@@ -32,7 +32,7 @@ $ pod install
 │   │   ├── AppDelegate.swift
 │   │   ├── Configuration -> App parametrization
 │   │   ├── Dependencies -> Dependency Injection
-│   │   └──Modifiers -> Core adaptations for country
+│   │   └── Modifiers -> Core adaptations for country
 │   └── 
 ├── README.md
 ├── i18n-poland -> Internationalization Poland git submodule
@@ -40,7 +40,15 @@ $ pod install
     ├── Accounts
     ├── ...
 ```
+## Project, folders and modules
 
+A crucial idea about the project organization is that folders, repositories and modules are different ways of seeing the project. Just consider the following ideas:
+
+- santander-one folder 
+    - is a different repository (git submodule)
+    - is a physical folder in Mac OS  
+    - contains several pod modules that are shown in the project under Development Pods group.
+- You can define pod modules in the santander-one level, or in the country one, in Modules/
 
 # Architecture
 
