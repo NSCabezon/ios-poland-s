@@ -29,8 +29,8 @@ final class AppDependencies {
 //        return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository, appInfo: versionInfo)
 //    }
 //    private lazy var managersProviderAdapater: PLManagersProviderAdapter = {
-//        let hostProvider = PTHostProvider()
-//        return PTManagersProviderAdapater(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+//        let hostProvider = PLHostProvider()
+//        return PLManagersProviderAdapater(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 //
 //    }()
     private lazy var dataProvider: SANLibraryV3.BSANDataProvider = {

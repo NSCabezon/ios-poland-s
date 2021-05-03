@@ -23,6 +23,9 @@ $ cd poland/Project
 $ pod install
 ```
 
+## Development certificates
+TODO
+
 ## Folder structure overview
 ```
 ├── Modules -> Local country modules
@@ -40,7 +43,7 @@ $ pod install
     ├── Accounts
     ├── ...
 ```
-## Project, folders and modules
+### Project, folders and modules
 
 A crucial idea about the project organization is that folders, repositories and modules are different ways of seeing the project. Just consider the following ideas:
 
@@ -105,6 +108,6 @@ TODO
 
 If you add a new schema, remember to regenerate the pods workspace:
 
-1º) Remove podfile.lock, pods/ folder and the .xcworkspace
-2º) execute pod install
+1. Remove podfile.lock, pods/ folder and the .xcworkspace
+2. Execute pod install
 
