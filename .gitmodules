@@ -1,0 +1,6 @@
+[submodule "santander-one"]
+	path = santander-one
+	url = ssh://git@santander-one-app.ciber.es:5793/ios/santander-one.git
+[submodule "i18n-poland"]
+	path = i18n-poland
+	url = ssh://git@santander-one-app.ciber.es:5793/common/i18n-poland.git

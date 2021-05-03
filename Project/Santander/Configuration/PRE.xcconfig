@@ -1,0 +1,36 @@
+//
+//  PRE.xcconfig
+//  Santander
+//
+//  Created by Jose C. Yebes on 03/05/2021.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+PRODUCT_NAME = PL-PRE-$(MARKETING_VERSION)
+PRODUCT_BUNDLE_IDENTIFIER = es.bancosantander.apps.ios.pre.5.6
+WIDGET_BUNDLE_IDENTIFIER = es.bancosantander.apps.ios.pre.5.6.widget
+SIRI_BUNDLE_IDENTIFIER = es.bancosantander.apps.ios.pre.5.6.siri.intents
+SIRI_UI_BUNDLE_IDENTIFIER = es.bancosantander.apps.ios.pre.5.6.siri.intents.ui
+PUSH_NOTIFICATION_BUNDLE_IDENTIFIER = es.bancosantander.apps.ios.pre.5.6.pushNotificationService
+APP_NAME = Santander Pre
+EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
+EMMA_API_KEY = santanderpreHdgTYANJ0
+LOAD_PFM_ENABLED = YES
+LOG_ENABLED = YES
+MANAGER_WALL_PRODUCTION_ENVIRONMENT = NO
+TEALIUM_TARGET = qa
+APP_CENTER_IDENTIFIER = ffcc0fdd-0d89-4ed9-9bed-e1c7d7c966b8
+TRUST_INVALID_CERTIFICATE = YES
+ENVIRONMENTS_AVAILABLE = YES
+KEYCHAIN_SERVICE = PRE_Santander
+ENVIRONMENTS_FOLDER = $(SRCROOT)/Santander/Configuration/Legacy
+ENVIRONMENTS_TO_EXCLUDE = $(ENVIRONMENTS_FOLDER)/INTERN/* $(ENVIRONMENTS_FOLDER)/PRO/* $(ENVIRONMENTS_FOLDER)/DEV/*
+TRUSTEER_FILES_TO_EXCLUDE = $(SRCROOT)/Santander/Trusteer/Wrapper/PRO/SdkHandler.mm
+EXCLUDED_SOURCE_FILE_NAMES = $(ENVIRONMENTS_TO_EXCLUDE) $(TRUSTEER_FILES_TO_EXCLUDE)
+HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/Santander/Trusteer/tas/include
+TAS_ROOT = "$(SRCROOT)/Santander/Trusteer/tas"
+APP_GROUPS_IDENTIFIER = group.es.bancosantander.mobility.ios.retail
+SHARED_KEYCHAIN_IDENTIFIER = JFX6PVNK48.es.santander.sso
+CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Debug.entitlements

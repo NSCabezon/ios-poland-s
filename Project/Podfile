@@ -1,0 +1,98 @@
+platform :ios, '10.3'
+
+source 'https://github.com/CocoaPods/Specs.git'
+
+# --------- General Core dependencies
+def core_dependencies
+  
+  # Common
+  pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
+  pod 'SANLibraryV3', :path => '../santander-one/Modules/Libraries/SANLibraryV3'
+  pod 'ModuleInjection', :path => '../santander-one/ModuleInjection'
+  pod 'Repository', :path => '../santander-one/Repository'
+  pod 'DataRepository', :path => '../santander-one/Modules/Libraries/DataRepository'
+  pod 'Operative', :path => '../santander-one/Operative'
+  pod 'CommonUseCase', :path => '../santander-one/CommonUseCase'
+  pod 'UI', :path => '../santander-one/UI'
+  pod 'Models', :path => '../santander-one/Models'
+  pod 'Commons', :path => '../santander-one/Commons'
+  pod 'ESCommons', :path => '../santander-one/Modules/Libraries/ESCommons'
+  pod 'PdfCommons', :path => '../santander-one/PdfCommons'
+  pod 'DomainCommon', :path => '../santander-one/Modules/Libraries/DomainCommon'
+  pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
+  pod 'Menu', :path => '../santander-one/Menu'
+  pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
+  
+  # Microsite configuration
+  pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
+  pod 'iOSCommonPublicFiles', :path => '../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+  
+  # Core Features
+  pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
+  pod 'iOSPullOffers', :path => '../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'PFM', :path => '../santander-one/Modules/Libraries/PFM'
+  pod 'Loans', :path => '../santander-one/Loans'
+  pod 'Account', :path => '../santander-one/Accounts'
+  pod 'Cards', :path => '../santander-one/Cards'
+  pod 'PersonalArea', :path => '../santander-one/PersonalArea'
+  pod 'PersonalManager', :path => '../santander-one/PersonalManager'
+  pod 'Transfer', :path => '../santander-one/Transfer'
+  pod 'Inbox', :path => '../santander-one/Inbox'
+  pod 'Bills', :path => '../santander-one/Bills'
+  pod 'GlobalSearch', :path => '../santander-one/GlobalSearch'
+  pod 'BranchLocator', :path => '../santander-one/Modules/Features/BranchLocator'
+  pod 'FinantialTimeline', :path => '../santander-one/Modules/Features/FinantialTimeline'
+end
+
+def legacy_libraries
+  pod 'RefreshableSantander', :path => '../santander-one/Modules/Libraries/RefreshableSantander'
+  pod 'GlobileSquadsCore/UIComponents', :path => '../santander-one/Modules/Libraries/GlobileSquadsCore'
+  pod 'CacheLib', :path => '../santander-one/Modules/Libraries/CacheLib'
+  pod 'GlobileUtilsLib', :path => '../santander-one/Modules/Libraries/GlobileUtilsLib'
+  pod 'HapticResponseLib', :path => '../santander-one/Modules/Libraries/HapticResponseLib'
+  pod 'SantanderUIKitLib', :path => '../santander-one/Modules/Libraries/SantanderUIKitLib'
+  pod 'SensorsLib', :path => '../santander-one/Modules/Libraries/SensorsLib'
+  pod 'ServiceInvocationLib', :path => '../santander-one/Modules/Libraries/ServiceInvocationLib'
+  pod 'WebViewBridgeLib', :path => '../santander-one/Modules/Libraries/WebViewBridgeLib'
+  pod 'Locker', :path => '../santander-one/Modules/Libraries/Locker'
+  pod 'Logger', :path => '../santander-one/Modules/Libraries/Logger'
+  pod 'Helpers', :path => '../santander-one/Modules/Libraries/Helpers'
+  pod 'SANLegacyLibrary', :path => '../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'RetailLegacy', :path => '../santander-one/RetailLegacy'
+end
+
+def core_thirdparty_dependencies
+  pod 'IQKeyboardManagerSwift', '6.5.6'
+  pod 'SwiftyBeaver', '1.7.0'
+  pod 'Kingfisher', '4.10.1'
+  pod 'lottie-ios'
+end
+ 
+# --------- Poland dependencies
+# Put here country only dependencies...
+
+
+# --------- Target configuration
+target 'Santander' do
+  use_frameworks!
+
+  core_dependencies
+  legacy_libraries
+  core_thirdparty_dependencies
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+	target.build_configurations.each do |config|
+	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug"].include? config.name
+		config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
+		config.build_settings['GCC_OPTIMIZATION_LEVEL'] = '0'
+		config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+		config.build_settings['SWIFT_WHOLE_MODULE_OPTIMIZATION'] = 'YES'
+		config.build_settings['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] = 'DEBUG'
+		config.build_settings['SWIFT_VERSION'] = '5.0'
+		config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+	  end
+	end
+  end
+end
