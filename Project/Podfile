@@ -68,11 +68,14 @@ def core_thirdparty_dependencies
   pod 'lottie-ios'
 end
  
-# --------- Poland dependencies
+# --------- Poland only dependencies
 def pl_features
   pod 'PLLogin', :path => '../Modules/Features/PLLogin'
 end
 
+def pl_libraries
+  pod 'SANPLLibrary', :path => '../Modules/Libraries/SANPLLibrary'
+end
 
 # --------- Target configuration
 target 'Santander' do
@@ -83,6 +86,7 @@ target 'Santander' do
   core_thirdparty_dependencies
   
   pl_features
+  pl_libraries
 end
 
 post_install do |installer|
