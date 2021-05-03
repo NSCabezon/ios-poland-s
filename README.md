@@ -8,7 +8,7 @@ After cloning this repo, follow the steps bellow
 
 1º) Install the Submodules
 
-Here we supose that your locla folder containing the project is named "poland"
+Here we supose that your local folder containing the project is named "poland"
 ```
 $ cd poland
 $ git submodule init
@@ -44,7 +44,7 @@ $ pod install
 
 # Architecture
 
-This project uses __MVP + Coordinators__ architecture pattern. Note that the project uses git submodules and cocoapods to modularize and structure the large code base.
+This project uses __MVP + Coordinators__ architecture pattern. Note that the project uses __git submodules__ and __cocoapods__ to modularize and structure the large code base.
 
 We answer the basic questions needed to understand the app architecture hereunder.
 
