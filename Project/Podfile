@@ -69,7 +69,9 @@ def core_thirdparty_dependencies
 end
  
 # --------- Poland dependencies
-# Put here country only dependencies...
+def pl_features
+  pod 'PLLogin', :path => '../Modules/Features/PLLogin'
+end
 
 
 # --------- Target configuration
@@ -79,6 +81,8 @@ target 'Santander' do
   core_dependencies
   legacy_libraries
   core_thirdparty_dependencies
+  
+  pl_features
 end
 
 post_install do |installer|
