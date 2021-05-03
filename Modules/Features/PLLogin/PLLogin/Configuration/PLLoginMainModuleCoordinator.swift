@@ -1,7 +1,6 @@
 import Commons
 import UI
 import Models
-import SANLibraryV3
 
 public protocol PLLoginMainModuleCoordinatorDelegate: class {
     //TODO: add implementations
