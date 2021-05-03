@@ -1,0 +1,35 @@
+platform :ios, '10.3'
+
+use_frameworks!
+
+source 'ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/iOS-private-specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
+def libraries
+  pod 'DomainCommon', :path => '../../Modules/Libraries/DomainCommon'
+  pod 'SANLibraryV3', :path => '../../Modules/Libraries/SANLibraryV3'
+  pod 'iOSPublicFiles', :path => '../../Modules/Libraries/iOSPublicFiles'
+  pod 'iOSCommonPublicFiles', :path => '../../Modules/Libraries/iOSCommonPublicFiles'
+  pod 'iOSPullOffers', :path => '../../Modules/Libraries/iOSPullOffers'
+  pod 'DataRepository', :path => '../../Modules/Libraries/DataRepository'
+  pod 'SQLite.swift/SQLCipher', :path => '../../Modules/Libraries/SQLite.swift'
+  pod 'SQLCipher', '4.4.2'
+  pod 'SANLegacyLibrary', :path => '../../Modules/Libraries/SANLegacyLibrary'
+end
+
+def pods
+  pod 'Ecommerce', :path => '../'
+  pod 'QuickSetup', :path => '../../QuickSetup'
+  pod 'Repository', :path => '../../Repository'
+  pod 'Models', :path => '../../Models'
+  pod 'UI', :path => '../../UI'
+  pod 'Commons', :path => '../../Commons'
+  pod 'CommonUseCase', :path => '../../CommonUseCase'
+  pod 'Operative', :path => '../../Operative'
+  libraries
+end
+
+
+target 'PLLogin_Example' do
+  pods
+end

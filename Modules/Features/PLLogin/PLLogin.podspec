@@ -1,0 +1,28 @@
+Pod::Spec.new do |spec|
+  spec.name         = "PLLogin"
+  spec.version      = "0.0.1"
+  spec.summary      = "A short description of PLLogin."
+  spec.swift_version    = '5.0'
+  spec.description  = <<-DESC
+  The PLLogin framework
+                   DESC
+
+  spec.homepage     = "http://EXAMPLE/PLLogin"
+  spec.license      = { :type => 'MIT', :file => 'LICENSE' }
+  spec.author       = { 'Jose C. Yebes' => 'jose.yebes@ciberexperis.es' }
+  spec.platform     = :ios, "10.3"
+  spec.source       = { :git => "http://gitlab/PLLogin.git", :tag => "#{spec.version}" }
+  spec.source_files  = "PLLogin", "PLLogin/**/*.{swift}"
+
+  spec.resource_bundles = {
+    'PLLogin' => ['PLLogin/**/*{xib,xcassets}']
+  }
+
+  spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
+
+  spec.dependency "Commons"
+  spec.dependency "Models"
+  spec.dependency "UI"
+  spec.dependency "Repository"
+  spec.dependency "CommonUseCase"
+end
