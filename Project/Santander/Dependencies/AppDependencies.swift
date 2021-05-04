@@ -11,6 +11,7 @@ import DataRepository
 import ESCommons
 import RetailLegacy
 import SANLibraryV3
+import Repository
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -75,6 +76,44 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: LocalAppConfig.self) { _ in
             return self.localAppConfig
+        }
+        self.dependencieEngine.register(for: VersionInfoDTO.self) { _ in
+            return self.versionInfo
+        }
+        self.dependencieEngine.register(for: WebServicesUrlProvider.self) { resolver in
+            let bsanDataProvider: SANLibraryV3.BSANDataProvider = resolver.resolve(for: SANLibraryV3.BSANDataProvider.self)
+            return WebServicesUrlProviderImpl(bsanDataProvider: bsanDataProvider)
+        }
+        self.dependencieEngine.register(for: TargetProviderProtocol.self) { resolver in
+            return TargetProvider(webServicesUrlProvider:
+                                        resolver.resolve(for: WebServicesUrlProvider.self),
+                                      bsanDataProvider: resolver.resolve(for: BSANDataProvider.self))
+        }
+        // Data layer and country data adapters
+//        self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
+//            return self.managersProviderAdapter
+//        }
+//        dependencieEngine.register(for: BSANDataProviderProtocol.self) { _ in
+//            return self.dataProvider
+//        }
+//        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
+//            return self.managersProviderAdapater.getPLManagerProvider()
+//        }
+//        dependencieEngine.register(for: PLManagersProviderAdapater.self) { _ in
+//            return self.managersProviderAdapter
+//        }
+        // Legacy compatibility dependencies
+        self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
+            return self.compilation
+        }
+        self.dependencieEngine.register(for: TrusteerRepositoryProtocol.self) { _ in
+            return EmptyTrusteerRepository()
+        }
+        self.dependencieEngine.register(for: EmmaTrackEventListProtocol.self) { _ in
+            return EmptyEmmaTrackEventList()
+        }
+        self.dependencieEngine.register(for: SalesForceHandlerProtocol.self) { _ in
+            return EmptySalesForceHandler()
         }
     }
 }

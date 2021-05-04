@@ -21,6 +21,10 @@
 		66BC8C9126407DD300654CC5 /* HostsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC8C9026407DD300654CC5 /* HostsModule.swift */; };
 		66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */; };
 		66BC8DFC2640A58D00654CC5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 66BC8DFB2640A58D00654CC5 /* README.md */; };
+		66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */; };
+		66BC90612641260400654CC5 /* TargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90602641260400654CC5 /* TargetProvider.swift */; };
+		66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */; };
+		66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */; };
 		BA256241E878169125C1DC73 /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CD0BF265B29297DE9162D79 /* Pods_Santander.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +51,10 @@
 		66BC8C9026407DD300654CC5 /* HostsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostsModule.swift; sourceTree = "<group>"; };
 		66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationDependencies.swift; sourceTree = "<group>"; };
 		66BC8DFB2640A58D00654CC5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrusteerRepository.swift; sourceTree = "<group>"; };
+		66BC90602641260400654CC5 /* TargetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetProvider.swift; sourceTree = "<group>"; };
+		66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySalesForceHandler.swift; sourceTree = "<group>"; };
+		66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyEmmaTrackEventList.swift; sourceTree = "<group>"; };
 		7CD0BF265B29297DE9162D79 /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F6210A2FAB2FD9F7B9CA067 /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		B7C5A0AD1AF4F1B8450C277F /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +110,7 @@
 		66BC8A55263FED9F00654CC5 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				66BC8FEB26411FFE00654CC5 /* Legacy */,
 				66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */,
 				66BC8A57263FEDF600654CC5 /* AppDependencies.swift */,
 			);
@@ -142,6 +151,17 @@
 			children = (
 				66BC8C9026407DD300654CC5 /* HostsModule.swift */,
 				66BC8C8D26407CD300654CC5 /* Compilation.swift */,
+				66BC90602641260400654CC5 /* TargetProvider.swift */,
+			);
+			path = Legacy;
+			sourceTree = "<group>";
+		};
+		66BC8FEB26411FFE00654CC5 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */,
+				66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */,
+				66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */,
 			);
 			path = Legacy;
 			sourceTree = "<group>";
@@ -290,10 +310,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
+				66BC90612641260400654CC5 /* TargetProvider.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
 				66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
+				66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */,
+				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
+				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
 				66BC8C9126407DD300654CC5 /* HostsModule.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 			);
