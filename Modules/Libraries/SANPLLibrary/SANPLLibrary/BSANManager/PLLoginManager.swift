@@ -10,3 +10,27 @@ import Foundation
 public protocol PLLoginManagerProtocol {
     func doLoginWithNick(nick: String) throws -> Result<LoginDTO, Error>
 }
+
+final class PLLoginManager {
+    private let loginDataSource: LoginDataSourceProtocol
+    private let bsanDataProvider: BSANDataProvider
+    private let demoInterpreter: DemoUserProtocol
+    
+    public init(bsanDataProvider: BSANDataProvider, networkProvider: NetworkProvider, demoInterpreter: DemoUserProtocol) {
+        self.loginDataSource = LoginDataSource(networkProvider: networkProvider, dataProvider: bsanDataProvider)
+        self.bsanDataProvider = bsanDataProvider
+        self.demoInterpreter = demoInterpreter
+    }
+}
+
+extension PLLoginManager: PLLoginManagerProtocol {
+    func doLoginWithNick(nick: String) throws -> Result<LoginDTO, Error> {
+        let result = try loginDataSource.doLoginWithNick(nick: nick)
+        switch result {
+        case .success(let data):
+            return .success(data)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+}
