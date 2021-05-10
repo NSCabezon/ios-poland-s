@@ -99,7 +99,7 @@ private extension AppDependencies {
 //        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
 //            return self.managersProviderAdapater.getPLManagerProvider()
 //        }
-//        dependencieEngine.register(for: PLManagersProviderAdapater.self) { _ in
+//        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
 //            return self.managersProviderAdapter
 //        }
         // Legacy compatibility dependencies

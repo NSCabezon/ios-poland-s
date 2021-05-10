@@ -75,6 +75,7 @@ end
 
 def pl_libraries
   pod 'SANPLLibrary', :path => '../Modules/Libraries/SANPLLibrary'
+  pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
 end
 
 # --------- Target configuration

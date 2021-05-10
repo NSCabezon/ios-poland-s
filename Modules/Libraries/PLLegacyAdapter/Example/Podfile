@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'PLLegacyAdapter_Example' do
+  pod 'PLLegacyAdapter', :path => '../'
+
+  target 'PLLegacyAdapter_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
