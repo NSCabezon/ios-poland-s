@@ -21,16 +21,14 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/Jose C. Yebes/SANPLLibrary'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://santander-one-app.ciber.es'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Jose C. Yebes' => 'jose.yebes@ciberexperis.es' }
-  s.source           = { :git => 'https://github.com/Jose C. Yebes/SANPLLibrary.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://santander-one-app.ciber.es/ios/santander-one.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.3'
 
-  s.source_files = 'SANPLLibrary/Classes/**/*'
+  s.source_files = 'SANPLLibrary/SANPLLibrary/**/*'
   
   # s.resource_bundles = {
   #   'SANPLLibrary' => ['SANPLLibrary/Assets/*.png']
