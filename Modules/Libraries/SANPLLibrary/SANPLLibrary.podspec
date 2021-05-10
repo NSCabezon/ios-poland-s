@@ -28,7 +28,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '10.3'
 
-  s.source_files = 'SANPLLibrary/SANPLLibrary/**/*'
+  s.source_files = 'SANPLLibrary/**/*'
   
   # s.resource_bundles = {
   #   'SANPLLibrary' => ['SANPLLibrary/Assets/*.png']
