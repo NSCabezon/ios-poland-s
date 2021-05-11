@@ -1,0 +1,265 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+CONFIGURATIONS = {
+  "intern" => { name: "Intern", configuration: "Intern-Release", appcenter: "iOS-San-PL-V1.0-INTERN"},
+  "pre" => { name: "Pre", configuration: "Pre-Release", appcenter: "iOS-San-PL-V1.0-PRE"},
+  "dev" => { name: "Dev", configuration: "Dev-Release", appcenter: "iOS-San-PL-V1.0-DEV"}
+}
+
+TEST_EXAMPLE_APPS_CONFIGURATION = { }
+
+def calculateVersionCode(versionName)
+  version = versionName.split('.')
+  major = version[0].to_i
+  minor = version[1].to_i
+  build = version[2].to_i
+  (major * 100 + minor) * 1000 + build
+end
+
+platform :ios do
+
+  desc "Create app id"
+  lane :create_app_id do |options|
+    CONFIGURATIONS.each do |k, v|
+      produce(
+        app_name: "Poland #{k.upcase} #{options[:version].gsub '.',' '}",
+        skip_itc: true,
+        app_identifier: "pl.bancosantander.oneapp.#{k}.#{options[:version]}", # TODO: final PL bundle id
+        enable_services: {
+            app_group: "on",
+            associated_domains: "on",
+            in_app_purchase: "on",
+            push_notification: "on"
+        }
+      )
+    end
+  end
+
+  desc 'Fetch certificates and provisioning profiles'
+  lane :certificates do |options|
+    match(
+      git_url: "ssh://git@santander-one-app.ciber.es:5793/ios/certificates.git",
+      app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
+       "pl.bancosantander.oneapp.intern.#{options[:version]}",
+       "pl.bancosantander.oneapp.pre.#{options[:version]}"],
+      type: 'development',
+      readonly: true
+    )
+  end
+
+  desc 'Fetch Distribution certificates and provisioning profiles'
+  lane :certificates_release do |options|
+    match(
+      git_url: "ssh://git@santander-one-app.ciber.es:5793/admins/certificates-release.git",
+      app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
+      "pl.bancosantander.oneapp.intern.#{options[:version]}",
+      "pl.bancosantander.oneapp.pre.#{options[:version]}",
+      "pl.bancosantander.oneapp.intern2"],
+      type: 'enterprise',
+      readonly: true
+    )
+  end
+
+  desc 'Updating pods and Provisions'
+  lane :update_pods do
+    sh "cd .. && pod update"
+    versionName = get_version_number()
+    major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
+    certificates_release({version: "#{major}.#{minor}"})
+  end
+  
+  desc "Test all example apps"
+  lane :test do |options|
+    TEST_EXAMPLE_APPS_CONFIGURATION.each do |app, configuration|
+      UI.message "Passing #{app} tests"
+      path = "../santander-one/#{configuration[:path]}"
+      cocoapods(podfile: "#{path}/Podfile")
+      run_tests(
+        workspace: "#{path}/#{configuration[:workspace]}",
+        scheme: configuration[:scheme],
+        derived_data_path: "~/derived_data",
+        build_for_testing: false,
+        output_style: "basic",
+        suppress_xcode_output: options[:suppress_xcode_output]
+    )
+    end
+  end
+
+  desc 'Updating pods'
+  lane :check_pods do
+    sh "pod update"
+  end
+
+  desc 'Pass swiftlint'
+  lane :swift_lint do
+    swiftlint(
+      mode: :lint,
+      executable: "./Pods/SwiftLint/swiftlint",
+      config_file: "../.swiftlint.yml",
+      quiet: true
+  )
+  end
+
+  lane :clean_repo do
+    sh "git clean -qfdx"
+    sh "git reset --hard HEAD"
+  end
+
+  lane :release do |options|
+    UI.message "Start lane release"
+    ensure_strings_update()
+    do_release(options)
+    generate_changelog()
+    upload_to_appcenter(options)
+  end
+
+private_lane :do_release do |options|
+  UI.message "Start lane doRelease"
+  ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "90"
+  ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "90"
+  outpudir = File.expand_path("~/CI/")
+  clear_derived_data
+  configuration = CONFIGURATIONS[options[:deploy_env]]
+  UI.message configuration
+  gym(
+      configuration: configuration[:configuration],
+      scheme: configuration[:name],
+      output_directory: outpudir,
+      output_name: "NR-#{configuration[:name]}-#{get_version_number(target: "Santander")}.ipa",
+      export_method: "enterprise",
+      include_bitcode: "false",
+      include_symbols: "true",
+      clean: "true",
+      export_options: {
+          compileBitcode: false
+      }
+  )
+end
+
+  lane :generate_changelog do
+    version = get_version_number(target: "Santander")
+    major, minor, patch = version.match(/(\d*)\.(\d*)\.(\d*)/).captures
+    if  patch.to_i > 0
+      changelog_from_git_commits(
+          between: ["dev/#{major}.#{minor}/#{major}.#{minor}.#{patch.to_i - 1}", "HEAD"],
+          pretty: "-  %s by %aN",
+          date_format: "short",
+          merge_commit_filtering: "exclude_merges"
+      )
+      UI.success Actions.lane_context[SharedValues::FL_CHANGELOG]
+    end
+  end
+  
+  private_lane :upload_to_appcenter do |options|
+    UI.success "IPA: #{Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]}"
+    UI.success "DSYM: #{Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH]}"
+    appcenter_upload(
+        api_token: ENV["APPCENTER_API_TOKEN"],
+        owner_name: ENV["APPCENTER_OWNER_NAME"],
+        owner_type: "organization",
+        app_name: CONFIGURATIONS[options[:deploy_env]][:appcenter],
+        destinations: CONFIGURATIONS[options[:deploy_env]][:collaborators],
+        file: Actions.lane_context[SharedValues::IPA_OUTPUT_PATH],
+        dsym: Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH],
+        notify_testers: options[:notify_testers],
+        release_notes: Actions.lane_context[SharedValues::FL_CHANGELOG]
+    )
+  end
+
+  lane :build_appium do
+    UI.message "Start lane to appium"
+    build_ios_app(
+      workspace: "Santander.xcworkspace",
+      configuration: "Intern",
+      skip_package_ipa: true,
+      skip_archive: true,
+      clean: true,
+      scheme: "Santander INTERN",
+      derived_data_path: "~/derived_data",
+      sdk: "iphonesimulator"
+      )
+  end
+
+  # Lane to update i18n
+  private_lane :ensure_strings_update do
+    UI.message "Start lane ensure_strings_update"
+    sh "cd ../../i18n && git checkout master"
+    sh "cd ../../i18n && git pull"
+    status = sh "cd ../.. && git status -s"
+    if status.include? "i18n"
+      sh "cd ../.. && git add i18n"
+      sh "cd ../.. && git commit -m \"updating i18n\""
+      sh "cd ../.. && git push -u origin"
+    end
+  end
+
+
+  # Lanes about incrementing version
+  desc 'Incrementing Version'
+  lane :increment_version do
+    version = get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")
+    push_tag()
+    increment_version_number(xcodeproj: "Santander.xcodeproj", bump_type: "patch")
+    increment_build_number(build_number: calculateVersionCode(get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")))
+    upload_build_settings_versions()
+    push_version()
+  end
+
+  lane :push_tag do
+    versionName = get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")
+    UI.message("Current version " + versionName)
+    Dir.chdir("..") do
+      major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
+      branch = git_branch == "master" ? "release" : "dev"
+      tag = "#{branch}/#{major}.#{minor}/#{versionName}"
+      if !git_tag_exists(tag: tag)
+        UI.message("NOT Found it 🚀 tag " + tag)
+        add_git_tag(tag: tag, message: "Version #{versionName}")
+        push_git_tags
+      else
+        UI.message("Found it 🚀 tag " + tag)
+      end
+    end
+  end
+
+  private_lane :push_version do
+    Dir.chdir("..") do
+      branch = "develop"      
+      UI.message("🚀  Git branch #{branch}")      
+      git_add(path: "./Project/Santander/Info.plist")
+      git_commit(path: "./Project/Santander/Info.plist", message: "Updating Version #{Actions.lane_context[SharedValues::VERSION_NUMBER]}")
+      reset_git_repo(force: true)
+      git_pull(rebase: true)
+      sh "git pull origin #{branch}"
+      push_to_git_remote(remote_branch: branch)
+    end
+  end
+
+  private_lane :upload_build_settings_versions do
+    project_version = get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")
+    build_version = get_build_number(xcodeproj: "Santander.xcodeproj")
+    UI.message("Project version #{project_version} --- Build version #{build_version}")
+    project = Xcodeproj::Project.open('../Santander.xcodeproj')
+    target = project.targets.first
+    target.build_configurations.each do |configuration|
+      configuration.build_settings["MARKETING_VERSION"] = project_version
+      configuration.build_settings["CURRENT_PROJECT_VERSION"] = build_version
+    end
+    project.save
+  end
+end

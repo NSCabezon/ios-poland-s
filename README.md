@@ -24,7 +24,14 @@ $ pod install
 ```
 
 ## Development certificates
+We use fastlane and match to manage development certificates. To install a development certificate:
+
+1. Install fastlane
+2. Execute in poland/Project
+
+```
 TODO
+```
 
 ## Folder structure overview
 ```
