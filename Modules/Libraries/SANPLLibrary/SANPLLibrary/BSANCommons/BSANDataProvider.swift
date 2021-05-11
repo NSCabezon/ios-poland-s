@@ -27,4 +27,14 @@ public class BSANDataProvider {
         }
         throw BSANIllegalStateException("BSANEnvironment is nil in DataRepository")
     }
+    
+    // TODO: Fill with AuthModel
+    public func getAuthCredentials() throws -> String {
+        return ""
+        throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
+    }
+    
+    public func isDemo() -> Bool {
+        return dataRepository.get(DemoMode.self) != nil
+    }
 }

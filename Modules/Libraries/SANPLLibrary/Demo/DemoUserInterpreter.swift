@@ -2,13 +2,14 @@
 //  DemoUserInterpreter.swift
 //  SANPLLibrary
 //
-//  Created by Ernesto Fernandez Calles on 10/5/21.
+//  Created by Ernesto Fernandez Calles on 11/5/21.
 //
 
 import Foundation
 
 public protocol DemoUserProtocol {
     func isDemoUser(userName: String) -> Bool
+    func getAnswerNumber(serviceName: PLLocalServiceName) -> Int
     var isDemoModeAvailable: Bool { get }
 }
 
@@ -27,4 +28,17 @@ public class DemoUserInterpreter: DemoUserProtocol {
     public func isDemoUser(userName: String) -> Bool {
         return userName.uppercased() == DemoUserInterpreter.demoUser
     }
+    
+    public func getAnswerNumber(serviceName: PLLocalServiceName) -> Int {
+        return PLLocalAnswerType.success.rawValue
+    }
+}
+
+public enum PLLocalAnswerType: Int {
+    case success = 0
+    case error = 1
+}
+
+public enum PLLocalServiceName: String {
+    case loginNick = "login_nick"
 }

@@ -10,10 +10,12 @@ import Foundation
 public class BSANPLEnvironmentDTO: Hashable, Codable {
     public let name: String
     public let urlBase: String
+    public let clientId: String
 
-    public init(name: String, urlBase: String) {
+    public init(name: String, urlBase: String, clientId: String) {
         self.name = name
         self.urlBase = urlBase
+        self.clientId = clientId
     }
     
     public var hashValue: Int {

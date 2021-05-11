@@ -25,7 +25,7 @@ public protocol NetworkProvider {
 public protocol NetworkProviderRequest {
     associatedtype Body: Encodable
     var serviceName: String { get }
-    //var localServiceName: PTLocalServiceName { get }
+    var localServiceName: PLLocalServiceName { get }
     var method: NetworkProviderMethod { get }
     var serviceUrl: String { get }
     var headers: [String: String]? { get }
@@ -83,7 +83,7 @@ public enum NetworkProviderError: Error {
         }
         return error.code
     }
-    
+    // TODO: Fill
 //    public func getPTErrorMessage() -> String? {
 //        guard case .error(let error) = self,
 //              let data = error.data,
