@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginDataSourceProtocol {
-    func doLoginWithNick(nick: String) throws -> Result<LoginDTO, Error>
+    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -25,14 +25,25 @@ class LoginDataSource: LoginDataSourceProtocol {
     private let dataProvider: BSANDataProvider
     // TODO: Fill
     private let basePath = ""
+    private var headers: [String: String] = ["Santander-Channel": "MBP",
+                                             "Santander-Session-Id": ""]
+    
+    private enum LoginServiceType: String {
+        case token = "/token"
+        case challenge = "/challenge"
+        case revoke = "/revoke"
+        case pin = "/pin"
+        case validation = "/validation"
+        case password = "/password"
+    }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
         self.dataProvider = dataProvider
     }
     
-    func doLoginWithNick(nick: String) throws -> Result<LoginDTO, Error> {
-        guard let baseUrl = self.getBaseUrl() else {
+    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, NetworkProviderError> {
+        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         
@@ -44,7 +55,7 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                             method: .get,
                                                                                                             body: body, headers: self.headers,
                                                                                                             contentType: .urlEncoded,
-                                                                                                            localServiceName: .loginIDP)
+                                                                                                            localServiceName: .loginNick)
         )
         return result
     }
