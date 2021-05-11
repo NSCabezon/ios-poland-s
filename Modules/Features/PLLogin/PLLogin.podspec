@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name         = "PLLogin"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of PLLogin."
+  spec.summary      = "Poland login implementation"
   spec.swift_version    = '5.0'
   spec.description  = <<-DESC
   The PLLogin framework
@@ -25,4 +25,7 @@ Pod::Spec.new do |spec|
   spec.dependency "UI"
   spec.dependency "Repository"
   spec.dependency "CommonUseCase"
+  spec.dependency "LoginCommon"
+  spec.dependency "iOSPublicFiles"
+  spec.dependency "SANPLLibrary"
 end
