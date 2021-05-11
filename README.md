@@ -42,6 +42,7 @@ TODO
 │   │   ├── AppDelegate.swift
 │   │   ├── Configuration -> App parametrization
 │   │   ├── Dependencies -> Dependency Injection
+│   │   ├── MicrositeLocalConf -> local version for debugging
 │   │   └── Modifiers -> Core adaptations for country
 │   └── 
 ├── README.md
@@ -108,7 +109,17 @@ We can configure also general iOS environment variables from xcconfig files. For
 TODO
 
 ## Microsite dynamic configuration
-TODO
+The app can be configured with a remote microsite json configuration file. This file can be loaded locally for testing and debugging purposes.
+
+### Local configuration folder
+
+You can find a local copy of microsite configuration files in __Santander/MicrositeLocalConf/__ folder. This configuration files can be modified locally to test app behaviors without changing the actual microsite content.
+
+There are two local configurations that can be selected in test/debug builds from a selector in login screen. The path to these configurations can be found in __PublicFilesHostProvider__ struct.
+
+### Remote microsite URLs
+
+The URL for microsite configuration can change depending on the selected schema. You can set or modify the configuration URLs in __PublicFilesHostProvider__ struct.
 
 # Other tips & tricks
 ## Updating or modifiying the schemas
