@@ -1,5 +1,5 @@
 //
-//  PTNetworkProvider.swift
+//  PLNetworkProvider.swift
 //  SANPLLibrary
 //
 //  Created by Ernesto Fernandez Calles on 11/5/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class PTNetworkProvider {
+public final class PLNetworkProvider {
     private let dataProvider: BSANDataProvider
     private let networkProvider: NetworkProvider
     private var demoNetworkProvider: NetworkProvider
@@ -24,7 +24,7 @@ public final class PTNetworkProvider {
     }
 }
 
-extension PTNetworkProvider: NetworkProvider {
+extension PLNetworkProvider: NetworkProvider {
     public func request<Request, Response>(_ request: Request) -> Result<Response, NetworkProviderError> where Request : NetworkProviderRequest, Response : Decodable {
         if !isDemoUser {
             return networkProvider.request(request)

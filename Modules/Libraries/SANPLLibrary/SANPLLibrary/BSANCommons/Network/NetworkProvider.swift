@@ -84,10 +84,10 @@ public enum NetworkProviderError: Error {
         return error.code
     }
     // TODO: Fill
-//    public func getPTErrorMessage() -> String? {
+//    public func getPLErrorMessage() -> String? {
 //        guard case .error(let error) = self,
 //              let data = error.data,
-//              let dto: PTGenericResponseErrorsDTO = try? JSONDecoder().decode(PTGenericResponseErrorsDTO.self, from: data), let errorDescription = dto.errors.first?.errorDescription
+//              let dto: PLGenericResponseErrorsDTO = try? JSONDecoder().decode(PLGenericResponseErrorsDTO.self, from: data), let errorDescription = dto.errors.first?.errorDescription
 //        else { return nil }
 //        return errorDescription
 //    }

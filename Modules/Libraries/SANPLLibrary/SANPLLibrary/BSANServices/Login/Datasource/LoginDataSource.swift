@@ -23,18 +23,13 @@ class LoginDataSource: LoginDataSourceProtocol {
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    // TODO: Fill
+    // TODO: Review
     private let basePath = ""
     private var headers: [String: String] = ["Santander-Channel": "MBP",
                                              "Santander-Session-Id": ""]
     
     private enum LoginServiceType: String {
-        case token = "/token"
-        case challenge = "/challenge"
-        case revoke = "/revoke"
-        case pin = "/pin"
-        case validation = "/validation"
-        case password = "/password"
+        case nick = "/nick"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -49,7 +44,7 @@ class LoginDataSource: LoginDataSourceProtocol {
         
         let path = self.basePath + self.loginNickPath
         let absoluteUrl = baseUrl + path
-        let serviceName =  LoginServiceType.token.rawValue
+        let serviceName =  LoginServiceType.nick.rawValue
         let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.loginRequest(LoginRequest(serviceName: serviceName,
                                                                                                             serviceUrl: absoluteUrl,
                                                                                                             method: .get,
@@ -60,8 +55,6 @@ class LoginDataSource: LoginDataSourceProtocol {
         return result
     }
 }
-
-
 
 private struct LoginRequest: NetworkProviderRequest {
     let serviceName: String

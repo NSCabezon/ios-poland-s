@@ -45,18 +45,18 @@ private extension URLSessionNetworkProvider {
         return urlRequest
     }
     
+    //TODO: Review headers values
     func addHeaders<Request: NetworkProviderRequest>(_ urlRequest: inout URLRequest, request: Request) throws {
         request.headers?.forEach {
             urlRequest.addValue($0.value, forHTTPHeaderField: $0.key)
         }
         if let clientId = try? dataProvider.getEnvironment().clientId,
-           //TODO: Remove this line when services will be right
            urlRequest.value(forHTTPHeaderField: "client-id") == nil
            {
             urlRequest.addValue(clientId, forHTTPHeaderField: "Client-id")
         }
         urlRequest.addValue("application/\(request.contentType.rawValue)", forHTTPHeaderField: "Content-Type")
-        urlRequest.addValue("Santander PT ONE App", forHTTPHeaderField: "User-Agent")
+        urlRequest.addValue("Santander PL ONE App", forHTTPHeaderField: "User-Agent")
         let traceUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
         let spanUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").prefix(16).lowercased()
         urlRequest.addValue(traceUUID, forHTTPHeaderField: "X-B3-TraceId")
