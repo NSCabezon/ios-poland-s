@@ -122,6 +122,13 @@ There are two local configurations that can be selected in test/debug builds fro
 The URL for microsite configuration can change depending on the selected schema. You can set or modify the configuration URLs in __PublicFilesHostProvider__ struct.
 
 # Other tips & tricks
+
+## Demo user
+
+The project has a special user which gives us the ability to use the app without an internet connection. It's very useful when we have to test UI elements without the need for services that can slow down the testing process. In addition we can execute unit tests through this user. Not all of the app's features can be tested through this user
+
+You can add or modify the mocked network responses in __SANPLLibrary__ pod.
+
 ## Updating or modifiying the schemas
 
 If you add a new schema, remember to regenerate the pods workspace:
