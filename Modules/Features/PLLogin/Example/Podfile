@@ -5,31 +5,42 @@ use_frameworks!
 source 'ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/iOS-private-specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
-def libraries
-  pod 'DomainCommon', :path => '../../Modules/Libraries/DomainCommon'
-  pod 'SANLibraryV3', :path => '../../Modules/Libraries/SANLibraryV3'
-  pod 'iOSPublicFiles', :path => '../../Modules/Libraries/iOSPublicFiles'
-  pod 'iOSCommonPublicFiles', :path => '../../Modules/Libraries/iOSCommonPublicFiles'
-  pod 'iOSPullOffers', :path => '../../Modules/Libraries/iOSPullOffers'
-  pod 'DataRepository', :path => '../../Modules/Libraries/DataRepository'
-  pod 'SQLite.swift/SQLCipher', :path => '../../Modules/Libraries/SQLite.swift'
+
+def example_app_common
+  pod 'QuickSetup', :path => '../../../../santander-one/QuickSetup'
+  pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
+  pod 'Models', :path => '../../../../santander-one/Models'
+  pod 'Commons', :path => '../../../../santander-one/Commons'
+  pod 'ESCommons', :path => '../../../../santander-one/Modules/Libraries/ESCommons'
+end
+
+def core_dependencies
+  pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'
+  pod 'iOSCommonPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+  pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
+  pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'SQLCipher', '4.4.2'
-  pod 'SANLegacyLibrary', :path => '../../Modules/Libraries/SANLegacyLibrary'
+  pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'Repository', :path => '../../../../santander-one/Repository'
+  pod 'UI', :path => '../../../../santander-one/UI'
+  pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
+  pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
 end
 
-def pods
-  pod 'Ecommerce', :path => '../'
-  pod 'QuickSetup', :path => '../../QuickSetup'
-  pod 'Repository', :path => '../../Repository'
-  pod 'Models', :path => '../../Models'
-  pod 'UI', :path => '../../UI'
-  pod 'Commons', :path => '../../Commons'
-  pod 'CommonUseCase', :path => '../../CommonUseCase'
-  pod 'Operative', :path => '../../Operative'
-  libraries
+def pl_dependencies
+  pod 'PLLogin', :path => '../'
+  pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
 end
-
 
 target 'PLLogin_Example' do
-  pods
+  example_app_common
+  core_dependencies
+  pl_dependencies
+end
+
+target 'PLLogin_ExampleTests' do
+  example_app_common
+  core_dependencies
+  pl_dependencies
 end
