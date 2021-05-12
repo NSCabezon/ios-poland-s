@@ -9,7 +9,7 @@ public class PLLoginModuleCoordinator: ModuleSectionedCoordinator {
         case main
     }
     
-    public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController) {
+    public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.coordinator = PLLoginMainModuleCoordinator(dependenciesResolver: dependenciesResolver, navigationController: navigationController)
     }

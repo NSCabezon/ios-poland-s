@@ -31,4 +31,5 @@ TODO: Add long description of the pod here.
   s.source_files = 'SANPLLibrary/**/*'
   
   s.dependency 'DataRepository'
+  s.dependency "SANLibraryV3"
 end

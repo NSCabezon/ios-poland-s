@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42BF471526495D3400136E8D /* HostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF471426495D3400136E8D /* HostModule.swift */; };
+		42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF484326497C9200136E8D /* BSANEnvironments.swift */; };
+		42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */; };
+		42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */; };
+		42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4875264A8E5700136E8D /* AppModifiers.swift */; };
+		42BF5170264BF06000136E8D /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF516D264BF06000136E8D /* en.strings */; };
+		42BF5171264BF06000136E8D /* es.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF516E264BF06000136E8D /* es.strings */; };
+		42BF5172264BF06000136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF516F264BF06000136E8D /* pl.strings */; };
 		66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */; };
 		66B3CFB32639C6C8000AAD0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB22639C6C8000AAD0F /* Assets.xcassets */; };
 		66B3CFB62639C6C8000AAD0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */; };
@@ -34,6 +42,14 @@
 		1A779591AD9A0B113A124D8F /* Pods-Santander.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.debug.xcconfig"; sourceTree = "<group>"; };
 		28A304166CAAF0D444757AAF /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
 		3C3C045C52D39DB6423F77D7 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
+		42BF471426495D3400136E8D /* HostModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostModule.swift; sourceTree = "<group>"; };
+		42BF484326497C9200136E8D /* BSANEnvironments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSANEnvironments.swift; sourceTree = "<group>"; };
+		42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySiriAssistant.swift; sourceTree = "<group>"; };
+		42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTealiumCompilation.swift; sourceTree = "<group>"; };
+		42BF4875264A8E5700136E8D /* AppModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModifiers.swift; sourceTree = "<group>"; };
+		42BF516D264BF06000136E8D /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
+		42BF516E264BF06000136E8D /* es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es.strings; path = "../../../../i18n-poland/clients/iOS/es.strings"; sourceTree = "<group>"; };
+		42BF516F264BF06000136E8D /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
 		4D7D37A46A9C74874675DCB0 /* Pods-Santander.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.release.xcconfig"; sourceTree = "<group>"; };
 		4D996C6F56B9DD26D174B0AA /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
 		603A2928BF0F1A69757026E6 /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +94,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42BF486F264A8AF300136E8D /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				42BF516D264BF06000136E8D /* en.strings */,
+				42BF516E264BF06000136E8D /* es.strings */,
+				42BF516F264BF06000136E8D /* pl.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		42BF4874264A8DE300136E8D /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		66B3CF9D2639C6C5000AAD0F = {
 			isa = PBXGroup;
 			children = (
@@ -102,9 +136,10 @@
 			children = (
 				66E57596264A68DF006804BD /* MicrositeLocalConf */,
 				66BC8A5A263FFCFB00654CC5 /* Configuration */,
-				66BC8A56263FEDB100654CC5 /* Modifiers */,
 				66BC8A55263FED9F00654CC5 /* Dependencies */,
 				66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */,
+				42BF471426495D3400136E8D /* HostModule.swift */,
+				42BF484326497C9200136E8D /* BSANEnvironments.swift */,
 				66B3CFB22639C6C8000AAD0F /* Assets.xcassets */,
 				66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */,
 				66B3CFB72639C6C8000AAD0F /* Info.plist */,
@@ -122,13 +157,6 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
-		66BC8A56263FEDB100654CC5 /* Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Modifiers;
-			sourceTree = "<group>";
-		};
 		66BC8A5A263FFCFB00654CC5 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +168,8 @@
 				66BC8A62263FFDC500654CC5 /* Certificates */,
 				66BC8A5F263FFD7C00654CC5 /* XCConfig.swift */,
 				66BC8A6D263FFFF000654CC5 /* PLAppConfig.swift */,
+				42BF4874264A8DE300136E8D /* Modifiers */,
+				42BF486F264A8AF300136E8D /* Strings */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -167,6 +197,8 @@
 				66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */,
 				66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */,
 				66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */,
+				42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */,
+				42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */,
 			);
 			path = Legacy;
 			sourceTree = "<group>";
@@ -270,9 +302,12 @@
 				66E57608264A6C3A006804BD /* assets in Resources */,
 				66BC8A68263FFE4C00654CC5 /* INTERN.xcconfig in Resources */,
 				66BC8DFC2640A58D00654CC5 /* README.md in Resources */,
+				42BF5172264BF06000136E8D /* pl.strings in Resources */,
 				66BC8A6A263FFE4C00654CC5 /* PRO.xcconfig in Resources */,
+				42BF5170264BF06000136E8D /* en.strings in Resources */,
 				66BC8A6B263FFE4C00654CC5 /* DEV.xcconfig in Resources */,
 				66BC8A69263FFE4C00654CC5 /* PRE.xcconfig in Resources */,
+				42BF5171264BF06000136E8D /* es.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,12 +360,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
+				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
+				42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */,
 				66BC90612641260400654CC5 /* TargetProvider.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
 				66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
+				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
+				42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */,
 				66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */,
 				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
 				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
