@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>APP_CENTER_IDENTIFIER</key>
+	<string>$(APP_CENTER_IDENTIFIER)</string>
+	<key>APP_GROUPS_IDENTIFIER</key>
+	<string>$(APP_GROUPS_IDENTIFIER)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -18,33 +22,36 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>DEFAULT_DEMO_USER</key>
+	<string>$(DEFAULT_DEMO_USER)</string>
+	<key>DEFAULT_MAGIC</key>
+	<string>$(DEFAULT_MAGIC)</string>
+	<key>EMMA_API_KEY</key>
+	<string>$(EMMA_API_KEY)</string>
+	<key>ENVIRONMENTS_AVAILABLE</key>
+	<string>$(ENVIRONMENTS_AVAILABLE)</string>
+	<key>KEYCHAIN_SERVICE</key>
+	<string>$(KEYCHAIN_SERVICE)</string>
+	<key>LOAD_PFM_ENABLED</key>
+	<string>$(LOAD_PFM_ENABLED)</string>
+	<key>LOG_ENABLED</key>
+	<string>$(LOG_ENABLED)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
-		<key>UISceneConfigurations</key>
-		<dict>
-			<key>UIWindowSceneSessionRoleApplication</key>
-			<array>
-				<dict>
-					<key>UISceneConfigurationName</key>
-					<string>Default Configuration</string>
-					<key>UISceneDelegateClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
-				</dict>
-			</array>
-		</dict>
-	</dict>
+	<key>PUBLIC_FILE_ENVIRONMENTS</key>
+	<string>$(PUBLIC_FILE_ENVIRONMENTS)</string>
+	<key>SHARED_KEYCHAIN_IDENTIFIER</key>
+	<string>$(SHARED_KEYCHAIN_IDENTIFIER)</string>
+	<key>TAS_ROOT</key>
+	<string>$(TAS_ROOT)</string>
+	<key>TEALIUM_TARGET</key>
+	<string>$(TEALIUM_TARGET)</string>
+	<key>TRUST_INVALID_CERTIFICATE</key>
+	<string>$(TRUST_INVALID_CERTIFICATE)</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -62,33 +69,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>APP_CENTER_IDENTIFIER</key>
-	<string>$(APP_CENTER_IDENTIFIER)</string>
-	<key>APP_GROUPS_IDENTIFIER</key>
-	<string>$(APP_GROUPS_IDENTIFIER)</string>
-	<key>PUBLIC_FILE_ENVIRONMENTS</key>
-	<string>$(PUBLIC_FILE_ENVIRONMENTS)</string>
-	<key>SHARED_KEYCHAIN_IDENTIFIER</key>
-	<string>$(SHARED_KEYCHAIN_IDENTIFIER)</string>
-	<key>TAS_ROOT</key>
-	<string>$(TAS_ROOT)</string>
-	<key>TEALIUM_TARGET</key>
-	<string>$(TEALIUM_TARGET)</string>
-	<key>TRUST_INVALID_CERTIFICATE</key>
-	<string>$(TRUST_INVALID_CERTIFICATE)</string>
-	<key>DEFAULT_DEMO_USER</key>
-	<string>$(DEFAULT_DEMO_USER)</string>
-	<key>DEFAULT_MAGIC</key>
-	<string>$(DEFAULT_MAGIC)</string>
-	<key>EMMA_API_KEY</key>
-	<string>$(EMMA_API_KEY)</string>
-	<key>ENVIRONMENTS_AVAILABLE</key>
-	<string>$(ENVIRONMENTS_AVAILABLE)</string>
-	<key>KEYCHAIN_SERVICE</key>
-	<string>$(KEYCHAIN_SERVICE)</string>
-	<key>LOAD_PFM_ENABLED</key>
-	<string>$(LOAD_PFM_ENABLED)</string>
-	<key>LOG_ENABLED</key>
-	<string>$(LOG_ENABLED)</string>
 </dict>
 </plist>
