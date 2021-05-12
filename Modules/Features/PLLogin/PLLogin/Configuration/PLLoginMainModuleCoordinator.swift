@@ -1,12 +1,13 @@
 import Commons
 import UI
 import Models
+import LoginCommon
 
 public protocol PLLoginMainModuleCoordinatorDelegate: class {
     //TODO: add implementations
 }
 
-public class PLLoginMainModuleCoordinator: ModuleCoordinator {
+public class PLLoginMainModuleCoordinator: ModuleSectionedCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     
@@ -37,5 +38,18 @@ public class PLLoginMainModuleCoordinator: ModuleCoordinator {
             presenter.view = viewController
             return viewController
         }
+    }
+}
+
+extension PLLoginMainModuleCoordinator: LoginModuleCoordinatorProtocol {
+    public func start(_ section: LoginSection) {
+//        switch section {
+//        case .unrememberedLogin:
+//            return self.coordinator.start()
+//        case .loginRemembered:
+//            return self.coordinatorRemembered.start()
+//        case .quickBalance:
+//            break
+//        }
     }
 }

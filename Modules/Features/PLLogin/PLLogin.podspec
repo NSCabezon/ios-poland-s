@@ -25,4 +25,5 @@ Pod::Spec.new do |spec|
   spec.dependency "UI"
   spec.dependency "Repository"
   spec.dependency "CommonUseCase"
+  spec.dependency "LoginCommon"
 end
