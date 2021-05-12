@@ -9,11 +9,11 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 PRODUCT_NAME = Santander
-PRODUCT_BUNDLE_IDENTIFIER = com.isban.bancosantander.es.public
-WIDGET_BUNDLE_IDENTIFIER = com.isban.bancosantander.es.public.widget
-SIRI_BUNDLE_IDENTIFIER = com.isban.bancosantander.es.public.siriintents
-SIRI_UI_BUNDLE_IDENTIFIER = com.isban.bancosantander.es.public.siriintentsui
-PUSH_NOTIFICATION_BUNDLE_IDENTIFIER = com.isban.bancosantander.es.public.pushNotificationService
+PRODUCT_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public
+WIDGET_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.widget
+SIRI_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.siriintents
+SIRI_UI_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.siriintentsui
+PUSH_NOTIFICATION_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.pushNotificationService
 APP_NAME = Santander
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
 EMMA_API_KEY = santanderxqq6LQWwW

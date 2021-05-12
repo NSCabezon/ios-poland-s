@@ -78,6 +78,10 @@ def pl_libraries
   pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
 end
 
+def pl_thirdparty_dependencies
+  pod 'SwiftLint', '0.39.2'
+end
+
 # --------- Target configuration
 target 'Santander' do
   use_frameworks!

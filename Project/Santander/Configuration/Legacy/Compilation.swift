@@ -77,11 +77,11 @@ final class BSANHostProviderEmpty: BSANHostProviderProtocol {
 
 struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
     let publicFilesEnvironments: [PublicFilesEnvironmentDTO] = [
-        PublicFilesEnvironmentDTO("PRE", "https://micrositeoneapp9.santander.pt/filesFF/", false),
-        PublicFilesEnvironmentDTO("QA", "https://serverftp.ciber-es.com/one_app/pt/files_qa/", false),
-        PublicFilesEnvironmentDTO("DEV", "https://serverftp.ciber-es.com/one_app/pt/files_dev/", false),
-        PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pt/files_pre/", false),
-        PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pt/filesFF/", false),
+        PublicFilesEnvironmentDTO("PRE", "https://micrositeoneapp9.santander.pl/filesFF/", false),
+        PublicFilesEnvironmentDTO("QA", "https://serverftp.ciber-es.com/one_app/pl/files_qa/", false),
+        PublicFilesEnvironmentDTO("DEV", "https://serverftp.ciber-es.com/one_app/pl/files_dev/", false),
+        PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false),
+        PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
         PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
         PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true),
     ]

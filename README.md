@@ -24,7 +24,14 @@ $ pod install
 ```
 
 ## Development certificates
+We use fastlane and match to manage development certificates. To install a development certificate:
+
+1. Install fastlane
+2. Execute in poland/Project
+
+```
 TODO
+```
 
 ## Folder structure overview
 ```
@@ -35,6 +42,7 @@ TODO
 │   │   ├── AppDelegate.swift
 │   │   ├── Configuration -> App parametrization
 │   │   ├── Dependencies -> Dependency Injection
+│   │   ├── MicrositeLocalConf -> local version for debugging
 │   │   └── Modifiers -> Core adaptations for country
 │   └── 
 ├── README.md
@@ -101,9 +109,26 @@ We can configure also general iOS environment variables from xcconfig files. For
 TODO
 
 ## Microsite dynamic configuration
-TODO
+The app can be configured with a remote microsite json configuration file. This file can be loaded locally for testing and debugging purposes.
+
+### Local configuration folder
+
+You can find a local copy of microsite configuration files in __Santander/MicrositeLocalConf/__ folder. This configuration files can be modified locally to test app behaviors without changing the actual microsite content.
+
+There are two local configurations that can be selected in test/debug builds from a selector in login screen. The path to these configurations can be found in __PublicFilesHostProvider__ struct.
+
+### Remote microsite URLs
+
+The URL for microsite configuration can change depending on the selected schema. You can set or modify the configuration URLs in __PublicFilesHostProvider__ struct.
 
 # Other tips & tricks
+
+## Demo user
+
+The project has a special user which gives us the ability to use the app without an internet connection. It's very useful when we have to test UI elements without the need for services that can slow down the testing process. In addition we can execute unit tests through this user. Not all of the app's features can be tested through this user
+
+You can add or modify the mocked network responses in __SANPLLibrary__ pod.
+
 ## Updating or modifiying the schemas
 
 If you add a new schema, remember to regenerate the pods workspace:
