@@ -4,7 +4,7 @@ import LoginCommon
 
 public class PLLoginModuleCoordinator: ModuleSectionedCoordinator {
     public weak var navigationController: UINavigationController?
-    private let unrememberdLoginCoordinator: UnrememberedLoginCoordinator
+    //private let unrememberdLoginCoordinator: PLUnrememberedLoginCoordinator
     
     public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
