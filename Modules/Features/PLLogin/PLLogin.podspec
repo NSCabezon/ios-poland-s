@@ -21,6 +21,7 @@ Pod::Spec.new do |spec|
   spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 
   spec.dependency "Commons"
+  spec.dependency "PLCommons"
   spec.dependency "Models"
   spec.dependency "UI"
   spec.dependency "Repository"
