@@ -34,7 +34,7 @@ extension PLLoadingLoginViewCapable {
             title: localized("login_popup_identifiedUser"),
             subtitle: localized("loading_label_moment")
         )
-        let type = LoadingViewType.onDrawer(completion: completion, shakeDelegate: self)
+        let type = LoadingViewType.onScreen(controller: self.associatedLoadingView, completion: completion)
         let info = LoadingInfo(type: type, loadingText: loadingText, placeholders: nil, topInset: nil)
         self.showLoadingWithLoading(info: info)
     }

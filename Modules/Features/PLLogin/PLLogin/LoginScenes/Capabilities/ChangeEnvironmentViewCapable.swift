@@ -6,6 +6,12 @@ import Foundation
 import Commons
 import UI
 
+// TODO: Move this protocol to PLCommons
+public protocol PLCompilationProtocol {
+    var isEnvironmentsAvailable: Bool { get }
+    var isTrustInvalidCertificateEnabled: Bool { get }
+}
+
 protocol ChangeEnvironmentViewCapable {
     var environmentButton: UIButton? { get }
     var dependenciesResolver: DependenciesResolver { get }

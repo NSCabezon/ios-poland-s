@@ -153,7 +153,7 @@ private extension PLUnrememberedLoginViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+        return "" // TODO: integrate greeting
     }
     
     func addKeyboardObserver() {
@@ -168,18 +168,7 @@ private extension PLUnrememberedLoginViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        switch (documentTextField.introducedDocument().isEmpty, passwordTextField.introducedPassword().isEmpty) {
-        case (true, true):
-            showAlert(with: localized("pt_login_error_userAndPassword"), alertType: .failure)
-        case (true, false):
-            showAlert(with: localized("pt_login_error_username"), alertType: .failure)
-        case (false, true):
-            showAlert(with: localized("pt_login_error_password"), alertType: .failure)
-        case (false, false):
-            guard let remember = rememberMeView?.remember() else { return }
-            passwordTextField?.textField?.resignFirstResponder()
-            presenter.login(identification: documentTextField.introducedDocument(), magic: passwordTextField.introducedPassword(), remember: remember)
-        }
+        // TODO
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {

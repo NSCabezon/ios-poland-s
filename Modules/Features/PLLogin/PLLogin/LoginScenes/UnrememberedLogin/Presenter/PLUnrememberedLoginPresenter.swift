@@ -53,3 +53,13 @@ extension PLUnrememberedLoginPresenter: PLUnrememberedLoginPresenterProtocol {
     }
     
 }
+
+extension PLUnrememberedLoginPresenter: PLLoginPresenterLayerProtocol {
+
+    func handle(event: SessionProcessEvent) {
+        // TODO
+    }
+    func willStartSession() {
+        // TODO
+    }
+}
