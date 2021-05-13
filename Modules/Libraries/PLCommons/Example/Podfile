@@ -1,0 +1,6 @@
+use_frameworks!
+target 'PLCommons_Tests' do
+  pod 'PLCommons', :path => '../'
+  
+  
+end
