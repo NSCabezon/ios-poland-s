@@ -1,55 +1,75 @@
 //
-//  PTNetworkProvider.swift
-//  SANPTLibrary
+//  PLNetworkProvider.swift
+//  SANPLLibrary
 //
-//  Created by Luis Escámez Sánchez on 17/03/2021.
+//  Created by Ernesto Fernandez Calles on 11/5/21.
 //
 
 import Foundation
-import SANLibraryV3
 
 public final class PLNetworkProvider {
-//    private let dataProvider: BSANDataProvider
-//    private let networkProvider: NetworkProvider
-//    private var demoNetworkProvider: NetworkProvider
+    private let dataProvider: BSANDataProvider
+    private let networkProvider: NetworkProvider
+    private var demoNetworkProvider: NetworkProvider
+    private var demoInterpreter: DemoUserProtocol
     private var isDemoUser: Bool {
-//        return dataProvider.isDemo()
-        return true
+        return dataProvider.isDemo() && self.demoInterpreter.isDemoModeAvailable
     }
-    
-//    public init(dataProvider: BSANDataProvider, demoInterpreter: DemoUserProtocol) {
-    public init(demoInterpreter: DemoUserProtocol) {
-//        self.dataProvider = dataProvider
-//        self.networkProvider = URLSessionNetworkProvider(dataProvider: dataProvider)
-//        self.demoNetworkProvider = BSANLocalManager(demoInterpreter: demoInterpreter)
+
+    public init(dataProvider: BSANDataProvider, demoInterpreter: DemoUserProtocol, isTrustInvalidCertificateEnabled: Bool) {
+        self.dataProvider = dataProvider
+        self.networkProvider = URLSessionNetworkProvider(dataProvider: dataProvider, isTrustInvalidCertificateEnabled: isTrustInvalidCertificateEnabled)
+        self.demoNetworkProvider = BSANLocalManager(demoInterpreter: demoInterpreter)
+        self.demoInterpreter = demoInterpreter
     }
 }
 
 extension PLNetworkProvider: NetworkProvider {
     public func request<Request, Response>(_ request: Request) -> Result<Response, NetworkProviderError> where Request : NetworkProviderRequest, Response : Decodable {
-//        if !isDemoUser {
-//            return networkProvider.request(request)
-//        } else {
-//            return demoNetworkProvider.request(request)
-//        }
-        return .failure(.other)
+        if !isDemoUser {
+            return networkProvider.request(request)
+        } else {
+            return demoNetworkProvider.request(request)
+        }
     }
     
+    public func loginRequest<Request, Response>(_ request: Request) -> Result<Response, NetworkProviderError> where Request : NetworkProviderRequest, Response : Decodable {
+        if !isDemoUser {
+            return networkProvider.loginRequest(request)
+        } else {
+            return demoNetworkProvider.request(request)
+        }
+    }
+    
+    public func request<Request>(_ request: Request) -> Result<Void, NetworkProviderError> where Request : NetworkProviderRequest {
+        if !isDemoUser {
+            return networkProvider.request(request)
+        } else {
+            return demoNetworkProvider.request(request)
+        }
+    }
+
     public func requestData<Request>(_ request: Request) -> Result<Data, NetworkProviderError> where Request : NetworkProviderRequest {
-//        if !isDemoUser {
-//            return networkProvider.requestData(request)
-//        } else {
-//            return demoNetworkProvider.requestData(request)
-//        }
-        return .failure(.other)
+        if !isDemoUser {
+            return networkProvider.requestData(request)
+        } else {
+            return demoNetworkProvider.requestData(request)
+        }
+    }
+
+    public func requestDataWithHeaders<Request>(_ request: Request) -> Result<NetworkProviderResponseWithHeaders, NetworkProviderError> where Request : NetworkProviderRequest {
+        if !isDemoUser {
+            return networkProvider.requestDataWithHeaders(request)
+        } else {
+            return demoNetworkProvider.requestDataWithHeaders(request)
+        }
     }
     
-    public func requestDataWithHeaders<Request>(_ request: Request) -> Result<NetworkProviderResponseWithHeaders, NetworkProviderError> where Request : NetworkProviderRequest {
-//        if !isDemoUser {
-//            return networkProvider.requestDataWithHeaders(request)
-//        } else {
-//            return demoNetworkProvider.requestDataWithHeaders(request)
-//        }
-        return .failure(.other)
+    public func requestDataWithStatus<Request>(_ request: Request) -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> where Request : NetworkProviderRequest {
+        if !isDemoUser {
+            return networkProvider.requestDataWithStatus(request)
+        } else {
+            return demoNetworkProvider.requestDataWithStatus(request)
+        }
     }
 }

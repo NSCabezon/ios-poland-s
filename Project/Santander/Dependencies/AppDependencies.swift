@@ -30,21 +30,24 @@ final class AppDependencies {
     private lazy var dataRepository: DataRepository = {
         return DataRepositoryBuilder(dependenciesResolver: dependencieEngine).build()
     }()
-//    private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
-//        return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository, appInfo: versionInfo)
-//    }
+    
+    private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
+        return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
+    }
+    
     private lazy var dataProvider: SANLibraryV3.BSANDataProvider = {
         return BSANDataProvider(dataRepository: self.dataRepository, appInfo: self.versionInfo)
     }()
     private var demoInterpreter: DemoUserProtocol {
         let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
-        return DemoUserInterpreter(defaultDemoUser: "12345678Z",
+        return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
                                    demoModeAvailable: demoModeAvailable)
     }
     private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
 
         let hostProvider = PLHostProvider()
-        let networkProvider = PLNetworkProvider(demoInterpreter: demoInterpreter)
+        // TODO: Check value isTrustInvalidCertificateEnabled
+        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
 
         return PLManagersProviderAdapter(hostProvider: hostProvider,
                                          networkProvider: networkProvider,

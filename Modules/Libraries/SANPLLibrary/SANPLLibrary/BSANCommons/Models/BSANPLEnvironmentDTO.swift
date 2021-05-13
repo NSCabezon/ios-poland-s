@@ -1,27 +1,21 @@
+//
+//  BSANPLEnvironmentDTO.swift
+//  SANPLLibrary
+//
+//  Created by Ernesto Fernandez Calles on 10/5/21.
+//
+
 import Foundation
 
 public class BSANPLEnvironmentDTO: Hashable, Codable {
-    
-    public let isHttps: Bool
     public let name: String
     public let urlBase: String
     public let clientId: String
-    public let urlNewRegistration: String
-    
-    public init(isHttps: Bool,
-                name: String,
-                urlBase: String,
-                clientId: String,
-                urlNewRegistration: String) {
-        self.isHttps = isHttps
+
+    public init(name: String, urlBase: String, clientId: String) {
         self.name = name
         self.urlBase = urlBase
         self.clientId = clientId
-        self.urlNewRegistration = urlNewRegistration
-    }
-    
-    public var description: String {
-        return "\(name) : \(urlBase)"
     }
     
     public var hashValue: Int {

@@ -1,8 +1,8 @@
 //
-//  DemoMode.swift
-//  SANPTLibrary
+//  Demo.swift
+//  SANPLLibrary
 //
-//  Created by Luis Escámez Sánchez on 17/03/2021.
+//  Created by Ernesto Fernandez Calles on 11/5/21.
 //
 
 import Foundation

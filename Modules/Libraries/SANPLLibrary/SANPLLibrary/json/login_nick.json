@@ -1,0 +1,27 @@
+{
+    "12345678Z": {
+        "0": {
+            "userId": 33355343,
+            "passwordMaskEnabled": false,
+            "passwordMask": 1048575,
+            "secondFactorData": {
+                "finalState": "NOT_FINAL",
+                "challenges": [
+                    {
+                        "authorizationType": "SMS_CODE",
+                        "value": "24646701"
+                    }
+                ],
+                "defaultChallenge": {
+                    "authorizationType": "SMS_CODE",
+                    "value": "24646701"
+                },
+                "expired": false
+            },
+            "trustedComputerData": {
+                "state": "NOT_ALLOWED",
+                "register": false
+            }
+        }
+    }
+}

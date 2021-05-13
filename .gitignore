@@ -113,3 +113,5 @@ Modules/Features/MBWay/Example/Pods/
 # fastlane specific
 **/fastlane/report.xml
 
+Project/Santander.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+Project/Santander.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist

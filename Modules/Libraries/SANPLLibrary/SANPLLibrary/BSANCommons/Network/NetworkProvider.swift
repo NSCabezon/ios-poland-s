@@ -1,9 +1,11 @@
 //
 //  NetworkProvider.swift
-//  SANPTLibrary
+//  SANPLLibrary
 //
-//  Created by Jose Ignacio de Juan Díaz on 23/12/2020.
+//  Created by Ernesto Fernandez Calles on 10/5/21.
 //
+
+import Foundation
 
 import Foundation
 
@@ -11,8 +13,11 @@ import Foundation
 
 public protocol NetworkProvider {
     func request<Request: NetworkProviderRequest, Response: Decodable>(_ request: Request) -> Result<Response, NetworkProviderError>
+    func loginRequest<Request: NetworkProviderRequest, Response: Decodable>(_ request: Request) -> Result<Response, NetworkProviderError>
+    func request<Request: NetworkProviderRequest>(_ request: Request) -> Result<Void, NetworkProviderError>
     func requestData<Request: NetworkProviderRequest>(_ request: Request) -> Result<Data, NetworkProviderError>
     func requestDataWithHeaders<Request: NetworkProviderRequest>(_ request: Request) -> Result<NetworkProviderResponseWithHeaders, NetworkProviderError>
+    func requestDataWithStatus<Request: NetworkProviderRequest>(_ request: Request) -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
 }
 
 // MARK: - NetworkProviderRequest
@@ -20,7 +25,7 @@ public protocol NetworkProvider {
 public protocol NetworkProviderRequest {
     associatedtype Body: Encodable
     var serviceName: String { get }
-    var localServiceName: PTLocalServiceName { get }
+    var localServiceName: PLLocalServiceName { get }
     var method: NetworkProviderMethod { get }
     var serviceUrl: String { get }
     var headers: [String: String]? { get }
@@ -62,6 +67,8 @@ public enum NetworkProviderError: Error {
     case error(_ error: NetworkProviderResponseError)
     case unauthorized
     case other
+    case noConnection
+    case otpExpired
     
     public func getErrorBody<ErrorDTO: Codable>() -> ErrorDTO? {
         guard let body = self.getErrorBody() else {
@@ -76,6 +83,14 @@ public enum NetworkProviderError: Error {
         }
         return error.code
     }
+    // TODO: Fill
+//    public func getPLErrorMessage() -> String? {
+//        guard case .error(let error) = self,
+//              let data = error.data,
+//              let dto: PLGenericResponseErrorsDTO = try? JSONDecoder().decode(PLGenericResponseErrorsDTO.self, from: data), let errorDescription = dto.errors.first?.errorDescription
+//        else { return nil }
+//        return errorDescription
+//    }
     
     public func getErrorHeaders() -> [AnyHashable: Any]? {
         guard case .error(let error) = self,
@@ -115,4 +130,10 @@ private extension NetworkProviderError {
 public struct NetworkProviderResponseWithHeaders {
     let response: Data
     let headers: [AnyHashable: Any]
+}
+
+public struct NetworkProviderResponseWithStatus {
+    let data: Data?
+    let headers: [AnyHashable: Any]
+    let statusCode: Int
 }
