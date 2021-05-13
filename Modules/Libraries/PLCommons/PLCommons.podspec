@@ -13,7 +13,7 @@ The Poland PLCommons framework.
   s.source           = { :git => 'https://github.com/Jose C. Yebes/PLCommons.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.3'
 
   s.source_files = 'PLCommons/**/*.{swift}'
   
