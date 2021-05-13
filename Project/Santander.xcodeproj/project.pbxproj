@@ -139,7 +139,6 @@
 				66BC8A55263FED9F00654CC5 /* Dependencies */,
 				66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */,
 				42BF471426495D3400136E8D /* HostModule.swift */,
-				42BF484326497C9200136E8D /* BSANEnvironments.swift */,
 				66B3CFB22639C6C8000AAD0F /* Assets.xcassets */,
 				66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */,
 				66B3CFB72639C6C8000AAD0F /* Info.plist */,
@@ -184,6 +183,7 @@
 		66BC8C8B26407C3400654CC5 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
+				42BF484326497C9200136E8D /* BSANEnvironments.swift */,
 				66BC8C9026407DD300654CC5 /* HostsModule.swift */,
 				66BC8C8D26407CD300654CC5 /* Compilation.swift */,
 				66BC90602641260400654CC5 /* TargetProvider.swift */,

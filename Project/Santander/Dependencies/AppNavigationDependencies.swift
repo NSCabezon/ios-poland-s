@@ -23,7 +23,7 @@ final class AppNavigationDependencies {
 
         dependenciesEngine.register(for: LoginModuleCoordinatorProtocol.self) { resolver in
 
-            return PLLoginMainModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+            return PLLoginModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
     }
 }

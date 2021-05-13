@@ -10,7 +10,6 @@ final class PLHostProvider {
 }
 
 // MARK: - Private Methods
-
 extension PLHostProvider: PLHostProviderProtocol {
     func getEnvironments() -> [BSANPLEnvironmentDTO] {
         return [BSANEnvironments.environmentPre,
