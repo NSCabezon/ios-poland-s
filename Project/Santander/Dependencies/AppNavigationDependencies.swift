@@ -6,7 +6,7 @@
 //
 
 import LoginCommon
-//import PLLogin // TODO: uncomment when module is created
+import PLLogin
 import Commons
 import RetailLegacy
 
@@ -18,10 +18,12 @@ final class AppNavigationDependencies {
         self.drawer = drawer
         self.dependenciesEngine = dependenciesEngine
     }
-    
+
     func registerDependencies() {
-//        dependenciesEngine.register(for: LoginModuleCoordinatorProtocol.self) { dependenciesResolver in
-//            return LoginPLModuleCoordinator(dependenciesResolver: dependenciesResolver, navigationController: drawer.currentRootViewController as? UINavigationController)
-//        }
+
+        dependenciesEngine.register(for: LoginModuleCoordinatorProtocol.self) { resolver in
+
+            return PLLoginMainModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
     }
 }

@@ -12,6 +12,9 @@ import ESCommons
 import RetailLegacy
 import SANLibraryV3
 import Repository
+import SANLegacyLibrary
+import SANPLLibrary
+import PLLegacyAdapter
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -19,6 +22,7 @@ final class AppDependencies {
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
     private let compilation: CompilationProtocol
+    private let appModifiers: AppModifiers
     
     // MARK: - Dependecies definitions
     
@@ -29,15 +33,24 @@ final class AppDependencies {
 //    private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
 //        return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository, appInfo: versionInfo)
 //    }
-//    private lazy var managersProviderAdapater: PLManagersProviderAdapter = {
-//        let hostProvider = PLHostProvider()
-//        return PLManagersProviderAdapater(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
-//
-//    }()
     private lazy var dataProvider: SANLibraryV3.BSANDataProvider = {
-        return BSANDataProvider(dataRepository: dataRepository, appInfo: versionInfo)
+        return BSANDataProvider(dataRepository: self.dataRepository, appInfo: self.versionInfo)
     }()
-    
+    private var demoInterpreter: DemoUserProtocol {
+        let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
+        return DemoUserInterpreter(defaultDemoUser: "12345678Z",
+                                   demoModeAvailable: demoModeAvailable)
+    }
+    private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
+
+        let hostProvider = PLHostProvider()
+        let networkProvider = PLNetworkProvider(demoInterpreter: demoInterpreter)
+
+        return PLManagersProviderAdapter(hostProvider: hostProvider,
+                                         networkProvider: networkProvider,
+                                         demoInterpreter: demoInterpreter)
+
+    }()
     
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
@@ -57,7 +70,7 @@ final class AppDependencies {
         )
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
-        //appModifiers = AppModifiers(dependenciesEngine: dependencieEngine)
+        appModifiers = AppModifiers(dependenciesEngine: dependencieEngine)
         registerDependencies()
     }
 }
@@ -72,7 +85,7 @@ private extension AppDependencies {
             return self.dataRepository
         }
         self.dependencieEngine.register(for: BSANDataProvider.self) { _ in
-            return BSANDataProvider(dataRepository: self.dataRepository, appInfo: self.versionInfo)
+            return self.dataProvider
         }
         self.dependencieEngine.register(for: LocalAppConfig.self) { _ in
             return self.localAppConfig
@@ -90,12 +103,12 @@ private extension AppDependencies {
                                       bsanDataProvider: resolver.resolve(for: BSANDataProvider.self))
         }
         // Data layer and country data adapters
-//        self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
-//            return self.managersProviderAdapter
-//        }
-//        dependencieEngine.register(for: BSANDataProviderProtocol.self) { _ in
-//            return self.dataProvider
-//        }
+        self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
+            return self.managersProviderAdapter
+        }
+        self.dependencieEngine.register(for: BSANDataProviderProtocol.self) { _ in
+            return self.dataProvider
+        }
 //        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
 //            return self.managersProviderAdapater.getPLManagerProvider()
 //        }
@@ -114,6 +127,15 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: SalesForceHandlerProtocol.self) { _ in
             return EmptySalesForceHandler()
+        }
+        self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
+            return EmptySiriAssistant()
+        }
+        self.dependencieEngine.register(for: TealiumCompilationProtocol.self) { _ in
+            return EmptyTealiumCompilation()
+        }
+        self.dependencieEngine.register(for: SharedDependenciesDelegate.self) { _ in
+            return self
         }
     }
 }
