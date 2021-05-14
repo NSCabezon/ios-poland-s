@@ -7,6 +7,94 @@
 
 import Foundation
 
-protocol GlobalPositionDataSource {
-    func getAccounts() throws -> Result<GlobalPositionDTO, NetworkProviderError>
+protocol GlobalPositionDataSourceProtocol {
+    func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError>
+    func getGlobalPosition(_ parameters: GlobalPositionParameters?) throws -> Result<GlobalPositionDTO, NetworkProviderError>
+}
+
+private extension GlobalPositionDataSource {
+    func getBaseUrl() -> String? {
+        return try? self.dataProvider.getEnvironment().urlBase
+    }
+}
+
+final class GlobalPositionDataSource {
+    private enum GlobalPositionServiceType: String {
+        case globalPosition = "/gps"
+    }
+    
+    private let networkProvider: NetworkProvider
+    private let dataProvider: BSANDataProvider
+    private let basePath = "/api/ceke"
+    private var headers: [String: String] = [:]
+    private var queryParams: [String: String]?
+    
+    init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
+        self.networkProvider = networkProvider
+        self.dataProvider = dataProvider
+    }
+}
+
+extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
+    func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
+        try getGlobalPosition(nil)
+    }
+    
+    func getGlobalPosition(_ parameters: GlobalPositionParameters?) throws -> Result<GlobalPositionDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let serviceName = GlobalPositionServiceType.globalPosition.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        if let filter = parameters?.filterBy {
+            self.queryParams = ["types": filter.rawValue]
+        }
+        let result: Result<GlobalPositionDTO, NetworkProviderError> = self.networkProvider.request(GlobalPositionRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .get,
+                                                                                                                headers: self.headers,
+                                                                                                                queryParams: self.queryParams,
+                                                                                                                contentType: .urlEncoded,
+                                                                                                                localServiceName: .globalPosition)
+        )
+        return result
+    }
+}
+
+private struct GlobalPositionRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: String]?
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+    
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: Encodable? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .form,
+         headers: [String: String]?,
+         queryParams: [String: String]? = nil,
+         contentType: NetworkProviderContentType,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.bodyEncoding = bodyEncoding
+        self.headers = headers
+        self.queryParams = queryParams
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
+    }
 }
