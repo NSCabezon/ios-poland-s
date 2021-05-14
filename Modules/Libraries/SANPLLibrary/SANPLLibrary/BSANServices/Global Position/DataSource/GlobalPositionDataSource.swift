@@ -9,7 +9,7 @@ import Foundation
 
 protocol GlobalPositionDataSourceProtocol {
     func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError>
-    func getGlobalPosition(_ parameters: GlobalPositionParameters?) throws -> Result<GlobalPositionDTO, NetworkProviderError>
+    func getGlobalPosition(_ parameters: GlobalPositionParameters) throws -> Result<GlobalPositionDTO, NetworkProviderError>
 }
 
 private extension GlobalPositionDataSource {
@@ -37,19 +37,12 @@ final class GlobalPositionDataSource {
 
 extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
     func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        try getGlobalPosition(nil)
-    }
-    
-    func getGlobalPosition(_ parameters: GlobalPositionParameters?) throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         
         let serviceName = GlobalPositionServiceType.globalPosition.rawValue
         let absoluteUrl = baseUrl + self.basePath
-        if let filter = parameters?.filterBy {
-            self.queryParams = ["types": filter.rawValue]
-        }
         let result: Result<GlobalPositionDTO, NetworkProviderError> = self.networkProvider.request(GlobalPositionRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
@@ -58,6 +51,12 @@ extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
                                                                                                                 contentType: .urlEncoded,
                                                                                                                 localServiceName: .globalPosition)
         )
+        return result
+    }
+    
+    func getGlobalPosition(_ parameters: GlobalPositionParameters) throws -> Result<GlobalPositionDTO, NetworkProviderError> {
+        self.queryParams = ["types": parameters.filterBy.rawValue]
+        let result = try getGlobalPosition()
         return result
     }
 }
