@@ -111,7 +111,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureBackground() {
-        //backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
