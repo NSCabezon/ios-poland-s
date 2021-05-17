@@ -3,14 +3,14 @@ import UI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetPassword()
     func resetForm()
 }
 
-final class PLUnrememberedLoginViewController: UIViewController {
+final class PLUnrememberedLoginIdViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
-    private let presenter: PLUnrememberedLoginPresenterProtocol
+    private let presenter: PLUnrememberedLoginIdPresenterProtocol
     
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
@@ -24,7 +24,7 @@ final class PLUnrememberedLoginViewController: UIViewController {
     @IBOutlet weak var environmentButton: UIButton?
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
-         presenter: PLUnrememberedLoginPresenterProtocol) {
+         presenter: PLUnrememberedLoginIdPresenterProtocol) {
         self.presenter = presenter
         self.dependenciesResolver = dependenciesResolver
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -61,7 +61,7 @@ final class PLUnrememberedLoginViewController: UIViewController {
     }
 }
 
-extension PLUnrememberedLoginViewController: PLUnrememberedLoginViewProtocol {
+extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
@@ -85,7 +85,7 @@ extension PLUnrememberedLoginViewController: PLUnrememberedLoginViewProtocol {
     }
 }
 
-private extension PLUnrememberedLoginViewController {
+private extension PLUnrememberedLoginIdViewController {
     func isKeyboardDismisserAllowed() -> Bool {
         return parent == nil || parent is UINavigationController
     }
@@ -201,13 +201,13 @@ private extension PLUnrememberedLoginViewController {
     }
 }
 
-extension PLUnrememberedLoginViewController: PasswordPTTextFieldDelegate {
+extension PLUnrememberedLoginIdViewController: PasswordPTTextFieldDelegate {
     public func enterDidPressed() {
         self.loginButtonDidPressed()
     }
 }
 
-extension PLUnrememberedLoginViewController: RememberMeViewDelegate {
+extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
     }

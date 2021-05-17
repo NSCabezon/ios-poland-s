@@ -1,5 +1,5 @@
 //
-//  PLUnrememberedLoginPresenter.swift
+//  PLUnrememberedLoginIdPresenter.swift
 //  PLLogin
 
 import DomainCommon
@@ -8,8 +8,8 @@ import Models
 import LoginCommon
 import SANPLLibrary
 
-protocol PLUnrememberedLoginPresenterProtocol {
-    var view: PLUnrememberedLoginViewProtocol? { get set }
+protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
+    var view: PLUnrememberedLoginIdViewProtocol? { get set }
     var loginManager: PLLoginManagerProtocol? { get set }
     func viewDidLoad()
     func viewWillAppear()
@@ -18,20 +18,17 @@ protocol PLUnrememberedLoginPresenterProtocol {
     func didSelectChooseEnvironment()
 }
 
-final class PLUnrememberedLoginPresenter {
-    weak var view: PLUnrememberedLoginViewProtocol?
+final class PLUnrememberedLoginIdPresenter {
+    weak var view: PLUnrememberedLoginIdViewProtocol?
     weak var loginManager: PLLoginManagerProtocol?
-    let dependenciesResolver: DependenciesResolver
-    var coordinatorDelegate: LoginCoordinatorDelegate {
-        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
-    }
+    internal let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
-            self.dependenciesResolver = dependenciesResolver
+        self.dependenciesResolver = dependenciesResolver
     }
 }
 
-extension PLUnrememberedLoginPresenter: PLUnrememberedLoginPresenterProtocol {
+extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
     func viewDidLoad() {
         // TODO
     }
@@ -51,10 +48,9 @@ extension PLUnrememberedLoginPresenter: PLUnrememberedLoginPresenterProtocol {
     func didSelectChooseEnvironment() {
         // TODO
     }
-    
 }
 
-extension PLUnrememberedLoginPresenter: PLLoginPresenterLayerProtocol {
+extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
 
     func handle(event: SessionProcessEvent) {
         // TODO

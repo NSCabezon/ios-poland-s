@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLUnrememberedLoginViewController" customModule="PLLogin" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLUnrememberedLoginIdViewController" customModule="PLLogin" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundImageView" destination="MFm-pN-t0c" id="7sD-oA-BQB"/>
                 <outlet property="bottonDistance" destination="0Tv-Ip-dCx" id="pwS-Ty-l4h"/>
