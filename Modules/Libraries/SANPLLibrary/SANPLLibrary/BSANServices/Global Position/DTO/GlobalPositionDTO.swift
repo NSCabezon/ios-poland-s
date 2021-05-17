@@ -7,6 +7,7 @@
 
 import Foundation
 
-struct GlobalPositionDTO {
-    let accounts: AccountsDTO
+public struct GlobalPositionDTO: Codable {
+    public let accounts: [AccountDTO]?
+    public let cards: [CardDTO]?
 }
