@@ -135,7 +135,7 @@ private extension PLUnrememberedLoginIdViewController {
         loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
         restoreButton.backgroundColor = UIColor.clear
-        restoreButton.setTitle(localized("pt_login_button_newRegistrationOr").plainText, for: .normal)
+        restoreButton.setTitle(localized("pl_login_button_newRegistrationOr").plainText, for: .normal)
         restoreButton.titleLabel?.font = UIFont.santander(family: .text, type: .regular, size: 14)
         restoreButton.titleLabel?.textColor = UIColor.Legacy.uiWhite
         restoreButton.onTouchAction = { [weak self] _ in
@@ -153,7 +153,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func regardNow() -> String {
-        return "" // TODO: integrate greeting
+        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
     }
     
     func addKeyboardObserver() {
