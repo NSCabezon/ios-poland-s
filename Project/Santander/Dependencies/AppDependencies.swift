@@ -15,6 +15,7 @@ import Repository
 import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
+import PLCommons
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -22,6 +23,7 @@ final class AppDependencies {
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
     private let compilation: CompilationProtocol
+    private let plCompilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     
     // MARK: - Dependecies definitions
@@ -68,6 +70,7 @@ final class AppDependencies {
     init() {
         self.dependencieEngine = DependenciesDefault()
         compilation = Compilation()
+        plCompilation = PLCompilation()
         versionInfo = VersionInfoDTO(
             bundleIdentifier: Bundle.main.bundleIdentifier ?? "",
             versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -125,6 +128,9 @@ private extension AppDependencies {
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
             return self.compilation
+        }
+        dependencieEngine.register(for: PLCompilationProtocol.self) { _ in
+            return self.plCompilation
         }
         self.dependencieEngine.register(for: TrusteerRepositoryProtocol.self) { _ in
             return EmptyTrusteerRepository()
