@@ -57,7 +57,6 @@ private extension URLSessionNetworkProvider {
         }
         urlRequest.addValue("application/\(request.contentType.rawValue)", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Santander PL ONE App", forHTTPHeaderField: "User-Agent")
-        // Do we have to include all this header fields??
         let traceUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
         let spanUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").prefix(16).lowercased()
         urlRequest.addValue(traceUUID, forHTTPHeaderField: "X-B3-TraceId")
