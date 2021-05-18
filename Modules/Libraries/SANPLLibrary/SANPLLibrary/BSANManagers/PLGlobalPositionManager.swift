@@ -10,6 +10,7 @@ import Foundation
 public protocol PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, Error>
     func getAccounts() throws -> Result<GlobalPositionDTO, Error>
+    func getCards() throws -> Result<GlobalPositionDTO, Error>
 }
 
 final class PLGlobalPositionManager {
@@ -37,6 +38,16 @@ extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     
     func getAccounts() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
+        switch result {
+        case .success(let data):
+            return .success(data)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getCards() throws -> Result<GlobalPositionDTO, Error> {
+        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
         switch result {
         case .success(let data):
             return .success(data)
