@@ -34,7 +34,21 @@ public class BSANDataProvider {
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
     
+    public func setDemoMode(_ isDemo: Bool, _ demoUser: String?) {
+        if isDemo, let demoUser = demoUser {
+            objc_sync_enter(dataRepository)
+            dataRepository.store(DemoMode(demoUser))
+            objc_sync_exit(dataRepository)
+        } else {
+            dataRepository.remove(DemoMode.self)
+        }
+    }
+    
     public func isDemo() -> Bool {
         return dataRepository.get(DemoMode.self) != nil
+    }
+    
+    public func getDemoMode() -> DemoMode? {
+        return dataRepository.get(DemoMode.self)
     }
 }
