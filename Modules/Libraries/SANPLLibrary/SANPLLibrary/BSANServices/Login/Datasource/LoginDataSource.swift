@@ -9,6 +9,7 @@ import Foundation
 
 protocol LoginDataSourceProtocol {
     func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, NetworkProviderError>
+    func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -19,7 +20,7 @@ private extension LoginDataSource {
 
 class LoginDataSource: LoginDataSourceProtocol {
     
-    private let loginNickPath = "/api/as/login"
+    private let loginNickAndAliasPath = "/api/as/login"
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
@@ -30,6 +31,7 @@ class LoginDataSource: LoginDataSourceProtocol {
     
     private enum LoginServiceType: String {
         case nick = "/nick"
+        case alias = "/alias"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -42,15 +44,33 @@ class LoginDataSource: LoginDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
         
-        let path = self.basePath + self.loginNickPath
+        let path = self.basePath + self.loginNickAndAliasPath
         let absoluteUrl = baseUrl + path
         let serviceName =  LoginServiceType.nick.rawValue
         let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.loginRequest(LoginRequest(serviceName: serviceName,
                                                                                                             serviceUrl: absoluteUrl,
-                                                                                                            method: .get,
+                                                                                                            method: .post,
                                                                                                             body: body, headers: self.headers,
                                                                                                             contentType: .urlEncoded,
-                                                                                                            localServiceName: .loginNick)
+                                                                                                            localServiceName: .loginNickAndAlias)
+        )
+        return result
+    }
+    
+    func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, NetworkProviderError> {
+        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let path = self.basePath + self.loginNickAndAliasPath
+        let absoluteUrl = baseUrl + path
+        let serviceName =  LoginServiceType.alias.rawValue
+        let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.loginRequest(LoginRequest(serviceName: serviceName,
+                                                                                                            serviceUrl: absoluteUrl,
+                                                                                                            method: .post,
+                                                                                                            body: body, headers: self.headers,
+                                                                                                            contentType: .urlEncoded,
+                                                                                                            localServiceName: .loginNickAndAlias)
         )
         return result
     }
