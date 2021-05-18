@@ -91,18 +91,6 @@ private extension URLSessionNetworkProvider {
         return result
     }
     
-//    func executeLoginUrlRequest(_ urlRequest: URLRequest) -> Result<Data, NetworkProviderError> {
-//        let semaphore = DispatchSemaphore(value: 0)
-//        var result: Result<Data, NetworkProviderError> = .failure(NetworkProviderError.other)
-//        self.urlSession.dataTask(with: urlRequest) { [weak self] data, response, error in
-//            guard let self = self else { return }
-//            result = self.checkLoginResponse(data, response, error)
-//            semaphore.signal()
-//        }.resume()
-//        semaphore.wait()
-//        return result
-//    }
-    
     func checkResponse(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Result<Data, NetworkProviderError> {
         guard let httpResponse = response as? HTTPURLResponse else {
             return .failure(NetworkProviderError.noConnection)
@@ -173,31 +161,6 @@ private extension URLSessionNetworkProvider {
         }
     }
     
-//    func checkLoginResponse(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Result<Data, NetworkProviderError> {
-//        guard let httpResponse = response as? HTTPURLResponse else {
-//            return .failure(NetworkProviderError.noConnection)
-//        }
-//        let statusCode = httpResponse.statusCode
-//        switch httpResponse.statusCode {
-//        case 202:
-//            let error = NetworkProviderResponseError(code: statusCode, data: data, headerFields: httpResponse.allHeaderFields, error: nil)
-//            return .failure(NetworkProviderError.error(error))
-//        case 200...299:
-//            guard let data = data else {
-//                return .failure(NetworkProviderError.other)
-//            }
-//            return .success(data)
-//        case 401:
-//            return .failure(NetworkProviderError.unauthorized)
-//        default:
-//            let error = NetworkProviderResponseError(code: statusCode,
-//                                                data: data,
-//                                                headerFields: httpResponse.allHeaderFields,
-//                                                error: error)
-//            return .failure(NetworkProviderError.error(error))
-//        }
-//    }
-    
     func executeUrlRequestWithHeaders(_ urlRequest: URLRequest) -> Result<NetworkProviderResponseWithHeaders, NetworkProviderError> {
         let semaphore = DispatchSemaphore(value: 0)
         var result: Result<NetworkProviderResponseWithHeaders, NetworkProviderError> = .failure(NetworkProviderError.other)
@@ -243,11 +206,6 @@ extension URLSessionNetworkProvider: NetworkProvider {
         return self.checkRequestDataResponse(response)
     }
     
-//    public func loginRequest<Request: NetworkProviderRequest, Response: Decodable>(_ request: Request) -> Result<Response, NetworkProviderError> {
-//        let response = self.loginRequestData(request)
-//        return self.checkRequestDataResponse(response)
-//    }
-    
     public func request<Request: NetworkProviderRequest>(_ request: Request) -> Result<Void, NetworkProviderError> {
         let response = self.requestData(request)
         switch response {
@@ -269,18 +227,6 @@ extension URLSessionNetworkProvider: NetworkProvider {
             return .failure(.other)
         }
     }
-    
-//    public func loginRequestData<Request: NetworkProviderRequest>(_ request: Request) -> Result<Data, NetworkProviderError> {
-//        do {
-//            let urlRequest = try self.createRequest(request)
-//            let response = self.executeLoginUrlRequest(urlRequest)
-//            return response
-//        } catch let error as NetworkProviderError {
-//            return .failure(error)
-//        } catch {
-//            return .failure(.other)
-//        }
-//    }
     
     public func requestDataWithHeaders<Request: NetworkProviderRequest>(_ request: Request) -> Result<NetworkProviderResponseWithHeaders, NetworkProviderError> {
         do {
