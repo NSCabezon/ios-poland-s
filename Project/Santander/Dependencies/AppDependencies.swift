@@ -49,12 +49,13 @@ final class AppDependencies {
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
 
-        return PLManagersProviderAdapter(hostProvider: hostProvider,
+        return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
+                                         hostProvider: hostProvider,
                                          networkProvider: networkProvider,
-                                         demoInterpreter: demoInterpreter)
+                                         demoInterpreter: self.demoInterpreter)
 
     }()
-    
+
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
@@ -115,9 +116,12 @@ private extension AppDependencies {
 //        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
 //            return self.managersProviderAdapater.getPLManagerProvider()
 //        }
-//        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
-//            return self.managersProviderAdapter
-//        }
+        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
+            return self.managersProviderAdapter
+        }
+        dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
+            return self.managersProviderAdapter
+        }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
             return self.compilation
