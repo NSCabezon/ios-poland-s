@@ -17,15 +17,12 @@ public class BSANPLEnvironmentDTO: Hashable, Codable {
         self.urlBase = urlBase
         self.clientId = clientId
     }
-    
-    public var hashValue: Int {
-        if let hash = Int(name) {
-            return hash
-        }
-        return 0
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name)
     }
     
     public static func ==(lhs: BSANPLEnvironmentDTO, rhs: BSANPLEnvironmentDTO) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.hashValue == rhs.hashValue
     }
 }
