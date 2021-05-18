@@ -33,10 +33,8 @@ final class GlobalPositionDataSource {
         self.networkProvider = networkProvider
         self.dataProvider = dataProvider
     }
-}
-
-extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
-    func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
+    
+    private func performGetGlobalPosition() -> Result<GlobalPositionDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
@@ -51,13 +49,20 @@ extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
                                                                                                                 contentType: .urlEncoded,
                                                                                                                 localServiceName: .globalPosition)
         )
+        return result
+    }
+}
+
+extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
+    func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         self.queryParams = nil
+        let result = performGetGlobalPosition()
         return result
     }
     
     func getGlobalPosition(_ parameters: GlobalPositionParameters) throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         self.queryParams = ["types": parameters.filterBy.rawValue]
-        let result = try getGlobalPosition()
+        let result = performGetGlobalPosition()
         return result
     }
 }
