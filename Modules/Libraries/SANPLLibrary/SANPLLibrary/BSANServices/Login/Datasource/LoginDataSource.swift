@@ -9,6 +9,7 @@ import Foundation
 
 protocol LoginDataSourceProtocol {
     func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, NetworkProviderError>
+    func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -20,6 +21,7 @@ private extension LoginDataSource {
 class LoginDataSource: LoginDataSourceProtocol {
     
     private let loginNickPath = "/api/as/login"
+    private let loginPubKeyPath = "/api/as/pub_key"
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
@@ -30,6 +32,7 @@ class LoginDataSource: LoginDataSourceProtocol {
     
     private enum LoginServiceType: String {
         case nick = "/nick"
+        case pubKey = "/pubKey"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -49,6 +52,24 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                             serviceUrl: absoluteUrl,
                                                                                                             method: .get,
                                                                                                             body: body, headers: self.headers,
+                                                                                                            contentType: .urlEncoded,
+                                                                                                            localServiceName: .loginNick)
+        )
+        return result
+    }
+    
+    func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let path = self.basePath + self.loginPubKeyPath
+        let absoluteUrl = baseUrl + path
+        let serviceName =  LoginServiceType.pubKey.rawValue
+        let result: Result<PubKeyDTO, NetworkProviderError> = self.networkProvider.loginRequest(LoginRequest(serviceName: serviceName,
+                                                                                                            serviceUrl: absoluteUrl,
+                                                                                                            method: .get,
+                                                                                                            headers: self.headers,
                                                                                                             contentType: .urlEncoded,
                                                                                                             localServiceName: .loginNick)
         )

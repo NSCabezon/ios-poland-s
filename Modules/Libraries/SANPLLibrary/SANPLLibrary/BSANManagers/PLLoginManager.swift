@@ -9,6 +9,7 @@ import Foundation
 
 public protocol PLLoginManagerProtocol {
     func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error>
+    func getPubKey() throws -> Result<PubKeyDTO, Error>
 }
 
 final class PLLoginManager {
@@ -26,6 +27,16 @@ final class PLLoginManager {
 extension PLLoginManager: PLLoginManagerProtocol {
     func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error> {
         let result = try loginDataSource.doLoginWithNick(parameters)
+        switch result {
+        case .success(let data):
+            return .success(data)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getPubKey() throws -> Result<PubKeyDTO, Error> {
+        let result = try loginDataSource.getPubKey()
         switch result {
         case .success(let data):
             return .success(data)

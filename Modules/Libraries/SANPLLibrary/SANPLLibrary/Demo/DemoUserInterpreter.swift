@@ -41,4 +41,5 @@ public enum PLLocalAnswerType: Int {
 
 public enum PLLocalServiceName: String {
     case loginNick = "login_nick"
+    case pubKey = "pub_key"
 }
