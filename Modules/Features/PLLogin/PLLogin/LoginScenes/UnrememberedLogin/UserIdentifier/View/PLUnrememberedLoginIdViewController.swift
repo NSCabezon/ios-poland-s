@@ -4,7 +4,6 @@ import Commons
 import IQKeyboardManagerSwift
 
 protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
-    func resetPassword()
     func resetForm()
 }
 
@@ -16,10 +15,8 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: DocumentPTTextField!
-    @IBOutlet private weak var passwordTextField: PasswordPTTextField!
     @IBOutlet private weak var rememberMeView: RememberMeView!
     @IBOutlet private weak var loginButton: UIButton!
-    @IBOutlet private weak var restoreButton: ResponsiveStateButton!
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
 
@@ -67,12 +64,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
-    func resetPassword() {
-        self.passwordTextField?.reset()
-    }
-    
     func resetForm() {
-        self.passwordTextField?.reset()
         self.documentTextField?.setText("")
     }
     
@@ -116,8 +108,6 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureTextFields() {
-        documentTextField.setReturnAction { [weak self] in self?.passwordTextField?.becomeResponder() }
-        passwordTextField.delegate = self
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
     
@@ -134,22 +124,12 @@ private extension PLUnrememberedLoginIdViewController {
         loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
         loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        restoreButton.backgroundColor = UIColor.clear
-        restoreButton.setTitle(localized("pl_login_button_newRegistrationOr").plainText, for: .normal)
-        restoreButton.titleLabel?.font = UIFont.santander(family: .text, type: .regular, size: 14)
-        restoreButton.titleLabel?.textColor = UIColor.Legacy.uiWhite
-        restoreButton.onTouchAction = { [weak self] _ in
-            self?.recoverPasswordOrNewRegistration()
-        }
     }
     
     func setAccessibility() {
         documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        passwordTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextPassword.rawValue
-        passwordTextField.showBackView?.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEyeOpen.rawValue
         rememberMeView.checkButton?.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnCheck.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
-        restoreButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnLostKey.rawValue
     }
     
     func regardNow() -> String {
