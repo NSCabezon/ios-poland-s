@@ -33,14 +33,6 @@ extension PLNetworkProvider: NetworkProvider {
         }
     }
     
-    public func loginRequest<Request, Response>(_ request: Request) -> Result<Response, NetworkProviderError> where Request : NetworkProviderRequest, Response : Decodable {
-        if !isDemoUser {
-            return networkProvider.loginRequest(request)
-        } else {
-            return demoNetworkProvider.request(request)
-        }
-    }
-    
     public func request<Request>(_ request: Request) -> Result<Void, NetworkProviderError> where Request : NetworkProviderRequest {
         if !isDemoUser {
             return networkProvider.request(request)
