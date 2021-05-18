@@ -30,7 +30,6 @@ public class BSANDataProvider {
     
     // TODO: Fill with AuthModel
     public func getAuthCredentials() throws -> String {
-        return ""
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
     

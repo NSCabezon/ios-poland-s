@@ -45,24 +45,25 @@ class LoginDataSource: LoginDataSourceProtocol {
         let path = self.basePath + self.loginNickPath
         let absoluteUrl = baseUrl + path
         let serviceName =  LoginServiceType.nick.rawValue
-        let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.loginRequest(LoginRequest(serviceName: serviceName,
-                                                                                                            serviceUrl: absoluteUrl,
-                                                                                                            method: .get,
-                                                                                                            body: body, headers: self.headers,
-                                                                                                            contentType: .urlEncoded,
-                                                                                                            localServiceName: .loginNick)
-        )
+        let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.request(LoginRequest(serviceName: serviceName,
+                                                                                                       serviceUrl: absoluteUrl,
+                                                                                                       method: .post,
+                                                                                                       body: body,
+                                                                                                       jsonBody: parameters,
+                                                                                                       headers: self.headers,
+                                                                                                       localServiceName: .loginNick))
         return result
     }
 }
 
 private struct LoginRequest: NetworkProviderRequest {
+
     let serviceName: String
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
     let queryParams: [String: String]? = nil
-    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let jsonBody: LoginNickParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
     let contentType: NetworkProviderContentType
@@ -73,16 +74,17 @@ private struct LoginRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
-         jsonBody: Encodable? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .form,
+         jsonBody: LoginNickParameters? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
         self.formData = body
+        self.jsonBody = jsonBody
         self.bodyEncoding = bodyEncoding
         self.headers = headers
         self.contentType = contentType

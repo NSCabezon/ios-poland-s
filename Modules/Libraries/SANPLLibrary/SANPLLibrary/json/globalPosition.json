@@ -1,0 +1,277 @@
+{
+    "12345678Z": {
+        "0": {
+            "accounts": [
+                {
+                    "number": "32109013620000000036057901",
+                    "accountId": {
+                        "id": "36057901",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Konto Select",
+                        "userDefined": "Main account"
+                    },
+                    "role": "OWNER",
+                    "type": "PERSONAL",
+                    "balance": {
+                        "value": -7658.14,
+                        "currencyCode": "PLN"
+                    },
+                    "availableFunds": {
+                        "value": 341.86,
+                        "currencyCode": "PLN"
+                    },
+                    "withholdingBalance": {
+                        "value": -7658.14,
+                        "currencyCode": "PLN"
+                    },
+                    "overDraftLimit": {
+                        "value": 8000,
+                        "currencyCode": "PLN"
+                    },
+                    "lastUpdate": "2021-03-31",
+                    "bankId": 0,
+                    "defaultForPayments": true
+                },
+                {
+                    "number": "90109013620000000036732559",
+                    "accountId": {
+                        "id": "36732559",
+                        "systemId": 3
+                    },
+                    "currencyCode": "EUR",
+                    "name": {
+                        "description": "Konto24 walutowe w EUR",
+                        "userDefined": "Currency account"
+                    },
+                    "role": "OWNER",
+                    "type": "CURRENCY",
+                    "balance": {
+                        "value": 606.73,
+                        "currencyCode": "EUR"
+                    },
+                    "availableFunds": {
+                        "value": 606.73,
+                        "currencyCode": "EUR"
+                    },
+                    "withholdingBalance": {
+                        "value": 0,
+                        "currencyCode": "EUR"
+                    },
+                    "overDraftLimit": {
+                        "value": 0,
+                        "currencyCode": "EUR"
+                    },
+                    "lastUpdate": "2020-04-01",
+                    "bankId": 0,
+                    "defaultForPayments": false
+                },
+                {
+                    "number": "PL75114020040000310280155746",
+                    "accountId": {
+                        "id": "13207",
+                        "systemId": 11
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "EKONTO",
+                        "userDefined": "Account from other bank"
+                    },
+                    "role": "OWNER",
+                    "type": "OTHER",
+                    "balance": {
+                        "value": 12.14,
+                        "currencyCode": "PLN"
+                    },
+                    "availableFunds": {
+                        "value": 12.12,
+                        "currencyCode": "PLN"
+                    },
+                    "withholdingBalance": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    },
+                    "overDraftLimit": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    },
+                    "lastUpdate": "2021-04-11",
+                    "bankId": 86,
+                    "defaultForPayments": false
+                },
+                {
+                    "number": "29109014894000000112257854",
+                    "accountId": {
+                        "id": "1537637",
+                        "systemId": 2
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Visa Platinum",
+                        "userDefined": "Visa card"
+                    },
+                    "role": "OWNER",
+                    "type": "CREDIT_CARD",
+                    "balance": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    },
+                    "availableFunds": {
+                        "value": 20000,
+                        "currencyCode": "PLN"
+                    },
+                    "withholdingBalance": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    },
+                    "overDraftLimit": {
+                        "value": 20000,
+                        "currencyCode": "PLN"
+                    },
+                    "lastUpdate": "2019-03-01",
+                    "bankId": 0,
+                    "defaultForPayments": false
+                }
+            ],
+            "cards": [
+                {
+                    "maskedPan": "412281_9173",
+                    "virtualPan": "412281P002925860",
+                    "generalStatus": "ACTIVE",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "CREDIT",
+                    "productCode": "PLPV",
+                    "name": {
+                        "description": "Visa Platinum",
+                        "userDefined": "My Visa card"
+                    },
+                    "relatedAccount": "29109014894000000112257854",
+                    "expirationDate": "2023-02-23",
+                    "availableBalance": {
+                        "value": 5000,
+                        "currencyCode": "PLN"
+                    },
+                    "creditLimit": {
+                        "value": 5000,
+                        "currencyCode": "PLN"
+                    },
+                    "disposedAmount": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    }
+                },
+                {
+                    "maskedPan": "421352_4013",
+                    "virtualPan": "421352I036827548",
+                    "generalStatus": "ACTIVE",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "DEBIT",
+                    "productCode": "VIPE",
+                    "name": {
+                        "description": "VISA SELECT",
+                        "userDefined": "Visa select card"
+                    },
+                    "relatedAccount": "32109013620000000036057901",
+                    "expirationDate": "2024-04-30",
+                    "availableBalance": {
+                        "value": 341.86,
+                        "currencyCode": "PLN"
+                    },
+                    "creditLimit": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    },
+                    "disposedAmount": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    }
+                }
+            ],
+            "deposits": [
+                {
+                    "number": "69109000880000000142214841",
+                    "accountId": {
+                        "id": "142214841",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Konto oszczędnościowe",
+                        "userDefined": "Savings account"
+                    },
+                    "role": "OWNER",
+                    "type": "SAVINGS",
+                    "currentBalance": {
+                        "value": 5044,
+                        "currencyCode": "PLN"
+                    },
+                    "lastUpdate": "2021-03-21"
+                },
+                {
+                    "number": "55109010560000000142738338",
+                    "accountId": {
+                        "id": "142738338",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Lokata24",
+                        "userDefined": "Deposit for vacation"
+                    },
+                    "role": "OWNER",
+                    "type": "TERM",
+                    "currentBalance": {
+                        "value": 5044,
+                        "currencyCode": "PLN"
+                    },
+                    "lastUpdate": "2021-03-19"
+                }
+            ],
+            "investmentFunds": [
+                {
+                    "number": "08132992-21-0010",
+                    "accountId": {
+                        "id": "108530910",
+                        "systemId": 5
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "source": "SANTANDER OBLIGACJI KORPORACYJNYCH - PRODUKT STANDARDOWY",
+                        "userDefined": "my Investmensts"
+                    },
+                    "role": "OWNER",
+                    "type": "INVESTMENT",
+                    "currentValue": {
+                        "value": 101811.3,
+                        "currencyCode": "PLN"
+                    }
+                }
+            ],
+            "loans": [
+                {
+                    "number": "02109000200000000103417256",
+                    "accountId": {
+                        "id": "103417256",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Kredyt mieszkaniowy",
+                        "userDefined": "Mortgage"
+                    },
+                    "role": "OWNER",
+                    "type": "MORTGAGE",
+                    "currentLimit": {
+                        "value": 83109.06,
+                        "currencyCode": "PLN"
+                    },
+                    "lastUpdate": "2021-03-19"
+                }
+            ]
+        }
+    }
+}
