@@ -11,7 +11,7 @@ public protocol PLLoginManagerProtocol {
     func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error>
 }
 
-final class PLLoginManager {
+public final class PLLoginManager {
     private let loginDataSource: LoginDataSourceProtocol
     private let bsanDataProvider: BSANDataProvider
     private let demoInterpreter: DemoUserProtocol
@@ -24,7 +24,7 @@ final class PLLoginManager {
 }
 
 extension PLLoginManager: PLLoginManagerProtocol {
-    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error> {
+    public func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error> {
         let result = try loginDataSource.doLoginWithNick(parameters)
         switch result {
         case .success(let data):
