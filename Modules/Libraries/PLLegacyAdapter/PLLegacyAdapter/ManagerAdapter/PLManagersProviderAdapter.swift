@@ -14,7 +14,7 @@ public protocol PLManagersProviderAdapterProtocol {
 
 public final class PLManagersProviderAdapter {
     private let authManager: PLAuthManagerAdapter
-    private let gobalPositionManagerAdapter: PLGlobalPositionManagerAdapter
+    private let globalPositionManagerAdapter: PLGlobalPositionManagerAdapter
     private let cardsManagerAdapter: PLCardsManagerAdapter
     private let portfoliosPBManagerAdapter: PLPortfoliosPBManagerAdapter
     private let pullOffersManagerAdapter: PLPullOffersManagerAdapter
@@ -67,6 +67,10 @@ public final class PLManagersProviderAdapter {
         self.scaManagerAdapter = PLScaManagerAdapter()
         self.environmentsManagerApadater = PLEnvironmentsManagerAdapter(bsanHostProvider: hostProvider,
                                                                         dataProvider: bsanDataProvider)
+        self.plManagersProvider = PLManagersProvider(bsanDataProvider: bsanDataProvider,
+                                                    hostProvider: hostProvider,
+                                                    networkProvider: networkProvider,
+                                                    demoInterpreter: demoInterpreter)
         self.insurancesManager = PLInsurancesManagerAdapter()
         self.managersManager = PLManagersManagerAdapter()
         self.sociusManager = PLSociusManagerAdapter()
@@ -94,7 +98,7 @@ public final class PLManagersProviderAdapter {
         self.userSegmentManagerAdapter = PLUserSegmentManagerAdapter()
         self.demoInterpreter = demoInterpreter
         self.portfoliosPBManagerAdapter = PLPortfoliosPBManagerAdapter()
-        self.gobalPositionManagerAdapter = PLGlobalPositionManagerAdapter()
+        self.globalPositionManagerAdapter = PLGlobalPositionManagerAdapter(globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), bsanDataProvider: bsanDataProvider)
         self.transfersManager = PLTransfersManagerAdapter()
         self.accountsManager = PLAccountsManagerAdapter()
         self.cardsManagerAdapter = PLCardsManagerAdapter()
@@ -108,10 +112,7 @@ public final class PLManagersProviderAdapter {
         self.sendMoneyManagerAdapter = PLSendMoneyManagerAdapter()
         self.ecommerceManagerAdapter = PLEcommerceManagerAdapter()
         self.predefineSCAManager = PLPredefineSCAManagerAdapter()
-        self.plManagersProvider = PLManagersProvider(bsanDataProvider: bsanDataProvider,
-                                                    hostProvider: hostProvider,
-                                                    networkProvider: networkProvider,
-                                                    demoInterpreter: demoInterpreter)
+        
     }
 }
 
@@ -122,7 +123,7 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
     }
     
     public func getBsanPGManager() -> BSANPGManager {
-        return self.gobalPositionManagerAdapter
+        return self.globalPositionManagerAdapter
     }
     
     public func getBsanDepositsManager() -> BSANDepositsManager {
