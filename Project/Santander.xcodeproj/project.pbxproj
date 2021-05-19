@@ -35,6 +35,7 @@
 		66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */; };
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
+		7E186B5E264E7EAC00C2EB3B /* PLCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */; };
 		BA256241E878169125C1DC73 /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CD0BF265B29297DE9162D79 /* Pods_Santander.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 		66E57605264A6C32006804BD /* assetsLocal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assetsLocal; sourceTree = "<group>"; };
 		66E57607264A6C3A006804BD /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		7CD0BF265B29297DE9162D79 /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCompilation.swift; sourceTree = "<group>"; };
 		9F6210A2FAB2FD9F7B9CA067 /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		B7C5A0AD1AF4F1B8450C277F /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
 		B93F5F4990CE86A43923C950 /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				66BC8A5F263FFD7C00654CC5 /* XCConfig.swift */,
 				66BC8A6D263FFFF000654CC5 /* PLAppConfig.swift */,
 				42BF4874264A8DE300136E8D /* Modifiers */,
+				7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
 				66BC8C9126407DD300654CC5 /* HostsModule.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
+				7E186B5E264E7EAC00C2EB3B /* PLCompilation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

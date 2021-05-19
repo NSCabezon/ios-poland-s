@@ -10,7 +10,7 @@ import Foundation
 public struct LoginNickParameters: Encodable {
     let userId: String
     
-    init(userId: String) {
+    public init(userId: String) {
         self.userId = userId
     }
 }

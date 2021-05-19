@@ -1,4 +1,11 @@
-import SANPLLibrary
+//
+//  BSANEnvironments.swift
+//  SANPLLibrary_Tests
+//
+//  Created by Marcos Álvarez Mesa on 18/5/21.
+//
+
+@testable import SANPLLibrary
 
 public struct BSANEnvironments {
 
@@ -16,12 +23,12 @@ public struct BSANEnvironments {
             static let restOauthClientId = ""
         }
     }
-    
+
     public static let environmentPro =
         BSANPLEnvironmentDTO(name: EnvironmentsConstants.PRO.name,
                              urlBase: EnvironmentsConstants.PRO.endpoint,
                              clientId: EnvironmentsConstants.PRO.restOauthClientId)
-    
+
     public static let environmentPre =
         BSANPLEnvironmentDTO(name: EnvironmentsConstants.PRE.name,
                              urlBase: EnvironmentsConstants.PRE.endpoint,

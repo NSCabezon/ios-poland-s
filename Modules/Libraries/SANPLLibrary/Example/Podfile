@@ -1,13 +1,28 @@
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '10.3'
+
+def core_dependencies
+  pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
+  pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
+  pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
+  pod 'Commons', :path => '../../../../santander-one/Commons'
+  pod 'Models', :path => '../../../../santander-one/Models'
+  pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
+  pod 'Repository', :path => '../../../../santander-one/Repository'
+
+  # Microsite configuration
+  pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'
+  pod 'iOSCommonPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+
+end
 
 target 'SANPLLibrary_Example' do
   pod 'SANPLLibrary', :path => '../'
+  core_dependencies
 
   target 'SANPLLibrary_Tests' do
     inherit! :search_paths
-
-    
   end
 end

@@ -27,16 +27,14 @@ final class GlobalPositionDataSource {
     private let dataProvider: BSANDataProvider
     private let basePath = "/api/ceke"
     private var headers: [String: String] = [:]
-    private var queryParams: [String: String]?
+    private var queryParams: [String: String]? = nil
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
         self.dataProvider = dataProvider
     }
-}
-
-extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
-    func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
+    
+    private func performGetGlobalPosition() -> Result<GlobalPositionDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
@@ -53,10 +51,18 @@ extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
         )
         return result
     }
+}
+
+extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
+    func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
+        self.queryParams = nil
+        let result = performGetGlobalPosition()
+        return result
+    }
     
     func getGlobalPosition(_ parameters: GlobalPositionParameters) throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         self.queryParams = ["types": parameters.filterBy.rawValue]
-        let result = try getGlobalPosition()
+        let result = performGetGlobalPosition()
         return result
     }
 }

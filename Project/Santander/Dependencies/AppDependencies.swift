@@ -15,6 +15,7 @@ import Repository
 import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
+import PLCommons
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -22,6 +23,7 @@ final class AppDependencies {
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
     private let compilation: CompilationProtocol
+    private let plCompilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     
     // MARK: - Dependecies definitions
@@ -49,12 +51,13 @@ final class AppDependencies {
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
 
-        return PLManagersProviderAdapter(hostProvider: hostProvider,
+        return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
+                                         hostProvider: hostProvider,
                                          networkProvider: networkProvider,
-                                         demoInterpreter: demoInterpreter)
+                                         demoInterpreter: self.demoInterpreter)
 
     }()
-    
+
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
@@ -67,6 +70,7 @@ final class AppDependencies {
     init() {
         self.dependencieEngine = DependenciesDefault()
         compilation = Compilation()
+        plCompilation = PLCompilation()
         versionInfo = VersionInfoDTO(
             bundleIdentifier: Bundle.main.bundleIdentifier ?? "",
             versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -115,12 +119,18 @@ private extension AppDependencies {
 //        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
 //            return self.managersProviderAdapater.getPLManagerProvider()
 //        }
-//        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
-//            return self.managersProviderAdapter
-//        }
+        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
+            return self.managersProviderAdapter
+        }
+        dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
+            return self.managersProviderAdapter
+        }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
             return self.compilation
+        }
+        dependencieEngine.register(for: PLCompilationProtocol.self) { _ in
+            return self.plCompilation
         }
         self.dependencieEngine.register(for: TrusteerRepositoryProtocol.self) { _ in
             return EmptyTrusteerRepository()

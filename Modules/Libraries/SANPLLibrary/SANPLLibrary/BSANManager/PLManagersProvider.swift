@@ -9,7 +9,7 @@ import Foundation
 
 public protocol PLManagersProviderProtocol {
 //    func getEnvironmentsManager() -> PTEnvironmentsManagerProtocol
-//    func getLoginManager() -> PTLoginManagerProtocol
+    func getLoginManager() -> PLLoginManagerProtocol
 //    func getAccountsManager() -> PTAccountsManagerProtocol
 //    func getCardsManager() -> PTCardsManagerProtocol
 //    func getCardTransactionsManager() -> PTCardTransactionsManagerProtocol
@@ -29,7 +29,7 @@ public protocol PLManagersProviderProtocol {
 
 public final class PLManagersProvider {
 //    private let environmentsManager: PTEnvironmentsManager
-//    private let loginManager: PTLoginManager
+    private let loginManager: PLLoginManager
 //    private let accountManager: PTAccountsManager
 //    private let cardsManager: PTCardsManager
 //    private let cardTransactionsManager: PTCardTransactionsManager
@@ -47,13 +47,14 @@ public final class PLManagersProvider {
 //    private let scheduleList: PTScheduleListManagerProtocol
 //    private let demoInterpreter: DemoUserProtocol
 
-    public init() {
-
-    }
-//    public init(bsanDataProvider: BSANDataProvider, hostProvider: PTHostProviderProtocol, networkProvider: NetworkProvider, demoInterpreter: DemoUserProtocol) {
-//        self.demoInterpreter = demoInterpreter
+    public init(bsanDataProvider: BSANDataProvider,
+                hostProvider: PLHostProviderProtocol,
+                networkProvider: NetworkProvider,
+                demoInterpreter: DemoUserProtocol) {
 //        self.environmentsManager = PTEnvironmentsManager(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider)
-//        self.loginManager = PTLoginManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.loginManager = PLLoginManager(bsanDataProvider: bsanDataProvider,
+                                           networkProvider: networkProvider,
+                                           demoInterpreter: demoInterpreter)
 //        self.cardsManager = PTCardsManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
 //        self.cardTransactionsManager = PTCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
 //        self.accountManager = PTAccountsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
@@ -69,7 +70,7 @@ public final class PLManagersProvider {
 //        self.mbwayManager = PTMBWayManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.customersManager = PTCustomersManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.transfersManager = PTTransfersManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
-//    }
+    }
 }
 
 // MARK: - PTManagersProviderProtocol
@@ -87,9 +88,9 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 //        return self.environmentsManager
 //    }
 //
-//    public func getLoginManager() -> PTLoginManagerProtocol {
-//        return self.loginManager
-//    }
+    public func getLoginManager() -> PLLoginManagerProtocol {
+        return self.loginManager
+    }
 //
 //    public func getAccountsManager() -> PTAccountsManagerProtocol {
 //        self.accountManager
