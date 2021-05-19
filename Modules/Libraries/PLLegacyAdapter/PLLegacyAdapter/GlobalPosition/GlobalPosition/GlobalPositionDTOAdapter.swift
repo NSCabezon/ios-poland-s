@@ -11,7 +11,7 @@ final class GlobalPositionDTOAdapter {
         var globalPositionDTO = SANLegacyLibrary.GlobalPositionDTO()
         let cards = plGlobalPosition.cards?.compactMap({ card -> SANLegacyLibrary.CardDTO? in
             let cardDTOAdapter = CardDTOAdapter()
-            return cardDTOAdapter.adaptPLCardToCardDTO(card)
+            return cardDTOAdapter.adaptPLCardToCard(card)
         })
         globalPositionDTO.cards = cards
 

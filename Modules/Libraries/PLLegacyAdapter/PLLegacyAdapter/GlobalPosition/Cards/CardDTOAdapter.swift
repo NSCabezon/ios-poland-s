@@ -10,7 +10,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 public final class CardDTOAdapter {
-    func adaptPLCardToCardDTO(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDTO {
+    func adaptPLCardToCard(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDTO {
         var cardDTO = SANLegacyLibrary.CardDTO()
         cardDTO.PAN = plCard.maskedPan
         cardDTO.alias = plCard.name?.userDefined
@@ -20,7 +20,7 @@ public final class CardDTOAdapter {
         return cardDTO
     }
 
-    func adaptPLCardToCardDataDTO(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDataDTO {
+    func adaptPLCardToCardData(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDataDTO {
         var cardDataDTO = SANLegacyLibrary.CardDataDTO()
         cardDataDTO.PAN = plCard.maskedPan
         let amountAdapter = AmountAdapter()
