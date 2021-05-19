@@ -10,6 +10,7 @@ import Foundation
 public enum GlobalPositionFilterType: String, Encodable {
     case accounts = "ACCOUNTS"
     case cards = "CARDS"
+    case loans = "LOANS"
 }
 
 public struct GlobalPositionParameters: Encodable {
