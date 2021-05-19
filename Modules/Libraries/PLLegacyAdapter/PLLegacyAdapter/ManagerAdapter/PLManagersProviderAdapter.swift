@@ -9,11 +9,11 @@ import SANLegacyLibrary
 import SANPLLibrary
 
 public protocol PLManagersProviderAdapterProtocol {
-    func getPTManagerProvider() -> PLManagersProviderProtocol
+    func getPLManagerProvider() -> PLManagersProviderProtocol
 }
 
 public final class PLManagersProviderAdapter {
-    private let authManger: PLAuthManagerAdapter
+    private let authManager: PLAuthManagerAdapter
     private let gobalPositionManagerAdapter: PLGlobalPositionManagerAdapter
     private let cardsManagerAdapter: PLCardsManagerAdapter
     private let portfoliosPBManagerAdapter: PLPortfoliosPBManagerAdapter
@@ -54,15 +54,19 @@ public final class PLManagersProviderAdapter {
     private let aviosManager: PLAviosManagerAdapter
     private let branchLocatorManager: PLBranchLocatorManagerAdapter
     private let pendingSolicitudesManager: PLPendingSolicitudesManagerAdapter
-    private let plManagerProvider: PLManagersProvider
+    private let plManagersProvider: PLManagersProvider
     private let demoInterpreter: DemoUserProtocol
     private let ecommerceManagerAdapter: PLEcommerceManagerAdapter
     private let predefineSCAManager: PLPredefineSCAManagerAdapter
 
-    public init(hostProvider: PLHostProviderProtocol, networkProvider: NetworkProvider, demoInterpreter: DemoUserProtocol) {
+    public init(bsanDataProvider:SANPLLibrary.BSANDataProvider,
+                hostProvider: PLHostProviderProtocol,
+                networkProvider: NetworkProvider,
+                demoInterpreter: DemoUserProtocol) {
         self.pullOffersManagerAdapter = PLPullOffersManagerAdapter()
         self.scaManagerAdapter = PLScaManagerAdapter()
-        self.environmentsManagerApadater = PLEnvironmentsManagerAdapter()
+        self.environmentsManagerApadater = PLEnvironmentsManagerAdapter(bsanHostProvider: hostProvider,
+                                                                        dataProvider: bsanDataProvider)
         self.insurancesManager = PLInsurancesManagerAdapter()
         self.managersManager = PLManagersManagerAdapter()
         self.sociusManager = PLSociusManagerAdapter()
@@ -89,7 +93,6 @@ public final class PLManagersProviderAdapter {
         self.pendingSolicitudesManager = PLPendingSolicitudesManagerAdapter()
         self.userSegmentManagerAdapter = PLUserSegmentManagerAdapter()
         self.demoInterpreter = demoInterpreter
-        self.plManagerProvider = PLManagersProvider()
         self.portfoliosPBManagerAdapter = PLPortfoliosPBManagerAdapter()
         self.gobalPositionManagerAdapter = PLGlobalPositionManagerAdapter()
         self.transfersManager = PLTransfersManagerAdapter()
@@ -101,17 +104,21 @@ public final class PLManagersProviderAdapter {
         self.pensionsManager = PLPensionsManagerAdapter()
         self.favouriteTransfersManager = PLFavouriteTransfersManagerAdapter()
         self.sessionManagerApadater = PLSessionManagerAdapter()
-        self.authManger = PLAuthManagerAdapter()
+        self.authManager = PLAuthManagerAdapter()
         self.sendMoneyManagerAdapter = PLSendMoneyManagerAdapter()
         self.ecommerceManagerAdapter = PLEcommerceManagerAdapter()
         self.predefineSCAManager = PLPredefineSCAManagerAdapter()
+        self.plManagersProvider = PLManagersProvider(bsanDataProvider: bsanDataProvider,
+                                                    hostProvider: hostProvider,
+                                                    networkProvider: networkProvider,
+                                                    demoInterpreter: demoInterpreter)
     }
 }
 
 extension PLManagersProviderAdapter: BSANManagersProvider {
 
     public func getBsanAuthManager() -> BSANAuthManager {
-        return self.authManger
+        return self.authManager
     }
     
     public func getBsanPGManager() -> BSANPGManager {
@@ -284,7 +291,7 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
 }
 
 extension PLManagersProviderAdapter: PLManagersProviderAdapterProtocol {
-    public func getPTManagerProvider() -> PLManagersProviderProtocol {
-        return self.plManagerProvider
+    public func getPLManagerProvider() -> PLManagersProviderProtocol {
+        return self.plManagersProvider
     }
 }

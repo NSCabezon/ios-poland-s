@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  SANPLLibrary
+//  PLUI
 //
-//  Created by Jose C. Yebes on 05/04/2021.
+//  Created by Jose C. Yebes on 05/13/2021.
 //  Copyright (c) 2021 Jose C. Yebes. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }

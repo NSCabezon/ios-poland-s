@@ -13,7 +13,6 @@ import Foundation
 
 public protocol NetworkProvider {
     func request<Request: NetworkProviderRequest, Response: Decodable>(_ request: Request) -> Result<Response, NetworkProviderError>
-    func loginRequest<Request: NetworkProviderRequest, Response: Decodable>(_ request: Request) -> Result<Response, NetworkProviderError>
     func request<Request: NetworkProviderRequest>(_ request: Request) -> Result<Void, NetworkProviderError>
     func requestData<Request: NetworkProviderRequest>(_ request: Request) -> Result<Data, NetworkProviderError>
     func requestDataWithHeaders<Request: NetworkProviderRequest>(_ request: Request) -> Result<NetworkProviderResponseWithHeaders, NetworkProviderError>
