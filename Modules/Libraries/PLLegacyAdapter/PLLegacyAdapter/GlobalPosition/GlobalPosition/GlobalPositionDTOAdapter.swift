@@ -9,11 +9,18 @@ import SANLegacyLibrary
 final class GlobalPositionDTOAdapter {
     func adaptPLGlobalPositionToGlobalPosition(_ plGlobalPosition: SANPLLibrary.GlobalPositionDTO) -> SANLegacyLibrary.GlobalPositionDTO {
         var globalPositionDTO = SANLegacyLibrary.GlobalPositionDTO()
+
         let rearrangedAccounts = self.rearrangeAccountsByFirstMainItem(plGlobalPosition.accounts)
         let accounts: [SANLegacyLibrary.AccountDTO]? = rearrangedAccounts.compactMap{ account -> SANLegacyLibrary.AccountDTO? in
             return AccountDTOAdapter().adaptPLAccountToAccount(account)
         }
+        let cards = plGlobalPosition.cards?.compactMap({ card -> SANLegacyLibrary.CardDTO? in
+            let cardDTOAdapter = CardDTOAdapter()
+            return cardDTOAdapter.adaptPLCardToCard(card)
+        })
+
         globalPositionDTO.accounts = accounts
+        globalPositionDTO.cards = cards
 
         return globalPositionDTO
     }
