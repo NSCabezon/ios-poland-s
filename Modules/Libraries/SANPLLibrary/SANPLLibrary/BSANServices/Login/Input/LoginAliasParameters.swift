@@ -10,7 +10,7 @@ import Foundation
 public struct LoginAliasParameters: Encodable {
     let userAlias: String
     
-    init(userAlias: String) {
+    public init(userAlias: String) {
         self.userAlias = userAlias
     }
 }

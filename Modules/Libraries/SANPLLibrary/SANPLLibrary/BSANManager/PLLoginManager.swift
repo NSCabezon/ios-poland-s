@@ -35,7 +35,7 @@ extension PLLoginManager: PLLoginManagerProtocol {
         }
     }
     
-    func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, Error> {
+    public func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, Error> {
         let result = try loginDataSource.doLoginWithAlias(parameters)
         switch result {
         case .success(let data):
