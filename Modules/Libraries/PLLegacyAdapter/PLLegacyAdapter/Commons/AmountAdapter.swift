@@ -1,6 +1,6 @@
 //
 //  AmountAdapter.swift
-//  PortugalLegacyAdapter
+//  PLLegacyAdapter
 //
 
 import SANLegacyLibrary

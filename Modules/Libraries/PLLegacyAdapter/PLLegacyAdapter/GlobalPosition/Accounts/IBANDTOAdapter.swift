@@ -1,6 +1,6 @@
 //
 //  IBANDTOAdapter.swift
-//  PortugalLegacyAdapter
+//  PLLegacyAdapter
 //
 
 import SANLegacyLibrary

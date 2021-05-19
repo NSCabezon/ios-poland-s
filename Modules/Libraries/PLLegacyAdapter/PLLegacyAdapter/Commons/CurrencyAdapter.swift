@@ -1,6 +1,6 @@
 //
 //  CurrencyAdapter.swift
-//  PortugalLegacyAdapter
+//  PLLegacyAdapter
 //
 
 import Foundation
