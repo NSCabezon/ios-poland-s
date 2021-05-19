@@ -18,27 +18,12 @@ public struct CardDTO: Codable {
     public let name: CardNameDTO?
     public let relatedAccount: String?
     public let expirationDate: String?
-    public let availableBalance: CardAvailableBalanceDTO?
-    public let creditLimit: CardCreditLimitDTO?
-    public let disposedAmount: CardDisposedAmountDTO?
+    public let availableBalance: BalanceDTO?
+    public let creditLimit: BalanceDTO?
+    public let disposedAmount: BalanceDTO?
 }
 
 public struct CardNameDTO: Codable {
     public let description: String?
     public let userDefined: String?
-}
-
-public struct CardAvailableBalanceDTO: Codable {
-    public let value: Double?
-    public let currencyCode: String?
-}
-
-public struct CardCreditLimitDTO: Codable {
-    public let value: Double?
-    public let currencyCode: String?
-}
-
-public struct CardDisposedAmountDTO: Codable {
-    public let value: Double?
-    public let currencyCode: String?
 }
