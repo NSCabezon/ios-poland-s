@@ -19,7 +19,6 @@ public struct SecondFactorDataDTO: Codable {
     public let challenges: [ChallengeDTO]?
     public let defaultChallenge: ChallengeDTO?
     public let expired: Bool?
-    
 }
 
 public struct ChallengeDTO: Codable {
