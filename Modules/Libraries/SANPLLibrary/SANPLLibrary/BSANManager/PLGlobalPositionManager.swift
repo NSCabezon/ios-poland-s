@@ -38,21 +38,21 @@ final class PLGlobalPositionManager {
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition()
-        return processResult(result)
+        return self.processResult(result)
     }
     
     func getAccounts() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
-        return processResult(result)
+        return self.processResult(result)
     }
     
     func getCards() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
-        return processResult(result)
+        return self.processResult(result)
     }
 
     func getDeposits() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
-        return processResult(result)
+        return self.processResult(result)
     }
 }
