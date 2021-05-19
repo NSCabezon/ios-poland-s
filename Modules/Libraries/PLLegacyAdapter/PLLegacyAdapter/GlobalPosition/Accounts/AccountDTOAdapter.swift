@@ -10,11 +10,14 @@ public final class AccountDTOAdapter {
     public func adaptPLAccountToAccount(_ plAccount: SANPLLibrary.AccountDTO) -> SANLegacyLibrary.AccountDTO {
         var accountDTO = SANLegacyLibrary.AccountDTO()
         accountDTO.alias = plAccount.name?.userDefined
+        accountDTO.tipoSituacionCto = plAccount.type
         accountDTO.iban = IBANDTOAdapter.adaptDisplayNumberToIBAN(plAccount.number)
 
         let amountAdapter = AmountAdapter()
         accountDTO.currentBalance = amountAdapter.adaptBalanceToAmount(plAccount.balance)
-        accountDTO.availableAutAmount = amountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
+        accountDTO.availableNoAutAmount = amountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
+
+        accountDTO.contract = ContractDTO(bankCode: nil, branchCode: nil, product: nil, contractNumber: plAccount.accountId?.id)
 
         return accountDTO
     }
