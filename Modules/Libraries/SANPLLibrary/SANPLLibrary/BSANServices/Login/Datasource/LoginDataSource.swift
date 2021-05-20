@@ -9,6 +9,7 @@ import Foundation
 
 protocol LoginDataSourceProtocol {
     func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError>
+    func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -20,6 +21,7 @@ private extension LoginDataSource {
 class LoginDataSource: LoginDataSourceProtocol {
     
     private let loginPath = "/api/as/login"
+    private let authenticatePath = "/api/as/authenticate"
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
@@ -30,6 +32,7 @@ class LoginDataSource: LoginDataSourceProtocol {
     
     private enum LoginServiceType: String {
         case login = "/login"
+        case authenticate = "/authenticate"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -46,6 +49,25 @@ class LoginDataSource: LoginDataSourceProtocol {
         let absoluteUrl = baseUrl + path
         let serviceName =  LoginServiceType.login.rawValue
         let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.request(LoginRequest(serviceName: serviceName,
+                                                                                                       serviceUrl: absoluteUrl,
+                                                                                                       method: .post,
+                                                                                                       body: body,
+                                                                                                       jsonBody: parameters,
+                                                                                                       headers: self.headers,
+                                                                                                       localServiceName: .login))
+
+        return result
+    }
+
+    func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError> {
+        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let path = self.basePath + self.authenticatePath
+        let absoluteUrl = baseUrl + path
+        let serviceName =  LoginServiceType.authenticate.rawValue
+        let result: Result<AuthenticateDTO, NetworkProviderError> = self.networkProvider.request(AuthenticateRequest(serviceName: serviceName,
                                                                                                        serviceUrl: absoluteUrl,
                                                                                                        method: .post,
                                                                                                        body: body,
@@ -75,6 +97,42 @@ private struct LoginRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: LoginParameters? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .body,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.jsonBody = jsonBody
+        self.bodyEncoding = bodyEncoding
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
+    }
+}
+
+private struct AuthenticateRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: String]? = nil
+    let jsonBody: AuthenticateParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: AuthenticateParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
          contentType: NetworkProviderContentType = .json,

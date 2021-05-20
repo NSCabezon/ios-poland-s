@@ -9,6 +9,7 @@ import Foundation
 
 public protocol PLLoginManagerProtocol {
     func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, Error>
+    func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, Error>
 }
 
 public final class PLLoginManager {
@@ -26,6 +27,16 @@ public final class PLLoginManager {
 extension PLLoginManager: PLLoginManagerProtocol {
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, Error> {
         let result = try loginDataSource.doLogin(parameters)
+        switch result {
+        case .success(let data):
+            return .success(data)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+
+    public func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, Error> {
+        let result = try loginDataSource.doAuthenticate(parameters)
         switch result {
         case .success(let data):
             return .success(data)
