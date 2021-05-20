@@ -11,4 +11,5 @@ public struct GlobalPositionDTO: Codable {
     public let accounts: [AccountDTO]?
     public let cards: [CardDTO]?
     public let deposits: [DepositDTO]?
+    public let investmentFunds: [InvestmentFundsDTO]?
 }
