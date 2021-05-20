@@ -14,6 +14,8 @@ final class PLLoginManagerTests: Tests {
 
         static let userId = "33355343"
         static let userAlias = "oneapp1"
+        static let authorizationType = "SMS_CODE"
+        static let authorizationValue = "57481439"
     }
 
     private var loginManager: PLLoginManager {
@@ -62,7 +64,7 @@ final class PLLoginManagerTests: Tests {
     }
 
     func testAuthenticateInit() {
-        let parameters = AuthenticateInitParameters(userId: "33355343", secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: "SMS_CODE", value: "57481439")))
+        let parameters = AuthenticateInitParameters(userId: Constants.userId, secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: Constants.authorizationType, value: Constants.authorizationValue)))
         let result = try? self.loginManager.doAuthenticateInit(parameters)
 
         switch result {
