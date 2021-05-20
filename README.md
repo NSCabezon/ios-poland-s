@@ -1,6 +1,6 @@
 # Poland
 
-This is the Poland santander-one Readme file. In this document you can find a general overview of the app. For more details and common procedures, see the confluence technical documentation.
+This is the Poland santander-one Readme file. In this document you can find a general overview of the app. For more details and common procedures, see the [confluence technical documentation](https://saneu.atlassian.net/wiki/spaces/MOVPL/pages/1122861793/iOS+-+Technical+documentation).
 
 ## First steps
 
