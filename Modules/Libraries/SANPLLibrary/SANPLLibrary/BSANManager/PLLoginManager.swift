@@ -8,8 +8,7 @@
 import Foundation
 
 public protocol PLLoginManagerProtocol {
-    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error>
-    func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, Error>
+    func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, Error>
 }
 
 public final class PLLoginManager {
@@ -25,18 +24,8 @@ public final class PLLoginManager {
 }
 
 extension PLLoginManager: PLLoginManagerProtocol {
-    public func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error> {
-        let result = try loginDataSource.doLoginWithNick(parameters)
-        switch result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
-    }
-    
-    public func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, Error> {
-        let result = try loginDataSource.doLoginWithAlias(parameters)
+    public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, Error> {
+        let result = try loginDataSource.doLogin(parameters)
         switch result {
         case .success(let data):
             return .success(data)

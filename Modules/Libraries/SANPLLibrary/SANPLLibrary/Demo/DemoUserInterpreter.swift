@@ -40,5 +40,5 @@ public enum PLLocalAnswerType: Int {
 }
 
 public enum PLLocalServiceName: String {
-    case loginNickAndAlias = "login_nick_alias"
+    case login = "login"
 }

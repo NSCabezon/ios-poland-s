@@ -8,8 +8,7 @@
 import Foundation
 
 protocol LoginDataSourceProtocol {
-    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, NetworkProviderError>
-    func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, NetworkProviderError>
+    func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -20,7 +19,7 @@ private extension LoginDataSource {
 
 class LoginDataSource: LoginDataSourceProtocol {
     
-    private let loginNickAndAliasPath = "/api/as/login"
+    private let loginPath = "/api/as/login"
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
@@ -30,8 +29,7 @@ class LoginDataSource: LoginDataSourceProtocol {
                                              "Santander-Session-Id": ""]
     
     private enum LoginServiceType: String {
-        case nick = "/nick"
-        case alias = "/alias"
+        case login = "/login"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -39,52 +37,33 @@ class LoginDataSource: LoginDataSourceProtocol {
         self.dataProvider = dataProvider
     }
     
-    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, NetworkProviderError> {
+    func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
         guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         
-        let path = self.basePath + self.loginNickAndAliasPath
+        let path = self.basePath + self.loginPath
         let absoluteUrl = baseUrl + path
-        let serviceName =  LoginServiceType.nick.rawValue
-        let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.request(LoginNickRequest(serviceName: serviceName,
+        let serviceName =  LoginServiceType.login.rawValue
+        let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.request(LoginRequest(serviceName: serviceName,
                                                                                                        serviceUrl: absoluteUrl,
                                                                                                        method: .post,
                                                                                                        body: body,
                                                                                                        jsonBody: parameters,
                                                                                                        headers: self.headers,
-                                                                                                       localServiceName: .loginNickAndAlias))
+                                                                                                       localServiceName: .login))
 
-        return result
-    }
-
-    func doLoginWithAlias(_ parameters: LoginAliasParameters) throws -> Result<LoginDTO, NetworkProviderError> {
-        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
-            return .failure(NetworkProviderError.other)
-        }
-
-        let path = self.basePath + self.loginNickAndAliasPath
-        let absoluteUrl = baseUrl + path
-        let serviceName =  LoginServiceType.alias.rawValue
-        let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.request(LoginAliasRequest(serviceName: serviceName,
-                                                                                                            serviceUrl: absoluteUrl,
-                                                                                                            method: .post,
-                                                                                                            body: body,
-                                                                                                            jsonBody: parameters,
-                                                                                                            headers: self.headers,
-                                                                                                            localServiceName: .loginNickAndAlias))
         return result
     }
 }
 
-private struct LoginNickRequest: NetworkProviderRequest {
-
+private struct LoginRequest: NetworkProviderRequest {
     let serviceName: String
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
     let queryParams: [String: String]? = nil
-    let jsonBody: LoginNickParameters?
+    let jsonBody: LoginParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
     let contentType: NetworkProviderContentType
@@ -95,44 +74,7 @@ private struct LoginNickRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
-         jsonBody: LoginNickParameters? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .body,
-         headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
-         localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
-        self.serviceName = serviceName
-        self.serviceUrl = serviceUrl
-        self.method = method
-        self.formData = body
-        self.jsonBody = jsonBody
-        self.bodyEncoding = bodyEncoding
-        self.headers = headers
-        self.contentType = contentType
-        self.localServiceName = localServiceName
-        self.authorization = authorization
-    }
-}
-
-private struct LoginAliasRequest: NetworkProviderRequest {
-
-    let serviceName: String
-    let serviceUrl: String
-    let method: NetworkProviderMethod
-    let headers: [String: String]?
-    let queryParams: [String: String]? = nil
-    let jsonBody: LoginAliasParameters?
-    let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
-    let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
-
-    init(serviceName: String,
-         serviceUrl: String,
-         method: NetworkProviderMethod,
-         body: Data? = nil,
-         jsonBody: LoginAliasParameters? = nil,
+         jsonBody: LoginParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
          contentType: NetworkProviderContentType = .json,
