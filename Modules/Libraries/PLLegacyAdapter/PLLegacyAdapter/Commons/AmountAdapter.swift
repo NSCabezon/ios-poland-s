@@ -2,11 +2,9 @@
 //  AmountAdapter.swift
 //  PLLegacyAdapter
 //
-//  Created by Rodrigo Jurado on 19/5/21.
-//
 
-import SANPLLibrary
 import SANLegacyLibrary
+import SANPLLibrary
 
 public final class AmountAdapter {
     public func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
