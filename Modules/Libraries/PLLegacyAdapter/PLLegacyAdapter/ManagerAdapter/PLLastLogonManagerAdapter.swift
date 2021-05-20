@@ -11,6 +11,10 @@ import SANLegacyLibrary
 final class PLLastLogonManagerAdapter {}
  
 extension PLLastLogonManagerAdapter: BSANLastLogonManager {
+    func insertDateUpdate() throws -> BSANResponse<Void> {
+        return BSANErrorResponse(nil)
+    }
+    
     func getLastLogonInfo() throws -> BSANResponse<LastLogonDTO> {
         return BSANErrorResponse(nil)
     }
