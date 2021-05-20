@@ -1,5 +1,6 @@
 import UIKit
 import UI
+import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
@@ -15,10 +16,11 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: DocumentPTTextField!
-    @IBOutlet private weak var rememberMeView: RememberMeView!
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
+    @IBOutlet weak var tooltipButton: UIButton!
+
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLUnrememberedLoginIdPresenterProtocol) {
@@ -116,8 +118,6 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureButtons() {
-        rememberMeView.setTitle(localized("login_radioButton_rememberUser").plainText)
-        rememberMeView.setDelegate(self)
         loginButton.set(localizedStylableText: localized("login_button_enter"), state: .normal)
         loginButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
         loginButton.backgroundColor = UIColor.santanderRed
@@ -128,7 +128,6 @@ private extension PLUnrememberedLoginIdViewController {
     
     func setAccessibility() {
         documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        rememberMeView.checkButton?.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnCheck.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
     }
     
