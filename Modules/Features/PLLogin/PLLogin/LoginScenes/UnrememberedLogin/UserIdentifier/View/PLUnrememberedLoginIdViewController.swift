@@ -124,6 +124,12 @@ private extension PLUnrememberedLoginIdViewController {
         loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
         loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
+        tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
+        tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
+        tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
+        tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
+        tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
     
     func setAccessibility() {
@@ -148,6 +154,13 @@ private extension PLUnrememberedLoginIdViewController {
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
         // TODO
+    }
+
+    @objc func tooltipButtonDidPressed() {
+        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
+                    print("Action")
+                }), isCloseButtonAvailable: true)
+        dialog.show(in: self)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
