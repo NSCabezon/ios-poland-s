@@ -12,6 +12,7 @@ public protocol PLGlobalPositionManagerProtocol {
     func getAccounts() throws -> Result<GlobalPositionDTO, Error>
     func getCards() throws -> Result<GlobalPositionDTO, Error>
     func getLoans() throws -> Result<GlobalPositionDTO, Error>
+    func getDeposits() throws -> Result<GlobalPositionDTO, Error>
 }
 
 final class PLGlobalPositionManager {
@@ -24,46 +25,40 @@ final class PLGlobalPositionManager {
         self.bsanDataProvider = bsanDataProvider
         self.demoInterpreter = demoInterpreter
     }
+
+    private func processResult(_ result: Result<GlobalPositionDTO, NetworkProviderError>) -> Result<GlobalPositionDTO, Error> {
+        switch result {
+        case .success(let data):
+            return .success(data)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }
 
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition()
-        switch result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
+        return self.processResult(result)
     }
     
     func getAccounts() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
-        switch result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
+        return self.processResult(result)
     }
     
     func getCards() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
-        switch result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
+        return self.processResult(result)
+    }
+
+    func getDeposits() throws -> Result<GlobalPositionDTO, Error> {
+        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
+        return self.processResult(result)
     }
 
     func getLoans() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
-        switch result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
+        return self.processResult(result)
     }
 }
