@@ -20,7 +20,7 @@ private extension LoginDataSource {
 
 class LoginDataSource: LoginDataSourceProtocol {
     
-    private let loginNickPath = "/api/as/login"
+    private let loginPath = "/api/as/login"
     private let authenticateInit = "/api/as/authenticate/init"
     
     private let networkProvider: NetworkProvider

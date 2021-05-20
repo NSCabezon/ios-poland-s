@@ -32,7 +32,6 @@ final class PLLoginManagerTests: Tests {
     }
 
     func testLoginWithNick() {
-
         let parameters = LoginParameters(userId: Constants.userId)
         let result = try? self.loginManager.doLogin(parameters)
 
@@ -48,13 +47,27 @@ final class PLLoginManagerTests: Tests {
     }
 
     func testLoginWithAlias() {
-
         let parameters = LoginParameters(userAlias: Constants.userAlias)
         let result = try? self.loginManager.doLogin(parameters)
 
         switch result {
         case .success(let login):
             XCTAssertEqual(String(login.userId ?? 0), Constants.userId)
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Not getting correct user")
+        default:
+            XCTFail("Not getting correct user")
+        }
+    }
+
+    func testAuthenticateInit() {
+        let parameters = AuthenticateInitParameters(userId: "33355343", secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: "SMS_CODE", value: "57481439")))
+        let result = try? self.loginManager.doAuthenticateInit(parameters)
+
+        switch result {
+        case .success(let login):
+            XCTAssertEqual(String(login.statusCode), "200")
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting correct user")
