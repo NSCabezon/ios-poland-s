@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol PLLoginManagerProtocol {
-    func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error>
+    func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, Error>
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
 }
 
@@ -25,8 +25,8 @@ public final class PLLoginManager {
 }
 
 extension PLLoginManager: PLLoginManagerProtocol {
-    public func doLoginWithNick(_ parameters: LoginNickParameters) throws -> Result<LoginDTO, Error> {
-        let result = try loginDataSource.doLoginWithNick(parameters)
+    public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, Error> {
+        let result = try loginDataSource.doLogin(parameters)
         switch result {
         case .success(let data):
             return .success(data)
