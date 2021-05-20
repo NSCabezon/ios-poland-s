@@ -30,7 +30,7 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
     
     func getGlobalPosition() throws -> BSANResponse<SANLegacyLibrary.GlobalPositionDTO> {
  
-        let globalPosition = self.globalPositionManager.getAllProducts()
+        let globalPosition = try self.globalPositionManager.getAllProducts()
         
         var adaptedGlobalPosition = GlobalPositionDTOAdapter().adaptPLGlobalPositionToGlobalPosition(try globalPosition.get())
 //        let nameAndSurname = getNameAndSurname()
