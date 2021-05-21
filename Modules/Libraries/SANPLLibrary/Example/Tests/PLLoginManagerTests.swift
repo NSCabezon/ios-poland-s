@@ -13,6 +13,9 @@ final class PLLoginManagerTests: Tests {
     private enum Constants {
 
         static let userId = "33355343"
+        static let userAlias = "oneapp1"
+        static let authorizationType = "SMS_CODE"
+        static let authorizationValue = "57481439"
     }
 
     private var loginManager: PLLoginManager {
@@ -31,13 +34,42 @@ final class PLLoginManagerTests: Tests {
     }
 
     func testLoginWithNick() {
-
-        let parameters = LoginNickParameters(userId: Constants.userId)
-        let result = try? self.loginManager.doLoginWithNick(parameters)
+        let parameters = LoginParameters(userId: Constants.userId)
+        let result = try? self.loginManager.doLogin(parameters)
 
         switch result {
         case .success(let login):
             XCTAssertEqual(String(login.userId ?? 0), Constants.userId)
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Not getting correct user")
+        default:
+            XCTFail("Not getting correct user")
+        }
+    }
+
+    func testLoginWithAlias() {
+        let parameters = LoginParameters(userAlias: Constants.userAlias)
+        let result = try? self.loginManager.doLogin(parameters)
+
+        switch result {
+        case .success(let login):
+            XCTAssertEqual(String(login.userId ?? 0), Constants.userId)
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Not getting correct user")
+        default:
+            XCTFail("Not getting correct user")
+        }
+    }
+
+    func testAuthenticateInit() {
+        let parameters = AuthenticateInitParameters(userId: Constants.userId, secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: Constants.authorizationType, value: Constants.authorizationValue)))
+        let result = try? self.loginManager.doAuthenticateInit(parameters)
+
+        switch result {
+        case .success(let login):
+            XCTAssertEqual(String(login.statusCode), "200")
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting correct user")
