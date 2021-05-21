@@ -40,6 +40,7 @@ public enum PLLocalAnswerType: Int {
 }
 
 public enum PLLocalServiceName: String {
-    case loginNick = "login_nick"
     case globalPosition = "globalPosition"
+    case login = "login"
+    case authenticateInit = "authenticate_init"
 }
