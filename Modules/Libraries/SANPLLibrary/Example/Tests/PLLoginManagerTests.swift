@@ -77,4 +77,18 @@ final class PLLoginManagerTests: Tests {
             XCTFail("Not getting correct user")
         }
     }
+
+    func testPubKey() {
+        let result = try? self.loginManager.getPubKey()
+
+        switch result {
+        case .success(let pubkey):
+            XCTAssertTrue(((pubkey.exponent?.isEmpty) != nil))
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Not getting correct user")
+        default:
+            XCTFail("Not getting correct user")
+        }
+    }
 }
