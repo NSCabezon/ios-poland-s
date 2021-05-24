@@ -7,7 +7,7 @@ import Foundation
 import Commons
 import Models
 
-protocol PLLoginManagerProtocol: class {
+protocol PLLoginLayersManagerDelegate: class {
     func doLogin()
     func getCurrentEnvironments()
     func chooseEnvironment()
@@ -35,6 +35,10 @@ final class PLLoginLayersManager {
     private var pushNotificationExcecutor: PushNotificationExecutorProtocol {
         self.dependenciesResolver.resolve(for: PushNotificationExecutorProtocol.self)
     }
+
+    private lazy var loginPresenterLayer: PLLoginPresenterLayerProtocol = {
+        return self.dependenciesResolver.resolve(for: PLLoginPresenterLayerProtocol.self)
+    }()
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
@@ -45,7 +49,7 @@ final class PLLoginLayersManager {
     }
 }
 
-extension PLLoginLayersManager: PLLoginManagerProtocol {
+extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
     func chooseEnvironment() {
         self.publicFilesManager.loadPublicFiles(withStrategy: .reload, timeout: 5)
         //self.loginEnvironmentLayer.getCurrentEnvironments()

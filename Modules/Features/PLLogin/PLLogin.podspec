@@ -31,4 +31,5 @@ Pod::Spec.new do |spec|
   spec.dependency "LoginCommon"
   spec.dependency "iOSPublicFiles"
   spec.dependency "SANPLLibrary"
+  spec.dependency "PLLegacyAdapter"
 end

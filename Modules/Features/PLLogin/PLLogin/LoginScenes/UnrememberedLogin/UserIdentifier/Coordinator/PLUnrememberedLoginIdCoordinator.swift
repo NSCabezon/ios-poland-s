@@ -17,8 +17,8 @@ protocol PLUnrememberedLoginIdCoordinatorProtocol {
 final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private lazy var loginLayerManager: PLLoginLayerManager = {
-        return PLLoginLayerManager(dependenciesResolver: self.dependenciesEngine)
+    private lazy var loginLayerManager: PLLoginLayersManager = {
+        return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
