@@ -9,11 +9,11 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 PRODUCT_NAME = PL-PRE-$(MARKETING_VERSION)
-PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.1.0
-WIDGET_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.1.0.widget
-SIRI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.1.0.siri.intents
-SIRI_UI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.1.0.siri.intents.ui
-PUSH_NOTIFICATION_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.1.0.pushNotificationService
+PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0
+WIDGET_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.widget
+SIRI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.siri.intents
+SIRI_UI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.siri.intents.ui
+PUSH_NOTIFICATION_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.pushNotificationService
 APP_NAME = Santander Pre
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
 EMMA_API_KEY = santanderpreHdgTYANJ0
