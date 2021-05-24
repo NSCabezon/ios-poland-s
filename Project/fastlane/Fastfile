@@ -65,7 +65,7 @@ platform :ios do
   lane :certificates_release do |options|
     match(
       git_url: "ssh://git@santander-one-app.ciber.es:5793/admins/certificates-release.git",
-      app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
+      app_identifier: [
       "pl.bancosantander.oneapp.intern.#{options[:version]}",
       "pl.bancosantander.oneapp.pre.#{options[:version]}"],
       type: 'enterprise',
@@ -78,7 +78,6 @@ platform :ios do
     sh "cd .. && pod update"
     versionName = get_version_number()
     major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
-    certificates({version: "#{major}.#{minor}"})
     certificates_release({version: "#{major}.#{minor}"})
   end
   
