@@ -21,14 +21,13 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
 
 final class PLUnrememberedLoginIdPresenter {
     weak var view: PLUnrememberedLoginIdViewProtocol?
-    weak var loginManager: PLLoginManagerProtocol?
+    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
+
+    private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
-        let managersProviders = dependenciesResolver.resolve(for: PLManagersProviderAdapterProtocol.self)
-        let managerProvider = managersProviders.getPLManagerProvider()
-        self.loginManager = managerProvider.getLoginManager()
     }
 }
 
@@ -38,21 +37,11 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
     }
     
     func viewWillAppear() {
-        // TODO
+        self.loginManager?.getCurrentEnvironments()
     }
     
     func login(identification: String, magic: String, remember: Bool) {
-        // TODO: Check if this is the appropiate place for this example or we need an intermediate use case
-        let parameters = LoginParameters(userId: "33355343", userAlias: nil)
-        let result = try? self.loginManager?.doLogin(parameters)
-        switch result {
-        case .success(let login):
-            print("success")
-        case .failure(let error):
-            print("login failed")
-        default:
-            print("Default")
-        }
+        // TODO
     }
     
     func recoverPasswordOrNewRegistration() {
@@ -71,5 +60,12 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
     }
     func willStartSession() {
         // TODO
+    }
+
+    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
+        self.publicFilesEnvironment = publicFilesEnvironment
+        let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
+        let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
+        self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
     }
 }

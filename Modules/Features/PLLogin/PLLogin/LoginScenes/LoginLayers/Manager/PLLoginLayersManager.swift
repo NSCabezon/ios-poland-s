@@ -18,6 +18,7 @@ protocol PLLoginLayersManagerDelegate: class {
 
 protocol PLLoginPresenterLayerProtocol: class {
     func handle(event: SessionProcessEvent)
+    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity)
     func willStartSession()
 }
 
@@ -39,6 +40,12 @@ final class PLLoginLayersManager {
     private lazy var loginPresenterLayer: PLLoginPresenterLayerProtocol = {
         return self.dependenciesResolver.resolve(for: PLLoginPresenterLayerProtocol.self)
     }()
+
+    private lazy var loginEnvironmentLayer: LoginEnvironmentLayer = {
+        let environmentLayer = self.dependenciesResolver.resolve(for: LoginEnvironmentLayer.self)
+        environmentLayer.setDelegate(self)
+        return environmentLayer
+    }()
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
@@ -50,15 +57,6 @@ final class PLLoginLayersManager {
 }
 
 extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
-    func chooseEnvironment() {
-        self.publicFilesManager.loadPublicFiles(withStrategy: .reload, timeout: 5)
-        //self.loginEnvironmentLayer.getCurrentEnvironments()
-    }
-    
-    func getCurrentEnvironments() {
-        //self.loginEnvironmentLayer.getCurrentEnvironments()
-    }
-    
     func loadData() {
         // TODO
     }
@@ -73,5 +71,24 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
     
     func isSessionExpired() -> Bool {
         return false // TODO: self.loginSessionLayer.isSessionExpired()
+    }
+
+    // MARK: Environment layer
+    func chooseEnvironment() {
+        self.publicFilesManager.loadPublicFiles(withStrategy: .reload, timeout: 5)
+        self.loginEnvironmentLayer.getCurrentEnvironments()
+    }
+
+    func getCurrentEnvironments() {
+        self.loginEnvironmentLayer.getCurrentEnvironments()
+    }
+}
+
+
+// MARK: - Environment layer Delegate
+extension PLLoginLayersManager: LoginEnvironmentLayerDelegate {
+    func didLoadEnvironment(_ environment: PLEnvironmentEntity,
+                            publicFilesEnvironment: PublicFilesEnvironmentEntity) {
+        self.loginPresenterLayer.didLoadEnvironment(environment, publicFilesEnvironment: publicFilesEnvironment)
     }
 }
