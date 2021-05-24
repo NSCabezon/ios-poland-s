@@ -78,7 +78,8 @@ private extension PLEnvironmentsManagerAdapter {
                            insurancesPass2Url: nil,
                            pass2oauthClientId: "",
                            pass2oauthClientSecret: "",
-                           ecommerceUrl: "")
+                           ecommerceUrl: "",
+                           fintechUrl: "")
     }
 
     func getPLEnvironment(from coreEnvironment: BSANEnvironmentDTO) throws -> BSANPLEnvironmentDTO {

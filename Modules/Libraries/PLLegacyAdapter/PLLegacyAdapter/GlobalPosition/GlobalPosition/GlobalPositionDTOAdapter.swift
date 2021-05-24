@@ -11,12 +11,15 @@ final class GlobalPositionDTOAdapter {
         var globalPositionDTO = SANLegacyLibrary.GlobalPositionDTO()
 
         let rearrangedAccounts = self.rearrangeAccountsByFirstMainItem(plGlobalPosition.accounts)
-        let accounts: [SANLegacyLibrary.AccountDTO]? = rearrangedAccounts.compactMap{ account -> SANLegacyLibrary.AccountDTO? in
+        let accounts: [SANLegacyLibrary.AccountDTO]? = rearrangedAccounts.compactMap({ account -> SANLegacyLibrary.AccountDTO? in
             return AccountDTOAdapter().adaptPLAccountToAccount(account)
-        }
+        })
         let cards = plGlobalPosition.cards?.compactMap({ card -> SANLegacyLibrary.CardDTO? in
             let cardDTOAdapter = CardDTOAdapter()
             return cardDTOAdapter.adaptPLCardToCard(card)
+        })
+        let funds = plGlobalPosition.investmentFunds?.compactMap({ investmentFund -> SANLegacyLibrary.FundDTO? in
+            return InvestmentFundsDTOAdapter().adaptPLInvestimentFundsToInvestimentFunds(investmentFund)
         })
         let loans = plGlobalPosition.loans?.compactMap({ loan -> SANLegacyLibrary.LoanDTO? in
             return LoanDTOAdapter().adaptPLLoanToLoan(loan)
@@ -28,6 +31,7 @@ final class GlobalPositionDTOAdapter {
 
         globalPositionDTO.accounts = accounts
         globalPositionDTO.cards = cards
+        globalPositionDTO.funds = funds
         globalPositionDTO.loans = loans
         globalPositionDTO.deposits = deposits
 

@@ -42,6 +42,8 @@ struct Compilation: CompilationProtocol {
     let bsanHostProvider: BSANHostProviderProtocol = BSANHostProviderEmpty()
     let publicFilesHostProvider: PublicFilesHostProviderProtocol = PublicFilesHostProvider()
     let mapPoiHostProvider: MapPoiHostProviderProtocol = MapPoiHostProvider()
+    let salesForceEndPoint: String = ""
+
 }
 
 struct CompilationKeychain: CompilationKeychainProtocol {
@@ -68,7 +70,7 @@ struct CompilationKey: CompilationKeyProtocol {
 }
 
 final class BSANHostProviderEmpty: BSANHostProviderProtocol {
-    let environmentDefault: BSANEnvironmentDTO = BSANEnvironmentDTO(urlBase: "", isHttps: false, name: "", urlNetInsight: "", urlSocius: "", urlBizumEnrollment: "", urlBizumWeb: "", urlGetCMC: "", urlGetNewPassword: "", urlForgotPassword: "", urlRestBase: "", oauthClientId: "", oauthClientSecret: "", microURL: "", click2CallURL: "", branchLocatorGlobile: "", insurancesPass2Url: "", pass2oauthClientId: "", pass2oauthClientSecret: "", ecommerceUrl: "")
+    let environmentDefault: BSANEnvironmentDTO = BSANEnvironmentDTO(urlBase: "", isHttps: false, name: "", urlNetInsight: "", urlSocius: "", urlBizumEnrollment: "", urlBizumWeb: "", urlGetCMC: "", urlGetNewPassword: "", urlForgotPassword: "", urlRestBase: "", oauthClientId: "", oauthClientSecret: "", microURL: "", click2CallURL: "", branchLocatorGlobile: "", insurancesPass2Url: "", pass2oauthClientId: "", pass2oauthClientSecret: "", ecommerceUrl: "", fintechUrl: "")
     
     func getEnvironments() -> [BSANEnvironmentDTO] {
         return [self.environmentDefault]

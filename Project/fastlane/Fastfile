@@ -16,9 +16,8 @@
 default_platform(:ios)
 
 CONFIGURATIONS = {
-  "intern" => { name: "Intern", configuration: "Intern-Release", appcenter: "iOS-San-PL-V1.0-INTERN"},
-  "pre" => { name: "Pre", configuration: "Pre-Release", appcenter: "iOS-San-PL-V1.0-PRE"},
-  "dev" => { name: "Dev", configuration: "Dev-Release", appcenter: "iOS-San-PL-V1.0-DEV"}
+  "intern" => { name: "Intern", configuration: "Intern-Release", appcenter: "Poland-v0.0-Intern-iOS"},
+  "pre" => { name: "Pre", configuration: "Pre-Release", appcenter: "Poland-v0.0-Pre-iOS"}
 }
 
 TEST_EXAMPLE_APPS_CONFIGURATION = { }
@@ -66,10 +65,9 @@ platform :ios do
   lane :certificates_release do |options|
     match(
       git_url: "ssh://git@santander-one-app.ciber.es:5793/admins/certificates-release.git",
-      app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
+      app_identifier: [
       "pl.bancosantander.oneapp.intern.#{options[:version]}",
-      "pl.bancosantander.oneapp.pre.#{options[:version]}",
-      "pl.bancosantander.oneapp.intern2"],
+      "pl.bancosantander.oneapp.pre.#{options[:version]}"],
       type: 'enterprise',
       readonly: true
     )
@@ -170,10 +168,10 @@ end
     UI.success "DSYM: #{Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH]}"
     appcenter_upload(
         api_token: ENV["APPCENTER_API_TOKEN"],
-        owner_name: ENV["APPCENTER_OWNER_NAME"],
+        owner_name: ENV["APPCENTER_NEW_OWNER_NAME"],
         owner_type: "organization",
         app_name: CONFIGURATIONS[options[:deploy_env]][:appcenter],
-        destinations: CONFIGURATIONS[options[:deploy_env]][:collaborators],
+        destinations: "*",
         file: Actions.lane_context[SharedValues::IPA_OUTPUT_PATH],
         dsym: Actions.lane_context[SharedValues::DSYM_OUTPUT_PATH],
         notify_testers: options[:notify_testers],
@@ -189,7 +187,7 @@ end
       skip_package_ipa: true,
       skip_archive: true,
       clean: true,
-      scheme: "Santander INTERN",
+      scheme: "Intern",
       derived_data_path: "~/derived_data",
       sdk: "iphonesimulator"
       )
@@ -198,12 +196,12 @@ end
   # Lane to update i18n
   private_lane :ensure_strings_update do
     UI.message "Start lane ensure_strings_update"
-    sh "cd ../../i18n && git checkout master"
-    sh "cd ../../i18n && git pull"
+    sh "cd ../../i18n-poland && git checkout master"
+    sh "cd ../../i18n-poland && git pull"
     status = sh "cd ../.. && git status -s"
-    if status.include? "i18n"
-      sh "cd ../.. && git add i18n"
-      sh "cd ../.. && git commit -m \"updating i18n\""
+    if status.include? "i18n-poland"
+      sh "cd ../.. && git add i18n-poland"
+      sh "cd ../.. && git commit -m \"updating i18n-poland\""
       sh "cd ../.. && git push -u origin"
     end
   end

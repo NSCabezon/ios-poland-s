@@ -13,6 +13,7 @@ public protocol PLGlobalPositionManagerProtocol {
     func getCards() throws -> Result<GlobalPositionDTO, Error>
     func getLoans() throws -> Result<GlobalPositionDTO, Error>
     func getDeposits() throws -> Result<GlobalPositionDTO, Error>
+    func getInvestmentFunds() throws -> Result<GlobalPositionDTO, Error>
 }
 
 final class PLGlobalPositionManager {
@@ -54,6 +55,11 @@ extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
 
     func getDeposits() throws -> Result<GlobalPositionDTO, Error> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
+        return self.processResult(result)
+    }
+
+    func getInvestmentFunds() throws -> Result<GlobalPositionDTO, Error> {
+        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
         return self.processResult(result)
     }
 
