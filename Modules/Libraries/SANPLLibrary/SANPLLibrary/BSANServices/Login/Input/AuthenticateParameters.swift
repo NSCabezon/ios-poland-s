@@ -9,16 +9,16 @@ import Foundation
 
 public struct AuthenticateParameters: Encodable {
     let encryptedPassword, userId: String?
-    let secondFactorData: SecondFactorData
+    let secondFactorData: SecondFactorDataAuthenticate
 
-    public init(encryptedPassword: String, userId: String, secondFactorData: SecondFactorData) {
+    public init(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticate) {
         self.encryptedPassword = encryptedPassword
         self.userId = userId
         self.secondFactorData = secondFactorData
     }
 }
 
-public struct SecondFactorData: Encodable {
+public struct SecondFactorDataAuthenticate: Encodable {
     let response: Response
 
     public init(response: Response) {
