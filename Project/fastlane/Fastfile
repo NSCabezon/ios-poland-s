@@ -78,6 +78,7 @@ platform :ios do
     sh "cd .. && pod update"
     versionName = get_version_number()
     major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
+    certificates({version: "#{major}.#{minor}"})
     certificates_release({version: "#{major}.#{minor}"})
   end
   
