@@ -18,6 +18,9 @@ final class GlobalPositionDTOAdapter {
             let cardDTOAdapter = CardDTOAdapter()
             return cardDTOAdapter.adaptPLCardToCard(card)
         })
+        let loans = plGlobalPosition.loans?.compactMap({ loan -> SANLegacyLibrary.LoanDTO? in
+            return LoanDTOAdapter().adaptPLLoanToLoan(loan)
+        })
         let deposits = plGlobalPosition.deposits?.compactMap({ deposit -> SANLegacyLibrary.DepositDTO? in
             let depositDTOAdapter = DepositDTOAdapter()
             return depositDTOAdapter.adaptPLDepositToDeposit(deposit)
@@ -25,6 +28,7 @@ final class GlobalPositionDTOAdapter {
 
         globalPositionDTO.accounts = accounts
         globalPositionDTO.cards = cards
+        globalPositionDTO.loans = loans
         globalPositionDTO.deposits = deposits
 
         return globalPositionDTO
