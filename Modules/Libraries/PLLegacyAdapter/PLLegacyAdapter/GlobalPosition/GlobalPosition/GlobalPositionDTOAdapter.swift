@@ -18,7 +18,7 @@ final class GlobalPositionDTOAdapter {
             let cardDTOAdapter = CardDTOAdapter()
             return cardDTOAdapter.adaptPLCardToCard(card)
         })
-        let investimentFunds = plGlobalPosition.investmentFunds?.compactMap({ investmentFund -> SANLegacyLibrary.FundDTO? in
+        let funds = plGlobalPosition.investmentFunds?.compactMap({ investmentFund -> SANLegacyLibrary.FundDTO? in
             return InvestmentFundsDTOAdapter().adaptPLInvestimentFundsToInvestimentFunds(investmentFund)
         })
         let loans = plGlobalPosition.loans?.compactMap({ loan -> SANLegacyLibrary.LoanDTO? in
@@ -31,7 +31,7 @@ final class GlobalPositionDTOAdapter {
 
         globalPositionDTO.accounts = accounts
         globalPositionDTO.cards = cards
-        globalPositionDTO.funds = investimentFunds
+        globalPositionDTO.funds = funds
         globalPositionDTO.loans = loans
         globalPositionDTO.deposits = deposits
 
