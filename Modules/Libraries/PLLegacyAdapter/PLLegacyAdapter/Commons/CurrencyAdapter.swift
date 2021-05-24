@@ -2,8 +2,6 @@
 //  CurrencyAdapter.swift
 //  PLLegacyAdapter
 //
-//  Created by Rodrigo Jurado on 20/5/21.
-//
 
 import Foundation
 import SANLegacyLibrary
