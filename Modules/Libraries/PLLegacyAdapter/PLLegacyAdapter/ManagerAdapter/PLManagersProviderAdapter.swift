@@ -290,11 +290,9 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
     public func getBsanPredefineSCAManager() -> BSANPredefineSCAManager {
         return self.predefineSCAManager
     }
-    
     public func getBsanFintechManager() -> BSANFintechManager {
         return self.fintechManager
     }
-
 }
 
 extension PLManagersProviderAdapter: PLManagersProviderAdapterProtocol {
