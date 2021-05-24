@@ -12,6 +12,7 @@ public enum GlobalPositionFilterType: String, Encodable {
     case cards = "CARDS"
     case loans = "LOANS"
     case deposits = "DEPOSITS"
+    case investmentFunds = "INVESTMENTS"
 }
 
 public struct GlobalPositionParameters: Encodable {

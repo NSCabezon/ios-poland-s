@@ -10,4 +10,5 @@ import Foundation
 public struct BalanceDTO: Codable {
     public let value: Double?
     public let currencyCode: String?
+    public let valueInBaseCurrency: Double?
 }
