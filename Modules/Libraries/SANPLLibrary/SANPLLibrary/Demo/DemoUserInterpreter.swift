@@ -41,4 +41,6 @@ public enum PLLocalAnswerType: Int {
 
 public enum PLLocalServiceName: String {
     case login = "login"
+    case pubKey = "pub_key"
+    case authenticateInit = "authenticate_init"
 }
