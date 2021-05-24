@@ -14,4 +14,8 @@ extension PLLastLogonManagerAdapter: BSANLastLogonManager {
     func getLastLogonInfo() throws -> BSANResponse<LastLogonDTO> {
         return BSANErrorResponse(nil)
     }
+
+    func insertDateUpdate() throws -> BSANResponse<Void> {
+        return BSANResponse()
+    }
 }

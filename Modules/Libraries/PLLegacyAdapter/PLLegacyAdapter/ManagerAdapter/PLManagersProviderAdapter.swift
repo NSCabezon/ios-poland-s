@@ -58,6 +58,7 @@ public final class PLManagersProviderAdapter {
     private let demoInterpreter: DemoUserProtocol
     private let ecommerceManagerAdapter: PLEcommerceManagerAdapter
     private let predefineSCAManager: PLPredefineSCAManagerAdapter
+    private let bsanFintechManagerAdapter: PLBsanFintechManagerAdapter
 
     public init(bsanDataProvider:SANPLLibrary.BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -112,6 +113,7 @@ public final class PLManagersProviderAdapter {
                                                     hostProvider: hostProvider,
                                                     networkProvider: networkProvider,
                                                     demoInterpreter: demoInterpreter)
+        self.bsanFintechManagerAdapter = PLBsanFintechManagerAdapter()
     }
 }
 
@@ -287,6 +289,10 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
 
     public func getBsanPredefineSCAManager() -> BSANPredefineSCAManager {
         return self.predefineSCAManager
+    }
+
+    public func getBsanFintechManager() -> BSANFintechManager {
+        return self.bsanFintechManagerAdapter
     }
 }
 

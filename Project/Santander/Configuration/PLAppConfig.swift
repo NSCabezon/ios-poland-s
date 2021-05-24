@@ -58,4 +58,6 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledChangeCurrency: Bool = true
     let isEnabledTransfersFAQs: Bool = true
     var maxLengthInternalTransferConcept: Int = 140
+    var showATMIntermediateScreen: Bool = false
+    var isEnabledEditAlias: Bool = false
 }

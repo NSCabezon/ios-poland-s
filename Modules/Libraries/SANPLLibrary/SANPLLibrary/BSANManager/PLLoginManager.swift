@@ -9,6 +9,7 @@ import Foundation
 
 public protocol PLLoginManagerProtocol {
     func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError>
+    func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
 }
 
@@ -27,6 +28,11 @@ public final class PLLoginManager {
 extension PLLoginManager: PLLoginManagerProtocol {
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
         let result = try loginDataSource.doLogin(parameters)
+        return result
+    }
+
+    public func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
+        let result = try loginDataSource.getPubKey()
         return result
     }
 
