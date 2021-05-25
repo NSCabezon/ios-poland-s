@@ -13,4 +13,8 @@ extension PLPredefineSCAManagerAdapter: BSANPredefineSCAManager {
     func getInternalTransferPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
         return BSANErrorResponse(nil)
     }
+    
+    func getOnePayTransferPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
+        return BSANErrorResponse(nil)
+    }
 }

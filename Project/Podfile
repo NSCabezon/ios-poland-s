@@ -16,7 +16,6 @@ def core_dependencies
   pod 'UI', :path => '../santander-one/UI'
   pod 'Models', :path => '../santander-one/Models'
   pod 'Commons', :path => '../santander-one/Commons'
-  pod 'ESCommons', :path => '../santander-one/Modules/Libraries/ESCommons'
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
   pod 'DomainCommon', :path => '../santander-one/Modules/Libraries/DomainCommon'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
