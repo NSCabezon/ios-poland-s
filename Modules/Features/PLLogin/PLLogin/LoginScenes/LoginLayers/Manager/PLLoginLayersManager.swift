@@ -8,7 +8,7 @@ import Commons
 import Models
 
 protocol PLLoginLayersManagerDelegate: class {
-    func doLogin()
+    func doLogin(type: LoginType)
     func getCurrentEnvironments()
     func chooseEnvironment()
     func loadData()
@@ -61,7 +61,7 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
         // TODO
     }
     
-    func doLogin() {
+    func doLogin(type: LoginType) {
         // TODO
     }
     

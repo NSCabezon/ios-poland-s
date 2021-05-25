@@ -153,7 +153,12 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        // TODO
+        if documentTextField.introducedDocument().isEmpty {
+            print("Empty id: show error message when it will be defined") // TODO
+        } else {
+            documentTextField?.textField?.resignFirstResponder()
+            presenter.login(identification: documentTextField.introducedDocument())
+        }
     }
 
     @objc func tooltipButtonDidPressed() {
