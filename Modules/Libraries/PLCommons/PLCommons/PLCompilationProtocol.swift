@@ -1,8 +1,3 @@
-import Models
-import Foundation
+import Commons
 
-public protocol PLCompilationProtocol {
-    var isEnvironmentsAvailable: Bool { get }
-    var isTrustInvalidCertificateEnabled: Bool { get }
-}
-
+public protocol PLCompilationProtocol: CompilationProtocol {}

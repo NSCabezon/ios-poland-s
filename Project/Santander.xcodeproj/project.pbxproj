@@ -36,7 +36,6 @@
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
 		713B9AAC3FF52E36D0BD44AD /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89484BEECF72F5D06C73A59 /* Pods_Santander.framework */; };
-		7E186B5E264E7EAC00C2EB3B /* PLCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,7 +168,6 @@
 				66BC8A5F263FFD7C00654CC5 /* XCConfig.swift */,
 				66BC8A6D263FFFF000654CC5 /* PLAppConfig.swift */,
 				42BF4874264A8DE300136E8D /* Modifiers */,
-				7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -375,7 +373,6 @@
 				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
 				66BC8C9126407DD300654CC5 /* HostsModule.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
-				7E186B5E264E7EAC00C2EB3B /* PLCompilation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
