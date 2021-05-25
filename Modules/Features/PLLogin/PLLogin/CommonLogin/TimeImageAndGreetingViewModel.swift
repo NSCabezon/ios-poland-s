@@ -29,8 +29,8 @@ final class TimeImageAndGreetingViewModel {
     }
     
     var backgroundImage: UIImage? {
-        let randomId: Int = Int.random(in: 1...10)
+        let imageId: Int = 1
         let theme: BackgroundImagesTheme = BackgroundImagesTheme.nature
-        return UIImage(named: "\(theme.name)_\(randomId)", in: Bundle(for: Self.self), compatibleWith: nil)
+        return UIImage(named: "\(theme.name)_\(imageId)", in: Bundle(for: Self.self), compatibleWith: nil)
     }
 }
