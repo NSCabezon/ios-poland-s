@@ -36,7 +36,6 @@
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
 		7E186B5E264E7EAC00C2EB3B /* PLCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */; };
-		7EC927912652902A0000ED2C /* PLTransferHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC927902652902A0000ED2C /* PLTransferHomeActionModifier.swift */; };
 		7EC927942652B2C40000ED2C /* PLCardHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC927932652B2C40000ED2C /* PLCardHomeActionModifier.swift */; };
 		7EC927972652B3A80000ED2C /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC927962652B3A80000ED2C /* PLAccountHomeActionModifier.swift */; };
 		7EC9279A2652B6250000ED2C /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC927992652B6250000ED2C /* PLAccountOtherOperativesActionModifier.swift */; };
@@ -82,7 +81,6 @@
 		66E57607264A6C3A006804BD /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		7CD0BF265B29297DE9162D79 /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E186B5D264E7EAC00C2EB3B /* PLCompilation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCompilation.swift; sourceTree = "<group>"; };
-		7EC927902652902A0000ED2C /* PLTransferHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransferHomeActionModifier.swift; sourceTree = "<group>"; };
 		7EC927932652B2C40000ED2C /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
 		7EC927962652B3A80000ED2C /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
 		7EC927992652B6250000ED2C /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 			children = (
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
 				7EC927992652B6250000ED2C /* PLAccountOtherOperativesActionModifier.swift */,
-				7EC927902652902A0000ED2C /* PLTransferHomeActionModifier.swift */,
 				7EC927962652B3A80000ED2C /* PLAccountHomeActionModifier.swift */,
 				7EC927932652B2C40000ED2C /* PLCardHomeActionModifier.swift */,
 			);
@@ -389,7 +386,6 @@
 				7EC9279A2652B6250000ED2C /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */,
 				66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */,
-				7EC927912652902A0000ED2C /* PLTransferHomeActionModifier.swift in Sources */,
 				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
 				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
 				7EC927942652B2C40000ED2C /* PLCardHomeActionModifier.swift in Sources */,

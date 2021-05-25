@@ -44,13 +44,6 @@ final class AppModifiers {
         }
         return modifier
     }()
-    private lazy var transferHomeActionModifier: Transfer.TransferHomeActionModifier = {
-        let modifier = TransferHomeActionModifier(dependenciesResolver: self.dependencieEngine)
-        modifier.setCompletion { resolver in
-            modifier.add(PLTransferHomeActionModifier(dependenciesResolver: resolver))
-        }
-        return modifier
-    }()
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
@@ -74,9 +67,6 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
             return self.cardHomeActionModifier
-        }
-        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
-            return self.transferHomeActionModifier
         }
         
 //        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
