@@ -20,9 +20,7 @@ final class AppNavigationDependencies {
     }
 
     func registerDependencies() {
-
         dependenciesEngine.register(for: LoginModuleCoordinatorProtocol.self) { resolver in
-
             return PLLoginModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
     }

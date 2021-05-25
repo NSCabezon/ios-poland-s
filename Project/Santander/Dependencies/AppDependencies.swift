@@ -113,9 +113,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: BSANDataProviderProtocol.self) { _ in
             return self.dataProvider
         }
-//        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
-//            return self.managersProviderAdapater.getPLManagerProvider()
-//        }
+        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
+            return self.managersProviderAdapter.getPLManagerProvider()
+        }
         dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
             return self.managersProviderAdapter
         }
