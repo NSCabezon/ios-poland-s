@@ -18,7 +18,6 @@ public protocol MaskedPasswordViewDelegate: AnyObject {
 public final class MaskedPasswordView: UIView {
 
     private enum Constants {
-
         static let positionsNumber = 20
         static let elementsPerRow = 10
         static let rowsNumber = Int(positionsNumber/elementsPerRow)
@@ -27,7 +26,6 @@ public final class MaskedPasswordView: UIView {
     }
 
     private lazy var verticalStackView: UIStackView = {
-
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = Constants.spacingBetweenRows
@@ -38,9 +36,7 @@ public final class MaskedPasswordView: UIView {
     private var passwordInputBoxesArray = [PasswordInputBoxView]()
     private let requestedPositions: [NSInteger]
     private var keyboardType: UIKeyboardType
-    private let delegate: MaskedPasswordViewDelegate?
-
-    weak var maskedPasswordViewDelegate: MaskedPasswordViewDelegate?
+    private weak var delegate: MaskedPasswordViewDelegate?
 
     public init(requestedPositions: [NSInteger],
          keyboardType: UIKeyboardType = .default,
