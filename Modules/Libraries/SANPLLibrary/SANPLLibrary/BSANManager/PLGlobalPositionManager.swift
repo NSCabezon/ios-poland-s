@@ -26,15 +26,6 @@ final class PLGlobalPositionManager {
         self.bsanDataProvider = bsanDataProvider
         self.demoInterpreter = demoInterpreter
     }
-
-    private func processResult(_ result: Result<GlobalPositionDTO, NetworkProviderError>) -> Result<GlobalPositionDTO, Error> {
-        switch result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
-    }
 }
 
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
