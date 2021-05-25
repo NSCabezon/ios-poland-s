@@ -7,7 +7,8 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 public final class AccountDTOAdapter {
-    public func adaptPLAccountToAccount(_ plAccount: SANPLLibrary.AccountDTO) -> SANLegacyLibrary.AccountDTO {
+    
+    static func adaptPLAccountToAccount(_ plAccount: SANPLLibrary.AccountDTO) -> SANLegacyLibrary.AccountDTO {
         var accountDTO = SANLegacyLibrary.AccountDTO()
         accountDTO.alias = plAccount.name?.userDefined
         accountDTO.tipoSituacionCto = plAccount.type
@@ -22,7 +23,7 @@ public final class AccountDTOAdapter {
         return accountDTO
     }
 
-    func adaptPLAccountToAccountDetail(_ plAccount: SANPLLibrary.AccountDTO) -> SANLegacyLibrary.AccountDetailDTO {
+    static func adaptPLAccountToAccountDetail(_ plAccount: SANPLLibrary.AccountDTO) -> SANLegacyLibrary.AccountDetailDTO {
         var accountDetailDTO = SANLegacyLibrary.AccountDetailDTO()
         accountDetailDTO.mainItem = plAccount.defaultForPayments
         accountDetailDTO.description = plAccount.name?.description

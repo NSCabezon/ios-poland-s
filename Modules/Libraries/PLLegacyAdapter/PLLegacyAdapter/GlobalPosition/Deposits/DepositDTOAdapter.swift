@@ -8,8 +8,8 @@
 import SANLegacyLibrary
 import SANPLLibrary
 
-public final class DepositDTOAdapter {
-    func adaptPLDepositToDeposit(_ plDeposit: SANPLLibrary.DepositDTO) -> SANLegacyLibrary.DepositDTO {
+final class DepositDTOAdapter {
+    static func adaptPLDepositToDeposit(_ plDeposit: SANPLLibrary.DepositDTO) -> SANLegacyLibrary.DepositDTO {
         var depositDTO = SANLegacyLibrary.DepositDTO()
         depositDTO.alias = plDeposit.name?.userDefined
         let currencyAdapter = CurrencyAdapter()
