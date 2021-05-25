@@ -77,9 +77,7 @@ public final class MaskedPasswordView: UIView {
 private extension MaskedPasswordView {
 
     func addSubviews() {
-
         for row in 1...Constants.rowsNumber {
-
             let stackView = UIStackView()
             stackView.axis = .horizontal
             stackView.spacing = Constants.spacingBetweenColumns
@@ -95,7 +93,6 @@ private extension MaskedPasswordView {
     }
 
     func configureConstraints() {
-
         NSLayoutConstraint.activate([
             self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor),
             self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -108,7 +105,6 @@ private extension MaskedPasswordView {
 extension MaskedPasswordView: PasswordInputBoxViewDelegate {
 
     func passwordInputBoxViewShouldChangeString (_ paswwordInputBoxView: PasswordInputBoxView, replacementString string: String) -> Bool {
-
         let allowChange = self.delegate?.maskedPasswordView(self, willChange: string, for: paswwordInputBoxView.position)
 
         guard allowChange == true else {
@@ -146,7 +142,6 @@ extension MaskedPasswordView: PasswordInputBoxViewDelegate {
 private extension Array where Element == PasswordInputBoxView {
 
     func nextEnabled(from position: NSInteger) -> PasswordInputBoxView? {
-
         guard position < self.count else { return nil }
         let next = self.first { $0.enabled == true && $0.position > position }
         return next

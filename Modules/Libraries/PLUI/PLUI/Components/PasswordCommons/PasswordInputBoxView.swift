@@ -100,7 +100,6 @@ private extension PasswordInputBoxView {
         self.positionLabel.backgroundColor = .clear
         self.positionLabel.textAlignment = .center
         self.positionLabel.textColor = Constants.positionLabelFontColor
-//        self.positionLabel.font = .santander(family: .text, size: 10.0)
     }
 
     func configureConstraints() {
