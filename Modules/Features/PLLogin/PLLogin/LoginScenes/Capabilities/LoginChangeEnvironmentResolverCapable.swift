@@ -6,7 +6,7 @@ import Foundation
 import Commons
 
 protocol LoginChangeEnvironmentResolverCapable {
-    var dependenciesEngine: DependenciesDefault { get }
+    var dependenciesEngine: DependenciesResolver & DependenciesInjector { get }
 }
 
 extension LoginChangeEnvironmentResolverCapable {

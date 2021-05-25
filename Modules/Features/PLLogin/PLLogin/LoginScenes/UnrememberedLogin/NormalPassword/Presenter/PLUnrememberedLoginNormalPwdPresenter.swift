@@ -1,5 +1,5 @@
 //
-//  PLUnrememberedLoginIdPresenter.swift
+//  PLUnrememberedLoginNormalPwdPresenter.swift
 //  PLLogin
 
 import DomainCommon
@@ -9,8 +9,8 @@ import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
 
-protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
-    var view: PLUnrememberedLoginIdViewProtocol? { get set }
+protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol {
+    var view: PLUnrememberedLoginNormalPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
@@ -19,41 +19,41 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
     func didSelectChooseEnvironment()
 }
 
-final class PLUnrememberedLoginIdPresenter {
-    weak var view: PLUnrememberedLoginIdViewProtocol?
+final class PLUnrememberedLoginNormalPwdPresenter {
+    weak var view: PLUnrememberedLoginNormalPwdViewProtocol?
     weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
-    
+
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 }
 
-extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
+extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
     func viewDidLoad() {
         // TODO
     }
-    
+
     func viewWillAppear() {
         self.loginManager?.getCurrentEnvironments()
     }
-    
+
     func login(identification: String, magic: String, remember: Bool) {
         // TODO
     }
-    
+
     func recoverPasswordOrNewRegistration() {
         // TODO
     }
-    
+
     func didSelectChooseEnvironment() {
         // TODO
     }
 }
 
-extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
+extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
 
     func handle(event: SessionProcessEvent) {
         // TODO
@@ -71,8 +71,9 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
 }
 
 //MARK: - Private Methods
-private extension  PLUnrememberedLoginIdPresenter {
+private extension  PLUnrememberedLoginNormalPwdPresenter {
     var coordinator: PLLoginCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
     }
+
 }
