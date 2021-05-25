@@ -28,8 +28,6 @@ class PasswordInputTextField: UITextField {
         }
     }
 
-    //    AccesibilityIdentifier???????? Lo tengo que poner??
-
     private let padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private let isSecureEntry: Bool
     override var isEnabled: Bool {
@@ -100,7 +98,6 @@ class PasswordInputTextField: UITextField {
 private extension PasswordInputTextField {
 
     func configureView() {
-
         self.borderStyle = .none
         self.isSecureTextEntry = self.isSecureEntry
         self.textAlignment = .center
