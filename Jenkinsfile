@@ -36,7 +36,6 @@ pipeline {
 			steps {
 				echo "Distributing android app"
 				sh "cd Project && fastlane ios release deploy_env:intern notify_testers:true branch:develop"
-			    sh "cd Project && fastlane ios release_portugal deploy_env:intern"
 			}
         }
 
@@ -64,7 +63,6 @@ pipeline {
 			steps {
 				echo "Distributing Pre app"
 				sh "cd Project && fastlane ios release deploy_env:pre notify_testers:true branch:master"
-				sh "cd Project && fastlane ios release_portugal deploy_env:pre"
 			}
 		}
 
@@ -92,9 +90,5 @@ pipeline {
 		success {
 			cleanWs()
 		}
-
-	    failure {
-            mail to: "juan.carlos.lopez@experis.es", subject: "Build: ${env.JOB_NAME} - Failed", body: "The build ${env.JOB_NAME} has failed"
-        }
 	}
 }
