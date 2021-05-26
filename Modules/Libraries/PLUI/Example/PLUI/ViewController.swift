@@ -25,16 +25,20 @@ class ViewController: UIViewController {
     }()
 
     private enum Constants {
-
         static let reuseIdentifier = "Cell"
     }
+
+    private var components = [Any]()
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
 
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(red: 204/256, green: 0, blue: 0, alpha: 1)
         self.view.addSubview(self.tableView)
+
+        components.append(self.maskedPasswordView())
+        components.append(self.smsAuthenticationView())
 
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -66,21 +70,21 @@ extension ViewController: UITableViewDataSource {
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self.components.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        guard let component = self.components[section] as? UIView else {
+            return nil
+        }
+
         let title = UILabel()
         title.textColor = .white
         title.translatesAutoresizingMaskIntoConstraints = false
         title.textAlignment = .center
         title.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        switch section {
-        case 0:
-            title.text = String(describing: MaskedPasswordView.self)
-        default:
-            return nil
-        }
+        title.text = String(describing: type(of: component))
 
         return title
     }
@@ -90,12 +94,12 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         var cell = self.tableView.dequeueReusableCell(withIdentifier: Constants.reuseIdentifier)
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: Constants.reuseIdentifier)
         }
         guard let newCell = cell else { return UITableViewCell() }
+        newCell.backgroundColor = .clear
         newCell.translatesAutoresizingMaskIntoConstraints = false
         let component = self.componentForRow(indexPath: indexPath)
         newCell.contentView.addSubview(component)
@@ -107,15 +111,10 @@ extension ViewController: UITableViewDataSource {
 private extension ViewController {
 
     func componentForRow(indexPath: IndexPath) -> UIView {
-
-        switch indexPath.row {
-        case 0:
-
-            return self.maskedPasswordView()
-
-        default:
+        guard let component = self.components[indexPath.section] as? UIView else {
             return UIView()
         }
 
+        return component
     }
 }

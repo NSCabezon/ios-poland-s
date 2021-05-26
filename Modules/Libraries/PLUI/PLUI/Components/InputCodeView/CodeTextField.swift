@@ -8,14 +8,12 @@
 import UIKit
 
 protocol PasswordInputTextFieldDelegate: UITextFieldDelegate {
-    func didDeleteTextField(_ textField: PasswordInputTextField)
+    func didDeleteTextField(_ textField: CodeTextField)
 }
 
-class PasswordInputTextField: UITextField {
+class CodeTextField: UITextField {
 
     private enum Constants {
-        static let textWitdh: CGFloat = 31.0
-        static let textHeight: CGFloat = 56.0
         static let textColor = UIColor.white
         static let textSize: CGFloat = 20
         static let tintColor = UIColor.red
@@ -52,6 +50,11 @@ class PasswordInputTextField: UITextField {
         return view
     }()
 
+    /**
+     - Parameters:
+     - Parameter delegate: delegate
+     - Parameter isSecureEntry: If true the characters entered are not shown
+     */
     init(delegate: PasswordInputTextFieldDelegate?, isSecureEntry: Bool = true) {
         self.passwordInputDelegate = delegate
         self.isSecureEntry = isSecureEntry
@@ -95,7 +98,7 @@ class PasswordInputTextField: UITextField {
     }
 }
 
-private extension PasswordInputTextField {
+private extension CodeTextField {
 
     func configureView() {
         self.borderStyle = .none
@@ -104,15 +107,6 @@ private extension PasswordInputTextField {
         self.textColor = Constants.textColor
         self.font = Constants.font
         self.tintColor = Constants.tintColor
-
-        self.configureConstraints()
-    }
-
-    func configureConstraints() {
-        NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: Constants.textWitdh),
-            self.heightAnchor.constraint(equalToConstant: Constants.textHeight),
-        ])
     }
 }
 
