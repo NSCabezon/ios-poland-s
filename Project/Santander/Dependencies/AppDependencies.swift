@@ -42,7 +42,7 @@ final class AppDependencies {
         return BSANDataProvider(dataRepository: self.dataRepository, appInfo: self.versionInfo)
     }()
     private var demoInterpreter: DemoUserProtocol {
-        let demoModeAvailable: Bool = true
+        let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
         return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
                                    demoModeAvailable: demoModeAvailable)
     }
@@ -50,7 +50,6 @@ final class AppDependencies {
 
         let hostProvider = PLHostProvider()
         // TODO: Check value isTrustInvalidCertificateEnabled
-        bsanDataProvider.setDemoMode(true, "12345678Z")
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
 
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
