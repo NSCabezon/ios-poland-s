@@ -7,26 +7,24 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 final class GlobalPositionDTOAdapter {
-    func adaptPLGlobalPositionToGlobalPosition(_ plGlobalPosition: SANPLLibrary.GlobalPositionDTO) -> SANLegacyLibrary.GlobalPositionDTO {
+    static func adaptPLGlobalPositionToGlobalPosition(_ plGlobalPosition: SANPLLibrary.GlobalPositionDTO) -> SANLegacyLibrary.GlobalPositionDTO {
         var globalPositionDTO = SANLegacyLibrary.GlobalPositionDTO()
 
         let rearrangedAccounts = self.rearrangeAccountsByFirstMainItem(plGlobalPosition.accounts)
         let accounts: [SANLegacyLibrary.AccountDTO]? = rearrangedAccounts.compactMap({ account -> SANLegacyLibrary.AccountDTO? in
-            return AccountDTOAdapter().adaptPLAccountToAccount(account)
+            return AccountDTOAdapter.adaptPLAccountToAccount(account)
         })
         let cards = plGlobalPosition.cards?.compactMap({ card -> SANLegacyLibrary.CardDTO? in
-            let cardDTOAdapter = CardDTOAdapter()
-            return cardDTOAdapter.adaptPLCardToCard(card)
+            return CardDTOAdapter.adaptPLCardToCard(card)
         })
         let funds = plGlobalPosition.investmentFunds?.compactMap({ investmentFund -> SANLegacyLibrary.FundDTO? in
-            return InvestmentFundsDTOAdapter().adaptPLInvestimentFundsToInvestimentFunds(investmentFund)
+            return InvestmentFundsDTOAdapter.adaptPLInvestimentFundsToInvestimentFunds(investmentFund)
         })
         let loans = plGlobalPosition.loans?.compactMap({ loan -> SANLegacyLibrary.LoanDTO? in
-            return LoanDTOAdapter().adaptPLLoanToLoan(loan)
+            return LoanDTOAdapter.adaptPLLoanToLoan(loan)
         })
         let deposits = plGlobalPosition.deposits?.compactMap({ deposit -> SANLegacyLibrary.DepositDTO? in
-            let depositDTOAdapter = DepositDTOAdapter()
-            return depositDTOAdapter.adaptPLDepositToDeposit(deposit)
+            return DepositDTOAdapter.adaptPLDepositToDeposit(deposit)
         })
 
         globalPositionDTO.accounts = accounts
@@ -40,7 +38,7 @@ final class GlobalPositionDTOAdapter {
 }
 
 private extension GlobalPositionDTOAdapter {
-    func rearrangeAccountsByFirstMainItem(_ accounts: [SANPLLibrary.AccountDTO]?) -> [SANPLLibrary.AccountDTO] {
+    static func rearrangeAccountsByFirstMainItem(_ accounts: [SANPLLibrary.AccountDTO]?) -> [SANPLLibrary.AccountDTO] {
         guard var rearrangedAccounts = accounts else { return [] }
         guard rearrangedAccounts.first?.defaultForPayments != true,
             let index = (rearrangedAccounts.firstIndex { $0.defaultForPayments == true }) else {

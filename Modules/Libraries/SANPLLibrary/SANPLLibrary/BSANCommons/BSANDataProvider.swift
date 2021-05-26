@@ -6,6 +6,7 @@
 //
 
 import DataRepository
+import SANLegacyLibrary
 
 public class BSANDataProvider {
     
@@ -32,7 +33,7 @@ public class BSANDataProvider {
     public func getAuthCredentials() throws -> String {
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
-    
+
     public func setDemoMode(_ isDemo: Bool, _ demoUser: String?) {
         if isDemo, let demoUser = demoUser {
             objc_sync_enter(dataRepository)
@@ -46,6 +47,9 @@ public class BSANDataProvider {
     public func isDemo() -> Bool {
         return dataRepository.get(DemoMode.self) != nil
     }
+}
+
+extension BSANDataProvider: BSANDemoProviderProtocol {
     
     public func getDemoMode() -> DemoMode? {
         return dataRepository.get(DemoMode.self)

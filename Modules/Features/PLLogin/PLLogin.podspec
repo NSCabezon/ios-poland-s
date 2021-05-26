@@ -13,7 +13,8 @@ Pod::Spec.new do |spec|
   spec.platform     = :ios, "10.3"
   spec.source       = { :git => "http://gitlab/PLLogin.git", :tag => "#{spec.version}" }
   spec.source_files  = "PLLogin", "PLLogin/**/*.{swift}"
-
+  spec.ios.deployment_target = '10.3'
+  
   spec.resource_bundles = {
     'PLLogin' => ['PLLogin/**/*{xib,xcassets}']
   }
@@ -24,9 +25,11 @@ Pod::Spec.new do |spec|
   spec.dependency "PLCommons"
   spec.dependency "Models"
   spec.dependency "UI"
+  spec.dependency "PLUI"
   spec.dependency "Repository"
   spec.dependency "CommonUseCase"
   spec.dependency "LoginCommon"
   spec.dependency "iOSPublicFiles"
   spec.dependency "SANPLLibrary"
+  spec.dependency "PLLegacyAdapter"
 end

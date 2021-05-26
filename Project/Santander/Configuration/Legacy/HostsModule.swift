@@ -7,10 +7,8 @@
 
 /// Note that this struct is maintained for compatibility with legacy code and will be removed in some point in the furure
 
-import Foundation
-import ESCommons
 import SANLegacyLibrary
-import SANLibraryV3
+import Commons
 
 final class HostsModule: HostsModuleProtocol {
     func providesBSANHostProvider() -> BSANHostProviderProtocol {
@@ -19,9 +17,5 @@ final class HostsModule: HostsModuleProtocol {
     
     func providesPublicFilesHostProvider() -> PublicFilesHostProviderProtocol {
         return PublicFilesHostProvider()
-    }
-    
-    func providesMapPoiHostProvider() -> MapPoiHostProviderProtocol {
-        return MapPoiHostProvider()
     }
 }

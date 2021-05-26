@@ -32,10 +32,7 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
  
         let globalPosition = try self.globalPositionManager.getAllProducts()
         
-        var adaptedGlobalPosition = GlobalPositionDTOAdapter().adaptPLGlobalPositionToGlobalPosition(try globalPosition.get())
-//        let nameAndSurname = getNameAndSurname()
-//        adaptedGlobalPosition.clientNameWithoutSurname = nameAndSurname.0
-//        adaptedGlobalPosition.clientFirstSurname = nameAndSurname.1
+        let adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(try globalPosition.get())
         return BSANOkResponse(adaptedGlobalPosition)
     }
 }
