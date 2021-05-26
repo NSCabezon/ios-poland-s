@@ -16,7 +16,7 @@ final class PLGetPublicKeyUseCase: UseCase<Void, PLGetPublicKeyUseCaseOkOutput, 
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLGetPublicKeyUseCaseInput) throws -> UseCaseResponse<PLGetPublicKeyUseCaseOkOutput, PLGetPublicKeyUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<PLGetPublicKeyUseCaseOkOutput, PLGetPublicKeyUseCaseErrorOutput> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let result = try managerProvider.getLoginManager().getPubKey()
         switch result {
@@ -24,8 +24,8 @@ final class PLGetPublicKeyUseCase: UseCase<Void, PLGetPublicKeyUseCaseOkOutput, 
             // TODO: the modulus and exponent can't be optionals...
             return UseCaseResponse.ok(PLGetPublicKeyUseCaseOkOutput(modulus: pubKey.modulus!, exponent: pubKey.exponent!))
         case .failure(_):
-                // TODO: the error management will be implemented in next sprint.
-                return UseCaseResponse.error(PLGetPublicKeyUseCaseErrorOutput(loginErrorType: .unauthorized))
+            // TODO: the error management will be implemented in next sprint.
+            return UseCaseResponse.error(PLGetPublicKeyUseCaseErrorOutput(loginErrorType: .unauthorized))
         }
     }
 }
@@ -35,8 +35,6 @@ extension PLGetPublicKeyUseCase: Cancelable {
 }
 
 // MARK: I/O types definition
-struct PLGetPublicKeyUseCaseInput {}
-
 final class PLGetPublicKeyUseCaseErrorOutput: StringErrorOutput {
     public var loginErrorType: LoginErrorType?
 

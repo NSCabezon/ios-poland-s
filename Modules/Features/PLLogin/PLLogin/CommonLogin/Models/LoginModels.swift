@@ -3,7 +3,7 @@
 //  PLLogin
 
 public struct LoginChallengeEntity {
-    public let authorizationType String?
+    public let authorizationType: String?
     public let value: String?
 }
 

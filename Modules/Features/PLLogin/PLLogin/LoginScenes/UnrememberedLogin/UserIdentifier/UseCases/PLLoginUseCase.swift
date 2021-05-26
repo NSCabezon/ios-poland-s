@@ -23,9 +23,10 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
         switch result {
         case .success(let loginData):
             // TODO: Check if userID must be a not optional Int
-            let loginChallenge = LoginChallengeEntity(authorizationType: loginData, value: loginData)
+            let loginChallenge = LoginChallengeEntity(authorizationType: loginData.secondFactorData?.defaultChallenge?.authorizationType,
+                value: loginData.secondFactorData?.defaultChallenge?.value)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
-            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
+            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId ?? 0, passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
             return UseCaseResponse.ok(loginOutput)
         case .failure(_):
                 // TODO: the error management will be implemented in next sprint.
