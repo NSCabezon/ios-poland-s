@@ -13,4 +13,3 @@ public enum LoginProcessLayerEvent {
     case noConnection
     case permanentlyBlocked
 }
-

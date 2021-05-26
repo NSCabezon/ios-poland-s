@@ -53,49 +53,13 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
 private extension PLLoginProcessLayer {
 
     func doNonPersistedLogin(_ info: LoginTypeInfo) {
-        // TODO
+        let input = PLLoginUseCaseInput(userId: info.identification, userAlias: <#T##String?#>)
+        let useCase = self.loginUseCase.setRequestValues(requestValues: input)
+        guard let loginUseCase = useCase as? LoginUseCase else { return }
+        self.loginWith(useCase: loginUseCase, authLogin: .magic(magic ?? ""))
     }
 
     func doPersistedLogin(_ info: LoginTypeInfo) {
         // TODO
-    }
-
-    func loginWith<Input, Output, Error: PLLoginUseCaseErrorOutput>(useCase: UseCase<Input, Output, Error> & Cancelable, authLogin: AuthLogin) {
-            UseCaseWrapper(
-                with: useCase,
-                useCaseHandler: self.useCaseHandler,
-                onSuccess: { [weak self] _ in
-                    self?.delegate?.handle(event: .loginSuccess)
-                }, onError: { [weak self] error in
-                    self?.handleError(error)
-            })
-    }
-
-    func handleError<Error: PLLoginUseCaseErrorOutput>(_ error: UseCaseError<Error>?) {
-        switch error {
-        case .error(let error):
-            self.checkLoginError(error?.loginErrorType)
-        case .generic, .intern, .networkUnavailable, .unauthorized, .none:
-            self.delegate?.handle(event: .loginError)
-        }
-    }
-
-    func checkLoginError(_ error: PLLoginErrorType?) {
-        switch error {
-        case .temporaryLocked(let seconds):
-            self.delegate?.handle(event: .accountTemporaryLocked(seconds: seconds))
-        case .unauthorized:
-            self.delegate?.handle(event: .wrongCredentials)
-        case .termsAndConditions(let sessionId):
-            self.delegate?.handle(event: .termsAndConditions(sessionId: sessionId))
-        case .noConnection:
-            self.delegate?.handle(event: .noConnection)
-        case .sca(let sessionId):
-            self.delegate?.handle(event: .sca(sessionId: sessionId))
-        case .scaPhoneList(let sessionId, let phoneList):
-            self.delegate?.handle(event: .scaPhoneList(sessionId: sessionId, phoneList: phoneList))
-        default:
-            self.delegate?.handle(event: .loginError)
-        }
     }
 }

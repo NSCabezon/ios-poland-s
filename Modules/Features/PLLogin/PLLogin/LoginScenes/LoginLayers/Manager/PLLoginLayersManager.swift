@@ -46,6 +46,12 @@ final class PLLoginLayersManager {
         environmentLayer.setDelegate(self)
         return environmentLayer
     }()
+
+    private lazy var loginProcessLayer: PLLoginProcessLayerProtocol = {
+        let processLayer = self.dependenciesResolver.resolve(for: PLLoginProcessLayerProtocol.self)
+        processLayer.setDelegate(self)
+        return processLayer
+    }()
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
@@ -62,7 +68,8 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
     }
     
     func doLogin(type: LoginType) {
-        // TODO
+        self.loginProcessLayer.doLogin(with: type)
+        //self.loginSessionLayer.setLoginState(.login)
     }
     
     func continueWithLoginSuccess() {
@@ -90,5 +97,13 @@ extension PLLoginLayersManager: LoginEnvironmentLayerDelegate {
     func didLoadEnvironment(_ environment: PLEnvironmentEntity,
                             publicFilesEnvironment: PublicFilesEnvironmentEntity) {
         self.loginPresenterLayer.didLoadEnvironment(environment, publicFilesEnvironment: publicFilesEnvironment)
+    }
+}
+
+
+// MARK: - Process Layer Delegate
+extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
+    func handle(event: LoginProcessLayerEvent) {
+        // TODO
     }
 }
