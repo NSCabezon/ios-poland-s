@@ -21,11 +21,11 @@ final class PLGlobalPositionManagerAdapter {
 
 extension PLGlobalPositionManagerAdapter: BSANPGManager {
     func loadGlobalPosition(onlyVisibleProducts: Bool, isPB: Bool) throws -> BSANResponse<SANLegacyLibrary.GlobalPositionDTO> {
-        return BSANErrorResponse(nil)
+        return try getGlobalPosition()
     }
     
     func loadGlobalPositionV2(onlyVisibleProducts: Bool, isPB: Bool) throws -> BSANResponse<SANLegacyLibrary.GlobalPositionDTO> {
-        return BSANErrorResponse(nil)
+        return try getGlobalPosition()
     }
     
     func getGlobalPosition() throws -> BSANResponse<SANLegacyLibrary.GlobalPositionDTO> {
