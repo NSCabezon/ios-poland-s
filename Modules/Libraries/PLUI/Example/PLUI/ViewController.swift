@@ -101,6 +101,7 @@ extension ViewController: UITableViewDataSource {
         guard let newCell = cell else { return UITableViewCell() }
         newCell.backgroundColor = .clear
         newCell.translatesAutoresizingMaskIntoConstraints = false
+        newCell.selectionStyle = .none
         let component = self.componentForRow(indexPath: indexPath)
         newCell.contentView.addSubview(component)
 

@@ -1,17 +1,17 @@
 //
-//  PasswordInputTextView.swift
-//  UITest
+//  CodeTextField.swift
+//  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 20/5/21.
 //
 
 import UIKit
 
-protocol PasswordInputTextFieldDelegate: UITextFieldDelegate {
-    func didDeleteTextField(_ textField: CodeTextField)
+protocol InputCodeTextFieldDelegate: UITextFieldDelegate {
+    func didDeleteTextField(_ textField: InputCodeTextField)
 }
 
-class CodeTextField: UITextField {
+class InputCodeTextField: UITextField {
 
     private enum Constants {
         static let textColor = UIColor.white
@@ -35,7 +35,7 @@ class CodeTextField: UITextField {
         }
     }
 
-    weak var passwordInputDelegate: PasswordInputTextFieldDelegate?
+    weak var inputCodeDelegate: InputCodeTextFieldDelegate?
 
     private lazy var disabledIndicatorView: UIView = {
         let view = UIView()
@@ -55,8 +55,8 @@ class CodeTextField: UITextField {
      - Parameter delegate: delegate
      - Parameter isSecureEntry: If true the characters entered are not shown
      */
-    init(delegate: PasswordInputTextFieldDelegate?, isSecureEntry: Bool = true) {
-        self.passwordInputDelegate = delegate
+    init(delegate: InputCodeTextFieldDelegate?, isSecureEntry: Bool = true) {
+        self.inputCodeDelegate = delegate
         self.isSecureEntry = isSecureEntry
         super.init(frame: .zero)
         self.delegate = delegate
@@ -70,7 +70,7 @@ class CodeTextField: UITextField {
 
     override func deleteBackward() {
         super.deleteBackward()
-        self.passwordInputDelegate?.didDeleteTextField(self)
+        self.inputCodeDelegate?.didDeleteTextField(self)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -98,7 +98,7 @@ class CodeTextField: UITextField {
     }
 }
 
-private extension CodeTextField {
+private extension InputCodeTextField {
 
     func configureView() {
         self.borderStyle = .none

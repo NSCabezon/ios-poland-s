@@ -1,11 +1,9 @@
 //
-//  CodeView.swift
+//  InputCodeView.swift
 //  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 26/5/21.
 //
-
-import Foundation
 
 public protocol InputCodeViewDelegate: AnyObject {
     func codeView(_ view: InputCodeView, didChange string: String, for position: NSInteger)
@@ -15,24 +13,76 @@ public protocol InputCodeViewDelegate: AnyObject {
     func codeView(_ view: InputCodeView, didDelete position: NSInteger)
 }
 
+public protocol InputCodeFacade: AnyObject {
+    func view(with boxes: [InputCodeBoxView]) -> UIView
+    func configuration() -> InputCodeFacadeConfiguration
+//    func shouldShowPositions() -> Bool
+//    func shouldShowSecureEntry() -> Bool
+//    func elementsNumber() -> NSInteger
+}
+
+public struct InputCodeFacadeConfiguration {
+    let showPositions: Bool
+    let showSecureEntry: Bool
+    let elementsNumber: NSInteger
+}
+
+public enum RequestedPositions {
+    case all
+    case positions([NSInteger])
+
+    func isRequestedPosition(position: NSInteger) -> Bool {
+        switch self {
+        case .all:
+            return true
+        case .positions(let positions):
+            return positions.contains(where: { $0 == position })
+        }
+    }
+}
+
 public class InputCodeView: UIView {
 
-    var inputBoxArray = [InputCodeBoxView]()
+    var inputCodeBoxArray = [InputCodeBoxView]()
+    public let charactersSet: CharacterSet
     private weak var delegate: InputCodeViewDelegate?
     private var keyboardType: UIKeyboardType
+    private let facade: InputCodeFacade
 
     /**
      - Parameters:
+     - Parameter keyboardType: keyboard that will be shown when user select any of the requested inputCodeBoxView
      - Parameter delegate: delegate
-     - Parameter keyboardType: keyboard that will be shown when user select any of the enabled inputCodeBoxView
+     - Parameter facade: Facade used por drawing the InputCodeView
+     - Parameter elementSize: size for the element to be drawn
+     - Parameter requestedPositions: positions requested for user to write (From 1 to elementsNumber)
+     - Parameter charactersSet: characterSet used for validating the user´s entry
      */
-    init(keyboardType: UIKeyboardType = .default,
-         delegate: InputCodeViewDelegate?) {
+    public init(keyboardType: UIKeyboardType = .default,
+         delegate: InputCodeViewDelegate?,
+         facade: InputCodeFacade,
+         elementSize: CGSize,
+         requestedPositions: RequestedPositions,
+         charactersSet: CharacterSet) {
 
+        self.facade = facade
         self.keyboardType = keyboardType
         self.delegate = delegate
+        self.charactersSet = charactersSet
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
+
+        let facadeConfiguration = self.facade.configuration()
+        for position in 1...facadeConfiguration.elementsNumber {
+            self.inputCodeBoxArray.append(InputCodeBoxView(position: position,
+                                                       showPosition: facadeConfiguration.showPositions,
+                                                       delegate: self,
+                                                       requested: requestedPositions.isRequestedPosition(position: position),
+                                                       isSecureEntry: facadeConfiguration.showSecureEntry,
+                                                       size: elementSize))
+        }
+
+        self.addSubviews(view: self.facade.view(with: self.inputCodeBoxArray))
     }
 
     required init?(coder: NSCoder) {
@@ -40,8 +90,21 @@ public class InputCodeView: UIView {
     }
 
     @discardableResult override public func resignFirstResponder() -> Bool {
-        self.inputBoxArray.isAnyFirstResponder()?.resignFirstResponder()
+        self.inputCodeBoxArray.isAnyFirstResponder()?.resignFirstResponder()
         return true
+    }
+}
+
+private extension InputCodeView {
+
+    func addSubviews(view: UIView) {
+        self.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: self.topAnchor),
+            view.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            view.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
     }
 }
 
@@ -57,7 +120,7 @@ extension InputCodeView: InputCodeBoxViewDelegate {
 
         codeBoxView.text = string
 
-        if let nextPasswordInputBoxView = self.inputBoxArray.nextEnabled(from: codeBoxView.position) {
+        if let nextPasswordInputBoxView = self.inputCodeBoxArray.nextEnabled(from: codeBoxView.position) {
             nextPasswordInputBoxView.becomeFirstResponder()
         } else {
             codeBoxView.resignFirstResponder()
@@ -86,7 +149,7 @@ extension Array where Element == InputCodeBoxView {
 
     func nextEnabled(from position: NSInteger) -> InputCodeBoxView? {
         guard position < self.count else { return nil }
-        let next = self.first { $0.enabled == true && $0.position > position }
+        let next = self.first { $0.requested == true && $0.position > position }
         return next
     }
 

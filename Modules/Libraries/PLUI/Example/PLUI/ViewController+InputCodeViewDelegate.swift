@@ -11,22 +11,40 @@ import PLUI
 extension ViewController {
 
     private enum InputCodeViewConstants {
-        static let smsCharactersSet: CharacterSet = .decimalDigits
-        static let passwordCharactersSet: CharacterSet = .alphanumerics
+        enum SMS {
+            static let charactersSet: CharacterSet = .decimalDigits
+            static let keyboardType: UIKeyboardType = .numberPad
+            static let boxSize = CGSize(width: 39.0, height: 56.0)
+        }
+
+        enum MaskedPassword {
+            static let charactersSet: CharacterSet = .alphanumerics
+            static let keyboardType: UIKeyboardType = .default
+            static let boxSize = CGSize(width: 31.0, height: 56.0)
+        }
     }
 
-    func smsAuthenticationView() -> SMSInputCodeView {
+    func smsAuthenticationView() -> InputCodeView {
 
-        let maskedPasswordView = SMSInputCodeView(delegate: self)
-        return maskedPasswordView
+        let smsAuthenticationView = InputCodeView(keyboardType: InputCodeViewConstants.SMS.keyboardType,
+                                                  delegate: self,
+                                                  facade: InputCodeSMSFacade(),
+                                                  elementSize: InputCodeViewConstants.SMS.boxSize,
+                                                  requestedPositions: .all,
+                                                  charactersSet: InputCodeViewConstants.SMS.charactersSet)
+        return smsAuthenticationView
     }
 
-    func maskedPasswordView() -> MaskedPasswordInputCodeView {
+    func maskedPasswordView() -> InputCodeView {
 
         let requestedPositions: [NSInteger] = [1, 3, 5, 8, 14, 16, 19, 20]
 
-        let maskedPasswordView = MaskedPasswordInputCodeView(requestedPositions: requestedPositions,
-                                                    delegate: self)
+        let maskedPasswordView = InputCodeView(keyboardType: InputCodeViewConstants.MaskedPassword.keyboardType,
+                                               delegate: self,
+                                               facade: InputCodeMaskedPasswordFacade(),
+                                               elementSize: InputCodeViewConstants.MaskedPassword.boxSize,
+                                               requestedPositions: RequestedPositions.positions(requestedPositions),
+                                               charactersSet: InputCodeViewConstants.MaskedPassword.charactersSet)
         return maskedPasswordView
     }
 }
@@ -37,24 +55,14 @@ extension ViewController: InputCodeViewDelegate {
     func codeView(_ view: InputCodeView, didChange string: String, for position: NSInteger) {
 
         let type = String(describing: type(of: view))
-        print("\(type) Text introduced: \(string) Position: \(position)")
+        print("\(type) Text: \(string) Position: \(position)")
     }
 
     func codeView(_ view: InputCodeView, willChange string: String, for position: NSInteger) -> Bool {
 
-        var characterSet: CharacterSet
-        switch view.self {
-        case is MaskedPasswordInputCodeView:
-            characterSet = InputCodeViewConstants.passwordCharactersSet
-        case is SMSInputCodeView:
-            characterSet = InputCodeViewConstants.smsCharactersSet
-        default:
-            characterSet = .alphanumerics
-        }
-
         guard string.count == 1,
               let character = UnicodeScalar(string),
-              characterSet.contains(UnicodeScalar(character)) == true else {
+              view.charactersSet.contains(UnicodeScalar(character)) == true else {
             return false
         }
         return true

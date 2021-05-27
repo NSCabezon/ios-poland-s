@@ -1,6 +1,6 @@
 //
-//  PasswordBox.swift
-//  UITest
+//  InputCodeBoxView.swift
+//  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 19/5/21.
 //
@@ -14,7 +14,7 @@ protocol InputCodeBoxViewDelegate: AnyObject {
     func codeBoxViewDidDelete (_ codeBoxView: InputCodeBoxView)
 }
 
-class InputCodeBoxView: UIView {
+public class InputCodeBoxView: UIView {
 
     private enum Constants {
         static let positionLabelHeight: CGFloat = 24.0
@@ -24,12 +24,12 @@ class InputCodeBoxView: UIView {
         static let defaultHeight: CGFloat = 56.0
     }
 
-    private lazy var codeTextField: CodeTextField = {
-        return CodeTextField(delegate: self, isSecureEntry: self.isSecureEntry)
+    private lazy var codeTextField: InputCodeTextField = {
+        return InputCodeTextField(delegate: self, isSecureEntry: self.isSecureEntry)
     }()
     let position: NSInteger
     let showPosition: Bool
-    let enabled: Bool
+    let requested: Bool
     private let isSecureEntry: Bool
     private let size: CGSize
     private let positionLabel = UILabel()
@@ -40,19 +40,19 @@ class InputCodeBoxView: UIView {
      - Parameter position: position number
      - Parameter showPosition: If true the position number is shown bellow the textField
      - Parameter delegate: delegate
-     - Parameter enabled: If false then it will be not editable. It is shown a rounded square in its place
+     - Parameter requested: If true the user´s entry is needed. If false it will be not editable. It is shown a rounded square in its place
      - Parameter isSecureEntry: If true the characters entered are not shown
      - Parameter size: size of the codeTextField. The positionLabel has its own size
      */
     init(position: NSInteger,
          showPosition: Bool = false,
          delegate: InputCodeBoxViewDelegate? = nil,
-         enabled: Bool,
+         requested: Bool,
          isSecureEntry: Bool = true,
          size: CGSize = CGSize(width: Constants.defaultWitdh, height: Constants.defaultHeight)) {
         self.showPosition = showPosition
         self.position = position
-        self.enabled = enabled
+        self.requested = requested
         self.isSecureEntry = isSecureEntry
         self.size = size
         super.init(frame: .zero)
@@ -65,15 +65,15 @@ class InputCodeBoxView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @discardableResult override func becomeFirstResponder() -> Bool {
+    @discardableResult public override func becomeFirstResponder() -> Bool {
         return self.codeTextField.becomeFirstResponder()
     }
 
-    @discardableResult override func resignFirstResponder() -> Bool {
+    @discardableResult public override func resignFirstResponder() -> Bool {
         return self.codeTextField.resignFirstResponder()
     }
 
-    override var isFirstResponder: Bool {
+    public override var isFirstResponder: Bool {
         return self.codeTextField.isFirstResponder
     }
 
@@ -107,7 +107,7 @@ private extension InputCodeBoxView {
 
     func configureSubviews() {
         self.codeTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.codeTextField.isEnabled = self.enabled
+        self.codeTextField.isEnabled = self.requested
 
         self.positionLabel.translatesAutoresizingMaskIntoConstraints = false
         self.positionLabel.text = String(self.position)
@@ -133,9 +133,9 @@ private extension InputCodeBoxView {
     }
 }
 
-extension InputCodeBoxView: PasswordInputTextFieldDelegate {
+extension InputCodeBoxView: InputCodeTextFieldDelegate {
 
-    func didDeleteTextField(_ textField: CodeTextField) {
+    func didDeleteTextField(_ textField: InputCodeTextField) {
 
         self.delegate?.codeBoxViewDidDelete(self)
     }
