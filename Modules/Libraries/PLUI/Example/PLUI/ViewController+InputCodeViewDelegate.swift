@@ -24,24 +24,24 @@ extension ViewController {
         }
     }
 
-    func smsAuthenticationView() -> InputCodeView {
+    func smsAuthenticationView() -> PLUIInputCodeView {
 
-        let smsAuthenticationView = InputCodeView(keyboardType: InputCodeViewConstants.SMS.keyboardType,
+        let smsAuthenticationView = PLUIInputCodeView(keyboardType: InputCodeViewConstants.SMS.keyboardType,
                                                   delegate: self,
-                                                  facade: InputCodeSMSFacade(),
+                                                  facade: PLUIInputCodeSMSFacade(),
                                                   elementSize: InputCodeViewConstants.SMS.boxSize,
                                                   requestedPositions: .all,
                                                   charactersSet: InputCodeViewConstants.SMS.charactersSet)
         return smsAuthenticationView
     }
 
-    func maskedPasswordView() -> InputCodeView {
+    func maskedPasswordView() -> PLUIInputCodeView {
 
         let requestedPositions: [NSInteger] = [1, 3, 5, 8, 14, 16, 19, 20]
 
-        let maskedPasswordView = InputCodeView(keyboardType: InputCodeViewConstants.MaskedPassword.keyboardType,
+        let maskedPasswordView = PLUIInputCodeView(keyboardType: InputCodeViewConstants.MaskedPassword.keyboardType,
                                                delegate: self,
-                                               facade: InputCodeMaskedPasswordFacade(),
+                                               facade: PLUIInputCodeMaskedPasswordFacade(),
                                                elementSize: InputCodeViewConstants.MaskedPassword.boxSize,
                                                requestedPositions: RequestedPositions.positions(requestedPositions),
                                                charactersSet: InputCodeViewConstants.MaskedPassword.charactersSet)
@@ -50,15 +50,15 @@ extension ViewController {
 }
 
 
-extension ViewController: InputCodeViewDelegate {
+extension ViewController: PLUIInputCodeViewDelegate {
 
-    func codeView(_ view: InputCodeView, didChange string: String, for position: NSInteger) {
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
 
         let type = String(describing: type(of: view))
         print("\(type) Text: \(string) Position: \(position)")
     }
 
-    func codeView(_ view: InputCodeView, willChange string: String, for position: NSInteger) -> Bool {
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
 
         guard string.count == 1,
               let character = UnicodeScalar(string),
@@ -68,10 +68,10 @@ extension ViewController: InputCodeViewDelegate {
         return true
     }
 
-    func codeView(_ view: InputCodeView, didBeginEditing position: NSInteger) {}
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {}
 
-    func codeView(_ view: InputCodeView, didEndEditing position: NSInteger) {}
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {}
 
-    func codeView(_ view: InputCodeView, didDelete position: NSInteger) {}
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {}
 }
 

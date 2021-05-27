@@ -1,5 +1,5 @@
 //
-//  InputCodeMaskedPasswordFacade.swift
+//  PLUIInputCodeMaskedPasswordFacade.swift
 //  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 19/5/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class InputCodeMaskedPasswordFacade {
+public final class PLUIInputCodeMaskedPasswordFacade {
 
     public init() {}
 
@@ -28,9 +28,9 @@ public final class InputCodeMaskedPasswordFacade {
     }()
 }
 
-extension InputCodeMaskedPasswordFacade: InputCodeFacade {
+extension PLUIInputCodeMaskedPasswordFacade: PLUIInputCodeFacade {
 
-    public func view(with boxes: [InputCodeBoxView]) -> UIView {
+    public func view(with boxes: [PLUIInputCodeBoxView]) -> UIView {
         for row in 1...Constants.rowsNumber {
             let stackView = UIStackView()
             stackView.axis = .horizontal
@@ -46,9 +46,9 @@ extension InputCodeMaskedPasswordFacade: InputCodeFacade {
         return self.verticalStackView
     }
 
-    public func configuration() -> InputCodeFacadeConfiguration {
-        return InputCodeFacadeConfiguration(showPositions: true,
-                                            showSecureEntry: true,
-                                            elementsNumber: Constants.elementsNumber)
+    public func configuration() -> PLUIInputCodeFacadeConfiguration {
+        return PLUIInputCodeFacadeConfiguration(showPositions: true,
+                                                showSecureEntry: true,
+                                                elementsNumber: Constants.elementsNumber)
     }
 }

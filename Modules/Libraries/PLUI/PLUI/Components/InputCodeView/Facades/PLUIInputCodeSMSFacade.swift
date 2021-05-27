@@ -1,5 +1,5 @@
 //
-//  InputCodeSMSFacade.swift
+//  PLUIInputCodeSMSFacade.swift
 //  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 25/5/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class InputCodeSMSFacade {
+public final class PLUIInputCodeSMSFacade {
 
     public init() {}
 
@@ -41,9 +41,9 @@ public final class InputCodeSMSFacade {
     }()
 }
 
-extension InputCodeSMSFacade: InputCodeFacade {
+extension PLUIInputCodeSMSFacade: PLUIInputCodeFacade {
     
-    public func view(with boxes: [InputCodeBoxView]) -> UIView {
+    public func view(with boxes: [PLUIInputCodeBoxView]) -> UIView {
         for position in 1...boxes.count {
             self.horizontalStackView.addArrangedSubview(boxes[position-1])
         }
@@ -52,9 +52,9 @@ extension InputCodeSMSFacade: InputCodeFacade {
         return horizontalStackView
     }
 
-    public func configuration() -> InputCodeFacadeConfiguration {
-        return InputCodeFacadeConfiguration(showPositions: false,
-                                            showSecureEntry: false,
-                                            elementsNumber: Constants.elementsNumber)
+    public func configuration() -> PLUIInputCodeFacadeConfiguration {
+        return PLUIInputCodeFacadeConfiguration(showPositions: false,
+                                                showSecureEntry: false,
+                                                elementsNumber: Constants.elementsNumber)
     }
 }

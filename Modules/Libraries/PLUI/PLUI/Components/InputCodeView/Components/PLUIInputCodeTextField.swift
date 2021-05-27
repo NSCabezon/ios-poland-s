@@ -1,5 +1,5 @@
 //
-//  InputCodeTextField.swift
+//  PLUIInputCodeTextField.swift
 //  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 20/5/21.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol InputCodeTextFieldDelegate: UITextFieldDelegate {
-    func didDeleteTextField(_ textField: InputCodeTextField)
+protocol PLUIInputCodeTextFieldDelegate: UITextFieldDelegate {
+    func didDeleteTextField(_ textField: PLUIInputCodeTextField)
 }
 
-class InputCodeTextField: UITextField {
+class PLUIInputCodeTextField: UITextField {
 
     private enum Constants {
         static let textColor = UIColor.white
@@ -35,7 +35,7 @@ class InputCodeTextField: UITextField {
         }
     }
 
-    weak var inputCodeDelegate: InputCodeTextFieldDelegate?
+    weak var inputCodeDelegate: PLUIInputCodeTextFieldDelegate?
 
     private lazy var disabledIndicatorView: UIView = {
         let view = UIView()
@@ -55,7 +55,7 @@ class InputCodeTextField: UITextField {
      - Parameter delegate: delegate
      - Parameter isSecureEntry: If true the characters entered are not shown
      */
-    init(delegate: InputCodeTextFieldDelegate?, isSecureEntry: Bool = true) {
+    init(delegate: PLUIInputCodeTextFieldDelegate?, isSecureEntry: Bool = true) {
         self.inputCodeDelegate = delegate
         self.isSecureEntry = isSecureEntry
         super.init(frame: .zero)
@@ -98,7 +98,7 @@ class InputCodeTextField: UITextField {
     }
 }
 
-private extension InputCodeTextField {
+private extension PLUIInputCodeTextField {
 
     func configureView() {
         self.borderStyle = .none

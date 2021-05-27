@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol InputCodeBoxViewDelegate: AnyObject {
-    func codeBoxViewShouldChangeString (_ codeBoxView: InputCodeBoxView, replacementString string: String) -> Bool
-    func codeBoxViewDidBeginEditing (_ codeBoxView: InputCodeBoxView)
-    func codeBoxViewDidEndEditing (_ codeBoxView: InputCodeBoxView)
-    func codeBoxViewDidDelete (_ codeBoxView: InputCodeBoxView)
+protocol PLUIInputCodeBoxViewDelegate: AnyObject {
+    func codeBoxViewShouldChangeString (_ codeBoxView: PLUIInputCodeBoxView, replacementString string: String) -> Bool
+    func codeBoxViewDidBeginEditing (_ codeBoxView: PLUIInputCodeBoxView)
+    func codeBoxViewDidEndEditing (_ codeBoxView: PLUIInputCodeBoxView)
+    func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView)
 }
 
-public class InputCodeBoxView: UIView {
+public class PLUIInputCodeBoxView: UIView {
 
     private enum Constants {
         static let positionLabelHeight: CGFloat = 24.0
@@ -24,8 +24,8 @@ public class InputCodeBoxView: UIView {
         static let defaultHeight: CGFloat = 56.0
     }
 
-    private lazy var codeTextField: InputCodeTextField = {
-        return InputCodeTextField(delegate: self, isSecureEntry: self.isSecureEntry)
+    private lazy var codeTextField: PLUIInputCodeTextField = {
+        return PLUIInputCodeTextField(delegate: self, isSecureEntry: self.isSecureEntry)
     }()
     let position: NSInteger
     let showPosition: Bool
@@ -33,7 +33,7 @@ public class InputCodeBoxView: UIView {
     private let isSecureEntry: Bool
     private let size: CGSize
     private let positionLabel = UILabel()
-    weak var delegate: InputCodeBoxViewDelegate?
+    weak var delegate: PLUIInputCodeBoxViewDelegate?
 
     /**
      - Parameters:
@@ -46,7 +46,7 @@ public class InputCodeBoxView: UIView {
      */
     init(position: NSInteger,
          showPosition: Bool = false,
-         delegate: InputCodeBoxViewDelegate? = nil,
+         delegate: PLUIInputCodeBoxViewDelegate? = nil,
          requested: Bool,
          isSecureEntry: Bool = true,
          size: CGSize = CGSize(width: Constants.defaultWitdh, height: Constants.defaultHeight)) {
@@ -92,7 +92,7 @@ public class InputCodeBoxView: UIView {
     }
 }
 
-private extension InputCodeBoxView {
+private extension PLUIInputCodeBoxView {
 
     func configureView() {
         self.addSubviews()
@@ -133,9 +133,9 @@ private extension InputCodeBoxView {
     }
 }
 
-extension InputCodeBoxView: InputCodeTextFieldDelegate {
+extension PLUIInputCodeBoxView: PLUIInputCodeTextFieldDelegate {
 
-    func didDeleteTextField(_ textField: InputCodeTextField) {
+    func didDeleteTextField(_ textField: PLUIInputCodeTextField) {
 
         self.delegate?.codeBoxViewDidDelete(self)
     }

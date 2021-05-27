@@ -1,27 +1,24 @@
 //
-//  InputCodeView.swift
+//  PLUIInputCodeView.swift
 //  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 26/5/21.
 //
 
-public protocol InputCodeViewDelegate: AnyObject {
-    func codeView(_ view: InputCodeView, didChange string: String, for position: NSInteger)
-    func codeView(_ view: InputCodeView, willChange string: String, for position: NSInteger) -> Bool
-    func codeView(_ view: InputCodeView, didBeginEditing position: NSInteger)
-    func codeView(_ view: InputCodeView, didEndEditing position: NSInteger)
-    func codeView(_ view: InputCodeView, didDelete position: NSInteger)
+public protocol PLUIInputCodeViewDelegate: AnyObject {
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger)
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger)
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger)
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger)
 }
 
-public protocol InputCodeFacade: AnyObject {
-    func view(with boxes: [InputCodeBoxView]) -> UIView
-    func configuration() -> InputCodeFacadeConfiguration
-//    func shouldShowPositions() -> Bool
-//    func shouldShowSecureEntry() -> Bool
-//    func elementsNumber() -> NSInteger
+public protocol PLUIInputCodeFacade: AnyObject {
+    func view(with boxes: [PLUIInputCodeBoxView]) -> UIView
+    func configuration() -> PLUIInputCodeFacadeConfiguration
 }
 
-public struct InputCodeFacadeConfiguration {
+public struct PLUIInputCodeFacadeConfiguration {
     let showPositions: Bool
     let showSecureEntry: Bool
     let elementsNumber: NSInteger
@@ -41,13 +38,13 @@ public enum RequestedPositions {
     }
 }
 
-public class InputCodeView: UIView {
+public class PLUIInputCodeView: UIView {
 
-    var inputCodeBoxArray = [InputCodeBoxView]()
+    var inputCodeBoxArray = [PLUIInputCodeBoxView]()
     public let charactersSet: CharacterSet
-    private weak var delegate: InputCodeViewDelegate?
+    private weak var delegate: PLUIInputCodeViewDelegate?
     private var keyboardType: UIKeyboardType
-    private let facade: InputCodeFacade
+    private let facade: PLUIInputCodeFacade
 
     /**
      - Parameters:
@@ -59,8 +56,8 @@ public class InputCodeView: UIView {
      - Parameter charactersSet: characterSet used for validating the user´s entry
      */
     public init(keyboardType: UIKeyboardType = .default,
-         delegate: InputCodeViewDelegate?,
-         facade: InputCodeFacade,
+         delegate: PLUIInputCodeViewDelegate?,
+         facade: PLUIInputCodeFacade,
          elementSize: CGSize,
          requestedPositions: RequestedPositions,
          charactersSet: CharacterSet) {
@@ -74,12 +71,12 @@ public class InputCodeView: UIView {
 
         let facadeConfiguration = self.facade.configuration()
         for position in 1...facadeConfiguration.elementsNumber {
-            self.inputCodeBoxArray.append(InputCodeBoxView(position: position,
-                                                       showPosition: facadeConfiguration.showPositions,
-                                                       delegate: self,
-                                                       requested: requestedPositions.isRequestedPosition(position: position),
-                                                       isSecureEntry: facadeConfiguration.showSecureEntry,
-                                                       size: elementSize))
+            self.inputCodeBoxArray.append(PLUIInputCodeBoxView(position: position,
+                                                               showPosition: facadeConfiguration.showPositions,
+                                                               delegate: self,
+                                                               requested: requestedPositions.isRequestedPosition(position: position),
+                                                               isSecureEntry: facadeConfiguration.showSecureEntry,
+                                                               size: elementSize))
         }
 
         self.addSubviews(view: self.facade.view(with: self.inputCodeBoxArray))
@@ -95,7 +92,7 @@ public class InputCodeView: UIView {
     }
 }
 
-private extension InputCodeView {
+private extension PLUIInputCodeView {
 
     func addSubviews(view: UIView) {
         self.addSubview(view)
@@ -108,9 +105,9 @@ private extension InputCodeView {
     }
 }
 
-extension InputCodeView: InputCodeBoxViewDelegate {
+extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
-    func codeBoxViewShouldChangeString (_ codeBoxView: InputCodeBoxView, replacementString string: String) -> Bool {
+    func codeBoxViewShouldChangeString (_ codeBoxView: PLUIInputCodeBoxView, replacementString string: String) -> Bool {
         let allowChange = self.delegate?.codeView(self, willChange: string, for: codeBoxView.position)
 
         guard allowChange == true else {
@@ -131,29 +128,29 @@ extension InputCodeView: InputCodeBoxViewDelegate {
         return true
     }
 
-    func codeBoxViewDidBeginEditing (_ codeBoxView: InputCodeBoxView) {
+    func codeBoxViewDidBeginEditing (_ codeBoxView: PLUIInputCodeBoxView) {
         codeBoxView.setKeyboardType(self.keyboardType)
         self.delegate?.codeView(self, didBeginEditing: codeBoxView.position)
     }
 
-    func codeBoxViewDidEndEditing (_ codeBoxView: InputCodeBoxView) {
+    func codeBoxViewDidEndEditing (_ codeBoxView: PLUIInputCodeBoxView) {
         self.delegate?.codeView(self, didEndEditing: codeBoxView.position)
     }
 
-    func codeBoxViewDidDelete (_ codeBoxView: InputCodeBoxView) {
+    func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView) {
         self.delegate?.codeView(self, didDelete: codeBoxView.position)
     }
 }
 
-extension Array where Element == InputCodeBoxView {
+extension Array where Element == PLUIInputCodeBoxView {
 
-    func nextEnabled(from position: NSInteger) -> InputCodeBoxView? {
+    func nextEnabled(from position: NSInteger) -> PLUIInputCodeBoxView? {
         guard position < self.count else { return nil }
         let next = self.first { $0.requested == true && $0.position > position }
         return next
     }
 
-    func isAnyFirstResponder() -> InputCodeBoxView? {
+    func isAnyFirstResponder() -> PLUIInputCodeBoxView? {
         for passwordInputBoxView in self {
             if passwordInputBoxView.isFirstResponder {
                 return passwordInputBoxView
