@@ -1,5 +1,5 @@
 //
-//  ViewController+SMSAuthenticationView.swift
+//  ViewController+InputCodeViewDelegate.swift
 //  PLUI_Example
 //
 //  Created by Marcos Álvarez Mesa on 25/5/21.

@@ -1,5 +1,5 @@
 //
-//  CodeTextField.swift
+//  InputCodeTextField.swift
 //  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 20/5/21.
