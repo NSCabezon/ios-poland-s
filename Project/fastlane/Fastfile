@@ -214,7 +214,6 @@ end
     push_tag()
     increment_version_number(xcodeproj: "Santander.xcodeproj", bump_type: "patch")
     increment_build_number(build_number: calculateVersionCode(get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")))
-    upload_build_settings_versions()
     push_version()
   end
 
@@ -237,7 +236,7 @@ end
 
   private_lane :push_version do
     Dir.chdir("..") do
-      branch = "develop"      
+      branch = git_branch      
       UI.message("🚀  Git branch #{branch}")      
       git_add(path: "./Project/Santander/Info.plist")
       git_commit(path: "./Project/Santander/Info.plist", message: "Updating Version #{Actions.lane_context[SharedValues::VERSION_NUMBER]}")

@@ -11,6 +11,7 @@ public protocol PLLoginManagerProtocol {
     func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError>
     func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError>
 }
 
 public final class PLLoginManager {
@@ -38,6 +39,11 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
         let result = try loginDataSource.doAuthenticateInit(parameters)
+        return result
+    }
+
+    public func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError> {
+        let result = try loginDataSource.doAuthenticate(parameters)
         return result
     }
 }

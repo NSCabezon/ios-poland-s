@@ -9,8 +9,8 @@ import Foundation
 import SANPLLibrary
 import SANLegacyLibrary
 
-public final class CardDTOAdapter {
-    func adaptPLCardToCard(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDTO {
+final class CardDTOAdapter {
+    static func adaptPLCardToCard(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDTO {
         var cardDTO = SANLegacyLibrary.CardDTO()
         cardDTO.PAN = plCard.maskedPan
         cardDTO.alias = plCard.name?.userDefined
@@ -20,7 +20,7 @@ public final class CardDTOAdapter {
         return cardDTO
     }
 
-    func adaptPLCardToCardData(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDataDTO {
+    static func adaptPLCardToCardData(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDataDTO {
         var cardDataDTO = SANLegacyLibrary.CardDataDTO()
         cardDataDTO.PAN = plCard.maskedPan
         let amountAdapter = AmountAdapter()
@@ -38,7 +38,7 @@ public final class CardDTOAdapter {
         return cardDataDTO
     }
 
-    func adaptPLCardToInactiveCard(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.InactiveCardDTO {
+    static func adaptPLCardToInactiveCard(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.InactiveCardDTO {
         var inactiveCardDTO = SANLegacyLibrary.InactiveCardDTO()
         inactiveCardDTO.PAN = plCard.maskedPan
         inactiveCardDTO.cardDescription = plCard.name?.userDefined

@@ -7,7 +7,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 final class InvestmentFundsDTOAdapter {
-    func adaptPLInvestimentFundsToInvestimentFunds(_ plInvestmentFunds: SANPLLibrary.InvestmentFundsDTO) -> SANLegacyLibrary.FundDTO {
+    static func adaptPLInvestimentFundsToInvestimentFunds(_ plInvestmentFunds: SANPLLibrary.InvestmentFundsDTO) -> SANLegacyLibrary.FundDTO {
         var fundDTO = SANLegacyLibrary.FundDTO()
         fundDTO.alias = plInvestmentFunds.name?.userDefined
         fundDTO.contractDescription = plInvestmentFunds.number

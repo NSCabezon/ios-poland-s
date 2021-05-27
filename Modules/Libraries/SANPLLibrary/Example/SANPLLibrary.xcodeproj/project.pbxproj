@@ -18,6 +18,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		7EBBC5F9265D115400C64888 /* PLGLobalPositionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBBC5F8265D115400C64888 /* PLGLobalPositionManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		65347D0B6EC9DF1C2F9496E9 /* Pods_SANPLLibrary_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SANPLLibrary_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EBBC5F8265D115400C64888 /* PLGLobalPositionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGLobalPositionManagerTests.swift; sourceTree = "<group>"; };
 		AA0911059BB0FD5E0E406D32 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		BA9029326D433A0C1C003ED0 /* Pods-SANPLLibrary_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SANPLLibrary_Tests.debug.xcconfig"; path = "Target Support Files/Pods-SANPLLibrary_Tests/Pods-SANPLLibrary_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C0684C60A2D6CD49FF6AC300 /* Pods-SANPLLibrary_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SANPLLibrary_Example.debug.xcconfig"; path = "Target Support Files/Pods-SANPLLibrary_Example/Pods-SANPLLibrary_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				427287A72654144A00AF43DB /* PLLoginManagerTests.swift */,
+				7EBBC5F8265D115400C64888 /* PLGLobalPositionManagerTests.swift */,
 				4272874F2654096E00AF43DB /* Helpers */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -315,6 +318,7 @@
 				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
 				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
 				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
@@ -337,6 +341,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
@@ -393,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EBBC5F9265D115400C64888 /* PLGLobalPositionManagerTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				427287882654119B00AF43DB /* DataRepositoryBuilder.swift in Sources */,
 				4272874A2654094700AF43DB /* BSANEnvironments.swift in Sources */,

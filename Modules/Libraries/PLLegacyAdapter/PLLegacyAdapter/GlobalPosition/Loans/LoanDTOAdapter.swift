@@ -7,7 +7,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 final class LoanDTOAdapter {
-    func adaptPLLoanToLoan(_ plLoan: SANPLLibrary.LoanDTO) -> SANLegacyLibrary.LoanDTO {
+    static func adaptPLLoanToLoan(_ plLoan: SANPLLibrary.LoanDTO) -> SANLegacyLibrary.LoanDTO {
         var loanDTO = SANLegacyLibrary.LoanDTO()
         loanDTO.alias = plLoan.name?.userDefined
         let currencyAdapter = CurrencyAdapter()
