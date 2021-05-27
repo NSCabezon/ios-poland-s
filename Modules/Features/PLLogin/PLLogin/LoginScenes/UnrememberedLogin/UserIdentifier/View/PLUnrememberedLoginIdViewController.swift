@@ -15,8 +15,8 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: DocumentPTTextField!
-    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var documentTextField: PLDocumentTextField!
+    @IBOutlet private weak var loginButton: PLLoginButton!
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var tooltipButton: UIButton!
@@ -118,11 +118,6 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureButtons() {
-        loginButton.set(localizedStylableText: localized("login_button_enter"), state: .normal)
-        loginButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        loginButton.backgroundColor = UIColor.santanderRed
-        loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
-        loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
         tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
         tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
