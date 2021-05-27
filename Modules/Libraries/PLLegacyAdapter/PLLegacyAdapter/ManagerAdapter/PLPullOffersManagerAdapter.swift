@@ -12,10 +12,10 @@ final class PLPullOffersManagerAdapter {}
 extension PLPullOffersManagerAdapter: BSANPullOffersManager {
 
     public func getCampaigns() throws -> BSANResponse<[String]?> {
-        return BSANErrorResponse(nil)
+        return BSANOkResponse([])
     }
 
     public func loadCampaigns() throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
+        return BSANOkResponse(())
     }
 }

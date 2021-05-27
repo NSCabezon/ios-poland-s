@@ -9,6 +9,9 @@
 //import Models
 import Commons
 import GlobalPosition
+import Transfer
+import Cards
+import Account
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -19,6 +22,27 @@ final class AppModifiers {
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
         let fundModifier = FundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
+    }()
+    private lazy var accountHomeActionModifier: Account.AccountHomeActionModifier = {
+        let modifier = AccountHomeActionModifier(dependenciesResolver: self.dependencieEngine)
+        modifier.setCompletion { resolver in
+            modifier.add(PLAccountHomeActionModifier(dependenciesResolver: resolver))
+        }
+        return modifier
+    }()
+    private lazy var accountOtherOperativesActionModifier: Account.AccountOtherOperativesActionModifier = {
+        let modifier = AccountOtherOperativesActionModifier(dependenciesResolver: self.dependencieEngine)
+        modifier.setCompletion { resolver in
+            modifier.add(PLAccountOtherOperativesActionModifier(dependenciesResolver: resolver))
+        }
+        return modifier
+    }()
+    private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
+        let modifier = CardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
+        modifier.setCompletion { resolver in
+            modifier.add(PLCardHomeActionModifier(dependenciesResolver: resolver))
+        }
+        return modifier
     }()
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
@@ -35,6 +59,16 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: FundModifier.self) { _ in
             return self.fundModifiers
         }
+        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
+            return self.accountHomeActionModifier
+        }
+        self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
+            return self.accountOtherOperativesActionModifier
+        }
+        self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
+            return self.cardHomeActionModifier
+        }
+        
 //        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
 //            return self.accountHomeActionModifier
 //        }
