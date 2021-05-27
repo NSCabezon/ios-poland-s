@@ -33,12 +33,23 @@ public class BSANDataProvider {
     public func getAuthCredentials() throws -> String {
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
-}
 
-extension BSANDataProvider: BSANDemoProviderProtocol {
+    public func setDemoMode(_ isDemo: Bool, _ demoUser: String?) {
+        if isDemo, let demoUser = demoUser {
+            objc_sync_enter(dataRepository)
+            dataRepository.store(DemoMode(demoUser))
+            objc_sync_exit(dataRepository)
+        } else {
+            dataRepository.remove(DemoMode.self)
+        }
+    }
+    
     public func isDemo() -> Bool {
         return dataRepository.get(DemoMode.self) != nil
     }
+}
+
+extension BSANDataProvider: BSANDemoProviderProtocol {
     
     public func getDemoMode() -> DemoMode? {
         return dataRepository.get(DemoMode.self)

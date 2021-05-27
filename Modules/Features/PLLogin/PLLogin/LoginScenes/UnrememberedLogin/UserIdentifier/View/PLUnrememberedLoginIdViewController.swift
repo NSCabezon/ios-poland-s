@@ -153,12 +153,9 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        if documentTextField.introducedDocument().isEmpty {
-            print("Empty id: show error message when it will be defined") // TODO
-        } else {
-            documentTextField?.textField?.resignFirstResponder()
-            presenter.login(identification: documentTextField.introducedDocument())
-        }
+        // TODO: PG Remove the following lines: 2
+        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+        coordinatorDelegate.goToPrivate(.classic)
     }
 
     @objc func tooltipButtonDidPressed() {
