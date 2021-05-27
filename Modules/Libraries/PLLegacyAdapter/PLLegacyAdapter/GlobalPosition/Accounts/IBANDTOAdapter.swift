@@ -5,8 +5,8 @@
 
 import SANLegacyLibrary
 
-public final class IBANDTOAdapter {
-    public class func adaptDisplayNumberToIBAN(_ displayNumber: String?) -> IBANDTO? {
+final class IBANDTOAdapter {
+    static func adaptDisplayNumberToIBAN(_ displayNumber: String?) -> IBANDTO? {
         guard let displayNumber = displayNumber else {
             return nil
         }

@@ -5,8 +5,9 @@
 //  Created by Jose C. Yebes on 4/05/2021.
 //
 
-import Foundation
 import RetailLegacy
+import Foundation
+import Commons
 import Models
 
 class EmptySalesForceHandler: SalesForceHandlerProtocol {

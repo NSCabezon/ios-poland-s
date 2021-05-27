@@ -1,14 +1,11 @@
 //
 //  PTManagersProvider.swift
-//  Pods-SANPTLibrary_Tests
-//
-//  Created by Luis Escámez Sánchez on 05/01/2021.
-//
+//  SanPLLibrary
 
 import Foundation
 
 public protocol PLManagersProviderProtocol {
-//    func getEnvironmentsManager() -> PTEnvironmentsManagerProtocol
+    func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol
     func getLoginManager() -> PLLoginManagerProtocol
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
 //    func getAccountsManager() -> PTAccountsManagerProtocol
@@ -28,7 +25,7 @@ public protocol PLManagersProviderProtocol {
 }
 
 public final class PLManagersProvider {
-//    private let environmentsManager: PTEnvironmentsManager
+    private let environmentsManager: PLEnvironmentsManager
     private let loginManager: PLLoginManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
 //    private let accountManager: PTAccountsManager
@@ -51,7 +48,7 @@ public final class PLManagersProvider {
                 hostProvider: PLHostProviderProtocol,
                 networkProvider: NetworkProvider,
                 demoInterpreter: DemoUserProtocol) {
-//        self.environmentsManager = PTEnvironmentsManager(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider)
+        self.environmentsManager = PLEnvironmentsManager(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider)
         self.loginManager = PLLoginManager(bsanDataProvider: bsanDataProvider,
                                            networkProvider: networkProvider,
                                            demoInterpreter: demoInterpreter)
@@ -86,10 +83,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 //        return self.scheduleList
 //    }
 //
-//    public func getEnvironmentsManager() -> PTEnvironmentsManagerProtocol {
-//        return self.environmentsManager
-//    }
-//
+    public func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol {
+        return self.environmentsManager
+    }
+
     public func getLoginManager() -> PLLoginManagerProtocol {
         return self.loginManager
     }
