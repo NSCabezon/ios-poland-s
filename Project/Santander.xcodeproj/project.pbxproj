@@ -114,7 +114,9 @@
 			isa = PBXGroup;
 			children = (
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
-				7E79068A265F90D1008B10E2 /* GlobalPosition */,
+				7E79068D265F90D1008B10E2 /* PLAccountHomeActionModifier.swift */,
+				7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */,
+				7E790690265F90D1008B10E2 /* PLCardHomeActionModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -264,16 +266,6 @@
 				4AE1BB63208719FA83AA6199 /* Pods-Santander.pre-release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		7E79068A265F90D1008B10E2 /* GlobalPosition */ = {
-			isa = PBXGroup;
-			children = (
-				7E79068D265F90D1008B10E2 /* PLAccountHomeActionModifier.swift */,
-				7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */,
-				7E790690265F90D1008B10E2 /* PLCardHomeActionModifier.swift */,
-			);
-			path = GlobalPosition;
 			sourceTree = "<group>";
 		};
 		858AB66681FFD84F323E4A8F /* Frameworks */ = {
