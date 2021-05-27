@@ -14,7 +14,7 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
-    func login(identification: String, magic: String, remember: Bool)
+    func login(identification: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
 }
@@ -40,8 +40,8 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
         self.loginManager?.getCurrentEnvironments()
     }
     
-    func login(identification: String, magic: String, remember: Bool) {
-        // TODO
+    func login(identification: String) {
+        self.doLogin(with: .notPersisted(info: LoginTypeInfo(identification: identification)))
     }
     
     func recoverPasswordOrNewRegistration() {
@@ -54,10 +54,30 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
 }
 
 extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
+    func handle(event: LoginProcessLayerEvent) {
+        switch event {
+        case .willLogin:
+            break // TODO
+        case .loginWithIdentifierSuccess(let passwordType):
+            switch passwordType {
+            case .normal:
+                self.coordinator.goToNormalPasswordScene()
+            case .masked:
+                self.coordinator.goToMaskedPasswordScene()
+            }
+        case .loginSuccess:
+            break // TODO
+        case .noConnection:
+            break // TODO
+        case .loginError:
+            break // TODO
+        }
+    }
 
     func handle(event: SessionProcessEvent) {
         // TODO
     }
+
     func willStartSession() {
         // TODO
     }
@@ -72,7 +92,13 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
 
 //MARK: - Private Methods
 private extension  PLUnrememberedLoginIdPresenter {
-    var coordinator: PLLoginCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+    var coordinator: PLUnrememberedLoginIdCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginIdCoordinatorProtocol.self)
+    }
+
+    func doLogin(with type: LoginType) {
+        self.view?.showLoadingWithInfo(completion: {[weak self] in
+            self?.loginManager?.doLogin(type: type)
+        })
     }
 }

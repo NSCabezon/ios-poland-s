@@ -10,8 +10,8 @@ import LoginCommon
 import CommonUseCase
 
 protocol PLUnrememberedLoginIdCoordinatorProtocol {
-    func goToNormalLoginScene()
-    func goToMaskedLoginScene()
+    func goToNormalPasswordScene()
+    func goToMaskedPasswordScene()
 }
 
 final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
@@ -34,11 +34,11 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
 }
 
 extension PLUnrememberedLoginIdCoordinator: PLUnrememberedLoginIdCoordinatorProtocol {
-    func goToNormalLoginScene() {
+    func goToNormalPasswordScene() {
         //TODO:
     }
     
-    func goToMaskedLoginScene() {
+    func goToMaskedPasswordScene() {
         //TODO:
     }
 }
@@ -101,8 +101,5 @@ private extension PLUnrememberedLoginIdCoordinator {
     }
 }
 
-extension PLUnrememberedLoginIdCoordinator: PLLoginCoordinatorProtocol {
-    // TODO: override navigation methods if necessary
-}
-
+extension PLUnrememberedLoginIdCoordinator: PLLoginCoordinatorProtocol {}
 extension PLUnrememberedLoginIdCoordinator: LoginChangeEnvironmentResolverCapable {}
