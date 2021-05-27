@@ -8,7 +8,6 @@
 import Commons
 import Foundation
 import DataRepository
-import ESCommons
 import RetailLegacy
 import SANLibraryV3
 import Repository
@@ -22,8 +21,7 @@ final class AppDependencies {
     private let localAppConfig: LocalAppConfig
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
-    private let compilation: CompilationProtocol
-    private let plCompilation: PLCompilationProtocol
+    private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     
     // MARK: - Dependecies definitions
@@ -50,7 +48,8 @@ final class AppDependencies {
         let hostProvider = PLHostProvider()
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
-
+        // TODO: PG Remove the following lines: 1
+        bsanDataProvider.setDemoMode(true, "12345678Z")
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
@@ -70,7 +69,6 @@ final class AppDependencies {
     init() {
         self.dependencieEngine = DependenciesDefault()
         compilation = Compilation()
-        plCompilation = PLCompilation()
         versionInfo = VersionInfoDTO(
             bundleIdentifier: Bundle.main.bundleIdentifier ?? "",
             versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -104,10 +102,10 @@ private extension AppDependencies {
             let bsanDataProvider: SANLibraryV3.BSANDataProvider = resolver.resolve(for: SANLibraryV3.BSANDataProvider.self)
             return WebServicesUrlProviderImpl(bsanDataProvider: bsanDataProvider)
         }
-        self.dependencieEngine.register(for: TargetProviderProtocol.self) { resolver in
-            return TargetProvider(webServicesUrlProvider:
-                                        resolver.resolve(for: WebServicesUrlProvider.self),
-                                      bsanDataProvider: resolver.resolve(for: BSANDataProvider.self))
+        self.dependencieEngine.register(for: DemoInterpreterProvider.self) { resolver in
+            return TargetProvider(
+                demoProvider: self.bsanDataProvider
+            )
         }
         // Data layer and country data adapters
         self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
@@ -130,7 +128,7 @@ private extension AppDependencies {
             return self.compilation
         }
         dependencieEngine.register(for: PLCompilationProtocol.self) { _ in
-            return self.plCompilation
+            return self.compilation
         }
         self.dependencieEngine.register(for: TrusteerRepositoryProtocol.self) { _ in
             return EmptyTrusteerRepository()

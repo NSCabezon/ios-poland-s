@@ -7,10 +7,10 @@ import Foundation
 public protocol PLManagersProviderProtocol {
     func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol
     func getLoginManager() -> PLLoginManagerProtocol
+    func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
 //    func getAccountsManager() -> PTAccountsManagerProtocol
 //    func getCardsManager() -> PTCardsManagerProtocol
 //    func getCardTransactionsManager() -> PTCardTransactionsManagerProtocol
-//    func getGlobalPositionManager() -> PTGlobalPositionManagerProtocol
 //    func getAuthManager() -> PTAuthManagerProtocol
 //    func getDepositsManager() -> PTDepositsManagerProtocol
 //    func getLoansManager() -> PTLoansManagerProtocol
@@ -27,10 +27,10 @@ public protocol PLManagersProviderProtocol {
 public final class PLManagersProvider {
     private let environmentsManager: PLEnvironmentsManager
     private let loginManager: PLLoginManager
+    private let globalPositionManager: PLGlobalPositionManagerProtocol
 //    private let accountManager: PTAccountsManager
 //    private let cardsManager: PTCardsManager
 //    private let cardTransactionsManager: PTCardTransactionsManager
-//    private let globalPositionManager: PTGlobalPositionManagerProtocol
 //    private let authManager: PTAuthManager
 //    private let depositsManager: PTDepositsManager
 //    private let loansManager: PTLoansManager
@@ -52,10 +52,12 @@ public final class PLManagersProvider {
         self.loginManager = PLLoginManager(bsanDataProvider: bsanDataProvider,
                                            networkProvider: networkProvider,
                                            demoInterpreter: demoInterpreter)
+        self.globalPositionManager = PLGlobalPositionManager(bsanDataProvider: bsanDataProvider,
+                                                             networkProvider: networkProvider,
+                                                             demoInterpreter: demoInterpreter)
 //        self.cardsManager = PTCardsManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
 //        self.cardTransactionsManager = PTCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
 //        self.accountManager = PTAccountsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
-//        self.globalPositionManager = PTGlobalPositionManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.authManager = PTAuthManager(networkProvider: networkProvider, dataProvider: bsanDataProvider)
 //        self.depositsManager = PTDepositsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.loansManager = PTLoansManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
@@ -88,6 +90,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getLoginManager() -> PLLoginManagerProtocol {
         return self.loginManager
     }
+    
+    public func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol {
+        return globalPositionManager
+    }
 //
 //    public func getAccountsManager() -> PTAccountsManagerProtocol {
 //        self.accountManager
@@ -97,9 +103,7 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 //        return self.cardsManager
 //    }
 //
-//    public func getGlobalPositionManager() -> PTGlobalPositionManagerProtocol {
-//        return globalPositionManager
-//    }
+
 //
 //    public func setEnvironment(environment: BSANPTEnvironmentDTO) {
 //        _ = environmentsManager.setEnvironment(bsanEnvironment: environment)
