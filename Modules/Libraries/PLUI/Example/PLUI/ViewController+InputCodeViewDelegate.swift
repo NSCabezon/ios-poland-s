@@ -16,7 +16,6 @@ extension ViewController {
             static let keyboardType: UIKeyboardType = .numberPad
             static let boxSize = CGSize(width: 39.0, height: 56.0)
         }
-
         enum MaskedPassword {
             static let charactersSet: CharacterSet = .alphanumerics
             static let keyboardType: UIKeyboardType = .default
@@ -27,11 +26,11 @@ extension ViewController {
     func smsAuthenticationView() -> PLUIInputCodeView {
 
         let smsAuthenticationView = PLUIInputCodeView(keyboardType: InputCodeViewConstants.SMS.keyboardType,
-                                                  delegate: self,
-                                                  facade: PLUIInputCodeSMSFacade(),
-                                                  elementSize: InputCodeViewConstants.SMS.boxSize,
-                                                  requestedPositions: .all,
-                                                  charactersSet: InputCodeViewConstants.SMS.charactersSet)
+                                                      delegate: self,
+                                                      facade: PLUIInputCodeSMSFacade(),
+                                                      elementSize: InputCodeViewConstants.SMS.boxSize,
+                                                      requestedPositions: .all,
+                                                      charactersSet: InputCodeViewConstants.SMS.charactersSet)
         return smsAuthenticationView
     }
 
@@ -40,11 +39,11 @@ extension ViewController {
         let requestedPositions: [NSInteger] = [1, 3, 5, 8, 14, 16, 19, 20]
 
         let maskedPasswordView = PLUIInputCodeView(keyboardType: InputCodeViewConstants.MaskedPassword.keyboardType,
-                                               delegate: self,
-                                               facade: PLUIInputCodeMaskedPasswordFacade(),
-                                               elementSize: InputCodeViewConstants.MaskedPassword.boxSize,
-                                               requestedPositions: RequestedPositions.positions(requestedPositions),
-                                               charactersSet: InputCodeViewConstants.MaskedPassword.charactersSet)
+                                                   delegate: self,
+                                                   facade: PLUIInputCodeMaskedPasswordFacade(),
+                                                   elementSize: InputCodeViewConstants.MaskedPassword.boxSize,
+                                                   requestedPositions: RequestedPositions.positions(requestedPositions),
+                                                   charactersSet: InputCodeViewConstants.MaskedPassword.charactersSet)
         return maskedPasswordView
     }
 }
