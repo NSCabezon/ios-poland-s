@@ -46,18 +46,6 @@ extension InputCodeMaskedPasswordFacade: InputCodeFacade {
         return self.verticalStackView
     }
 
-//    public func shouldShowPositions() -> Bool {
-//        return true
-//    }
-//
-//    public func shouldShowSecureEntry() -> Bool {
-//        return true
-//    }
-//
-//    public func elementsNumber() -> NSInteger {
-//        return Constants.elementsNumber
-//    }
-
     public func configuration() -> InputCodeFacadeConfiguration {
         return InputCodeFacadeConfiguration(showPositions: true,
                                             showSecureEntry: true,

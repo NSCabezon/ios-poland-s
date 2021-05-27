@@ -52,18 +52,6 @@ extension InputCodeSMSFacade: InputCodeFacade {
         return horizontalStackView
     }
 
-//    public func shouldShowPositions() -> Bool {
-//        return false
-//    }
-//
-//    public func shouldShowSecureEntry() -> Bool {
-//        return false
-//    }
-//
-//    public func elementsNumber() -> NSInteger {
-//        return Constants.elementsNumber
-//    }
-
     public func configuration() -> InputCodeFacadeConfiguration {
         return InputCodeFacadeConfiguration(showPositions: false,
                                             showSecureEntry: false,
