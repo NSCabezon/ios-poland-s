@@ -16,11 +16,8 @@
 		42BF5874264D13C900136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5871264D13C900136E8D /* pl.strings */; };
 		42BF5875264D13C900136E8D /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5872264D13C900136E8D /* en.strings */; };
 		444186B9265E4590004242A0 /* GetPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444186B8265E4590004242A0 /* GetPGFrequentOperativeOption.swift */; };
-		444186BD265E7BE6004242A0 /* BLIKPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444186BC265E7BE6004242A0 /* BLIKPGFrequentOperativeOption.swift */; };
+		444186BD265E7BE6004242A0 /* BLIKGPFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444186BC265E7BE6004242A0 /* BLIKGPFrequentOperativeOption.swift */; };
 		444186BF265E8C67004242A0 /* PLAccessibilityPGFrequentOperatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444186BE265E8C67004242A0 /* PLAccessibilityPGFrequentOperatives.swift */; };
-		44B4FDF3265FCA1300136B53 /* BillTaxPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4FDF2265FCA1300136B53 /* BillTaxPGFrequentOperativeOption.swift */; };
-		44BB43A0265FBE7000AB92DA /* PaymentsPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BB439F265FBE7000AB92DA /* PaymentsPGFrequentOperativeOption.swift */; };
-		44BB43A2265FC04E00AB92DA /* ContractPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BB43A1265FC04E00AB92DA /* ContractPGFrequentOperativeOption.swift */; };
 		66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */; };
 		66B3CFB32639C6C8000AAD0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB22639C6C8000AAD0F /* Assets.xcassets */; };
 		66B3CFB62639C6C8000AAD0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */; };
@@ -61,11 +58,8 @@
 		42BF5871264D13C900136E8D /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
 		42BF5872264D13C900136E8D /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
 		444186B8265E4590004242A0 /* GetPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
-		444186BC265E7BE6004242A0 /* BLIKPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		444186BC265E7BE6004242A0 /* BLIKGPFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKGPFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		444186BE265E8C67004242A0 /* PLAccessibilityPGFrequentOperatives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccessibilityPGFrequentOperatives.swift; sourceTree = "<group>"; };
-		44B4FDF2265FCA1300136B53 /* BillTaxPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTaxPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
-		44BB439F265FBE7000AB92DA /* PaymentsPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
-		44BB43A1265FC04E00AB92DA /* ContractPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		4D7D37A46A9C74874675DCB0 /* Pods-Santander.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.release.xcconfig"; sourceTree = "<group>"; };
 		4D996C6F56B9DD26D174B0AA /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
 		603A2928BF0F1A69757026E6 /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,11 +140,8 @@
 		444186B7265E457E004242A0 /* GlobalPosition */ = {
 			isa = PBXGroup;
 			children = (
-				44B4FDF2265FCA1300136B53 /* BillTaxPGFrequentOperativeOption.swift */,
-				444186BC265E7BE6004242A0 /* BLIKPGFrequentOperativeOption.swift */,
-				44BB43A1265FC04E00AB92DA /* ContractPGFrequentOperativeOption.swift */,
 				444186B8265E4590004242A0 /* GetPGFrequentOperativeOption.swift */,
-				44BB439F265FBE7000AB92DA /* PaymentsPGFrequentOperativeOption.swift */,
+				444186BC265E7BE6004242A0 /* BLIKGPFrequentOperativeOption.swift */,
 				444186BE265E8C67004242A0 /* PLAccessibilityPGFrequentOperatives.swift */,
 			);
 			path = GlobalPosition;
@@ -406,19 +397,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				444186BD265E7BE6004242A0 /* BLIKPGFrequentOperativeOption.swift in Sources */,
+				444186BD265E7BE6004242A0 /* BLIKGPFrequentOperativeOption.swift in Sources */,
 				42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */,
 				7EC927972652B3A80000ED2C /* PLAccountHomeActionModifier.swift in Sources */,
 				444186BF265E8C67004242A0 /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
-				44BB43A0265FBE7000AB92DA /* PaymentsPGFrequentOperativeOption.swift in Sources */,
-				44BB43A2265FC04E00AB92DA /* ContractPGFrequentOperativeOption.swift in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
 				42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */,
 				66BC90612641260400654CC5 /* TargetProvider.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
 				66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */,
-				44B4FDF3265FCA1300136B53 /* BillTaxPGFrequentOperativeOption.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
 				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
