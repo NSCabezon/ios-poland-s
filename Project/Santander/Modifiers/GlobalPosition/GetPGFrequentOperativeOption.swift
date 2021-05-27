@@ -28,10 +28,10 @@ extension GetPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol {
 
 private extension GetPGFrequentOperativeOption {
     func getPGFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
-        return [PGFrequentOperativeOption.sendMoney,
-                PGFrequentOperativeOption.contract,
-                PGFrequentOperativeOption.billTax,
-                BLIKGPFrequentOperativeOption()
+        return [PaymentsPGFrequentOperativeOption(),
+                ContractPGFrequentOperativeOption(),
+                BillTaxPGFrequentOperativeOption(),
+                BLIKPGFrequentOperativeOption()
         ]
     }
 }
