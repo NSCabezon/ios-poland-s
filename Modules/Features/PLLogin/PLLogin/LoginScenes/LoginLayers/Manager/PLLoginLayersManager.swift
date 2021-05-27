@@ -7,6 +7,20 @@ import Foundation
 import Commons
 import Models
 
+/**
+    The Login Manager is a multi-layer use cases coordinator. Can be used from different login scenes.
+    The login is a complex process that affects different layers in the app. This manager move information and coordinate the different data layers.
+
+    These are the layers and their responsability
+
+    - Presenter Layer: Represents any scene presenter which needs to use the login manager
+    - Session layer
+    - Process Layer
+    - Environment Layer
+    - Public Files
+ */
+
+/// This protocol is adopted by the Login Manager and used from scene presenter.
 protocol PLLoginLayersManagerDelegate: class {
     func doLogin(type: LoginType)
     func getCurrentEnvironments()
@@ -16,7 +30,9 @@ protocol PLLoginLayersManagerDelegate: class {
     func isSessionExpired() -> Bool
 }
 
+/// This protocol is adopted by the scene presenter and used from the Login Manager.
 protocol PLLoginPresenterLayerProtocol: class {
+    func handle(event: LoginProcessLayerEvent)
     func handle(event: SessionProcessEvent)
     func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity)
     func willStartSession()
@@ -100,10 +116,20 @@ extension PLLoginLayersManager: LoginEnvironmentLayerDelegate {
     }
 }
 
-
 // MARK: - Process Layer Delegate
 extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
     func handle(event: LoginProcessLayerEvent) {
-        // TODO
+        switch event {
+        case .willLogin:
+            self.publicFilesManager.cancelPublicFilesLoad(withStrategy: .initialLoad)
+        case .loginWithIdentifierSuccess(let passwordType):
+            break
+        case .loginSuccess:
+            //self.loginSessionLayer.handleSuccessLogin()
+            break
+        case .loginError, .noConnection:
+            break
+        }
+        self.loginPresenterLayer.handle(event: event)
     }
 }

@@ -18,12 +18,6 @@ public class PLLoginProcessLayer {
     private let dependenciesResolver: DependenciesResolver
     private weak var delegate: PLLoginProcessLayerEventDelegate?
 
-//    private var loginPTUseCase: PLLoginUseCase {
-//        self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
-//    }
-//    private var loginPTPersistedUseCase: PLLoginPersistedUseCase {
-//        self.dependenciesResolver.resolve(for: PLLoginPersistedUseCase.self)
-//    }
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
@@ -36,6 +30,10 @@ public class PLLoginProcessLayer {
 extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
     public func setDelegate(_ delegate: PLLoginProcessLayerEventDelegate) {
         self.delegate = delegate
+    }
+
+    private var loginUseCase: PLLoginUseCase {
+        self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
     }
 
     func doLogin(with loginType: LoginType) {
@@ -52,14 +50,47 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
 //MARK: - Private Methods
 private extension PLLoginProcessLayer {
 
+    // MARK: Main login execution
     func doNonPersistedLogin(_ info: LoginTypeInfo) {
-        let input = PLLoginUseCaseInput(userId: info.identification, userAlias: <#T##String?#>)
-        let useCase = self.loginUseCase.setRequestValues(requestValues: input)
-        guard let loginUseCase = useCase as? LoginUseCase else { return }
-        self.loginWith(useCase: loginUseCase, authLogin: .magic(magic ?? ""))
+        let identifierType = self.getIdentifierType(info.identification)
+        var caseInput: PLLoginUseCaseInput
+        switch identifierType {
+        case .nik:
+            caseInput = PLLoginUseCaseInput(userId: info.identification, userAlias: nil)
+        case .alias:
+            caseInput = PLLoginUseCaseInput(userId: nil, userAlias: info.identification)
+        }
+
+        let useCase = self.loginUseCase.setRequestValues(requestValues: caseInput)
+        guard let loginUseCase = useCase as? PLLoginUseCase else { return }
+        Scenario(useCase: loginUseCase, input: caseInput)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { [weak self] output in
+                self?.delegate?.handle(event: .loginSuccess)
+            }
+            .onError { [weak self] error in
+                self?.handleError(error)
+            }
     }
 
     func doPersistedLogin(_ info: LoginTypeInfo) {
-        // TODO
+        // TODO: Implement remembered login
+    }
+
+    // MARK: Auxiliar methods
+    func handleError<Error: PLLoginUseCaseErrorOutput>(_ error: UseCaseError<Error>?) {
+        // TODO: Handle login errors
+    }
+
+    // TODO: make a unit test
+    /// Determines the identifier type depending on length and type. An Alias is alphanumeric and can have more than 8 characters
+    func getIdentifierType(_ identifier: String) -> UserIdentifierType {
+        let characters = CharacterSet.decimalDigits.inverted
+        if !identifier.isEmpty && identifier.rangeOfCharacter(from: characters) == nil && identifier.count <= 8 {
+            return .nik
+        } else {
+            return .alias
+        }
+
     }
 }

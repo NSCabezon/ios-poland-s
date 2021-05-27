@@ -54,10 +54,30 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
 }
 
 extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
+    func handle(event: LoginProcessLayerEvent) {
+        switch event {
+        case .willLogin:
+            break // TODO
+        case .loginWithIdentifierSuccess(let passwordType):
+            switch passwordType {
+            case .normal:
+                self.coordinator.goToNormalPasswordScene()
+            case .masked:
+                self.coordinator.goToMaskedPasswordScene()
+            }
+        case .loginSuccess:
+            break // TODO
+        case .noConnection:
+            break // TODO
+        case .loginError:
+            break // TODO
+        }
+    }
 
     func handle(event: SessionProcessEvent) {
         // TODO
     }
+
     func willStartSession() {
         // TODO
     }
@@ -72,8 +92,8 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
 
 //MARK: - Private Methods
 private extension  PLUnrememberedLoginIdPresenter {
-    var coordinator: PLLoginCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+    var coordinator: PLUnrememberedLoginIdCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginIdCoordinatorProtocol.self)
     }
 
     func doLogin(with type: LoginType) {
