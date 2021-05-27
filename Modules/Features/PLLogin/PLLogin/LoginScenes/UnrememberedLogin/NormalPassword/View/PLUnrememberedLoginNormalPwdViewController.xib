@@ -16,9 +16,9 @@
                 <outlet property="documentTextField" destination="ALE-qB-Yfr" id="oFy-Tt-zMs"/>
                 <outlet property="environmentButton" destination="Mnk-2a-nRa" id="99a-lc-fSQ"/>
                 <outlet property="loginButton" destination="4yN-eH-7fk" id="hEJ-6A-3Y5"/>
+                <outlet property="passwordTextField" destination="SNJ-mh-a34" id="JHB-ZT-pLT"/>
                 <outlet property="regardLabel" destination="Fqj-VQ-BIu" id="QbF-uG-FWT"/>
                 <outlet property="sanIconImageView" destination="ncR-i9-Y80" id="fKm-30-5aB"/>
-                <outlet property="tooltipButton" destination="6tg-aa-poL" id="zFr-ds-Yjb"/>
                 <outlet property="view" destination="vTt-qt-azL" id="lmN-3d-2dv"/>
             </connections>
         </placeholder>
@@ -48,37 +48,41 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fR-Jr-Ai5">
-                    <rect key="frame" x="26" y="425" width="364" height="56"/>
+                    <rect key="frame" x="26" y="199" width="364" height="136"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALE-qB-Yfr" customClass="DocumentPTTextField" customModule="UI">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALE-qB-Yfr" customClass="PLDocumentTextField" customModule="PLLogin" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="364" height="56"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.34999999999999998" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="YsU-E8-JIa"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNJ-mh-a34" customClass="PasswordTextField" customModule="UI">
+                            <rect key="frame" x="0.0" y="80" width="364" height="56"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.34999999999999998" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="8Ir-dT-atx"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="SNJ-mh-a34" firstAttribute="leading" secondItem="ALE-qB-Yfr" secondAttribute="leading" id="0VB-H4-dwL"/>
+                        <constraint firstAttribute="bottom" secondItem="SNJ-mh-a34" secondAttribute="bottom" id="0Wp-jI-2FH"/>
+                        <constraint firstItem="SNJ-mh-a34" firstAttribute="trailing" secondItem="ALE-qB-Yfr" secondAttribute="trailing" id="GhI-xj-5UP"/>
                         <constraint firstItem="ALE-qB-Yfr" firstAttribute="top" secondItem="5fR-Jr-Ai5" secondAttribute="top" id="IKJ-qP-UTq"/>
                         <constraint firstItem="ALE-qB-Yfr" firstAttribute="leading" secondItem="5fR-Jr-Ai5" secondAttribute="leading" id="TsO-7e-YsH"/>
                         <constraint firstAttribute="trailing" secondItem="ALE-qB-Yfr" secondAttribute="trailing" id="ePN-1W-fKa"/>
-                        <constraint firstAttribute="height" constant="56" id="g6j-oF-zUm"/>
+                        <constraint firstItem="SNJ-mh-a34" firstAttribute="top" secondItem="ALE-qB-Yfr" secondAttribute="bottom" constant="24" id="g1u-7C-Mdw"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yN-eH-7fk" customClass="PressableButton" customModule="UI">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yN-eH-7fk" customClass="PLLoginButton" customModule="PLLogin" customModuleProvider="target">
                     <rect key="frame" x="24" y="747" width="366" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="sGE-fb-qt1"/>
                     </constraints>
                     <state key="normal" title="Button"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="pressedColor">
-                            <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="normalColor">
-                            <color key="value" red="0.94901960780000005" green="0.13725490200000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="btnLogin"/>
                     </userDefinedRuntimeAttributes>
                 </button>
@@ -102,41 +106,26 @@
                         <action selector="didSelectChooseEnvironment:" destination="-1" eventType="touchUpInside" id="yXj-MV-W1F"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6tg-aa-poL">
-                    <rect key="frame" x="25" y="493" width="365" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="NPv-wV-Uoy"/>
-                    </constraints>
-                    <state key="normal" title="tooltip" image="tooltipIcon">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="yqX-5V-s55"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="MFm-pN-t0c" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" id="4oS-6Q-Yw5"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" priority="750" constant="50" id="4vN-my-x2V"/>
-                <constraint firstItem="6tg-aa-poL" firstAttribute="top" secondItem="5fR-Jr-Ai5" secondAttribute="bottom" constant="12" id="6mk-Qr-W2a"/>
-                <constraint firstItem="5fR-Jr-Ai5" firstAttribute="centerY" secondItem="vTt-qt-azL" secondAttribute="centerY" priority="999" constant="5" id="8Ln-Cn-cwW"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Fqj-VQ-BIu" secondAttribute="trailing" constant="21" id="BRm-aK-tBP"/>
                 <constraint firstItem="MFm-pN-t0c" firstAttribute="top" secondItem="vTt-qt-azL" secondAttribute="top" id="CfV-sz-hne"/>
-                <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" constant="16" id="DDS-PA-9au"/>
-                <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="6tg-aa-poL" secondAttribute="trailing" constant="24" id="IWB-4g-GAc"/>
+                <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" constant="90" id="DDS-PA-9au"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="25" id="IWf-7O-dOy"/>
                 <constraint firstItem="f16-w7-XMb" firstAttribute="top" secondItem="4yN-eH-7fk" secondAttribute="bottom" constant="67" id="JSx-a4-Ff0"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="26" id="K5h-4q-QF2"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="4yN-eH-7fk" secondAttribute="trailing" constant="24" id="KL3-SH-qoz"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="bottom" secondItem="f16-w7-XMb" secondAttribute="bottom" id="PIE-x6-IMM"/>
-                <constraint firstItem="6tg-aa-poL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5fR-Jr-Ai5" secondAttribute="bottom" constant="12" id="Plb-Lk-7ba"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="f16-w7-XMb" secondAttribute="trailing" id="VHG-3d-C0p"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="21" id="VuW-XX-4nW"/>
                 <constraint firstItem="4yN-eH-7fk" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="24" id="cle-Z2-7I0"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-26" id="edJ-9H-8T8"/>
-                <constraint firstItem="4yN-eH-7fk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6tg-aa-poL" secondAttribute="bottom" constant="16" id="f3V-y0-Stq"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Mnk-2a-nRa" secondAttribute="trailing" id="gKt-Ox-fig"/>
                 <constraint firstItem="f16-w7-XMb" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" id="iPf-GX-Lxs"/>
-                <constraint firstItem="6tg-aa-poL" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="25" id="mwr-PL-XtH"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="5fR-Jr-Ai5" secondAttribute="trailing" constant="24" id="o5l-97-cfz"/>
                 <constraint firstItem="f16-w7-XMb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4yN-eH-7fk" secondAttribute="bottom" constant="15" id="pDA-r1-eZ0"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="MFm-pN-t0c" secondAttribute="trailing" id="rt2-fq-6hX"/>
@@ -148,8 +137,12 @@
             <point key="canvasLocation" x="-1212" y="274"/>
         </view>
     </objects>
+    <designables>
+        <designable name="4yN-eH-7fk">
+            <size key="intrinsicContentSize" width="54" height="38"/>
+        </designable>
+    </designables>
     <resources>
-        <image name="tooltipIcon" width="24" height="24"/>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
