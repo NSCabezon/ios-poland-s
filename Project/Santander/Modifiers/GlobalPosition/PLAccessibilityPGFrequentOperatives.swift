@@ -8,5 +8,8 @@
 import Foundation
 
 enum PLAccessibilityPGFrequentOperatives: String {
+    case btnPayments
+    case btnContract
+    case btnBillTax
     case btnBlik
 }

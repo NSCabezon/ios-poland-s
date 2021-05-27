@@ -1,21 +1,21 @@
 //
-//  BLIKGPFrequentOperativeOption.swift
+//  PaymentsPGFrequentOperativeOption.swift
 //  Santander
 //
-//  Created by Rodrigo Jurado on 26/5/21.
+//  Created by Rodrigo Jurado on 27/5/21.
 //
 
 import Models
 import UI
 import Commons
 
-final class BLIKGPFrequentOperativeOption {
-    let trackName: String? = "blik_pl"
-    let rawValue: String = "blikPoland"
-    let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnBlik.rawValue
+final class PaymentsPGFrequentOperativeOption {
+    let trackName: String? = "enviar_dinero"
+    let rawValue: String = "paymentsPoland"
+    let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnPayments.rawValue
 }
 
-extension BLIKGPFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
+extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
         return .custom {
             Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -23,8 +23,8 @@ extension BLIKGPFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     }
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
-        let imageKey: String = "icnBlik"
-        let titleKey: String = "pt_frequentOperative_button_blik"
+        let imageKey: String = "icnSendMoney"
+        let titleKey: String = "frequentOperative_label_sendMoney"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,
