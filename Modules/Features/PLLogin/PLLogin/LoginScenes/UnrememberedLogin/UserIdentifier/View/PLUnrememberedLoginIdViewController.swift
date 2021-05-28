@@ -150,15 +150,22 @@ private extension PLUnrememberedLoginIdViewController {
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
         // TODO: PG Remove the following lines: 2
-        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-        coordinatorDelegate.goToPrivate(.classic)
+//        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+//        coordinatorDelegate.goToPrivate(.classic)
+        self.presenter.login(identification: documentTextField.introducedDocument())
     }
 
     @objc func tooltipButtonDidPressed() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
-                    print("Action")
-                }), isCloseButtonAvailable: true)
-        dialog.show(in: self)
+        let keyTitle = "generic_alert_information"
+        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_whatIsLogin"), configuration: LocalizedStylableTextConfiguration(
+            font: .santander(family: .text, type: .regular, size: 18),
+            alignment: .center,
+            lineHeightMultiple: 1,
+            lineBreakMode: .byTruncatingTail
+        ))
+        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
+        let image = "icnInfoPg"
+        self.showDialog(title: keyTitle, items: [desc], image: image, action: acceptAction, isCloseOptionAvailable: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
