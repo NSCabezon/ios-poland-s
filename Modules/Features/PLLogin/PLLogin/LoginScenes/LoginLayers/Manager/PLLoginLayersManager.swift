@@ -85,6 +85,7 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
     
     func doLogin(type: LoginType) {
         self.loginProcessLayer.doLogin(with: type)
+        self.loginProcessLayer.getPublicKey()
         //self.loginSessionLayer.setLoginState(.login)
     }
     
@@ -123,6 +124,9 @@ extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
         case .willLogin:
             self.publicFilesManager.cancelPublicFilesLoad(withStrategy: .initialLoad)
         case .loginWithIdentifierSuccess(let passwordType):
+            break
+        case .pubKeyRetrieved(let key):
+            // TODO: Pesist key
             break
         case .loginSuccess:
             //self.loginSessionLayer.handleSuccessLogin()

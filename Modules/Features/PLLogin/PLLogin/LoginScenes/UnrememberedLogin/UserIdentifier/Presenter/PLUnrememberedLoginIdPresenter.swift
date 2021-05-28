@@ -65,6 +65,8 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
             case .masked:
                 self.coordinator.goToMaskedPasswordScene()
             }
+        case .pubKeyRetrieved(let key):
+            break
         case .loginSuccess:
             break // TODO
         case .noConnection:

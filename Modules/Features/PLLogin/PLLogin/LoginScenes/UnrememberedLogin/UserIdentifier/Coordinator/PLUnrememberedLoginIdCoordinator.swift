@@ -57,6 +57,10 @@ private extension PLUnrememberedLoginIdCoordinator {
         self.dependenciesEngine.register(for: PLLoginPresenterLayerProtocol.self) { _ in
             return presenter
         }
+
+        self.dependenciesEngine.register(for: PLLoginProcessLayerProtocol.self) { resolver in
+            return PLLoginProcessLayer(dependenciesResolver: resolver)
+        }
         
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdPresenterProtocol.self) { resolver in
             return presenter
@@ -80,6 +84,14 @@ private extension PLUnrememberedLoginIdCoordinator {
             presenter.view = viewController
             presenter.loginManager = self.loginLayerManager
             return viewController
+        }
+
+        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
+            return PLLoginUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetPublicKeyUseCase.self) { resolver in
+            return PLGetPublicKeyUseCase(dependenciesResolver: resolver)
         }
         
         self.dependenciesEngine.register(for: PullOfferCandidatesUseCase.self) { resolver in

@@ -12,6 +12,7 @@ public protocol PLLoginProcessLayerEventDelegate: class {
 protocol PLLoginProcessLayerProtocol {
     func setDelegate(_ delegate: PLLoginProcessLayerEventDelegate)
     func doLogin(with loginType: LoginType)
+    func getPublicKey()
 }
 
 public class PLLoginProcessLayer {
@@ -36,6 +37,10 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
         self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
     }
 
+    private var getPublicKeyUseCase: PLGetPublicKeyUseCase {
+        self.dependenciesResolver.resolve(for: PLGetPublicKeyUseCase.self)
+    }
+
     func doLogin(with loginType: LoginType) {
         self.delegate?.handle(event: .willLogin)
         switch loginType {
@@ -44,6 +49,17 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
         case .persisted(let info):
             self.doPersistedLogin(info)
         }
+    }
+
+    func getPublicKey() {
+        Scenario(useCase: self.getPublicKeyUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { [weak self] output in
+                self?.delegate?.handle(event: .pubKeyRetrieved(key: output.modulus))
+            }
+            .onError { error in
+                // TODO: Process error
+            }
     }
 }
 
