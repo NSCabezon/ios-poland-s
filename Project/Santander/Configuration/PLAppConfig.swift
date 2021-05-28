@@ -23,7 +23,7 @@ class PLAppConfig: LocalAppConfig {
     let privateMenu = true
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = false
-    let isEnabledPlusButtonPG = true
+    let isEnabledPlusButtonPG = false
     let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true

@@ -15,6 +15,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
+import Models
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -55,6 +56,9 @@ final class AppDependencies {
                                          networkProvider: networkProvider,
                                          demoInterpreter: self.demoInterpreter)
 
+    }()
+    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
+        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
     }()
 
     // MARK: Features
@@ -122,6 +126,9 @@ private extension AppDependencies {
         }
         dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
             return self.managersProviderAdapter
+        }
+        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
+            return self.getPGFrequentOperativeOption
         }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in

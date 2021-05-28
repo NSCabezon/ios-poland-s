@@ -15,6 +15,13 @@
 		42BF5873264D13C900136E8D /* es.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5870264D13C900136E8D /* es.strings */; };
 		42BF5874264D13C900136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5871264D13C900136E8D /* pl.strings */; };
 		42BF5875264D13C900136E8D /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5872264D13C900136E8D /* en.strings */; };
+		446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C1E265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift */; };
+		446E0C23265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C1F265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift */; };
+		446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C20265FE42400847FCA /* ContractPGFrequentOperativeOption.swift */; };
+		446E0C25265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C21265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift */; };
+		446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C26265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift */; };
+		446E0C29265FE49F00847FCA /* GetPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C27265FE49F00847FCA /* GetPGFrequentOperativeOption.swift */; };
+		446E0C2A265FEC2E00847FCA /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E79068D265F90D1008B10E2 /* PLAccountHomeActionModifier.swift */; };
 		66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */; };
 		66B3CFB32639C6C8000AAD0F /* PolandAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB22639C6C8000AAD0F /* PolandAssets.xcassets */; };
 		66B3CFB62639C6C8000AAD0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */; };
@@ -36,9 +43,8 @@
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
 		713B9AAC3FF52E36D0BD44AD /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89484BEECF72F5D06C73A59 /* Pods_Santander.framework */; };
-		7ECEC3DB265E4EC800F10574 /* PLCardHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECEC3D8265E4EC700F10574 /* PLCardHomeActionModifier.swift */; };
-		7ECEC3DC265E4EC800F10574 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECEC3D9265E4EC700F10574 /* PLAccountOtherOperativesActionModifier.swift */; };
-		7ECEC3DD265E4EC800F10574 /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECEC3DA265E4EC700F10574 /* PLAccountHomeActionModifier.swift */; };
+		7E790692265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */; };
+		7E790696265F90D1008B10E2 /* PLCardHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E790690265F90D1008B10E2 /* PLCardHomeActionModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +58,12 @@
 		42BF5870264D13C900136E8D /* es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es.strings; path = "../../i18n-poland/clients/iOS/es.strings"; sourceTree = "<group>"; };
 		42BF5871264D13C900136E8D /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
 		42BF5872264D13C900136E8D /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
+		446E0C1E265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLIKPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		446E0C1F265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		446E0C20265FE42400847FCA /* ContractPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		446E0C21265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillTaxPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		446E0C26265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccessibilityPGFrequentOperatives.swift; sourceTree = "<group>"; };
+		446E0C27265FE49F00847FCA /* GetPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		4AE1BB63208719FA83AA6199 /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
 		4F6BBFF1BAA3F7B8414EFCD0 /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
 		5E1F03521FC761F7662E6826 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
@@ -79,9 +91,9 @@
 		66E57605264A6C32006804BD /* assetsLocal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assetsLocal; sourceTree = "<group>"; };
 		66E57607264A6C3A006804BD /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		70122BB2CD9C57A2CB07B8A3 /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
-		7ECEC3D8265E4EC700F10574 /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
-		7ECEC3D9265E4EC700F10574 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
-		7ECEC3DA265E4EC700F10574 /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
+		7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
+		7E79068D265F90D1008B10E2 /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
+		7E790690265F90D1008B10E2 /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
 		A89484BEECF72F5D06C73A59 /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D035738C5A6EDA67A243B2D6 /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,9 +114,9 @@
 			isa = PBXGroup;
 			children = (
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
-				7ECEC3DA265E4EC700F10574 /* PLAccountHomeActionModifier.swift */,
-				7ECEC3D9265E4EC700F10574 /* PLAccountOtherOperativesActionModifier.swift */,
-				7ECEC3D8265E4EC700F10574 /* PLCardHomeActionModifier.swift */,
+				7E79068D265F90D1008B10E2 /* PLAccountHomeActionModifier.swift */,
+				7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */,
+				7E790690265F90D1008B10E2 /* PLCardHomeActionModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -117,6 +129,27 @@
 				42BF5871264D13C900136E8D /* pl.strings */,
 			);
 			name = Strings;
+			sourceTree = "<group>";
+		};
+		446E0C1C265FE42400847FCA /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				446E0C1D265FE42400847FCA /* GlobalPosition */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		446E0C1D265FE42400847FCA /* GlobalPosition */ = {
+			isa = PBXGroup;
+			children = (
+				446E0C21265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift */,
+				446E0C1E265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift */,
+				446E0C20265FE42400847FCA /* ContractPGFrequentOperativeOption.swift */,
+				446E0C27265FE49F00847FCA /* GetPGFrequentOperativeOption.swift */,
+				446E0C1F265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift */,
+				446E0C26265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift */,
+			);
+			path = GlobalPosition;
 			sourceTree = "<group>";
 		};
 		66B3CF9D2639C6C5000AAD0F = {
@@ -144,6 +177,7 @@
 				66E57596264A68DF006804BD /* MicrositeLocalConf */,
 				66BC8A5A263FFCFB00654CC5 /* Configuration */,
 				66BC8A55263FED9F00654CC5 /* Dependencies */,
+				446E0C1C265FE42400847FCA /* Modifiers */,
 				42BF586F264D13BA00136E8D /* Strings */,
 				66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */,
 				42BF471426495D3400136E8D /* HostModule.swift */,
@@ -366,21 +400,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */,
-				7ECEC3DD265E4EC800F10574 /* PLAccountHomeActionModifier.swift in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
 				42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */,
 				66BC90612641260400654CC5 /* TargetProvider.swift in Sources */,
-				7ECEC3DC265E4EC800F10574 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
+				446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
+				7E790692265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
-				7ECEC3DB265E4EC800F10574 /* PLCardHomeActionModifier.swift in Sources */,
 				66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */,
+				446E0C25265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift in Sources */,
+				7E790696265F90D1008B10E2 /* PLCardHomeActionModifier.swift in Sources */,
+				446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
+				446E0C29265FE49F00847FCA /* GetPGFrequentOperativeOption.swift in Sources */,
 				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
 				42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */,
 				66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */,
+				446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */,
 				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
+				446E0C23265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift in Sources */,
+				446E0C2A265FEC2E00847FCA /* PLAccountHomeActionModifier.swift in Sources */,
 				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
 				66BC8C9126407DD300654CC5 /* HostsModule.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
