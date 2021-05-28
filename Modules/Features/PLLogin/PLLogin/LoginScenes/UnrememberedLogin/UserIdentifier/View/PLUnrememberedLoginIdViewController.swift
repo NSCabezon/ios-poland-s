@@ -219,3 +219,9 @@ extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
         return true
     }
 }
+
+extension PLUnrememberedLoginIdViewController: DialogViewPresentationCapable {
+    var associatedDialogView: UIViewController {
+        return self
+    }
+}
