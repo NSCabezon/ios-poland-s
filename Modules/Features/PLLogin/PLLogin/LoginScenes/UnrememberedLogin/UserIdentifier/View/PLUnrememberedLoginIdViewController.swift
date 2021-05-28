@@ -110,6 +110,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureTextFields() {
+        documentTextField.textField.delegate = self
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
     
@@ -119,7 +120,7 @@ private extension PLUnrememberedLoginIdViewController {
     
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
+        tooltipButton.set(localizedStylableText: localized("pl_login_label_whatIsLogin"), state: .normal)
         tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
         tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
         tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
@@ -190,14 +191,24 @@ private extension PLUnrememberedLoginIdViewController {
     }
 }
 
-extension PLUnrememberedLoginIdViewController: PasswordPTTextFieldDelegate {
-    public func enterDidPressed() {
-        self.loginButtonDidPressed()
-    }
-}
-
 extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
+    }
+}
+
+extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = documentTextField.textField.text ?? ""
+        if currentText.count < 6 {
+            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
+            loginButton.isEnabled = false
+        }
+        else {
+            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+            loginButton.isEnabled = true
+        }
+        return true
     }
 }

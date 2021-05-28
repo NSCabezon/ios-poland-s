@@ -97,6 +97,8 @@ private extension PLDocumentTextField {
     func configureTextField() {
         textField.textColor = UIColor.Legacy.uiWhite
         textField.font = UIFont.santander(family: .text, type: .regular, size: Screen.isIphone4or5 ? 16.0 : 20.0)
+        textField.attributedPlaceholder = NSAttributedString(string: localized("pl_login_hint_login"),
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         textField.adjustsFontSizeToFitWidth = true
         textField.minimumFontSize = 12.0
         textField.returnKeyType = .next
@@ -108,12 +110,12 @@ private extension PLDocumentTextField {
         if #available(iOS 11, *) {
             textField.textContentType = .username
         }
-        self.changeFieldVisibility(isFieldVisible: false, animated: false)
+        self.changeFieldVisibility(isFieldVisible: true, animated: false)
     }
 
     func configureLoginTypeLabel() {
         titleLabel.textColor = .white
-        titleLabel.text = localized("login_select_user").plainText
+        titleLabel.text = localized("pl_login_label_login").plainText
     }
 
     func configureView() {
@@ -146,23 +148,5 @@ extension PLDocumentTextField: UITextFieldDelegate {
             introducedText = updatedText
             return true
         }
-    }
-
-    public func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        self.changeFieldVisibility(isFieldVisible: textField.text?.isEmpty == false, animated: true)
-        return true
-    }
-
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        self.changeFieldVisibility(isFieldVisible: textField.text?.isEmpty == false, animated: true)
-    }
-
-    public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        self.changeFieldVisibility(isFieldVisible: textField.text?.isEmpty == false, animated: true)
-    }
-
-    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.changeFieldVisibility(isFieldVisible: true, animated: true)
-        return true
     }
 }
