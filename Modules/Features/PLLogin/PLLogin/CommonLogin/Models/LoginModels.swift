@@ -21,3 +21,24 @@ public enum PasswordType {
     case normal
     case masked
 }
+
+struct SecondFactorDataEntity {
+    let defaultChallenge: DefaultChallengeEntity
+}
+
+public struct DefaultChallengeEntity: Encodable {
+    let authorizationType, value: String
+}
+
+public struct SecondFactorDataAuthenticateEntity {
+    let response: ResponseEntity
+}
+
+public struct ResponseEntity {
+    let challenge: ChallengeEntity
+    let value: String
+}
+
+public struct ChallengeEntity {
+    let authorizationType, value: String
+}
