@@ -16,7 +16,7 @@ public final class PLDocumentTextField: LegacyDesignableView, AnimationTextField
     @IBOutlet public var centerConstraint: NSLayoutConstraint!
     @IBOutlet public var bottomConstraint: NSLayoutConstraint!
 
-    private var maxLenght: Int = 64
+    public var maxLenght: Int = 20
 
     private weak var delegate: UITextFieldDelegate? { didSet { textField.delegate = delegate } }
     private var returnAction: (() -> Void)?
@@ -106,7 +106,6 @@ private extension PLDocumentTextField {
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
-        textField.delegate = self
         if #available(iOS 11, *) {
             textField.textContentType = .username
         }
@@ -123,30 +122,6 @@ private extension PLDocumentTextField {
         contentView?.isUserInteractionEnabled = true
         observer = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) { [weak self] (notification) in
             self?.setText((notification.object as? UITextField)?.text)
-        }
-    }
-}
-
-// MARK: - UITextFieldDelegate methods
-extension PLDocumentTextField: UITextFieldDelegate {
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        returnAction?()
-        return true
-    }
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = introducedText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-        if updatedText.count > self.maxLenght  {
-            let changeUpdatedText = updatedText.substring(0, self.maxLenght) ?? ""
-            introducedText = changeUpdatedText
-            textField.text = changeUpdatedText
-            return false
-        } else {
-            introducedText = updatedText
-            return true
         }
     }
 }
