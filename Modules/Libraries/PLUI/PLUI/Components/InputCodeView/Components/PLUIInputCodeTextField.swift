@@ -1,21 +1,19 @@
 //
-//  PasswordInputTextView.swift
-//  UITest
+//  PLUIInputCodeTextField.swift
+//  PLUI
 //
 //  Created by Marcos Álvarez Mesa on 20/5/21.
 //
 
 import UIKit
 
-protocol PasswordInputTextFieldDelegate: UITextFieldDelegate {
-    func didDeleteTextField(_ textField: PasswordInputTextField)
+protocol PLUIInputCodeTextFieldDelegate: UITextFieldDelegate {
+    func didDeleteTextField(_ textField: PLUIInputCodeTextField)
 }
 
-class PasswordInputTextField: UITextField {
+class PLUIInputCodeTextField: UITextField {
 
     private enum Constants {
-        static let textWitdh: CGFloat = 31.0
-        static let textHeight: CGFloat = 56.0
         static let textColor = UIColor.white
         static let textSize: CGFloat = 20
         static let tintColor = UIColor.red
@@ -37,7 +35,7 @@ class PasswordInputTextField: UITextField {
         }
     }
 
-    weak var passwordInputDelegate: PasswordInputTextFieldDelegate?
+    weak var inputCodeDelegate: PLUIInputCodeTextFieldDelegate?
 
     private lazy var disabledIndicatorView: UIView = {
         let view = UIView()
@@ -52,8 +50,13 @@ class PasswordInputTextField: UITextField {
         return view
     }()
 
-    init(delegate: PasswordInputTextFieldDelegate?, isSecureEntry: Bool = true) {
-        self.passwordInputDelegate = delegate
+    /**
+     - Parameters:
+     - Parameter delegate: delegate
+     - Parameter isSecureEntry: If true the characters entered are not shown
+     */
+    init(delegate: PLUIInputCodeTextFieldDelegate?, isSecureEntry: Bool = true) {
+        self.inputCodeDelegate = delegate
         self.isSecureEntry = isSecureEntry
         super.init(frame: .zero)
         self.delegate = delegate
@@ -67,7 +70,7 @@ class PasswordInputTextField: UITextField {
 
     override func deleteBackward() {
         super.deleteBackward()
-        self.passwordInputDelegate?.didDeleteTextField(self)
+        self.inputCodeDelegate?.didDeleteTextField(self)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -95,7 +98,7 @@ class PasswordInputTextField: UITextField {
     }
 }
 
-private extension PasswordInputTextField {
+private extension PLUIInputCodeTextField {
 
     func configureView() {
         self.borderStyle = .none
@@ -104,15 +107,6 @@ private extension PasswordInputTextField {
         self.textColor = Constants.textColor
         self.font = Constants.font
         self.tintColor = Constants.tintColor
-
-        self.configureConstraints()
-    }
-
-    func configureConstraints() {
-        NSLayoutConstraint.activate([
-            self.widthAnchor.constraint(equalToConstant: Constants.textWitdh),
-            self.heightAnchor.constraint(equalToConstant: Constants.textHeight),
-        ])
     }
 }
 
