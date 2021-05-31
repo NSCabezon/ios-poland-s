@@ -8,7 +8,9 @@
 import Foundation
 
 public struct LoginDTO: Codable {
-    public let userId, passwordMask: Int?
+    public let userId: Int
+    public let passwordMask: Int?
+    public let loginImageData: String?
     public let passwordMaskEnabled: Bool?
     public let secondFactorData: SecondFactorDataDTO?
     public let trustedComputerData: TrustedComputerDataDTO?

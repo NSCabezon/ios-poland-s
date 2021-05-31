@@ -83,6 +83,24 @@ public class BSANDataProvider {
         }
         objc_sync_exit(dataRepository)
     }
+
+    // MARK: Login public key store management
+    public func storePublicKey(_ pubKey: PubKeyDTO) {
+        objc_sync_enter(dataRepository)
+        dataRepository.store(pubKey)
+        objc_sync_exit(dataRepository)
+    }
+
+    public func getPublicKey() throws -> PubKeyDTO {
+        if let pubKeyDTO = dataRepository.get(PubKeyDTO.self) {
+            return pubKeyDTO
+        }
+        throw BSANIllegalStateException("PubKeyDTO is nil in DataRepository")
+    }
+
+    public func removePublicKey() {
+        self.dataRepository.remove(PubKeyDTO.self)
+    }
 }
 
 extension BSANDataProvider: BSANDemoProviderProtocol {

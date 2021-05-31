@@ -8,5 +8,5 @@
 import Foundation
 
 public struct PubKeyDTO: Codable {
-    public let modulus, exponent: String?
+    public let modulus, exponent: String
 }
