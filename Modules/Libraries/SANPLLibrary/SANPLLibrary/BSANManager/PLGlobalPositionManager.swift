@@ -31,31 +31,43 @@ final class PLGlobalPositionManager {
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try globalPositionDataSource.getGlobalPosition()
-        return result
+        return self.performResult(result: result)
     }
     
     func getAccounts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
-        return result
+        return self.performResult(result: result)
     }
     
     func getCards() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
-        return result
+        return self.performResult(result: result)
     }
 
     func getDeposits() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
-        return result
+        return self.performResult(result: result)
     }
 
     func getInvestmentFunds() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
-        return result
+        return self.performResult(result: result)
     }
 
     func getLoans() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
-        return result
+        return self.performResult(result: result)
+    }
+}
+
+private extension PLGlobalPositionManager {
+    private func performResult(result: Result<GlobalPositionDTO, NetworkProviderError>) -> Result<GlobalPositionDTO, NetworkProviderError> {
+        switch result {
+        case .failure(let error):
+            return .failure(error)
+        case .success(let globalPositionDTO):
+            self.bsanDataProvider.store(globalPositionDTO)
+            return .success(globalPositionDTO)
+        }
     }
 }
