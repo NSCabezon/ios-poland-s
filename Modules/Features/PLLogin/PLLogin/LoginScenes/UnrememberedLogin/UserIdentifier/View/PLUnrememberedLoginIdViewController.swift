@@ -16,10 +16,15 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: PLDocumentTextField!
-    @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
+    @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var tooltipButton: UIButton!
+    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
+
+    private enum Constants {
+        static let bottomDistance: CGFloat = 32
+        static let animationDuration: TimeInterval = 0.2
+    }
 
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -174,11 +179,11 @@ private extension PLUnrememberedLoginIdViewController {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        bottonDistance?.constant = keyboardFrame.height
+        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
-        UIView.animate(withDuration: 0.2) { [weak self] in
+        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
             self?.view.layoutSubviews()
         }
@@ -186,8 +191,8 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         IQKeyboardManager.shared.enableAutoToolbar = true
-        bottonDistance?.constant = 0
-        UIView.animate(withDuration: 0.2) { [weak self] in
+        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
+        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
             self?.view.layoutSubviews()
         }

@@ -19,8 +19,7 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.rowHeight = 200.0
-        tableView.estimatedRowHeight = 200.0
+        tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
 
@@ -73,20 +72,11 @@ extension ViewController: UITableViewDataSource {
         return self.components.count
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let component = self.components[section] as? UIView else {
             return nil
         }
-
-        let title = UILabel()
-        title.textColor = .white
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.textAlignment = .center
-        title.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        title.text = String(describing: type(of: component))
-
-        return title
+        return String(describing: type(of: component))
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -104,6 +94,12 @@ extension ViewController: UITableViewDataSource {
         newCell.selectionStyle = .none
         let component = self.componentForRow(indexPath: indexPath)
         newCell.contentView.addSubview(component)
+        NSLayoutConstraint.activate([
+            component.topAnchor.constraint(equalTo: newCell.contentView.topAnchor, constant: 10),
+            component.bottomAnchor.constraint(equalTo: newCell.contentView.bottomAnchor, constant: -10),
+            component.leadingAnchor.constraint(equalTo: newCell.contentView.leadingAnchor),
+            component.trailingAnchor.constraint(equalTo: newCell.contentView.trailingAnchor)
+        ])
 
         return newCell
     }
