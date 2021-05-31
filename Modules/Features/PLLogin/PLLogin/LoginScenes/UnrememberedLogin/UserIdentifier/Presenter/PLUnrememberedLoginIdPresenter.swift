@@ -29,6 +29,10 @@ final class PLUnrememberedLoginIdPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+
+    private var loginConfiguration: UnrememberedLoginConfiguration {
+        self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
+    }
 }
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
@@ -58,13 +62,16 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
         switch event {
         case .willLogin:
             break // TODO
-        case .loginWithIdentifierSuccess(let passwordType):
-            switch passwordType {
-            case .normal:
-                self.coordinator.goToNormalPasswordScene()
-            case .masked:
-                self.coordinator.goToMaskedPasswordScene()
-            }
+        case .loginWithIdentifierSuccess(let configuration):
+            self.view?.dismissLoading(completion: { [weak self] in
+                switch configuration.passwordType {
+                case .normal:
+                    self?.coordinator.goToNormalPasswordScene(configuration: configuration)
+                case .masked:
+                    self?.coordinator.goToMaskedPasswordScene(configuration: configuration)
+                }
+            })
+
         case .loginSuccess:
             break // TODO
         case .noConnection:

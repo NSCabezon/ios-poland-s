@@ -42,8 +42,8 @@ public final class PLLoginButton: UIButton {
         contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         clipsToBounds = true
         titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
-        set(localizedStylableText: localized("login_button_enter"), state: .normal)
-        isEnabled = true
+        set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
+        isEnabled = false
     }
 
     internal func colourForState() {

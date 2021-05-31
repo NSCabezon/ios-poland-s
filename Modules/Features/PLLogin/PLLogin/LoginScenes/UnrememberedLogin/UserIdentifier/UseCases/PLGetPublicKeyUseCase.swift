@@ -20,9 +20,8 @@ final class PLGetPublicKeyUseCase: UseCase<Void, PLGetPublicKeyUseCaseOkOutput, 
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let result = try managerProvider.getLoginManager().getPubKey()
         switch result {
-        case .success(let pubKey):
-            // TODO: the modulus and exponent can't be optionals...
-            return UseCaseResponse.ok(PLGetPublicKeyUseCaseOkOutput(modulus: pubKey.modulus!, exponent: pubKey.exponent!))
+        case .success(let pubKeyData):
+            return UseCaseResponse.ok(PLGetPublicKeyUseCaseOkOutput(modulus: pubKeyData.modulus, exponent: pubKeyData.exponent))
         case .failure(_):
             // TODO: the error management will be implemented in next sprint.
             return UseCaseResponse.error(PLGetPublicKeyUseCaseErrorOutput(loginErrorType: .unauthorized))

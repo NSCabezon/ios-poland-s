@@ -49,7 +49,7 @@ final class AppDependencies {
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
         // TODO: PG Remove the following lines: 1
-        bsanDataProvider.setDemoMode(true, "12345678Z")
+        //bsanDataProvider.setDemoMode(true, "12345678Z")
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,

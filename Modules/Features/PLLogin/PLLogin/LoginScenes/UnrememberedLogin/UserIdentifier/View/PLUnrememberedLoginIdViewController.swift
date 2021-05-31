@@ -110,6 +110,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureTextFields() {
+        documentTextField.textField.delegate = self
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
     
@@ -119,7 +120,7 @@ private extension PLUnrememberedLoginIdViewController {
     
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
+        tooltipButton.set(localizedStylableText: localized("pl_login_label_whatIsLogin"), state: .normal)
         tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
         tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
         tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
@@ -149,15 +150,22 @@ private extension PLUnrememberedLoginIdViewController {
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
         // TODO: PG Remove the following lines: 2
-        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-        coordinatorDelegate.goToPrivate(.classic)
+//        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+//        coordinatorDelegate.goToPrivate(.classic)
+        self.presenter.login(identification: documentTextField.introducedDocument())
     }
 
     @objc func tooltipButtonDidPressed() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
-                    print("Action")
-                }), isCloseButtonAvailable: true)
-        dialog.show(in: self)
+        let keyTitle = "generic_alert_information"
+        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_whatIsLogin"), configuration: LocalizedStylableTextConfiguration(
+            font: .santander(family: .text, type: .regular, size: 18),
+            alignment: .center,
+            lineHeightMultiple: 1,
+            lineBreakMode: .byTruncatingTail
+        ))
+        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
+        let image = "icnInfoPg"
+        self.showDialog(title: keyTitle, items: [desc], image: image, action: acceptAction, isCloseOptionAvailable: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -190,14 +198,30 @@ private extension PLUnrememberedLoginIdViewController {
     }
 }
 
-extension PLUnrememberedLoginIdViewController: PasswordPTTextFieldDelegate {
-    public func enterDidPressed() {
-        self.loginButtonDidPressed()
-    }
-}
-
 extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
+    }
+}
+
+extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = documentTextField.textField.text ?? ""
+        if currentText.count < 6 {
+            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
+            loginButton.isEnabled = false
+        }
+        else {
+            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+            loginButton.isEnabled = true
+        }
+        return true
+    }
+}
+
+extension PLUnrememberedLoginIdViewController: DialogViewPresentationCapable {
+    var associatedDialogView: UIViewController {
+        return self
     }
 }

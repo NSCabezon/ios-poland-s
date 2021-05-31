@@ -12,6 +12,7 @@ public protocol PLLoginProcessLayerEventDelegate: class {
 protocol PLLoginProcessLayerProtocol {
     func setDelegate(_ delegate: PLLoginProcessLayerEventDelegate)
     func doLogin(with loginType: LoginType)
+    func getPublicKey()
 }
 
 public class PLLoginProcessLayer {
@@ -36,6 +37,10 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
         self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
     }
 
+    private var getPublicKeyUseCase: PLGetPublicKeyUseCase {
+        self.dependenciesResolver.resolve(for: PLGetPublicKeyUseCase.self)
+    }
+
     func doLogin(with loginType: LoginType) {
         self.delegate?.handle(event: .willLogin)
         switch loginType {
@@ -44,6 +49,17 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
         case .persisted(let info):
             self.doPersistedLogin(info)
         }
+    }
+
+    func getPublicKey() {
+        Scenario(useCase: self.getPublicKeyUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { _ in
+                // Nothing to do
+            }
+            .onError { error in
+                // TODO: Process error: without pub key we can't process SMS SCA
+            }
     }
 }
 
@@ -66,7 +82,15 @@ private extension PLLoginProcessLayer {
         Scenario(useCase: loginUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
-                self?.delegate?.handle(event: .loginSuccess)
+                var passwordType = PasswordType.normal
+                if output.passwordMaskEnabled == true, let mask = output.passwordMask {
+                    passwordType = PasswordType.masked(mask: mask)
+                }
+                let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
+                                                                   passwordType: passwordType,
+                                                                   challenge: LoginChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
+                                                                   loginImageData: output.loginImage, password: nil)
+                self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }
             .onError { [weak self] error in
                 self?.handleError(error)

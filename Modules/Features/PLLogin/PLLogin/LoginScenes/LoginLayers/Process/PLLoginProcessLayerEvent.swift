@@ -6,7 +6,7 @@ import Foundation
 
 public enum LoginProcessLayerEvent {
     case willLogin
-    case loginWithIdentifierSuccess(passwordType: PasswordType)
+    case loginWithIdentifierSuccess(configuration: UnrememberedLoginConfiguration)
     case loginSuccess
     case loginError
     case noConnection

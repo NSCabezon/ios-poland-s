@@ -19,7 +19,7 @@ public enum UserIdentifierType {
 
 public enum PasswordType {
     case normal
-    case masked
+    case masked(mask: Int)
 }
 
 struct SecondFactorDataEntity {
