@@ -6,6 +6,7 @@ import IQKeyboardManagerSwift
 
 protocol PLUnrememberedLoginNormalPwdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
+    func setUserIdentifier(_ identifier: String)
 }
 
 final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
@@ -61,6 +62,10 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
 }
 
 extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalPwdViewProtocol {
+    func setUserIdentifier(_ identifier: String) {
+        self.documentTextField.setText(identifier)
+    }
+
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
@@ -115,6 +120,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        self.documentTextField.isUserInteractionEnabled = false
         passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
         passwordTextField?.delegate = self
     }

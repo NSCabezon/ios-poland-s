@@ -29,11 +29,15 @@ final class PLUnrememberedLoginNormalPwdPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+
+    private var loginConfiguration: UnrememberedLoginConfiguration {
+        self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
+    }
 }
 
 extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
     func viewDidLoad() {
-        // TODO
+        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
     }
 
     func viewWillAppear() {
