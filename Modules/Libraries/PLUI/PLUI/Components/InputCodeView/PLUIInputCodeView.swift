@@ -56,11 +56,11 @@ public class PLUIInputCodeView: UIView {
      - Parameter charactersSet: characterSet used for validating the user´s entry
      */
     public init(keyboardType: UIKeyboardType = .default,
-         delegate: PLUIInputCodeViewDelegate?,
-         facade: PLUIInputCodeFacade,
-         elementSize: CGSize,
-         requestedPositions: RequestedPositions,
-         charactersSet: CharacterSet) {
+                delegate: PLUIInputCodeViewDelegate?,
+                facade: PLUIInputCodeFacade,
+                elementSize: CGSize,
+                requestedPositions: RequestedPositions,
+                charactersSet: CharacterSet) {
 
         self.facade = facade
         self.keyboardType = keyboardType

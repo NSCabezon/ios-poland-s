@@ -4,13 +4,13 @@ import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginMaskedPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
 }
 
-final class PLUnrememberedLoginIdViewController: UIViewController {
+final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
-    private let presenter: PLUnrememberedLoginIdPresenterProtocol
+    private let presenter: PLUnrememberedLoginMaskedPwdPresenterProtocol
     
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
@@ -18,19 +18,31 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet private weak var documentTextField: DocumentPTTextField!
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var tooltipButton: UIButton!
-    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
+    private lazy var maskedPasswordInputCodeView: PLUIInputCodeView = {
+
+        let requestedPositions = self.presenter.requestedPositions()
+
+        return PLUIInputCodeView(keyboardType: .default,
+                                 delegate: self.presenter,
+                                 facade: PLUIInputCodeMaskedPasswordFacade(),
+                                 elementSize: Constants.makedPasswordBoxSize,
+                                 requestedPositions: RequestedPositions.positions(requestedPositions),
+                                 charactersSet: Constants.maskedPasswordCharacterSet)
+    }()
 
     private enum Constants {
+        static let makedPasswordBoxSize = CGSize(width: 31, height: 56) // TODO: We need to change the width and height for smaller devices screens
+        static let maskedPasswordCharacterSet: CharacterSet = .alphanumerics
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
     }
 
-
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
-         presenter: PLUnrememberedLoginIdPresenterProtocol) {
+         presenter: PLUnrememberedLoginMaskedPwdPresenterProtocol) {
         self.presenter = presenter
         self.dependenciesResolver = dependenciesResolver
+
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -65,14 +77,14 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     }
 }
 
-extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {
+extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedPwdViewProtocol {
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func resetForm() {
-        self.documentTextField?.setText("")
+        //TODO: Need to add a reset for PLUIInputCodeView
     }
     
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
@@ -84,7 +96,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
     }
 }
 
-private extension PLUnrememberedLoginIdViewController {
+private extension PLUnrememberedLoginMaskedPwdViewController {
     func isKeyboardDismisserAllowed() -> Bool {
         return parent == nil || parent is UINavigationController
     }
@@ -99,6 +111,7 @@ private extension PLUnrememberedLoginIdViewController {
         configureRegardLabel()
         configureBackground()
         configureTextFields()
+        configureMaskedPasswordInputView()
         configureButtons()
         setAccessibility()
     }
@@ -117,6 +130,16 @@ private extension PLUnrememberedLoginIdViewController {
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
+
+    func configureMaskedPasswordInputView() {
+
+        self.view.addSubview(self.maskedPasswordInputCodeView)
+        NSLayoutConstraint.activate([
+            self.maskedPasswordInputCodeView.leadingAnchor.constraint(equalTo: self.documentTextField.leadingAnchor),
+            self.maskedPasswordInputCodeView.trailingAnchor.constraint(equalTo: self.documentTextField.trailingAnchor),
+            self.maskedPasswordInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24),
+        ])
+    }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -129,12 +152,6 @@ private extension PLUnrememberedLoginIdViewController {
         loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
         loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
-        tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
-        tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
-        tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
     
     func setAccessibility() {
@@ -158,16 +175,7 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        // TODO: PG Remove the following lines: 2
-        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-        coordinatorDelegate.goToPrivate(.classic)
-    }
-
-    @objc func tooltipButtonDidPressed() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
-                    print("Action")
-                }), isCloseButtonAvailable: true)
-        dialog.show(in: self)
+        // TODO
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -176,7 +184,7 @@ private extension PLUnrememberedLoginIdViewController {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
+        buttonBottomAnchorConstant.constant = -keyboardFrame.height + Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
@@ -188,7 +196,7 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         IQKeyboardManager.shared.enableAutoToolbar = true
-        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
+        buttonBottomAnchorConstant.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
             self?.view.layoutSubviews()
@@ -200,13 +208,13 @@ private extension PLUnrememberedLoginIdViewController {
     }
 }
 
-extension PLUnrememberedLoginIdViewController: PasswordPTTextFieldDelegate {
+extension PLUnrememberedLoginMaskedPwdViewController: PasswordPTTextFieldDelegate {
     public func enterDidPressed() {
         self.loginButtonDidPressed()
     }
 }
 
-extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
+extension PLUnrememberedLoginMaskedPwdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
     }

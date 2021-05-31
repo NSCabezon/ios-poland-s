@@ -4,7 +4,7 @@ import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginNormalPwdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginNormalPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
 }
 
