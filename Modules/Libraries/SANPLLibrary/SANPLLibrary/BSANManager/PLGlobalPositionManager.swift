@@ -31,43 +31,48 @@ final class PLGlobalPositionManager {
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition()
-        return self.performResult(result)
+        processResult(result)
+        return result
     }
     
     func getAccounts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
-        return self.performResult(result)
+        processResult(result)
+        return result
     }
     
     func getCards() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
-        return self.performResult(result)
+        processResult(result)
+        return result
     }
 
     func getDeposits() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
-        return self.performResult(result)
+        processResult(result)
+        return result
     }
 
     func getInvestmentFunds() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
-        return self.performResult(result)
+        processResult(result)
+        return result
     }
 
     func getLoans() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
-        return self.performResult(result)
+        processResult(result)
+        return result
     }
 }
 
 private extension PLGlobalPositionManager {
-    private func performResult(_ result: Result<GlobalPositionDTO, NetworkProviderError>) -> Result<GlobalPositionDTO, NetworkProviderError> {
+    private func processResult(_ result: Result<GlobalPositionDTO, NetworkProviderError>) {
         switch result {
-        case .failure(let error):
-            return .failure(error)
+        case .failure(_):
+            return
         case .success(let globalPositionDTO):
             self.bsanDataProvider.store(globalPositionDTO)
-            return .success(globalPositionDTO)
         }
     }
 }
