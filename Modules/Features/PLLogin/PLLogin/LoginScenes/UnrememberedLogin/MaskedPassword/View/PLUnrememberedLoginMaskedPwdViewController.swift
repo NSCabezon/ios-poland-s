@@ -15,7 +15,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: DocumentPTTextField!
+    @IBOutlet private weak var documentTextField: PLDocumentTextField!
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
@@ -128,6 +128,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func configureTextFields() {
+        self.documentTextField.isUserInteractionEnabled = false
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
 
