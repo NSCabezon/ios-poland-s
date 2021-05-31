@@ -28,7 +28,7 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func getCardsDataMap() throws -> BSANResponse<[String : CardDataDTO]> {
-        return BSANErrorResponse([:])
+        return BSANOkResponse([:])
     }
     
     func getPrepaidsCardsDataMap() throws -> BSANResponse<[String : PrepaidCardDataDTO]> {
