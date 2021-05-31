@@ -59,12 +59,15 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
         case .willLogin:
             break // TODO
         case .loginWithIdentifierSuccess(let configuration):
-            switch configuration.passwordType {
-            case .normal:
-                self.coordinator.goToNormalPasswordScene(configuration: configuration)
-            case .masked:
-                self.coordinator.goToMaskedPasswordScene(configuration: configuration)
-            }
+            self.view?.dismissLoading(completion: { [weak self] in
+                switch configuration.passwordType {
+                case .normal:
+                    self?.coordinator.goToNormalPasswordScene(configuration: configuration)
+                case .masked:
+                    self?.coordinator.goToMaskedPasswordScene(configuration: configuration)
+                }
+            })
+
         case .loginSuccess:
             break // TODO
         case .noConnection:
