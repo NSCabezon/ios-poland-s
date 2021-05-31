@@ -45,7 +45,7 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
 
 extension PLUnrememberedLoginIdCoordinator: PLUnrememberedLoginIdCoordinatorProtocol {
     func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration) {
-        self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
+            self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
             return configuration
         }
         self.normalPwdCoordinator.start()

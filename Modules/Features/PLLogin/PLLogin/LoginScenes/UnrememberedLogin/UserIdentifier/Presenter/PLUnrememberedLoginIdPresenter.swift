@@ -29,6 +29,10 @@ final class PLUnrememberedLoginIdPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+
+    private var loginConfiguration: UnrememberedLoginConfiguration {
+        self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
+    }
 }
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {

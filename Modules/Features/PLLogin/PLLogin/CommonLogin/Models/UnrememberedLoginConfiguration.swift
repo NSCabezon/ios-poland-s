@@ -9,11 +9,13 @@ public final class UnrememberedLoginConfiguration {
     public let passwordType: PasswordType
     public let challenge: LoginChallengeEntity
     public let loginImageData: String?
+    public let password: String?
 
-    public init(userIdentifier: String, passwordType: PasswordType, challenge: LoginChallengeEntity, loginImageData: String?) {
+    public init(userIdentifier: String, passwordType: PasswordType, challenge: LoginChallengeEntity, loginImageData: String?, password: String?) {
         self.userIdentifier = userIdentifier
         self.passwordType = passwordType
         self.challenge = challenge
         self.loginImageData = loginImageData
+        self.password = password
     }
 }

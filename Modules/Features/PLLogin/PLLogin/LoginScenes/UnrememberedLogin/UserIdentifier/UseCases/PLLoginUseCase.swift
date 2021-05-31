@@ -22,7 +22,7 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
         let result = try managerProvider.getLoginManager().doLogin(parameters)
         switch result {
         case .success(let loginData):
-            // TODO: Check if userID must be a not optional Int
+            // TODO: Check if loginData.userId must be a string
             let loginChallenge = LoginChallengeEntity(authorizationType: loginData.secondFactorData?.defaultChallenge?.authorizationType,
                 value: loginData.secondFactorData?.defaultChallenge?.value)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
