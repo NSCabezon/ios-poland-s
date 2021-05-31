@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLUnrememberedLoginNormalPwdViewController" customModule="PLLogin" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundImageView" destination="MFm-pN-t0c" id="7sD-oA-BQB"/>
-                <outlet property="bottonDistance" destination="0Tv-Ip-dCx" id="pwS-Ty-l4h"/>
+                <outlet property="buttonBottomAnchorConstraint" destination="9tx-Is-Z7N" id="gJ3-0s-DJy"/>
                 <outlet property="documentTextField" destination="ALE-qB-Yfr" id="oFy-Tt-zMs"/>
                 <outlet property="environmentButton" destination="Mnk-2a-nRa" id="99a-lc-fSQ"/>
                 <outlet property="loginButton" destination="4yN-eH-7fk" id="hEJ-6A-3Y5"/>
@@ -77,7 +77,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yN-eH-7fk" customClass="PLLoginButton" customModule="PLLogin" customModuleProvider="target">
-                    <rect key="frame" x="24" y="747" width="366" height="48"/>
+                    <rect key="frame" x="24" y="782" width="366" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="sGE-fb-qt1"/>
                     </constraints>
@@ -86,13 +86,6 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="btnLogin"/>
                     </userDefinedRuntimeAttributes>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f16-w7-XMb" userLabel="EndView">
-                    <rect key="frame" x="0.0" y="862" width="414" height="0.0"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" id="0Tv-Ip-dCx"/>
-                    </constraints>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnk-2a-nRa" customClass="ResponsiveButton" customModule="UI">
                     <rect key="frame" x="368" y="43" width="46" height="71"/>
                     <color key="backgroundColor" systemColor="systemGrayColor"/>
@@ -112,22 +105,18 @@
             <constraints>
                 <constraint firstItem="MFm-pN-t0c" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" id="4oS-6Q-Yw5"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" priority="750" constant="50" id="4vN-my-x2V"/>
+                <constraint firstItem="4yN-eH-7fk" firstAttribute="bottom" secondItem="yqX-5V-s55" secondAttribute="bottom" constant="-32" id="9tx-Is-Z7N"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Fqj-VQ-BIu" secondAttribute="trailing" constant="21" id="BRm-aK-tBP"/>
                 <constraint firstItem="MFm-pN-t0c" firstAttribute="top" secondItem="vTt-qt-azL" secondAttribute="top" id="CfV-sz-hne"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" constant="90" id="DDS-PA-9au"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="25" id="IWf-7O-dOy"/>
-                <constraint firstItem="f16-w7-XMb" firstAttribute="top" secondItem="4yN-eH-7fk" secondAttribute="bottom" constant="67" id="JSx-a4-Ff0"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="26" id="K5h-4q-QF2"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="4yN-eH-7fk" secondAttribute="trailing" constant="24" id="KL3-SH-qoz"/>
-                <constraint firstItem="yqX-5V-s55" firstAttribute="bottom" secondItem="f16-w7-XMb" secondAttribute="bottom" id="PIE-x6-IMM"/>
-                <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="f16-w7-XMb" secondAttribute="trailing" id="VHG-3d-C0p"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="21" id="VuW-XX-4nW"/>
                 <constraint firstItem="4yN-eH-7fk" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="24" id="cle-Z2-7I0"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-26" id="edJ-9H-8T8"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Mnk-2a-nRa" secondAttribute="trailing" id="gKt-Ox-fig"/>
-                <constraint firstItem="f16-w7-XMb" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" id="iPf-GX-Lxs"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="5fR-Jr-Ai5" secondAttribute="trailing" constant="24" id="o5l-97-cfz"/>
-                <constraint firstItem="f16-w7-XMb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4yN-eH-7fk" secondAttribute="bottom" constant="15" id="pDA-r1-eZ0"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="MFm-pN-t0c" secondAttribute="trailing" id="rt2-fq-6hX"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="top" secondItem="ncR-i9-Y80" secondAttribute="bottom" priority="980" constant="39" id="tcO-Gs-mcx"/>
                 <constraint firstItem="Mnk-2a-nRa" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-1" id="w5o-Oq-fAo"/>
