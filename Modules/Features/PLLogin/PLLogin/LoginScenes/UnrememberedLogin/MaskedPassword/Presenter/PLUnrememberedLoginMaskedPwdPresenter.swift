@@ -71,10 +71,11 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 
-    func handle(event: SessionProcessEvent) {
+    func handle(event: LoginProcessLayerEvent) {
         // TODO
     }
-    func willStartSession() {
+
+    func handle(event: SessionProcessEvent) {
         // TODO
     }
 
@@ -83,6 +84,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
         let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
         let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
         self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
+    }
+
+    func willStartSession() {
+        // TODO
     }
 }
 
