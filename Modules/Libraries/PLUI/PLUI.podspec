@@ -13,8 +13,9 @@ The Poland PLUI framework.
 
   s.ios.deployment_target = '10.3'
   s.source_files = 'PLUI/**/*.{swift}'
+  s.resources = "PLUI/**/*.{xcassets}"
   s.resource_bundles = {
-    'PLUI' => ['PLUI/**/*.{storyboard,ttf,json,strings,xib,m4a,caf,xcassets}']
+    'PLUI' => ['PLUI/**/*.{storyboard,ttf,json,strings,xib,m4a,caf}']
   }
   s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 

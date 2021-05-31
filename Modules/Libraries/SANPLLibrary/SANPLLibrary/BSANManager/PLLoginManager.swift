@@ -34,7 +34,13 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
         let result = try loginDataSource.getPubKey()
-        return result
+        switch result {
+        case .success(let pubKeyDTO):
+            bsanDataProvider.storePublicKey(pubKeyDTO)
+            return .success(pubKeyDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
 
     public func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {

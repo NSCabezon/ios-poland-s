@@ -15,11 +15,11 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: DocumentPTTextField!
-    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var documentTextField: PLDocumentTextField!
+    @IBOutlet private weak var loginButton: PLLoginButton!
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var tooltipButton: UIButton!
+    @IBOutlet weak var passwordTextField: PasswordTextField!
 
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -64,6 +64,10 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
+    }
+
+    func resetPassword() {
+        self.passwordTextField?.reset()
     }
     
     func resetForm() {
@@ -111,6 +115,8 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
+        passwordTextField?.delegate = self
     }
     
     @objc func dismissKeyboard() {
@@ -118,23 +124,13 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     func configureButtons() {
-        loginButton.set(localizedStylableText: localized("login_button_enter"), state: .normal)
-        loginButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        loginButton.backgroundColor = UIColor.santanderRed
-        loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
-        loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
-        tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
-        tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
-        tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
     
     func setAccessibility() {
         documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+        passwordTextField?.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextPassword.rawValue
     }
     
     func regardNow() -> String {
@@ -193,7 +189,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
 }
 
-extension PLUnrememberedLoginNormalPwdViewController: PasswordPTTextFieldDelegate {
+extension PLUnrememberedLoginNormalPwdViewController: PasswordTextFieldDelegate {
     public func enterDidPressed() {
         self.loginButtonDidPressed()
     }

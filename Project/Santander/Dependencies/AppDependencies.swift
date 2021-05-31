@@ -15,6 +15,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
+import Models
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -49,12 +50,15 @@ final class AppDependencies {
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
         // TODO: PG Remove the following lines: 1
-        bsanDataProvider.setDemoMode(true, "12345678Z")
+        //bsanDataProvider.setDemoMode(true, "12345678Z")
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
                                          demoInterpreter: self.demoInterpreter)
 
+    }()
+    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
+        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
     }()
 
     // MARK: Features
@@ -122,6 +126,9 @@ private extension AppDependencies {
         }
         dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
             return self.managersProviderAdapter
+        }
+        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
+            return self.getPGFrequentOperativeOption
         }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in

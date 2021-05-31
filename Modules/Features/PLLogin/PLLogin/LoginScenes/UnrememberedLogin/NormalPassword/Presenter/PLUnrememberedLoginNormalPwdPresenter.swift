@@ -54,6 +54,9 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
 }
 
 extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
+    func handle(event: LoginProcessLayerEvent) {
+        // TODO
+    }
 
     func handle(event: SessionProcessEvent) {
         // TODO
