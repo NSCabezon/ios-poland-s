@@ -10,13 +10,15 @@ import LoginCommon
 import CommonUseCase
 
 protocol PLUnrememberedLoginIdCoordinatorProtocol {
-    func goToNormalPasswordScene()
-    func goToMaskedPasswordScene()
+    func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration)
+    func goToMaskedPasswordScene(configuration: UnrememberedLoginConfiguration)
 }
 
 final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let normalPwdCoordinator: PLUnrememberedLoginNormalPwdCoordinator
+    //private let maskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -24,6 +26,14 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.normalPwdCoordinator = PLUnrememberedLoginNormalPwdCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
+//        self.maskedPwdCoordinator = PLUnrememberedLoginMaskedPwdCoordinator(
+//            dependenciesResolver: self.dependenciesEngine,
+//            navigationController: navigationController
+//        )
         self.setupDependencies()
     }
     
@@ -34,18 +44,20 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
 }
 
 extension PLUnrememberedLoginIdCoordinator: PLUnrememberedLoginIdCoordinatorProtocol {
-    func goToNormalPasswordScene() {
-        //TODO:
+    func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration) {
+        self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
+            return configuration
+        }
+        self.normalPwdCoordinator.start()
     }
     
-    func goToMaskedPasswordScene() {
-        //TODO:
+    func goToMaskedPasswordScene(configuration: UnrememberedLoginConfiguration) {
+        //TODO: navigate to masked password
     }
 }
 
-/**
- #Register Scene depencencies.
-*/
+
+// MARK: Register Scene depencencies.
 private extension PLUnrememberedLoginIdCoordinator {
     func setupDependencies() {
         let presenter = PLUnrememberedLoginIdPresenter(dependenciesResolver: self.dependenciesEngine)

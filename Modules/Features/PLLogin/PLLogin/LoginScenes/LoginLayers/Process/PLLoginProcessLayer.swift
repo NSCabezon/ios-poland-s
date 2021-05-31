@@ -54,11 +54,11 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
     func getPublicKey() {
         Scenario(useCase: self.getPublicKeyUseCase)
             .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { [weak self] output in
-                self?.delegate?.handle(event: .pubKeyRetrieved(key: output.modulus))
+            .onSuccess { _ in
+                // Nothing to do
             }
             .onError { error in
-                // TODO: Process error
+                // TODO: Process error: without pub key we can't process SMS SCA
             }
     }
 }
@@ -82,7 +82,15 @@ private extension PLLoginProcessLayer {
         Scenario(useCase: loginUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
-                self?.delegate?.handle(event: .loginSuccess)
+                var passwordType = PasswordType.normal
+                if output.passwordMaskEnabled == true, let mask = output.passwordMask {
+                    passwordType = PasswordType.masked(mask: mask)
+                }
+                let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
+                                                                   passwordType: passwordType,
+                                                                   challenge: LoginChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
+                                                                   loginImageData: output.loginImage)
+                self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }
             .onError { [weak self] error in
                 self?.handleError(error)

@@ -26,7 +26,7 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
             let loginChallenge = LoginChallengeEntity(authorizationType: loginData.secondFactorData?.defaultChallenge?.authorizationType,
                 value: loginData.secondFactorData?.defaultChallenge?.value)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
-            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId ?? 0, passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
+            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
             return UseCaseResponse.ok(loginOutput)
         case .failure(_):
                 // TODO: the error management will be implemented in next sprint.
@@ -78,6 +78,7 @@ final class PLLoginUseCaseErrorOutput: StringErrorOutput {
 
 public struct PLLoginUseCaseOkOutput {
     public let userId: Int
+    public let loginImage: String?
     public let passwordMaskEnabled: Bool?
     public let passwordMask: Int?
     public let defaultChallenge: LoginChallengeEntity

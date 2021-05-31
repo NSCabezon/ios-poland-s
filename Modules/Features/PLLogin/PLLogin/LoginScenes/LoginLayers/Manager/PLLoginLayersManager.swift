@@ -123,11 +123,8 @@ extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
         switch event {
         case .willLogin:
             self.publicFilesManager.cancelPublicFilesLoad(withStrategy: .initialLoad)
-        case .loginWithIdentifierSuccess(let passwordType):
-            break
-        case .pubKeyRetrieved(let key):
-            // TODO: Pesist key
-            break
+        case .loginWithIdentifierSuccess(let loginConfiguration):
+            // todo
         case .loginSuccess:
             //self.loginSessionLayer.handleSuccessLogin()
             break
