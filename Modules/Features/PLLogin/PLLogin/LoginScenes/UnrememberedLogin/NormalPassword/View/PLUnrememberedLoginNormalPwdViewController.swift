@@ -21,7 +21,14 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
     @IBOutlet weak var passwordTextField: PLPasswordTextField!
-    private var isShowingKeyboard = false
+    @IBOutlet weak var textfieldContainerContraintWithoutKeyboard: NSLayoutConstraint!
+    @IBOutlet weak var textfieldContainerContraintWithKeyboard: NSLayoutConstraint!
+    private var isShowingKeyboard = false {
+        didSet {
+            textfieldContainerContraintWithKeyboard.isActive = isShowingKeyboard
+            textfieldContainerContraintWithoutKeyboard.isActive = !isShowingKeyboard
+        }
+    }
 
     private enum Constants {
         static let bottomDistance: CGFloat = 32
