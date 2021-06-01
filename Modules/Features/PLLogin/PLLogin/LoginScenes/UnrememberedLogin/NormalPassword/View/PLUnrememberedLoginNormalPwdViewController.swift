@@ -20,7 +20,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet private weak var loginButton: PLLoginButton!
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
-    @IBOutlet weak var passwordTextField: PasswordTextField!
+    @IBOutlet weak var passwordTextField: PLPasswordTextField!
 
     private enum Constants {
         static let bottomDistance: CGFloat = 32
@@ -127,6 +127,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         self.documentTextField.isUserInteractionEnabled = false
         passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
         passwordTextField?.delegate = self
+        passwordTextField?.textField?.delegate = self
     }
     
     @objc func dismissKeyboard() {
@@ -199,7 +200,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
 }
 
-extension PLUnrememberedLoginNormalPwdViewController: PasswordTextFieldDelegate {
+extension PLUnrememberedLoginNormalPwdViewController: PLPasswordTextFieldDelegate {
     public func enterDidPressed() {
         self.loginButtonDidPressed()
     }
@@ -208,5 +209,29 @@ extension PLUnrememberedLoginNormalPwdViewController: PasswordTextFieldDelegate 
 extension PLUnrememberedLoginNormalPwdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
+    }
+}
+
+extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
+
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard string != " " else { return false }
+        let currentText = self.passwordTextField.hiddenText
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        guard updatedText.count <= self.passwordTextField.maxLength else { return false }
+        self.passwordTextField.hiddenText = updatedText
+        self.passwordTextField.updatePassword()
+        if updatedText.count >= 4 {
+            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+            loginButton.isEnabled = true
+        }
+        else {
+            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
+            loginButton.isEnabled = false
+        }
+
+        return false
     }
 }
