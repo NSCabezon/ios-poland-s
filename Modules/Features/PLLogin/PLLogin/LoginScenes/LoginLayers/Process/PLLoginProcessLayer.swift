@@ -110,7 +110,7 @@ private extension PLLoginProcessLayer {
     /// Determines the identifier type depending on length and type. An Alias is alphanumeric and can have more than 8 characters
     func getIdentifierType(_ identifier: String) -> UserIdentifierType {
         let characters = CharacterSet.decimalDigits.inverted
-        if !identifier.isEmpty && identifier.rangeOfCharacter(from: characters) == nil && identifier.count <= 8 {
+        if !identifier.isEmpty && identifier.rangeOfCharacter(from: characters) == nil && identifier.count == 8 {
             return .nik
         } else {
             return .alias
