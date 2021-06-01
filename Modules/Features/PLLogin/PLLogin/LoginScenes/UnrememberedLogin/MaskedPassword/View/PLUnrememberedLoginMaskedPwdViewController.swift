@@ -4,13 +4,14 @@ import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginMaskedPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
+    func setUserIdentifier(_ identifier: String)
 }
 
-final class PLUnrememberedLoginIdViewController: UIViewController {
+final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
-    private let presenter: PLUnrememberedLoginIdPresenterProtocol
+    private let presenter: PLUnrememberedLoginMaskedPwdPresenterProtocol
     
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
@@ -18,26 +19,43 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet private weak var documentTextField: PLDocumentTextField!
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var tooltipButton: UIButton!
-    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
-    @IBOutlet weak var textfieldConstraintWithoutKeyboard: NSLayoutConstraint!
+    @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
+    private lazy var maskedPasswordConstraintWithoutKeyboard: NSLayoutConstraint? = {
+        return self.maskedPasswordInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)
+    }()
+    private lazy var maskedPasswordConstraintWithKeyboard: NSLayoutConstraint? = {
+        return self.maskedPasswordInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
+    }()
+    private lazy var maskedPasswordInputCodeView: PLUIInputCodeView = {
+
+        let requestedPositions = self.presenter.requestedPositions()
+
+        return PLUIInputCodeView(keyboardType: .default,
+                                 delegate: self.presenter,
+                                 facade: PLUIInputCodeMaskedPasswordFacade(),
+                                 elementSize: Constants.makedPasswordBoxSize,
+                                 requestedPositions: RequestedPositions.positions(requestedPositions),
+                                 charactersSet: Constants.maskedPasswordCharacterSet)
+    }()
     private var isShowingKeyboard = false {
         didSet {
-            textfieldConstraintWithKeyboard.isActive = isShowingKeyboard
-            textfieldConstraintWithoutKeyboard.isActive = !isShowingKeyboard
+            self.maskedPasswordConstraintWithoutKeyboard?.isActive = !isShowingKeyboard
+            self.maskedPasswordConstraintWithKeyboard?.isActive = isShowingKeyboard
         }
     }
 
-    @IBOutlet weak var textfieldConstraintWithKeyboard: NSLayoutConstraint!
     private enum Constants {
+        static let makedPasswordBoxSize = CGSize(width: 31, height: 56) // TODO: We need to change the width and height for smaller devices screens
+        static let maskedPasswordCharacterSet: CharacterSet = .alphanumerics
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
-         presenter: PLUnrememberedLoginIdPresenterProtocol) {
+         presenter: PLUnrememberedLoginMaskedPwdPresenterProtocol) {
         self.presenter = presenter
         self.dependenciesResolver = dependenciesResolver
+
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -72,14 +90,14 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     }
 }
 
-extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {
+extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedPwdViewProtocol {
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func resetForm() {
-        self.documentTextField?.setText("")
+        //TODO: Need to add a reset for PLUIInputCodeView
     }
     
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
@@ -89,9 +107,13 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
     func chooseEnvironment() {
         self.presenter.didSelectChooseEnvironment()
     }
+
+    func setUserIdentifier(_ identifier: String) {
+        self.documentTextField.setText(identifier)
+    }
 }
 
-private extension PLUnrememberedLoginIdViewController {
+private extension PLUnrememberedLoginMaskedPwdViewController {
     func isKeyboardDismisserAllowed() -> Bool {
         return parent == nil || parent is UINavigationController
     }
@@ -106,6 +128,7 @@ private extension PLUnrememberedLoginIdViewController {
         configureRegardLabel()
         configureBackground()
         configureTextFields()
+        configureMaskedPasswordInputView()
         configureButtons()
         setAccessibility()
     }
@@ -122,8 +145,18 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureTextFields() {
-        documentTextField.textField.delegate = self
+        self.documentTextField.isUserInteractionEnabled = false
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+
+    func configureMaskedPasswordInputView() {
+
+        self.view.addSubview(self.maskedPasswordInputCodeView)
+        self.maskedPasswordConstraintWithoutKeyboard?.isActive = true
+        NSLayoutConstraint.activate([
+            self.maskedPasswordInputCodeView.leadingAnchor.constraint(equalTo: self.documentTextField.leadingAnchor),
+            self.maskedPasswordInputCodeView.trailingAnchor.constraint(equalTo: self.documentTextField.trailingAnchor)
+        ])
     }
     
     @objc func dismissKeyboard() {
@@ -131,13 +164,12 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureButtons() {
+        loginButton.set(localizedStylableText: localized("login_button_enter"), state: .normal)
+        loginButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
+        loginButton.backgroundColor = UIColor.santanderRed
+        loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
+        loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        tooltipButton.set(localizedStylableText: localized("pl_login_label_whatIsLogin"), state: .normal)
-        tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
-        tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
-        tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
     
     func setAccessibility() {
@@ -161,37 +193,25 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        self.presenter.login(identification: documentTextField.introducedDocument())
-    }
-
-    @objc func tooltipButtonDidPressed() {
-        let keyTitle = "generic_alert_information"
-        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_whatIsLogin"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 18),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
-        let image = "icnInfoPg"
-        self.showDialog(title: keyTitle, items: [desc], image: image, action: acceptAction, isCloseOptionAvailable: true)
+        // TODO
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
-        
+
         IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
+        buttonBottomAnchorConstant.constant = -keyboardFrame.height + Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
+            self?.documentTextField?.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
@@ -199,9 +219,10 @@ private extension PLUnrememberedLoginIdViewController {
     @objc func keyboardWillHide(notification: NSNotification) {
         self.isShowingKeyboard = false
         IQKeyboardManager.shared.enableAutoToolbar = true
-        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
+        buttonBottomAnchorConstant.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
+            self?.documentTextField?.alpha = 1.0
             self?.view.layoutSubviews()
         }
     }
@@ -211,41 +232,14 @@ private extension PLUnrememberedLoginIdViewController {
     }
 }
 
-extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
+extension PLUnrememberedLoginMaskedPwdViewController: PasswordPTTextFieldDelegate {
+    public func enterDidPressed() {
+        self.loginButtonDidPressed()
+    }
+}
+
+extension PLUnrememberedLoginMaskedPwdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
-    }
-}
-
-extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = self.documentTextField.introducedText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-        if updatedText.count > self.documentTextField.maxLenght  {
-            let changeUpdatedText = updatedText.substring(0, self.documentTextField.maxLenght) ?? ""
-            self.documentTextField.introducedText = changeUpdatedText
-            self.documentTextField.textField.text = changeUpdatedText
-            return false
-        } else {
-            if updatedText.count >= 6 {
-                loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-                loginButton.isEnabled = true
-            }
-            else {
-                loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-                loginButton.isEnabled = false
-            }
-            self.documentTextField.introducedText = updatedText
-            return true
-        }
-    }
-}
-
-extension PLUnrememberedLoginIdViewController: DialogViewPresentationCapable {
-    var associatedDialogView: UIViewController {
-        return self
     }
 }

@@ -18,7 +18,7 @@ public final class AccountDTOAdapter {
         accountDTO.currentBalance = amountAdapter.adaptBalanceToAmount(plAccount.balance)
         accountDTO.availableNoAutAmount = amountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
 
-        accountDTO.contract = ContractDTO(bankCode: nil, branchCode: nil, product: nil, contractNumber: plAccount.accountId?.id)
+        accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.accountId?.id)
 
         return accountDTO
     }

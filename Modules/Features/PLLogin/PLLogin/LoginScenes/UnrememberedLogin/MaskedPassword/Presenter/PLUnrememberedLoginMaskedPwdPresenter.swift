@@ -1,5 +1,5 @@
 //
-//  PLUnrememberedLoginNormalPwdPresenter.swift
+//  PLUnrememberedLoginMaskedPwdPresenter.swift
 //  PLLogin
 
 import DomainCommon
@@ -8,19 +8,21 @@ import Models
 import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
+import PLUI
 
-protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol {
-    var view: PLUnrememberedLoginNormalPwdViewProtocol? { get set }
+protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol, PLUIInputCodeViewDelegate {
+    var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
     func login(identification: String, magic: String, remember: Bool)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
+    func requestedPositions() -> [Int]
 }
 
-final class PLUnrememberedLoginNormalPwdPresenter {
-    weak var view: PLUnrememberedLoginNormalPwdViewProtocol?
+final class PLUnrememberedLoginMaskedPwdPresenter {
+    weak var view: PLUnrememberedLoginMaskedPwdViewProtocol?
     weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
@@ -35,7 +37,7 @@ final class PLUnrememberedLoginNormalPwdPresenter {
     }
 }
 
-extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
+extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
         self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
     }
@@ -55,17 +57,33 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
     func didSelectChooseEnvironment() {
         // TODO
     }
+
+    // Returns [Int] with the positions requested for the masked password
+    func requestedPositions() -> [Int] {
+
+        var maskValue: Int = 0
+        if case .masked(mask: let value) = self.loginConfiguration.passwordType {
+            maskValue = value
+        }
+
+        let binaryString = String(maskValue, radix: 2)
+        var pos = 0
+        let requestedPositions: [Int] = binaryString.compactMap {
+            let value = Int(String($0)) ?? 0
+            pos += 1
+            return value == 1 ? pos : nil
+        }
+        return requestedPositions
+    }
 }
 
-extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
+extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
+
     func handle(event: LoginProcessLayerEvent) {
         // TODO
     }
 
     func handle(event: SessionProcessEvent) {
-        // TODO
-    }
-    func willStartSession() {
         // TODO
     }
 
@@ -75,12 +93,40 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
         let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
         self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
     }
+
+    func willStartSession() {
+        // TODO
+    }
 }
 
 //MARK: - Private Methods
-private extension  PLUnrememberedLoginNormalPwdPresenter {
+private extension  PLUnrememberedLoginMaskedPwdPresenter {
     var coordinator: PLLoginCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
     }
 
+}
+
+extension  PLUnrememberedLoginMaskedPwdPresenter: PLUIInputCodeViewDelegate {
+
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
+        guard string.count == 1,
+              let character = UnicodeScalar(string),
+              view.charactersSet.contains(UnicodeScalar(character)) == true else {
+            return false
+        }
+        return true
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
+    }
 }

@@ -20,7 +20,7 @@ public final class PLUIInputCodeSMSFacade {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = Constants.spacingBetweenColumns
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()

@@ -53,7 +53,9 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
     }
     
     func didSelectChooseEnvironment() {
-        // TODO
+        self.coordinatorDelegate.goToEnvironmentsSelector { [weak self] in
+            self?.loginManager?.chooseEnvironment()
+        }
     }
 }
 
@@ -101,6 +103,9 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
 private extension  PLUnrememberedLoginIdPresenter {
     var coordinator: PLUnrememberedLoginIdCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLUnrememberedLoginIdCoordinatorProtocol.self)
+    }
+    var coordinatorDelegate: LoginCoordinatorDelegate {
+        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
 
     func doLogin(with type: LoginType) {

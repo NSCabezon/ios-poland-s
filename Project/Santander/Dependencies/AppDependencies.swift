@@ -16,6 +16,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
 import Models
+import GlobalPosition
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -49,8 +50,6 @@ final class AppDependencies {
         let hostProvider = PLHostProvider()
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
-        // TODO: PG Remove the following lines: 1
-        //bsanDataProvider.setDemoMode(true, "12345678Z")
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
@@ -59,6 +58,9 @@ final class AppDependencies {
     }()
     private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
         return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
+    }()
+    private lazy var productIdDelegate: ProductIdDelegateProtocol = {
+        return ProductIdDelegateModifier()
     }()
 
     // MARK: Features
@@ -154,6 +156,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: SharedDependenciesDelegate.self) { _ in
             return self
+        }
+        self.dependencieEngine.register(for: ProductIdDelegateProtocol.self) { _ in
+            return self.productIdDelegate
         }
     }
 }

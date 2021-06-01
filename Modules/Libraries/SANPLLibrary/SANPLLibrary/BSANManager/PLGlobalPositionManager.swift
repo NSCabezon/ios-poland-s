@@ -30,32 +30,49 @@ final class PLGlobalPositionManager {
 
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition()
+        let result = try self.globalPositionDataSource.getGlobalPosition()
+        processResult(result)
         return result
     }
     
     func getAccounts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
+        let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
+        processResult(result)
         return result
     }
     
     func getCards() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
+        let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
+        processResult(result)
         return result
     }
 
     func getDeposits() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
+        let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
+        processResult(result)
         return result
     }
 
     func getInvestmentFunds() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
+        let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
+        processResult(result)
         return result
     }
 
     func getLoans() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
+        let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
+        processResult(result)
         return result
+    }
+}
+
+private extension PLGlobalPositionManager {
+    private func processResult(_ result: Result<GlobalPositionDTO, NetworkProviderError>) {
+        switch result {
+        case .failure(_):
+            return
+        case .success(let globalPositionDTO):
+            self.bsanDataProvider.store(globalPositionDTO)
+        }
     }
 }

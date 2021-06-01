@@ -4,8 +4,9 @@ import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginNormalPwdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginNormalPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
+    func setUserIdentifier(_ identifier: String)
 }
 
 final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
@@ -17,10 +18,15 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: PLDocumentTextField!
     @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
+    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
     @IBOutlet weak var passwordTextField: PasswordTextField!
+    private var isShowingKeyboard = false
 
+    private enum Constants {
+        static let bottomDistance: CGFloat = 32
+        static let animationDuration: TimeInterval = 0.2
+    }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLUnrememberedLoginNormalPwdPresenterProtocol) {
@@ -61,6 +67,10 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
 }
 
 extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalPwdViewProtocol {
+    func setUserIdentifier(_ identifier: String) {
+        self.documentTextField.setText(identifier)
+    }
+
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
@@ -71,7 +81,7 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     }
     
     func resetForm() {
-        self.documentTextField?.setText("")
+        self.passwordTextField?.setText("")
     }
     
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
@@ -115,6 +125,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        self.documentTextField.isUserInteractionEnabled = false
         passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
         passwordTextField?.delegate = self
     }
@@ -160,25 +171,29 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        guard self.isShowingKeyboard == false else { return }
+        self.isShowingKeyboard = true
+        
         IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        bottonDistance?.constant = keyboardFrame.height
+        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
-        UIView.animate(withDuration: 0.2) { [weak self] in
+        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        self.isShowingKeyboard = false
         IQKeyboardManager.shared.enableAutoToolbar = true
-        bottonDistance?.constant = 0
-        UIView.animate(withDuration: 0.2) { [weak self] in
+        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
+        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
             self?.view.layoutSubviews()
         }

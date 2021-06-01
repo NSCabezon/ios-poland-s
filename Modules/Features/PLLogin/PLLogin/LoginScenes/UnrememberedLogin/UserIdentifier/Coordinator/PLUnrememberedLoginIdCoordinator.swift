@@ -18,7 +18,7 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private let normalPwdCoordinator: PLUnrememberedLoginNormalPwdCoordinator
-    //private let maskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinator
+    private let maskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -30,10 +30,10 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
             dependenciesResolver: self.dependenciesEngine,
             navigationController: navigationController
         )
-//        self.maskedPwdCoordinator = PLUnrememberedLoginMaskedPwdCoordinator(
-//            dependenciesResolver: self.dependenciesEngine,
-//            navigationController: navigationController
-//        )
+        self.maskedPwdCoordinator = PLUnrememberedLoginMaskedPwdCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
         self.setupDependencies()
     }
     
@@ -45,14 +45,17 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
 
 extension PLUnrememberedLoginIdCoordinator: PLUnrememberedLoginIdCoordinatorProtocol {
     func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration) {
-            self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
+        self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
             return configuration
         }
         self.normalPwdCoordinator.start()
     }
     
     func goToMaskedPasswordScene(configuration: UnrememberedLoginConfiguration) {
-        //TODO: navigate to masked password
+        self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
+            return configuration
+        }
+        self.maskedPwdCoordinator.start()
     }
 }
 
