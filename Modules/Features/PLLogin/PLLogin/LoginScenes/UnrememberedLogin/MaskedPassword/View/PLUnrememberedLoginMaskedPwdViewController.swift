@@ -6,6 +6,7 @@ import IQKeyboardManagerSwift
 
 protocol PLUnrememberedLoginMaskedPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
+    func setUserIdentifier(_ identifier: String)
 }
 
 final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
@@ -15,10 +16,16 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: DocumentPTTextField!
+    @IBOutlet private weak var documentTextField: PLDocumentTextField!
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
+    private lazy var maskedPasswordConstraintWithoutKeyboard: NSLayoutConstraint? = {
+        return self.maskedPasswordInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)
+    }()
+    private lazy var maskedPasswordConstraintWithKeyboard: NSLayoutConstraint? = {
+        return self.maskedPasswordInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
+    }()
     private lazy var maskedPasswordInputCodeView: PLUIInputCodeView = {
 
         let requestedPositions = self.presenter.requestedPositions()
@@ -30,6 +37,12 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
                                  requestedPositions: RequestedPositions.positions(requestedPositions),
                                  charactersSet: Constants.maskedPasswordCharacterSet)
     }()
+    private var isShowingKeyboard = false {
+        didSet {
+            self.maskedPasswordConstraintWithoutKeyboard?.isActive = !isShowingKeyboard
+            self.maskedPasswordConstraintWithKeyboard?.isActive = isShowingKeyboard
+        }
+    }
 
     private enum Constants {
         static let makedPasswordBoxSize = CGSize(width: 31, height: 56) // TODO: We need to change the width and height for smaller devices screens
@@ -94,6 +107,10 @@ extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedP
     func chooseEnvironment() {
         self.presenter.didSelectChooseEnvironment()
     }
+
+    func setUserIdentifier(_ identifier: String) {
+        self.documentTextField.setText(identifier)
+    }
 }
 
 private extension PLUnrememberedLoginMaskedPwdViewController {
@@ -128,16 +145,17 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func configureTextFields() {
+        self.documentTextField.isUserInteractionEnabled = false
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
 
     func configureMaskedPasswordInputView() {
 
         self.view.addSubview(self.maskedPasswordInputCodeView)
+        self.maskedPasswordConstraintWithoutKeyboard?.isActive = true
         NSLayoutConstraint.activate([
             self.maskedPasswordInputCodeView.leadingAnchor.constraint(equalTo: self.documentTextField.leadingAnchor),
-            self.maskedPasswordInputCodeView.trailingAnchor.constraint(equalTo: self.documentTextField.trailingAnchor),
-            self.maskedPasswordInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24),
+            self.maskedPasswordInputCodeView.trailingAnchor.constraint(equalTo: self.documentTextField.trailingAnchor)
         ])
     }
     
@@ -179,6 +197,9 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        guard self.isShowingKeyboard == false else { return }
+        self.isShowingKeyboard = true
+
         IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
@@ -190,15 +211,18 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         }
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
+            self?.documentTextField?.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        self.isShowingKeyboard = false
         IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstant.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
+            self?.documentTextField?.alpha = 1.0
             self?.view.layoutSubviews()
         }
     }

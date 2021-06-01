@@ -21,6 +21,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
     @IBOutlet weak var passwordTextField: PasswordTextField!
+    private var isShowingKeyboard = false
 
     private enum Constants {
         static let bottomDistance: CGFloat = 32
@@ -80,7 +81,7 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     }
     
     func resetForm() {
-        self.documentTextField?.setText("")
+        self.passwordTextField?.setText("")
     }
     
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
@@ -170,6 +171,9 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        guard self.isShowingKeyboard == false else { return }
+        self.isShowingKeyboard = true
+        
         IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
@@ -186,6 +190,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        self.isShowingKeyboard = false
         IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
