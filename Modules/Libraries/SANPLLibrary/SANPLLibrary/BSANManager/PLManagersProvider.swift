@@ -9,7 +9,7 @@ public protocol PLManagersProviderProtocol {
     func getLoginManager() -> PLLoginManagerProtocol
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
 //    func getAccountsManager() -> PTAccountsManagerProtocol
-//    func getCardsManager() -> PTCardsManagerProtocol
+    func getCardsManager() -> PLCardsManagerProtocol
 //    func getCardTransactionsManager() -> PTCardTransactionsManagerProtocol
 //    func getAuthManager() -> PTAuthManagerProtocol
 //    func getDepositsManager() -> PTDepositsManagerProtocol
@@ -29,7 +29,7 @@ public final class PLManagersProvider {
     private let loginManager: PLLoginManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
 //    private let accountManager: PTAccountsManager
-//    private let cardsManager: PTCardsManager
+    private let cardsManager: PLCardsManager
 //    private let cardTransactionsManager: PTCardTransactionsManager
 //    private let authManager: PTAuthManager
 //    private let depositsManager: PTDepositsManager
@@ -55,7 +55,7 @@ public final class PLManagersProvider {
         self.globalPositionManager = PLGlobalPositionManager(bsanDataProvider: bsanDataProvider,
                                                              networkProvider: networkProvider,
                                                              demoInterpreter: demoInterpreter)
-//        self.cardsManager = PTCardsManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider)
 //        self.cardTransactionsManager = PTCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
 //        self.accountManager = PTAccountsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.authManager = PTAuthManager(networkProvider: networkProvider, dataProvider: bsanDataProvider)
@@ -99,9 +99,9 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 //        self.accountManager
 //    }
 //
-//    public func getCardsManager() -> PTCardsManagerProtocol {
-//        return self.cardsManager
-//    }
+    public func getCardsManager() -> PLCardsManagerProtocol {
+        return self.cardsManager
+    }
 //
 
 //
