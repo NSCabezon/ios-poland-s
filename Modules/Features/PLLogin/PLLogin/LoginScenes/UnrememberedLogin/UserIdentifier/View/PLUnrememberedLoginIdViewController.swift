@@ -154,9 +154,6 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        // TODO: PG Remove the following lines: 2
-//        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-//        coordinatorDelegate.goToPrivate(.classic)
         self.presenter.login(identification: documentTextField.introducedDocument())
     }
 
@@ -211,17 +208,28 @@ extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
 
 extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = documentTextField.textField.text ?? ""
-        if currentText.count < 6 {
-            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-            loginButton.isEnabled = false
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard string != " " else { return false }
+        let currentText = self.documentTextField.introducedText
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        if updatedText.count > self.documentTextField.maxLenght  {
+            let changeUpdatedText = updatedText.substring(0, self.documentTextField.maxLenght) ?? ""
+            self.documentTextField.introducedText = changeUpdatedText
+            self.documentTextField.textField.text = changeUpdatedText
+            return false
+        } else {
+            if updatedText.count >= 6 {
+                loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+                loginButton.isEnabled = true
+            }
+            else {
+                loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
+                loginButton.isEnabled = false
+            }
+            self.documentTextField.introducedText = updatedText
+            return true
         }
-        else {
-            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-            loginButton.isEnabled = true
-        }
-        return true
     }
 }
 
