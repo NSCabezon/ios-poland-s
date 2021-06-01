@@ -31,11 +31,15 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+
+    private var loginConfiguration: UnrememberedLoginConfiguration {
+        self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
+    }
 }
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
-        // TODO
+        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
     }
 
     func viewWillAppear() {
@@ -57,8 +61,12 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
     // Returns [Int] with the positions requested for the masked password
     func requestedPositions() -> [Int] {
 
-        let num = 1048575 // TODO: Get this number from the response of the API
-        let binaryString = String(num, radix: 2)
+        var maskValue: Int = 0
+        if case .masked(mask: let value) = self.loginConfiguration.passwordType {
+            maskValue = value
+        }
+
+        let binaryString = String(maskValue, radix: 2)
         var pos = 0
         let requestedPositions: [Int] = binaryString.compactMap {
             let value = Int(String($0)) ?? 0
