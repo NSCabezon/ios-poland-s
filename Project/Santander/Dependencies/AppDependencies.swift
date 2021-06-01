@@ -16,6 +16,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
 import Models
+import GlobalPosition
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -57,6 +58,9 @@ final class AppDependencies {
     }()
     private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
         return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
+    }()
+    private lazy var productIdDelegate: ProductIdDelegateProtocol = {
+        return ProductIdDelegateModifier()
     }()
 
     // MARK: Features
@@ -152,6 +156,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: SharedDependenciesDelegate.self) { _ in
             return self
+        }
+        self.dependencieEngine.register(for: ProductIdDelegateProtocol.self) { _ in
+            return self.productIdDelegate
         }
     }
 }

@@ -18,6 +18,8 @@
                 <outlet property="loginButton" destination="4yN-eH-7fk" id="hEJ-6A-3Y5"/>
                 <outlet property="regardLabel" destination="Fqj-VQ-BIu" id="QbF-uG-FWT"/>
                 <outlet property="sanIconImageView" destination="ncR-i9-Y80" id="fKm-30-5aB"/>
+                <outlet property="textfieldConstraintWithKeyboard" destination="kJO-Rq-SUw" id="SJf-wc-ZcH"/>
+                <outlet property="textfieldConstraintWithoutKeyboard" destination="DDS-PA-9au" id="WO3-P1-ViX"/>
                 <outlet property="tooltipButton" destination="6tg-aa-poL" id="zFr-ds-Yjb"/>
                 <outlet property="view" destination="vTt-qt-azL" id="lmN-3d-2dv"/>
             </connections>
@@ -118,6 +120,7 @@
                 <constraint firstItem="4yN-eH-7fk" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="24" id="cle-Z2-7I0"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-26" id="edJ-9H-8T8"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Mnk-2a-nRa" secondAttribute="trailing" id="gKt-Ox-fig"/>
+                <constraint firstItem="5fR-Jr-Ai5" firstAttribute="bottom" secondItem="4yN-eH-7fk" secondAttribute="top" constant="-60" id="kJO-Rq-SUw"/>
                 <constraint firstItem="6tg-aa-poL" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="24" id="mwr-PL-XtH"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="5fR-Jr-Ai5" secondAttribute="trailing" constant="24" id="o5l-97-cfz"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="MFm-pN-t0c" secondAttribute="trailing" id="rt2-fq-6hX"/>
@@ -126,6 +129,11 @@
                 <constraint firstAttribute="bottom" secondItem="MFm-pN-t0c" secondAttribute="bottom" id="zEq-q9-K6C"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ncR-i9-Y80" secondAttribute="bottom" constant="4" id="ziW-NX-L4j"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="kJO-Rq-SUw"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="-1212" y="274"/>
         </view>
     </objects>

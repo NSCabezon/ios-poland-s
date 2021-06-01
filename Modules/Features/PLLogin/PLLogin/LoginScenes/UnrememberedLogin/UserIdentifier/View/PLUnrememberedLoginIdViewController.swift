@@ -20,12 +20,19 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var tooltipButton: UIButton!
     @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textfieldConstraintWithoutKeyboard: NSLayoutConstraint!
+    private var isShowingKeyboard = false {
+        didSet {
+            textfieldConstraintWithKeyboard.isActive = isShowingKeyboard
+            textfieldConstraintWithoutKeyboard.isActive = !isShowingKeyboard
+        }
+    }
 
+    @IBOutlet weak var textfieldConstraintWithKeyboard: NSLayoutConstraint!
     private enum Constants {
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
     }
-
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLUnrememberedLoginIdPresenterProtocol) {
@@ -171,6 +178,9 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        guard self.isShowingKeyboard == false else { return }
+        self.isShowingKeyboard = true
+        
         IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
@@ -187,6 +197,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        self.isShowingKeyboard = false
         IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in

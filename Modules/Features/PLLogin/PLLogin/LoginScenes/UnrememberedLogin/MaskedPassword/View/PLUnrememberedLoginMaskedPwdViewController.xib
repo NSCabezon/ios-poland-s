@@ -49,7 +49,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fR-Jr-Ai5" userLabel="TextFieldView">
                     <rect key="frame" x="24" y="199" width="366" height="56"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALE-qB-Yfr" customClass="DocumentPTTextField" customModule="UI">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALE-qB-Yfr" customClass="PLDocumentTextField" customModule="PLLogin" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="366" height="56"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.34999999999999998" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <constraints>
