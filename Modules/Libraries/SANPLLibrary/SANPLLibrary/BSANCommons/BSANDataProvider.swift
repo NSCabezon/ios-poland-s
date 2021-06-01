@@ -48,6 +48,42 @@ public class BSANDataProvider {
         return dataRepository.get(DemoMode.self) != nil
     }
 
+    public func createSessionData(_ userDTO: UserDTO) {
+        let sessionData = SessionData(userDTO)
+        objc_sync_enter(dataRepository)
+        dataRepository.store(sessionData)
+        objc_sync_exit(dataRepository)
+    }
+
+    public func cleanSessionData() throws {
+        let sessionData = try self.getSessionData()
+        let userDTO = sessionData.loggedUserDTO
+        self.dataRepository.remove(SessionData.self)
+        self.createSessionData(userDTO)
+    }
+
+    public func getSessionData() throws -> SessionData {
+        if let sessionData = dataRepository.get(SessionData.self) {
+            return sessionData
+        }
+        throw BSANIllegalStateException("SessionData nil in DataRepository")
+    }
+
+    public func updateSessionData(_ sessionData: SessionData) {
+        objc_sync_enter(dataRepository)
+        dataRepository.store(sessionData)
+        objc_sync_exit(dataRepository)
+    }
+
+    public func store(_ newGlobalPositionDTO: GlobalPositionDTO) {
+        objc_sync_enter(dataRepository)
+        if let sessionData = try? getSessionData() {
+            sessionData.globalPositionDTO = newGlobalPositionDTO
+            updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {
         objc_sync_enter(dataRepository)

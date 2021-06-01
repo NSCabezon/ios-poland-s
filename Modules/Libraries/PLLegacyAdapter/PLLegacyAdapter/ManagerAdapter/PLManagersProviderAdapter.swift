@@ -102,7 +102,7 @@ public final class PLManagersProviderAdapter {
         self.globalPositionManagerAdapter = PLGlobalPositionManagerAdapter(globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), bsanDataProvider: bsanDataProvider)
         self.transfersManager = PLTransfersManagerAdapter()
         self.accountsManager = PLAccountsManagerAdapter()
-        self.cardsManagerAdapter = PLCardsManagerAdapter()
+        self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager())
         self.signatureAdapter = PLSignatureAdapter()
         self.depositsManagerApadater = PLDepositsManagerAdapter()
         self.loansManager = PLLoansManagerAdapter()
