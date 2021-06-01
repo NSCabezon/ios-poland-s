@@ -3,7 +3,6 @@
 //  PLLogin
 
 import Foundation
-
 import Commons
 import Models
 
@@ -107,7 +106,6 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
         self.loginEnvironmentLayer.getCurrentEnvironments()
     }
 }
-
 
 // MARK: - Environment layer Delegate
 extension PLLoginLayersManager: LoginEnvironmentLayerDelegate {
