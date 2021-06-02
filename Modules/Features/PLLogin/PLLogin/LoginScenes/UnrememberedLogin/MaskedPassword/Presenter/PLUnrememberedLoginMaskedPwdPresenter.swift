@@ -10,7 +10,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLUI
 
-protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol, PLUIInputCodeViewDelegate {
+protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
@@ -39,7 +39,7 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
-        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
+//        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
     }
 
     func viewWillAppear() {
@@ -61,10 +61,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
     // Returns [Int] with the positions requested for the masked password
     func requestedPositions() -> [Int] {
 
-        var maskValue: Int = 0
-        if case .masked(mask: let value) = self.loginConfiguration.passwordType {
-            maskValue = value
-        }
+        var maskValue: Int = 1231234
+//        if case .masked(mask: let value) = self.loginConfiguration.passwordType {
+//            maskValue = value
+//        }
 
         let binaryString = String(maskValue, radix: 2)
         var pos = 0
@@ -103,30 +103,5 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 private extension  PLUnrememberedLoginMaskedPwdPresenter {
     var coordinator: PLLoginCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-    }
-
-}
-
-extension  PLUnrememberedLoginMaskedPwdPresenter: PLUIInputCodeViewDelegate {
-
-    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
-        guard string.count == 1,
-              let character = UnicodeScalar(string),
-              view.charactersSet.contains(UnicodeScalar(character)) == true else {
-            return false
-        }
-        return true
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
     }
 }

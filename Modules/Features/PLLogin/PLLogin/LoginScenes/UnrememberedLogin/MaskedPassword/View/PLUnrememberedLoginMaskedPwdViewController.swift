@@ -17,7 +17,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: PLDocumentTextField!
-    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var loginButton: PLLoginButton!
     @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
     private lazy var maskedPasswordConstraintWithoutKeyboard: NSLayoutConstraint? = {
@@ -31,7 +31,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
         let requestedPositions = self.presenter.requestedPositions()
 
         return PLUIInputCodeView(keyboardType: .default,
-                                 delegate: self.presenter,
+                                 delegate: self,
                                  facade: PLUIInputCodeMaskedPasswordFacade(),
                                  elementSize: Constants.makedPasswordBoxSize,
                                  requestedPositions: RequestedPositions.positions(requestedPositions),
@@ -93,7 +93,6 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
 extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedPwdViewProtocol {
     
     func didUpdateEnvironments() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func resetForm() {
@@ -130,6 +129,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         configureTextFields()
         configureMaskedPasswordInputView()
         configureButtons()
+        configureKeyboard()
         setAccessibility()
     }
     
@@ -170,6 +170,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
         loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        loginButton.setEnabled(false)
     }
     
     func setAccessibility() {
@@ -185,6 +186,10 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+
+    func configureKeyboard() {
+        IQKeyboardManager.shared.enableAutoToolbar = false
+    }
     
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -195,7 +200,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         self.view.endEditing(true)
         // TODO
     }
-    
+
     @objc func keyboardWillShow(notification: NSNotification) {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
@@ -239,5 +244,46 @@ extension PLUnrememberedLoginMaskedPwdViewController: PasswordPTTextFieldDelegat
 extension PLUnrememberedLoginMaskedPwdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
+    }
+}
+
+extension  PLUnrememberedLoginMaskedPwdViewController: PLUIInputCodeViewDelegate {
+
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
+
+        if let first = view.firstEmptyRequested(), first >= 8 {
+            self.loginButton.setEnabled(true)
+        } else {
+            self.loginButton.setEnabled(false)
+        }
+    }
+
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
+        if string.count == 0 { return true }
+        guard string.count > 0,
+              let character = UnicodeScalar(string),
+              view.charactersSet.contains(character) == true else {
+            return false
+        }
+        return true
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
+    }
+}
+
+private extension PLLoginButton {
+
+    func setEnabled(_ enabled: Bool) {
+        guard self.isEnabled != enabled else { return }
+        self.isEnabled = enabled
+        let localizedKey = enabled ? "generic_button_continue" : "pl_login_button_access"
+        self.set(localizedStylableText: localized(localizedKey), state: .normal)
     }
 }

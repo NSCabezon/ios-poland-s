@@ -75,7 +75,6 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
 extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {
     
     func didUpdateEnvironments() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func resetForm() {
@@ -107,6 +106,7 @@ private extension PLUnrememberedLoginIdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureKeyboard()
         setAccessibility()
     }
     
@@ -139,7 +139,7 @@ private extension PLUnrememberedLoginIdViewController {
         tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
         tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
-    
+
     func setAccessibility() {
         documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
@@ -147,6 +147,10 @@ private extension PLUnrememberedLoginIdViewController {
     
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+    }
+
+    func configureKeyboard() {
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func addKeyboardObserver() {

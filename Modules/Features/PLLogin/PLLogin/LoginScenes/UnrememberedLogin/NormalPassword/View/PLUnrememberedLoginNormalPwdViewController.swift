@@ -115,6 +115,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureKeyboard()
         setAccessibility()
     }
     
@@ -153,6 +154,10 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+    }
+
+    func configureKeyboard() {
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func addKeyboardObserver() {

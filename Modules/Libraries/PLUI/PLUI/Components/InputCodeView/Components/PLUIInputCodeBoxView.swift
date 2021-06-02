@@ -79,7 +79,6 @@ public class PLUIInputCodeBoxView: UIView {
 
     func setKeyboardType(_ keyboardType : UIKeyboardType) {
         self.codeTextField.keyboardType = keyboardType
-
     }
 
     var text: String? {

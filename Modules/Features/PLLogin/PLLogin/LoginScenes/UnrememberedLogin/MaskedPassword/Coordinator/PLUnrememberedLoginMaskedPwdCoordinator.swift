@@ -66,7 +66,7 @@ private extension PLUnrememberedLoginMaskedPwdCoordinator {
         }
 
         self.dependenciesEngine.register(for: PLUnrememberedLoginMaskedPwdViewController.self) { resolver in
-            let presenter = resolver.resolve(for: PLUnrememberedLoginMaskedPwdPresenterProtocol.self)
+            var presenter = resolver.resolve(for: PLUnrememberedLoginMaskedPwdPresenterProtocol.self)
             let viewController = PLUnrememberedLoginMaskedPwdViewController(
                 nibName: "PLUnrememberedLoginMaskedPwdViewController",
                 bundle: Bundle.module,
