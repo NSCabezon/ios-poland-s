@@ -17,7 +17,8 @@ protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
-    func login(identification: String)
+    func authenticateInit()
+    func authenticate()
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
 }
@@ -32,19 +33,27 @@ final class PLSmsAuthPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+
+    private var loginConfiguration: UnrememberedLoginConfiguration {
+        self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
+    }
 }
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     func viewDidLoad() {
-        // TODO
+        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
     }
 
     func viewWillAppear() {
         self.loginManager?.getCurrentEnvironments()
     }
 
-    func login(identification: String) {
-        self.doLogin(with: .notPersisted(info: LoginTypeInfo(identification: identification)))
+    func authenticateInit() {
+        self.doAuthenticateInit()
+    }
+
+    func authenticate() {
+        self.doAuthenticate()
     }
 
     func recoverPasswordOrNewRegistration() {
@@ -94,9 +103,11 @@ private extension  PLSmsAuthPresenter {
         return self.dependenciesResolver.resolve(for: PLSmsAuthCoordinatorProtocol.self)
     }
 
-    func doLogin(with type: LoginType) {
-        self.view?.showLoadingWithInfo(completion: {[weak self] in
-            self?.loginManager?.doLogin(type: type)
-        })
+    func doAuthenticateInit() {
+        self.loginManager?.doAuthenticateInit()
+    }
+
+    func doAuthenticate() {
+        self.loginManager?.doAuthenticate()
     }
 }

@@ -13,6 +13,7 @@ import IQKeyboardManagerSwift
 
 protocol PLSmsAuthViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
+    func setUserIdentifier(_ identifier: String)
 }
 
 final class PLSmsAuthViewController: UIViewController {
@@ -27,7 +28,32 @@ final class PLSmsAuthViewController: UIViewController {
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
     //@IBOutlet weak var tooltipButton: UIButton!
-    private var components = [Any]()
+
+    private lazy var smsConstraintWithoutKeyboard: NSLayoutConstraint? = {
+        return self.smsInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)
+    }()
+    private lazy var smsConstraintWithKeyboard: NSLayoutConstraint? = {
+        return self.smsInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
+    }()
+    private lazy var smsInputCodeView: PLUIInputCodeView = PLUIInputCodeView(keyboardType: .numberPad,
+                                                                                        delegate: self,
+                                                                                        facade: PLUIInputCodeSMSFacade(),
+                                                                                        elementSize: Constants.smsBoxSize,
+                                                                                        requestedPositions: .all,
+                                                                                        charactersSet: Constants.smsCharacterSet)
+    private var isShowingKeyboard = false {
+        didSet {
+            self.smsConstraintWithoutKeyboard?.isActive = !isShowingKeyboard
+            self.smsConstraintWithKeyboard?.isActive = isShowingKeyboard
+        }
+    }
+
+    private enum Constants {
+        static let smsBoxSize = CGSize(width: 31.0, height: 56.0) // TODO: We need to change the width and height for smaller devices screens
+        static let smsCharacterSet: CharacterSet = .decimalDigits
+        static let bottomDistance: CGFloat = 32
+        static let animationDuration: TimeInterval = 0.2
+    }
 
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -69,7 +95,10 @@ final class PLSmsAuthViewController: UIViewController {
 }
 
 extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
-
+    func setUserIdentifier(_ identifier: String) {
+        self.documentTextField.setText(identifier)
+    }
+    
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
@@ -94,6 +123,7 @@ private extension PLSmsAuthViewController {
 
     func setupViews() {
         commonInit()
+
     }
 
     func commonInit() {
@@ -105,6 +135,7 @@ private extension PLSmsAuthViewController {
         configureButtons()
         configureSMSAuthView()
         setAccessibility()
+        authenticateInit()
     }
 
     func configureRegardLabel() {
@@ -120,6 +151,7 @@ private extension PLSmsAuthViewController {
 
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        self.documentTextField.isUserInteractionEnabled = false
     }
 
     @objc func dismissKeyboard() {
@@ -137,7 +169,16 @@ private extension PLSmsAuthViewController {
     }
 
     func configureSMSAuthView() {
-        components.append(self.smsAuthenticationView())
+        self.view.addSubview(self.smsInputCodeView)
+        self.smsConstraintWithoutKeyboard?.isActive = true
+        NSLayoutConstraint.activate([
+            self.smsInputCodeView.leadingAnchor.constraint(equalTo: self.documentTextField.leadingAnchor),
+            self.smsInputCodeView.trailingAnchor.constraint(equalTo: self.documentTextField.trailingAnchor)
+        ])
+    }
+
+    func authenticateInit() {
+        self.presenter.authenticateInit()
     }
 
     func setAccessibility() {
@@ -161,6 +202,7 @@ private extension PLSmsAuthViewController {
 
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
+        self.presenter.authenticate()
         // TODO: PG Remove the following lines: 2
         let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
         coordinatorDelegate.goToPrivate(.classic)
@@ -215,3 +257,59 @@ extension PLSmsAuthViewController: RememberMeViewDelegate {
     }
 }
 
+extension PLSmsAuthViewController: UITextFieldDelegate {
+
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard string != " " else { return false }
+        let currentText = self.documentTextField.introducedText
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        if updatedText.count > self.documentTextField.maxLenght  {
+            let changeUpdatedText = updatedText.substring(0, self.documentTextField.maxLenght) ?? ""
+            self.documentTextField.introducedText = changeUpdatedText
+            self.documentTextField.textField.text = changeUpdatedText
+            return false
+        } else {
+            if updatedText.count >= 6 {
+                loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+                loginButton.isEnabled = true
+            }
+            else {
+                loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
+                loginButton.isEnabled = false
+            }
+            self.documentTextField.introducedText = updatedText
+            return true
+        }
+    }
+}
+
+extension  PLSmsAuthViewController: PLUIInputCodeViewDelegate {
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
+
+        if let first = view.firstEmptyRequested(), first >= 6 {
+            self.loginButton.isEnabled = true
+        } else {
+            self.loginButton.isEnabled = false
+        }
+    }
+
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
+        if string.count == 0 { return true }
+        guard string.count > 0,
+              let character = UnicodeScalar(string),
+              view.charactersSet.contains(character) == true else {
+            return false
+        }
+        return true
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
+    }
+}

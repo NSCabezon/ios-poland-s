@@ -54,7 +54,6 @@ extension PLAuthenticateInitUseCase: Cancelable {
 // MARK: I/O types definition
 struct PLAuthenticateInitUseCaseInput {
     let userId: String
-    let encryptedPassword: String
     let secondFactorData: SecondFactorDataEntity
 }
 
