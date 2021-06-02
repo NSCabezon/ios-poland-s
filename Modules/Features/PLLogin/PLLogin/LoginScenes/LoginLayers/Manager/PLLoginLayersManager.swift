@@ -103,7 +103,7 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
     }
 
     func getCurrentEnvironments() {
-//        self.loginEnvironmentLayer.getCurrentEnvironments()
+        self.loginEnvironmentLayer.getCurrentEnvironments()
     }
 }
 
