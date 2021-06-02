@@ -78,7 +78,6 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
         self.documentTextField.setText(identifier)
     }
 
-    
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
@@ -116,6 +115,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureKeyboard()
         setAccessibility()
     }
     
@@ -155,6 +155,10 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
     }
+
+    func configureKeyboard() {
+        IQKeyboardManager.shared.enableAutoToolbar = false
+    }
     
     func addKeyboardObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -181,13 +185,12 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
-        
-        IQKeyboardManager.shared.enableAutoToolbar = false
+
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
+        buttonBottomAnchorConstraint.constant = -keyboardFrame.height - Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
@@ -199,7 +202,6 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.isShowingKeyboard = false
-        IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
@@ -235,14 +237,7 @@ extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
         guard updatedText.count <= self.passwordTextField.maxLength else { return false }
         self.passwordTextField.hiddenText = updatedText
         self.passwordTextField.updatePassword()
-        if updatedText.count >= 4 {
-            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-            loginButton.isEnabled = true
-        }
-        else {
-            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-            loginButton.isEnabled = false
-        }
+        loginButton.isEnabled = updatedText.count >= 4
 
         return false
     }

@@ -65,19 +65,13 @@
                         <constraint firstAttribute="height" constant="56" id="g6j-oF-zUm"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yN-eH-7fk" userLabel="CTAButton" customClass="PressableButton" customModule="UI">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yN-eH-7fk" userLabel="CTAButton" customClass="PLLoginButton" customModule="PLLogin" customModuleProvider="target">
                     <rect key="frame" x="24" y="782" width="366" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="sGE-fb-qt1"/>
                     </constraints>
                     <state key="normal" title="Button"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="pressedColor">
-                            <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="normalColor">
-                            <color key="value" red="0.94901960780000005" green="0.13725490200000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="btnLogin"/>
                     </userDefinedRuntimeAttributes>
                 </button>
@@ -120,6 +114,11 @@
             <point key="canvasLocation" x="-1213.0434782608697" y="273.88392857142856"/>
         </view>
     </objects>
+    <designables>
+        <designable name="4yN-eH-7fk">
+            <size key="intrinsicContentSize" width="54" height="34"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

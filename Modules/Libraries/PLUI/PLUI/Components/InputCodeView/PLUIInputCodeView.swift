@@ -90,6 +90,12 @@ public class PLUIInputCodeView: UIView {
         self.inputCodeBoxArray.isAnyFirstResponder()?.resignFirstResponder()
         return true
     }
+
+    // Returns the position of the first element that is required and empty, in other case returns nil
+    public func firstEmptyRequested() -> Int? {
+        guard let nextEmptyBox = self.inputCodeBoxArray.firstEmptyEnabled() else { return nil }
+        return nextEmptyBox.position
+    }
 }
 
 private extension PLUIInputCodeView {
@@ -117,13 +123,13 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
         codeBoxView.text = string
 
+        self.delegate?.codeView(self, didChange: string, for: codeBoxView.position)
+
         if let nextPasswordInputBoxView = self.inputCodeBoxArray.nextEnabled(from: codeBoxView.position) {
             nextPasswordInputBoxView.becomeFirstResponder()
         } else {
             codeBoxView.resignFirstResponder()
         }
-
-        self.delegate?.codeView(self, didChange: string, for: codeBoxView.position)
 
         return true
     }
@@ -145,8 +151,13 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 extension Array where Element == PLUIInputCodeBoxView {
 
     func nextEnabled(from position: NSInteger) -> PLUIInputCodeBoxView? {
-        guard position < self.count else { return nil }
-        let next = self.first { $0.requested == true && $0.position > position }
+        guard position > 0, position < self.count else { return nil }
+        let next = self.first { $0.requested == true && $0.position >= position && $0.text?.count == 0 }
+        return next
+    }
+
+    func firstEmptyEnabled() -> PLUIInputCodeBoxView? {
+        let next = self.first { $0.requested == true && $0.text?.count == 0 }
         return next
     }
 

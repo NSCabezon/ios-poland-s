@@ -16,6 +16,8 @@ public final class PLLoginButton: UIButton {
     public override var isEnabled: Bool {
         didSet {
             colourForState()
+            let localizedKey = isEnabled ? "generic_button_continue" : "pl_login_button_access"
+            set(localizedStylableText: localized(localizedKey), state: .normal)
         }
     }
 
@@ -42,7 +44,6 @@ public final class PLLoginButton: UIButton {
         contentEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         clipsToBounds = true
         titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
-        set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
         isEnabled = false
     }
 

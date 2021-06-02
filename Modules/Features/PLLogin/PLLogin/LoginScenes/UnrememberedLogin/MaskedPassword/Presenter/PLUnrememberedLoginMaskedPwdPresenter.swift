@@ -10,7 +10,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLUI
 
-protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol, PLUIInputCodeViewDelegate {
+protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
@@ -103,30 +103,5 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 private extension  PLUnrememberedLoginMaskedPwdPresenter {
     var coordinator: PLLoginCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-    }
-
-}
-
-extension  PLUnrememberedLoginMaskedPwdPresenter: PLUIInputCodeViewDelegate {
-
-    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
-        guard string.count == 1,
-              let character = UnicodeScalar(string),
-              view.charactersSet.contains(UnicodeScalar(character)) == true else {
-            return false
-        }
-        return true
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
     }
 }
