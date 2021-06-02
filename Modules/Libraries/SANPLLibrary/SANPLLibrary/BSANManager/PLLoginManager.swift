@@ -28,6 +28,7 @@ public final class PLLoginManager {
 
 extension PLLoginManager: PLLoginManagerProtocol {
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
+        self.setDemoModeIfNeeded(parameters.selectedId)
         let result = try loginDataSource.doLogin(parameters)
         return result
     }
@@ -51,5 +52,20 @@ extension PLLoginManager: PLLoginManagerProtocol {
     public func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError> {
         let result = try loginDataSource.doAuthenticate(parameters)
         return result
+    }
+}
+
+// MARK: - Private Methods
+
+private extension PLLoginManager {
+    func setDemoModeIfNeeded(_ user: String) {
+        guard self.demoInterpreter.isDemoModeAvailable,
+            self.demoInterpreter.isDemoUser(userName: user) else { return }
+        self.bsanDataProvider.setDemoMode(true, user)
+    }
+
+    func removeDemoModeIfNeeded() {
+        guard let _ = self.bsanDataProvider.getDemoMode() else { return }
+        self.bsanDataProvider.setDemoMode(false, nil)
     }
 }

@@ -19,6 +19,8 @@
                 <outlet property="passwordTextField" destination="SNJ-mh-a34" id="JHB-ZT-pLT"/>
                 <outlet property="regardLabel" destination="Fqj-VQ-BIu" id="QbF-uG-FWT"/>
                 <outlet property="sanIconImageView" destination="ncR-i9-Y80" id="fKm-30-5aB"/>
+                <outlet property="textfieldContainerContraintWithKeyboard" destination="fy6-Iy-5rc" id="xRN-EI-1Fi"/>
+                <outlet property="textfieldContainerContraintWithoutKeyboard" destination="DDS-PA-9au" id="kcf-ZX-4pt"/>
                 <outlet property="view" destination="vTt-qt-azL" id="lmN-3d-2dv"/>
             </connections>
         </placeholder>
@@ -37,7 +39,7 @@
                         <constraint firstAttribute="width" constant="52" id="fZ6-D4-ODe"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fqj-VQ-BIu">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fqj-VQ-BIu" userLabel="GreetingLabel">
                     <rect key="frame" x="21" y="109" width="372" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" id="SBh-iS-ZDM"/>
@@ -47,7 +49,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fR-Jr-Ai5">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fR-Jr-Ai5" userLabel="TextfieldContainerView">
                     <rect key="frame" x="26" y="199" width="364" height="136"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALE-qB-Yfr" customClass="PLDocumentTextField" customModule="PLLogin" customModuleProvider="target">
@@ -57,7 +59,7 @@
                                 <constraint firstAttribute="height" constant="56" id="YsU-E8-JIa"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNJ-mh-a34" customClass="PasswordTextField" customModule="UI">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SNJ-mh-a34" customClass="PLPasswordTextField" customModule="PLLogin" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="80" width="364" height="56"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.34999999999999998" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -115,6 +117,7 @@
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="21" id="VuW-XX-4nW"/>
                 <constraint firstItem="4yN-eH-7fk" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="24" id="cle-Z2-7I0"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-26" id="edJ-9H-8T8"/>
+                <constraint firstItem="5fR-Jr-Ai5" firstAttribute="bottom" secondItem="4yN-eH-7fk" secondAttribute="top" constant="-45" id="fy6-Iy-5rc"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Mnk-2a-nRa" secondAttribute="trailing" id="gKt-Ox-fig"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="5fR-Jr-Ai5" secondAttribute="trailing" constant="24" id="o5l-97-cfz"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="MFm-pN-t0c" secondAttribute="trailing" id="rt2-fq-6hX"/>
@@ -123,6 +126,11 @@
                 <constraint firstAttribute="bottom" secondItem="MFm-pN-t0c" secondAttribute="bottom" id="zEq-q9-K6C"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ncR-i9-Y80" secondAttribute="bottom" constant="4" id="ziW-NX-L4j"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="fy6-Iy-5rc"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="-1212" y="274"/>
         </view>
     </objects>

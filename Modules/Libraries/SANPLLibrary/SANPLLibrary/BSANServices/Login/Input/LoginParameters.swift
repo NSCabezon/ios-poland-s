@@ -14,4 +14,14 @@ public struct LoginParameters: Encodable {
         self.userId = userId
         self.userAlias = userAlias
     }
+
+    var selectedId: String {
+        if let userId = self.userId {
+            return userId
+        } else if let userAlias = self.userAlias {
+            return userAlias
+        } else {
+            return ""
+        }
+    }
 }
