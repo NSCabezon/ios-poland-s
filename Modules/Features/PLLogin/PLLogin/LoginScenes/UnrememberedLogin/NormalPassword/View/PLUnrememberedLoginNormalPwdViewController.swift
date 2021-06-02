@@ -237,14 +237,7 @@ extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
         guard updatedText.count <= self.passwordTextField.maxLength else { return false }
         self.passwordTextField.hiddenText = updatedText
         self.passwordTextField.updatePassword()
-        if updatedText.count >= 4 {
-            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-            loginButton.isEnabled = true
-        }
-        else {
-            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-            loginButton.isEnabled = false
-        }
+        loginButton.isEnabled = updatedText.count >= 4
 
         return false
     }

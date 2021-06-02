@@ -164,13 +164,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func configureButtons() {
-        loginButton.set(localizedStylableText: localized("login_button_enter"), state: .normal)
-        loginButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        loginButton.backgroundColor = UIColor.santanderRed
-        loginButton.layer.cornerRadius = (loginButton?.frame.height ?? 0.0) / 2.0
-        loginButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        loginButton.setEnabled(false)
     }
     
     func setAccessibility() {
@@ -252,9 +246,9 @@ extension  PLUnrememberedLoginMaskedPwdViewController: PLUIInputCodeViewDelegate
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
 
         if let first = view.firstEmptyRequested(), first >= 8 {
-            self.loginButton.setEnabled(true)
+            self.loginButton.isEnabled = true
         } else {
-            self.loginButton.setEnabled(false)
+            self.loginButton.isEnabled = false
         }
     }
 
@@ -275,14 +269,5 @@ extension  PLUnrememberedLoginMaskedPwdViewController: PLUIInputCodeViewDelegate
     }
 
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
-    }
-}
-
-private extension PLLoginButton {
-
-    func setEnabled(_ enabled: Bool) {
-        self.isEnabled = enabled
-        let localizedKey = enabled ? "generic_button_continue" : "pl_login_button_access"
-        self.set(localizedStylableText: localized(localizedKey), state: .normal)
     }
 }

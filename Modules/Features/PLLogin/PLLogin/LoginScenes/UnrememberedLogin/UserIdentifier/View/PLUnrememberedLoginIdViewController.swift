@@ -232,14 +232,7 @@ extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
             self.documentTextField.textField.text = changeUpdatedText
             return false
         } else {
-            if updatedText.count >= 6 {
-                loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-                loginButton.isEnabled = true
-            }
-            else {
-                loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-                loginButton.isEnabled = false
-            }
+            loginButton.isEnabled = updatedText.count >= 6
             self.documentTextField.introducedText = updatedText
             return true
         }
