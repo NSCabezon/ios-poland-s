@@ -281,7 +281,6 @@ extension  PLUnrememberedLoginMaskedPwdViewController: PLUIInputCodeViewDelegate
 private extension PLLoginButton {
 
     func setEnabled(_ enabled: Bool) {
-        guard self.isEnabled != enabled else { return }
         self.isEnabled = enabled
         let localizedKey = enabled ? "generic_button_continue" : "pl_login_button_access"
         self.set(localizedStylableText: localized(localizedKey), state: .normal)
