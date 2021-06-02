@@ -33,7 +33,7 @@ public final class PLManagersProvider {
 //    private let cardTransactionsManager: PTCardTransactionsManager
 //    private let authManager: PTAuthManager
 //    private let depositsManager: PTDepositsManager
-//    private let loansManager: PTLoansManager
+    private let loansManager: PLLoanManager
 //    private let pensionsManager: PTPensionsManager
 //    private let topUpsManager: PTTopUpsManager
 //    private let newTopUpsManager: PTNewTopUpManager
@@ -60,7 +60,7 @@ public final class PLManagersProvider {
 //        self.accountManager = PTAccountsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.authManager = PTAuthManager(networkProvider: networkProvider, dataProvider: bsanDataProvider)
 //        self.depositsManager = PTDepositsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
-//        self.loansManager = PTLoansManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
+        self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 //        self.pensionsManager = PTPensionsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.topUpsManager = PTTopUpsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
 //        self.newTopUpsManager = PTNewTopUpManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
@@ -113,9 +113,9 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 //        return self.depositsManager
 //    }
 //
-//    public func getLoansManager() -> PTLoansManagerProtocol {
-//        return self.loansManager
-//    }
+    public func getLoansManager() -> PLLoanManagerProtocol {
+        return self.loansManager
+    }
 //
 //    public func getPensionsManager() -> PTPensionsManagerProtocol {
 //        return self.pensionsManager

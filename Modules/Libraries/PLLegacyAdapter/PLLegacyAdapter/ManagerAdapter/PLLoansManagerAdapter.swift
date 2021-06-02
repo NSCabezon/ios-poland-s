@@ -6,31 +6,45 @@
 //
 
 import SANLegacyLibrary
+import SANPLLibrary
 
-final class PLLoansManagerAdapter {}
+final class PLLoansManagerAdapter {
+
+    private let loanManager: PLLoanManagerProtocol
+    private let bsanDataProvider: BSANDataProvider
+
+    init(loanManager: PLLoanManagerProtocol, bsanDataProvider: BSANDataProvider) {
+        self.bsanDataProvider = bsanDataProvider
+        self.loanManager = loanManager
+    }
+}
  
 extension PLLoansManagerAdapter: BSANLoansManager {
-    func getLoanTransactions(forLoan loan: LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<LoanTransactionsListDTO> {
+    func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
+
+        let loanTransactionsList = try self.loanManager.getAllProducts()
+
+        let adaptedLoanTransactionsList = LoanTransactionsListDTOAdapter.adaptPLLoanTransactionListToLoanTransactionList(try loanTransactionsList.get())
+        return BSANOkResponse(adaptedLoanTransactionsList)
+    }
+    
+    func getLoanDetail(forLoan loan: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<LoanDetailDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func getLoanDetail(forLoan loan: LoanDTO) throws -> BSANResponse<LoanDetailDTO> {
+    func getLoanTransactionDetail(forLoan loan: SANLegacyLibrary.LoanDTO, loanTransaction: SANLegacyLibrary.LoanTransactionDTO) throws -> BSANResponse<LoanTransactionDetailDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func getLoanTransactionDetail(forLoan loan: LoanDTO, loanTransaction: LoanTransactionDTO) throws -> BSANResponse<LoanTransactionDetailDTO> {
+    func removeLoanDetail(loanDTO: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
-    func removeLoanDetail(loanDTO: LoanDTO) throws -> BSANResponse<Void> {
+    func confirmChangeAccount(loanDTO: SANLegacyLibrary.LoanDTO, accountDTO: SANLegacyLibrary.AccountDTO, signatureDTO: SignatureDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmChangeAccount(loanDTO: LoanDTO, accountDTO: AccountDTO, signatureDTO: SignatureDTO) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
-    }
-    
-    func getLoanPartialAmortization(loanDTO: LoanDTO) throws -> BSANResponse<LoanPartialAmortizationDTO> {
+    func getLoanPartialAmortization(loanDTO: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<LoanPartialAmortizationDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -42,7 +56,7 @@ extension PLLoansManagerAdapter: BSANLoansManager {
         return BSANErrorResponse(nil)
     }
     
-    func changeLoanAlias(_ loan: LoanDTO, newAlias: String) throws -> BSANResponse<Void> {
+    func changeLoanAlias(_ loan: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
 }

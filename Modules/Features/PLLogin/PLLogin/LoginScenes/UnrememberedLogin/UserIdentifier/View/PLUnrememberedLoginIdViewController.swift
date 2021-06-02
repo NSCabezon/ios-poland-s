@@ -161,6 +161,9 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
+        // TODO: PG Remove the following lines: 2
+        //let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+        //coordinatorDelegate.goToPrivate(.classic)
         self.presenter.login(identification: documentTextField.introducedDocument())
     }
 

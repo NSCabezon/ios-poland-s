@@ -42,6 +42,7 @@ public enum PLLocalAnswerType: Int {
 public enum PLLocalServiceName: String {
     case globalPosition = "globalPosition"
     case login = "login"
+    case loanTransactions = "loanTransactions"
     case pubKey = "pub_key"
     case authenticateInit = "authenticate_init"
     case authenticate = "authenticate"
