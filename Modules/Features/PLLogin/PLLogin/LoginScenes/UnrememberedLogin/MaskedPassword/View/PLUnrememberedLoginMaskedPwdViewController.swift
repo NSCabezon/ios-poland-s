@@ -200,12 +200,11 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
 
-        IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstant.constant = -keyboardFrame.height + Constants.bottomDistance
+        buttonBottomAnchorConstant.constant = -keyboardFrame.height - Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
@@ -218,7 +217,6 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.isShowingKeyboard = false
-        IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstant.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
