@@ -201,8 +201,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        self.presenter.goToSMSScene()
-        // TODO
+        self.presenter.login(password: passwordTextField?.textField?.text ?? "")
     }
 
     @objc func tooltipButtonDidPressed() {
