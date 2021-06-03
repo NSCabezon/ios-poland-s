@@ -1,6 +1,9 @@
 //
-//  PLUnrememberedLoginNormalPwdPresenter.swift
+//  PLSmsAuthPresenter.swift
 //  PLLogin
+//
+//  Created by Juan Sánchez Marín on 28/5/21.
+//
 
 import DomainCommon
 import Commons
@@ -9,18 +12,19 @@ import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
 
-protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol {
-    var view: PLUnrememberedLoginNormalPwdViewProtocol? { get set }
+protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
+    var view: PLSmsAuthViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
-    func goToSMSScene()
+    func authenticateInit()
+    func authenticate()
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
 }
 
-final class PLUnrememberedLoginNormalPwdPresenter {
-    weak var view: PLUnrememberedLoginNormalPwdViewProtocol?
+final class PLSmsAuthPresenter {
+    weak var view: PLSmsAuthViewProtocol?
     weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
@@ -35,23 +39,21 @@ final class PLUnrememberedLoginNormalPwdPresenter {
     }
 }
 
-extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
+extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     func viewDidLoad() {
-        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
-
-        if let imageString = loginConfiguration.loginImageData,
-           let data = Data(base64Encoded: imageString),
-           let image = UIImage(data: data) {
-            self.view?.setUserImage(image: image)
-        }
+        // TODO
     }
 
     func viewWillAppear() {
         self.loginManager?.getCurrentEnvironments()
     }
 
-    func goToSMSScene() {
-        self.coordinator.goToSMSScene()
+    func authenticateInit() {
+        self.doAuthenticateInit()
+    }
+
+    func authenticate() {
+        self.doAuthenticate()
     }
 
     func recoverPasswordOrNewRegistration() {
@@ -63,7 +65,7 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
     }
 }
 
-extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
+extension PLSmsAuthPresenter: PLLoginPresenterLayerProtocol {
     func handle(event: LoginProcessLayerEvent) {
         // TODO
     }
@@ -71,6 +73,7 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
     func handle(event: SessionProcessEvent) {
         // TODO
     }
+
     func willStartSession() {
         // TODO
     }
@@ -84,8 +87,16 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
 }
 
 //MARK: - Private Methods
-private extension  PLUnrememberedLoginNormalPwdPresenter {
-    var coordinator: PLUnrememberedLoginNormalPwdCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginNormalPwdCoordinatorProtocol.self)
+private extension  PLSmsAuthPresenter {
+    var coordinator: PLSmsAuthCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLSmsAuthCoordinatorProtocol.self)
+    }
+
+    func doAuthenticateInit() {
+        self.loginManager?.doAuthenticateInit()
+    }
+
+    func doAuthenticate() {
+        self.loginManager?.doAuthenticate()
     }
 }

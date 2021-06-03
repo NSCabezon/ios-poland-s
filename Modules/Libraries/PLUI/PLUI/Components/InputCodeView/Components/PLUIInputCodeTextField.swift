@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UI
 
 protocol PLUIInputCodeTextFieldDelegate: UITextFieldDelegate {
     func didDeleteTextField(_ textField: PLUIInputCodeTextField)
@@ -17,7 +18,7 @@ class PLUIInputCodeTextField: UITextField {
         static let textColor = UIColor.white
         static let textSize: CGFloat = 20
         static let tintColor = UIColor.red
-        static let font = UIFont.systemFont(ofSize: 22.0)
+        static let font = UIFont.santander(family: .text, type: .regular, size: 28)
         static let enabledBackgroundColor = UIColor(white: 1.0, alpha: 0.35)
 
         enum Cursor {
