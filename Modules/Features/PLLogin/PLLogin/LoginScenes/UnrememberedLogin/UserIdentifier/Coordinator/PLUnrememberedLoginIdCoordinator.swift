@@ -108,6 +108,14 @@ private extension PLUnrememberedLoginIdCoordinator {
         self.dependenciesEngine.register(for: PLGetPublicKeyUseCase.self) { resolver in
             return PLGetPublicKeyUseCase(dependenciesResolver: resolver)
         }
+
+        self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
+            return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+            return PLAuthenticateUseCase(dependenciesResolver: resolver)
+        }
         
         self.dependenciesEngine.register(for: PullOfferCandidatesUseCase.self) { resolver in
            return PullOfferCandidatesUseCase(dependenciesResolver: resolver)

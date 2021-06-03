@@ -22,6 +22,8 @@ import Models
 /// This protocol is adopted by the Login Manager and used from scene presenter.
 protocol PLLoginLayersManagerDelegate: class {
     func doLogin(type: LoginType)
+    func doAuthenticateInit()
+    func doAuthenticate()
     func getCurrentEnvironments()
     func chooseEnvironment()
     func loadData()
@@ -86,6 +88,14 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
         self.loginProcessLayer.doLogin(with: type)
         self.loginProcessLayer.getPublicKey()
         //self.loginSessionLayer.setLoginState(.login)
+    }
+
+    func doAuthenticateInit() {
+        self.loginProcessLayer.doAuthenticateInit()
+    }
+
+    func doAuthenticate() {
+        self.loginProcessLayer.doAuthenticate()
     }
     
     func continueWithLoginSuccess() {

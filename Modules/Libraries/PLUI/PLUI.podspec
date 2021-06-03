@@ -19,6 +19,6 @@ The Poland PLUI framework.
   }
   s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 
-#  s.dependency "UI"
+  s.dependency "UI"
 #  s.dependency "Commons"
 end

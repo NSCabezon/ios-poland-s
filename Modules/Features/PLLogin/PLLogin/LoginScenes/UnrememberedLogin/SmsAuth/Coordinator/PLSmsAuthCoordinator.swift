@@ -1,6 +1,9 @@
 //
-//  PLUnrememberedLoginMaskedPwdCoordinator.swift
+//  PLSmsAuthCoordinator.swift
 //  PLLogin
+//
+//  Created by Juan Sánchez Marín on 28/5/21.
+//
 
 import Commons
 import UI
@@ -9,14 +12,13 @@ import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 
-protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
-    func goToSMSScene()
+protocol PLSmsAuthCoordinatorProtocol {
+    func goToGlobalPositionScene()
 }
 
-final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
+final class PLSmsAuthCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    private let smsAuthCoordinator: PLSmsAuthCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -24,33 +26,29 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.smsAuthCoordinator = PLSmsAuthCoordinator(
-            dependenciesResolver: self.dependenciesEngine,
-            navigationController: navigationController
-        )
         self.setupDependencies()
     }
 
     func start() {
-        let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginMaskedPwdViewController.self)
+        let controller = self.dependenciesEngine.resolve(for: PLSmsAuthViewController.self)
         self.navigationController?.pushViewController(controller, animated: false)
     }
 }
 
-extension PLUnrememberedLoginMaskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
-    func goToSMSScene() {
-        self.smsAuthCoordinator.start()
+extension PLSmsAuthCoordinator: PLSmsAuthCoordinatorProtocol {
+    func goToGlobalPositionScene() {
+        //TODO:
     }
 }
 
 /**
  #Register Scene depencencies.
 */
-private extension PLUnrememberedLoginMaskedPwdCoordinator {
+private extension PLSmsAuthCoordinator {
     func setupDependencies() {
-        let presenter = PLUnrememberedLoginMaskedPwdPresenter(dependenciesResolver: self.dependenciesEngine)
+        let presenter = PLSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
 
-        self.dependenciesEngine.register(for: PLUnrememberedLoginMaskedPwdCoordinatorProtocol.self) { _ in
+        self.dependenciesEngine.register(for: PLSmsAuthCoordinatorProtocol.self) { _ in
             return self
         }
 
@@ -58,22 +56,22 @@ private extension PLUnrememberedLoginMaskedPwdCoordinator {
             return presenter
         }
 
-        self.dependenciesEngine.register(for: PLUnrememberedLoginMaskedPwdPresenterProtocol.self) { resolver in
+        self.dependenciesEngine.register(for: PLSmsAuthPresenterProtocol.self) { resolver in
             return presenter
         }
 
-        self.dependenciesEngine.register(for: PLUnrememberedLoginMaskedPwdViewProtocol.self) { dependenciesResolver in
-            return dependenciesResolver.resolve(for: PLUnrememberedLoginMaskedPwdViewController.self)
+        self.dependenciesEngine.register(for: PLSmsAuthViewProtocol.self) { dependenciesResolver in
+            return dependenciesResolver.resolve(for: PLSmsAuthViewController.self)
         }
 
         self.dependenciesEngine.register(for: PLLoginCoordinatorProtocol.self) { _ in
             return self
         }
 
-        self.dependenciesEngine.register(for: PLUnrememberedLoginMaskedPwdViewController.self) { resolver in
-            var presenter = resolver.resolve(for: PLUnrememberedLoginMaskedPwdPresenterProtocol.self)
-            let viewController = PLUnrememberedLoginMaskedPwdViewController(
-                nibName: "PLUnrememberedLoginMaskedPwdViewController",
+        self.dependenciesEngine.register(for: PLSmsAuthViewController.self) { resolver in
+            var presenter = resolver.resolve(for: PLSmsAuthPresenterProtocol.self)
+            let viewController = PLSmsAuthViewController(
+                nibName: "PLSmsAuthViewController",
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
@@ -97,9 +95,9 @@ private extension PLUnrememberedLoginMaskedPwdCoordinator {
         self.dependenciesEngine.register(for: CalculateLocationsUseCase.self) { resolver in
            return CalculateLocationsUseCase(dependenciesResolver: resolver)
         }
+        self.registerEnvironmentDependencies()
     }
 }
 
-extension PLUnrememberedLoginMaskedPwdCoordinator: PLLoginCoordinatorProtocol {
-    // TODO: override navigation methods if necessary
-}
+extension PLSmsAuthCoordinator: PLLoginCoordinatorProtocol {}
+extension PLSmsAuthCoordinator: LoginChangeEnvironmentResolverCapable {}
