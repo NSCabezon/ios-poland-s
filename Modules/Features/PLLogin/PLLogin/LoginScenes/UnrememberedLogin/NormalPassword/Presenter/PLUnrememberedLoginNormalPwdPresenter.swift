@@ -12,9 +12,9 @@ import PLLegacyAdapter
 protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginNormalPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
+    func login(password: String)
     func viewDidLoad()
     func viewWillAppear()
-    func goToSMSScene()
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
 }
@@ -36,6 +36,12 @@ final class PLUnrememberedLoginNormalPwdPresenter {
 }
 
 extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
+
+    func login(password: String) {
+        self.loginConfiguration.password = password
+        self.coordinator.goToSMSScene()
+    }
+
     func viewDidLoad() {
         self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
 
