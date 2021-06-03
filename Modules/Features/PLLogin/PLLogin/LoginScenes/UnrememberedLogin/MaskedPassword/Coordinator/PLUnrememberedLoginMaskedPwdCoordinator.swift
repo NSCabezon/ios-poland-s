@@ -16,6 +16,7 @@ protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
 final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+//    private let smsCoordinator: PLUnrememberedLoginSMSCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -23,6 +24,10 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+//        self.smsCoordinator = PLUnrememberedLoginSMSCoordinator(
+//            dependenciesResolver: self.dependenciesEngine,
+//            navigationController: navigationController
+//        )
         self.setupDependencies()
     }
 
@@ -35,6 +40,7 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
 extension PLUnrememberedLoginMaskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
     func goToSMSScene() {
         // TODO
+//        self.smsCoordinator.start()
     }
 }
 
