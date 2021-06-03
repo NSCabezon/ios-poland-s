@@ -7,6 +7,7 @@ import IQKeyboardManagerSwift
 protocol PLUnrememberedLoginMaskedPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func setUserIdentifier(_ identifier: String)
+    func setUserImage(image: UIImage)
 }
 
 final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
@@ -26,6 +27,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     private lazy var maskedPasswordConstraintWithKeyboard: NSLayoutConstraint? = {
         return self.maskedPasswordInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
     }()
+    private let userImageView = UIImageView()
     private lazy var maskedPasswordInputCodeView: PLUIInputCodeView = {
 
         let requestedPositions = self.presenter.requestedPositions()
@@ -50,6 +52,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
         static let minimumPositionsFulfilled = 8
+        static let userImageSize = CGSize(width: 56.0, height: 56.0)
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -111,6 +114,15 @@ extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedP
     func setUserIdentifier(_ identifier: String) {
         self.documentTextField.setText(identifier)
     }
+
+    func setUserImage(image: UIImage) {
+        self.userImageView.image = image
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
+                self?.userImageView.alpha = 1.0
+            }
+        }
+    }
 }
 
 private extension PLUnrememberedLoginMaskedPwdViewController {
@@ -129,6 +141,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         configureBackground()
         configureTextFields()
         configureMaskedPasswordInputView()
+        configureUserImage()
         configureButtons()
         configureKeyboard()
         setAccessibility()
@@ -148,6 +161,23 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     func configureTextFields() {
         self.documentTextField.isUserInteractionEnabled = false
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+
+    func configureUserImage() {
+        self.userImageView.alpha = 0.0
+        self.userImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.userImageView.contentMode = .scaleAspectFit
+        self.userImageView.layer.cornerRadius = Constants.userImageSize.height/2.0
+        self.userImageView.layer.borderWidth = 2.0
+        self.userImageView.layer.borderColor = UIColor.white.cgColor
+        self.userImageView.layer.masksToBounds = true
+        self.view.addSubview(self.userImageView)
+        NSLayoutConstraint.activate([
+            self.userImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.userImageView.topAnchor.constraint(equalTo: self.regardLabel.bottomAnchor, constant: 15.0),
+            self.userImageView.heightAnchor.constraint(equalToConstant: Constants.userImageSize.height),
+            self.userImageView.widthAnchor.constraint(equalToConstant: Constants.userImageSize.width)
+        ])
     }
 
     func configureMaskedPasswordInputView() {
@@ -212,6 +242,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
             self?.documentTextField?.alpha = 0.0
+            self?.userImageView.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
@@ -222,6 +253,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
             self?.documentTextField?.alpha = 1.0
+            self?.userImageView.alpha = self?.userImageView.image != nil ? 1.0 : 0.0
             self?.view.layoutSubviews()
         }
     }

@@ -7,6 +7,7 @@ import IQKeyboardManagerSwift
 protocol PLUnrememberedLoginNormalPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func setUserIdentifier(_ identifier: String)
+    func setUserImage(image: UIImage)
 }
 
 final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
@@ -23,6 +24,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet weak var passwordTextField: PLPasswordTextField!
     @IBOutlet weak var textfieldContainerContraintWithoutKeyboard: NSLayoutConstraint!
     @IBOutlet weak var textfieldContainerContraintWithKeyboard: NSLayoutConstraint!
+    private let userImageView = UIImageView()
     private var isShowingKeyboard = false {
         didSet {
             textfieldContainerContraintWithKeyboard.isActive = isShowingKeyboard
@@ -33,6 +35,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     private enum Constants {
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
+        static let userImageSize = CGSize(width: 56.0, height: 56.0)
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -79,7 +82,6 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     }
 
     func didUpdateEnvironments() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
     func resetPassword() {
@@ -96,6 +98,15 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     
     func chooseEnvironment() {
         self.presenter.didSelectChooseEnvironment()
+    }
+
+    func setUserImage(image: UIImage) {
+        self.userImageView.image = image
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
+                self?.userImageView.alpha = 1.0
+            }
+        }
     }
 }
 
@@ -115,6 +126,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureUserImage()
         configureKeyboard()
         setAccessibility()
     }
@@ -136,6 +148,23 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
         passwordTextField?.delegate = self
         passwordTextField?.textField?.delegate = self
+    }
+
+    func configureUserImage() {
+        self.userImageView.alpha = 0.0
+        self.userImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.userImageView.contentMode = .scaleAspectFit
+        self.userImageView.layer.cornerRadius = Constants.userImageSize.height/2.0
+        self.userImageView.layer.borderWidth = 2.0
+        self.userImageView.layer.borderColor = UIColor.white.cgColor
+        self.userImageView.layer.masksToBounds = true
+        self.view.addSubview(self.userImageView)
+        NSLayoutConstraint.activate([
+            self.userImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.userImageView.topAnchor.constraint(equalTo: self.regardLabel.bottomAnchor, constant: 15.0),
+            self.userImageView.heightAnchor.constraint(equalToConstant: Constants.userImageSize.height),
+            self.userImageView.widthAnchor.constraint(equalToConstant: Constants.userImageSize.width)
+        ])
     }
     
     @objc func dismissKeyboard() {
@@ -197,6 +226,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         }
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
+            self?.userImageView.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
@@ -206,6 +236,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
+            self?.userImageView.alpha = self?.userImageView.image != nil ? 1.0 : 0.0
             self?.view.layoutSubviews()
         }
     }

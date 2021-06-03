@@ -38,6 +38,12 @@ final class PLUnrememberedLoginNormalPwdPresenter {
 extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
     func viewDidLoad() {
         self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
+
+        if let imageString = loginConfiguration.loginImageData,
+           let data = Data(base64Encoded: imageString),
+           let image = UIImage(data: data) {
+            self.view?.setUserImage(image: image)
+        }
     }
 
     func viewWillAppear() {
