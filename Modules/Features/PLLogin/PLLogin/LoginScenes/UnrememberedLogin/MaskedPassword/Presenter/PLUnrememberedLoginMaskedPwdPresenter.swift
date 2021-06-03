@@ -15,7 +15,7 @@ protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol 
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
-    func login(identification: String, magic: String, remember: Bool)
+    func login(password: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
     func requestedPositions() -> [Int]
@@ -46,8 +46,9 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         self.loginManager?.getCurrentEnvironments()
     }
 
-    func login(identification: String, magic: String, remember: Bool) {
-        // TODO
+    func login(password: String) {
+        self.loginConfiguration.password = password
+        self.coordinator.goToSMSScene()
     }
 
     func recoverPasswordOrNewRegistration() {
@@ -101,7 +102,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 
 //MARK: - Private Methods
 private extension  PLUnrememberedLoginMaskedPwdPresenter {
-    var coordinator: PLLoginCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+    var coordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginMaskedPwdCoordinatorProtocol.self)
     }
 }

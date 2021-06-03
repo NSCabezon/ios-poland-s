@@ -49,6 +49,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
         static let maskedPasswordCharacterSet: CharacterSet = .alphanumerics
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
+        static let minimumPositionsFulfilled = 8
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -192,7 +193,8 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        // TODO
+        let text = self.maskedPasswordInputCodeView.fulfilledText()
+        self.presenter.login(password: text ?? "")
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -244,11 +246,10 @@ extension PLUnrememberedLoginMaskedPwdViewController: RememberMeViewDelegate {
 extension  PLUnrememberedLoginMaskedPwdViewController: PLUIInputCodeViewDelegate {
 
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
-
-        if let first = view.firstEmptyRequested(), first >= 8 {
+        if let first = view.firstEmptyRequested(), first > Constants.minimumPositionsFulfilled {
             self.loginButton.isEnabled = true
         } else {
-            self.loginButton.isEnabled = false
+            self.loginButton.isEnabled = view.isFulfilled()
         }
     }
 
