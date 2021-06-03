@@ -159,6 +159,9 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
     func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView) {
         self.delegate?.codeView(self, didDelete: codeBoxView.position)
+        if let previousPasswordInputBoxView = self.inputCodeBoxArray.previousRequested(from: codeBoxView.position) {
+            previousPasswordInputBoxView.becomeFirstResponder()
+        }
     }
 }
 
@@ -168,6 +171,11 @@ extension Array where Element == PLUIInputCodeBoxView {
     func nextEmptyRequested(from position: NSInteger) -> PLUIInputCodeBoxView? {
         guard position > 0, position < self.count else { return nil }
         return self.first { $0.requested == true && $0.position >= position && $0.text?.count == 0 }
+    }
+
+    func previousRequested(from position: NSInteger) -> PLUIInputCodeBoxView? {
+        guard position > 0, position <= self.count else { return nil }
+        return self.last { $0.requested == true && $0.position < position }
     }
 
     func firstEmptyRequested() -> PLUIInputCodeBoxView? {
