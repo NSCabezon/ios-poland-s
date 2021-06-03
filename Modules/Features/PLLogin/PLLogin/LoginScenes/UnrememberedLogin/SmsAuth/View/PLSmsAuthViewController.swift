@@ -1,179 +1,202 @@
+//
+//  PLSmsAuthView.swift
+//  PLLogin
+//
+//  Created by Juan Sánchez Marín on 28/5/21.
+//
+
 import UIKit
 import UI
 import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginNormalPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLSmsAuthViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
-    func setUserIdentifier(_ identifier: String)
 }
 
-final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
+final class PLSmsAuthViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
-    private let presenter: PLUnrememberedLoginNormalPwdPresenterProtocol
-    
+    private let presenter: PLSmsAuthPresenterProtocol
+
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: PLDocumentTextField!
+    @IBOutlet weak var smsLabel: UILabel!
     @IBOutlet private weak var loginButton: PLLoginButton!
+    @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
-    @IBOutlet weak var passwordTextField: PLPasswordTextField!
-    @IBOutlet weak var textfieldContainerContraintWithoutKeyboard: NSLayoutConstraint!
-    @IBOutlet weak var textfieldContainerContraintWithKeyboard: NSLayoutConstraint!
+
+    private lazy var smsConstraintWithoutKeyboard: NSLayoutConstraint? = {
+        return self.smsInputCodeView.topAnchor.constraint(equalTo: self.smsLabel.bottomAnchor, constant: Constants.bottomDistance)
+    }()
+    private lazy var smsConstraintWithKeyboard: NSLayoutConstraint? = {
+        return self.smsInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
+    }()
+    private lazy var smsInputCodeView: PLUIInputCodeView = PLUIInputCodeView(keyboardType: .numberPad,
+                                                                                        delegate: self,
+                                                                                        facade: PLUIInputCodeSMSFacade(),
+                                                                                        elementSize: Constants.smsBoxSize,
+                                                                                        requestedPositions: .all,
+                                                                                        charactersSet: Constants.smsCharacterSet)
     private var isShowingKeyboard = false {
         didSet {
-            textfieldContainerContraintWithKeyboard.isActive = isShowingKeyboard
-            textfieldContainerContraintWithoutKeyboard.isActive = !isShowingKeyboard
+            self.smsConstraintWithoutKeyboard?.isActive = !isShowingKeyboard
+            self.smsConstraintWithKeyboard?.isActive = isShowingKeyboard
         }
     }
 
     private enum Constants {
-        static let bottomDistance: CGFloat = 32
+        static let smsBoxSize = CGSize(width: 39.0, height: 56.0)
+        static let smsCharacterSet: CharacterSet = .decimalDigits
+        static let bottomDistance: CGFloat = 10
         static let animationDuration: TimeInterval = 0.2
+        static let minimumPositionsFulfilled = 8
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
-         presenter: PLUnrememberedLoginNormalPwdPresenterProtocol) {
+         presenter: PLSmsAuthPresenterProtocol) {
         self.presenter = presenter
         self.dependenciesResolver = dependenciesResolver
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
+
     override func viewDidLoad() {
         self.presenter.viewDidLoad()
         self.setupViews()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter.viewWillAppear()
         self.addKeyboardObserver()
         self.setNavigationBar()
     }
-    
+
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
             .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
-    
+
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     @objc func didSelectMenu() {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
 }
 
-extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalPwdViewProtocol {
-    func setUserIdentifier(_ identifier: String) {
-        self.documentTextField.setText(identifier)
-    }
-
+extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
+    
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
-    func resetPassword() {
-        self.passwordTextField?.reset()
-    }
-    
     func resetForm() {
-        self.passwordTextField?.setText("")
+        //TODO
     }
-    
+
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
         self.chooseEnvironment()
     }
-    
+
     func chooseEnvironment() {
         self.presenter.didSelectChooseEnvironment()
     }
 }
 
-private extension PLUnrememberedLoginNormalPwdViewController {
+private extension PLSmsAuthViewController {
     func isKeyboardDismisserAllowed() -> Bool {
         return parent == nil || parent is UINavigationController
     }
-    
+
     func setupViews() {
         commonInit()
+
     }
-    
+
     func commonInit() {
         setupEnvironmentButton()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        configureRegardLabel()
+        configureLabels()
         configureBackground()
         configureTextFields()
         configureButtons()
-        configureKeyboard()
+        configureSMSAuthView()
         setAccessibility()
+        authenticateInit()
     }
-    
-    func configureRegardLabel() {
+
+    func configureLabels() {
         regardLabel.font = .santander(family: .text, type: .light, size: 40)
         regardLabel.textColor = UIColor.Legacy.uiWhite
         regardLabel.text = regardNow()
+        smsLabel.font = .santander(family: .text, type: .regular, size: 12)
+        smsLabel.textColor = UIColor.Legacy.uiWhite
+        smsLabel.text = localized("pl_login_hint_smsCode").plainText
     }
-    
+
     func configureBackground() {
         backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
-    
+
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        self.documentTextField.isUserInteractionEnabled = false
-        passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
-        passwordTextField?.delegate = self
-        passwordTextField?.textField?.delegate = self
     }
-    
+
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
+
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
     }
-    
-    func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
-        passwordTextField?.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextPassword.rawValue
+
+    func configureSMSAuthView() {
+        self.view.addSubview(self.smsInputCodeView)
+        self.smsConstraintWithoutKeyboard?.isActive = true
+        NSLayoutConstraint.activate([
+            self.smsInputCodeView.leadingAnchor.constraint(equalTo: self.smsLabel.leadingAnchor),
+            self.smsInputCodeView.trailingAnchor.constraint(equalTo: self.smsLabel.trailingAnchor)
+        ])
     }
-    
+
+    func authenticateInit() {
+        self.presenter.authenticateInit()
+    }
+
+    func setAccessibility() {
+        smsLabel.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
+        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    }
+
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
     }
 
-    func configureKeyboard() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
-    }
-    
     func addKeyboardObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        self.presenter.goToSMSScene()
-        // TODO
+        self.presenter.authenticate()
+        // TODO: PG Remove the following lines: 2
+        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+        coordinatorDelegate.goToPrivate(.classic)
     }
 
     @objc func tooltipButtonDidPressed() {
@@ -182,64 +205,74 @@ private extension PLUnrememberedLoginNormalPwdViewController {
                 }), isCloseButtonAvailable: true)
         dialog.show(in: self)
     }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard self.isShowingKeyboard == false else { return }
-        self.isShowingKeyboard = true
 
+    @objc func keyboardWillShow(notification: NSNotification) {
+        IQKeyboardManager.shared.enableAutoToolbar = false
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height - Constants.bottomDistance
+        bottonDistance?.constant = keyboardFrame.height
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
-        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
+        UIView.animate(withDuration: 0.2) { [weak self] in
             self?.regardLabel?.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        self.isShowingKeyboard = false
-        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
-        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
+        IQKeyboardManager.shared.enableAutoToolbar = true
+        bottonDistance?.constant = 0
+        UIView.animate(withDuration: 0.2) { [weak self] in
             self?.regardLabel?.alpha = 1.0
             self?.view.layoutSubviews()
         }
     }
-    
+
     func recoverPasswordOrNewRegistration() {
         self.presenter.recoverPasswordOrNewRegistration()
     }
 }
 
-extension PLUnrememberedLoginNormalPwdViewController: PLPasswordTextFieldDelegate {
+extension PLSmsAuthViewController: PasswordPTTextFieldDelegate {
     public func enterDidPressed() {
         self.loginButtonDidPressed()
     }
 }
 
-extension PLUnrememberedLoginNormalPwdViewController: RememberMeViewDelegate {
+extension PLSmsAuthViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
     }
 }
 
-extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
+extension  PLSmsAuthViewController: PLUIInputCodeViewDelegate {
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
+        if let first = view.firstEmptyRequested(), first > Constants.minimumPositionsFulfilled {
+            self.loginButton.isEnabled = true
+        } else {
+            self.loginButton.isEnabled = view.isFulfilled()
+        }
+    }
 
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = self.passwordTextField.hiddenText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
+        if string.count == 0 { return true }
+        guard string.count > 0,
+              let character = UnicodeScalar(string),
+              view.charactersSet.contains(character) == true else {
+            return false
+        }
+        return true
+    }
 
-        guard updatedText.count <= self.passwordTextField.maxLength else { return false }
-        self.passwordTextField.hiddenText = updatedText
-        self.passwordTextField.updatePassword()
-        loginButton.isEnabled = updatedText.count >= 4
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
+    }
 
-        return false
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
     }
 }
