@@ -47,7 +47,7 @@ final class PLSmsAuthViewController: UIViewController {
     }
 
     private enum Constants {
-        static let smsBoxSize = CGSize(width: 39.0, height: 56.0)
+        static let smsBoxSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 39.0, height: 56.0) : CGSize(width: 34, height: 49)
         static let smsCharacterSet: CharacterSet = .decimalDigits
         static let bottomDistance: CGFloat = 32
         static let separationDistance: CGFloat = 10
