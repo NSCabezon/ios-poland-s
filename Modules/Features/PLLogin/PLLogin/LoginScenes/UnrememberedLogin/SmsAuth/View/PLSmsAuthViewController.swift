@@ -27,7 +27,6 @@ final class PLSmsAuthViewController: UIViewController {
     @IBOutlet private weak var loginButton: PLLoginButton!
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
-    //@IBOutlet weak var tooltipButton: UIButton!
 
     private lazy var smsConstraintWithoutKeyboard: NSLayoutConstraint? = {
         return self.smsInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)
@@ -49,7 +48,7 @@ final class PLSmsAuthViewController: UIViewController {
     }
 
     private enum Constants {
-        static let smsBoxSize = CGSize(width: 31.0, height: 56.0) // TODO: We need to change the width and height for smaller devices screens
+        static let smsBoxSize = CGSize(width: 31.0, height: 56.0)
         static let smsCharacterSet: CharacterSet = .decimalDigits
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
@@ -160,12 +159,6 @@ private extension PLSmsAuthViewController {
 
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        /*tooltipButton.set(localizedStylableText: localized("login_button_lostKey"), state: .normal)
-        tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
-        tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
-        tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))*/
     }
 
     func configureSMSAuthView() {

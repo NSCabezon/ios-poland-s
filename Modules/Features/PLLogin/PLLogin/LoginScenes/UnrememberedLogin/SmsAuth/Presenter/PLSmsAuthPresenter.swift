@@ -67,18 +67,7 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
 
 extension PLSmsAuthPresenter: PLLoginPresenterLayerProtocol {
     func handle(event: LoginProcessLayerEvent) {
-        switch event {
-        case .willLogin:
-            break // TODO
-        case .loginWithIdentifierSuccess(let _):
-            break // TODO
-        case .loginSuccess:
-            break // TODO
-        case .noConnection:
-            break // TODO
-        case .loginError:
-            break // TODO
-        }
+        // TODO
     }
 
     func handle(event: SessionProcessEvent) {
