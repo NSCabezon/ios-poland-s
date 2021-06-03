@@ -16,13 +16,9 @@ class PLUIInputCodeTextField: UITextField {
 
     private enum Constants {
         static let textColor = UIColor.white
-        static let textSize: CGFloat = 20
-        static let tintColor = UIColor.red
-//        static let font = UIFont.santander(family: .text, type: .regular, size: 28)
+        static let tintColor = UIColor.santanderRed
         static let enabledBackgroundColor = UIColor(white: 1.0, alpha: 0.35)
-
         enum Cursor {
-            static let height: CGFloat = 17.0
             static let width: CGFloat = 1.0
         }
     }
@@ -96,7 +92,7 @@ class PLUIInputCodeTextField: UITextField {
 
     override func caretRect(for position: UITextPosition) -> CGRect {
         var rect = super.caretRect(for: position)
-        rect.size.height = Constants.Cursor.height
+        rect.size.height = self.selectedFont.lineHeight
         rect.size.width = Constants.Cursor.width
         rect.origin.y = (self.frame.height - rect.size.height) / 2
         return rect

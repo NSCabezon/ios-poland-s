@@ -263,12 +263,6 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
 }
 
-extension PLUnrememberedLoginMaskedPwdViewController: PasswordPTTextFieldDelegate {
-    public func enterDidPressed() {
-        self.loginButtonDidPressed()
-    }
-}
-
 extension PLUnrememberedLoginMaskedPwdViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)

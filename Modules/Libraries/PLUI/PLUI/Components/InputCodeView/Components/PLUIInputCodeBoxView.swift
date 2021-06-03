@@ -20,8 +20,6 @@ public class PLUIInputCodeBoxView: UIView {
         static let positionLabelHeight: CGFloat = 24.0
         static let positionLabelFontColor = UIColor.white
         static let positionLabelFont = UIFont.systemFont(ofSize: 14.0)
-        static let defaultWitdh: CGFloat = 31.0
-        static let defaultHeight: CGFloat = 56.0
     }
 
     private lazy var codeTextField: PLUIInputCodeTextField = {
@@ -52,7 +50,7 @@ public class PLUIInputCodeBoxView: UIView {
          delegate: PLUIInputCodeBoxViewDelegate? = nil,
          requested: Bool,
          isSecureEntry: Bool = true,
-         size: CGSize = CGSize(width: Constants.defaultWitdh, height: Constants.defaultHeight),
+         size: CGSize,
          font: UIFont) {
         self.showPosition = showPosition
         self.position = position
