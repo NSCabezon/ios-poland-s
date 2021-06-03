@@ -106,6 +106,7 @@ private extension PLUnrememberedLoginIdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureNavigationController()
         configureKeyboard()
         setAccessibility()
     }
@@ -147,6 +148,10 @@ private extension PLUnrememberedLoginIdViewController {
     
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+    }
+
+    func configureNavigationController() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
 
     func configureKeyboard() {
