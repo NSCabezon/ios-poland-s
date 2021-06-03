@@ -24,11 +24,11 @@ final class PLSmsAuthViewController: UIViewController {
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet weak var smsLabel: UILabel!
     @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
+    @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
 
     private lazy var smsConstraintWithoutKeyboard: NSLayoutConstraint? = {
-        return self.smsInputCodeView.topAnchor.constraint(equalTo: self.smsLabel.bottomAnchor, constant: Constants.bottomDistance)
+        return self.smsInputCodeView.topAnchor.constraint(equalTo: self.regardLabel.bottomAnchor, constant: Constants.distanceToRegardLabel)
     }()
     private lazy var smsConstraintWithKeyboard: NSLayoutConstraint? = {
         return self.smsInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
@@ -49,7 +49,9 @@ final class PLSmsAuthViewController: UIViewController {
     private enum Constants {
         static let smsBoxSize = CGSize(width: 39.0, height: 56.0)
         static let smsCharacterSet: CharacterSet = .decimalDigits
-        static let bottomDistance: CGFloat = 10
+        static let bottomDistance: CGFloat = 32
+        static let separationDistance: CGFloat = 10
+        static let distanceToRegardLabel: CGFloat = 90.0
         static let animationDuration: TimeInterval = 0.2
         static let minimumPositionsFulfilled = 8
     }
@@ -75,6 +77,7 @@ final class PLSmsAuthViewController: UIViewController {
         self.presenter.viewWillAppear()
         self.addKeyboardObserver()
         self.setNavigationBar()
+        self.configureConstraints()
     }
 
     func setNavigationBar() {
@@ -95,7 +98,6 @@ final class PLSmsAuthViewController: UIViewController {
 extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
     
     func didUpdateEnvironments() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
     func resetForm() {
@@ -129,6 +131,7 @@ private extension PLSmsAuthViewController {
         configureTextFields()
         configureButtons()
         configureSMSAuthView()
+        configureKeyboard()
         setAccessibility()
         authenticateInit()
     }
@@ -140,6 +143,10 @@ private extension PLSmsAuthViewController {
         smsLabel.font = .santander(family: .text, type: .regular, size: 12)
         smsLabel.textColor = UIColor.Legacy.uiWhite
         smsLabel.text = localized("pl_login_hint_smsCode").plainText
+    }
+
+    func configureConstraints() {
+        smsLabel.bottomAnchor.constraint(equalTo: self.smsInputCodeView.topAnchor, constant: -Constants.separationDistance).isActive = true
     }
 
     func configureBackground() {
@@ -206,13 +213,19 @@ private extension PLSmsAuthViewController {
         dialog.show(in: self)
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
+    func configureKeyboard() {
         IQKeyboardManager.shared.enableAutoToolbar = false
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard self.isShowingKeyboard == false else { return }
+        self.isShowingKeyboard = true
+        
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        bottonDistance?.constant = keyboardFrame.height
+        self.buttonBottomAnchorConstant.constant = -keyboardFrame.height - Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
@@ -223,8 +236,8 @@ private extension PLSmsAuthViewController {
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        IQKeyboardManager.shared.enableAutoToolbar = true
-        bottonDistance?.constant = 0
+        self.isShowingKeyboard = false
+        self.buttonBottomAnchorConstant.constant = -Constants.bottomDistance
         UIView.animate(withDuration: 0.2) { [weak self] in
             self?.regardLabel?.alpha = 1.0
             self?.view.layoutSubviews()
