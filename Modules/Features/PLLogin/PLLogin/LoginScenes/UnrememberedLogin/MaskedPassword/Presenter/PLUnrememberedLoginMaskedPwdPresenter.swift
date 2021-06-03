@@ -13,9 +13,9 @@ import PLUI
 protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
+    func login(password: String)
     func viewDidLoad()
     func viewWillAppear()
-    func login(password: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
     func requestedPositions() -> [Int]
@@ -40,6 +40,12 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
         self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
+
+        if let imageString = loginConfiguration.loginImageData,
+           let data = Data(base64Encoded: imageString),
+           let image = UIImage(data: data) {
+            self.view?.setUserImage(image: image)
+        }
     }
 
     func viewWillAppear() {
