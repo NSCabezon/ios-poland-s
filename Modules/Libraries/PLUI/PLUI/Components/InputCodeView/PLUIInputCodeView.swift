@@ -13,17 +13,6 @@ public protocol PLUIInputCodeViewDelegate: AnyObject {
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger)
 }
 
-public protocol PLUIInputCodeFacade: AnyObject {
-    func view(with boxes: [PLUIInputCodeBoxView]) -> UIView
-    func configuration() -> PLUIInputCodeFacadeConfiguration
-}
-
-public struct PLUIInputCodeFacadeConfiguration {
-    let showPositions: Bool
-    let showSecureEntry: Bool
-    let elementsNumber: NSInteger
-}
-
 public enum RequestedPositions {
     case all
     case positions([NSInteger])
@@ -44,7 +33,7 @@ public class PLUIInputCodeView: UIView {
     public let charactersSet: CharacterSet
     private weak var delegate: PLUIInputCodeViewDelegate?
     private var keyboardType: UIKeyboardType
-    private let facade: PLUIInputCodeFacade
+    private let facade: PLUIInputCodeFacadeProtocol
 
     /**
      - Parameters:
@@ -57,7 +46,7 @@ public class PLUIInputCodeView: UIView {
      */
     public init(keyboardType: UIKeyboardType = .default,
                 delegate: PLUIInputCodeViewDelegate?,
-                facade: PLUIInputCodeFacade,
+                facade: PLUIInputCodeFacadeProtocol,
                 elementSize: CGSize,
                 requestedPositions: RequestedPositions,
                 charactersSet: CharacterSet) {
@@ -109,7 +98,7 @@ public class PLUIInputCodeView: UIView {
 // MARK: Private
 private extension PLUIInputCodeView {
 
-    func configureInputCodeBoxArray(facade: PLUIInputCodeFacade,
+    func configureInputCodeBoxArray(facade: PLUIInputCodeFacadeProtocol,
                                     elementSize: CGSize,
                                     requestedPositions: RequestedPositions) {
 
@@ -120,7 +109,8 @@ private extension PLUIInputCodeView {
                                                                delegate: self,
                                                                requested: requestedPositions.isRequestedPosition(position: position),
                                                                isSecureEntry: facadeConfiguration.showSecureEntry,
-                                                               size: elementSize))
+                                                               size: elementSize,
+                                                               font: facadeConfiguration.font))
         }
     }
 

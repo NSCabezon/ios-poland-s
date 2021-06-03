@@ -18,7 +18,7 @@ class PLUIInputCodeTextField: UITextField {
         static let textColor = UIColor.white
         static let textSize: CGFloat = 20
         static let tintColor = UIColor.red
-        static let font = UIFont.santander(family: .text, type: .regular, size: 28)
+//        static let font = UIFont.santander(family: .text, type: .regular, size: 28)
         static let enabledBackgroundColor = UIColor(white: 1.0, alpha: 0.35)
 
         enum Cursor {
@@ -29,6 +29,7 @@ class PLUIInputCodeTextField: UITextField {
 
     private let padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private let isSecureEntry: Bool
+    private let selectedFont: UIFont
     override var isEnabled: Bool {
         didSet {
             self.disabledIndicatorView.isHidden = isEnabled
@@ -56,9 +57,12 @@ class PLUIInputCodeTextField: UITextField {
      - Parameter delegate: delegate
      - Parameter isSecureEntry: If true the characters entered are not shown
      */
-    init(delegate: PLUIInputCodeTextFieldDelegate?, isSecureEntry: Bool = true) {
+    init(delegate: PLUIInputCodeTextFieldDelegate?,
+         font: UIFont,
+         isSecureEntry: Bool = true) {
         self.inputCodeDelegate = delegate
         self.isSecureEntry = isSecureEntry
+        self.selectedFont = font
         super.init(frame: .zero)
         self.delegate = delegate
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +110,7 @@ private extension PLUIInputCodeTextField {
         self.isSecureTextEntry = self.isSecureEntry
         self.textAlignment = .center
         self.textColor = Constants.textColor
-        self.font = Constants.font
+        self.font = self.selectedFont
         self.tintColor = Constants.tintColor
     }
 }

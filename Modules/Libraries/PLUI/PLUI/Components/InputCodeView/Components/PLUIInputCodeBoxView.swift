@@ -25,7 +25,9 @@ public class PLUIInputCodeBoxView: UIView {
     }
 
     private lazy var codeTextField: PLUIInputCodeTextField = {
-        return PLUIInputCodeTextField(delegate: self, isSecureEntry: self.isSecureEntry)
+        return PLUIInputCodeTextField(delegate: self,
+                                      font: self.font,
+                                      isSecureEntry: self.isSecureEntry)
     }()
     let position: NSInteger
     let showPosition: Bool
@@ -33,6 +35,7 @@ public class PLUIInputCodeBoxView: UIView {
     private let isSecureEntry: Bool
     private let size: CGSize
     private let positionLabel = UILabel()
+    private let font: UIFont
     weak var delegate: PLUIInputCodeBoxViewDelegate?
 
     /**
@@ -49,12 +52,14 @@ public class PLUIInputCodeBoxView: UIView {
          delegate: PLUIInputCodeBoxViewDelegate? = nil,
          requested: Bool,
          isSecureEntry: Bool = true,
-         size: CGSize = CGSize(width: Constants.defaultWitdh, height: Constants.defaultHeight)) {
+         size: CGSize = CGSize(width: Constants.defaultWitdh, height: Constants.defaultHeight),
+         font: UIFont) {
         self.showPosition = showPosition
         self.position = position
         self.requested = requested
         self.isSecureEntry = isSecureEntry
         self.size = size
+        self.font = font
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.delegate = delegate
