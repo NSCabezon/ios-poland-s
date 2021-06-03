@@ -27,6 +27,7 @@ final class PLSmsAuthViewController: UIViewController {
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
 
+    private var finishedTimeValidateSMS: Bool = false
     private lazy var smsConstraintWithoutKeyboard: NSLayoutConstraint? = {
         return self.smsInputCodeView.topAnchor.constraint(equalTo: self.smsLabel.bottomAnchor, constant: Constants.bottomDistance)
     }()
@@ -131,6 +132,7 @@ private extension PLSmsAuthViewController {
         configureSMSAuthView()
         setAccessibility()
         authenticateInit()
+        initTimeValidateSMS()
     }
 
     func configureLabels() {
@@ -172,6 +174,19 @@ private extension PLSmsAuthViewController {
         self.presenter.authenticateInit()
     }
 
+    func configureTooltip() {
+        let dialog = Dialog(title: "", items: [Dialog.Item.text("pl_login_alert_expiredSignature")], image: nil, actionButton: Dialog.Action(title: "generic_button_understand", style: .red, action: {
+            self.presenter.goToUnrememberedLogindScene()
+                }), isCloseButtonAvailable: false)
+        dialog.show(in: self)
+    }
+
+    func initTimeValidateSMS() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 180) {
+            self.finishedTimeValidateSMS = true
+        }
+    }
+
     func setAccessibility() {
         smsLabel.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
@@ -193,17 +208,15 @@ private extension PLSmsAuthViewController {
 
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        self.presenter.authenticate()
-        // TODO: PG Remove the following lines: 2
-        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-        coordinatorDelegate.goToPrivate(.classic)
-    }
-
-    @objc func tooltipButtonDidPressed() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
-                    print("Action")
-                }), isCloseButtonAvailable: true)
-        dialog.show(in: self)
+        if finishedTimeValidateSMS {
+            configureTooltip()
+        }
+        else {
+            self.presenter.authenticate()
+            // TODO: PG Remove the following lines: 2
+            let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+            coordinatorDelegate.goToPrivate(.classic)
+        }
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
