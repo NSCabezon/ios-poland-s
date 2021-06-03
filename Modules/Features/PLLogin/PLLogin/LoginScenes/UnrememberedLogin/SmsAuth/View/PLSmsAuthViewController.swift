@@ -130,7 +130,6 @@ private extension PLSmsAuthViewController {
         configureButtons()
         configureSMSAuthView()
         setAccessibility()
-        authenticateInit()
     }
 
     func configureLabels() {
@@ -156,7 +155,7 @@ private extension PLSmsAuthViewController {
     }
 
     func configureButtons() {
-        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(smsSendButtonDidPressed)))
     }
 
     func configureSMSAuthView() {
@@ -166,10 +165,6 @@ private extension PLSmsAuthViewController {
             self.smsInputCodeView.leadingAnchor.constraint(equalTo: self.smsLabel.leadingAnchor),
             self.smsInputCodeView.trailingAnchor.constraint(equalTo: self.smsLabel.trailingAnchor)
         ])
-    }
-
-    func authenticateInit() {
-        self.presenter.authenticateInit()
     }
 
     func setAccessibility() {
@@ -191,9 +186,13 @@ private extension PLSmsAuthViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    @objc func loginButtonDidPressed() {
+    @objc func smsSendButtonDidPressed() {
         self.view.endEditing(true)
-        self.presenter.authenticate()
+        guard let smsCode = self.smsInputCodeView.fulfilledText() else {
+            // TODO: return error. smsCode can't be empty
+            return
+        }
+        self.presenter.authenticate(smsCode: smsCode)
         // TODO: PG Remove the following lines: 2
         let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
         coordinatorDelegate.goToPrivate(.classic)
@@ -238,7 +237,7 @@ private extension PLSmsAuthViewController {
 
 extension PLSmsAuthViewController: PasswordPTTextFieldDelegate {
     public func enterDidPressed() {
-        self.loginButtonDidPressed()
+        self.smsSendButtonDidPressed()
     }
 }
 

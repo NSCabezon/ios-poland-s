@@ -11,14 +11,14 @@ import Models
 import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
+import Security
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
-    func authenticateInit()
-    func authenticate()
+    func authenticate(smsCode: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
 }
@@ -41,19 +41,15 @@ final class PLSmsAuthPresenter {
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     func viewDidLoad() {
-        // TODO
+        self.doAuthenticateInit()
     }
 
     func viewWillAppear() {
         self.loginManager?.getCurrentEnvironments()
     }
 
-    func authenticateInit() {
-        self.doAuthenticateInit()
-    }
-
-    func authenticate() {
-        self.doAuthenticate()
+    func authenticate(smsCode: String) {
+        self.doAuthenticate(smscode: smsCode)
     }
 
     func recoverPasswordOrNewRegistration() {
@@ -93,10 +89,52 @@ private extension  PLSmsAuthPresenter {
     }
 
     func doAuthenticateInit() {
-        self.loginManager?.doAuthenticateInit()
+        self.loginManager?.doAuthenticateInit(userId: loginConfiguration.userIdentifier, challenge: loginConfiguration.challenge)
     }
 
-    func doAuthenticate() {
-        self.loginManager?.doAuthenticate()
+    func doAuthenticate(smscode: String) {
+        let secondFactorData = SecondFactorDataAuthenticationEntity(challenge: loginConfiguration.challenge, value: smscode)
+        guard let password = loginConfiguration.password else {
+            // TODO: generate error, password can't be empty
+            return
+        }
+        let encrytionKey = EncryptionKeyEntity(modulus: "", exponent: "") // TODO: Get public key from repository
+
+        self.loginManager?.doAuthenticate(encryptedPassword: self.encryptPassword(password: password, encryptionKey: encrytionKey),
+                                          userId: loginConfiguration.userIdentifier,
+                                          secondFactorData: secondFactorData)
     }
+
+    func encryptPassword(password: String, encryptionKey: EncryptionKeyEntity) throws -> String {
+        
+        var encryptedPassword = ""
+
+      
+        return encryptedPassword
+
+    }
+
+
+
+//    public String encryptPassword(String password, EncryptionKey encryptionKey) {
+//
+//            String encryptedPassword = null;
+//
+//            try {
+//                BigInteger modulus = new BigInteger(encryptionKey.getModulus(), 16); //encryptionKey.getModulus() received from /api/as/pub_key
+//                BigInteger exponent = new BigInteger(encryptionKey.getExponent(), 16); //encryptionKey.getExponent() received from /api/as/pub_key
+//                RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, exponent);
+//
+//                KeyFactory factory = KeyFactory.getInstance("RSA");
+//                PublicKey publicKey = factory.generatePublic(spec);
+//                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//                cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+//
+//                byte[] cipherText = cipher.doFinal(password.getBytes());
+//                encryptedPassword = DatatypeConverter.printHexBinary(cipherText).toLowerCase();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//            return encryptedPassword;
+//        }
 }

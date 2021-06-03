@@ -22,8 +22,8 @@ import Models
 /// This protocol is adopted by the Login Manager and used from scene presenter.
 protocol PLLoginLayersManagerDelegate: class {
     func doLogin(type: LoginType)
-    func doAuthenticateInit()
-    func doAuthenticate()
+    func doAuthenticateInit(userId: String, challenge: ChallengeEntity)
+    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity)
     func getCurrentEnvironments()
     func chooseEnvironment()
     func loadData()
@@ -80,6 +80,7 @@ final class PLLoginLayersManager {
 }
 
 extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
+
     func loadData() {
         // TODO
     }
@@ -90,12 +91,12 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
         //self.loginSessionLayer.setLoginState(.login)
     }
 
-    func doAuthenticateInit() {
-        self.loginProcessLayer.doAuthenticateInit()
+    func doAuthenticateInit(userId: String, challenge: ChallengeEntity) {
+        self.loginProcessLayer.doAuthenticateInit(userId: userId, challenge: challenge)
     }
 
-    func doAuthenticate() {
-        self.loginProcessLayer.doAuthenticate()
+    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity) {
+        self.loginProcessLayer.doAuthenticate(encryptedPassword: encryptedPassword, userId: userId, secondFactorData: secondFactorData)
     }
     
     func continueWithLoginSuccess() {
@@ -131,12 +132,7 @@ extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
         switch event {
         case .willLogin:
             self.publicFilesManager.cancelPublicFilesLoad(withStrategy: .initialLoad)
-        case .loginWithIdentifierSuccess:
-            break
-        case .loginSuccess:
-            //self.loginSessionLayer.handleSuccessLogin()
-            break
-        case .loginError, .noConnection:
+        default:
             break
         }
         self.loginPresenterLayer.handle(event: event)

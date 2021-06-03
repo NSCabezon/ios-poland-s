@@ -21,11 +21,10 @@ final class PLAuthenticateInitUseCase: UseCase<PLAuthenticateInitUseCaseInput, V
 
     public override func executeUseCase(requestValues: PLAuthenticateInitUseCaseInput) throws -> UseCaseResponse<Void, PLAuthenticateInitUseCaseErrorOutput> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let parameters = AuthenticateInitParameters(userId: requestValues.userId, secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: requestValues.secondFactorData.defaultChallenge.authorizationType, value: requestValues.secondFactorData.defaultChallenge.value)))
+        let parameters = AuthenticateInitParameters(userId: requestValues.userId, secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: requestValues.challenge.authorizationType, value: requestValues.challenge.value)))
         let result = try managerProvider.getLoginManager().doAuthenticateInit(parameters)
         switch result {
         case .success(_):
-            // TODO: Check if userID must be a not optional Int
             return UseCaseResponse.ok()
         case .failure(_):
             // TODO: the error management will be implemented in next sprint.
@@ -54,7 +53,7 @@ extension PLAuthenticateInitUseCase: Cancelable {
 // MARK: I/O types definition
 struct PLAuthenticateInitUseCaseInput {
     let userId: String
-    let secondFactorData: SecondFactorDataEntity
+    let challenge: ChallengeEntity
 }
 
 final class PLAuthenticateInitUseCaseErrorOutput: StringErrorOutput {

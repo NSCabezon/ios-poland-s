@@ -23,8 +23,8 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
         switch result {
         case .success(let loginData):
             // TODO: Check if loginData.userId must be a string
-            let loginChallenge = LoginChallengeEntity(authorizationType: loginData.secondFactorData?.defaultChallenge?.authorizationType,
-                value: loginData.secondFactorData?.defaultChallenge?.value)
+            let loginChallenge = ChallengeEntity(authorizationType: loginData.secondFactorData.defaultChallenge.authorizationType,
+                value: loginData.secondFactorData.defaultChallenge.value)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
             let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
             return UseCaseResponse.ok(loginOutput)
@@ -81,6 +81,6 @@ public struct PLLoginUseCaseOkOutput {
     public let loginImage: String?
     public let passwordMaskEnabled: Bool?
     public let passwordMask: Int?
-    public let defaultChallenge: LoginChallengeEntity
+    public let defaultChallenge: ChallengeEntity
     public let trustedComputerData: TrustedComputerEntity?
 }
