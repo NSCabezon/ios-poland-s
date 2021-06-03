@@ -41,7 +41,7 @@ final class PLSmsAuthPresenter {
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     func viewDidLoad() {
-        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
+        // TODO
     }
 
     func viewWillAppear() {

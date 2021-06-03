@@ -13,7 +13,6 @@ import IQKeyboardManagerSwift
 
 protocol PLSmsAuthViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
-    func setUserIdentifier(_ identifier: String)
 }
 
 final class PLSmsAuthViewController: UIViewController {
@@ -23,13 +22,13 @@ final class PLSmsAuthViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: PLDocumentTextField!
+    @IBOutlet weak var smsLabel: UILabel!
     @IBOutlet private weak var loginButton: PLLoginButton!
     @IBOutlet private weak var bottonDistance: NSLayoutConstraint!
     @IBOutlet weak var environmentButton: UIButton?
 
     private lazy var smsConstraintWithoutKeyboard: NSLayoutConstraint? = {
-        return self.smsInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)
+        return self.smsInputCodeView.topAnchor.constraint(equalTo: self.smsLabel.bottomAnchor, constant: Constants.bottomDistance)
     }()
     private lazy var smsConstraintWithKeyboard: NSLayoutConstraint? = {
         return self.smsInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
@@ -48,12 +47,12 @@ final class PLSmsAuthViewController: UIViewController {
     }
 
     private enum Constants {
-        static let smsBoxSize = CGSize(width: 31.0, height: 56.0)
+        static let smsBoxSize = CGSize(width: 39.0, height: 56.0)
         static let smsCharacterSet: CharacterSet = .decimalDigits
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 10
         static let animationDuration: TimeInterval = 0.2
+        static let minimumPositionsFulfilled = 8
     }
-
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLSmsAuthPresenterProtocol) {
@@ -94,16 +93,13 @@ final class PLSmsAuthViewController: UIViewController {
 }
 
 extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
-    func setUserIdentifier(_ identifier: String) {
-        self.documentTextField.setText(identifier)
-    }
     
     func didUpdateEnvironments() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
     func resetForm() {
-        self.documentTextField?.setText("")
+        //TODO
     }
 
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
@@ -128,7 +124,7 @@ private extension PLSmsAuthViewController {
     func commonInit() {
         setupEnvironmentButton()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        configureRegardLabel()
+        configureLabels()
         configureBackground()
         configureTextFields()
         configureButtons()
@@ -137,10 +133,13 @@ private extension PLSmsAuthViewController {
         authenticateInit()
     }
 
-    func configureRegardLabel() {
+    func configureLabels() {
         regardLabel.font = .santander(family: .text, type: .light, size: 40)
         regardLabel.textColor = UIColor.Legacy.uiWhite
         regardLabel.text = regardNow()
+        smsLabel.font = .santander(family: .text, type: .regular, size: 12)
+        smsLabel.textColor = UIColor.Legacy.uiWhite
+        smsLabel.text = localized("pl_login_hint_smsCode").plainText
     }
 
     func configureBackground() {
@@ -150,7 +149,6 @@ private extension PLSmsAuthViewController {
 
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        self.documentTextField.isUserInteractionEnabled = false
     }
 
     @objc func dismissKeyboard() {
@@ -165,8 +163,8 @@ private extension PLSmsAuthViewController {
         self.view.addSubview(self.smsInputCodeView)
         self.smsConstraintWithoutKeyboard?.isActive = true
         NSLayoutConstraint.activate([
-            self.smsInputCodeView.leadingAnchor.constraint(equalTo: self.documentTextField.leadingAnchor),
-            self.smsInputCodeView.trailingAnchor.constraint(equalTo: self.documentTextField.trailingAnchor)
+            self.smsInputCodeView.leadingAnchor.constraint(equalTo: self.smsLabel.leadingAnchor),
+            self.smsInputCodeView.trailingAnchor.constraint(equalTo: self.smsLabel.trailingAnchor)
         ])
     }
 
@@ -175,7 +173,7 @@ private extension PLSmsAuthViewController {
     }
 
     func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
+        smsLabel.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
     }
 
@@ -250,40 +248,12 @@ extension PLSmsAuthViewController: RememberMeViewDelegate {
     }
 }
 
-extension PLSmsAuthViewController: UITextFieldDelegate {
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = self.documentTextField.introducedText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-        if updatedText.count > self.documentTextField.maxLenght  {
-            let changeUpdatedText = updatedText.substring(0, self.documentTextField.maxLenght) ?? ""
-            self.documentTextField.introducedText = changeUpdatedText
-            self.documentTextField.textField.text = changeUpdatedText
-            return false
-        } else {
-            if updatedText.count >= 6 {
-                loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-                loginButton.isEnabled = true
-            }
-            else {
-                loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-                loginButton.isEnabled = false
-            }
-            self.documentTextField.introducedText = updatedText
-            return true
-        }
-    }
-}
-
 extension  PLSmsAuthViewController: PLUIInputCodeViewDelegate {
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
-
-        if let first = view.firstEmptyRequested(), first >= 6 {
+        if let first = view.firstEmptyRequested(), first > Constants.minimumPositionsFulfilled {
             self.loginButton.isEnabled = true
         } else {
-            self.loginButton.isEnabled = false
+            self.loginButton.isEnabled = view.isFulfilled()
         }
     }
 
