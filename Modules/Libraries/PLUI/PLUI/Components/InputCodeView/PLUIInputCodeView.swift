@@ -50,7 +50,6 @@ public class PLUIInputCodeView: UIView {
                 elementSize: CGSize,
                 requestedPositions: RequestedPositions,
                 charactersSet: CharacterSet) {
-
         self.facade = facade
         self.keyboardType = keyboardType
         self.delegate = delegate
