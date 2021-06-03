@@ -22,7 +22,11 @@ final class PLLoansManagerAdapter {
 extension PLLoansManagerAdapter: BSANLoansManager {
     func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
 
-        let loanTransactionsList = try self.loanManager.getAllProducts()
+        guard let sessionData = try? self.bsanDataProvider.getSessionData(),
+              let cardDTO = sessionData.globalPositionDTO?.cards else {
+            return BSANErrorResponse(nil)
+        }
+        let loanTransactionsList = try self.loanManager.getTransactions()
 
         let adaptedLoanTransactionsList = LoanTransactionsListDTOAdapter.adaptPLLoanTransactionListToLoanTransactionList(try loanTransactionsList.get())
         return BSANOkResponse(adaptedLoanTransactionsList)

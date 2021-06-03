@@ -6,7 +6,7 @@
 import Foundation
 
 public protocol PLLoanManagerProtocol {
-    func getAllProducts() throws -> Result<LoanTransactionsListDTO, NetworkProviderError>
+    func getTransactions() throws -> Result<LoanTransactionsListDTO, NetworkProviderError>
 }
 
 final class PLLoanManager {
@@ -22,7 +22,7 @@ final class PLLoanManager {
 }
 
 extension PLLoanManager: PLLoanManagerProtocol {
-    func getAllProducts() throws -> Result<LoanTransactionsListDTO, NetworkProviderError> {
+    func getTransactions() throws -> Result<LoanTransactionsListDTO, NetworkProviderError> {
         let result = try self.loanDataSource.getTransactions()
         return result
     }

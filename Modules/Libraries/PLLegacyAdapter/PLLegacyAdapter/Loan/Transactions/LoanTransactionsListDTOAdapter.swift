@@ -13,6 +13,9 @@ final class LoanTransactionsListDTOAdapter {
         loanTransactionsListDTO.transactionDTOs = plLoanTransactionList.installments?.compactMap({
             LoanTransactionDTOAdapter.adaptPLLoanTransactionToLoanTransaction($0)
         }) ?? []
+        if let pagination = plLoanTransactionList.page?.first {
+            loanTransactionsListDTO.pagination = LoanPaginationDTOAdapter.adaptPLLoanPaginationToLoanPagination(pagination)
+        }
         return loanTransactionsListDTO
     }
 }

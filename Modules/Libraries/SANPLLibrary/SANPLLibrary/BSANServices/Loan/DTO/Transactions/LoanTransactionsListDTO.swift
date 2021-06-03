@@ -7,5 +7,5 @@ import Foundation
 
 public struct LoanTransactionsListDTO: Codable {
     public let installments: [LoanTransactionDTO]?
-    public let page: LoanPageDTO?
+    public let page: [LoanPageDTO]?
 }

@@ -17,7 +17,7 @@ private extension LoanDataSource {
 
 final class LoanDataSource {
     private enum LoanServiceType: String {
-        case transactions = "/installments"
+        case transactions = "/installments/"
     }
     
     private let networkProvider: NetworkProvider
@@ -38,10 +38,15 @@ extension LoanDataSource: LoanDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
+        var accountId: String?
+        if let sessionData = try? self.dataProvider.getSessionData() {
+            accountId = sessionData.loggedUserDTO.login
+        }
+
         self.queryParams = nil
 
         let serviceName = LoanServiceType.transactions.rawValue
-        let absoluteUrl = baseUrl + self.basePath
+        let absoluteUrl = baseUrl + self.basePath + (accountId ?? "")
         let result: Result<LoanTransactionsListDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
