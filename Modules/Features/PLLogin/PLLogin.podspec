@@ -32,4 +32,5 @@ Pod::Spec.new do |spec|
   spec.dependency "iOSPublicFiles"
   spec.dependency "SANPLLibrary"
   spec.dependency "PLLegacyAdapter"
+  spec.dependency "SwiftyRSA"
 end

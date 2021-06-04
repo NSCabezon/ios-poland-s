@@ -12,6 +12,7 @@ import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
 import Security
+import SwiftyRSA
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
@@ -21,6 +22,11 @@ protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     func authenticate(smsCode: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
+}
+
+enum EncryptionError: Error {
+    case emptyPublicKey
+    case publicKeyGenerationFailed
 }
 
 final class PLSmsAuthPresenter {
@@ -37,6 +43,19 @@ final class PLSmsAuthPresenter {
     private var loginConfiguration: UnrememberedLoginConfiguration {
         self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
     }
+
+    private var getPersistedPubKeyUseCase: PLGetPersistedPubKeyUseCase {
+        self.dependenciesResolver.resolve(for: PLGetPersistedPubKeyUseCase.self)
+    }
+
+    private var authenticateInitUseCase: PLAuthenticateInitUseCase {
+        self.dependenciesResolver.resolve(for: PLAuthenticateInitUseCase.self)
+    }
+
+    private var authenticateUseCase: PLAuthenticateUseCase {
+        self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
+    }
+    
 }
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
@@ -89,7 +108,15 @@ private extension  PLSmsAuthPresenter {
     }
 
     func doAuthenticateInit() {
-        self.loginManager?.doAuthenticateInit(userId: loginConfiguration.userIdentifier, challenge: loginConfiguration.challenge)
+        let caseInput: PLAuthenticateInitUseCaseInput = PLAuthenticateInitUseCaseInput(userId: loginConfiguration.userIdentifier, challenge: loginConfiguration.challenge)
+        Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { _ in
+                // TODO: connect sms timeout
+            }
+            .onError { error in
+
+            }
     }
 
     func doAuthenticate(smscode: String) {
@@ -98,43 +125,102 @@ private extension  PLSmsAuthPresenter {
             // TODO: generate error, password can't be empty
             return
         }
-        let encrytionKey = EncryptionKeyEntity(modulus: "", exponent: "") // TODO: Get public key from repository
 
-        self.loginManager?.doAuthenticate(encryptedPassword: self.encryptPassword(password: password, encryptionKey: encrytionKey),
-                                          userId: loginConfiguration.userIdentifier,
-                                          secondFactorData: secondFactorData)
+        Scenario(useCase: self.getPersistedPubKeyUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput> in
+                let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)
+                do {
+                    let encryptedPassword = try self?.encryptPassword(password: password, encryptionKey: encrytionKey) ?? ""
+                    let userId = self?.loginConfiguration.userIdentifier ?? ""
+
+                    let caseInput: PLAuthenticateUseCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPassword, userId: userId, secondFactorData: secondFactorData)
+                    return Scenario(useCase: self?.authenticateUseCase, input: caseInput)
+                } catch {
+                    // TODO: Show error message, the login process can't continue
+                }
+
+            })
+            .onSuccess({ _ in
+                // TODO: Navigate to PG
+            })
+            .onError { error in
+                // TODO: Present error
+            }
     }
 
+    // MARK: Password encryption
     func encryptPassword(password: String, encryptionKey: EncryptionKeyEntity) throws -> String {
-        
-        var encryptedPassword = ""
-
+        guard let secPublicKey = self.getPublicKeySecurityRepresentation(encryptionKey.modulus, exponent: encryptionKey.exponent) else {
+            throw EncryptionError.publicKeyGenerationFailed
+        }
+        var encryptedBase64String = ""
+        let publicKey = try PublicKey(reference: secPublicKey)
+        let clear = try ClearMessage(string: password, using: .utf8)
+        let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+        encryptedBase64String = encrypted.base64String
       
-        return encryptedPassword
-
+        return encryptedBase64String
     }
 
+    func getPublicKeySecurityRepresentation(_ modulus: String, exponent: String) -> SecKey? {
+        var byteArrModulus = Array(modulus.utf8)
+        let byteArrayExponent = Array(exponent.utf8)
 
+        // Process modulus and exponent to generate an Apple Security SecKey
+        byteArrModulus.insert(0x00, at: 0)
 
-//    public String encryptPassword(String password, EncryptionKey encryptionKey) {
-//
-//            String encryptedPassword = null;
-//
-//            try {
-//                BigInteger modulus = new BigInteger(encryptionKey.getModulus(), 16); //encryptionKey.getModulus() received from /api/as/pub_key
-//                BigInteger exponent = new BigInteger(encryptionKey.getExponent(), 16); //encryptionKey.getExponent() received from /api/as/pub_key
-//                RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, exponent);
-//
-//                KeyFactory factory = KeyFactory.getInstance("RSA");
-//                PublicKey publicKey = factory.generatePublic(spec);
-//                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-//                cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-//
-//                byte[] cipherText = cipher.doFinal(password.getBytes());
-//                encryptedPassword = DatatypeConverter.printHexBinary(cipherText).toLowerCase();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//            return encryptedPassword;
-//        }
+        var modulusEncoded: [UInt8] = []
+        modulusEncoded.append(0x02)
+        modulusEncoded.append(contentsOf: lengthField(of: byteArrModulus))
+        modulusEncoded.append(contentsOf: byteArrModulus)
+
+        var exponentEncoded: [UInt8] = []
+        exponentEncoded.append(0x02)
+        exponentEncoded.append(contentsOf: lengthField(of: byteArrayExponent))
+        exponentEncoded.append(contentsOf: byteArrayExponent)
+
+        var sequenceEncoded: [UInt8] = []
+        sequenceEncoded.append(0x30)
+        sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
+        sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
+
+        // Create the SecKey
+        let keyData = Data(sequenceEncoded)
+        let keySize = (byteArrModulus.count * 8)
+        let attributes: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecAttrKeyClass as String: kSecAttrKeyClassPublic,
+            kSecAttrKeySizeInBits as String: keySize
+        ]
+        let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, nil)
+
+        return publicKey
+    }
+
+    func lengthField(of valueField: [UInt8]) -> [UInt8] {
+        var count = valueField.count
+
+        if count < 128 {
+            return [ UInt8(count) ]
+        }
+
+        // The number of bytes needed to encode count.
+        let lengthBytesCount = Int((log2(Double(count)) / 8) + 1)
+
+        // The first byte in the length field encoding the number of remaining bytes.
+        let firstLengthFieldByte = UInt8(128 + lengthBytesCount)
+
+        var lengthField: [UInt8] = []
+        for _ in 0..<lengthBytesCount {
+
+            let lengthByte = UInt8(count & 0xff) // last 8 bits of count.
+            lengthField.insert(lengthByte, at: 0)
+            count = count >> 8 // Delete the last 8 bits of count.
+        }
+
+        // Include the first byte.
+        lengthField.insert(firstLengthFieldByte, at: 0)
+        return lengthField
+    }
 }

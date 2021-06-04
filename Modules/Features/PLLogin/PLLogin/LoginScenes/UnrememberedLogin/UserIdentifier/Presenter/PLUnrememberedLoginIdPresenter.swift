@@ -74,11 +74,7 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
                 }
             })
 
-        case .loginSuccess:
-            break // TODO
-        case .noConnection:
-            break // TODO
-        case .loginError:
+        default:
             break // TODO
         }
     }

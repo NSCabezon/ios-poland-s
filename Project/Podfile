@@ -80,6 +80,7 @@ def pl_libraries
 end
 
 def pl_thirdparty_dependencies
+  pod 'SwiftyRSA'
   pod 'SwiftLint', '0.39.2'
 end
 
@@ -93,6 +94,7 @@ target 'Santander' do
   
   pl_features
   pl_libraries
+  pl_thirdparty_dependencies
 end
 
 post_install do |installer|
