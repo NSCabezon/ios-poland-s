@@ -16,19 +16,16 @@ class PLUIInputCodeTextField: UITextField {
 
     private enum Constants {
         static let textColor = UIColor.white
-        static let textSize: CGFloat = 20
-        static let tintColor = UIColor.red
-        static let font = UIFont.santander(family: .text, type: .regular, size: 28)
+        static let tintColor = UIColor.santanderRed
         static let enabledBackgroundColor = UIColor(white: 1.0, alpha: 0.35)
-
         enum Cursor {
-            static let height: CGFloat = 17.0
             static let width: CGFloat = 1.0
         }
     }
 
     private let padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private let isSecureEntry: Bool
+    private let selectedFont: UIFont
     override var isEnabled: Bool {
         didSet {
             self.disabledIndicatorView.isHidden = isEnabled
@@ -56,9 +53,12 @@ class PLUIInputCodeTextField: UITextField {
      - Parameter delegate: delegate
      - Parameter isSecureEntry: If true the characters entered are not shown
      */
-    init(delegate: PLUIInputCodeTextFieldDelegate?, isSecureEntry: Bool = true) {
+    init(delegate: PLUIInputCodeTextFieldDelegate?,
+         font: UIFont,
+         isSecureEntry: Bool = true) {
         self.inputCodeDelegate = delegate
         self.isSecureEntry = isSecureEntry
+        self.selectedFont = font
         super.init(frame: .zero)
         self.delegate = delegate
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +92,7 @@ class PLUIInputCodeTextField: UITextField {
 
     override func caretRect(for position: UITextPosition) -> CGRect {
         var rect = super.caretRect(for: position)
-        rect.size.height = Constants.Cursor.height
+        rect.size.height = self.selectedFont.lineHeight
         rect.size.width = Constants.Cursor.width
         rect.origin.y = (self.frame.height - rect.size.height) / 2
         return rect
@@ -106,7 +106,7 @@ private extension PLUIInputCodeTextField {
         self.isSecureTextEntry = self.isSecureEntry
         self.textAlignment = .center
         self.textColor = Constants.textColor
-        self.font = Constants.font
+        self.font = self.selectedFont
         self.tintColor = Constants.tintColor
     }
 }

@@ -17,6 +17,7 @@ public final class PLUIInputCodeMaskedPasswordFacade {
         static let elementsPerRow = elementsNumber/rowsNumber
         static let spacingBetweenRows: CGFloat = 5.0
         static let spacingBetweenColumns: CGFloat = 1.0
+        static let font = UIFont.systemFont(ofSize: 22)
     }
 
     private lazy var verticalStackView: UIStackView = {
@@ -28,7 +29,7 @@ public final class PLUIInputCodeMaskedPasswordFacade {
     }()
 }
 
-extension PLUIInputCodeMaskedPasswordFacade: PLUIInputCodeFacade {
+extension PLUIInputCodeMaskedPasswordFacade: PLUIInputCodeFacadeProtocol {
 
     public func view(with boxes: [PLUIInputCodeBoxView]) -> UIView {
         for row in 1...Constants.rowsNumber {
@@ -49,6 +50,7 @@ extension PLUIInputCodeMaskedPasswordFacade: PLUIInputCodeFacade {
     public func configuration() -> PLUIInputCodeFacadeConfiguration {
         return PLUIInputCodeFacadeConfiguration(showPositions: true,
                                                 showSecureEntry: true,
-                                                elementsNumber: Constants.elementsNumber)
+                                                elementsNumber: Constants.elementsNumber,
+                                                font: Constants.font)
     }
 }

@@ -21,6 +21,7 @@ protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     func authenticate()
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
+    func goToUnrememberedLogindScene()
 }
 
 final class PLSmsAuthPresenter {
@@ -62,6 +63,10 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
 
     func didSelectChooseEnvironment() {
         // TODO
+    }
+
+    func goToUnrememberedLogindScene() {
+        self.coordinator.goToUnrememberedLogindScene()
     }
 }
 

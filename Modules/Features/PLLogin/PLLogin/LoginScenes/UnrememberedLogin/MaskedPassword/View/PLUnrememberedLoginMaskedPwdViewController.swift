@@ -47,7 +47,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     }
 
     private enum Constants {
-        static let makedPasswordBoxSize = CGSize(width: 31, height: 56) // TODO: We need to change the width and height for smaller devices screens
+        static let makedPasswordBoxSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 31, height: 56) : CGSize(width: 22, height: 34)
         static let maskedPasswordCharacterSet: CharacterSet = .alphanumerics
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
@@ -260,12 +260,6 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     
     func recoverPasswordOrNewRegistration() {
         self.presenter.recoverPasswordOrNewRegistration()
-    }
-}
-
-extension PLUnrememberedLoginMaskedPwdViewController: PasswordPTTextFieldDelegate {
-    public func enterDidPressed() {
-        self.loginButtonDidPressed()
     }
 }
 
