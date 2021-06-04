@@ -13,17 +13,6 @@ public protocol PLUIInputCodeViewDelegate: AnyObject {
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger)
 }
 
-public protocol PLUIInputCodeFacade: AnyObject {
-    func view(with boxes: [PLUIInputCodeBoxView]) -> UIView
-    func configuration() -> PLUIInputCodeFacadeConfiguration
-}
-
-public struct PLUIInputCodeFacadeConfiguration {
-    let showPositions: Bool
-    let showSecureEntry: Bool
-    let elementsNumber: NSInteger
-}
-
 public enum RequestedPositions {
     case all
     case positions([NSInteger])
@@ -44,7 +33,7 @@ public class PLUIInputCodeView: UIView {
     public let charactersSet: CharacterSet
     private weak var delegate: PLUIInputCodeViewDelegate?
     private var keyboardType: UIKeyboardType
-    private let facade: PLUIInputCodeFacade
+    private let facade: PLUIInputCodeFacadeProtocol
 
     /**
      - Parameters:
@@ -57,11 +46,10 @@ public class PLUIInputCodeView: UIView {
      */
     public init(keyboardType: UIKeyboardType = .default,
                 delegate: PLUIInputCodeViewDelegate?,
-                facade: PLUIInputCodeFacade,
+                facade: PLUIInputCodeFacadeProtocol,
                 elementSize: CGSize,
                 requestedPositions: RequestedPositions,
                 charactersSet: CharacterSet) {
-
         self.facade = facade
         self.keyboardType = keyboardType
         self.delegate = delegate
@@ -109,7 +97,7 @@ public class PLUIInputCodeView: UIView {
 // MARK: Private
 private extension PLUIInputCodeView {
 
-    func configureInputCodeBoxArray(facade: PLUIInputCodeFacade,
+    func configureInputCodeBoxArray(facade: PLUIInputCodeFacadeProtocol,
                                     elementSize: CGSize,
                                     requestedPositions: RequestedPositions) {
 
@@ -120,7 +108,8 @@ private extension PLUIInputCodeView {
                                                                delegate: self,
                                                                requested: requestedPositions.isRequestedPosition(position: position),
                                                                isSecureEntry: facadeConfiguration.showSecureEntry,
-                                                               size: elementSize))
+                                                               size: elementSize,
+                                                               font: facadeConfiguration.font))
         }
     }
 
@@ -170,6 +159,9 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
     func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView) {
         self.delegate?.codeView(self, didDelete: codeBoxView.position)
+        if let previousPasswordInputBoxView = self.inputCodeBoxArray.previousRequested(from: codeBoxView.position) {
+            previousPasswordInputBoxView.becomeFirstResponder()
+        }
     }
 }
 
@@ -179,6 +171,11 @@ extension Array where Element == PLUIInputCodeBoxView {
     func nextEmptyRequested(from position: NSInteger) -> PLUIInputCodeBoxView? {
         guard position > 0, position < self.count else { return nil }
         return self.first { $0.requested == true && $0.position >= position && $0.text?.count == 0 }
+    }
+
+    func previousRequested(from position: NSInteger) -> PLUIInputCodeBoxView? {
+        guard position > 0, position <= self.count else { return nil }
+        return self.last { $0.requested == true && $0.position < position }
     }
 
     func firstEmptyRequested() -> PLUIInputCodeBoxView? {

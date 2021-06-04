@@ -13,9 +13,9 @@ import PLUI
 protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
+    func login(password: String)
     func viewDidLoad()
     func viewWillAppear()
-    func login(password: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
     func requestedPositions() -> [Int]
