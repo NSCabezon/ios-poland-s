@@ -32,7 +32,7 @@ final class PLSmsAuthCoordinator: ModuleCoordinator {
 
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLSmsAuthViewController.self)
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 

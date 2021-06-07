@@ -39,7 +39,7 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginIdViewController.self)
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
