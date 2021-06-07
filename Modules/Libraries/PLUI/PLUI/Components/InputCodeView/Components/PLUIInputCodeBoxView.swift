@@ -20,12 +20,12 @@ public class PLUIInputCodeBoxView: UIView {
         static let positionLabelHeight: CGFloat = 24.0
         static let positionLabelFontColor = UIColor.white
         static let positionLabelFont = UIFont.systemFont(ofSize: 14.0)
-        static let defaultWitdh: CGFloat = 31.0
-        static let defaultHeight: CGFloat = 56.0
     }
 
     private lazy var codeTextField: PLUIInputCodeTextField = {
-        return PLUIInputCodeTextField(delegate: self, isSecureEntry: self.isSecureEntry)
+        return PLUIInputCodeTextField(delegate: self,
+                                      font: self.font,
+                                      isSecureEntry: self.isSecureEntry)
     }()
     let position: NSInteger
     let showPosition: Bool
@@ -33,6 +33,7 @@ public class PLUIInputCodeBoxView: UIView {
     private let isSecureEntry: Bool
     private let size: CGSize
     private let positionLabel = UILabel()
+    private let font: UIFont
     weak var delegate: PLUIInputCodeBoxViewDelegate?
 
     /**
@@ -49,12 +50,14 @@ public class PLUIInputCodeBoxView: UIView {
          delegate: PLUIInputCodeBoxViewDelegate? = nil,
          requested: Bool,
          isSecureEntry: Bool = true,
-         size: CGSize = CGSize(width: Constants.defaultWitdh, height: Constants.defaultHeight)) {
+         size: CGSize,
+         font: UIFont) {
         self.showPosition = showPosition
         self.position = position
         self.requested = requested
         self.isSecureEntry = isSecureEntry
         self.size = size
+        self.font = font
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.delegate = delegate
@@ -79,7 +82,6 @@ public class PLUIInputCodeBoxView: UIView {
 
     func setKeyboardType(_ keyboardType : UIKeyboardType) {
         self.codeTextField.keyboardType = keyboardType
-
     }
 
     var text: String? {

@@ -10,12 +10,12 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLUI
 
-protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol, PLUIInputCodeViewDelegate {
+protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     var loginManager: PLLoginLayersManagerDelegate? { get set }
+    func login(password: String)
     func viewDidLoad()
     func viewWillAppear()
-    func login(identification: String, magic: String, remember: Bool)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
     func requestedPositions() -> [Int]
@@ -40,14 +40,21 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
         self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
+
+        if let imageString = loginConfiguration.loginImageData,
+           let data = Data(base64Encoded: imageString),
+           let image = UIImage(data: data) {
+            self.view?.setUserImage(image: image)
+        }
     }
 
     func viewWillAppear() {
         self.loginManager?.getCurrentEnvironments()
     }
 
-    func login(identification: String, magic: String, remember: Bool) {
-        // TODO
+    func login(password: String) {
+        self.loginConfiguration.password = password
+        self.coordinator.goToSMSScene()
     }
 
     func recoverPasswordOrNewRegistration() {
@@ -101,32 +108,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 
 //MARK: - Private Methods
 private extension  PLUnrememberedLoginMaskedPwdPresenter {
-    var coordinator: PLLoginCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-    }
-
-}
-
-extension  PLUnrememberedLoginMaskedPwdPresenter: PLUIInputCodeViewDelegate {
-
-    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
-        guard string.count == 1,
-              let character = UnicodeScalar(string),
-              view.charactersSet.contains(UnicodeScalar(character)) == true else {
-            return false
-        }
-        return true
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
+    var coordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginMaskedPwdCoordinatorProtocol.self)
     }
 }

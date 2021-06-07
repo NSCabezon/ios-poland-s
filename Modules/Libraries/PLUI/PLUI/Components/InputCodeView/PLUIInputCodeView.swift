@@ -13,17 +13,6 @@ public protocol PLUIInputCodeViewDelegate: AnyObject {
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger)
 }
 
-public protocol PLUIInputCodeFacade: AnyObject {
-    func view(with boxes: [PLUIInputCodeBoxView]) -> UIView
-    func configuration() -> PLUIInputCodeFacadeConfiguration
-}
-
-public struct PLUIInputCodeFacadeConfiguration {
-    let showPositions: Bool
-    let showSecureEntry: Bool
-    let elementsNumber: NSInteger
-}
-
 public enum RequestedPositions {
     case all
     case positions([NSInteger])
@@ -40,11 +29,11 @@ public enum RequestedPositions {
 
 public class PLUIInputCodeView: UIView {
 
-    var inputCodeBoxArray = [PLUIInputCodeBoxView]()
+    private var inputCodeBoxArray = [PLUIInputCodeBoxView]()
     public let charactersSet: CharacterSet
     private weak var delegate: PLUIInputCodeViewDelegate?
     private var keyboardType: UIKeyboardType
-    private let facade: PLUIInputCodeFacade
+    private let facade: PLUIInputCodeFacadeProtocol
 
     /**
      - Parameters:
@@ -57,28 +46,19 @@ public class PLUIInputCodeView: UIView {
      */
     public init(keyboardType: UIKeyboardType = .default,
                 delegate: PLUIInputCodeViewDelegate?,
-                facade: PLUIInputCodeFacade,
+                facade: PLUIInputCodeFacadeProtocol,
                 elementSize: CGSize,
                 requestedPositions: RequestedPositions,
                 charactersSet: CharacterSet) {
-
         self.facade = facade
         self.keyboardType = keyboardType
         self.delegate = delegate
         self.charactersSet = charactersSet
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
-
-        let facadeConfiguration = self.facade.configuration()
-        for position in 1...facadeConfiguration.elementsNumber {
-            self.inputCodeBoxArray.append(PLUIInputCodeBoxView(position: position,
-                                                               showPosition: facadeConfiguration.showPositions,
-                                                               delegate: self,
-                                                               requested: requestedPositions.isRequestedPosition(position: position),
-                                                               isSecureEntry: facadeConfiguration.showSecureEntry,
-                                                               size: elementSize))
-        }
-
+        self.configureInputCodeBoxArray(facade: facade,
+                                        elementSize: elementSize,
+                                        requestedPositions: requestedPositions)
         self.addSubviews(view: self.facade.view(with: self.inputCodeBoxArray))
     }
 
@@ -90,9 +70,48 @@ public class PLUIInputCodeView: UIView {
         self.inputCodeBoxArray.isAnyFirstResponder()?.resignFirstResponder()
         return true
     }
+
+    /**
+     Returns the position of the first element that is required and empty, in other case returns nil
+     */
+    public func firstEmptyRequested() -> Int? {
+        guard let nextEmptyBox = self.inputCodeBoxArray.firstEmptyRequested() else { return nil }
+        return nextEmptyBox.position
+    }
+
+    /**
+     Returns a text conformed by all the positions requested fulfilled by user
+     */
+    public func fulfilledText() -> String? {
+        return self.inputCodeBoxArray.fulfilledText()
+    }
+
+    /**
+     Returns true if all positions requested are fulfilled by user
+     */
+    public func isFulfilled() -> Bool {
+        return self.inputCodeBoxArray.fulfilledCount() == self.inputCodeBoxArray.requestedCount()
+    }
 }
 
+// MARK: Private
 private extension PLUIInputCodeView {
+
+    func configureInputCodeBoxArray(facade: PLUIInputCodeFacadeProtocol,
+                                    elementSize: CGSize,
+                                    requestedPositions: RequestedPositions) {
+
+        let facadeConfiguration = facade.configuration()
+        for position in 1...facadeConfiguration.elementsNumber {
+            self.inputCodeBoxArray.append(PLUIInputCodeBoxView(position: position,
+                                                               showPosition: facadeConfiguration.showPositions,
+                                                               delegate: self,
+                                                               requested: requestedPositions.isRequestedPosition(position: position),
+                                                               isSecureEntry: facadeConfiguration.showSecureEntry,
+                                                               size: elementSize,
+                                                               font: facadeConfiguration.font))
+        }
+    }
 
     func addSubviews(view: UIView) {
         self.addSubview(view)
@@ -105,6 +124,7 @@ private extension PLUIInputCodeView {
     }
 }
 
+// MARK: PLUIInputCodeBoxViewDelegate
 extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
     func codeBoxViewShouldChangeString (_ codeBoxView: PLUIInputCodeBoxView, replacementString string: String) -> Bool {
@@ -117,13 +137,13 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
         codeBoxView.text = string
 
-        if let nextPasswordInputBoxView = self.inputCodeBoxArray.nextEnabled(from: codeBoxView.position) {
+        self.delegate?.codeView(self, didChange: string, for: codeBoxView.position)
+
+        if let nextPasswordInputBoxView = self.inputCodeBoxArray.nextEmptyRequested(from: codeBoxView.position) {
             nextPasswordInputBoxView.becomeFirstResponder()
         } else {
             codeBoxView.resignFirstResponder()
         }
-
-        self.delegate?.codeView(self, didChange: string, for: codeBoxView.position)
 
         return true
     }
@@ -139,23 +159,50 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
 
     func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView) {
         self.delegate?.codeView(self, didDelete: codeBoxView.position)
+        if let previousPasswordInputBoxView = self.inputCodeBoxArray.previousRequested(from: codeBoxView.position) {
+            previousPasswordInputBoxView.becomeFirstResponder()
+        }
     }
 }
 
+// MARK: Array extension
 extension Array where Element == PLUIInputCodeBoxView {
 
-    func nextEnabled(from position: NSInteger) -> PLUIInputCodeBoxView? {
-        guard position < self.count else { return nil }
-        let next = self.first { $0.requested == true && $0.position > position }
-        return next
+    func nextEmptyRequested(from position: NSInteger) -> PLUIInputCodeBoxView? {
+        guard position > 0, position < self.count else { return nil }
+        return self.first { $0.requested == true && $0.position >= position && $0.text?.count == 0 }
+    }
+
+    func previousRequested(from position: NSInteger) -> PLUIInputCodeBoxView? {
+        guard position > 0, position <= self.count else { return nil }
+        return self.last { $0.requested == true && $0.position < position }
+    }
+
+    func firstEmptyRequested() -> PLUIInputCodeBoxView? {
+        return self.first { $0.requested == true && $0.text?.count == 0 }
     }
 
     func isAnyFirstResponder() -> PLUIInputCodeBoxView? {
-        for passwordInputBoxView in self {
-            if passwordInputBoxView.isFirstResponder {
-                return passwordInputBoxView
-            }
-        }
-        return nil
+        return self.first { $0.isFirstResponder }
+    }
+
+    func fulfilledBoxViews() -> [PLUIInputCodeBoxView]? {
+        return self.filter { return $0.requested == true && ($0.text ?? "").count > 0 }
+    }
+
+    func fulfilledText() -> String? {
+        guard let fullfilledInputBoxArray = self.fulfilledBoxViews() else { return nil }
+        return fullfilledInputBoxArray.reduce("", { result, inputBox in
+            return result + (inputBox.text ?? "")
+        })
+    }
+
+    func fulfilledCount() -> Int {
+        guard let fulfilledInputBoxArray = self.fulfilledBoxViews() else { return 0 }
+        return fulfilledInputBoxArray.count
+    }
+
+    func requestedCount() -> Int {
+        return self.filter { $0.requested == true }.count
     }
 }

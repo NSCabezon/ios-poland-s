@@ -16,6 +16,7 @@ protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
 final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let smsAuthCoordinator: PLSmsAuthCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -23,18 +24,22 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.smsAuthCoordinator = PLSmsAuthCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
         self.setupDependencies()
     }
 
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginMaskedPwdViewController.self)
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension PLUnrememberedLoginMaskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
     func goToSMSScene() {
-        // TODO
+        self.smsAuthCoordinator.start()
     }
 }
 
@@ -66,7 +71,7 @@ private extension PLUnrememberedLoginMaskedPwdCoordinator {
         }
 
         self.dependenciesEngine.register(for: PLUnrememberedLoginMaskedPwdViewController.self) { resolver in
-            let presenter = resolver.resolve(for: PLUnrememberedLoginMaskedPwdPresenterProtocol.self)
+            var presenter = resolver.resolve(for: PLUnrememberedLoginMaskedPwdPresenterProtocol.self)
             let viewController = PLUnrememberedLoginMaskedPwdViewController(
                 nibName: "PLUnrememberedLoginMaskedPwdViewController",
                 bundle: Bundle.module,

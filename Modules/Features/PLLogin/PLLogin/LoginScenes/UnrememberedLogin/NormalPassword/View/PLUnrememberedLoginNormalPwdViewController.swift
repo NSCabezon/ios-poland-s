@@ -7,6 +7,7 @@ import IQKeyboardManagerSwift
 protocol PLUnrememberedLoginNormalPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func setUserIdentifier(_ identifier: String)
+    func setUserImage(image: UIImage)
 }
 
 final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
@@ -23,6 +24,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     @IBOutlet weak var passwordTextField: PLPasswordTextField!
     @IBOutlet weak var textfieldContainerContraintWithoutKeyboard: NSLayoutConstraint!
     @IBOutlet weak var textfieldContainerContraintWithKeyboard: NSLayoutConstraint!
+    private let userImageView = UIImageView()
     private var isShowingKeyboard = false {
         didSet {
             textfieldContainerContraintWithKeyboard.isActive = isShowingKeyboard
@@ -33,6 +35,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     private enum Constants {
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
+        static let userImageSize = CGSize(width: 56.0, height: 56.0)
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -78,9 +81,7 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
         self.documentTextField.setText(identifier)
     }
 
-    
     func didUpdateEnvironments() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
     func resetPassword() {
@@ -97,6 +98,15 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     
     func chooseEnvironment() {
         self.presenter.didSelectChooseEnvironment()
+    }
+
+    func setUserImage(image: UIImage) {
+        self.userImageView.image = image
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
+                self?.userImageView.alpha = 1.0
+            }
+        }
     }
 }
 
@@ -116,6 +126,8 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureUserImage()
+        configureKeyboard()
         setAccessibility()
     }
     
@@ -137,6 +149,23 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         passwordTextField?.delegate = self
         passwordTextField?.textField?.delegate = self
     }
+
+    func configureUserImage() {
+        self.userImageView.alpha = 0.0
+        self.userImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.userImageView.contentMode = .scaleAspectFit
+        self.userImageView.layer.cornerRadius = Constants.userImageSize.height/2.0
+        self.userImageView.layer.borderWidth = 2.0
+        self.userImageView.layer.borderColor = UIColor.white.cgColor
+        self.userImageView.layer.masksToBounds = true
+        self.view.addSubview(self.userImageView)
+        NSLayoutConstraint.activate([
+            self.userImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.userImageView.topAnchor.constraint(equalTo: self.regardLabel.bottomAnchor, constant: 15.0),
+            self.userImageView.heightAnchor.constraint(equalToConstant: Constants.userImageSize.height),
+            self.userImageView.widthAnchor.constraint(equalToConstant: Constants.userImageSize.width)
+        ])
+    }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -155,6 +184,10 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
     }
+
+    func configureKeyboard() {
+        IQKeyboardManager.shared.enableAutoToolbar = false
+    }
     
     func addKeyboardObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -168,7 +201,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     @objc func loginButtonDidPressed() {
         self.view.endEditing(true)
-        // TODO
+        self.presenter.login(password: passwordTextField?.textField?.text ?? "")
     }
 
     @objc func tooltipButtonDidPressed() {
@@ -181,28 +214,28 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
-        
-        IQKeyboardManager.shared.enableAutoToolbar = false
+
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
+        buttonBottomAnchorConstraint.constant = -keyboardFrame.height - Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 0.0
+            self?.userImageView.alpha = 0.0
             self?.view.layoutSubviews()
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.isShowingKeyboard = false
-        IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
+            self?.userImageView.alpha = self?.userImageView.image != nil ? 1.0 : 0.0
             self?.view.layoutSubviews()
         }
     }
@@ -235,14 +268,7 @@ extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
         guard updatedText.count <= self.passwordTextField.maxLength else { return false }
         self.passwordTextField.hiddenText = updatedText
         self.passwordTextField.updatePassword()
-        if updatedText.count >= 4 {
-            loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-            loginButton.isEnabled = true
-        }
-        else {
-            loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-            loginButton.isEnabled = false
-        }
+        loginButton.isEnabled = updatedText.count >= 4
 
         return false
     }

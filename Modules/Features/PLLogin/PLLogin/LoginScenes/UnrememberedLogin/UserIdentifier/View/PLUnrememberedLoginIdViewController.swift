@@ -75,7 +75,6 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
 extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {
     
     func didUpdateEnvironments() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func resetForm() {
@@ -107,6 +106,8 @@ private extension PLUnrememberedLoginIdViewController {
         configureBackground()
         configureTextFields()
         configureButtons()
+        configureNavigationController()
+        configureKeyboard()
         setAccessibility()
     }
     
@@ -139,7 +140,7 @@ private extension PLUnrememberedLoginIdViewController {
         tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
         tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
-    
+
     func setAccessibility() {
         documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
@@ -147,6 +148,14 @@ private extension PLUnrememberedLoginIdViewController {
     
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+    }
+
+    func configureNavigationController() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+
+    func configureKeyboard() {
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func addKeyboardObserver() {
@@ -183,13 +192,12 @@ private extension PLUnrememberedLoginIdViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
-        
-        IQKeyboardManager.shared.enableAutoToolbar = false
+
         guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height + Constants.bottomDistance
+        buttonBottomAnchorConstraint.constant = -keyboardFrame.height - Constants.bottomDistance
         if let loginButton = loginButton {
             view.bringSubviewToFront(loginButton)
         }
@@ -201,7 +209,6 @@ private extension PLUnrememberedLoginIdViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.isShowingKeyboard = false
-        IQKeyboardManager.shared.enableAutoToolbar = true
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             self?.regardLabel?.alpha = 1.0
@@ -233,14 +240,7 @@ extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
             self.documentTextField.textField.text = changeUpdatedText
             return false
         } else {
-            if updatedText.count >= 6 {
-                loginButton?.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-                loginButton.isEnabled = true
-            }
-            else {
-                loginButton?.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
-                loginButton.isEnabled = false
-            }
+            loginButton.isEnabled = updatedText.count >= 6
             self.documentTextField.introducedText = updatedText
             return true
         }

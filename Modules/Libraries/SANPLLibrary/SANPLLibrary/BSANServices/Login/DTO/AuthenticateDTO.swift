@@ -8,7 +8,7 @@
 import Foundation
 
 public struct AuthenticateDTO: Codable {
-    public let userId, userCif, expires, expires_in: Int?
-    public let companyContext, trusted_device_token: Bool?
-    public let type, access_token, client_id: String?
+    public let userId, userCif, expires, expires_in: Int
+    public let companyContext, trusted_device_token: Bool
+    public let type, access_token, client_id: String
 }

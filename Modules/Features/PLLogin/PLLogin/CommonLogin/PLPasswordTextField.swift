@@ -80,7 +80,7 @@ public final class PLPasswordTextField: LegacyDesignableView, UITextFieldDelegat
         textField?.textAlignment = .left
         textField?.returnKeyType = .default
         textField?.delegate = self
-        textField?.keyboardType = .numberPad
+        textField?.keyboardType = .default
         if #available(iOS 11, *) {
             textField?.textContentType = .password
         }
