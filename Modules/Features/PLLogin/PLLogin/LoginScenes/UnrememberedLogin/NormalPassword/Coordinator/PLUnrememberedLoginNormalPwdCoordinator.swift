@@ -33,7 +33,7 @@ final class PLUnrememberedLoginNormalPwdCoordinator: ModuleCoordinator {
 
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginNormalPwdViewController.self)
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 

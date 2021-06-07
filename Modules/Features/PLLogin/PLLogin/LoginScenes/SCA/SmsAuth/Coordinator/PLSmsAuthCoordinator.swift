@@ -14,6 +14,7 @@ import CommonUseCase
 
 protocol PLSmsAuthCoordinatorProtocol {
     func goToGlobalPositionScene()
+    func goToUnrememberedLogindScene()
 }
 
 final class PLSmsAuthCoordinator: ModuleCoordinator {
@@ -31,13 +32,17 @@ final class PLSmsAuthCoordinator: ModuleCoordinator {
 
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLSmsAuthViewController.self)
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension PLSmsAuthCoordinator: PLSmsAuthCoordinatorProtocol {
     func goToGlobalPositionScene() {
         //TODO:
+    }
+
+    func goToUnrememberedLogindScene() {
+        self.backToLogin()
     }
 }
 
