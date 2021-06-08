@@ -27,6 +27,7 @@ def core_dependencies
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
   pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
+  pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
 end
 
 def pl_dependencies
