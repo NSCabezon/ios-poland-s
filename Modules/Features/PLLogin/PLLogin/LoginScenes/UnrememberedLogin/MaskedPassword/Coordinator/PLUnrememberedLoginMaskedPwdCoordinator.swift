@@ -33,7 +33,7 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
 
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginMaskedPwdViewController.self)
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
