@@ -13,6 +13,7 @@
 		425A0E78266F9BBD0008F3AE /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 425A0E74266F9BBD0008F3AE /* en.strings */; };
 		425A0E79266F9BBD0008F3AE /* es.strings in Resources */ = {isa = PBXBuildFile; fileRef = 425A0E75266F9BBD0008F3AE /* es.strings */; };
 		425A0E7D266FB2C50008F3AE /* Compilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0E7C266FB2C40008F3AE /* Compilation.swift */; };
+		425A0E7F266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		425A0E74266F9BBD0008F3AE /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../../../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
 		425A0E75266F9BBD0008F3AE /* es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es.strings; path = "../../../../../i18n-poland/clients/iOS/es.strings"; sourceTree = "<group>"; };
 		425A0E7C266FB2C40008F3AE /* Compilation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compilation.swift; sourceTree = "<group>"; };
+		425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoginTrsutedDeviceTests.swift; sourceTree = "<group>"; };
 		4B3CF3AC010A0048D5F66851 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		57C6288C306AF4149AD1F794 /* Pods-PLLogin_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLLogin_ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PLLogin_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLLogin_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */,
+				425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */,
 				66E5761A264AC5AC006804BD /* Info.plist */,
 			);
 			path = PLLogin_ExampleTests;
@@ -241,7 +244,6 @@
 					66E57615264AC5AC006804BD = {
 						CreatedOnToolsVersion = 12.4;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -520,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E57619264AC5AC006804BD /* PLLogin_ExampleTests.swift in Sources */,
+				425A0E7F266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,7 +691,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35E1FC0C625A61876CAB11D6 /* Pods-PLLogin_ExampleTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -711,7 +713,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PLLogin_Example.app/PLLogin_Example";
 			};
 			name = Debug;
 		};
@@ -719,7 +720,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57C6288C306AF4149AD1F794 /* Pods-PLLogin_ExampleTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -739,7 +739,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PLLogin_Example.app/PLLogin_Example";
 			};
 			name = Release;
 		};
