@@ -10,11 +10,9 @@ import Commons
 import Models
 import UI
 
-public final class PLDocumentTextField: LegacyDesignableView, AnimationTextFieldProtocol {
+public final class PLDocumentTextField: LegacyDesignableView {
     @IBOutlet public weak var textField: ConfigurableActionsTextField!
     @IBOutlet public weak var titleLabel: UILabel!
-    @IBOutlet public var centerConstraint: NSLayoutConstraint!
-    @IBOutlet public var bottomConstraint: NSLayoutConstraint!
 
     public var maxLenght: Int = 20
 
@@ -23,11 +21,35 @@ public final class PLDocumentTextField: LegacyDesignableView, AnimationTextField
 
     public var introducedText: String = "" {
         didSet {
-            updateTextField()
+            if !introducedText.isEmpty {
+                configureTextAttributes()
+            }
         }
     }
 
+    private var textfieldUsableWidth: CGFloat {
+        return textField.editingRect(forBounds: self.textField.bounds).width
+    }
+
+    private var kern: CGFloat = Constants.characterSpacing
+
+    private var textfieldAttributes: [NSAttributedString.Key: Any] {
+        return [.font: Constants.textLabelFont,
+                .foregroundColor: UIColor.white,
+                .kern: self.kern,]
+    }
+
     private var observer: NSObjectProtocol?
+
+    private enum Constants {
+        static let titleLabelFont = UIFont.santander(family: .text, type: .regular, size: 12)
+        static let textLabelFontSize: CGFloat = 22.0
+        static let textLabelFont = UIFont.santander(family: .text, type: .regular, size: Constants.textLabelFontSize)
+        static let characterSpacing: CGFloat = 6.0
+        static let errorMargin: CGFloat = 0.01
+        static let margin: CGFloat = 2.0
+        static let cursorColor = UIColor.santanderRed
+    }
 
     public override func removeFromSuperview() {
         super.removeFromSuperview()
@@ -36,7 +58,6 @@ public final class PLDocumentTextField: LegacyDesignableView, AnimationTextField
 
     public func setText(_ text: String?) {
         introducedText = text ?? ""
-        textField.text = introducedText
     }
 
     public func introducedDocument() -> String {
@@ -58,49 +79,51 @@ public final class PLDocumentTextField: LegacyDesignableView, AnimationTextField
         configureView()
     }
 
+    override public func layoutSubviews() {
+        superview?.layoutSubviews()
+        self.configureTextAttributes()
+    }
 }
 
 // MARK: - Private methods
 
 private extension PLDocumentTextField {
-    @objc func textDidEdited() {
-        introducedText = textField.text ?? ""
-    }
 
     @objc func becomeResponder() {
         textField.becomeFirstResponder()
     }
 
-    func checkTextLenght() {
-        if introducedText.count > maxLenght {
-            introducedText = String(introducedText.prefix(maxLenght))
-            textField.text = introducedText
-        }
-    }
-
     func configureTextAttributes() {
-        let correction: CGFloat = Screen.isIphone4or5 ? 4.0 : 0.0
-        textField.font = UIFont.santander(family: .text, type: .regular, size: 20.0 - correction)
-        textField.subviews.forEach({ ($0 as? UILabel)?.adjustsFontSizeToFitWidth = true })
+        textField.attributedText = NSAttributedString(string: self.introducedText,
+                                                      attributes: self.textfieldAttributes)
+        let currentTextWidth = (introducedText as NSString).size(withAttributes: self.textfieldAttributes).width
+        if currentTextWidth > textfieldUsableWidth {
+            kern = self.calculateNewKern(for: currentTextWidth)
+            configureTextAttributes()
+        } else if currentTextWidth < (textfieldUsableWidth - Constants.margin) && kern < Constants.characterSpacing {
+            kern = Constants.characterSpacing
+            configureTextAttributes()
+        }
     }
 
-    func updateTextField() {
-        checkTextLenght()
-        if !introducedText.isEmpty {
-            configureTextAttributes()
-        } else {
-            textField.font = UIFont.santander(family: .text, type: .regular, size: 20)
-        }
-        self.changeFieldVisibility(isFieldVisible: true, animated: false)
+    func calculateNewKern(for currentTextWidth: CGFloat) -> CGFloat {
+        let charactersNumber = CGFloat(introducedText.count)
+        let characterWidthPlusKern = currentTextWidth / charactersNumber
+        let characterWidth = characterWidthPlusKern - kern
+        let newKern = textfieldUsableWidth / charactersNumber - characterWidth - Constants.errorMargin
+        return newKern >= 0 ? newKern : 0
     }
 
     func configureTextField() {
         textField.textColor = UIColor.Legacy.uiWhite
-        textField.font = UIFont.santander(family: .text, type: .regular, size: Screen.isIphone4or5 ? 16.0 : 20.0)
+        textField.tintColor = Constants.cursorColor
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: Constants.textLabelFont,
+            .foregroundColor: UIColor.white,
+        ]
         textField.attributedPlaceholder = NSAttributedString(string: localized("pl_login_hint_login"),
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        textField.adjustsFontSizeToFitWidth = true
-        textField.minimumFontSize = 12.0
+                                                             attributes: attributes)
+        textField.adjustsFontSizeToFitWidth = false
         textField.returnKeyType = .next
         textField.keyboardType = .default
         textField.autocapitalizationType = .none
@@ -109,12 +132,12 @@ private extension PLDocumentTextField {
         if #available(iOS 11, *) {
             textField.textContentType = .username
         }
-        self.changeFieldVisibility(isFieldVisible: true, animated: false)
     }
 
     func configureLoginTypeLabel() {
         titleLabel.textColor = .white
         titleLabel.text = localized("pl_login_label_login").plainText
+        titleLabel.font = Constants.titleLabelFont
     }
 
     func configureView() {
