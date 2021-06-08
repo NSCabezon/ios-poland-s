@@ -18,7 +18,7 @@ class PLAppConfig: LocalAppConfig {
     let endMorning = 5
     let endAfternoon = 14
     let endNight = 20
-    let language: LanguageType = .spanish
+    let language: LanguageType = .polish
     let isEnabledPfm = true
     let privateMenu = true
     let isEnabledConfigureWhatYouSee = true
@@ -27,7 +27,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true
-    let languageList: [LanguageType] = [.spanish, .english, .french, .italian, .portuguese, .polish]
+    let languageList: [LanguageType] = [.polish, .english]
     let enablePGCardActivation = true
     let isEnabledDepositWebView = false
     let isEnabledfundWebView = false
