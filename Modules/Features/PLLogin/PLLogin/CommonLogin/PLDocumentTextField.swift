@@ -110,7 +110,7 @@ private extension PLDocumentTextField {
         let characterWidthPlusKern = currentTextWidth / charactersNumber
         let characterWidth = characterWidthPlusKern - kern
         let newKern = textfieldUsableWidth / charactersNumber - characterWidth - Constants.errorMargin
-        return newKern
+        return newKern >= 0 ? newKern : 0
     }
 
     func configureTextField() {
