@@ -48,6 +48,7 @@ public final class PLDocumentTextField: LegacyDesignableView {
         static let characterSpacing: CGFloat = 6.0
         static let errorMargin: CGFloat = 0.01
         static let margin: CGFloat = 2.0
+        static let cursorColor = UIColor.santanderRed
     }
 
     public override func removeFromSuperview() {
@@ -115,6 +116,7 @@ private extension PLDocumentTextField {
 
     func configureTextField() {
         textField.textColor = UIColor.Legacy.uiWhite
+        textField.tintColor = Constants.cursorColor
         let attributes: [NSAttributedString.Key: Any] = [
             .font: Constants.textLabelFont,
             .foregroundColor: UIColor.white,
