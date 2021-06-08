@@ -2,7 +2,7 @@ platform :ios, '10.3'
 
 use_frameworks!
 
-source 'ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/iOS-private-specs.git'
+#source 'ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/iOS-private-specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
 
 
@@ -11,7 +11,6 @@ def example_app_common
   pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
   pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
-  pod 'ESCommons', :path => '../../../../santander-one/Modules/Libraries/ESCommons'
 end
 
 def core_dependencies
@@ -26,11 +25,16 @@ def core_dependencies
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
+  pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
+  pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
 end
 
 def pl_dependencies
   pod 'PLLogin', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
+  pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLUI', :path => '../../../Libraries/PLUI'
+  pod 'PLLegacyAdapter', :path => '../../../Libraries/PLLegacyAdapter'
 end
 
 target 'PLLogin_Example' do
