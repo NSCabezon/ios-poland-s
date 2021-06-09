@@ -6,7 +6,7 @@ public struct BSANEnvironments {
 
         enum PRE {
             static let name = "EXTERNAL_PRE"
-            static let endpoint = "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-rest"
+            static let endpoint = "https://micrositeoneapp2.santanderbankpolska.pl/omni/oneapp"
             static let restOauthClientId = ""
         }
 

@@ -244,13 +244,9 @@ extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
         if updatedText.count > self.documentTextField.maxLenght  {
-            let changeUpdatedText = updatedText.substring(0, self.documentTextField.maxLenght) ?? ""
-            self.documentTextField.introducedText = changeUpdatedText
-            self.documentTextField.textField.text = changeUpdatedText
             return false
         } else {
             loginButton.isEnabled = updatedText.count >= 6
-            self.documentTextField.introducedText = updatedText
             return true
         }
     }

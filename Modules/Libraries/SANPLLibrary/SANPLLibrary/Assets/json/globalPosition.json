@@ -139,7 +139,7 @@
                 {
                     "maskedPan": "412281_9173",
                     "virtualPan": "412281P002925860",
-                    "generalStatus": "ACTIVE",
+                    "generalStatus": "INACTIVE",
                     "cardStatus": "00",
                     "role": "OWNER",
                     "type": "CREDIT",
@@ -150,6 +150,33 @@
                     },
                     "relatedAccount": "29109014894000000112257854",
                     "expirationDate": "2023-02-23",
+                    "availableBalance": {
+                        "value": 5000,
+                        "currencyCode": "PLN"
+                    },
+                    "creditLimit": {
+                        "value": 5000,
+                        "currencyCode": "PLN"
+                    },
+                    "disposedAmount": {
+                        "value": 0,
+                        "currencyCode": "PLN"
+                    }
+                },
+                {
+                    "maskedPan": "412281_9174",
+                    "virtualPan": "412281P002925861",
+                    "generalStatus": "CANCELLED",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "CREDIT",
+                    "productCode": "PLPV",
+                    "name": {
+                        "description": "Visa Platinum",
+                        "userDefined": "My Visa card"
+                    },
+                    "relatedAccount": "29109014894000000112257855",
+                    "expirationDate": "2023-08-23",
                     "availableBalance": {
                         "value": 5000,
                         "currencyCode": "PLN"
