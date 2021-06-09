@@ -32,6 +32,8 @@ final class GlobalPositionDTOAdapter {
         globalPositionDTO.funds = funds
         globalPositionDTO.loans = loans
         globalPositionDTO.deposits = deposits
+        // TODO: Replace with customer API result when the API is implemented
+        globalPositionDTO.clientName = "TestUser"
 
         return globalPositionDTO
     }
