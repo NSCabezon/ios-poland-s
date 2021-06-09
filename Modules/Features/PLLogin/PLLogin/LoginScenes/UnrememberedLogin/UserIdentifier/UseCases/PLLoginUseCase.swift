@@ -23,10 +23,15 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
         switch result {
         case .success(let loginData):
             // TODO: Check if loginData.userId must be a string
-            let loginChallenge = LoginChallengeEntity(authorizationType: loginData.secondFactorData?.defaultChallenge?.authorizationType,
-                value: loginData.secondFactorData?.defaultChallenge?.value)
+            let loginChallenge = LoginChallengeEntity(authorizationType: loginData.secondFactorData.defaultChallenge?.authorizationType,
+                value: loginData.secondFactorData.defaultChallenge?.value)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
             let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
+
+            if loginData.secondFactorData.finalState.elementsEqual("BLOCKED") {
+                return UseCaseResponse.error(PLLoginUseCaseErrorOutput(loginErrorType: .accountPermanentlyBlocked))
+            }
+
             return UseCaseResponse.ok(loginOutput)
         case .failure(_):
                 // TODO: the error management will be implemented in next sprint.
