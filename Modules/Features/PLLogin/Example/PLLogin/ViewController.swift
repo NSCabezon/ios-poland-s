@@ -5,6 +5,7 @@ import Commons
 import SANLibraryV3
 import DomainCommon
 import Models
+import PLCommons
 
 
 class ViewController: UIViewController {
@@ -27,7 +28,7 @@ class ViewController: UIViewController {
         let navigationController = UINavigationController()
         navigationController.modalPresentationStyle = .fullScreen
         let coordinator = PLLoginModuleCoordinator(dependenciesResolver: dependenciesResolver, navigationController: navigationController)
-        coordinator.start(.main)
+        coordinator.start(.unrememberedLogin)
         self.present(navigationController, animated: true, completion: nil)
     }
     
@@ -35,9 +36,9 @@ class ViewController: UIViewController {
         
         let defaultResolver = DependenciesDefault()
         
-        defaultResolver.register(for: PLLoginMainModuleCoordinatorDelegate.self) { _ in
-            return PLLoginMainModuleCoordinatorImp()
-        }
+//        defaultResolver.register(for: PLLoginMainModuleCoordinatorDelegate.self) { _ in
+//            return PLLoginMainModuleCoordinatorImp()
+//        }
         
         defaultResolver.register(for: BSANManagersProvider.self) { _ in
             return QuickSetup.shared.managersProvider
@@ -68,6 +69,10 @@ class ViewController: UIViewController {
         defaultResolver.register(for: StringLoader.self) { _ in
             return self.localeManager
         }
+
+        defaultResolver.register(for: PLCompilationProtocol.self) { _ in
+            return Compilation()
+        }
         
         Localized.shared.setup(dependenciesResolver: defaultResolver)
         return defaultResolver
@@ -75,15 +80,15 @@ class ViewController: UIViewController {
     
     private lazy var localeManager: LocaleManager = {
         let locale = LocaleManager()
-        locale.updateCurrentLanguage(language: .createFromType(languageType: .spanish, isPb: true))
+        locale.updateCurrentLanguage(language: .createFromType(languageType: .spanish, isPb: false))
         return locale
     }()
     
 }
 
-final class PLLoginMainModuleCoordinatorImp: PLLoginMainModuleCoordinatorDelegate {
-    
-}
+//final class PLLoginMainModuleCoordinatorImp: PLLoginMainModuleCoordinatorDelegate {
+//
+//}
 
 class TrackerManagerMock: TrackerManager {
     
