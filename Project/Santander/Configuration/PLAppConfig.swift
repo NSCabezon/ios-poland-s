@@ -28,7 +28,6 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledTimeline = true
     let isEnabledPregranted = true
     let languageList: [LanguageType] = [.polish, .english]
-    let enablePGCardActivation = true
     let isEnabledDepositWebView = false
     let isEnabledfundWebView = false
     let clickablePension = true
