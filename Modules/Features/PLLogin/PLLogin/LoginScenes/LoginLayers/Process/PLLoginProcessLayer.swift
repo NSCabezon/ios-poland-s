@@ -149,8 +149,8 @@ private extension PLLoginProcessLayer {
 
     func checkLoginError(_ error: LoginErrorType?) {
         switch error {
-        case .accountPermanentlyBlocked:
-            self.delegate?.handle(event: .loginErrorAccountPermanentlyBlocked)
+        case .temporaryLocked:
+            self.delegate?.handle(event: .loginErrorAccountTemporaryBlocked)
 
         default:
             self.delegate?.handle(event: .loginError)

@@ -6,7 +6,7 @@ import IQKeyboardManagerSwift
 
 protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
-    func configureTooltipErrorAccountPermanentlyBlocked()
+    func showTooltipErrorAccountTemporaryBlocked()
 }
 
 final class PLUnrememberedLoginIdViewController: UIViewController {
@@ -82,7 +82,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         self.documentTextField?.setText("")
     }
 
-    func configureTooltipErrorAccountPermanentlyBlocked() {
+    func showTooltipErrorAccountTemporaryBlocked() {
         let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_userBlocked"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
             alignment: .center,
