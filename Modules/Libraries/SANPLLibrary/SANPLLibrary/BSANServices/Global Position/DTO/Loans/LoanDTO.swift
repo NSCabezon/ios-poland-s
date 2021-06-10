@@ -22,6 +22,7 @@ public struct LoanAccountIdDTO: Codable {
 }
 
 public struct LoanNameDTO: Codable {
+    public let source: String?
     public let description: String?
     public let userDefined: String?
 }

@@ -8,14 +8,13 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 final class LoanTransactionsListDTOAdapter {
-    static func adaptPLLoanTransactionListToLoanTransactionList(_ plLoanTransactionList: SANPLLibrary.LoanTransactionsListDTO) -> SANLegacyLibrary.LoanTransactionsListDTO {
+    static func adaptPLLoanTransactionListToLoanTransactionList(_ plLoanTransactionList: SANPLLibrary.LoanOperationListDTO) -> SANLegacyLibrary.LoanTransactionsListDTO {
         var loanTransactionsListDTO = SANLegacyLibrary.LoanTransactionsListDTO()
-        loanTransactionsListDTO.transactionDTOs = plLoanTransactionList.installments?.compactMap({
+        loanTransactionsListDTO.transactionDTOs = plLoanTransactionList.operationList?.compactMap({
             LoanTransactionDTOAdapter.adaptPLLoanTransactionToLoanTransaction($0)
         }) ?? []
-        if let pagination = plLoanTransactionList.page?.first {
-            loanTransactionsListDTO.pagination = LoanPaginationDTOAdapter.adaptPLLoanPaginationToLoanPagination(pagination)
-        }
+        let loanPagination = PaginationDTO(repositionXML: "", accountAmountXML: "", endList: true)
+        loanTransactionsListDTO.pagination = loanPagination
         return loanTransactionsListDTO
     }
 }

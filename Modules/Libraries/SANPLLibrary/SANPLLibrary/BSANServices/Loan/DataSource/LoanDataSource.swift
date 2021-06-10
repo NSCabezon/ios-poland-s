@@ -4,9 +4,12 @@
 //
 
 import Foundation
+import SANLegacyLibrary
 
 protocol LoanDataSourceProtocol {
-    func getTransactions() throws -> Result<LoanTransactionsListDTO, NetworkProviderError>
+    func getTransactions(accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
+    func getTransactions(accountId: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
+    func getDetails(accountId: String) throws -> Result<LoanDetailDTO, NetworkProviderError>
 }
 
 private extension LoanDataSource {
@@ -17,12 +20,15 @@ private extension LoanDataSource {
 
 final class LoanDataSource {
     private enum LoanServiceType: String {
-        case transactions = "/installments/"
+        case transactions = "/transactions"
+        case detail = "/detail"
     }
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    private let basePath = "/api/ceke/accounts/loan"
+    private let basePath = ""
+    private let detailsPath = "/api/ceke/accounts/"
+    private let transactionsPath = "/omni/oneapp/api/history/"
     private var headers: [String: String] = [:]
     private var queryParams: [String: String]? = nil
     
@@ -33,21 +39,56 @@ final class LoanDataSource {
 }
 
 extension LoanDataSource: LoanDataSourceProtocol {
-    func getTransactions() throws -> Result<LoanTransactionsListDTO, NetworkProviderError> {
-        guard let baseUrl = self.getBaseUrl() else {
-            return .failure(NetworkProviderError.other)
-        }
+    func getTransactions(accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError> {
+        let result = try self.performGetTransactions(accountId: accountNumber, type: .byNumber, parameters: parameters)
+        return result
+    }
 
-        var accountId: String?
-        if let sessionData = try? self.dataProvider.getSessionData() {
-            accountId = sessionData.loggedUserDTO.login
+    func getTransactions(accountId: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError> {
+        let result = try self.performGetTransactions(accountId: accountId, type: .byId, parameters: parameters)
+        return result
+    }
+
+    func getDetails(accountId: String) throws -> Result<LoanDetailDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let loan = try? self.dataProvider.getSessionData().globalPositionDTO?.loans?.filter({ $0.number == accountId }).first,
+              let systemId = loan.accountId?.systemId else {
+            return .failure(NetworkProviderError.other)
         }
 
         self.queryParams = nil
 
+        let serviceName = LoanServiceType.detail.rawValue
+        let absoluteUrl = "\(baseUrl)\(self.detailsPath)\(accountId)/\(systemId)"
+        let result: Result<LoanDetailDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .get,
+                                                                                                                headers: self.headers,
+                                                                                                                queryParams: self.queryParams,
+                                                                                                                contentType: .urlEncoded,
+                                                                                                                localServiceName: .loanDetails)
+        )
+        return result
+    }
+}
+
+private extension LoanDataSource {
+    private func performGetTransactions(accountId: String, type: GetLoanTransactionType, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let loan = try? self.dataProvider.getSessionData().globalPositionDTO?.loans?.filter({ $0.number == accountId }).first,
+              let systemId = loan.accountId?.systemId else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        self.queryParams = nil
+        if let parameters = parameters {
+            let parametersData = try JSONEncoder().encode(parameters)
+            self.queryParams = try JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
+        }
+
         let serviceName = LoanServiceType.transactions.rawValue
-        let absoluteUrl = baseUrl + self.basePath + (accountId ?? "")
-        let result: Result<LoanTransactionsListDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
+        let absoluteUrl = "\(baseUrl)\(self.transactionsPath)\(type.rawValue)/\(systemId)/\(accountId)"
+        let result: Result<LoanOperationListDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,

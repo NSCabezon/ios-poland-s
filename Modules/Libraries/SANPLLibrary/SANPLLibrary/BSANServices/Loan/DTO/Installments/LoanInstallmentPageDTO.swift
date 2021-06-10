@@ -1,11 +1,11 @@
 //
-//  LoanPageDTO.swift
+//  LoanInstallmentPageDTO.swift
 //  SANPLLibrary
 //
 
 import Foundation
 
-public struct LoanPageDTO: Codable {
+public struct LoanInstallmentPageDTO: Codable {
     public let operationCount: Int?
     public let hasNextPage: Bool?
     public let navigationKey: String?

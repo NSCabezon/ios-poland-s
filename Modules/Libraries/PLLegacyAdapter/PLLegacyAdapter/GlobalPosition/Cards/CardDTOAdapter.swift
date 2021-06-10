@@ -14,6 +14,7 @@ final class CardDTOAdapter {
         var cardDTO = SANLegacyLibrary.CardDTO()
         cardDTO.PAN = plCard.maskedPan
         cardDTO.alias = plCard.name?.userDefined
+        cardDTO.ownershipTypeDesc = OwnershipTypeDesc(plCard.role ?? "")
         cardDTO.cardContractStatusType = plCard.generalStatus?.lowercased() == "active" ? CardContractStatusType.active : CardContractStatusType.other
         cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plCard.virtualPan)
         cardDTO.cardTypeDescription = plCard.type

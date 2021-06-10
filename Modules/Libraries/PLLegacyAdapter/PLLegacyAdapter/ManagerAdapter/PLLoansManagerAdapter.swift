@@ -7,6 +7,7 @@
 
 import SANLegacyLibrary
 import SANPLLibrary
+import Commons
 
 final class PLLoansManagerAdapter {
 
@@ -21,19 +22,32 @@ final class PLLoansManagerAdapter {
  
 extension PLLoansManagerAdapter: BSANLoansManager {
     func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
-
-        guard let sessionData = try? self.bsanDataProvider.getSessionData(),
-              let cardDTO = sessionData.globalPositionDTO?.cards else {
+        guard let accountId = loan.contractDescription else {
             return BSANErrorResponse(nil)
         }
-        let loanTransactionsList = try self.loanManager.getTransactions()
+
+        var dateFrom: String? = nil
+        var dateTo: String? = nil
+        if let dateFilterFrom = dateFilter?.fromDateModel?.date, let dateFilterTo = dateFilter?.toDateModel?.date {
+            dateFrom = DateFormats.toString(date: dateFilterFrom, output: .YYYYMMDD)
+            dateTo = DateFormats.toString(date: dateFilterTo, output: .YYYYMMDD)
+        }
+
+        let loanTransactionsParameters = LoanTransactionParameters(dateFrom: dateFrom, dateTo: dateTo, operationCount: nil, getDirection: nil)
+        let loanTransactionsList = try self.loanManager.getTransactions(accountId: accountId, parameters: loanTransactionsParameters)
 
         let adaptedLoanTransactionsList = LoanTransactionsListDTOAdapter.adaptPLLoanTransactionListToLoanTransactionList(try loanTransactionsList.get())
         return BSANOkResponse(adaptedLoanTransactionsList)
     }
     
-    func getLoanDetail(forLoan loan: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<LoanDetailDTO> {
-        return BSANErrorResponse(nil)
+    func getLoanDetail(forLoan loan: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<SANLegacyLibrary.LoanDetailDTO> {
+        guard let accountId = loan.contractDescription else {
+            return BSANErrorResponse(nil)
+        }
+        let loanDetails = try self.loanManager.getDetails(accountId: accountId)
+
+        let adaptedLoanDetail = LoanDetailsDTOAdapter.adaptPLLoanDetailsToLoanDetails(try loanDetails.get(), loan: loan)
+        return BSANOkResponse(adaptedLoanDetail)
     }
     
     func getLoanTransactionDetail(forLoan loan: SANLegacyLibrary.LoanDTO, loanTransaction: SANLegacyLibrary.LoanTransactionDTO) throws -> BSANResponse<LoanTransactionDetailDTO> {
