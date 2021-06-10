@@ -17,7 +17,7 @@ extension ViewController {
             static let boxSize = CGSize(width: 39.0, height: 56.0)
         }
         enum MaskedPassword {
-            static let charactersSet: CharacterSet = .alphanumerics
+            static let charactersSet: CharacterSet = .alphanumerics.union(.symbols).union(.punctuationCharacters)
             static let keyboardType: UIKeyboardType = .default
             static let boxSize = CGSize(width: 31.0, height: 56.0)
         }

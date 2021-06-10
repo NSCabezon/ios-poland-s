@@ -21,6 +21,10 @@ public final class PLPasswordTextField: LegacyDesignableView, UITextFieldDelegat
         case secure
     }
 
+    private enum Constants {
+        static let cursorColor = UIColor.santanderRed
+    }
+
     @IBOutlet public weak var textField: UITextField?
 
     public weak var delegate: PLPasswordTextFieldDelegate?
@@ -77,6 +81,7 @@ public final class PLPasswordTextField: LegacyDesignableView, UITextFieldDelegat
     private func configureTextField() {
         textField?.textColor = UIColor.Legacy.uiWhite
         textField?.font = UIFont.santander(family: .text, type: .regular, size: Screen.isIphone4or5 ? 16.0 : 20.0)
+        textField?.tintColor = Constants.cursorColor
         textField?.textAlignment = .left
         textField?.returnKeyType = .default
         textField?.delegate = self

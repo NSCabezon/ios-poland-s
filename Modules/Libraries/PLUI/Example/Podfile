@@ -3,22 +3,27 @@ use_frameworks!
 platform :ios, '10.3'
 
 def core_dependencies
-#  pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
-#  pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
-#  pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
-#  pod 'Models', :path => '../../../../santander-one/Models'
-#  pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
-#  pod 'Repository', :path => '../../../../santander-one/Repository'
-#  pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'
-#  pod 'iOSCommonPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSCommonPublicFiles'
-#  pod 'Commons', :path => '../../../../santander-one/Commons'
-#  pod 'UI', :path => '../../../../santander-one/UI'
-#  pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
+  pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
+  pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'Models', :path => '../../../../santander-one/Models'
+  pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
+  pod 'Repository', :path => '../../../../santander-one/Repository'
+  pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'
+  pod 'iOSCommonPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+  pod 'Commons', :path => '../../../../santander-one/Commons'
+  pod 'UI', :path => '../../../../santander-one/UI'
+  pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
+  pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
+  pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
+end
 
+def pl_dependencies
+  pod 'PLUI', :path => '../'
 end
 
 target 'PLUI_Example' do
-  pod 'PLUI', :path => '../'
+  pl_dependencies
   core_dependencies
 
   target 'PLUI_Tests' do
