@@ -7,6 +7,7 @@ import IQKeyboardManagerSwift
 protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func configureTooltipErrorAccountPermanentlyBlocked()
+    func configureTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration)
 }
 
 final class PLUnrememberedLoginIdViewController: UIViewController {
@@ -92,7 +93,18 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
         self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
     }
-    
+
+    func configureTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration) {
+        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_attemptLast"), configuration: LocalizedStylableTextConfiguration(
+            font: .santander(family: .text, type: .regular, size: 16),
+            alignment: .center,
+            lineHeightMultiple: 1,
+            lineBreakMode: .byTruncatingTail
+        ))
+        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { self.presenter.goToPasswordScene(configuration) })
+        self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
+    }
+
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {
         self.chooseEnvironment()
     }
