@@ -9,5 +9,6 @@ public enum LoginProcessLayerEvent {
     case loginWithIdentifierSuccess(configuration: UnrememberedLoginConfiguration)
     case loginSuccess
     case loginError
+    case loginErrorAccountTemporaryBlocked
     case noConnection
 }

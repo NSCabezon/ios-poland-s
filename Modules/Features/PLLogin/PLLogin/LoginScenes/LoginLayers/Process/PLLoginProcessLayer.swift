@@ -139,7 +139,22 @@ private extension PLLoginProcessLayer {
 
     // MARK: Auxiliar methods
     func handleError<Error: PLLoginUseCaseErrorOutput>(_ error: UseCaseError<Error>?) {
-        // TODO: Handle login errors
+        switch error {
+        case .error(let error):
+            self.checkLoginError(error?.loginErrorType)
+        case .generic, .intern, .networkUnavailable, .unauthorized, .none:
+            self.delegate?.handle(event: .loginError)
+        }
+    }
+
+    func checkLoginError(_ error: LoginErrorType?) {
+        switch error {
+        case .temporaryLocked:
+            self.delegate?.handle(event: .loginErrorAccountTemporaryBlocked)
+
+        default:
+            self.delegate?.handle(event: .loginError)
+        }
     }
 
     // TODO: make a unit test

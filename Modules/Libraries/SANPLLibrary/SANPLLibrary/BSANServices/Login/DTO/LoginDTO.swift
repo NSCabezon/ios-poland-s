@@ -12,12 +12,12 @@ public struct LoginDTO: Codable {
     public let passwordMask: Int?
     public let loginImageData: String?
     public let passwordMaskEnabled: Bool?
-    public let secondFactorData: SecondFactorDataDTO?
+    public let secondFactorData: SecondFactorDataDTO
     public let trustedComputerData: TrustedComputerDataDTO?
 }
 
 public struct SecondFactorDataDTO: Codable {
-    public let finalState: String?
+    public let finalState: String
     public let challenges: [ChallengeDTO]?
     public let defaultChallenge: ChallengeDTO?
     public let expired: Bool?
