@@ -30,7 +30,7 @@ public class BSANDataProvider {
     }
     
     // TODO: Fill with AuthModel
-    public func getAuthCredentials() throws -> String {
+    public func getAuthCredentials() throws -> AuthCredentials {
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
 
@@ -107,5 +107,19 @@ extension BSANDataProvider: BSANDemoProviderProtocol {
     
     public func getDemoMode() -> DemoMode? {
         return dataRepository.get(DemoMode.self)
+    }
+}
+
+extension BSANDataProvider: BSANDataProviderProtocol {
+    public func getAuthCredentialsProvider() throws -> AuthCredentialsProvider {
+        return try getAuthCredentials()
+    }
+    
+    public func getLanguageISO() throws -> String {
+        return "pl"
+    }
+    
+    public func getDialectISO() throws -> String {
+        return "PL"
     }
 }

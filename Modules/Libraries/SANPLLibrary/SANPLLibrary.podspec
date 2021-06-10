@@ -35,5 +35,5 @@ TODO: Add long description of the pod here.
   }
   
   s.dependency 'DataRepository'
-  s.dependency "SANLibraryV3"
+  s.dependency "SANLegacyLibrary"
 end

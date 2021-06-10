@@ -59,4 +59,7 @@ class PLAppConfig: LocalAppConfig {
     var maxLengthInternalTransferConcept: Int = 140
     var showATMIntermediateScreen: Bool = false
     var isEnabledEditAlias: Bool = false
+    var analysisAreaHasTimelineSection: Bool = false
+    var analysisAreaIsIncomeSelectable: Bool = false
+    var analysisAreaIsExpensesSelectable: Bool = false
 }
