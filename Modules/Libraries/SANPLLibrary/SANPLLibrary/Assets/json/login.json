@@ -23,28 +23,5 @@
                 "register": false
             }
         }
-        "1": {
-            "userId": 33355343,
-            "passwordMaskEnabled": false,
-            "passwordMask": 1048575,
-            "secondFactorData": {
-                "finalState": "BLOCKED",
-                "challenges": [
-                    {
-                        "authorizationType": "SMS_CODE",
-                        "value": "24646701"
-                    }
-                ],
-                "defaultChallenge": {
-                    "authorizationType": "SMS_CODE",
-                    "value": "24646701"
-                },
-                "expired": false
-            },
-            "trustedComputerData": {
-                "state": "NOT_ALLOWED",
-                "register": false
-            }
-        }
     }
 }

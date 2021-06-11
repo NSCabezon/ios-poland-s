@@ -77,7 +77,7 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
         case .loginWithIdentifierSuccess(let configuration):
             self.view?.dismissLoading(completion: { [weak self] in
                 if configuration.secondFactorDataFinalState.elementsEqual("FINAL") {
-                    self?.view?.configureTooltipInvalidSCAWarning(configuration)
+                    self?.view?.showTooltipInvalidSCAWarning(configuration)
                 }
                 else {
                     self?.goToPasswordScene(configuration)
