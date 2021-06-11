@@ -19,6 +19,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		6611F327267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */; };
 		66E57619264AC5AC006804BD /* PLLogin_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */; };
 		799F83D0EC00F65803DBAA49 /* Pods_PLLogin_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8690A43BC85541D7A1C0DB /* Pods_PLLogin_Example.framework */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPasswordEncryptionUseCaseTests.swift; sourceTree = "<group>"; };
 		66E57616264AC5AC006804BD /* PLLogin_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PLLogin_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLogin_ExampleTests.swift; sourceTree = "<group>"; };
 		66E5761A264AC5AC006804BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,9 +166,18 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		6611F3252673447F00D1DD54 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
 		66E57617264AC5AC006804BD /* PLLogin_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				6611F3252673447F00D1DD54 /* UseCases */,
 				66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */,
 				425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */,
 				66E5761A264AC5AC006804BD /* Info.plist */,
@@ -326,6 +337,7 @@
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyXMLParser/SwiftyXMLParser.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
@@ -363,6 +375,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyXMLParser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
@@ -454,6 +467,7 @@
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyXMLParser/SwiftyXMLParser.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
 				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
@@ -491,6 +505,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyXMLParser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
@@ -521,6 +536,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6611F327267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift in Sources */,
 				66E57619264AC5AC006804BD /* PLLogin_ExampleTests.swift in Sources */,
 				425A0E7F266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift in Sources */,
 			);
