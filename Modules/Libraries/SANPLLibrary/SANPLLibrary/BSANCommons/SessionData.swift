@@ -7,18 +7,18 @@ import Foundation
 
 public class SessionData: Codable {
     
-    var loggedUserDTO: UserDTO
-    var globalPositionDTO: GlobalPositionDTO?
+    public var loggedUserDTO: UserDTO
+    public var globalPositionDTO: GlobalPositionDTO?
 
-    init(_ userDTO: UserDTO) {
+    public init(_ userDTO: UserDTO) {
         self.loggedUserDTO = userDTO
     }
     
-    func updateSessionData(_ isPB: Bool) {
+    public func updateSessionData(_ isPB: Bool) {
         loggedUserDTO.isPB = isPB
     }
     
-    func updateSessionData(_ globalPositionDTO: GlobalPositionDTO) {
+    public func updateSessionData(_ globalPositionDTO: GlobalPositionDTO) {
         self.globalPositionDTO = globalPositionDTO
     }
     
