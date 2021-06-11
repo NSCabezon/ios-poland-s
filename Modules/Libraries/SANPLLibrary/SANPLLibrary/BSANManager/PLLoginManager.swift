@@ -30,9 +30,6 @@ extension PLLoginManager: PLLoginManagerProtocol {
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
         self.setDemoModeIfNeeded(parameters.selectedId)
         let result = try loginDataSource.doLogin(parameters)
-        // Agregar estas dos líneas:
-        let userDTO = UserDTO(loginType: UserLoginType.U, login: "")
-        self.bsanDataProvider.createSessionData(userDTO)
         return result
     }
 
