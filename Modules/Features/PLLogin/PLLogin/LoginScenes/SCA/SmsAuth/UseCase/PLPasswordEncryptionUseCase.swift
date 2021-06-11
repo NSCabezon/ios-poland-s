@@ -27,7 +27,7 @@ final class PLPasswordEncryptionUseCase: UseCase<PLPasswordEncryptionUseCaseInpu
             let encryptedPassword = try self.encryptPassword(password: requestValues.plainPassword, encryptionKey: requestValues.encryptionKey)
             return UseCaseResponse.ok(PLPasswordEncryptionUseCaseOutput(encryptedPassword: encryptedPassword))
         } catch {
-            return UseCaseResponse.error(<#T##errorResult: _##_#>)
+            return UseCaseResponse.error(PLPasswordEncryptionUseCaseErrorOutput(error.localizedDescription))
         }
     }
 }

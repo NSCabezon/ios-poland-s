@@ -179,7 +179,7 @@ private extension PLSmsAuthViewController {
 
     func configureTooltip() {
         let dialog = Dialog(title: "", items: [Dialog.Item.text("pl_login_alert_expiredSignature")], image: nil, actionButton: Dialog.Action(title: "generic_button_understand", style: .red, action: {
-            self.presenter.goToUnrememberedLogindScene()
+            self.presenter.didSelectLoginRestartAfterTimeOut()
                 }), isCloseButtonAvailable: false)
         dialog.show(in: self)
     }
