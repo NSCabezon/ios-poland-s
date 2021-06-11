@@ -7,9 +7,10 @@ import Foundation
 import SANLegacyLibrary
 
 public protocol PLLoanManagerProtocol {
+    func getDetails(accountId: String, parameters: LoanDetailsParameters) throws -> Result<LoanDetailDTO, NetworkProviderError>
     func getTransactions(accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getTransactions(accountId: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
-    func getDetails(accountId: String) throws -> Result<LoanDetailDTO, NetworkProviderError>
+    func getInstallments(accountId: String, parameters: LoanInstallmentsParameters?) throws -> Result<LoanInstallmentsListDTO, NetworkProviderError>
 }
 
 final class PLLoanManager {
@@ -25,6 +26,11 @@ final class PLLoanManager {
 }
 
 extension PLLoanManager: PLLoanManagerProtocol {
+    func getDetails(accountId: String, parameters: LoanDetailsParameters) throws -> Result<LoanDetailDTO, NetworkProviderError> {
+        let result = try self.loanDataSource.getDetails(accountId: accountId, parameters: parameters)
+        return result
+    }
+
     func getTransactions(accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError> {
         let result = try self.loanDataSource.getTransactions(accountNumber: accountNumber, parameters: parameters)
         return result
@@ -35,8 +41,8 @@ extension PLLoanManager: PLLoanManagerProtocol {
         return result
     }
 
-    func getDetails(accountId: String) throws -> Result<LoanDetailDTO, NetworkProviderError> {
-        let result = try self.loanDataSource.getDetails(accountId: accountId)
+    func getInstallments(accountId: String, parameters: LoanInstallmentsParameters?) throws -> Result<LoanInstallmentsListDTO, NetworkProviderError> {
+        let result = try self.loanDataSource.getInstallments(accountId: accountId, parameters: parameters)
         return result
     }
 }

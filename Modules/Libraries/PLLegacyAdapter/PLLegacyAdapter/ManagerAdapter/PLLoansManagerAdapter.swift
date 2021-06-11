@@ -22,7 +22,7 @@ final class PLLoansManagerAdapter {
  
 extension PLLoansManagerAdapter: BSANLoansManager {
     func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
-        guard let accountId = loan.contractDescription else {
+        guard let accountNumber = loan.contractDescription else {
             return BSANErrorResponse(nil)
         }
 
@@ -34,7 +34,7 @@ extension PLLoansManagerAdapter: BSANLoansManager {
         }
 
         let loanTransactionsParameters = LoanTransactionParameters(dateFrom: dateFrom, dateTo: dateTo, operationCount: nil, getDirection: nil)
-        let loanTransactionsList = try self.loanManager.getTransactions(accountId: accountId, parameters: loanTransactionsParameters)
+        let loanTransactionsList = try self.loanManager.getTransactions(accountNumber: accountNumber, parameters: loanTransactionsParameters)
 
         let adaptedLoanTransactionsList = LoanTransactionsListDTOAdapter.adaptPLLoanTransactionListToLoanTransactionList(try loanTransactionsList.get())
         return BSANOkResponse(adaptedLoanTransactionsList)
@@ -44,7 +44,9 @@ extension PLLoansManagerAdapter: BSANLoansManager {
         guard let accountId = loan.contractDescription else {
             return BSANErrorResponse(nil)
         }
-        let loanDetails = try self.loanManager.getDetails(accountId: accountId)
+
+        let loanDetailsParameters = LoanDetailsParameters(includeDetails: true, includePermissions: true, includeFunctionalities: true)
+        let loanDetails = try self.loanManager.getDetails(accountId: accountId, parameters: loanDetailsParameters)
 
         let adaptedLoanDetail = LoanDetailsDTOAdapter.adaptPLLoanDetailsToLoanDetails(try loanDetails.get(), loan: loan)
         return BSANOkResponse(adaptedLoanDetail)
