@@ -29,7 +29,7 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
             let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer, secondFactorFinalState: loginData.secondFactorData.finalState)
 
             if loginData.secondFactorData.finalState.elementsEqual("BLOCKED") {
-                return UseCaseResponse.error(PLLoginUseCaseErrorOutput(loginErrorType: .accountPermanentlyBlocked))
+                return UseCaseResponse.error(PLLoginUseCaseErrorOutput(loginErrorType: .temporaryLocked))
             }
 
             return UseCaseResponse.ok(loginOutput)

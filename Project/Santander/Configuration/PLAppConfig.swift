@@ -28,7 +28,6 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledTimeline = true
     let isEnabledPregranted = true
     let languageList: [LanguageType] = [.polish, .english]
-    let enablePGCardActivation = true
     let isEnabledDepositWebView = false
     let isEnabledfundWebView = false
     let clickablePension = true
@@ -60,4 +59,8 @@ class PLAppConfig: LocalAppConfig {
     var maxLengthInternalTransferConcept: Int = 140
     var showATMIntermediateScreen: Bool = false
     var isEnabledEditAlias: Bool = false
+    let analysisAreaHasTimelineSection: Bool = true
+    let analysisAreaIsIncomeSelectable: Bool = true
+    let analysisAreaIsExpensesSelectable: Bool = true
+    let isAnalysisAreaHomeEnabled: Bool = false
 }

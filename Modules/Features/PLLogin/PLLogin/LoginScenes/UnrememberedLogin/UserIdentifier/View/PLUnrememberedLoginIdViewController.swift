@@ -6,8 +6,8 @@ import IQKeyboardManagerSwift
 
 protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
-    func configureTooltipErrorAccountPermanentlyBlocked()
-    func configureTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration)
+    func showTooltipErrorAccountTemporaryBlocked()
+    func showTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration)
 }
 
 final class PLUnrememberedLoginIdViewController: UIViewController {
@@ -83,7 +83,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         self.documentTextField?.setText("")
     }
 
-    func configureTooltipErrorAccountPermanentlyBlocked() {
+    func showTooltipErrorAccountTemporaryBlocked() {
         let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_userBlocked"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
             alignment: .center,
@@ -94,7 +94,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
     }
 
-    func configureTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration) {
+    func showTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration) {
         let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_attemptLast"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
             alignment: .center,
