@@ -80,6 +80,10 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
             break // TODO
         case .loginError:
             break // TODO
+        case .loginErrorAccountTemporaryBlocked:
+            self.view?.dismissLoading(completion: { [weak self] in
+                self?.view?.showTooltipErrorAccountTemporaryBlocked()
+            })
         }
     }
 

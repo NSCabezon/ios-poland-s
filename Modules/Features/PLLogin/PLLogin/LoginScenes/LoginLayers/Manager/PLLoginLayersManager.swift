@@ -136,7 +136,7 @@ extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
         case .loginSuccess:
             //self.loginSessionLayer.handleSuccessLogin()
             break
-        case .loginError, .noConnection:
+        case .loginError, .noConnection, .loginErrorAccountTemporaryBlocked:
             break
         }
         self.loginPresenterLayer.handle(event: event)
