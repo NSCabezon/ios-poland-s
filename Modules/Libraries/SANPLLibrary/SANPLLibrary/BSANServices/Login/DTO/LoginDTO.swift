@@ -17,7 +17,7 @@ public struct LoginDTO: Codable {
 }
 
 public struct SecondFactorDataDTO: Codable {
-    public let finalState: String?
+    public let finalState: String
     public let challenges: [ChallengeDTO]?
     public let defaultChallenge: ChallengeDTO
     public let expired: Bool?

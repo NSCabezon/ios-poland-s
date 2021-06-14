@@ -17,6 +17,7 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
     func login(identification: String)
     func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
+    func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration)
 }
 
 final class PLUnrememberedLoginIdPresenter {
@@ -57,6 +58,15 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
             self?.loginManager?.chooseEnvironment()
         }
     }
+
+    func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration) {
+        switch configuration.passwordType {
+        case .normal:
+            self.coordinator.goToNormalPasswordScene(configuration: configuration)
+        case .masked:
+            self.coordinator.goToMaskedPasswordScene(configuration: configuration)
+        }
+    }
 }
 
 extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
@@ -66,14 +76,17 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
             break // TODO
         case .loginWithIdentifierSuccess(let configuration):
             self.view?.dismissLoading(completion: { [weak self] in
-                switch configuration.passwordType {
-                case .normal:
-                    self?.coordinator.goToNormalPasswordScene(configuration: configuration)
-                case .masked:
-                    self?.coordinator.goToMaskedPasswordScene(configuration: configuration)
+                if configuration.secondFactorDataFinalState.elementsEqual("FINAL") {
+                    self?.view?.showTooltipInvalidSCAWarning(configuration)
+                }
+                else {
+                    self?.goToPasswordScene(configuration)
                 }
             })
-
+        case .loginErrorAccountTemporaryBlocked:
+            self.view?.dismissLoading(completion: { [weak self] in
+                self?.view?.showTooltipErrorAccountTemporaryBlocked()
+            })
         default:
             break // TODO
         }

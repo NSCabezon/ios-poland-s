@@ -123,7 +123,7 @@ private extension PLLoginProcessLayer {
                 let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
                                                                    passwordType: passwordType,
                                                                    challenge: ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
-                                                                   loginImageData: output.loginImage, password: nil)
+                                                                   loginImageData: output.loginImage, password: nil, secondFactorDataFinalState: output.secondFactorFinalState)
                 self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }
             .onError { [weak self] error in
@@ -137,7 +137,22 @@ private extension PLLoginProcessLayer {
 
     // MARK: Auxiliar methods
     func handleError<Error: PLLoginUseCaseErrorOutput>(_ error: UseCaseError<Error>?) {
-        // TODO: Handle login errors
+        switch error {
+        case .error(let error):
+            self.checkLoginError(error?.loginErrorType)
+        case .generic, .intern, .networkUnavailable, .unauthorized, .none:
+            self.delegate?.handle(event: .loginError)
+        }
+    }
+
+    func checkLoginError(_ error: LoginErrorType?) {
+        switch error {
+        case .temporaryLocked:
+            self.delegate?.handle(event: .loginErrorAccountTemporaryBlocked)
+
+        default:
+            self.delegate?.handle(event: .loginError)
+        }
     }
 
     // TODO: make a unit test

@@ -26,7 +26,12 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
             let loginChallenge = ChallengeEntity(authorizationType: loginData.secondFactorData.defaultChallenge.authorizationType,
                 value: loginData.secondFactorData.defaultChallenge.value)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
-            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer)
+            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer, secondFactorFinalState: loginData.secondFactorData.finalState)
+
+            if loginData.secondFactorData.finalState.elementsEqual("BLOCKED") {
+                return UseCaseResponse.error(PLLoginUseCaseErrorOutput(loginErrorType: .temporaryLocked))
+            }
+
             return UseCaseResponse.ok(loginOutput)
         case .failure(_):
                 // TODO: the error management will be implemented in next sprint.
@@ -83,4 +88,5 @@ public struct PLLoginUseCaseOkOutput {
     public let passwordMask: Int?
     public let defaultChallenge: ChallengeEntity
     public let trustedComputerData: TrustedComputerEntity?
+    public let secondFactorFinalState: String
 }

@@ -1,0 +1,145 @@
+{
+    "12345678Z": {
+        "0": {
+            "operationList": [
+                {
+                    "balance": -6944.46,
+                    "operationId": {
+                        "postingDate": "2021-01-18",
+                        "operationLP": 130
+                    },
+                    "valueDate": "2021-01-18",
+                    "amount": 5.21,
+                    "interestAmount": 0,
+                    "title": "na rach. kred. cif 0015036493, JAF,",
+                    "psCode": "BRAK",
+                    "statementNo": 0,
+                    "extraData": {
+                        "extendedTitle": "na rach. kred. cif 0015036493, JAF, J. Wiercinska",
+                        "branchId": null,
+                        "sideDebit": {
+                            "address": "JOANNA WIERCINSKA  UL. BUKOWSKA 63 62-571 STRYKOWO WIELKOPOLSKIE",
+                            "accountNo": "69109010140000000142686952",
+                            "exchangeRate": null
+                        },
+                        "sideCredit": {
+                            "address": "JOANNA WIERCINSKA UL. BUKOWSKA 63 62-571 STRYKOWO",
+                            "accountNo": "35109011990000000142217187",
+                            "exchangeRate": null
+                        },
+                        "operationSubCode": 130,
+                        "sepaData": null,
+                        "operationType": null,
+                        "operationCurrency": "PLN"
+                    },
+                    "csrData": {
+                        "csrId": 0,
+                        "csrOperationId": "2101290",
+                        "csrReference": null
+                    }
+                },
+                {
+                    "balance": -6648.06,
+                    "operationId": {
+                        "postingDate": "2021-01-19",
+                        "operationLP": 134
+                    },
+                    "valueDate": "2021-01-19",
+                    "amount": 296.4,
+                    "interestAmount": 43.17,
+                    "title": "SPLATA KREDYTU",
+                    "psCode": "BRAK",
+                    "statementNo": 0,
+                    "extraData": {
+                        "extendedTitle": null,
+                        "branchId": null,
+                        "sideDebit": null,
+                        "sideCredit": {
+                            "address": "JOANNA WIERCINSKA  UL. BUKOWSKA 63 62-571 STRYKOWO WIELKOPOLSKIE",
+                            "accountNo": "35109011990000000142217187",
+                            "exchangeRate": null
+                        },
+                        "operationSubCode": 0,
+                        "sepaData": null,
+                        "operationType": null,
+                        "operationCurrency": "PLN"
+                    },
+                    "csrData": {
+                        "csrId": 801756596,
+                        "csrOperationId": "210129801756596",
+                        "csrReference": null
+                    }
+                },
+                {
+                    "balance": -6648.06,
+                    "operationId": {
+                        "postingDate": "2021-02-23",
+                        "operationLP": 137
+                    },
+                    "valueDate": "2021-02-23",
+                    "amount": 0,
+                    "interestAmount": 5.09,
+                    "title": "SPLATA KREDYTU",
+                    "psCode": "BRAK",
+                    "statementNo": 0,
+                    "extraData": {
+                        "extendedTitle": null,
+                        "branchId": null,
+                        "sideDebit": null,
+                        "sideCredit": {
+                            "address": "JOANNA WIERCINSKA  UL. BUKOWSKA 63 62-571 STRYKOWO WIELKOPOLSKIE",
+                            "accountNo": "35109011990000000142217187",
+                            "exchangeRate": null
+                        },
+                        "operationSubCode": 0,
+                        "sepaData": null,
+                        "operationType": null,
+                        "operationCurrency": "PLN"
+                    },
+                    "csrData": {
+                        "csrId": 0,
+                        "csrOperationId": "2101310",
+                        "csrReference": null
+                    }
+                },
+                {
+                    "balance": -6648.06,
+                    "operationId": {
+                        "postingDate": "2021-04-22",
+                        "operationLP": 141
+                    },
+                    "valueDate": "2021-04-22",
+                    "amount": 0,
+                    "interestAmount": 0,
+                    "title": "SPLATA KREDYTU",
+                    "psCode": "BRAK",
+                    "statementNo": 0,
+                    "extraData": {
+                        "extendedTitle": null,
+                        "branchId": null,
+                        "sideDebit": null,
+                        "sideCredit": {
+                            "address": "JOANNA WIERCINSKA  UL. BUKOWSKA 63 62-571 STRYKOWO WIELKOPOLSKIE",
+                            "accountNo": "35109011990000000142217187",
+                            "exchangeRate": null
+                        },
+                        "operationSubCode": 0,
+                        "sepaData": null,
+                        "operationType": null,
+                        "operationCurrency": "PLN"
+                    },
+                    "csrData": {
+                        "csrId": 0,
+                        "csrOperationId": "2101310",
+                        "csrReference": null
+                    }
+                }
+            ],
+            "summary": {
+                "revenuesDebit": 360.17,
+                "revenuesCredit": 345,
+                "currencyCode": "PLN"
+            }
+        }
+    }
+}

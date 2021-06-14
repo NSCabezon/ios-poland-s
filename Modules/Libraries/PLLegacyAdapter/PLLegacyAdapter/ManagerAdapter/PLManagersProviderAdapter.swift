@@ -105,7 +105,7 @@ public final class PLManagersProviderAdapter {
         self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager())
         self.signatureAdapter = PLSignatureAdapter()
         self.depositsManagerApadater = PLDepositsManagerAdapter()
-        self.loansManager = PLLoansManagerAdapter()
+        self.loansManager = PLLoansManagerAdapter(loanManager: self.plManagersProvider.getLoansManager(), bsanDataProvider: bsanDataProvider)
         self.pensionsManager = PLPensionsManagerAdapter()
         self.favouriteTransfersManager = PLFavouriteTransfersManagerAdapter()
         self.sessionManagerApadater = PLSessionManagerAdapter()

@@ -11,5 +11,6 @@ public enum LoginProcessLayerEvent {
     case authenticateSuccess
     case loginSuccess
     case loginError
+    case loginErrorAccountTemporaryBlocked
     case noConnection
 }
