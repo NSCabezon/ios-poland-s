@@ -128,9 +128,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: EmmaTrackEventListProtocol.self) { _ in
             return EmptyEmmaTrackEventList()
         }
-        self.dependencieEngine.register(for: SalesForceHandlerProtocol.self) { _ in
-            return EmptySalesForceHandler()
-        }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
         }

@@ -45,14 +45,6 @@ final class PLLoginLayersManager {
     private var publicFilesManager: PublicFilesManagerProtocol {
         return self.dependenciesResolver.resolve(for: PublicFilesManagerProtocol.self)
     }
-    
-    private var pushNotificationRegister: PushNotificationRegisterManagerProtocol {
-        return self.dependenciesResolver.resolve(for: PushNotificationRegisterManagerProtocol.self)
-    }
-    
-    private var pushNotificationExcecutor: PushNotificationExecutorProtocol {
-        self.dependenciesResolver.resolve(for: PushNotificationExecutorProtocol.self)
-    }
 
     private lazy var loginPresenterLayer: PLLoginPresenterLayerProtocol = {
         return self.dependenciesResolver.resolve(for: PLLoginPresenterLayerProtocol.self)
