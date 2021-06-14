@@ -38,8 +38,6 @@
 		66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */; };
 		66BC8DFC2640A58D00654CC5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 66BC8DFB2640A58D00654CC5 /* README.md */; };
 		66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */; };
-		66BC90612641260400654CC5 /* TargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90602641260400654CC5 /* TargetProvider.swift */; };
-		66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */; };
 		66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */; };
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
@@ -87,8 +85,6 @@
 		66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationDependencies.swift; sourceTree = "<group>"; };
 		66BC8DFB2640A58D00654CC5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrusteerRepository.swift; sourceTree = "<group>"; };
-		66BC90602641260400654CC5 /* TargetProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetProvider.swift; sourceTree = "<group>"; };
-		66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySalesForceHandler.swift; sourceTree = "<group>"; };
 		66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyEmmaTrackEventList.swift; sourceTree = "<group>"; };
 		66E57605264A6C32006804BD /* assetsLocal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assetsLocal; sourceTree = "<group>"; };
 		66E57607264A6C3A006804BD /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
@@ -230,7 +226,6 @@
 				42BF484326497C9200136E8D /* BSANEnvironments.swift */,
 				66BC8C9026407DD300654CC5 /* HostsModule.swift */,
 				66BC8C8D26407CD300654CC5 /* Compilation.swift */,
-				66BC90602641260400654CC5 /* TargetProvider.swift */,
 			);
 			path = Legacy;
 			sourceTree = "<group>";
@@ -239,7 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */,
-				66BC90632641275900654CC5 /* EmptySalesForceHandler.swift */,
 				66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */,
 				42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */,
 				42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */,
@@ -406,7 +400,6 @@
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
 				42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */,
-				66BC90612641260400654CC5 /* TargetProvider.swift in Sources */,
 				446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
 				7E790692265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
@@ -425,7 +418,6 @@
 				0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */,
 				446E0C23265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift in Sources */,
 				446E0C2A265FEC2E00847FCA /* PLAccountHomeActionModifier.swift in Sources */,
-				66BC90642641275900654CC5 /* EmptySalesForceHandler.swift in Sources */,
 				66BC8C9126407DD300654CC5 /* HostsModule.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 			);

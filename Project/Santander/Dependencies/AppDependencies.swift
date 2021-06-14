@@ -9,7 +9,6 @@ import Commons
 import Foundation
 import DataRepository
 import RetailLegacy
-import SANLibraryV3
 import Repository
 import SANLegacyLibrary
 import SANPLLibrary
@@ -36,10 +35,6 @@ final class AppDependencies {
     private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
     }
-    
-    private lazy var dataProvider: SANLibraryV3.BSANDataProvider = {
-        return BSANDataProvider(dataRepository: self.dataRepository, appInfo: self.versionInfo)
-    }()
     private var demoInterpreter: DemoUserProtocol {
         let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
         return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
@@ -95,30 +90,18 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: DataRepository.self) { _ in
             return self.dataRepository
         }
-        self.dependencieEngine.register(for: BSANDataProvider.self) { _ in
-            return self.dataProvider
-        }
         self.dependencieEngine.register(for: LocalAppConfig.self) { _ in
             return self.localAppConfig
         }
         self.dependencieEngine.register(for: VersionInfoDTO.self) { _ in
             return self.versionInfo
         }
-        self.dependencieEngine.register(for: WebServicesUrlProvider.self) { resolver in
-            let bsanDataProvider: SANLibraryV3.BSANDataProvider = resolver.resolve(for: SANLibraryV3.BSANDataProvider.self)
-            return WebServicesUrlProviderImpl(bsanDataProvider: bsanDataProvider)
-        }
-        self.dependencieEngine.register(for: DemoInterpreterProvider.self) { resolver in
-            return TargetProvider(
-                demoProvider: self.bsanDataProvider
-            )
-        }
         // Data layer and country data adapters
         self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
             return self.managersProviderAdapter
         }
         self.dependencieEngine.register(for: BSANDataProviderProtocol.self) { _ in
-            return self.dataProvider
+            return self.bsanDataProvider
         }
         dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
             return self.managersProviderAdapter.getPLManagerProvider()
@@ -144,9 +127,6 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: EmmaTrackEventListProtocol.self) { _ in
             return EmptyEmmaTrackEventList()
-        }
-        self.dependencieEngine.register(for: SalesForceHandlerProtocol.self) { _ in
-            return EmptySalesForceHandler()
         }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
