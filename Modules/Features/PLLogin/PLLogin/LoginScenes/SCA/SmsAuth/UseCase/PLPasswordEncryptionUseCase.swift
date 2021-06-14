@@ -14,6 +14,7 @@ import SwiftyRSA
 /**
     This use case encrypt a password plain text using a public key and returns a encrypted string
  */
+protocol PLPasswordEncryptionUseCaseProtocol: UseCase<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput> {}
 
 final class PLPasswordEncryptionUseCase: UseCase<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput> {
     var dependenciesResolver: DependenciesResolver
@@ -57,7 +58,50 @@ private extension PLPasswordEncryptionUseCase {
         return encryptedBase64String
     }
 
+    /// Process modulus and exponent to generate an Apple Security SecKey
     func getPublicKeySecurityRepresentation(_ modulus: String, exponent: String) -> SecKey? {
+        let modulusData = Data(base64Encoded: modulus)!
+        var modulus = [UInt8](modulusData)
+        modulus.insert(0x00, at: 0) // prefix with 0x00 to indicate that it is a non-negative number
+        print("modulus, size \(modulus.count):", modulus)
+
+        let exponentData = Data(base64Encoded: exponent)!
+        let exponent = [UInt8](exponentData) // encode the exponent as big-endian bytes
+        print("exponent:", exponent)
+
+
+        // encode the modulus and exponent as INTEGERs
+        var modulusEncoded: [UInt8] = [0x02]
+        modulusEncoded.append(contentsOf: lengthField(of: modulus))
+        modulusEncoded.append(contentsOf: modulus)
+
+        var exponentEncoded: [UInt8] = [0x02]
+        exponentEncoded.append(contentsOf: lengthField(of: exponent))
+        exponentEncoded.append(contentsOf: exponent)
+
+        // combine these INTEGERs to a SEQUENCE
+        var sequenceEncoded: [UInt8] = [0x30]
+        sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
+        sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
+        print("encoded key:",sequenceEncoded)
+
+
+        // Create the SecKey
+        let keyData = Data(sequenceEncoded)
+        print("encoded key, base64:", keyData.base64EncodedString())
+        let attributes: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecAttrKeyClass as String: kSecAttrKeyClassPublic,
+            kSecAttrKeySizeInBits as String: modulus.count * 8
+        ]
+        var error: Unmanaged<CFError>?
+        let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, &error)
+        print("publicKey:", publicKey ?? "👎")
+        print("error:", error ?? "👍")
+        return publicKey
+    }
+
+    func getPublicKeySecurityRepresentation2(_ modulus: String, exponent: String) -> SecKey? {
         var byteArrModulus = Array(modulus.utf8)
         let byteArrayExponent = Array(exponent.utf8)
 
