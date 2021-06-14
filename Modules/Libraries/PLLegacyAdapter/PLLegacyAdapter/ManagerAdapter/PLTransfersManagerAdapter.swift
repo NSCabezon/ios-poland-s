@@ -86,6 +86,12 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
+    func getHistoricalTransferCompleted() throws -> Bool {
+        return false
+    }
+    
+    func storeGetHistoricalTransferCompleted(_ completed: Bool) throws {}
+    
     func validateScheduledTransfer(originAcount: AccountDTO, scheduledTransferInput: ScheduledTransferInput) throws -> BSANResponse<ValidateScheduledTransferDTO> {
         return BSANErrorResponse(nil)
     }

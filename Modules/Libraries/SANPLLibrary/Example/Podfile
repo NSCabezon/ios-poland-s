@@ -4,7 +4,6 @@ platform :ios, '10.3'
 
 def core_dependencies
   pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
-  pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'Commons', :path => '../../../../santander-one/Commons'
