@@ -43,6 +43,7 @@ def core_dependencies
   pod 'BranchLocator', :path => '../santander-one/Modules/Features/BranchLocator'
   pod 'FinantialTimeline', :path => '../santander-one/Modules/Features/FinantialTimeline'
   pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
+  pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
 end
 
 def legacy_libraries
