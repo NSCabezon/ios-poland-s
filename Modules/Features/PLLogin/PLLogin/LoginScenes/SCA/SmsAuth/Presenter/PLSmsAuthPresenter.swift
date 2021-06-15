@@ -20,8 +20,6 @@ protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     func viewDidLoad()
     func viewWillAppear()
     func authenticate(smsCode: String)
-    func recoverPasswordOrNewRegistration()
-    func didSelectChooseEnvironment()
     func didSelectLoginRestartAfterTimeOut()
 }
 
@@ -82,27 +80,6 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
 
     func didSelectChooseEnvironment() {
         // TODO
-    }
-}
-
-extension PLSmsAuthPresenter: PLLoginPresenterLayerProtocol {
-    func handle(event: LoginProcessLayerEvent) {
-        // TODO
-    }
-
-    func handle(event: SessionProcessEvent) {
-        // TODO
-    }
-
-    func willStartSession() {
-        // TODO
-    }
-
-    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
-        self.publicFilesEnvironment = publicFilesEnvironment
-        let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
-        let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
-        self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
     }
 }
 
