@@ -9,7 +9,6 @@ import Repository
 import Models
 import PLCommons
 import Security
-import SwiftyRSA
 
 /**
     This use case encrypt a password plain text using a public key and returns a encrypted string
@@ -34,41 +33,31 @@ final class PLPasswordEncryptionUseCase: UseCase<PLPasswordEncryptionUseCaseInpu
 }
 
 private extension PLPasswordEncryptionUseCase {
-    func getEnvironment() -> BSANPLEnvironmentDTO? {
-        let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let result = managerProvider.getEnvironmentsManager().getCurrentEnvironment()
-        switch result {
-        case .success(let dto):
-            return dto
-        case .failure:
-            return nil
-        }
-    }
+//    func getEnvironment() -> BSANPLEnvironmentDTO? {
+//        let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+//        let result = managerProvider.getEnvironmentsManager().getCurrentEnvironment()
+//        switch result {
+//        case .success(let dto):
+//            return dto
+//        case .failure:
+//            return nil
+//        }
+//    }
 
     func encryptPassword(password: String, encryptionKey: EncryptionKeyEntity) throws -> String {
-        guard let secPublicKey = self.getPublicKeySecurityRepresentation(encryptionKey.modulus, exponent: encryptionKey.exponent) else {
+        guard let secPublicKey = self.getPublicKeySecurityRepresentation(encryptionKey.modulus, exponentStr: encryptionKey.exponent) else {
             throw EncryptionError.publicKeyGenerationFailed
         }
-        var encryptedBase64String = ""
-        let publicKey = try PublicKey(reference: secPublicKey)
-        let clear = try ClearMessage(string: password, using: .utf8)
-        let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-        encryptedBase64String = encrypted.base64String
-
-        return encryptedBase64String
+        if let encryptedBase64String = self.encrypt(string: password, publicKey: secPublicKey) {
+            return encryptedBase64String
+        }
+        throw EncryptionError.publicKeyGenerationFailed
     }
 
     /// Process modulus and exponent to generate an Apple Security SecKey
-    func getPublicKeySecurityRepresentation(_ modulus: String, exponent: String) -> SecKey? {
-        let modulusData = Data(base64Encoded: modulus)!
-        var modulus = [UInt8](modulusData)
-        modulus.insert(0x00, at: 0) // prefix with 0x00 to indicate that it is a non-negative number
-        print("modulus, size \(modulus.count):", modulus)
-
-        let exponentData = Data(base64Encoded: exponent)!
-        let exponent = [UInt8](exponentData) // encode the exponent as big-endian bytes
-        print("exponent:", exponent)
-
+    func getPublicKeySecurityRepresentation(_ modulusStr: String, exponentStr: String) -> SecKey? {
+        let modulus = self.getByteArray(inputString: modulusStr)
+        let exponent: [UInt8] = self.getByteArray(inputString: exponentStr)
 
         // encode the modulus and exponent as INTEGERs
         var modulusEncoded: [UInt8] = [0x02]
@@ -83,12 +72,10 @@ private extension PLPasswordEncryptionUseCase {
         var sequenceEncoded: [UInt8] = [0x30]
         sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
         sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
-        print("encoded key:",sequenceEncoded)
 
 
         // Create the SecKey
         let keyData = Data(sequenceEncoded)
-        print("encoded key, base64:", keyData.base64EncodedString())
         let attributes: [String: Any] = [
             kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
             kSecAttrKeyClass as String: kSecAttrKeyClassPublic,
@@ -96,11 +83,11 @@ private extension PLPasswordEncryptionUseCase {
         ]
         var error: Unmanaged<CFError>?
         let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, &error)
-        print("publicKey:", publicKey ?? "👎")
-        print("error:", error ?? "👍")
+        //print("publicKey:", publicKey ?? "👎")
         return publicKey
     }
 
+    /// Generate a public key from a modulus - exponent representation
     func getPublicKeySecurityRepresentation2(_ modulus: String, exponent: String) -> SecKey? {
         var byteArrModulus = Array(modulus.utf8)
         let byteArrayExponent = Array(exponent.utf8)
@@ -132,10 +119,10 @@ private extension PLPasswordEncryptionUseCase {
             kSecAttrKeySizeInBits as String: keySize
         ]
         let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, nil)
-
         return publicKey
     }
 
+    // Aux method to calculate a byte array length
     func lengthField(of valueField: [UInt8]) -> [UInt8] {
         var count = valueField.count
 
@@ -160,6 +147,23 @@ private extension PLPasswordEncryptionUseCase {
         // Include the first byte.
         lengthField.insert(firstLengthFieldByte, at: 0)
         return lengthField
+    }
+
+    // Convert a String to big endian byte array
+    func getByteArray(inputString: String) -> [UInt8] {
+        let bytes = inputString.utf8
+        return [UInt8](bytes)
+    }
+
+    /// Encrypt a plain text using a public key
+    func encrypt(string: String, publicKey: SecKey) -> String? {
+        let buffer = [UInt8](string.utf8)
+
+        var keySize   = SecKeyGetBlockSize(publicKey)
+        var keyBuffer = [UInt8](repeating: 0, count: keySize)
+
+        guard SecKeyEncrypt(publicKey, SecPadding.PKCS1, buffer, buffer.count, &keyBuffer, &keySize) == errSecSuccess else { return nil }
+        return Data(bytes: keyBuffer, count: keySize).base64EncodedString()
     }
 }
 
