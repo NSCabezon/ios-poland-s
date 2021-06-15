@@ -8,7 +8,7 @@ import SANPLLibrary
 
 public final class AmountAdapter {
     public func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
-        guard let amount = balance?.value,
+        guard let amount = balance?.valueInBaseCurrency,
               let currencyCode = balance?.currencyCode else {
             return nil
         }
