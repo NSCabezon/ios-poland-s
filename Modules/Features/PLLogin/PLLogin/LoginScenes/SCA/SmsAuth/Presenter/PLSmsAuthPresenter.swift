@@ -54,6 +54,10 @@ final class PLSmsAuthPresenter {
     private var authenticateUseCase: PLAuthenticateUseCase {
         self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
     }
+
+    private var encryptPasswordUseCase: PLPasswordEncryptionUseCase {
+        self.dependenciesResolver.resolve(for: PLPasswordEncryptionUseCase.self)
+    }
     
 }
 
@@ -102,32 +106,29 @@ private extension  PLSmsAuthPresenter {
     }
 
     func doAuthenticate(smscode: String) {
-        let secondFactorData = SecondFactorDataAuthenticationEntity(challenge: loginConfiguration.challenge, value: smscode)
         guard let password = loginConfiguration.password else {
             // TODO: generate error, password can't be empty
             return
         }
 
-//        Scenario(useCase: self.getPersistedPubKeyUseCase)
-//            .execute(on: self.dependenciesResolver.resolve())
-//            .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput> in
-//                let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)
-//                do {
-//                    let encryptedPassword = try self?.encryptPassword(password: password, encryptionKey: encrytionKey) ?? ""
-//                    let userId = self?.loginConfiguration.userIdentifier ?? ""
-//
-//                    let caseInput: PLAuthenticateUseCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPassword, userId: userId, secondFactorData: secondFactorData)
-//                    return Scenario(useCase: self!.authenticateUseCase, input: caseInput) // WARNNING: force unwrap
-//                } catch {
-//                    return(PLAuthenticateUseCaseErrorOutput(error.localizedDescription))
-//                }
-//
-//            })
-//            .onSuccess({ _ in
-//                // TODO: Navigate to PG
-//            })
-//            .onError { error in
-//                // TODO: Present error
-//            }
+        Scenario(useCase: self.getPersistedPubKeyUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .then(scenario: {  [unowned self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> in
+                let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)
+                let useCaseInput = PLPasswordEncryptionUseCaseInput(plainPassword: password, encryptionKey: encrytionKey)
+                return Scenario(useCase: self.encryptPasswordUseCase, input: useCaseInput)
+            })
+            .then(scenario: {  [unowned self] (encryptedPasswordOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput> in
+                let secondFactorAuthentity = SecondFactorDataAuthenticationEntity(challenge: self.loginConfiguration.challenge, value: smscode)
+                let useCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPasswordOutput.encryptedPassword, userId: self.loginConfiguration.userIdentifier, secondFactorData: secondFactorAuthentity)
+                return Scenario(useCase: self.authenticateUseCase, input: useCaseInput)
+            })
+            .onSuccess({ _ in
+                let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+                coordinatorDelegate.goToPrivate(.classic)
+            })
+            .onError { error in
+                // TODO: Present errorsecondFactorData
+            }
     }
 }

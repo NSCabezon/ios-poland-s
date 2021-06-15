@@ -110,7 +110,7 @@ extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
     }
 
     func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
+
     }
 }
 
@@ -220,9 +220,6 @@ private extension PLSmsAuthViewController {
         }
         else {
         	self.presenter.authenticate(smsCode: smsCode)
-        	// TODO: PG Remove the following lines: 2
-        	let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-        	coordinatorDelegate.goToPrivate(.classic)
 		}
     }
 
@@ -255,10 +252,6 @@ private extension PLSmsAuthViewController {
             self?.regardLabel?.alpha = 1.0
             self?.view.layoutSubviews()
         }
-    }
-
-    func recoverPasswordOrNewRegistration() {
-        self.presenter.recoverPasswordOrNewRegistration()
     }
 }
 

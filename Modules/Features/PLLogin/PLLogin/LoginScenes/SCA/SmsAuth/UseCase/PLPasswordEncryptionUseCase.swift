@@ -13,36 +13,26 @@ import Security
 /**
     This use case encrypt a password plain text using a public key and returns a encrypted string
  */
-protocol PLPasswordEncryptionUseCaseProtocol: UseCase<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput> {}
+protocol PLPasswordEncryptionUseCaseProtocol: UseCase<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> {}
 
-final class PLPasswordEncryptionUseCase: UseCase<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput> {
+final class PLPasswordEncryptionUseCase: UseCase<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLPasswordEncryptionUseCaseInput) throws -> UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLPasswordEncryptionUseCaseInput) throws -> UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> {
         do {
             let encryptedPassword = try self.encryptPassword(password: requestValues.plainPassword, encryptionKey: requestValues.encryptionKey)
             return UseCaseResponse.ok(PLPasswordEncryptionUseCaseOutput(encryptedPassword: encryptedPassword))
         } catch {
-            return UseCaseResponse.error(PLPasswordEncryptionUseCaseErrorOutput(error.localizedDescription))
+            return UseCaseResponse.error(PLAuthenticateUseCaseErrorOutput(error.localizedDescription))
         }
     }
 }
 
 private extension PLPasswordEncryptionUseCase {
-//    func getEnvironment() -> BSANPLEnvironmentDTO? {
-//        let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-//        let result = managerProvider.getEnvironmentsManager().getCurrentEnvironment()
-//        switch result {
-//        case .success(let dto):
-//            return dto
-//        case .failure:
-//            return nil
-//        }
-//    }
 
     func encryptPassword(password: String, encryptionKey: EncryptionKeyEntity) throws -> String {
         guard let secPublicKey = self.getPublicKeySecurityRepresentation(encryptionKey.modulus, exponentStr: encryptionKey.exponent) else {
@@ -179,22 +169,4 @@ struct PLPasswordEncryptionUseCaseInput {
 
 struct PLPasswordEncryptionUseCaseOutput {
     let encryptedPassword: String
-}
-
-final class PLPasswordEncryptionUseCaseErrorOutput: StringErrorOutput {
-    public var loginErrorType: LoginErrorType?
-
-    public init(loginErrorType: LoginErrorType?) {
-        self.loginErrorType = loginErrorType
-        super.init(nil)
-    }
-
-    public override init(_ errorDesc: String?) {
-        self.loginErrorType = LoginErrorType.serviceFault
-        super.init(errorDesc)
-    }
-
-    public func getLoginErrorType() -> LoginErrorType? {
-        return loginErrorType
-    }
 }
