@@ -113,17 +113,20 @@ private extension  PLSmsAuthPresenter {
 
         Scenario(useCase: self.getPersistedPubKeyUseCase)
             .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: {  [unowned self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> in
+            .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput>? in
+                guard let self = self else { return nil}
                 let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)
                 let useCaseInput = PLPasswordEncryptionUseCaseInput(plainPassword: password, encryptionKey: encrytionKey)
                 return Scenario(useCase: self.encryptPasswordUseCase, input: useCaseInput)
             })
-            .then(scenario: {  [unowned self] (encryptedPasswordOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput> in
+            .then(scenario: {  [weak self] (encryptedPasswordOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput>? in
+                guard let self = self else { return nil}
                 let secondFactorAuthentity = SecondFactorDataAuthenticationEntity(challenge: self.loginConfiguration.challenge, value: smscode)
                 let useCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPasswordOutput.encryptedPassword, userId: self.loginConfiguration.userIdentifier, secondFactorData: secondFactorAuthentity)
                 return Scenario(useCase: self.authenticateUseCase, input: useCaseInput)
             })
-            .onSuccess({ _ in
+            .onSuccess({ [weak self] _ in
+                guard let self = self else { return }
                 let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
                 coordinatorDelegate.goToPrivate(.classic)
             })
