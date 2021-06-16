@@ -63,7 +63,6 @@ private extension PLPasswordEncryptionUseCase {
         sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
         sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
 
-
         // Create the SecKey
         let keyData = Data(sequenceEncoded)
         let attributes: [String: Any] = [
@@ -74,41 +73,6 @@ private extension PLPasswordEncryptionUseCase {
         var error: Unmanaged<CFError>?
         let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, &error)
         //print("publicKey:", publicKey ?? "👎")
-        return publicKey
-    }
-
-    /// Generate a public key from a modulus - exponent representation
-    func getPublicKeySecurityRepresentation2(_ modulus: String, exponent: String) -> SecKey? {
-        var byteArrModulus = Array(modulus.utf8)
-        let byteArrayExponent = Array(exponent.utf8)
-
-        // Process modulus and exponent to generate an Apple Security SecKey
-        byteArrModulus.insert(0x00, at: 0)
-
-        var modulusEncoded: [UInt8] = []
-        modulusEncoded.append(0x02)
-        modulusEncoded.append(contentsOf: lengthField(of: byteArrModulus))
-        modulusEncoded.append(contentsOf: byteArrModulus)
-
-        var exponentEncoded: [UInt8] = []
-        exponentEncoded.append(0x02)
-        exponentEncoded.append(contentsOf: lengthField(of: byteArrayExponent))
-        exponentEncoded.append(contentsOf: byteArrayExponent)
-
-        var sequenceEncoded: [UInt8] = []
-        sequenceEncoded.append(0x30)
-        sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
-        sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
-
-        // Create the SecKey
-        let keyData = Data(sequenceEncoded)
-        let keySize = (byteArrModulus.count * 8)
-        let attributes: [String: Any] = [
-            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
-            kSecAttrKeyClass as String: kSecAttrKeyClassPublic,
-            kSecAttrKeySizeInBits as String: keySize
-        ]
-        let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, nil)
         return publicKey
     }
 

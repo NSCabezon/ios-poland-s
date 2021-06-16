@@ -57,24 +57,6 @@ struct PLAuthenticateUseCaseInput {
     let secondFactorData: SecondFactorDataAuthenticationEntity
 }
 
-final class PLAuthenticateUseCaseErrorOutput: StringErrorOutput {
-    public var loginErrorType: LoginErrorType?
-
-    public init(loginErrorType: LoginErrorType?) {
-        self.loginErrorType = loginErrorType
-        super.init(nil)
-    }
-
-    public override init(_ errorDesc: String?) {
-        self.loginErrorType = LoginErrorType.serviceFault
-        super.init(errorDesc)
-    }
-
-    public func getLoginErrorType() -> LoginErrorType? {
-        return loginErrorType
-    }
-}
-
 public struct PLAuthenticateUseCaseOkOutput {
     public let userId, userCif, expires, expires_in: Int
     public let companyContext, trusted_device_token: Bool
