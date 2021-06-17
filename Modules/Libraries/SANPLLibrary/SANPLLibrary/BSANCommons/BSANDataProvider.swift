@@ -84,6 +84,38 @@ public class BSANDataProvider {
         objc_sync_exit(dataRepository)
     }
 
+    public func store(loanOperationList: LoanOperationListDTO, forLoanId loanId: String) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.loanInfo.loanOperationsDictionary[loanId] = loanOperationList
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+
+    public func getLoanOperationList(withLoanId loanId: String) -> LoanOperationListDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.loanInfo.loanOperationsDictionary[loanId]
+    }
+
+    public func store(loanDetail: LoanDetailDTO, forLoanId loanId: String) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.loanInfo.loanDetailDictionary[loanId] = loanDetail
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+
+    public func getLoanDetail(withLoanId loanId: String) -> LoanDetailDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.loanInfo.loanDetailDictionary[loanId]
+    }
+
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {
         objc_sync_enter(dataRepository)
