@@ -9,6 +9,7 @@ import Repository
 import Models
 import PLCommons
 import Security
+import CryptoSwift
 
 /**
     This use case encrypt a password plain text using a public key and returns a encrypted string
@@ -46,8 +47,10 @@ private extension PLPasswordEncryptionUseCase {
 
     /// Process modulus and exponent to generate an Apple Security SecKey
     func getPublicKeySecurityRepresentation(_ modulusStr: String, exponentStr: String) -> SecKey? {
-        let modulus = self.getByteArray(inputString: modulusStr)
-        let exponent: [UInt8] = self.getByteArray(inputString: exponentStr)
+        var modulus = self.getByteArrayFromHex(inputString: modulusStr)
+        let exponent = self.getByteArray(inputString: exponentStr)
+
+        modulus.insert(0x00, at: 0)
 
         // encode the modulus and exponent as INTEGERs
         var modulusEncoded: [UInt8] = [0x02]
@@ -58,7 +61,7 @@ private extension PLPasswordEncryptionUseCase {
         exponentEncoded.append(contentsOf: lengthField(of: exponent))
         exponentEncoded.append(contentsOf: exponent)
 
-        // combine these INTEGERs to a SEQUENCE
+        // combine these INTEGERs to a SEQUENCE -> PKCS#1 key
         var sequenceEncoded: [UInt8] = [0x30]
         sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
         sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
@@ -104,6 +107,10 @@ private extension PLPasswordEncryptionUseCase {
     }
 
     // Convert a String to big endian byte array
+    func getByteArrayFromHex(inputString: String) -> [UInt8] {
+        return Array<UInt8>.init(hex: inputString)
+    }
+
     func getByteArray(inputString: String) -> [UInt8] {
         let bytes = inputString.utf8
         return [UInt8](bytes)
