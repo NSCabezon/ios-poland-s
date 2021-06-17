@@ -221,8 +221,8 @@ private extension PLSmsAuthViewController {
         else {
             self.presenter.authenticate()
             // TODO: PG Remove the following lines: 2
-            let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-            coordinatorDelegate.goToPrivate(.classic)
+            /*let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+            coordinatorDelegate.goToPrivate(.classic)*/
         }
     }
 

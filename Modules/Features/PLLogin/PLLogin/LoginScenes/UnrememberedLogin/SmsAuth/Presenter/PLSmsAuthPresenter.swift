@@ -54,7 +54,8 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     }
 
     func authenticate() {
-        self.doAuthenticate()
+        self.coordinator.goToDeviceData()
+        //self.doAuthenticate()
     }
 
     func recoverPasswordOrNewRegistration() {

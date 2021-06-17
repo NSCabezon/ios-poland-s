@@ -1,8 +1,8 @@
 //
-//  PLSmsAuthCoordinator.swift
+//  PLDeviceDataController.swift
 //  PLLogin
 //
-//  Created by Juan Sánchez Marín on 28/5/21.
+//  Created by Juan Sánchez Marín on 16/6/21.
 //
 
 import Commons
@@ -12,16 +12,13 @@ import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 
-protocol PLSmsAuthCoordinatorProtocol {
+protocol PLDeviceDataCoordinatorProtocol {
     func goToGlobalPositionScene()
-    func goToUnrememberedLogindScene()
-    func goToDeviceData()
 }
 
-final class PLSmsAuthCoordinator: ModuleCoordinator {
+final class PLDeviceDataCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    private let deviceDataCoordinator: PLDeviceDataCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -29,64 +26,48 @@ final class PLSmsAuthCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.deviceDataCoordinator = PLDeviceDataCoordinator(
-            dependenciesResolver: self.dependenciesEngine,
-            navigationController: navigationController
-        )
         self.setupDependencies()
     }
 
     func start() {
-        let controller = self.dependenciesEngine.resolve(for: PLSmsAuthViewController.self)
+        let controller = self.dependenciesEngine.resolve(for: PLDeviceDataViewController.self)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-extension PLSmsAuthCoordinator: PLSmsAuthCoordinatorProtocol {
+extension PLDeviceDataCoordinator: PLDeviceDataCoordinatorProtocol {
     func goToGlobalPositionScene() {
         //TODO:
-    }
-
-    func goToUnrememberedLogindScene() {
-        self.backToLogin()
-    }
-
-    func goToDeviceData() {
-        self.deviceDataCoordinator.start()
     }
 }
 
 /**
  #Register Scene depencencies.
 */
-private extension PLSmsAuthCoordinator {
+private extension PLDeviceDataCoordinator {
     func setupDependencies() {
-        let presenter = PLSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
+        let presenter = PLDeviceDataPresenter(dependenciesResolver: self.dependenciesEngine)
 
-        self.dependenciesEngine.register(for: PLSmsAuthCoordinatorProtocol.self) { _ in
+        self.dependenciesEngine.register(for: PLDeviceDataCoordinatorProtocol.self) { _ in
             return self
         }
 
-        self.dependenciesEngine.register(for: PLLoginPresenterLayerProtocol.self) { _ in
+        self.dependenciesEngine.register(for: PLDeviceDataPresenterProtocol.self) { resolver in
             return presenter
         }
 
-        self.dependenciesEngine.register(for: PLSmsAuthPresenterProtocol.self) { resolver in
-            return presenter
-        }
-
-        self.dependenciesEngine.register(for: PLSmsAuthViewProtocol.self) { dependenciesResolver in
-            return dependenciesResolver.resolve(for: PLSmsAuthViewController.self)
+        self.dependenciesEngine.register(for: PLDeviceDataViewProtocol.self) { dependenciesResolver in
+            return dependenciesResolver.resolve(for: PLDeviceDataViewController.self)
         }
 
         self.dependenciesEngine.register(for: PLLoginCoordinatorProtocol.self) { _ in
             return self
         }
 
-        self.dependenciesEngine.register(for: PLSmsAuthViewController.self) { resolver in
-            var presenter = resolver.resolve(for: PLSmsAuthPresenterProtocol.self)
-            let viewController = PLSmsAuthViewController(
-                nibName: "PLSmsAuthViewController",
+        self.dependenciesEngine.register(for: PLDeviceDataViewController.self) { resolver in
+            var presenter = resolver.resolve(for: PLDeviceDataPresenterProtocol.self)
+            let viewController = PLDeviceDataViewController(
+                nibName: "PLDeviceDataViewController",
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
@@ -114,5 +95,5 @@ private extension PLSmsAuthCoordinator {
     }
 }
 
-extension PLSmsAuthCoordinator: PLLoginCoordinatorProtocol {}
-extension PLSmsAuthCoordinator: LoginChangeEnvironmentResolverCapable {}
+extension PLDeviceDataCoordinator: PLLoginCoordinatorProtocol {}
+extension PLDeviceDataCoordinator: LoginChangeEnvironmentResolverCapable {}
