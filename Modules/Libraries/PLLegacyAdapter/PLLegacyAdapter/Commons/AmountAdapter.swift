@@ -11,7 +11,7 @@ public final class AmountAdapter {
         return makeAmountDTO(value: balance?.value, currencyCode: balance?.currencyCode)
     }
 
-    public func adaptBaseCurrencyBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
+    public func adaptBalanceToCounterValueAmount(_ balance: BalanceDTO?) -> AmountDTO? {
         return makeAmountDTO(value: balance?.valueInBaseCurrency, currencyCode: balance?.currencyCode)
     }
     
