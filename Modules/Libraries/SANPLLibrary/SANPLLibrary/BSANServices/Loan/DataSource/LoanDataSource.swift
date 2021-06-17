@@ -7,7 +7,7 @@ import Foundation
 import SANLegacyLibrary
 
 protocol LoanDataSourceProtocol {
-    func getDetails(accountId: String, parameters: LoanDetailsParameters) throws -> Result<LoanDetailDTO, NetworkProviderError>
+    func getDetails(accountNumber: String, parameters: LoanDetailsParameters) throws -> Result<LoanDetailDTO, NetworkProviderError>
     func getTransactions(accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getTransactions(accountId: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getInstallments(accountId: String, parameters: LoanInstallmentsParameters?) throws -> Result<LoanInstallmentsListDTO, NetworkProviderError>
@@ -41,9 +41,9 @@ final class LoanDataSource {
 }
 
 extension LoanDataSource: LoanDataSourceProtocol {
-    func getDetails(accountId: String, parameters: LoanDetailsParameters) throws -> Result<LoanDetailDTO, NetworkProviderError> {
+    func getDetails(accountNumber: String, parameters: LoanDetailsParameters) throws -> Result<LoanDetailDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(),
-              let loan = try? self.dataProvider.getSessionData().globalPositionDTO?.loans?.filter({ $0.number == accountId }).first,
+              let loan = try? self.dataProvider.getSessionData().globalPositionDTO?.loans?.filter({ $0.number == accountNumber }).first,
               let systemId = loan.accountId?.systemId else {
             return .failure(NetworkProviderError.other)
         }
@@ -54,7 +54,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
         }
 
         let serviceName = LoanServiceType.detail.rawValue
-        let absoluteUrl = "\(baseUrl)\(self.detailsPath)\(accountId)/\(systemId)"
+        let absoluteUrl = "\(baseUrl)\(self.detailsPath)\(accountNumber)/\(systemId)"
         let result: Result<LoanDetailDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
