@@ -8,8 +8,16 @@ import SANPLLibrary
 
 public final class AmountAdapter {
     public func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
-        guard let amount = balance?.valueInBaseCurrency,
-              let currencyCode = balance?.currencyCode else {
+        return makeAmountDTO(value: balance?.value, currencyCode: balance?.currencyCode)
+    }
+
+    public func adaptBaseCurrencyBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
+        return makeAmountDTO(value: balance?.valueInBaseCurrency, currencyCode: balance?.currencyCode)
+    }
+    
+    private func makeAmountDTO(value: Double?, currencyCode: String?) -> AmountDTO? {
+        guard let amount = value,
+              let currencyCode = currencyCode else {
             return nil
         }
         let currencyType: CurrencyType = CurrencyType.parse(currencyCode)
