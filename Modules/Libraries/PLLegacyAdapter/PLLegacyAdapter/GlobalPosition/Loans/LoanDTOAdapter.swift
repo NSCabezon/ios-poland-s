@@ -17,6 +17,9 @@ final class LoanDTOAdapter {
         var amount = amountAdapter.adaptBalanceToAmount(plLoan.currentLimit)
         amount?.value?.negate()
         loanDTO.currentBalance = amount
+        var counterValueAmount = amountAdapter.adaptBalanceToCounterValueAmount(plLoan.currentLimit)
+        counterValueAmount?.value?.negate()
+        loanDTO.counterValueCurrentBalanceAmount = counterValueAmount
         loanDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plLoan.accountId?.id)
         return loanDTO
     }

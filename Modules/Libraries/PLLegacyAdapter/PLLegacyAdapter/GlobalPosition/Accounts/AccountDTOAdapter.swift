@@ -16,7 +16,9 @@ public final class AccountDTOAdapter {
 
         let amountAdapter = AmountAdapter()
         accountDTO.currentBalance = amountAdapter.adaptBalanceToAmount(plAccount.balance)
+        accountDTO.countervalueCurrentBalanceAmount = amountAdapter.adaptBalanceToCounterValueAmount(plAccount.balance)
         accountDTO.availableNoAutAmount = amountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
+        accountDTO.countervalueAvailableNoAutAmount = amountAdapter.adaptBalanceToCounterValueAmount(plAccount.availableFunds)
 
         accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.accountId?.id)
 

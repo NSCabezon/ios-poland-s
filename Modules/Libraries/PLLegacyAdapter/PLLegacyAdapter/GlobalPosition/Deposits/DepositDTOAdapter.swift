@@ -17,6 +17,7 @@ final class DepositDTOAdapter {
         depositDTO.contractDescription = plDeposit.number
         let amountAdapter = AmountAdapter()
         depositDTO.balance = amountAdapter.adaptBalanceToAmount(plDeposit.currentBalance)
+        depositDTO.countervalueCurrentBalance = amountAdapter.adaptBalanceToCounterValueAmount(plDeposit.currentBalance)
         depositDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plDeposit.accountId?.id)
         return depositDTO
     }

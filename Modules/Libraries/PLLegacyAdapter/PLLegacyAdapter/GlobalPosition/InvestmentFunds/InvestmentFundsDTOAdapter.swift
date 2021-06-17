@@ -15,6 +15,7 @@ final class InvestmentFundsDTOAdapter {
         fundDTO.currency = currencyDapter.adaptStringToCurrency(plInvestmentFunds.currentValue?.currencyCode)
         let amountAdapter = AmountAdapter()
         fundDTO.valueAmount = amountAdapter.adaptBalanceToAmount(plInvestmentFunds.currentValue)
+        fundDTO.countervalueAmount = amountAdapter.adaptBalanceToCounterValueAmount(plInvestmentFunds.currentValue)
         fundDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plInvestmentFunds.accountId?.id)
         return fundDTO
     }
