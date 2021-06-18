@@ -42,13 +42,13 @@ private extension PLPasswordEncryptionUseCaseTests {
     }
 
     // MARK: Handle useCase response
-    func passwordEncryptionUseCase(_ input: PLPasswordEncryptionUseCaseInput) throws -> UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput> {
+    func passwordEncryptionUseCase(_ input: PLPasswordEncryptionUseCaseInput) throws -> UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> {
             let useCase = PLPasswordEncryptionUseCase(dependenciesResolver: self.dependencies)
             let response = try useCase.executeUseCase(requestValues: input)
             return response
     }
 
-   func outputFrom(_ response: UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLPasswordEncryptionUseCaseErrorOutput>) -> PLPasswordEncryptionUseCaseOutput? {
+   func outputFrom(_ response: UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput>) -> PLPasswordEncryptionUseCaseOutput? {
             let output = try? response.getOkResult()
             return output
     }

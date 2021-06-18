@@ -9,6 +9,8 @@ import Repository
 import Models
 import PLCommons
 import Security
+import SwiftyRSA
+import CryptoSwift
 
 /**
     This use case encrypt a password plain text using a public key and returns a encrypted string
@@ -35,89 +37,35 @@ final class PLPasswordEncryptionUseCase: UseCase<PLPasswordEncryptionUseCaseInpu
 private extension PLPasswordEncryptionUseCase {
 
     func encryptPassword(password: String, encryptionKey: EncryptionKeyEntity) throws -> String {
-        guard let secPublicKey = self.getPublicKeySecurityRepresentation(encryptionKey.modulus, exponentStr: encryptionKey.exponent) else {
+        guard let secPublicKey = self.getPublicKeySecurityRepresentation(encryptionKey.modulus, exponentStr: encryptionKey.exponent, password: password) else {
             throw EncryptionError.publicKeyGenerationFailed
         }
-        if let encryptedBase64String = self.encrypt(string: password, publicKey: secPublicKey) {
-            return encryptedBase64String
+        if let encryptedString = self.encrypt(string: password, publicKey: secPublicKey) {
+            return encryptedString
         }
         throw EncryptionError.publicKeyGenerationFailed
     }
 
-    /// Process modulus and exponent to generate an Apple Security SecKey
-    func getPublicKeySecurityRepresentation(_ modulusStr: String, exponentStr: String) -> SecKey? {
-        let modulus = self.getByteArray(inputString: modulusStr)
-        let exponent: [UInt8] = self.getByteArray(inputString: exponentStr)
-
-        // encode the modulus and exponent as INTEGERs
-        var modulusEncoded: [UInt8] = [0x02]
-        modulusEncoded.append(contentsOf: lengthField(of: modulus))
-        modulusEncoded.append(contentsOf: modulus)
-
-        var exponentEncoded: [UInt8] = [0x02]
-        exponentEncoded.append(contentsOf: lengthField(of: exponent))
-        exponentEncoded.append(contentsOf: exponent)
-
-        // combine these INTEGERs to a SEQUENCE
-        var sequenceEncoded: [UInt8] = [0x30]
-        sequenceEncoded.append(contentsOf: lengthField(of: (modulusEncoded + exponentEncoded)))
-        sequenceEncoded.append(contentsOf: (modulusEncoded + exponentEncoded))
-
-        // Create the SecKey
-        let keyData = Data(sequenceEncoded)
-        let attributes: [String: Any] = [
-            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
-            kSecAttrKeyClass as String: kSecAttrKeyClassPublic,
-            kSecAttrKeySizeInBits as String: modulus.count * 8
-        ]
-        var error: Unmanaged<CFError>?
-        let publicKey = SecKeyCreateWithData(keyData as CFData, attributes as CFDictionary, &error)
-        //print("publicKey:", publicKey ?? "👎")
+    /// Process modulus and exponent to generate an pem with base 64 public key
+    func getPublicKeySecurityRepresentation(_ modulusStr: String, exponentStr: String, password: String) -> SecKey? {
+        guard let base64EncodedKey = RSAConverter.pemFrom(mod: modulusStr, exp: exponentStr),
+              let keyData = Data(base64Encoded: base64EncodedKey) else { return nil }
+        let publicKey = SecKeyCreateWithData(keyData as NSData, [
+            kSecAttrKeyType: kSecAttrKeyTypeRSA,
+            kSecAttrKeyClass: kSecAttrKeyClassPublic,
+        ] as NSDictionary, nil)
         return publicKey
-    }
-
-    // Aux method to calculate a byte array length
-    func lengthField(of valueField: [UInt8]) -> [UInt8] {
-        var count = valueField.count
-
-        if count < 128 {
-            return [ UInt8(count) ]
-        }
-
-        // The number of bytes needed to encode count.
-        let lengthBytesCount = Int((log2(Double(count)) / 8) + 1)
-
-        // The first byte in the length field encoding the number of remaining bytes.
-        let firstLengthFieldByte = UInt8(128 + lengthBytesCount)
-
-        var lengthField: [UInt8] = []
-        for _ in 0..<lengthBytesCount {
-
-            let lengthByte = UInt8(count & 0xff) // last 8 bits of count.
-            lengthField.insert(lengthByte, at: 0)
-            count = count >> 8 // Delete the last 8 bits of count.
-        }
-
-        // Include the first byte.
-        lengthField.insert(firstLengthFieldByte, at: 0)
-        return lengthField
-    }
-
-    // Convert a String to big endian byte array
-    func getByteArray(inputString: String) -> [UInt8] {
-        let bytes = inputString.utf8
-        return [UInt8](bytes)
     }
 
     /// Encrypt a plain text using a public key
     func encrypt(string: String, publicKey: SecKey) -> String? {
         let buffer = [UInt8](string.utf8)
-
         var keySize   = SecKeyGetBlockSize(publicKey)
         var keyBuffer = [UInt8](repeating: 0, count: keySize)
 
         guard SecKeyEncrypt(publicKey, SecPadding.PKCS1, buffer, buffer.count, &keyBuffer, &keySize) == errSecSuccess else { return nil }
-        return Data(bytes: keyBuffer, count: keySize).base64EncodedString()
+        let hexEncondedString = Data(bytes: keyBuffer, count: keySize).toHexString().lowercased()
+        return hexEncondedString
     }
 }
 

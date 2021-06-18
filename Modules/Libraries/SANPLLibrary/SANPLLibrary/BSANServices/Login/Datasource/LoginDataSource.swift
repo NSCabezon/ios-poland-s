@@ -245,7 +245,7 @@ private struct AuthenticateRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: AuthenticateParameters? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .none,
+         bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
          contentType: NetworkProviderContentType = .json,
          localServiceName: PLLocalServiceName,
