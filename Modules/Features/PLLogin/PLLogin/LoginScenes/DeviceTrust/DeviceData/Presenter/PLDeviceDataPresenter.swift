@@ -8,21 +8,15 @@
 import DomainCommon
 import Commons
 import Models
-import LoginCommon
-import SANPLLibrary
-import PLLegacyAdapter
 
 protocol PLDeviceDataPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLDeviceDataViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
-    func didSelectChooseEnvironment()
 }
 
 final class PLDeviceDataPresenter {
     weak var view: PLDeviceDataViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
@@ -42,25 +36,6 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
-    }
-
-    func didSelectChooseEnvironment() {
         // TODO
-    }
-}
-
-//MARK: - Private Methods
-private extension  PLDeviceDataPresenter {
-    var coordinator: PLDeviceDataCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLDeviceDataCoordinatorProtocol.self)
-    }
-
-    func doAuthenticateInit() {
-        self.loginManager?.doAuthenticateInit()
-    }
-
-    func doAuthenticate() {
-        self.loginManager?.doAuthenticate()
     }
 }

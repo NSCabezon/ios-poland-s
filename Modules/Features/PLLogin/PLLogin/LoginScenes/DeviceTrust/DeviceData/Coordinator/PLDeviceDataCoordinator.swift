@@ -8,8 +8,6 @@
 import Commons
 import UI
 import Models
-import SANLegacyLibrary
-import LoginCommon
 import CommonUseCase
 
 protocol PLDeviceDataCoordinatorProtocol {
@@ -56,23 +54,17 @@ private extension PLDeviceDataCoordinator {
             return presenter
         }
 
-        self.dependenciesEngine.register(for: PLDeviceDataViewProtocol.self) { dependenciesResolver in
-            return dependenciesResolver.resolve(for: PLDeviceDataViewController.self)
-        }
-
         self.dependenciesEngine.register(for: PLLoginCoordinatorProtocol.self) { _ in
             return self
         }
 
         self.dependenciesEngine.register(for: PLDeviceDataViewController.self) { resolver in
-            var presenter = resolver.resolve(for: PLDeviceDataPresenterProtocol.self)
+            let presenter = resolver.resolve(for: PLDeviceDataPresenterProtocol.self)
             let viewController = PLDeviceDataViewController(
                 nibName: "PLDeviceDataViewController",
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
-            presenter.view = viewController
-            presenter.loginManager = self.loginLayerManager
             return viewController
         }
 

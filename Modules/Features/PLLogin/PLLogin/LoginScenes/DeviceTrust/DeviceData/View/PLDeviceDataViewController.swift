@@ -5,321 +5,27 @@
 //  Created by Juan Sánchez Marín on 17/6/21.
 //
 
-/*import UIKit
-import UI
-import PLUI
-import Commons
-import IQKeyboardManagerSwift
-
-protocol PLDeviceDataViewProtocol: AnyObject, PLLoadingLoginViewCapable/*, ChangeEnvironmentViewCapable*/ {
-    func resetForm()
-    /*func setUserIdentifier(_ identifier: String)
-    func setUserImage(image: UIImage)*/
-}
-
-final class PLDeviceDataViewController: UIViewController {
-    let dependenciesResolver: DependenciesResolver
-    private let presenter: PLDeviceDataPresenterProtocol
-
-    /*@IBOutlet private weak var backgroundImageView: UIImageView!
-    @IBOutlet private weak var sanIconImageView: UIImageView!
-    @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: PLDocumentTextField!
-    @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
-    @IBOutlet weak var passwordTextField: PLPasswordTextField!
-    @IBOutlet weak var textfieldContainerContraintWithoutKeyboard: NSLayoutConstraint!
-    @IBOutlet weak var textfieldContainerContraintWithKeyboard: NSLayoutConstraint!
-    private let userImageView = UIImageView()
-    private var isShowingKeyboard = false {
-        didSet {
-            textfieldContainerContraintWithKeyboard.isActive = isShowingKeyboard
-            textfieldContainerContraintWithoutKeyboard.isActive = !isShowingKeyboard
-        }
-    }*/
-
-    private enum Constants {
-        static let bottomDistance: CGFloat = 32
-        static let animationDuration: TimeInterval = 0.2
-        static let userImageSize = CGSize(width: 56.0, height: 56.0)
-    }
-
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
-         presenter: PLDeviceDataPresenterProtocol) {
-        self.presenter = presenter
-        self.dependenciesResolver = dependenciesResolver
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-
-    override func viewDidLoad() {
-        self.presenter.viewDidLoad()
-        //self.setupViews()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.presenter.viewWillAppear()
-        //self.addKeyboardObserver()
-        self.setNavigationBar()
-    }
-
-    func setNavigationBar() {
-        NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-            .setRightActions(.menu(action: #selector(didSelectMenu)))
-            .build(on: self, with: nil)
-    }
-
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
-    @objc func didSelectMenu() {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
-    }
-}
-
-extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
-    /*func setUserIdentifier(_ identifier: String) {
-        self.documentTextField.setText(identifier)
-    }
-
-    func didUpdateEnvironments() {
-    }
-
-    func resetPassword() {
-        self.passwordTextField?.reset()
-    }*/
-
-    func resetForm() {
-        //self.passwordTextField?.setText("")
-    }
-
-    /*@IBAction func didSelectChooseEnvironment(_ sender: Any) {
-        self.chooseEnvironment()
-    }
-
-    func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
-    }
-
-    func setUserImage(image: UIImage) {
-        self.userImageView.image = image
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
-                self?.userImageView.alpha = 1.0
-            }
-        }
-    }*/
-}
-
-/*private extension PLDeviceDataViewController {
-    func isKeyboardDismisserAllowed() -> Bool {
-        return parent == nil || parent is UINavigationController
-    }
-
-    func setupViews() {
-        commonInit()
-    }
-
-    func commonInit() {
-        setupEnvironmentButton()
-        sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        configureRegardLabel()
-        configureBackground()
-        configureTextFields()
-        configureButtons()
-        configureUserImage()
-        configureKeyboard()
-        setAccessibility()
-    }
-
-    func configureRegardLabel() {
-        regardLabel.font = .santander(family: .text, type: .light, size: 40)
-        regardLabel.textColor = UIColor.Legacy.uiWhite
-        regardLabel.text = regardNow()
-    }
-
-    func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
-        backgroundImageView.contentMode = .scaleAspectFill
-    }
-
-    func configureTextFields() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        self.documentTextField.isUserInteractionEnabled = false
-        passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
-        passwordTextField?.delegate = self
-        passwordTextField?.textField?.delegate = self
-    }
-
-    func configureUserImage() {
-        self.userImageView.alpha = 0.0
-        self.userImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.userImageView.contentMode = .scaleAspectFit
-        self.userImageView.layer.cornerRadius = Constants.userImageSize.height/2.0
-        self.userImageView.layer.borderWidth = 2.0
-        self.userImageView.layer.borderColor = UIColor.white.cgColor
-        self.userImageView.layer.masksToBounds = true
-        self.view.addSubview(self.userImageView)
-        NSLayoutConstraint.activate([
-            self.userImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.userImageView.topAnchor.constraint(equalTo: self.regardLabel.bottomAnchor, constant: 15.0),
-            self.userImageView.heightAnchor.constraint(equalToConstant: Constants.userImageSize.height),
-            self.userImageView.widthAnchor.constraint(equalToConstant: Constants.userImageSize.width)
-        ])
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-
-    func configureButtons() {
-        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-    }
-
-    func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
-        passwordTextField?.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextPassword.rawValue
-    }
-
-    func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
-    }
-
-    func configureKeyboard() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
-    }
-
-    func addKeyboardObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    func removeKeyboardObserver() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc func loginButtonDidPressed() {
-        self.view.endEditing(true)
-        //self.presenter.login(password: passwordTextField?.textField?.text ?? "")
-    }
-
-    @objc func tooltipButtonDidPressed() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
-                    print("Action")
-                }), isCloseButtonAvailable: true)
-        dialog.show(in: self)
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard self.isShowingKeyboard == false else { return }
-        self.isShowingKeyboard = true
-
-        guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-        let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height - Constants.bottomDistance
-        if let loginButton = loginButton {
-            view.bringSubviewToFront(loginButton)
-        }
-        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
-            self?.regardLabel?.alpha = 0.0
-            self?.userImageView.alpha = 0.0
-            self?.view.layoutSubviews()
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.isShowingKeyboard = false
-        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
-        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
-            self?.regardLabel?.alpha = 1.0
-            self?.userImageView.alpha = self?.userImageView.image != nil ? 1.0 : 0.0
-            self?.view.layoutSubviews()
-        }
-    }
-
-    func recoverPasswordOrNewRegistration() {
-        //self.presenter.recoverPasswordOrNewRegistration()
-    }
-}
-
-extension PLDeviceDataViewController: PLPasswordTextFieldDelegate {
-    public func enterDidPressed() {
-        self.loginButtonDidPressed()
-    }
-}
-
-extension PLDeviceDataViewController: RememberMeViewDelegate {
-    func checkButtonPressed() {
-        self.view.endEditing(true)
-    }
-}
-
-extension PLDeviceDataViewController: UITextFieldDelegate {
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = self.passwordTextField.hiddenText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        guard updatedText.count <= self.passwordTextField.maxLength else { return false }
-        self.passwordTextField.hiddenText = updatedText
-        self.passwordTextField.updatePassword()
-        loginButton.isEnabled = updatedText.count >= 4
-
-        return false
-    }
-}*/
-*/
 import UIKit
 import UI
 import PLUI
 import Commons
-import IQKeyboardManagerSwift
 
-protocol PLDeviceDataViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
-    func resetForm()
-    func setUserIdentifier(_ identifier: String)
-    func setUserImage(image: UIImage)
-}
+protocol PLDeviceDataViewProtocol: AnyObject {}
 
 final class PLDeviceDataViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
     private let presenter: PLDeviceDataPresenterProtocol
 
-    @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
-    @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: PLDocumentTextField!
-    @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
-    @IBOutlet weak var passwordTextField: PLPasswordTextField!
-    @IBOutlet weak var textfieldContainerContraintWithoutKeyboard: NSLayoutConstraint!
-    @IBOutlet weak var textfieldContainerContraintWithKeyboard: NSLayoutConstraint!
-    private let userImageView = UIImageView()
-    private var isShowingKeyboard = false {
-        didSet {
-            textfieldContainerContraintWithKeyboard.isActive = isShowingKeyboard
-            textfieldContainerContraintWithoutKeyboard.isActive = !isShowingKeyboard
-        }
-    }
-
-    private enum Constants {
-        static let bottomDistance: CGFloat = 32
-        static let animationDuration: TimeInterval = 0.2
-        static let userImageSize = CGSize(width: 56.0, height: 56.0)
-    }
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var modelDeviceLabel: UILabel!
+    @IBOutlet private weak var modelDeviceValueLabel: UILabel!
+    @IBOutlet private weak var brandDeviceLabel: UILabel!
+    @IBOutlet private weak var brandDeviceValueLabel: UILabel!
+    @IBOutlet private weak var idDeviceLabel: UILabel!
+    @IBOutlet private weak var idDeviceValueLabel: UILabel!
+    @IBOutlet private weak var continueButton: UIButton!
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLDeviceDataPresenterProtocol) {
@@ -340,7 +46,6 @@ final class PLDeviceDataViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter.viewWillAppear()
-        self.addKeyboardObserver()
         self.setNavigationBar()
     }
 
@@ -359,201 +64,62 @@ final class PLDeviceDataViewController: UIViewController {
     }
 }
 
-extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
-    func setUserIdentifier(_ identifier: String) {
-        self.documentTextField.setText(identifier)
-    }
-
-    func didUpdateEnvironments() {
-    }
-
-    func resetPassword() {
-        self.passwordTextField?.reset()
-    }
-
-    func resetForm() {
-        self.passwordTextField?.setText("")
-    }
-
-    @IBAction func didSelectChooseEnvironment(_ sender: Any) {
-        self.chooseEnvironment()
-    }
-
-    func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
-    }
-
-    func setUserImage(image: UIImage) {
-        self.userImageView.image = image
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
-                self?.userImageView.alpha = 1.0
-            }
-        }
-    }
-}
-
 private extension PLDeviceDataViewController {
-    func isKeyboardDismisserAllowed() -> Bool {
-        return parent == nil || parent is UINavigationController
-    }
-
     func setupViews() {
         commonInit()
     }
 
     func commonInit() {
-        setupEnvironmentButton()
-        sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        configureRegardLabel()
-        configureBackground()
-        configureTextFields()
+        sanIconImageView?.image = Assets.image(named: "icnSanRedComplete")
+        configureLabels()
         configureButtons()
-        configureUserImage()
-        configureKeyboard()
         setAccessibility()
     }
 
-    func configureRegardLabel() {
-        regardLabel.font = .santander(family: .text, type: .light, size: 40)
-        regardLabel.textColor = UIColor.Legacy.uiWhite
-        regardLabel.text = regardNow()
-    }
-
-    func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
-        backgroundImageView.contentMode = .scaleAspectFill
-    }
-
-    func configureTextFields() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        self.documentTextField.isUserInteractionEnabled = false
-        passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
-        passwordTextField?.delegate = self
-        passwordTextField?.textField?.delegate = self
-    }
-
-    func configureUserImage() {
-        self.userImageView.alpha = 0.0
-        self.userImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.userImageView.contentMode = .scaleAspectFit
-        self.userImageView.layer.cornerRadius = Constants.userImageSize.height/2.0
-        self.userImageView.layer.borderWidth = 2.0
-        self.userImageView.layer.borderColor = UIColor.white.cgColor
-        self.userImageView.layer.masksToBounds = true
-        self.view.addSubview(self.userImageView)
-        NSLayoutConstraint.activate([
-            self.userImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.userImageView.topAnchor.constraint(equalTo: self.regardLabel.bottomAnchor, constant: 15.0),
-            self.userImageView.heightAnchor.constraint(equalToConstant: Constants.userImageSize.height),
-            self.userImageView.widthAnchor.constraint(equalToConstant: Constants.userImageSize.width)
-        ])
-    }
-
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
+    func configureLabels() {
+        titleLabel.font = .santander(family: .text, size: 48)
+        titleLabel.textColor = UIColor.Legacy.uiBlack
+        titleLabel.configureText(withKey: "pl_onboarding_title_appActiveHello", andConfiguration: nil)
+        titleLabel.numberOfLines = 3
+        descriptionLabel.font = .santander(family: .text, size: 24)
+        descriptionLabel.textColor = UIColor.Legacy.uiBlack
+        descriptionLabel.configureText(withKey: "pl_onboarding_text_appActiveWelcome", andConfiguration: nil)
+        descriptionLabel.numberOfLines = 5
+        modelDeviceLabel.font = .santander(family: .text, type: .light, size: 16)
+        modelDeviceLabel.textColor = UIColor.Legacy.uiBlack
+        modelDeviceLabel.text = localized("pl_onboarding_text_phoneModel")
+        modelDeviceValueLabel.font = .santander(family: .text, type: .bold, size: 16)
+        modelDeviceValueLabel.textColor = UIColor.Legacy.uiBlack
+        let deviceName = UIDevice.current.getDeviceName().components(separatedBy: " ")
+        modelDeviceValueLabel.text = deviceName[1]
+        brandDeviceLabel.font = .santander(family: .text, type: .light, size: 16)
+        brandDeviceLabel.textColor = UIColor.Legacy.uiBlack
+        brandDeviceLabel.text = localized("pl_onboarding_text_phoneBrand")
+        brandDeviceValueLabel.font = .santander(family: .text, type: .bold, size: 16)
+        brandDeviceValueLabel.textColor = UIColor.Legacy.uiBlack
+        brandDeviceValueLabel.text = UIDevice.current.model
+        idDeviceLabel.font = .santander(family: .text, type: .light, size: 16)
+        idDeviceLabel.textColor = UIColor.Legacy.uiBlack
+        idDeviceLabel.text = localized("pl_onboarding_text_phoneID")
+        idDeviceValueLabel.font = .santander(family: .text, type: .bold, size: 16)
+        idDeviceValueLabel.textColor = UIColor.Legacy.uiBlack
+        // TODO: idDeviceValueLabel.text = 
     }
 
     func configureButtons() {
-        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        continueButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+        continueButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
+        continueButton.backgroundColor = UIColor.santanderRed
+        continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
+        continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
+        continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
     }
 
     func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
-        passwordTextField?.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextPassword.rawValue
+        continueButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
     }
 
-    func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
-    }
-
-    func configureKeyboard() {
-        IQKeyboardManager.shared.enableAutoToolbar = false
-    }
-
-    func addKeyboardObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    func removeKeyboardObserver() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc func loginButtonDidPressed() {
-        self.view.endEditing(true)
-        //self.presenter.login(password: passwordTextField?.textField?.text ?? "")
-    }
-
-    @objc func tooltipButtonDidPressed() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("otp_text_popup_error")], image: "icnAlertError", actionButton: Dialog.Action(title: "generic_button_accept", style: .red, action: {
-                    print("Action")
-                }), isCloseButtonAvailable: true)
-        dialog.show(in: self)
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard self.isShowingKeyboard == false else { return }
-        self.isShowingKeyboard = true
-
-        guard  let keyboardFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-        let keyboardFrame: CGRect = keyboardFrameValue.cgRectValue
-        buttonBottomAnchorConstraint.constant = -keyboardFrame.height - Constants.bottomDistance
-        if let loginButton = loginButton {
-            view.bringSubviewToFront(loginButton)
-        }
-        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
-            self?.regardLabel?.alpha = 0.0
-            self?.userImageView.alpha = 0.0
-            self?.view.layoutSubviews()
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.isShowingKeyboard = false
-        buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
-        UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
-            self?.regardLabel?.alpha = 1.0
-            self?.userImageView.alpha = self?.userImageView.image != nil ? 1.0 : 0.0
-            self?.view.layoutSubviews()
-        }
-    }
-
-    func recoverPasswordOrNewRegistration() {
-        //self.presenter.recoverPasswordOrNewRegistration()
+    @objc func continueButtonDidPressed() {
+        //TODO:
     }
 }
-
-extension PLDeviceDataViewController: PLPasswordTextFieldDelegate {
-    public func enterDidPressed() {
-        self.loginButtonDidPressed()
-    }
-}
-
-extension PLDeviceDataViewController: RememberMeViewDelegate {
-    func checkButtonPressed() {
-        self.view.endEditing(true)
-    }
-}
-
-extension PLDeviceDataViewController: UITextFieldDelegate {
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = self.passwordTextField.hiddenText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-
-        guard updatedText.count <= self.passwordTextField.maxLength else { return false }
-        self.passwordTextField.hiddenText = updatedText
-        self.passwordTextField.updatePassword()
-        loginButton.isEnabled = updatedText.count >= 4
-
-        return false
-    }
-}
-
