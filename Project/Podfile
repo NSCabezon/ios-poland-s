@@ -83,7 +83,6 @@ def pl_libraries
 end
 
 def pl_thirdparty_dependencies
-  pod 'SwiftyRSA'
   pod 'SwiftLint', '0.39.2'
 end
 
