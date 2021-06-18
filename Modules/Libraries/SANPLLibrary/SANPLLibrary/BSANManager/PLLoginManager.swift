@@ -31,6 +31,7 @@ extension PLLoginManager: PLLoginManagerProtocol {
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
         self.setDemoModeIfNeeded(parameters.selectedId)
         let result = try loginDataSource.doLogin(parameters)
+        self.processLoginResult(parameters.selectedId, result: result)
         return result
     }
 
@@ -72,5 +73,11 @@ private extension PLLoginManager {
     func removeDemoModeIfNeeded() {
         guard let _ = self.bsanDataProvider.getDemoMode() else { return }
         self.bsanDataProvider.setDemoMode(false, nil)
+    }
+
+    private func processLoginResult(_ login: String, result: Result<LoginDTO, NetworkProviderError>) {
+        if case .success = result {
+            self.bsanDataProvider.createSessionData(UserDTO(loginType: .U, login: login))
+        }
     }
 }

@@ -5,7 +5,7 @@
         "shortcutsPG3":"[campaña_5, campaña_6]",
         "active": "true",
         "inactiveMessage": "Esta versión no está soportada actualmente. Por favor, actualice la aplicación en la App Store.",
-        "enabledCounterValue": "false",
+        "enabledCounterValue": "true",
         "enabledInsuranceDetail": "true",
         "enabledMoneyPlanPromotion": "true",
         "moneyPlanNativeMode": "true",

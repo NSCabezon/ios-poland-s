@@ -39,7 +39,6 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledGoToATMLocator: Bool = true
     let isEnabledGoToHelpCenter: Bool = true
     let isEnabledDigitalProfileView: Bool = true
-    let isEnabledPersonalInformation: Bool = true
     let isEnabledWorld123: Bool = false
     let isEnabledSendMoney: Bool = true
     let isEnabledBills: Bool = true
