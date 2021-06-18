@@ -13,11 +13,10 @@ final class LoanDTOAdapter {
         let currencyAdapter = CurrencyAdapter()
         loanDTO.currency = currencyAdapter.adaptStringToCurrency(plLoan.currentLimit?.currencyCode)
         loanDTO.contractDescription = plLoan.number
-        let amountAdapter = AmountAdapter()
-        var amount = amountAdapter.adaptBalanceToAmount(plLoan.currentLimit)
+        var amount = AmountAdapter.adaptBalanceToAmount(plLoan.currentLimit)
         amount?.value?.negate()
         loanDTO.currentBalance = amount
-        var counterValueAmount = amountAdapter.adaptBalanceToCounterValueAmount(plLoan.currentLimit)
+        var counterValueAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plLoan.currentLimit)
         counterValueAmount?.value?.negate()
         loanDTO.counterValueCurrentBalanceAmount = counterValueAmount
         loanDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plLoan.accountId?.id)

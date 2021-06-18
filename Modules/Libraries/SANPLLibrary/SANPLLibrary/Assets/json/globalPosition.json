@@ -228,9 +228,9 @@
                     "role": "OWNER",
                     "type": "MORTGAGE",
                     "currentLimit": {
-                        "value": 83109.06,
+                        "value": 1000.06,
                         "currencyCode": "PLN",
-                        "valueInBaseCurrency": 83109.06
+                        "valueInBaseCurrency": 1000.06
                     },
                     "lastUpdate": "2021-03-19"
                 }

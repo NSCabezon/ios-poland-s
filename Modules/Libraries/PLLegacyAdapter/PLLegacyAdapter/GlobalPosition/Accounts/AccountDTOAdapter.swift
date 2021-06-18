@@ -13,12 +13,10 @@ public final class AccountDTOAdapter {
         accountDTO.alias = plAccount.name?.userDefined
         accountDTO.tipoSituacionCto = plAccount.type
         accountDTO.iban = IBANDTOAdapter.adaptDisplayNumberToIBAN(plAccount.number)
-
-        let amountAdapter = AmountAdapter()
-        accountDTO.currentBalance = amountAdapter.adaptBalanceToAmount(plAccount.balance)
-        accountDTO.countervalueCurrentBalanceAmount = amountAdapter.adaptBalanceToCounterValueAmount(plAccount.balance)
-        accountDTO.availableNoAutAmount = amountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
-        accountDTO.countervalueAvailableNoAutAmount = amountAdapter.adaptBalanceToCounterValueAmount(plAccount.availableFunds)
+        accountDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plAccount.balance)
+        accountDTO.countervalueCurrentBalanceAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plAccount.balance)
+        accountDTO.availableNoAutAmount = AmountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
+        accountDTO.countervalueAvailableNoAutAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plAccount.availableFunds)
 
         accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.accountId?.id)
 
@@ -30,10 +28,8 @@ public final class AccountDTOAdapter {
         accountDetailDTO.mainItem = plAccount.defaultForPayments
         accountDetailDTO.description = plAccount.name?.description
         accountDetailDTO.accountId = plAccount.accountId?.id
-
-        let amountAdapter = AmountAdapter()
-        accountDetailDTO.mainBalance = amountAdapter.adaptBalanceToAmount(plAccount.balance)
-        accountDetailDTO.withholdingAmount = amountAdapter.adaptBalanceToAmount(plAccount.withholdingBalance)
+        accountDetailDTO.mainBalance = AmountAdapter.adaptBalanceToAmount(plAccount.balance)
+        accountDetailDTO.withholdingAmount = AmountAdapter.adaptBalanceToAmount(plAccount.withholdingBalance)
 
         return accountDetailDTO
     }
