@@ -9,6 +9,7 @@ public class SessionData: Codable {
     
     public var loggedUserDTO: UserDTO
     public var globalPositionDTO: GlobalPositionDTO?
+    public var loanInfo: LoanInfo = LoanInfo()
 
     public init(_ userDTO: UserDTO) {
         self.loggedUserDTO = userDTO
@@ -21,5 +22,5 @@ public class SessionData: Codable {
     public func updateSessionData(_ globalPositionDTO: GlobalPositionDTO) {
         self.globalPositionDTO = globalPositionDTO
     }
-    
+
 }

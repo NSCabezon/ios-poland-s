@@ -31,48 +31,45 @@ final class PLGlobalPositionManager {
 extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
     func getAllProducts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition()
-        processResult(result)
+        self.processResult(result)
         return result
     }
     
     func getAccounts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
-        processResult(result)
+        self.processResult(result)
         return result
     }
     
     func getCards() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
-        processResult(result)
+        self.processResult(result)
         return result
     }
 
     func getDeposits() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
-        processResult(result)
+        self.processResult(result)
         return result
     }
 
     func getInvestmentFunds() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
-        processResult(result)
+        self.processResult(result)
         return result
     }
 
     func getLoans() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
-        processResult(result)
+        self.processResult(result)
         return result
     }
 }
 
 private extension PLGlobalPositionManager {
     private func processResult(_ result: Result<GlobalPositionDTO, NetworkProviderError>) {
-        switch result {
-        case .failure(_):
-            return
-        case .success(let globalPositionDTO):
-            self.bsanDataProvider.store(globalPositionDTO)
+        if case .success(let globalPosition) = result {
+            self.bsanDataProvider.store(globalPosition)
         }
     }
 }

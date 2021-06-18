@@ -10,6 +10,7 @@ import SANLegacyLibrary
 final class PLTransfersManagerAdapter {}
  
 extension PLTransfersManagerAdapter: BSANTransfersManager {
+    
     func loadUsualTransfersOld() throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
@@ -253,6 +254,10 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     }
     
     func loadTransferSubTypeCommissions(originAccount: AccountDTO, destinationAccount: IBANDTO, amount: AmountDTO, beneficiary: String, concept: String) throws -> BSANResponse<TransferSubTypeCommissionDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
+    func validateCreateSepaPayee(alias: String, recipientType: FavoriteRecipientType?, beneficiary: String, iban: IBANDTO?, serviceType: String?, contractType: String?, accountIdType: String?, accountId: String?, streetName: String?, townName: String?, location: String?, country: String?, operationDate: Date?) throws -> BSANResponse<SignatureWithTokenDTO?> {
         return BSANErrorResponse(nil)
     }
 }
