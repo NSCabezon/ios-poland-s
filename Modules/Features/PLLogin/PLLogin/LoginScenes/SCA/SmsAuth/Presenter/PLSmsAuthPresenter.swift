@@ -12,7 +12,6 @@ import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
 import Security
-import SwiftyRSA
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
