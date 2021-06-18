@@ -2,9 +2,9 @@
 //  LoginModels.swift
 //  PLLogin
 
-public struct LoginChallengeEntity {
-    public let authorizationType: String?
-    public let value: String?
+public struct ChallengeEntity {
+    public let authorizationType: String
+    public let value: String
 }
 
 public struct TrustedComputerEntity {
@@ -23,22 +23,15 @@ public enum PasswordType {
 }
 
 struct SecondFactorDataEntity {
-    let defaultChallenge: DefaultChallengeEntity
+    let defaultChallenge: ChallengeEntity
 }
 
-public struct DefaultChallengeEntity: Encodable {
-    let authorizationType, value: String
-}
-
-public struct SecondFactorDataAuthenticateEntity {
-    let response: ResponseEntity
-}
-
-public struct ResponseEntity {
+public struct SecondFactorDataAuthenticationEntity {
     let challenge: ChallengeEntity
     let value: String
 }
 
-public struct ChallengeEntity {
-    let authorizationType, value: String
+public struct EncryptionKeyEntity {
+    let modulus: String
+    let exponent: String
 }

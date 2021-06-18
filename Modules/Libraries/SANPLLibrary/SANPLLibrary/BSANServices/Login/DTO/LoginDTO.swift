@@ -19,12 +19,12 @@ public struct LoginDTO: Codable {
 public struct SecondFactorDataDTO: Codable {
     public let finalState: String
     public let challenges: [ChallengeDTO]?
-    public let defaultChallenge: ChallengeDTO?
+    public let defaultChallenge: ChallengeDTO
     public let expired: Bool?
 }
 
 public struct ChallengeDTO: Codable {
-    public let authorizationType, value: String?
+    public let authorizationType, value: String
 }
 
 public struct TrustedComputerDataDTO: Codable {
