@@ -17,19 +17,23 @@
                     "type": "PERSONAL",
                     "balance": {
                         "value": -7658.14,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": -7658.14
                     },
                     "availableFunds": {
                         "value": 341.86,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 341.86
                     },
                     "withholdingBalance": {
                         "value": -7658.14,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": -7658.14
                     },
                     "overDraftLimit": {
-                        "value": 8000,
-                        "currencyCode": "PLN"
+                        "value": 8000.00,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 8000.00
                     },
                     "lastUpdate": "2021-03-31",
                     "bankId": 0,
@@ -50,19 +54,23 @@
                     "type": "CURRENCY",
                     "balance": {
                         "value": 606.73,
-                        "currencyCode": "EUR"
+                        "currencyCode": "EUR",
+                        "valueInBaseCurrency": 2541.86
                     },
                     "availableFunds": {
                         "value": 606.73,
-                        "currencyCode": "EUR"
+                        "currencyCode": "EUR",
+                        "valueInBaseCurrency": 2541.86
                     },
                     "withholdingBalance": {
                         "value": 0,
-                        "currencyCode": "EUR"
+                        "currencyCode": "EUR",
+                        "valueInBaseCurrency": 0
                     },
                     "overDraftLimit": {
                         "value": 0,
-                        "currencyCode": "EUR"
+                        "currencyCode": "EUR",
+                        "valueInBaseCurrency": 0
                     },
                     "lastUpdate": "2020-04-01",
                     "bankId": 0,
@@ -83,19 +91,23 @@
                     "type": "OTHER",
                     "balance": {
                         "value": 12.14,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 12.14
                     },
                     "availableFunds": {
                         "value": 12.12,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 12.12
                     },
                     "withholdingBalance": {
-                        "value": 0,
-                        "currencyCode": "PLN"
+                        "value": 0.02,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0.02
                     },
                     "overDraftLimit": {
                         "value": 0,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
                     },
                     "lastUpdate": "2021-04-11",
                     "bankId": 86,
@@ -116,19 +128,23 @@
                     "type": "CREDIT_CARD",
                     "balance": {
                         "value": 0,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
                     },
                     "availableFunds": {
-                        "value": 20000,
-                        "currencyCode": "PLN"
+                        "value": 20000.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 20000.0
                     },
                     "withholdingBalance": {
                         "value": 0,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
                     },
                     "overDraftLimit": {
-                        "value": 20000,
-                        "currencyCode": "PLN"
+                        "value": 20000.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 20000.0
                     },
                     "lastUpdate": "2019-03-01",
                     "bankId": 0,
@@ -139,7 +155,7 @@
                 {
                     "maskedPan": "412281_9173",
                     "virtualPan": "412281P002925860",
-                    "generalStatus": "INACTIVE",
+                    "generalStatus": "ACTIVE",
                     "cardStatus": "00",
                     "role": "OWNER",
                     "type": "CREDIT",
@@ -151,43 +167,19 @@
                     "relatedAccount": "29109014894000000112257854",
                     "expirationDate": "2023-02-23",
                     "availableBalance": {
-                        "value": 5000,
-                        "currencyCode": "PLN"
+                        "value": 5000.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5000.0
                     },
                     "creditLimit": {
                         "value": 5000,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5000
                     },
                     "disposedAmount": {
                         "value": 0,
-                        "currencyCode": "PLN"
-                    }
-                },
-                {
-                    "maskedPan": "412281_9174",
-                    "virtualPan": "412281P002925861",
-                    "generalStatus": "CANCELLED",
-                    "cardStatus": "00",
-                    "role": "OWNER",
-                    "type": "CREDIT",
-                    "productCode": "PLPV",
-                    "name": {
-                        "description": "Visa Platinum",
-                        "userDefined": "My Visa card"
-                    },
-                    "relatedAccount": "29109014894000000112257855",
-                    "expirationDate": "2023-08-23",
-                    "availableBalance": {
-                        "value": 5000,
-                        "currencyCode": "PLN"
-                    },
-                    "creditLimit": {
-                        "value": 5000,
-                        "currencyCode": "PLN"
-                    },
-                    "disposedAmount": {
-                        "value": 0,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
                     }
                 },
                 {
@@ -206,16 +198,41 @@
                     "expirationDate": "2024-04-30",
                     "availableBalance": {
                         "value": 341.86,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 341.86
                     },
                     "creditLimit": {
                         "value": 0,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
                     },
                     "disposedAmount": {
                         "value": 0,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
                     }
+                }
+            ],
+            "loans": [
+                {
+                    "number": "02109000200000000103417256",
+                    "accountId": {
+                        "id": "103417256",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Kredyt mieszkaniowy",
+                        "userDefined": "Mortgage"
+                    },
+                    "role": "OWNER",
+                    "type": "MORTGAGE",
+                    "currentLimit": {
+                        "value": 1000.06,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 1000.06
+                    },
+                    "lastUpdate": "2021-03-19"
                 }
             ],
             "deposits": [
@@ -233,8 +250,9 @@
                     "role": "OWNER",
                     "type": "SAVINGS",
                     "currentBalance": {
-                        "value": 5044,
-                        "currencyCode": "PLN"
+                        "value": 5044.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5044.0
                     },
                     "lastUpdate": "2021-03-21"
                 },
@@ -252,8 +270,9 @@
                     "role": "OWNER",
                     "type": "TERM",
                     "currentBalance": {
-                        "value": 5044,
-                        "currencyCode": "PLN"
+                        "value": 1044.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 1044.0
                     },
                     "lastUpdate": "2021-03-19"
                 }
@@ -274,29 +293,9 @@
                     "type": "INVESTMENT",
                     "currentValue": {
                         "value": 101811.3,
-                        "currencyCode": "PLN"
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 101811.3
                     }
-                }
-            ],
-            "loans": [
-                {
-                    "number": "02109000200000000103417256",
-                    "accountId": {
-                        "id": "103417256",
-                        "systemId": 3
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Kredyt mieszkaniowy",
-                        "userDefined": "Mortgage"
-                    },
-                    "role": "OWNER",
-                    "type": "MORTGAGE",
-                    "currentLimit": {
-                        "value": 1000.06,
-                        "currencyCode": "PLN"
-                    },
-                    "lastUpdate": "2021-03-19"
                 }
             ]
         }
