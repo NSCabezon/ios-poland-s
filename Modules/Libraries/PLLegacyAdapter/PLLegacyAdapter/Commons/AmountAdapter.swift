@@ -7,9 +7,17 @@ import SANLegacyLibrary
 import SANPLLibrary
 
 public final class AmountAdapter {
-    public func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
-        guard let amount = balance?.value,
-              let currencyCode = balance?.currencyCode else {
+    public static func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
+        return self.makeAmountDTO(value: balance?.value, currencyCode: balance?.currencyCode)
+    }
+
+    public static func adaptBalanceToCounterValueAmount(_ balance: BalanceDTO?) -> AmountDTO? {
+        return self.makeAmountDTO(value: balance?.valueInBaseCurrency, currencyCode: balance?.currencyCode)
+    }
+    
+    private static func makeAmountDTO(value: Double?, currencyCode: String?) -> AmountDTO? {
+        guard let amount = value,
+              let currencyCode = currencyCode else {
             return nil
         }
         let currencyType: CurrencyType = CurrencyType.parse(currencyCode)
