@@ -9,7 +9,6 @@ import Repository
 import Models
 import PLCommons
 import Security
-import SwiftyRSA
 import CryptoSwift
 
 /**
@@ -46,7 +45,7 @@ private extension PLPasswordEncryptionUseCase {
         throw EncryptionError.publicKeyGenerationFailed
     }
 
-    /// Process modulus and exponent to generate an pem with base 64 public key
+    /// Process modulus and exponent to generate an Apple Security SecKey
     func getPublicKeySecurityRepresentation(_ modulusStr: String, exponentStr: String, password: String) -> SecKey? {
         guard let base64EncodedKey = RSAConverter.pemFrom(mod: modulusStr, exp: exponentStr),
               let keyData = Data(base64Encoded: base64EncodedKey) else { return nil }
