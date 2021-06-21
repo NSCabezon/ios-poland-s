@@ -67,23 +67,6 @@ private extension PLDeviceDataCoordinator {
                 presenter: presenter)
             return viewController
         }
-
-        self.dependenciesEngine.register(for: PullOfferCandidatesUseCase.self) { resolver in
-           return PullOfferCandidatesUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: SetupPublicPullOffersSuperUseCase.self) { resolver in
-           return SetupPublicPullOffersSuperUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: SetupPullOffersUseCase.self) { resolver in
-           return SetupPullOffersUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: LoadPublicPullOffersVarsUseCase.self) { resolver in
-           return LoadPublicPullOffersVarsUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: CalculateLocationsUseCase.self) { resolver in
-           return CalculateLocationsUseCase(dependenciesResolver: resolver)
-        }
-        self.registerEnvironmentDependencies()
     }
 }
 
