@@ -62,4 +62,5 @@ class PLAppConfig: LocalAppConfig {
     let analysisAreaIsIncomeSelectable: Bool = true
     let analysisAreaIsExpensesSelectable: Bool = true
     let isAnalysisAreaHomeEnabled: Bool = false
+    let enablePGCardActivation: Bool = true
 }

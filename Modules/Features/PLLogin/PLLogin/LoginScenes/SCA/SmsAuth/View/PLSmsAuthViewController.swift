@@ -110,7 +110,7 @@ extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
     }
 
     func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
+
     }
 }
 
@@ -134,7 +134,6 @@ private extension PLSmsAuthViewController {
         configureSMSAuthView()
         configureKeyboard()
         setAccessibility()
-        authenticateInit()
         initTimeValidateSMS()
     }
 
@@ -165,7 +164,7 @@ private extension PLSmsAuthViewController {
     }
 
     func configureButtons() {
-        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(smsSendButtonDidPressed)))
     }
 
     func configureSMSAuthView() {
@@ -177,13 +176,10 @@ private extension PLSmsAuthViewController {
         ])
     }
 
-    func authenticateInit() {
-        self.presenter.authenticateInit()
-    }
 
     func configureTooltip() {
         let dialog = Dialog(title: "", items: [Dialog.Item.text("pl_login_alert_expiredSignature")], image: nil, actionButton: Dialog.Action(title: "generic_button_understand", style: .red, action: {
-            self.presenter.goToUnrememberedLogindScene()
+            self.presenter.didSelectLoginRestartAfterTimeOut()
                 }), isCloseButtonAvailable: false)
         dialog.show(in: self)
     }
@@ -213,16 +209,21 @@ private extension PLSmsAuthViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    @objc func loginButtonDidPressed() {
+    @objc func smsSendButtonDidPressed() {
         self.view.endEditing(true)
-        if finishedTimeValidateSMS {
+        guard let smsCode = self.smsInputCodeView.fulfilledText() else {
+            // TODO: return error. smsCode can't be empty
+            return
+        }
+		if finishedTimeValidateSMS {
             configureTooltip()
         }
         else {
-            self.presenter.authenticate()
+            self.presenter.authenticate(smsCode: smsCode)
             // TODO: PG Remove the following lines: 2
-            /*let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-            coordinatorDelegate.goToPrivate(.classic)*/
+            let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+            coordinatorDelegate.goToPrivate(.classic)
+            //self.presenter.goToDeviceTrustDeviceData()
         }
     }
 
@@ -256,15 +257,11 @@ private extension PLSmsAuthViewController {
             self?.view.layoutSubviews()
         }
     }
-
-    func recoverPasswordOrNewRegistration() {
-        self.presenter.recoverPasswordOrNewRegistration()
-    }
 }
 
 extension PLSmsAuthViewController: PasswordPTTextFieldDelegate {
     public func enterDidPressed() {
-        self.loginButtonDidPressed()
+        self.smsSendButtonDidPressed()
     }
 }
 

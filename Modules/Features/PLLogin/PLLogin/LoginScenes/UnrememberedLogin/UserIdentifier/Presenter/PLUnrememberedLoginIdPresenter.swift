@@ -83,17 +83,12 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
                     self?.goToPasswordScene(configuration)
                 }
             })
-
-        case .loginSuccess:
-            break // TODO
-        case .noConnection:
-            break // TODO
-        case .loginError:
-            break // TODO
         case .loginErrorAccountTemporaryBlocked:
             self.view?.dismissLoading(completion: { [weak self] in
                 self?.view?.showTooltipErrorAccountTemporaryBlocked()
             })
+        default:
+            break // TODO
         }
     }
 

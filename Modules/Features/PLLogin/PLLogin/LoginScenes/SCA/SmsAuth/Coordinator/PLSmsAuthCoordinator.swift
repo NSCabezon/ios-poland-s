@@ -15,7 +15,7 @@ import CommonUseCase
 protocol PLSmsAuthCoordinatorProtocol {
     func goToGlobalPositionScene()
     func goToUnrememberedLogindScene()
-    func goToDeviceData()
+    func goToDeviceTrustDeviceData()
 }
 
 final class PLSmsAuthCoordinator: ModuleCoordinator {
@@ -51,7 +51,7 @@ extension PLSmsAuthCoordinator: PLSmsAuthCoordinatorProtocol {
         self.backToLogin()
     }
 
-    func goToDeviceData() {
+    func goToDeviceTrustDeviceData() {
         self.deviceDataCoordinator.start()
     }
 }
@@ -65,10 +65,6 @@ private extension PLSmsAuthCoordinator {
 
         self.dependenciesEngine.register(for: PLSmsAuthCoordinatorProtocol.self) { _ in
             return self
-        }
-
-        self.dependenciesEngine.register(for: PLLoginPresenterLayerProtocol.self) { _ in
-            return presenter
         }
 
         self.dependenciesEngine.register(for: PLSmsAuthPresenterProtocol.self) { resolver in
@@ -95,20 +91,17 @@ private extension PLSmsAuthCoordinator {
             return viewController
         }
 
-        self.dependenciesEngine.register(for: PullOfferCandidatesUseCase.self) { resolver in
-           return PullOfferCandidatesUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
+           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: SetupPublicPullOffersSuperUseCase.self) { resolver in
-           return SetupPublicPullOffersSuperUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+           return PLAuthenticateUseCase(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: SetupPullOffersUseCase.self) { resolver in
-           return SetupPullOffersUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
+           return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: LoadPublicPullOffersVarsUseCase.self) { resolver in
-           return LoadPublicPullOffersVarsUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: CalculateLocationsUseCase.self) { resolver in
-           return CalculateLocationsUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
+           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
         }
         self.registerEnvironmentDependencies()
     }
