@@ -31,8 +31,12 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
     func getGlobalPosition() throws -> BSANResponse<SANLegacyLibrary.GlobalPositionDTO> {
  
         let globalPosition = try self.globalPositionManager.getAllProducts().get()
-        
-        let adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(globalPosition)
+        guard let authCredentials = try? self.bsanDataProvider.getAuthCredentials() else {
+            return BSANErrorResponse(nil)
+        }
+
+        let clientPersonCode = String(authCredentials.authenticate?.userId ?? 0)
+        let adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(globalPosition, clientPersonCode: clientPersonCode)
         return BSANOkResponse(adaptedGlobalPosition)
     }
 }

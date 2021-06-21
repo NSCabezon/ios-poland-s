@@ -30,7 +30,16 @@ public class BSANDataProvider {
     }
     
     // TODO: Fill with AuthModel
+    public func storeAuthCredentials(_ authCredentials: AuthCredentials) {
+        objc_sync_enter(self.dataRepository)
+        self.dataRepository.store(authCredentials)
+        objc_sync_exit(self.dataRepository)
+    }
+
     public func getAuthCredentials() throws -> AuthCredentials {
+        if let authCredentials = self.dataRepository.get(AuthCredentials.self) {
+            return authCredentials
+        }
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
 

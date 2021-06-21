@@ -36,13 +36,10 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
         let result = try loginDataSource.getPubKey()
-        switch result {
-        case .success(let pubKeyDTO):
-            bsanDataProvider.storePublicKey(pubKeyDTO)
-            return .success(pubKeyDTO)
-        case .failure(let error):
-            return .failure(error)
+        if case .success(let pubKeyDTO) = result {
+            self.bsanDataProvider.storePublicKey(pubKeyDTO)
         }
+        return result
     }
 
     public func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
@@ -52,6 +49,7 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError> {
         let result = try loginDataSource.doAuthenticate(parameters)
+        self.processAuthenticateResult(result)
         return result
     }
 }
@@ -59,13 +57,13 @@ extension PLLoginManager: PLLoginManagerProtocol {
 // MARK: - Private Methods
 
 private extension PLLoginManager {
-    func setDemoModeIfNeeded(_ user: String) {
+    private func setDemoModeIfNeeded(_ user: String) {
         guard self.demoInterpreter.isDemoModeAvailable,
             self.demoInterpreter.isDemoUser(userName: user) else { return }
         self.bsanDataProvider.setDemoMode(true, user)
     }
 
-    func removeDemoModeIfNeeded() {
+    private func removeDemoModeIfNeeded() {
         guard let _ = self.bsanDataProvider.getDemoMode() else { return }
         self.bsanDataProvider.setDemoMode(false, nil)
     }
@@ -73,6 +71,16 @@ private extension PLLoginManager {
     private func processLoginResult(_ login: String, result: Result<LoginDTO, NetworkProviderError>) {
         if case .success = result {
             self.bsanDataProvider.createSessionData(UserDTO(loginType: .U, login: login))
+        }
+    }
+
+    private func processAuthenticateResult(_ result: Result<AuthenticateDTO, NetworkProviderError>) {
+        if case .success(let authenticate) = result {
+            guard let login = try? self.bsanDataProvider.getSessionData().loggedUserDTO.login else {
+                return
+            }
+            let authCredentials = AuthCredentials(login: login, authenticate: authenticate)
+            self.bsanDataProvider.storeAuthCredentials(authCredentials)
         }
     }
 }
