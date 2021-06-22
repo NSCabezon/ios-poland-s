@@ -125,7 +125,7 @@
 		"obtainKeysUrl": "https://cmc.bancosantander.es/ALTCMC_PHOENIX/public/inicio",
 		"becomeClientUrl": "https://online.bancosantander.es/files/webapp-contratacion/",
 		"webMovilUrl": "https://www.bsan.mobi",
-		"disableOnboarding": "false",
+		"disableOnboarding": "true",
 		"enableEasyPayCards": "true",
 		"easyPayCardsModeClassic": "true",
 		"enabledEnvioDineroPGClasica": "false",
