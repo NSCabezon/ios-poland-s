@@ -173,6 +173,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        loginButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
     }
     
     func setAccessibility() {
