@@ -28,9 +28,9 @@ final class LoanDataSource {
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    private let detailsPath = "/api/ceke/accounts/"
-    private let transactionsPath = "/api/history/"
-    private let installmentsPath = "/api/ceke/accounts/loan/installments/"
+    private let detailsPath = "/api/ceke/accounts"
+    private let transactionsPath = "/api/history"
+    private let installmentsPath = "/api/ceke/accounts/loan/installments"
     private var headers: [String: String] = [:]
     private var queryParams: [String: String]? = nil
     
