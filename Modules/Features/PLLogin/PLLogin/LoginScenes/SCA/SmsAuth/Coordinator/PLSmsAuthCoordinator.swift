@@ -15,11 +15,13 @@ import CommonUseCase
 protocol PLSmsAuthCoordinatorProtocol {
     func goToGlobalPositionScene()
     func goToUnrememberedLogindScene()
+    func goToDeviceTrustDeviceData()
 }
 
 final class PLSmsAuthCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let deviceDataCoordinator: PLDeviceDataCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -27,6 +29,10 @@ final class PLSmsAuthCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.deviceDataCoordinator = PLDeviceDataCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
         self.setupDependencies()
     }
 
@@ -43,6 +49,10 @@ extension PLSmsAuthCoordinator: PLSmsAuthCoordinatorProtocol {
 
     func goToUnrememberedLogindScene() {
         self.backToLogin()
+    }
+
+    func goToDeviceTrustDeviceData() {
+        self.deviceDataCoordinator.start()
     }
 }
 
