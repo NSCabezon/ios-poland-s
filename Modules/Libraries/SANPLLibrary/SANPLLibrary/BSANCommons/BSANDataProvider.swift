@@ -29,7 +29,6 @@ public class BSANDataProvider {
         throw BSANIllegalStateException("BSANEnvironment is nil in DataRepository")
     }
     
-    // TODO: Fill with AuthModel
     public func storeAuthCredentials(_ authCredentials: AuthCredentials) {
         objc_sync_enter(self.dataRepository)
         self.dataRepository.store(authCredentials)

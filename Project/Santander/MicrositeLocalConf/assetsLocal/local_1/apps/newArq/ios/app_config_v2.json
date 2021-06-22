@@ -124,7 +124,7 @@
         "billsHomePensionUrl": "https://www.bancosantander.es",
         "billsHomeUnemploymentBenefit": "https://www.bancosantander.es",
         "timerLoadingTips": "8",
-        "disableOnboarding": "false",
+        "disableOnboarding": "true",
         "onboardingVersion": "1",
         "enabledAnalysisZoneMovements": "true",
         "enabledAnalysisZoneFinancialHealth": "true",

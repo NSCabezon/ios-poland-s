@@ -84,7 +84,9 @@ private extension PLLoginManager {
             guard let login = try? self.bsanDataProvider.getSessionData().loggedUserDTO.login else {
                 return
             }
-            let authCredentials = AuthCredentials(login: login, authenticate: authenticate)
+            let accessTokenCredentials = AccessTokenCredentials(type: authenticate.type, accessToken: authenticate.access_token, expires: authenticate.expires)
+            let trustedDeviceTokenCredentials = TrustedDeviceTokenCredentials(trustedDeviceToken: authenticate.trusted_device_token, clientId: authenticate.client_id, expiresIn: authenticate.expires_in)
+            let authCredentials = AuthCredentials(login: login, userId: authenticate.userId, userCif: authenticate.userCif, companyContext: authenticate.companyContext, accessTokenCredentials: accessTokenCredentials, trustedDeviceTokenCredentials: trustedDeviceTokenCredentials)
             self.bsanDataProvider.storeAuthCredentials(authCredentials)
         }
     }

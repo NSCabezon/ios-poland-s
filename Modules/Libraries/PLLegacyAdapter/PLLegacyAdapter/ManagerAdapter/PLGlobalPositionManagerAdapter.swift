@@ -35,7 +35,7 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
             return BSANErrorResponse(nil)
         }
 
-        let clientPersonCode = String(authCredentials.authenticate?.userId ?? 0)
+        let clientPersonCode = String(authCredentials.userId ?? 0)
         let adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(globalPosition, clientPersonCode: clientPersonCode)
         return BSANOkResponse(adaptedGlobalPosition)
     }
