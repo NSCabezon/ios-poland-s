@@ -78,7 +78,7 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
     let bodyEncoding: NetworkProviderBodyEncoding?
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
     
     init(serviceName: String,
          serviceUrl: String,
@@ -89,8 +89,7 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType,
-         localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
+         localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
@@ -100,6 +99,5 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
         self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
-        self.authorization = authorization
     }
 }
