@@ -90,7 +90,7 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType,
          localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
+         authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
