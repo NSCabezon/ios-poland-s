@@ -20,6 +20,7 @@ protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     func viewWillAppear()
     func authenticate(smsCode: String)
     func didSelectLoginRestartAfterTimeOut()
+    func goToDeviceTrustDeviceData()
 }
 
 enum EncryptionError: Error {
@@ -83,6 +84,10 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
 
     func didSelectChooseEnvironment() {
         // TODO
+    }
+
+    func goToDeviceTrustDeviceData() {
+        self.coordinator.goToDeviceTrustDeviceData()
     }
 }
 
