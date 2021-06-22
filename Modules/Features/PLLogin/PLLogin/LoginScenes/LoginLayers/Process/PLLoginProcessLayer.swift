@@ -13,8 +13,8 @@ protocol PLLoginProcessLayerProtocol {
     func setDelegate(_ delegate: PLLoginProcessLayerEventDelegate)
     func doLogin(with loginType: LoginType)
     func getPublicKey()
-    func doAuthenticateInit()
-    func doAuthenticate()
+    func doAuthenticateInit(userId: String, challenge: ChallengeEntity)
+    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity)
 }
 
 public class PLLoginProcessLayer {
@@ -72,26 +72,24 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
             }
     }
 
-    func doAuthenticateInit() {
-        let caseInput: PLAuthenticateInitUseCaseInput = PLAuthenticateInitUseCaseInput(userId: "36548382", secondFactorData: SecondFactorDataEntity(defaultChallenge: DefaultChallengeEntity(authorizationType: "SMS_CODE", value: "48280441")))
+    func doAuthenticateInit(userId: String, challenge: ChallengeEntity) {
+        let caseInput: PLAuthenticateInitUseCaseInput = PLAuthenticateInitUseCaseInput(userId: userId, challenge: challenge)
         Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { _ in
-                // Nothing to do
+            .onSuccess { [weak self] _ in
+                self?.delegate?.handle(event: .authenticateInitSuccess)
             }
             .onError { error in
                 // TODO: Process error: without pub key we can't process SMS SCA
             }
     }
 
-    func doAuthenticate() {
-        let encryptedPassword = "7aa74fc9feda95f7c4e8ccc91f6e6e87de15107f272245716f1a5ebd003fd41295a54d3d607ecad99b7969818c5afdc675fb8a989c322a8dfe4f6ba94b188a5272aaa4547dff7e55f74be9774f4ba217e3d8e0fbbf341c18a82310d5c5ac26abf7eb62f73cd07d957f46f44bd716bd985a917af74e13ecd384fab4794382ebffa0426eced9e6af46d9f08b8b258637d20e4834cfde6b0c760e494efbf4026b62c93ae3aa76c943714b4625545e803c9c9b8c1bc01a2ebc4a991d8f83086e40f841423ae471c6f9378fb8139987467a9d708034c451d69ddf3bb614e07060b4a7ed9a5364d92fc1d3c2a135ed02c8296653a74414fabd5bb3c84f5006984c733d"
-
-        let caseInput: PLAuthenticateUseCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPassword, userId: "36548382", secondFactorData: SecondFactorDataAuthenticateEntity(response: ResponseEntity(challenge: ChallengeEntity(authorizationType: "SMS_CODE", value: "48280441"), value: "217305")))
+    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity) {
+        let caseInput: PLAuthenticateUseCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPassword, userId: userId, secondFactorData: secondFactorData)
         Scenario(useCase: self.authenticateUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { _ in
-                // Nothing to do
+            .onSuccess { [weak self] _ in
+                self?.delegate?.handle(event: .authenticateSuccess)
             }
             .onError { error in
                 // TODO: Process error: without pub key we can't process SMS SCA
@@ -124,7 +122,7 @@ private extension PLLoginProcessLayer {
                 }
                 let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
                                                                    passwordType: passwordType,
-                                                                   challenge: LoginChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
+                                                                   challenge: ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
                                                                    loginImageData: output.loginImage, password: nil, secondFactorDataFinalState: output.secondFactorFinalState)
                 self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }

@@ -7,7 +7,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 
 def example_app_common
-  pod 'QuickSetup', :path => '../../../../santander-one/QuickSetup'
   pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
   pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
@@ -25,7 +24,6 @@ def core_dependencies
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
-  pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
 end
