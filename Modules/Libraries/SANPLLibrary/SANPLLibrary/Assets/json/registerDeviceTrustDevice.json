@@ -1,0 +1,11 @@
+{
+    "12345678Z": {
+        "0": {
+            "trustedDeviceState": "REGISTERED",
+            "trustedDeviceId": 2324,
+            "userId": 33355343,
+            "trustedDeviceTimestamp": 12121212,
+            "ivrInputCode": 23
+        }
+    }
+}

@@ -70,10 +70,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
 
         var maskValue: Int = 0
         if case .masked(mask: let value) = self.loginConfiguration.passwordType {
-            maskValue = value
+            maskValue = value + 1048576
         }
 
-        let binaryString = String(maskValue, radix: 2)
+        let binaryString = String(maskValue, radix: 2).reversed()
         var pos = 0
         let requestedPositions: [Int] = binaryString.compactMap {
             let value = Int(String($0)) ?? 0
