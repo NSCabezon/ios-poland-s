@@ -165,6 +165,7 @@ private extension PLSmsAuthViewController {
 
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(smsSendButtonDidPressed)))
+        loginButton.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
     }
 
     func configureSMSAuthView() {
