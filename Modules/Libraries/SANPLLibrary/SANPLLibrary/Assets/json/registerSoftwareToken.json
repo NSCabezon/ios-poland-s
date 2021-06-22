@@ -1,0 +1,17 @@
+{
+    "12345678Z": {
+        "0": {
+            "tokens": [
+                {
+                    "id": "516194",
+                    "name": "06783937046561403484",
+                    "key": "h4qZfaD68XPpRrAfFSxov4FACsyHpydXnbkZFW3A0fkXCRICWDJcCQ/GIxar7pl9KMEDda2swYUOkIehBgbaPpPj6W9ZNNmqkEBz6sJMots8ck4QvFKyxdNm5bLXKlw9qoUSs5FBQLO0y2CfIq+vt5KChMk1EaDnP+gHkAaXhus=",
+                    "timestamp": 640916189,
+                    "type": "PIN",
+                    "state": "PENDING"
+                }
+            ],
+            "trustedDeviceState": "REGISTERED"
+        }
+    }
+}
