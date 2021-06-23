@@ -25,7 +25,7 @@ final class GlobalPositionDataSource {
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    private let basePath = "/api/ceke"
+    private let basePath = "/api"
     private var headers: [String: String] = [:]
     private var queryParams: [String: String]? = nil
     
@@ -75,31 +75,27 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
     let queryParams: [String: String]?
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .none
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
     
     init(serviceName: String,
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: Encodable? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .form,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType,
-         localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = .oauth) {
+         localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
         self.formData = body
-        self.bodyEncoding = bodyEncoding
         self.headers = headers
         self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
-        self.authorization = authorization
     }
 }
