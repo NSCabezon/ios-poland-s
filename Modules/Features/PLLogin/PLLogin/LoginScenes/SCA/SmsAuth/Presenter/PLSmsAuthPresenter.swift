@@ -59,6 +59,10 @@ final class PLSmsAuthPresenter {
     private var encryptPasswordUseCase: PLPasswordEncryptionUseCase {
         self.dependenciesResolver.resolve(for: PLPasswordEncryptionUseCase.self)
     }
+
+    private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
+    }
     
 }
 
@@ -133,12 +137,30 @@ private extension  PLSmsAuthPresenter {
             })
             .onSuccess({ [weak self] _ in
                 guard let self = self else { return }
-                let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-                coordinatorDelegate.goToPrivate(.classic)
+                self.getGlobalPositionOption()
             })
             .onError { error in
                 // TODO: Present errorsecondFactorData
                 os_log("❌ [LOGIN][Authenticate] Login authorization did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
             }
+    }
+
+    private func getGlobalPositionOption() {
+        Scenario(useCase: self.globalPositionOptionUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess( { [weak self] output in
+                guard let self = self else { return }
+                self.goToGlobalPosition(output.globalPositionOption)
+            })
+            .onError { [weak self] _ in
+                guard let self = self else { return }
+                self.goToGlobalPosition(.classic)
+            }
+    }
+
+    private func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
+        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+        self.view?.dismissLoading()
+        coordinatorDelegate.goToPrivate(option)
     }
 }
