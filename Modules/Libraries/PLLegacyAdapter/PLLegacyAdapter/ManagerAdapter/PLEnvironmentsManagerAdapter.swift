@@ -6,87 +6,90 @@
 //
 
 import SANLegacyLibrary
-//import SANPTLibrary
+import SANPLLibrary
 
 final class PLEnvironmentsManagerAdapter {
     
-//    private let hostProvider: PTHostProviderProtocol
-//    private let dataProvider: BSANDataProvider
-//
-//    public init(bsanHostProvider: PTHostProviderProtocol, dataProvider: BSANDataProvider) {
-//        self.hostProvider = bsanHostProvider
-//        self.dataProvider = dataProvider
-//    }
+    private let hostProvider: PLHostProviderProtocol
+    private let dataProvider: BSANDataProvider
+
+    public init(bsanHostProvider: PLHostProviderProtocol, dataProvider: BSANDataProvider) {
+        self.hostProvider = bsanHostProvider
+        self.dataProvider = dataProvider
+        self.initEnvironment()
+    }
 }
 
 extension PLEnvironmentsManagerAdapter: BSANEnvironmentsManager {
     func getEnvironments() -> BSANResponse<[BSANEnvironmentDTO]> {
-//        let ptEnvironments = hostProvider.getEnvironments()
-//        let coreEnvironments = getCoreEnvironments(from: ptEnvironments)
-//        return BSANOkResponse(coreEnvironments)
-        return BSANErrorResponse(nil)
+        let plEnvironments = hostProvider.getEnvironments()
+        let coreEnvironments = getCoreEnvironments(from: plEnvironments)
+        return BSANOkResponse(coreEnvironments)
     }
     
     func getCurrentEnvironment() -> BSANResponse<BSANEnvironmentDTO> {
-//        if let currentEnvironment = try? dataProvider.getEnvironment() {
-//            return BSANOkResponse(self.getCoreEnvironment(from: currentEnvironment))
-//        } else {
-//            return BSANErrorResponse(nil)
-//        }
-        return BSANErrorResponse(nil)
+        if let currentEnvironment = try? dataProvider.getEnvironment() {
+            return BSANOkResponse(self.getCoreEnvironment(from: currentEnvironment))
+        } else {
+            return BSANErrorResponse(nil)
+        }
     }
     
     func setEnvironment(bsanEnvironment: BSANEnvironmentDTO) -> BSANResponse<Void> {
-//        guard let ptEnvironment = try? getPTEnvironment(from: bsanEnvironment) else { return BSANErrorResponse(nil)}
-//        dataProvider.storeEnviroment(ptEnvironment)
+        guard let plEnvironment = try? getPLEnvironment(from: bsanEnvironment) else { return BSANErrorResponse(nil)}
+        dataProvider.storeEnviroment(plEnvironment)
         return BSANOkResponse(nil)
     }
     
     func setEnvironment(bsanEnvironmentName: String) -> BSANResponse<Void> {
-//        let environments = hostProvider.getEnvironments()
-//        guard let environment = (environments.first{ $0.name == bsanEnvironmentName }) else { return BSANErrorResponse(nil) }
-//        dataProvider.storeEnviroment(environment)
+        let environments = hostProvider.getEnvironments()
+        guard let environment = (environments.first{ $0.name == bsanEnvironmentName }) else { return BSANErrorResponse(nil) }
+        dataProvider.storeEnviroment(environment)
         return BSANOkResponse(nil)
     }
 }
 
 ////MARK: - Private Methods
-//private extension PTEnvironmentsManagerApadater {
-//    
-//    func getCoreEnvironments(from ptEnvironments: [BSANPTEnvironmentDTO]) -> [BSANEnvironmentDTO] {
-//        return ptEnvironments.map{ ptEnvironment in
-//            self.getCoreEnvironment(from: ptEnvironment)
-//        }
-//    }
-//    
-//    func getCoreEnvironment(from ptEnvironment: BSANPTEnvironmentDTO) -> BSANEnvironmentDTO {
-//        BSANEnvironmentDTO(urlBase: ptEnvironment.urlBase,
-//                           isHttps: ptEnvironment.isHttps,
-//                           name: ptEnvironment.name,
-//                           urlNetInsight: "",
-//                           urlSocius: ptEnvironment.urlNewRegistration,
-//                           urlBizumEnrollment: "",
-//                           urlBizumWeb: nil,
-//                           urlGetCMC: nil,
-//                           urlGetNewPassword: nil,
-//                           urlForgotPassword: nil,
-//                           urlRestBase: nil,
-//                           oauthClientId: "",
-//                           oauthClientSecret: "",
-//                           microURL: nil,
-//                           click2CallURL: nil,
-//                           branchLocatorGlobile: nil,
-//                           insurancesPass2Url: nil,
-//                           pass2oauthClientId: "",
-//                           pass2oauthClientSecret: "",
-//                           ecommerceUrl: "")
-//    }
-//    
-//    func getPTEnvironment(from coreEnvironment: BSANEnvironmentDTO) throws -> BSANPTEnvironmentDTO {
-//        return try BSANPTEnvironmentDTO(isHttps: coreEnvironment.isHttps,
-//                                        name: coreEnvironment.name,
-//                                        urlBase: coreEnvironment.urlBase,
-//                                        clientId: dataProvider.getEnvironment().clientId,
-//                                        urlNewRegistration: coreEnvironment.urlSocius)
-//    }
-//}
+private extension PLEnvironmentsManagerAdapter {
+
+    func getCoreEnvironments(from plEnvironments: [BSANPLEnvironmentDTO]) -> [BSANEnvironmentDTO] {
+        return plEnvironments.map{ plEnvironment in
+            self.getCoreEnvironment(from: plEnvironment)
+        }
+    }
+
+    func getCoreEnvironment(from plEnvironment: BSANPLEnvironmentDTO) -> BSANEnvironmentDTO {
+        BSANEnvironmentDTO(urlBase: plEnvironment.urlBase,
+                           isHttps: true,
+                           name: plEnvironment.name,
+                           urlNetInsight: "",
+                           urlSocius: "",
+                           urlBizumEnrollment: "",
+                           urlBizumWeb: nil,
+                           urlGetCMC: nil,
+                           urlGetNewPassword: nil,
+                           urlForgotPassword: nil,
+                           urlRestBase: nil,
+                           oauthClientId: "",
+                           oauthClientSecret: "",
+                           microURL: nil,
+                           click2CallURL: nil,
+                           branchLocatorGlobile: nil,
+                           insurancesPass2Url: nil,
+                           pass2oauthClientId: "",
+                           pass2oauthClientSecret: "",
+                           ecommerceUrl: "",
+                           fintechUrl: "")
+    }
+
+    func getPLEnvironment(from coreEnvironment: BSANEnvironmentDTO) throws -> BSANPLEnvironmentDTO {
+
+        return try BSANPLEnvironmentDTO(name: coreEnvironment.name,
+                                        urlBase: coreEnvironment.urlBase,
+                                        clientId: dataProvider.getEnvironment().clientId)
+    }
+
+    func initEnvironment() {
+        self.dataProvider.storeEnviroment(self.hostProvider.environmentDefault)
+    }
+}

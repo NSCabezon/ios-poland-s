@@ -7,21 +7,21 @@ def core_dependencies
   
   # Common
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
-  pod 'SANLibraryV3', :path => '../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'ModuleInjection', :path => '../santander-one/ModuleInjection'
   pod 'Repository', :path => '../santander-one/Repository'
   pod 'DataRepository', :path => '../santander-one/Modules/Libraries/DataRepository'
   pod 'Operative', :path => '../santander-one/Operative'
+  pod 'WebViews', :path => '../santander-one/Modules/Libraries/WebViews'
   pod 'CommonUseCase', :path => '../santander-one/CommonUseCase'
   pod 'UI', :path => '../santander-one/UI'
   pod 'Models', :path => '../santander-one/Models'
   pod 'Commons', :path => '../santander-one/Commons'
-  pod 'ESCommons', :path => '../santander-one/Modules/Libraries/ESCommons'
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
   pod 'DomainCommon', :path => '../santander-one/Modules/Libraries/DomainCommon'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
+  pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
   
   # Microsite configuration
   pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
@@ -42,6 +42,8 @@ def core_dependencies
   pod 'GlobalSearch', :path => '../santander-one/GlobalSearch'
   pod 'BranchLocator', :path => '../santander-one/Modules/Features/BranchLocator'
   pod 'FinantialTimeline', :path => '../santander-one/Modules/Features/FinantialTimeline'
+  pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
+  pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
 end
 
 def legacy_libraries
@@ -77,6 +79,7 @@ def pl_libraries
   pod 'SANPLLibrary', :path => '../Modules/Libraries/SANPLLibrary'
   pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
   pod 'PLCommons', :path => '../Modules/Libraries/PLCommons'
+  pod 'PLUI', :path => '../Modules/Libraries/PLUI'
 end
 
 def pl_thirdparty_dependencies
@@ -93,6 +96,7 @@ target 'Santander' do
   
   pl_features
   pl_libraries
+  pl_thirdparty_dependencies
 end
 
 post_install do |installer|

@@ -7,16 +7,17 @@
 
 /// Note that this struct is maintained for compatibility with legacy code and will be removed in some point in the furure
 
-import Foundation
-import ESCommons
-import SANLibraryV3
+import SANLegacyLibrary
+import PLCommons
+import Commons
 import Models
 
-struct Compilation: CompilationProtocol {
-    let quickbalance: String = ""
+struct Compilation: PLCompilationProtocol {
     let service: String = ""
     let sharedTokenAccessGroup: String = ""
-    let isEnvironmentsAvailable: Bool = false
+    var isEnvironmentsAvailable: Bool {
+        return XCConfig["ENVIRONMENTS_AVAILABLE"] ?? false
+    }
     let debugLoginSetup: LoginDebugSetup? = nil
     let keychain: CompilationKeychainProtocol = CompilationKeychain()
     let userDefaults: CompilationUserDefaultsProtocol = CompilationUserDefaults()
@@ -28,20 +29,17 @@ struct Compilation: CompilationProtocol {
     let twinPushSubdomain: String = ""
     let twinPushAppId: String = ""
     let twinPushApiKey: String = ""
-    let salesForceAppId: String = ""
-    let salesForceAccessToken: String = ""
-    let salesForceMid: String = ""
-    let emmaApiKey: String = ""
     let isLogEnabled: Bool = false
     let isValidatingCertificate: Bool = false
     let appCenterIdentifier: String = "" // TODO: Add PL appCenter distribution identifier
     let isLoadPfmEnabled: Bool = false
-    let isTrustInvalidCertificateEnabled: Bool = true
+    var isTrustInvalidCertificateEnabled: Bool {
+        return XCConfig["IS_TRUST_INVALID_CERTIFICATE_ENABLED"] ?? false
+    }
     let managerWallProductionEnvironment: Bool = false
     let appGroupsIdentifier: String = ""
     let bsanHostProvider: BSANHostProviderProtocol = BSANHostProviderEmpty()
     let publicFilesHostProvider: PublicFilesHostProviderProtocol = PublicFilesHostProvider()
-    let mapPoiHostProvider: MapPoiHostProviderProtocol = MapPoiHostProvider()
 }
 
 struct CompilationKeychain: CompilationKeychainProtocol {
@@ -68,7 +66,7 @@ struct CompilationKey: CompilationKeyProtocol {
 }
 
 final class BSANHostProviderEmpty: BSANHostProviderProtocol {
-    let environmentDefault: BSANEnvironmentDTO = BSANEnvironmentDTO(urlBase: "", isHttps: false, name: "", urlNetInsight: "", urlSocius: "", urlBizumEnrollment: "", urlBizumWeb: "", urlGetCMC: "", urlGetNewPassword: "", urlForgotPassword: "", urlRestBase: "", oauthClientId: "", oauthClientSecret: "", microURL: "", click2CallURL: "", branchLocatorGlobile: "", insurancesPass2Url: "", pass2oauthClientId: "", pass2oauthClientSecret: "", ecommerceUrl: "")
+    let environmentDefault: BSANEnvironmentDTO = BSANEnvironmentDTO(urlBase: "", isHttps: false, name: "", urlNetInsight: "", urlSocius: "", urlBizumEnrollment: "", urlBizumWeb: "", urlGetCMC: "", urlGetNewPassword: "", urlForgotPassword: "", urlRestBase: "", oauthClientId: "", oauthClientSecret: "", microURL: "", click2CallURL: "", branchLocatorGlobile: "", insurancesPass2Url: "", pass2oauthClientId: "", pass2oauthClientSecret: "", ecommerceUrl: "", fintechUrl: "")
     
     func getEnvironments() -> [BSANEnvironmentDTO] {
         return [self.environmentDefault]
@@ -84,14 +82,5 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
         PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
         PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
         PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true),
-    ]
-}
-
-struct MapPoiHostProvider: MapPoiHostProviderProtocol {
-    static let rcMappoiUrlPre = "https://webcomerciallr.santander.pre.corp/cspresan/Satellite?"
-    static let rcMappoiUrlPro = "https://www.bancosantander.es/cssa/ContentServer?"
-    let mapPoiEnvironments: [MapPoiEnvironmentDTO] = [
-        MapPoiEnvironmentDTO("PRE", rcMappoiUrlPre),
-        MapPoiEnvironmentDTO("PRO", rcMappoiUrlPro)
     ]
 }

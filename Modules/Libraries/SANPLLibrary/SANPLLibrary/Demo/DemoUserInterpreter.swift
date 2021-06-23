@@ -40,5 +40,13 @@ public enum PLLocalAnswerType: Int {
 }
 
 public enum PLLocalServiceName: String {
-    case loginNick = "login_nick"
+    case globalPosition = "globalPosition"
+    case login = "login"
+    case loanDetails = "loanDetails"
+    case loanTransactions = "loanTransactions"
+    case loanInstallments = "loanInstallments"
+    case pubKey = "pub_key"
+    case authenticateInit = "authenticate_init"
+    case authenticate = "authenticate"
+    case registerDeviceTrustDevice = "registerDeviceTrustDevice"
 }

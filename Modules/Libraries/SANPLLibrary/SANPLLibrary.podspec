@@ -29,7 +29,11 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.3'
 
   s.source_files = 'SANPLLibrary/**/*'
+
+  s.resource_bundles = {
+    'SANPLLibrary' => 'SANPLLibrary/Assets/**/*{json}'
+  }
   
   s.dependency 'DataRepository'
-  s.dependency "SANLibraryV3"
+  s.dependency "SANLegacyLibrary"
 end

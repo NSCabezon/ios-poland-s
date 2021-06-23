@@ -1,10 +1,11 @@
 import UIKit
-import QuickSetup
+//import QuickSetup
 import PLLogin
 import Commons
-import SANLibraryV3
+//import SANLibraryV3
 import DomainCommon
 import Models
+import PLCommons
 
 
 class ViewController: UIViewController {
@@ -23,11 +24,11 @@ class ViewController: UIViewController {
     }
     
     private func presentModule() {
-        QuickSetup.shared.doLogin(withUser: .demo)
+        //QuickSetup.shared.doLogin(withUser: .demo)
         let navigationController = UINavigationController()
         navigationController.modalPresentationStyle = .fullScreen
         let coordinator = PLLoginModuleCoordinator(dependenciesResolver: dependenciesResolver, navigationController: navigationController)
-        coordinator.start(.main)
+        coordinator.start(.unrememberedLogin)
         self.present(navigationController, animated: true, completion: nil)
     }
     
@@ -35,21 +36,21 @@ class ViewController: UIViewController {
         
         let defaultResolver = DependenciesDefault()
         
-        defaultResolver.register(for: PLLoginMainModuleCoordinatorDelegate.self) { _ in
-            return PLLoginMainModuleCoordinatorImp()
-        }
+//        defaultResolver.register(for: PLLoginMainModuleCoordinatorDelegate.self) { _ in
+//            return PLLoginMainModuleCoordinatorImp()
+//        }
         
-        defaultResolver.register(for: BSANManagersProvider.self) { _ in
-            return QuickSetup.shared.managersProvider
-        }
+//        defaultResolver.register(for: BSANManagersProvider.self) { _ in
+//            return QuickSetup.shared.managersProvider
+//        }
         
         defaultResolver.register(for: UseCaseHandler.self) { _ in
             return UseCaseHandler(maxConcurrentOperationCount: 8, qualityOfService: .userInitiated)
         }
         
-        defaultResolver.register(for: GlobalPositionRepresentable.self) { _ in
-            return QuickSetup.shared.getGlobalPosition()!
-        }
+//        defaultResolver.register(for: GlobalPositionRepresentable.self) { _ in
+//            return QuickSetup.shared.getGlobalPosition()!
+//        }
         
         defaultResolver.register(for: GlobalPositionWithUserPrefsRepresentable.self) { resolver in
             let globalPosition = resolver.resolve(for: GlobalPositionRepresentable.self)
@@ -61,29 +62,33 @@ class ViewController: UIViewController {
             return TrackerManagerMock()
         }
         
-        defaultResolver.register(for: TimeManager.self) { _ in
-            return self.localeManager
-        }
-        
-        defaultResolver.register(for: StringLoader.self) { _ in
-            return self.localeManager
+//        defaultResolver.register(for: TimeManager.self) { _ in
+//            return self.localeManager
+//        }
+//        
+//        defaultResolver.register(for: StringLoader.self) { _ in
+//            return self.localeManager
+//        }
+
+        defaultResolver.register(for: PLCompilationProtocol.self) { _ in
+            return Compilation()
         }
         
         Localized.shared.setup(dependenciesResolver: defaultResolver)
         return defaultResolver
     }()
     
-    private lazy var localeManager: LocaleManager = {
-        let locale = LocaleManager()
-        locale.updateCurrentLanguage(language: .createFromType(languageType: .spanish, isPb: true))
-        return locale
-    }()
+//    private lazy var localeManager: LocaleManager = {
+//        let locale = LocaleManager()
+//        locale.updateCurrentLanguage(language: .createFromType(languageType: .spanish, isPb: false))
+//        return locale
+//    }()
     
 }
 
-final class PLLoginMainModuleCoordinatorImp: PLLoginMainModuleCoordinatorDelegate {
-    
-}
+//final class PLLoginMainModuleCoordinatorImp: PLLoginMainModuleCoordinatorDelegate {
+//
+//}
 
 class TrackerManagerMock: TrackerManager {
     

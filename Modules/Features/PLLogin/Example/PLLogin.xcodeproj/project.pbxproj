@@ -8,11 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		17DBE065DFC434C595F83888 /* Pods_PLLogin_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBDC6AA618D87B61DC885E91 /* Pods_PLLogin_ExampleTests.framework */; };
+		425A0E7D266FB2C50008F3AE /* Compilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0E7C266FB2C40008F3AE /* Compilation.swift */; };
+		425A0E7F266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */; };
+		425A0E93267A4C560008F3AE /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 425A0E8F267A4C560008F3AE /* pl.strings */; };
+		425A0E94267A4C560008F3AE /* es.strings in Resources */ = {isa = PBXBuildFile; fileRef = 425A0E90267A4C560008F3AE /* es.strings */; };
+		425A0E95267A4C560008F3AE /* fr.strings in Resources */ = {isa = PBXBuildFile; fileRef = 425A0E91267A4C560008F3AE /* fr.strings */; };
+		425A0E96267A4C560008F3AE /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 425A0E92267A4C560008F3AE /* en.strings */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		6611F327267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */; };
 		66E57619264AC5AC006804BD /* PLLogin_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */; };
 		799F83D0EC00F65803DBAA49 /* Pods_PLLogin_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8690A43BC85541D7A1C0DB /* Pods_PLLogin_Example.framework */; };
 /* End PBXBuildFile section */
@@ -31,6 +38,12 @@
 		2087211F62510BEC4C670E1D /* Pods-PLLogin_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLLogin_Example.release.xcconfig"; path = "Target Support Files/Pods-PLLogin_Example/Pods-PLLogin_Example.release.xcconfig"; sourceTree = "<group>"; };
 		35E1FC0C625A61876CAB11D6 /* Pods-PLLogin_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLLogin_ExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		373789FE2443F70F9A9EBF13 /* PLLogin.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PLLogin.podspec; path = ../PLLogin.podspec; sourceTree = "<group>"; };
+		425A0E7C266FB2C40008F3AE /* Compilation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compilation.swift; sourceTree = "<group>"; };
+		425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoginTrsutedDeviceTests.swift; sourceTree = "<group>"; };
+		425A0E8F267A4C560008F3AE /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../../../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
+		425A0E90267A4C560008F3AE /* es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es.strings; path = "../../../../../i18n-poland/clients/iOS/es.strings"; sourceTree = "<group>"; };
+		425A0E91267A4C560008F3AE /* fr.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr.strings; path = "../../../../../i18n-poland/clients/iOS/fr.strings"; sourceTree = "<group>"; };
+		425A0E92267A4C560008F3AE /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../../../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
 		4B3CF3AC010A0048D5F66851 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		57C6288C306AF4149AD1F794 /* Pods-PLLogin_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLLogin_ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PLLogin_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLLogin_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +53,7 @@
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPasswordEncryptionUseCaseTests.swift; sourceTree = "<group>"; };
 		66E57616264AC5AC006804BD /* PLLogin_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PLLogin_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLogin_ExampleTests.swift; sourceTree = "<group>"; };
 		66E5761A264AC5AC006804BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,9 +92,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		425A0E7B266FB27F0008F3AE /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				425A0E7C266FB2C40008F3AE /* Compilation.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		425A0E8E267A4C3F0008F3AE /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				425A0E92267A4C560008F3AE /* en.strings */,
+				425A0E90267A4C560008F3AE /* es.strings */,
+				425A0E91267A4C560008F3AE /* fr.strings */,
+				425A0E8F267A4C560008F3AE /* pl.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				425A0E8E267A4C3F0008F3AE /* Strings */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for PLLogin */,
 				66E57617264AC5AC006804BD /* PLLogin_ExampleTests */,
@@ -107,6 +141,7 @@
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				425A0E7B266FB27F0008F3AE /* Mocks */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for PLLogin";
@@ -131,10 +166,20 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		6611F3252673447F00D1DD54 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
 		66E57617264AC5AC006804BD /* PLLogin_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				6611F3252673447F00D1DD54 /* UseCases */,
 				66E57618264AC5AC006804BD /* PLLogin_ExampleTests.swift */,
+				425A0E7E266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift */,
 				66E5761A264AC5AC006804BD /* Info.plist */,
 			);
 			path = PLLogin_ExampleTests;
@@ -148,7 +193,6 @@
 				35E1FC0C625A61876CAB11D6 /* Pods-PLLogin_ExampleTests.debug.xcconfig */,
 				57C6288C306AF4149AD1F794 /* Pods-PLLogin_ExampleTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -163,7 +207,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				A15ED933651E9BE3D6760F04 /* [CP] Embed Pods Frameworks */,
+				3BECA398CC402C066075A701 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -182,7 +226,7 @@
 				66E57612264AC5AC006804BD /* Sources */,
 				66E57613264AC5AC006804BD /* Frameworks */,
 				66E57614264AC5AC006804BD /* Resources */,
-				546E12F4E01369D28B64BBAC /* [CP] Embed Pods Frameworks */,
+				DC6796266BAB5D30A254D632 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,7 +255,6 @@
 					66E57615264AC5AC006804BD = {
 						CreatedOnToolsVersion = 12.4;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -250,41 +293,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				425A0E94267A4C560008F3AE /* es.strings in Resources */,
+				425A0E96267A4C560008F3AE /* en.strings in Resources */,
+				425A0E93267A4C560008F3AE /* pl.strings in Resources */,
+				425A0E95267A4C560008F3AE /* fr.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48C3FD58FA9FEE1D1491D245 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PLLogin_ExampleTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		546E12F4E01369D28B64BBAC /* [CP] Embed Pods Frameworks */ = {
+		3BECA398CC402C066075A701 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PLLogin_Example/Pods-PLLogin_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
@@ -292,18 +317,20 @@
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
 				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
-				"${BUILT_PRODUCTS_DIR}/ESCommons/ESCommons.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/LoginCommon/LoginCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLLegacyAdapter/PLLegacyAdapter.framework",
 				"${BUILT_PRODUCTS_DIR}/PLLogin/PLLogin.framework",
-				"${BUILT_PRODUCTS_DIR}/QuickSetup/QuickSetup.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
 				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
@@ -325,18 +352,20 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESCommons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLegacyAdapter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLogin.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickSetup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
@@ -351,7 +380,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PLLogin_Example/Pods-PLLogin_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		48C3FD58FA9FEE1D1491D245 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PLLogin_ExampleTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7B2FA2FC6912595106ED598E /* [CP] Check Pods Manifest.lock */ = {
@@ -376,13 +427,13 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A15ED933651E9BE3D6760F04 /* [CP] Embed Pods Frameworks */ = {
+		DC6796266BAB5D30A254D632 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PLLogin_Example/Pods-PLLogin_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
@@ -390,18 +441,20 @@
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
 				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
-				"${BUILT_PRODUCTS_DIR}/ESCommons/ESCommons.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/LoginCommon/LoginCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLLegacyAdapter/PLLegacyAdapter.framework",
 				"${BUILT_PRODUCTS_DIR}/PLLogin/PLLogin.framework",
-				"${BUILT_PRODUCTS_DIR}/QuickSetup/QuickSetup.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
 				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
@@ -423,18 +476,20 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESCommons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLegacyAdapter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLogin.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickSetup.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
@@ -449,7 +504,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PLLogin_Example/Pods-PLLogin_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -459,6 +514,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				425A0E7D266FB2C50008F3AE /* Compilation.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
@@ -468,7 +524,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6611F327267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift in Sources */,
 				66E57619264AC5AC006804BD /* PLLogin_ExampleTests.swift in Sources */,
+				425A0E7F266FC2F50008F3AE /* PLLoginTrsutedDeviceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,7 +695,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35E1FC0C625A61876CAB11D6 /* Pods-PLLogin_ExampleTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -660,7 +717,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PLLogin_Example.app/PLLogin_Example";
 			};
 			name = Debug;
 		};
@@ -668,7 +724,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57C6288C306AF4149AD1F794 /* Pods-PLLogin_ExampleTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -688,7 +743,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PLLogin_Example.app/PLLogin_Example";
 			};
 			name = Release;
 		};

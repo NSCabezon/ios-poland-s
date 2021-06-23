@@ -18,17 +18,16 @@ class PLAppConfig: LocalAppConfig {
     let endMorning = 5
     let endAfternoon = 14
     let endNight = 20
-    let language: LanguageType = .spanish
+    let language: LanguageType = .polish
     let isEnabledPfm = true
     let privateMenu = true
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = false
-    let isEnabledPlusButtonPG = true
+    let isEnabledPlusButtonPG = false
     let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true
-    let languageList: [LanguageType] = [.spanish, .english, .french, .italian, .portuguese, .polish]
-    let enablePGCardActivation = true
+    let languageList: [LanguageType] = [.polish, .english]
     let isEnabledDepositWebView = false
     let isEnabledfundWebView = false
     let clickablePension = true
@@ -40,7 +39,6 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledGoToATMLocator: Bool = true
     let isEnabledGoToHelpCenter: Bool = true
     let isEnabledDigitalProfileView: Bool = true
-    let isEnabledPersonalInformation: Bool = true
     let isEnabledWorld123: Bool = false
     let isEnabledSendMoney: Bool = true
     let isEnabledBills: Bool = true
@@ -58,4 +56,11 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledChangeCurrency: Bool = true
     let isEnabledTransfersFAQs: Bool = true
     var maxLengthInternalTransferConcept: Int = 140
+    var showATMIntermediateScreen: Bool = false
+    var isEnabledEditAlias: Bool = false
+    let analysisAreaHasTimelineSection: Bool = true
+    let analysisAreaIsIncomeSelectable: Bool = true
+    let analysisAreaIsExpensesSelectable: Bool = true
+    let isAnalysisAreaHomeEnabled: Bool = false
+    let enablePGCardActivation: Bool = true
 }

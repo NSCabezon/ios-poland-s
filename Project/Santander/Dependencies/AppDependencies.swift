@@ -8,20 +8,21 @@
 import Commons
 import Foundation
 import DataRepository
-import ESCommons
 import RetailLegacy
-import SANLibraryV3
 import Repository
 import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
+import PLCommons
+import Models
+import GlobalPosition
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
     private let localAppConfig: LocalAppConfig
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
-    private let compilation: CompilationProtocol
+    private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     
     // MARK: - Dependecies definitions
@@ -34,10 +35,6 @@ final class AppDependencies {
     private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
     }
-    
-    private lazy var dataProvider: SANLibraryV3.BSANDataProvider = {
-        return BSANDataProvider(dataRepository: self.dataRepository, appInfo: self.versionInfo)
-    }()
     private var demoInterpreter: DemoUserProtocol {
         let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
         return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
@@ -48,13 +45,19 @@ final class AppDependencies {
         let hostProvider = PLHostProvider()
         // TODO: Check value isTrustInvalidCertificateEnabled
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
-
-        return PLManagersProviderAdapter(hostProvider: hostProvider,
+        return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
+                                         hostProvider: hostProvider,
                                          networkProvider: networkProvider,
-                                         demoInterpreter: demoInterpreter)
+                                         demoInterpreter: self.demoInterpreter)
 
     }()
-    
+    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
+        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
+    }()
+    private lazy var productIdDelegate: ProductIdDelegateProtocol = {
+        return ProductIdDelegateModifier()
+    }()
+
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
@@ -87,39 +90,36 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: DataRepository.self) { _ in
             return self.dataRepository
         }
-        self.dependencieEngine.register(for: BSANDataProvider.self) { _ in
-            return self.dataProvider
-        }
         self.dependencieEngine.register(for: LocalAppConfig.self) { _ in
             return self.localAppConfig
         }
         self.dependencieEngine.register(for: VersionInfoDTO.self) { _ in
             return self.versionInfo
         }
-        self.dependencieEngine.register(for: WebServicesUrlProvider.self) { resolver in
-            let bsanDataProvider: SANLibraryV3.BSANDataProvider = resolver.resolve(for: SANLibraryV3.BSANDataProvider.self)
-            return WebServicesUrlProviderImpl(bsanDataProvider: bsanDataProvider)
-        }
-        self.dependencieEngine.register(for: TargetProviderProtocol.self) { resolver in
-            return TargetProvider(webServicesUrlProvider:
-                                        resolver.resolve(for: WebServicesUrlProvider.self),
-                                      bsanDataProvider: resolver.resolve(for: BSANDataProvider.self))
-        }
         // Data layer and country data adapters
         self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
             return self.managersProviderAdapter
         }
         self.dependencieEngine.register(for: BSANDataProviderProtocol.self) { _ in
-            return self.dataProvider
+            return self.bsanDataProvider
         }
-//        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
-//            return self.managersProviderAdapater.getPLManagerProvider()
-//        }
-//        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
-//            return self.managersProviderAdapter
-//        }
+        dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
+            return self.managersProviderAdapter.getPLManagerProvider()
+        }
+        dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
+            return self.managersProviderAdapter
+        }
+        dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
+            return self.managersProviderAdapter
+        }
+        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
+            return self.getPGFrequentOperativeOption
+        }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
+            return self.compilation
+        }
+        dependencieEngine.register(for: PLCompilationProtocol.self) { _ in
             return self.compilation
         }
         self.dependencieEngine.register(for: TrusteerRepositoryProtocol.self) { _ in
@@ -127,9 +127,6 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: EmmaTrackEventListProtocol.self) { _ in
             return EmptyEmmaTrackEventList()
-        }
-        self.dependencieEngine.register(for: SalesForceHandlerProtocol.self) { _ in
-            return EmptySalesForceHandler()
         }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
@@ -139,6 +136,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: SharedDependenciesDelegate.self) { _ in
             return self
+        }
+        self.dependencieEngine.register(for: ProductIdDelegateProtocol.self) { _ in
+            return self.productIdDelegate
         }
     }
 }

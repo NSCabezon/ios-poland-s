@@ -9,12 +9,12 @@ import SANLegacyLibrary
 import SANPLLibrary
 
 public protocol PLManagersProviderAdapterProtocol {
-    func getPTManagerProvider() -> PLManagersProviderProtocol
+    func getPLManagerProvider() -> PLManagersProviderProtocol
 }
 
 public final class PLManagersProviderAdapter {
-    private let authManger: PLAuthManagerAdapter
-    private let gobalPositionManagerAdapter: PLGlobalPositionManagerAdapter
+    private let authManager: PLAuthManagerAdapter
+    private let globalPositionManagerAdapter: PLGlobalPositionManagerAdapter
     private let cardsManagerAdapter: PLCardsManagerAdapter
     private let portfoliosPBManagerAdapter: PLPortfoliosPBManagerAdapter
     private let pullOffersManagerAdapter: PLPullOffersManagerAdapter
@@ -54,15 +54,24 @@ public final class PLManagersProviderAdapter {
     private let aviosManager: PLAviosManagerAdapter
     private let branchLocatorManager: PLBranchLocatorManagerAdapter
     private let pendingSolicitudesManager: PLPendingSolicitudesManagerAdapter
-    private let plManagerProvider: PLManagersProvider
+    private let plManagersProvider: PLManagersProvider
     private let demoInterpreter: DemoUserProtocol
     private let ecommerceManagerAdapter: PLEcommerceManagerAdapter
     private let predefineSCAManager: PLPredefineSCAManagerAdapter
+    private let fintechManager: PLFintechManagerAdapter
 
-    public init(hostProvider: PLHostProviderProtocol, networkProvider: NetworkProvider, demoInterpreter: DemoUserProtocol) {
+    public init(bsanDataProvider:SANPLLibrary.BSANDataProvider,
+                hostProvider: PLHostProviderProtocol,
+                networkProvider: NetworkProvider,
+                demoInterpreter: DemoUserProtocol) {
         self.pullOffersManagerAdapter = PLPullOffersManagerAdapter()
         self.scaManagerAdapter = PLScaManagerAdapter()
-        self.environmentsManagerApadater = PLEnvironmentsManagerAdapter()
+        self.environmentsManagerApadater = PLEnvironmentsManagerAdapter(bsanHostProvider: hostProvider,
+                                                                        dataProvider: bsanDataProvider)
+        self.plManagersProvider = PLManagersProvider(bsanDataProvider: bsanDataProvider,
+                                                    hostProvider: hostProvider,
+                                                    networkProvider: networkProvider,
+                                                    demoInterpreter: demoInterpreter)
         self.insurancesManager = PLInsurancesManagerAdapter()
         self.managersManager = PLManagersManagerAdapter()
         self.sociusManager = PLSociusManagerAdapter()
@@ -89,33 +98,33 @@ public final class PLManagersProviderAdapter {
         self.pendingSolicitudesManager = PLPendingSolicitudesManagerAdapter()
         self.userSegmentManagerAdapter = PLUserSegmentManagerAdapter()
         self.demoInterpreter = demoInterpreter
-        self.plManagerProvider = PLManagersProvider()
         self.portfoliosPBManagerAdapter = PLPortfoliosPBManagerAdapter()
-        self.gobalPositionManagerAdapter = PLGlobalPositionManagerAdapter()
+        self.globalPositionManagerAdapter = PLGlobalPositionManagerAdapter(globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), bsanDataProvider: bsanDataProvider)
         self.transfersManager = PLTransfersManagerAdapter()
         self.accountsManager = PLAccountsManagerAdapter()
-        self.cardsManagerAdapter = PLCardsManagerAdapter()
+        self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager())
         self.signatureAdapter = PLSignatureAdapter()
         self.depositsManagerApadater = PLDepositsManagerAdapter()
-        self.loansManager = PLLoansManagerAdapter()
+        self.loansManager = PLLoansManagerAdapter(loanManager: self.plManagersProvider.getLoansManager(), bsanDataProvider: bsanDataProvider)
         self.pensionsManager = PLPensionsManagerAdapter()
         self.favouriteTransfersManager = PLFavouriteTransfersManagerAdapter()
         self.sessionManagerApadater = PLSessionManagerAdapter()
-        self.authManger = PLAuthManagerAdapter()
+        self.authManager = PLAuthManagerAdapter()
         self.sendMoneyManagerAdapter = PLSendMoneyManagerAdapter()
         self.ecommerceManagerAdapter = PLEcommerceManagerAdapter()
         self.predefineSCAManager = PLPredefineSCAManagerAdapter()
+        self.fintechManager = PLFintechManagerAdapter()
     }
 }
 
 extension PLManagersProviderAdapter: BSANManagersProvider {
 
     public func getBsanAuthManager() -> BSANAuthManager {
-        return self.authManger
+        return self.authManager
     }
     
     public func getBsanPGManager() -> BSANPGManager {
-        return self.gobalPositionManagerAdapter
+        return self.globalPositionManagerAdapter
     }
     
     public func getBsanDepositsManager() -> BSANDepositsManager {
@@ -281,10 +290,13 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
     public func getBsanPredefineSCAManager() -> BSANPredefineSCAManager {
         return self.predefineSCAManager
     }
+    public func getBsanFintechManager() -> BSANFintechManager {
+        return self.fintechManager
+    }
 }
 
 extension PLManagersProviderAdapter: PLManagersProviderAdapterProtocol {
-    public func getPTManagerProvider() -> PLManagersProviderProtocol {
-        return self.plManagerProvider
+    public func getPLManagerProvider() -> PLManagersProviderProtocol {
+        return self.plManagersProvider
     }
 }

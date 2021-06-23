@@ -10,7 +10,15 @@ import SANLegacyLibrary
 final class PLPredefineSCAManagerAdapter {}
 
 extension PLPredefineSCAManagerAdapter: BSANPredefineSCAManager {
+    func getCardBlockPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
+        return BSANErrorResponse(nil)
+    }
+    
     func getInternalTransferPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
+        return BSANErrorResponse(nil)
+    }
+    
+    func getOnePayTransferPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
         return BSANErrorResponse(nil)
     }
 }
