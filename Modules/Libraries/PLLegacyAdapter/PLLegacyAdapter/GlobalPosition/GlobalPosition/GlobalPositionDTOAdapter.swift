@@ -7,7 +7,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 final class GlobalPositionDTOAdapter {
-    static func adaptPLGlobalPositionToGlobalPosition(_ plGlobalPosition: SANPLLibrary.GlobalPositionDTO) -> SANLegacyLibrary.GlobalPositionDTO {
+    static func adaptPLGlobalPositionToGlobalPosition(_ plGlobalPosition: SANPLLibrary.GlobalPositionDTO, clientPersonCode: String) -> SANLegacyLibrary.GlobalPositionDTO {
         var globalPositionDTO = SANLegacyLibrary.GlobalPositionDTO()
 
         let rearrangedAccounts = self.rearrangeAccountsByFirstMainItem(plGlobalPosition.accounts)
@@ -34,13 +34,17 @@ final class GlobalPositionDTOAdapter {
         globalPositionDTO.deposits = deposits
         // TODO: Replace with customer API result when the API is implemented
         globalPositionDTO.clientName = "TestUser"
+        var userDataDTO: UserDataDTO = UserDataDTO()
+        userDataDTO.clientPersonType = ""
+        userDataDTO.clientPersonCode = clientPersonCode
+        globalPositionDTO.userDataDTO = userDataDTO
 
         return globalPositionDTO
     }
 }
 
 private extension GlobalPositionDTOAdapter {
-    static func rearrangeAccountsByFirstMainItem(_ accounts: [SANPLLibrary.AccountDTO]?) -> [SANPLLibrary.AccountDTO] {
+    private static func rearrangeAccountsByFirstMainItem(_ accounts: [SANPLLibrary.AccountDTO]?) -> [SANPLLibrary.AccountDTO] {
         guard var rearrangedAccounts = accounts else { return [] }
         guard rearrangedAccounts.first?.defaultForPayments != true,
             let index = (rearrangedAccounts.firstIndex { $0.defaultForPayments == true }) else {

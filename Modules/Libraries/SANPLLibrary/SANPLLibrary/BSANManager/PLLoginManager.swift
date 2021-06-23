@@ -37,13 +37,10 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
         let result = try loginDataSource.getPubKey()
-        switch result {
-        case .success(let pubKeyDTO):
-            bsanDataProvider.storePublicKey(pubKeyDTO)
-            return .success(pubKeyDTO)
-        case .failure(let error):
-            return .failure(error)
+        if case .success(let pubKeyDTO) = result {
+            self.bsanDataProvider.storePublicKey(pubKeyDTO)
         }
+        return result
     }
 
     public func getPersistedPubKey() throws -> PubKeyDTO {
@@ -57,6 +54,7 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError> {
         let result = try loginDataSource.doAuthenticate(parameters)
+        self.processAuthenticateResult(result)
         return result
     }
 }
@@ -64,13 +62,13 @@ extension PLLoginManager: PLLoginManagerProtocol {
 // MARK: - Private Methods
 
 private extension PLLoginManager {
-    func setDemoModeIfNeeded(_ user: String) {
+    private func setDemoModeIfNeeded(_ user: String) {
         guard self.demoInterpreter.isDemoModeAvailable,
             self.demoInterpreter.isDemoUser(userName: user) else { return }
         self.bsanDataProvider.setDemoMode(true, user)
     }
 
-    func removeDemoModeIfNeeded() {
+    private func removeDemoModeIfNeeded() {
         guard let _ = self.bsanDataProvider.getDemoMode() else { return }
         self.bsanDataProvider.setDemoMode(false, nil)
     }
@@ -78,6 +76,18 @@ private extension PLLoginManager {
     private func processLoginResult(_ login: String, result: Result<LoginDTO, NetworkProviderError>) {
         if case .success = result {
             self.bsanDataProvider.createSessionData(UserDTO(loginType: .U, login: login))
+        }
+    }
+
+    private func processAuthenticateResult(_ result: Result<AuthenticateDTO, NetworkProviderError>) {
+        if case .success(let authenticate) = result {
+            guard let login = try? self.bsanDataProvider.getSessionData().loggedUserDTO.login else {
+                return
+            }
+            let accessTokenCredentials = AccessTokenCredentials(type: authenticate.type, accessToken: authenticate.access_token, expires: authenticate.expires)
+            let trustedDeviceTokenCredentials = TrustedDeviceTokenCredentials(trustedDeviceToken: authenticate.trusted_device_token, clientId: authenticate.client_id, expiresIn: authenticate.expires_in)
+            let authCredentials = AuthCredentials(login: login, userId: authenticate.userId, userCif: authenticate.userCif, companyContext: authenticate.companyContext, accessTokenCredentials: accessTokenCredentials, trustedDeviceTokenCredentials: trustedDeviceTokenCredentials)
+            self.bsanDataProvider.storeAuthCredentials(authCredentials)
         }
     }
 }
