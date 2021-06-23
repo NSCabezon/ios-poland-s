@@ -12,6 +12,7 @@ import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
 import Security
+import os
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
@@ -105,13 +106,14 @@ private extension  PLSmsAuthPresenter {
                 // TODO: connect sms timeout
             }
             .onError { error in
-
+                os_log("❌ [LOGIN][Authenticate Init] Error with init SMS: %@", log: .default, type: .error, error.localizedDescription)
             }
     }
 
     func doAuthenticate(smscode: String) {
         guard let password = loginConfiguration.password else {
             // TODO: generate error, password can't be empty
+            os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
             return
         }
 
@@ -136,6 +138,7 @@ private extension  PLSmsAuthPresenter {
             })
             .onError { error in
                 // TODO: Present errorsecondFactorData
+                os_log("❌ [LOGIN][Authenticate] Login authorization did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
             }
     }
 }
