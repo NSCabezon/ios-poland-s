@@ -75,7 +75,7 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
     let queryParams: [String: String]?
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .none
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
@@ -85,7 +85,6 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: Encodable? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .form,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType,
@@ -94,7 +93,6 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
         self.serviceUrl = serviceUrl
         self.method = method
         self.formData = body
-        self.bodyEncoding = bodyEncoding
         self.headers = headers
         self.queryParams = queryParams
         self.contentType = contentType
