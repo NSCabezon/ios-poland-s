@@ -19,19 +19,15 @@ private extension TrustDeviceDataSource {
 }
 
 class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
-    private let registerDevicePath = "/api/auth/devices/registration/trusted-device"
-    private let registerSoftwareTokenPath = "/api/auth/devices/registration/software-token"
-
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    // TODO: Review
-    private let basePath = ""
+    private let basePath = "/api/auth/devices"
     private var headers: [String: String] = ["Santander-Channel": "MBP",
                                              "Santander-Session-Id": ""]
 
     private enum TrustDeviceServiceType: String {
-        case registerDevice = "/registerTrustedDevice"
-        case registerSoftwareToken = "/registerSoftwareToken"
+        case registerDevice = "/registration/trusted-device"
+        case registerSoftwareToken = "/registration/software-token"
     }
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -44,8 +40,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
-        let path = self.basePath + self.registerDevicePath
-        let absoluteUrl = baseUrl + path
+        let absoluteUrl = baseUrl + self.basePath
         let serviceName =  TrustDeviceServiceType.registerDevice.rawValue
         let result: Result<RegisterDeviceDTO, NetworkProviderError> = self.networkProvider.request(RegisterDeviceRequest(serviceName: serviceName,
                                                                                                        serviceUrl: absoluteUrl,
@@ -53,7 +48,8 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                                                                        body: body,
                                                                                                        jsonBody: parameters,
                                                                                                        headers: self.headers,
-                                                                                                       localServiceName: .registerDeviceTrustDevice))
+                                                                                                       localServiceName: .registerDeviceTrustDevice,
+                                                                                                       authorization: .oauth))
 
         return result
     }
@@ -63,8 +59,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
-        let path = self.basePath + self.registerSoftwareTokenPath
-        let absoluteUrl = baseUrl + path
+        let absoluteUrl = baseUrl + self.basePath
         let serviceName =  TrustDeviceServiceType.registerSoftwareToken.rawValue
         let result: Result<RegisterSoftwareTokenDTO, NetworkProviderError> = self.networkProvider.request(RegisterSoftwareTokenRequest(serviceName: serviceName,
                                                                                                        serviceUrl: absoluteUrl,
@@ -72,7 +67,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                                                                        body: body,
                                                                                                        jsonBody: parameters,
                                                                                                        headers: self.headers,
-                                                                                                       localServiceName: .registerSoftwareToken))
+                                                                                                       localServiceName: .registerSoftwareToken, authorization: .oauth))
 
         return result
     }
