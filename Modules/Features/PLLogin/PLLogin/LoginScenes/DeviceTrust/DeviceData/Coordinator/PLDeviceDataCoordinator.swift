@@ -11,7 +11,7 @@ import Models
 import CommonUseCase
 
 protocol PLDeviceDataCoordinatorProtocol {
-    func goToGlobalPositionScene()
+    func goToTrustedDevicePIN()
 }
 
 final class PLDeviceDataCoordinator: ModuleCoordinator {
@@ -34,7 +34,7 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
 }
 
 extension PLDeviceDataCoordinator: PLDeviceDataCoordinatorProtocol {
-    func goToGlobalPositionScene() {
+    func goToTrustedDevicePIN() {
         //TODO:
     }
 }
@@ -59,13 +59,27 @@ private extension PLDeviceDataCoordinator {
         }
 
         self.dependenciesEngine.register(for: PLDeviceDataViewController.self) { resolver in
-            let presenter = resolver.resolve(for: PLDeviceDataPresenterProtocol.self)
+            var presenter = resolver.resolve(for: PLDeviceDataPresenterProtocol.self)
             let viewController = PLDeviceDataViewController(
                 nibName: "PLDeviceDataViewController",
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
+            presenter.view = viewController
             return viewController
+        }
+
+        self.dependenciesEngine.register(for: PLDeviceDataTransportKeyEncryptionUseCase.self) { resolver in
+           return PLDeviceDataTransportKeyEncryptionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLDeviceDataParametersEncryptionUseCase.self) { resolver in
+           return PLDeviceDataParametersEncryptionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLDeviceDataCertificateCreationUseCase.self) { resolver in
+           return PLDeviceDataCertificateCreationUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLDeviceDataRegisterDeviceUseCase.self) { resolver in
+           return PLDeviceDataRegisterDeviceUseCase(dependenciesResolver: resolver)
         }
     }
 }

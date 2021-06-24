@@ -7,6 +7,7 @@ import Foundation
 public protocol PLManagersProviderProtocol {
     func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol
     func getLoginManager() -> PLLoginManagerProtocol
+    func getTrustedDeviceManager() -> PLTrustedDeviceManager
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
 //    func getAccountsManager() -> PTAccountsManagerProtocol
     func getCardsManager() -> PLCardsManagerProtocol
@@ -27,6 +28,7 @@ public protocol PLManagersProviderProtocol {
 public final class PLManagersProvider {
     private let environmentsManager: PLEnvironmentsManager
     private let loginManager: PLLoginManager
+    private let trustedDeviceManager: PLTrustedDeviceManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
 //    private let accountManager: PTAccountsManager
     private let cardsManager: PLCardsManager
@@ -42,7 +44,6 @@ public final class PLManagersProvider {
 //    private let customersManager: PTCustomersManager
 //    private let transfersManager: PTTransfersManager
 //    private let scheduleList: PTScheduleListManagerProtocol
-//    private let demoInterpreter: DemoUserProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -52,6 +53,9 @@ public final class PLManagersProvider {
         self.loginManager = PLLoginManager(bsanDataProvider: bsanDataProvider,
                                            networkProvider: networkProvider,
                                            demoInterpreter: demoInterpreter)
+        self.trustedDeviceManager = PLTrustedDeviceManager(bsanDataProvider: bsanDataProvider,
+                                                           networkProvider: networkProvider,
+                                                           demoInterpreter: demoInterpreter)
         self.globalPositionManager = PLGlobalPositionManager(bsanDataProvider: bsanDataProvider,
                                                              networkProvider: networkProvider,
                                                              demoInterpreter: demoInterpreter)
@@ -89,6 +93,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getLoginManager() -> PLLoginManagerProtocol {
         return self.loginManager
+    }
+
+    public func getTrustedDeviceManager() -> PLTrustedDeviceManager {
+        return self.trustedDeviceManager
     }
     
     public func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol {

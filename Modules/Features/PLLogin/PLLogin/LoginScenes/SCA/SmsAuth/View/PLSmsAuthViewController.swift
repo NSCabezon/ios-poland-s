@@ -219,11 +219,11 @@ private extension PLSmsAuthViewController {
             configureTooltip()
         }
         else {
-            self.presenter.authenticate(smsCode: smsCode)
+//            self.presenter.authenticate(smsCode: smsCode)
             // TODO: PG Remove the following lines: 2
             let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-            coordinatorDelegate.goToPrivate(.classic)
-            //self.presenter.goToDeviceTrustDeviceData()
+//            coordinatorDelegate.goToPrivate(.classic)
+            self.presenter.goToDeviceTrustDeviceData()
         }
     }
 
