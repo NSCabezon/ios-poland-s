@@ -21,16 +21,14 @@ private extension LoanDataSource {
 
 final class LoanDataSource {
     private enum LoanServiceType: String {
-        case detail = "/detail"
-        case transactions = "/transactions"
-        case installments = "/installments"
+        case detail = "/accounts"
+        case transactions = "/history"
+        case installments = "/accounts/loan/installments"
     }
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    private let detailsPath = "/api/ceke/accounts"
-    private let transactionsPath = "/api/history"
-    private let installmentsPath = "/api/ceke/accounts/loan/installments"
+    private let basePath = "/api"
     private var headers: [String: String] = [:]
     private var queryParams: [String: String]? = nil
     
@@ -53,8 +51,8 @@ extension LoanDataSource: LoanDataSourceProtocol {
             self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
         }
 
-        let serviceName = LoanServiceType.detail.rawValue
-        let absoluteUrl = "\(baseUrl)\(self.detailsPath)\(accountNumber)/\(systemId)"
+        let serviceName = "\(LoanServiceType.detail.rawValue)/\(accountNumber)/\(systemId)"
+        let absoluteUrl = baseUrl + self.basePath
         let result: Result<LoanDetailDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
@@ -86,8 +84,8 @@ extension LoanDataSource: LoanDataSourceProtocol {
             self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
         }
 
-        let serviceName = LoanServiceType.installments.rawValue
-        let absoluteUrl = "\(baseUrl)\(self.installmentsPath)\(accountId)"
+        let serviceName = "\(LoanServiceType.installments.rawValue)/\(accountId)"
+        let absoluteUrl = baseUrl + self.basePath
         let result: Result<LoanInstallmentsListDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
@@ -113,8 +111,9 @@ private extension LoanDataSource {
             self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
         }
 
-        let serviceName = LoanServiceType.transactions.rawValue
-        let absoluteUrl = "\(baseUrl)\(self.transactionsPath)\(type.rawValue)/\(systemId)/\(accountId)"
+        let serviceName = "\(LoanServiceType.transactions.rawValue)/\(type.rawValue)/\(systemId)/\(accountId)"
+        let absoluteUrl = baseUrl + self.basePath
+
         let result: Result<LoanOperationListDTO, NetworkProviderError> = self.networkProvider.request(LoanRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
@@ -135,31 +134,27 @@ private struct LoanRequest: NetworkProviderRequest {
     let queryParams: [String: String]?
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .none
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
     
     init(serviceName: String,
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: Encodable? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .form,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType,
-         localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = .oauth) {
+         localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
         self.formData = body
-        self.bodyEncoding = bodyEncoding
         self.headers = headers
         self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
-        self.authorization = authorization
     }
 }
