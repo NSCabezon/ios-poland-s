@@ -63,7 +63,10 @@ final class PLSmsAuthPresenter {
     private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
         return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
     }
-    
+
+    private var getNextSceneUseCase: PLGetLoginNextSceneUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetLoginNextSceneUseCase.self)
+    }
 }
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
@@ -106,9 +109,6 @@ private extension  PLSmsAuthPresenter {
         let caseInput: PLAuthenticateInitUseCaseInput = PLAuthenticateInitUseCaseInput(userId: loginConfiguration.userIdentifier, challenge: loginConfiguration.challenge)
         Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { _ in
-                // TODO: connect sms timeout
-            }
             .onError { error in
                 os_log("❌ [LOGIN][Authenticate Init] Error with init SMS: %@", log: .default, type: .error, error.localizedDescription)
             }
@@ -116,7 +116,7 @@ private extension  PLSmsAuthPresenter {
 
     func doAuthenticate(smscode: String) {
         guard let password = loginConfiguration.password else {
-            // TODO: generate error, password can't be empty
+            // TODO: generate generic error, password can't be empty
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
             return
         }
@@ -135,9 +135,18 @@ private extension  PLSmsAuthPresenter {
                 let useCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPasswordOutput.encryptedPassword, userId: self.loginConfiguration.userIdentifier, secondFactorData: secondFactorAuthentity)
                 return Scenario(useCase: self.authenticateUseCase, input: useCaseInput)
             })
-            .onSuccess({ [weak self] _ in
+            .then(scenario: {  [weak self] _ -> Scenario<Void, PLGetLoginNextSceneUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput>? in
+                guard let self = self else { return nil}
+                return Scenario(useCase: self.getNextSceneUseCase)
+            })
+            .onSuccess({ [weak self] nextSceneResult in
                 guard let self = self else { return }
-                self.getGlobalPositionOption()
+                switch nextSceneResult.nextScene {
+                case .trustedDeviceScene:
+                    self.goToDeviceTrustDeviceData()
+                case .globalPositionScene:
+                    self.getGlobalPositionTypeAndNavigate()
+                }
             })
             .onError { error in
                 // TODO: Present errorsecondFactorData
@@ -145,7 +154,7 @@ private extension  PLSmsAuthPresenter {
             }
     }
 
-    private func getGlobalPositionOption() {
+    func getGlobalPositionTypeAndNavigate() {
         Scenario(useCase: self.globalPositionOptionUseCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess( { [weak self] output in
@@ -158,7 +167,7 @@ private extension  PLSmsAuthPresenter {
             }
     }
 
-    private func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
+    func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
         let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
         self.view?.dismissLoading()
         coordinatorDelegate.goToPrivate(option)
