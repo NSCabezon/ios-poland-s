@@ -221,7 +221,6 @@ private extension PLSmsAuthViewController {
         }
         else {
             self.presenter.authenticate(smsCode: smsCode)
-            //self.presenter.goToDeviceTrustDeviceData()
         }
     }
 
