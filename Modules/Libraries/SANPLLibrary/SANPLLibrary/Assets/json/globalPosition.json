@@ -266,7 +266,7 @@
                 {
                     "maskedPan": "421352_6506",
                     "virtualPan": "421352I013731844",
-                    "generalStatus": "ACTIVE",
+                    "generalStatus": "INACTIVE",
                     "cardStatus": "00",
                     "role": "NOT_OWNER",
                     "type": "DEBIT",
@@ -296,7 +296,7 @@
                 {
                     "maskedPan": "421352_7895",
                     "virtualPan": "421352I037372333",
-                    "generalStatus": "ACTIVE",
+                    "generalStatus": "CANCELLED",
                     "cardStatus": "00",
                     "role": "OWNER",
                     "type": "DEBIT",
