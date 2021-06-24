@@ -339,7 +339,7 @@ extension PLCardsManagerAdapter: BSANCardsManager {
 //MARK: - Private Methods
 private extension PLCardsManagerAdapter {
     func filterInactiveCards(_ cards: [SANPLLibrary.CardDTO]) -> [SANPLLibrary.CardDTO] {
-        return cards.filter { $0.generalStatus == "INACTIVE" }
+        return cards.filter { $0.generalStatus != "ACTIVE" }
     }
 
     func createListOfInactiveCards(_ inactiveCardsDTO: [SANPLLibrary.CardDTO]) -> [String : InactiveCardDTO] {
