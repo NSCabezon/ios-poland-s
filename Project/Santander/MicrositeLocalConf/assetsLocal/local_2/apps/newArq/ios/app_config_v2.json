@@ -118,7 +118,7 @@
         "billsHomeUnemploymentBenefit": "https://www.bancosantander.es",
         "enableApplyBySanflix": "false",
         "timerLoadingTips": "4",
-        "disableOnboarding": "true",
+        "disableOnboarding": "false",
         "onboardingVersion": "2",
         "enabledAnalysisZoneFinancialHealth": "true",
         "enableEasyPayCards": "true",

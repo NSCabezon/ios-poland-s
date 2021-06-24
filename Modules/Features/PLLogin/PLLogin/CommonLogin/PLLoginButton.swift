@@ -16,8 +16,6 @@ public final class PLLoginButton: UIButton {
     public override var isEnabled: Bool {
         didSet {
             colourForState()
-            let localizedKey = isEnabled ? "generic_button_continue" : "pl_login_button_access"
-            set(localizedStylableText: localized(localizedKey), state: .normal)
         }
     }
 

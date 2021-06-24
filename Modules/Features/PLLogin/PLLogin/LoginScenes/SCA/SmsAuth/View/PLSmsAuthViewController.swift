@@ -165,6 +165,7 @@ private extension PLSmsAuthViewController {
 
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(smsSendButtonDidPressed)))
+        loginButton.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
     }
 
     func configureSMSAuthView() {
@@ -219,11 +220,7 @@ private extension PLSmsAuthViewController {
             configureTooltip()
         }
         else {
-//            self.presenter.authenticate(smsCode: smsCode)
-            // TODO: PG Remove the following lines: 2
-            let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-//            coordinatorDelegate.goToPrivate(.classic)
-            self.presenter.goToDeviceTrustDeviceData()
+            self.presenter.authenticate(smsCode: smsCode)
         }
     }
 
