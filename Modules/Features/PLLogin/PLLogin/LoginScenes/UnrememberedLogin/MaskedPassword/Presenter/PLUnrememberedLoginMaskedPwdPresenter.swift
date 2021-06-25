@@ -65,7 +65,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         // TODO
     }
 
-    // Returns [Int] with the positions requested for the masked password
+    /// Returns [Int] with the positions requested for the masked password
     func requestedPositions() -> [Int] {
 
         var maskValue: Int = 0
