@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol PLLoginManagerProtocol {
+    func setDemoModeIfNeeded(for user: String) -> Bool
     func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError>
     func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func getPersistedPubKey() throws -> PubKeyDTO
@@ -30,7 +31,6 @@ public final class PLLoginManager {
 
 extension PLLoginManager: PLLoginManagerProtocol {
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
-        self.setDemoModeIfNeeded(parameters.selectedId)
         let result = try loginDataSource.doLogin(parameters)
         self.processLoginResult(parameters.selectedId, result: result)
         return result
@@ -62,16 +62,18 @@ extension PLLoginManager: PLLoginManagerProtocol {
     public func getAuthCredentials() throws -> AuthCredentials {
         return try self.bsanDataProvider.getAuthCredentials()
     }
+
+    public func setDemoModeIfNeeded(for user: String) -> Bool {
+        guard self.demoInterpreter.isDemoModeAvailable,
+            self.demoInterpreter.isDemoUser(userName: user) else { return false }
+        self.bsanDataProvider.setDemoMode(true, user)
+        return true
+    }
 }
 
 // MARK: - Private Methods
 
 private extension PLLoginManager {
-    private func setDemoModeIfNeeded(_ user: String) {
-        guard self.demoInterpreter.isDemoModeAvailable,
-            self.demoInterpreter.isDemoUser(userName: user) else { return }
-        self.bsanDataProvider.setDemoMode(true, user)
-    }
 
     private func removeDemoModeIfNeeded() {
         guard let _ = self.bsanDataProvider.getDemoMode() else { return }
