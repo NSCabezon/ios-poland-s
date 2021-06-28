@@ -17,6 +17,9 @@ final class PLCardsManagerAdapter {
 }
 
 extension PLCardsManagerAdapter: BSANCardsManager {
+    func getFractionablePurchaseDetail(input: FractionablePurchaseDetailParameters) throws -> BSANResponse<FinanceableMovementDetailDTO> {
+        return BSANErrorResponse(nil)
+    }
 
     func getCardTransactionLocation(card: SANLegacyLibrary.CardDTO, transaction: SANLegacyLibrary.CardTransactionDTO, transactionDetail: CardTransactionDetailDTO) throws -> BSANResponse<CardMovementLocationDTO> {
         return BSANErrorResponse(nil)

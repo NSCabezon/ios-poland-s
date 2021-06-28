@@ -12,6 +12,26 @@ final class PLBillTaxesManagerAdapter {
 }
  
 extension PLBillTaxesManagerAdapter: BSANBillTaxesManager {
+    func cancelDirectBilling(account: AccountDTO, bill: BillDTO, enableBillAndTaxesRemedy: Bool) throws -> BSANResponse<GetCancelDirectBillingDTO> {
+        return BSANErrorResponse(nil)
+    }
+
+    func duplicateBill(account: AccountDTO, bill: BillDTO, enableBillAndTaxesRemedy: Bool) throws -> BSANResponse<DuplicateBillDTO> {
+        return BSANErrorResponse(nil)
+    }
+
+    func confirmDuplicateBill(account: AccountDTO, bill: BillDTO, signature: SignatureDTO, enableBillAndTaxesRemedy: Bool) throws -> BSANResponse<Void> {
+        return BSANErrorResponse(nil)
+    }
+
+    func confirmReceiptReturn(account: AccountDTO, bill: BillDTO, billDetail: BillDetailDTO, signature: SignatureDTO, enableBillAndTaxesRemedy: Bool) throws -> BSANResponse<Void> {
+        return BSANErrorResponse(nil)
+    }
+
+    func downloadPdfBill(account: AccountDTO, bill: BillDTO, enableBillAndTaxesRemedy: Bool) throws -> BSANResponse<DocumentDTO> {
+        return BSANErrorResponse(nil)
+    }
+
     func billAndTaxesDetail(of account: AccountDTO, bill: BillDTO, enableBillAndTaxesRemedy: Bool) throws -> BSANResponse<BillDetailDTO> {
         return BSANErrorResponse(nil)
     }
