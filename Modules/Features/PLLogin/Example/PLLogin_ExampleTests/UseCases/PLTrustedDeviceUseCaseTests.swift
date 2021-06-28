@@ -33,7 +33,6 @@ class PLTrustedDeviceUseCaseTests: XCTestCase {
     private enum ParametersEncryption {
         enum Input {
             static let transportKey = "ae125fbc8d227e046e56bb12c45f21b2"
-//            static let encryptedTransportKey = "NRYjSGEXRRzhyLNgyD4aBw=="
             static let parameters = "<2021-04-18 22:01:11.238><<AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><samsung><model><SM-A600FN>>"
         }
         enum Output {
