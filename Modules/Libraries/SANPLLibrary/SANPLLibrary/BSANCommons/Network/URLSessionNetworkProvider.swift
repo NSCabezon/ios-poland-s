@@ -21,7 +21,7 @@ private extension URLSessionNetworkProvider {
     private var isDemo: Bool { return true }
     
     func createRequest<Request: NetworkProviderRequest>(_ request: Request) throws -> URLRequest {
-        guard var urlComponents = URLComponents(string: request.serviceUrl) else {
+        guard var urlComponents = URLComponents(string: request.serviceUrl + request.serviceName) else {
             throw NetworkProviderError.other
         }
         if let queryParams = request.queryParams {
@@ -45,23 +45,13 @@ private extension URLSessionNetworkProvider {
         return urlRequest
     }
     
-    //TODO: Review headers values
+
     func addHeaders<Request: NetworkProviderRequest>(_ urlRequest: inout URLRequest, request: Request) throws {
         request.headers?.forEach {
             urlRequest.addValue($0.value, forHTTPHeaderField: $0.key)
         }
-        if let clientId = try? dataProvider.getEnvironment().clientId,
-           urlRequest.value(forHTTPHeaderField: "client-id") == nil
-           {
-            urlRequest.addValue(clientId, forHTTPHeaderField: "Client-id")
-        }
         urlRequest.addValue("application/\(request.contentType.rawValue)", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Santander PL ONE App", forHTTPHeaderField: "User-Agent")
-        let traceUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
-        let spanUUID = UUID().uuidString.replacingOccurrences(of: "-", with: "").prefix(16).lowercased()
-        urlRequest.addValue(traceUUID, forHTTPHeaderField: "X-B3-TraceId")
-        urlRequest.addValue(spanUUID, forHTTPHeaderField: "X-B3-SpanId")
-        urlRequest.addValue("1", forHTTPHeaderField: "X-B3-Sampled")
         switch request.authorization {
         case .oauth:
             try self.addOauthAuthorization(&urlRequest)
@@ -71,12 +61,11 @@ private extension URLSessionNetworkProvider {
     }
     
     func addOauthAuthorization(_ urlRequest: inout URLRequest) throws {
-        // TODO: Fill with auth info
-//        let authCredentials = try self.dataProvider.getAuthCredentials()
-//        guard let accessToken = authCredentials.oAuthCredentials?.accessToken else {
-//            throw NetworkProviderError.other
-//        }
-//        urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        let authCredentials = try self.dataProvider.getAuthCredentials()
+        guard let accessToken = authCredentials.accessTokenCredentials?.accessToken else {
+            throw NetworkProviderError.other
+        }
+        urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
     }
     
     func executeUrlRequest(_ urlRequest: URLRequest) -> Result<Data, NetworkProviderError> {

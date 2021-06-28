@@ -5,12 +5,13 @@
 import Commons
 import DomainCommon
 
-public protocol PLLoginProcessLayerEventDelegate: class {
+public protocol PLLoginProcessLayerEventDelegate: AnyObject {
     func handle(event: LoginProcessLayerEvent)
 }
 
 protocol PLLoginProcessLayerProtocol {
     func setDelegate(_ delegate: PLLoginProcessLayerEventDelegate)
+    func setDemoUserIfNeeded(with loginType: LoginType, completion: @escaping () -> Void)
     func doLogin(with loginType: LoginType)
     func getPublicKey()
     func doAuthenticateInit(userId: String, challenge: ChallengeEntity)
@@ -49,6 +50,16 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
 
     private var authenticateUseCase: PLAuthenticateUseCase {
         self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
+    }
+
+    func setDemoUserIfNeeded(with loginType: LoginType, completion: @escaping () -> Void) {
+        let input = PLSetDemoUserUseCaseInput(userId: loginType.indentification)
+        let setDemoUserUseCase = PLSetDemoUserUseCase(dependenciesResolver: self.dependenciesResolver)
+        Scenario(useCase: setDemoUserUseCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
+            .finally {
+                completion()
+            }
     }
 
     func doLogin(with loginType: LoginType) {
@@ -123,7 +134,9 @@ private extension PLLoginProcessLayer {
                 let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
                                                                    passwordType: passwordType,
                                                                    challenge: ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
-                                                                   loginImageData: output.loginImage, password: nil, secondFactorDataFinalState: output.secondFactorFinalState)
+                                                                   loginImageData: output.loginImage,
+                                                                   password: nil,
+                                                                   secondFactorDataFinalState: output.secondFactorFinalState)
                 self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }
             .onError { [weak self] error in

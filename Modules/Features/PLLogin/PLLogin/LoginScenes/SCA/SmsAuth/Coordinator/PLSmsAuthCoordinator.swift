@@ -103,6 +103,12 @@ private extension PLSmsAuthCoordinator {
         self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
            return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
         }
+        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
+            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
+            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
+        }
         self.registerEnvironmentDependencies()
     }
 }

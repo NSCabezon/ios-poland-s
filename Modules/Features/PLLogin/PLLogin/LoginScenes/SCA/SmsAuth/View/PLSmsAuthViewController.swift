@@ -165,6 +165,7 @@ private extension PLSmsAuthViewController {
 
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(smsSendButtonDidPressed)))
+        loginButton.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
     }
 
     func configureSMSAuthView() {
@@ -177,11 +178,17 @@ private extension PLSmsAuthViewController {
     }
 
 
-    func configureTooltip() {
-        let dialog = Dialog(title: "", items: [Dialog.Item.text("pl_login_alert_expiredSignature")], image: nil, actionButton: Dialog.Action(title: "generic_button_understand", style: .red, action: {
-            self.presenter.didSelectLoginRestartAfterTimeOut()
-                }), isCloseButtonAvailable: false)
-        dialog.show(in: self)
+    func showExpiredSignatureMessage() {
+        let message = Dialog.Item.styledConfiguredText(localized("pl_login_alert_expiredSignature"), configuration: LocalizedStylableTextConfiguration(
+            font: .santander(family: .text, type: .regular, size: 16),
+            alignment: .center,
+            lineHeightMultiple: 1,
+            lineBreakMode: .byTruncatingTail
+        ))
+        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { [weak self] in
+                self?.presenter.didSelectLoginRestartAfterTimeOut()
+        })
+        self.showDialog(items: [message], action: acceptAction, isCloseOptionAvailable: false)
     }
 
     func initTimeValidateSMS() {
@@ -216,14 +223,10 @@ private extension PLSmsAuthViewController {
             return
         }
 		if finishedTimeValidateSMS {
-            configureTooltip()
+            showExpiredSignatureMessage()
         }
         else {
             self.presenter.authenticate(smsCode: smsCode)
-            // TODO: PG Remove the following lines: 2
-            let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
-            coordinatorDelegate.goToPrivate(.classic)
-            //self.presenter.goToDeviceTrustDeviceData()
         }
     }
 
@@ -297,5 +300,11 @@ extension  PLSmsAuthViewController: PLUIInputCodeViewDelegate {
     }
 
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
+    }
+}
+
+extension PLSmsAuthViewController: DialogViewPresentationCapable {
+    var associatedDialogView: UIViewController {
+        return self
     }
 }

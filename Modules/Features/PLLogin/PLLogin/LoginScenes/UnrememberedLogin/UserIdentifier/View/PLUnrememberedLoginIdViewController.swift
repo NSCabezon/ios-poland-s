@@ -157,6 +157,7 @@ private extension PLUnrememberedLoginIdViewController {
     
     func configureButtons() {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
+        loginButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
         tooltipButton.set(localizedStylableText: localized("pl_login_label_whatIsLogin"), state: .normal)
         tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
         tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)

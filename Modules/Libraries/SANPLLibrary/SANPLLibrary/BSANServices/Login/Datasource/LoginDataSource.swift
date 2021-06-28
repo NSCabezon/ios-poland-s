@@ -21,22 +21,16 @@ private extension LoginDataSource {
 }
 
 class LoginDataSource: LoginDataSourceProtocol {
-    private let loginPath = "/api/as/login"
-    private let pubKeyPath = "/api/as/pub_key"
-    private let authenticateInitPath = "/api/as/authenticate/init"
-    private let authenticatePath = "/api/as/authenticate"
-    
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    // TODO: Review
-    private let basePath = ""
+    private let basePath = "/api/as"
     private var headers: [String: String] = ["Santander-Channel": "MBP",
                                              "Santander-Session-Id": ""]
     
     private enum LoginServiceType: String {
         case login = "/login"
-        case pubKey = "/pubKey"
-        case authenticateInit = "/authenticateInit"
+        case pubKey = "/pub_key"
+        case authenticateInit = "/authenticate/init"
         case authenticate = "/authenticate"
     }
     
@@ -49,9 +43,8 @@ class LoginDataSource: LoginDataSourceProtocol {
         guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
-        
-        let path = self.basePath + self.loginPath
-        let absoluteUrl = baseUrl + path
+
+        let absoluteUrl = baseUrl + self.basePath
         let serviceName =  LoginServiceType.login.rawValue
         let result: Result<LoginDTO, NetworkProviderError> = self.networkProvider.request(LoginRequest(serviceName: serviceName,
                                                                                                        serviceUrl: absoluteUrl,
@@ -69,8 +62,7 @@ class LoginDataSource: LoginDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
-        let path = self.basePath + self.pubKeyPath
-        let absoluteUrl = baseUrl + path
+        let absoluteUrl = baseUrl + self.basePath
         let serviceName =  LoginServiceType.pubKey.rawValue
         let result: Result<PubKeyDTO, NetworkProviderError> = self.networkProvider.request(pubKeyRequest(serviceName: serviceName,
                                                                                                             serviceUrl: absoluteUrl,
@@ -87,8 +79,7 @@ class LoginDataSource: LoginDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
-        let path = self.basePath + self.authenticateInitPath
-        let absoluteUrl = baseUrl + path
+        let absoluteUrl = baseUrl + self.basePath
         let serviceName =  LoginServiceType.authenticateInit.rawValue
         let result: Result<NetworkProviderResponseWithStatus, NetworkProviderError> = self.networkProvider.requestDataWithStatus(AuthenticateInitRequest(serviceName: serviceName,
                                                                                                            serviceUrl: absoluteUrl,
@@ -105,8 +96,7 @@ class LoginDataSource: LoginDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
-        let path = self.basePath + self.authenticatePath
-        let absoluteUrl = baseUrl + path
+        let absoluteUrl = baseUrl + self.basePath
         let serviceName =  LoginServiceType.authenticate.rawValue
         let result: Result<AuthenticateDTO, NetworkProviderError> = self.networkProvider.request(AuthenticateRequest(serviceName: serviceName,
                                                                                                              serviceUrl: absoluteUrl,
