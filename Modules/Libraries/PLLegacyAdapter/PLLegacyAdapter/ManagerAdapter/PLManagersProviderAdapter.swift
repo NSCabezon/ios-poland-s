@@ -59,6 +59,8 @@ public final class PLManagersProviderAdapter {
     private let ecommerceManagerAdapter: PLEcommerceManagerAdapter
     private let predefineSCAManager: PLPredefineSCAManagerAdapter
     private let fintechManager: PLFintechManagerAdapter
+    private let signBasicOperationManager: PLSignBasicOperationManagerAdapter
+    private let subscriptionManager: PLSubscriptionManagerAdapter
 
     public init(bsanDataProvider:SANPLLibrary.BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -114,10 +116,19 @@ public final class PLManagersProviderAdapter {
         self.ecommerceManagerAdapter = PLEcommerceManagerAdapter()
         self.predefineSCAManager = PLPredefineSCAManagerAdapter()
         self.fintechManager = PLFintechManagerAdapter()
+        self.signBasicOperationManager = PLSignBasicOperationManagerAdapter()
+        self.subscriptionManager = PLSubscriptionManagerAdapter()
     }
 }
 
 extension PLManagersProviderAdapter: BSANManagersProvider {
+    public func getBsanSignBasicOperationManager() -> BSANSignBasicOperationManager {
+        return self.signBasicOperationManager
+    }
+
+    public func getBsanSubscriptionManager() -> BSANSubscriptionManager {
+        self.subscriptionManager
+    }
 
     public func getBsanAuthManager() -> BSANAuthManager {
         return self.authManager

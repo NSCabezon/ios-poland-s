@@ -83,7 +83,7 @@ def pl_libraries
 end
 
 def pl_thirdparty_dependencies
-  pod 'SwiftLint', '0.39.2'
+  pod 'SwiftLint', '0.43.1'
 end
 
 # --------- Target configuration
