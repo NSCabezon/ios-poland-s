@@ -1,77 +1,62 @@
 {
     "12345678Z": {
         "0": {
-            "number": "35109011990000000142217187",
-            "id": "142217187",
-            "taxAccountId": "0",
+            "number": "33109010430000000142233200",
+            "id": "142233200",
             "currencyCode": "PLN",
             "name": {
-                "source": "Kredyt gotówkowy",
+                "source": null,
                 "description": "Kredyt gotówkowy",
                 "userDefined": null
             },
             "type": "LOAN",
             "balance": {
-                "value": -6371.68,
+                "value": -2742.75,
                 "currencyCode": "PLN"
             },
             "availableFunds": {
-                "value": 6371.68,
+                "value": 2742.75,
                 "currencyCode": "PLN"
             },
-            "lastUpdate": "2021-05-10",
+            "lastUpdate": "2021-06-11",
             "systemId": 3,
-            "permissions": [
-                "READ",
-                "WRITE",
-                "SIGN",
-                "SEND"
-            ],
-            "defaultForPayments": false,
             "role": "OWNER",
-            "functionalities": [
-                "DETAILS",
-                "ALIAS",
-                "HISTORY",
-                "CUSTOMER_SERVICE",
-                "INSTALLMENTS"
-            ],
             "accountDetails": {
-                "openedDate": "2020-05-25",
-                "interestRate": 0.1800
+                "openedDate": "2019-12-12",
+                "interestRate": 7.2128,
+                "overDraftLimit": {
+                    "value": 0.00,
+                    "currencyCode": "PLN"
+                },
+                "productCode": 110,
+                "accountType": 0
             },
             "loanAccountDetails": {
                 "loanType": "CASH_LOAN",
-                "creditTypeName": "KR.DLA LUDN.PLN NIEZABEZPIECZ.",
                 "interest": {
-                    "rateName": "INTERWENCYJNA NBP",
-                    "rate": 0.18,
+                    "rate": 0.0000,
                     "period": 0,
-                    "periodUnit": null,
-                    "nextChargingDate": "2021-05-17",
-                    "nextExpectDate": null,
+                    "periodUnit": " ",
                     "totalPaid": {
-                        "value": 1535.03,
+                        "value": 246.30,
                         "currencyCode": "PLN"
                     },
-                    "previousExpectDate": null,
                     "previousTotalAmount": {
-                        "value": 28.77,
+                        "value": 101.99,
                         "currencyCode": "PLN"
                     },
                     "penaltyAmount": {
-                        "value": 1535.03,
+                        "value": 246.30,
                         "currencyCode": "PLN"
                     }
                 },
                 "grantedCreditLimit": {
-                    "value": 10000,
+                    "value": 4555.00,
                     "currencyCode": "PLN"
                 },
-                "finalRepaymentDate": "2022-10-19",
-                "nextInstallmentDate": "2021-05-19",
+                "finalRepaymentDate": "2021-12-12",
                 "excessPaymentAmount": {
-                    "value": 0,
+                    "value": 0.00,
                     "currencyCode": "PLN"
                 },
                 "excessPaymentFlag": false

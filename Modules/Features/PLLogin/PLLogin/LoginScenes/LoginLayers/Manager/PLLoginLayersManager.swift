@@ -20,7 +20,7 @@ import Models
  */
 
 /// This protocol is adopted by the Login Manager and used from scene presenter.
-protocol PLLoginLayersManagerDelegate: class {
+protocol PLLoginLayersManagerDelegate: AnyObject {
     func doLogin(type: LoginType)
     func doAuthenticateInit(userId: String, challenge: ChallengeEntity)
     func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity)
@@ -32,7 +32,7 @@ protocol PLLoginLayersManagerDelegate: class {
 }
 
 /// This protocol is adopted by the scene presenter and used from the Login Manager.
-protocol PLLoginPresenterLayerProtocol: class {
+protocol PLLoginPresenterLayerProtocol: AnyObject {
     func handle(event: LoginProcessLayerEvent)
     func handle(event: SessionProcessEvent)
     func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity)
@@ -78,9 +78,11 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
     }
     
     func doLogin(type: LoginType) {
-        self.loginProcessLayer.doLogin(with: type)
-        self.loginProcessLayer.getPublicKey()
-        //self.loginSessionLayer.setLoginState(.login)
+        self.loginProcessLayer.setDemoUserIfNeeded(with: type) {
+            self.loginProcessLayer.doLogin(with: type)
+            self.loginProcessLayer.getPublicKey()
+            //self.loginSessionLayer.setLoginState(.login)
+        }
     }
 
     func doAuthenticateInit(userId: String, challenge: ChallengeEntity) {

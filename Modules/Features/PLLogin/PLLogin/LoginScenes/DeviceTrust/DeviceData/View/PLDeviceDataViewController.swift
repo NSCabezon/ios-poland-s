@@ -10,7 +10,9 @@ import UI
 import PLUI
 import Commons
 
-protocol PLDeviceDataViewProtocol: AnyObject {}
+protocol PLDeviceDataViewProtocol: AnyObject {
+    func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration)
+}
 
 final class PLDeviceDataViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
@@ -64,6 +66,16 @@ final class PLDeviceDataViewController: UIViewController {
     }
 }
 
+extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
+
+    func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration) {
+
+        modelDeviceValueLabel.text = deviceConfiguration.model
+        brandDeviceValueLabel.text = deviceConfiguration.brand
+        idDeviceValueLabel.text = deviceConfiguration.deviceId
+    }
+}
+
 private extension PLDeviceDataViewController {
     func setupViews() {
         commonInit()
@@ -90,20 +102,20 @@ private extension PLDeviceDataViewController {
         modelDeviceLabel.text = localized("pl_onboarding_text_phoneModel")
         modelDeviceValueLabel.font = .santander(family: .text, type: .bold, size: 16)
         modelDeviceValueLabel.textColor = UIColor.Legacy.uiBlack
-        let deviceName = UIDevice.current.getDeviceName().components(separatedBy: " ")
-        modelDeviceValueLabel.text = deviceName[1]
+//        let deviceName = UIDevice.current.getDeviceName().components(separatedBy: " ")
+//        modelDeviceValueLabel.text = deviceName[1]
         brandDeviceLabel.font = .santander(family: .text, type: .light, size: 16)
         brandDeviceLabel.textColor = UIColor.Legacy.uiBlack
         brandDeviceLabel.text = localized("pl_onboarding_text_phoneBrand")
         brandDeviceValueLabel.font = .santander(family: .text, type: .bold, size: 16)
         brandDeviceValueLabel.textColor = UIColor.Legacy.uiBlack
-        brandDeviceValueLabel.text = UIDevice.current.model
+//        brandDeviceValueLabel.text = UIDevice.current.model
         idDeviceLabel.font = .santander(family: .text, type: .light, size: 16)
         idDeviceLabel.textColor = UIColor.Legacy.uiBlack
         idDeviceLabel.text = localized("pl_onboarding_text_phoneID")
         idDeviceValueLabel.font = .santander(family: .text, type: .bold, size: 16)
         idDeviceValueLabel.textColor = UIColor.Legacy.uiBlack
-        // TODO: idDeviceValueLabel.text = 
+//        idDeviceValueLabel.text = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 9)?.toHexString()
     }
 
     func configureButtons() {
@@ -120,6 +132,6 @@ private extension PLDeviceDataViewController {
     }
 
     @objc func continueButtonDidPressed() {
-        //TODO:
+        self.presenter.registerDevice()
     }
 }

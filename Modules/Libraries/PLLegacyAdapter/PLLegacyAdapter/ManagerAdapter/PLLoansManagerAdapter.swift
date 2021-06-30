@@ -26,14 +26,7 @@ extension PLLoansManagerAdapter: BSANLoansManager {
             return BSANErrorResponse(nil)
         }
 
-        var dateFrom: String? = nil
-        var dateTo: String? = nil
-        if let dateFilterFrom = dateFilter?.fromDateModel?.date, let dateFilterTo = dateFilter?.toDateModel?.date {
-            dateFrom = DateFormats.toString(date: dateFilterFrom, output: .YYYYMMDD)
-            dateTo = DateFormats.toString(date: dateFilterTo, output: .YYYYMMDD)
-        }
-
-        let loanTransactionsParameters = LoanTransactionParameters(dateFrom: dateFrom, dateTo: dateTo, operationCount: nil, getDirection: nil)
+        let loanTransactionsParameters = LoanTransactionParameters(dateFrom: nil, dateTo: nil, operationCount: nil, getDirection: nil)
         let loanTransactionsList = try self.loanManager.getTransactions(withAccountNumber: accountNumber, parameters: loanTransactionsParameters).get()
 
         let adaptedLoanTransactionsList = LoanTransactionsListDTOAdapter.adaptPLLoanTransactionListToLoanTransactionList(loanTransactionsList)

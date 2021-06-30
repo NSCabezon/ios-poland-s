@@ -10,7 +10,10 @@ import SANLegacyLibrary
 final class PLTransfersManagerAdapter {}
  
 extension PLTransfersManagerAdapter: BSANTransfersManager {
-    
+    func confirmRemoveSepaPayee(payeeId: String?, signatureWithTokenDTO: SignatureWithTokenDTO?) throws -> BSANResponse<SignatureWithTokenDTO?> {
+        return BSANErrorResponse(nil)
+    }
+
     func loadUsualTransfersOld() throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }

@@ -65,7 +65,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         // TODO
     }
 
-    // Returns [Int] with the positions requested for the masked password
+    /// Returns [Int] with the positions requested for the masked password
     func requestedPositions() -> [Int] {
 
         var maskValue: Int = 0
@@ -78,6 +78,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         let requestedPositions: [Int] = binaryString.compactMap {
             let value = Int(String($0)) ?? 0
             pos += 1
+            guard pos <= 20 else { return nil }
             return value == 1 ? pos : nil
         }
         return requestedPositions
