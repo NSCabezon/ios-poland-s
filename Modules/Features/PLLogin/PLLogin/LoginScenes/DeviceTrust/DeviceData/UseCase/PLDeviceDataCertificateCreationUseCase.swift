@@ -9,6 +9,7 @@ import Commons
 import DomainCommon
 import PLCommons
 import CryptoSwift
+import CertificateSigningRequest
 
 private struct PLCertificate {
     let publicKey: String
@@ -26,8 +27,7 @@ final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertific
 
         do {
             let certificate = try self.generateCertificate()
-            return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(publicKey: certificate.publicKey,
-                                                                                   privateKey: certificate.privateKey))
+            return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate))
         } catch {
             return UseCaseResponse.error(PLDeviceDataUseCaseErrorOutput(error.localizedDescription))
         }
@@ -40,58 +40,46 @@ private extension PLDeviceDataCertificateCreationUseCase {
         static let keySize: Int = 1024
     }
 
-    func generateCertificate() throws -> PLCertificate {
+    func generateCertificate() throws -> String {
+        let random = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 2)?.toHexString() ?? ""
+        let tagPrivate = "OneApp.TrustedDevice.private.\(random)"
+        let tagPublic = "OneApp.TrustedDevice.public.\(random)"
+        let keyAlgorithm = KeyAlgorithm.rsa(signatureType: .sha256)
+        //let sizeOfKey = keyAlgorithm.availableKeySizes[1]
+        let sizeOfKey = 1024
 
-        guard
-            let publicKeyTag = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 16)?.toHexString().data(using: String.Encoding.utf8) as NSObject?,
-            let privateKeyTag = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 16)?.toHexString().data(using: String.Encoding.utf8) as NSObject?
-        else {
+        let (potentialPrivateKey, potentialPublicKey) =
+            self.generateKeysAndStoreInKeychain(keyAlgorithm, keySize: sizeOfKey,
+                                                tagPrivate: tagPrivate, tagPublic: tagPublic)
+        guard let privateKey = potentialPrivateKey,
+              let publicKey = potentialPublicKey else {
             throw PLDeviceDataEncryptionError.certificateCreationError
         }
 
-        let publicKeyAttr: [NSObject: NSObject] = [
-            kSecAttrIsPermanent:true as NSObject,
-            kSecAttrApplicationTag: publicKeyTag,
-            kSecClass: kSecClassKey,
-            kSecReturnData: kCFBooleanTrue]
-        let privateKeyAttr: [NSObject: NSObject] = [
-            kSecAttrIsPermanent:true as NSObject,
-            kSecAttrApplicationTag: privateKeyTag,
-            kSecClass: kSecClassKey,
-            kSecReturnData: kCFBooleanTrue]
-
-        var keyPairAttr = [NSObject: NSObject]()
-        keyPairAttr[kSecAttrKeyType] = kSecAttrKeyTypeRSA
-        keyPairAttr[kSecAttrKeySizeInBits] = Constants.keySize as NSObject
-        keyPairAttr[kSecPublicKeyAttrs] = publicKeyAttr as NSObject
-        keyPairAttr[kSecPrivateKeyAttrs] = privateKeyAttr as NSObject
-
-        var publicKey : SecKey?
-        var privateKey : SecKey?;
-
-        let statusCode = SecKeyGeneratePair(keyPairAttr as CFDictionary, &publicKey, &privateKey)
-
-        guard statusCode == noErr && publicKey != nil && privateKey != nil else {
+        let (potentialPublicKeyBits, potentialPublicKeyBlockSize) =
+            self.getPublicKeyBits(keyAlgorithm,
+                                  publicKey: publicKey, tagPublic: tagPublic)
+        guard let publicKeyBits = potentialPublicKeyBits,
+              potentialPublicKeyBlockSize != nil else {
             throw PLDeviceDataEncryptionError.certificateCreationError
         }
 
-        var resultPublicKey: AnyObject?
-        var resultPrivateKey: AnyObject?
-        let statusPublicKey = SecItemCopyMatching(publicKeyAttr as CFDictionary, &resultPublicKey)
-        let statusPrivateKey = SecItemCopyMatching(privateKeyAttr as CFDictionary, &resultPrivateKey)
+        // TODO: We will probably need to add the dates (notBefore, notAfter) to certificate and create a X509v3 instead of v1
+        let algorithm = KeyAlgorithm.rsa(signatureType: .sha256)
+                let csr = CertificateSigningRequest(commonName: "Santander",
+                                                    organizationName: "Santander Bank Polska S.A.",
+                                                    countryName: "PL",
+                                                    keyAlgorithm: algorithm)
 
-        guard statusPublicKey == noErr,
-              let publicKeyData = resultPublicKey as? Data else {
+        guard let builtCSR = csr.buildCSRAndReturnString(publicKeyBits, privateKey: privateKey, publicKey: publicKey) else {
             throw PLDeviceDataEncryptionError.certificateCreationError
         }
 
-        guard statusPrivateKey == noErr,
-              let privateKeyData = resultPrivateKey as? Data else {
-            throw PLDeviceDataEncryptionError.certificateCreationError
-        }
-
-        return PLCertificate(publicKey: publicKeyData.base64EncodedString().addPEMformat(),
-                             privateKey: privateKeyData.base64EncodedString())
+        let certificate = builtCSR
+            .replacingOccurrences(of: "-----BEGIN CERTIFICATE REQUEST-----", with: "-----BEGIN CERTIFICATE-----")
+            .replacingOccurrences(of: "-----END CERTIFICATE REQUEST-----", with: "-----END CERTIFICATE-----")
+        print("Certificate generated: \(certificate)")
+        return certificate
     }
 }
 
@@ -106,8 +94,79 @@ struct PLDeviceDataCertificateCreationUseCaseInput {
 }
 
 struct PLDeviceDataCertificateCreationUseCaseOutput {
-    let publicKey: String
-    let privateKey: String
+    let certificate: String
 }
 
+// MARK: Private extension
+private extension PLDeviceDataCertificateCreationUseCase {
+    func generateKeysAndStoreInKeychain(_ algorithm: KeyAlgorithm, keySize: Int,
+                                        tagPrivate: String, tagPublic: String) -> (SecKey?, SecKey?) {
+        let publicKeyParameters: [String: Any] = [
+            String(kSecAttrIsPermanent): true,
+            String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock,
+            String(kSecAttrApplicationTag): tagPublic.data(using: .utf8)!
+        ]
 
+        let privateKeyParameters: [String: Any] = [
+            String(kSecAttrIsPermanent): true,
+            String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock,
+            String(kSecAttrApplicationTag): tagPrivate.data(using: .utf8)!
+        ]
+
+        //Define what type of keys to be generated here
+        let parameters: [String: Any] = [
+            String(kSecAttrKeyType): algorithm.secKeyAttrType,
+            String(kSecAttrKeySizeInBits): keySize,
+            String(kSecReturnRef): true,
+            String(kSecPublicKeyAttrs): publicKeyParameters,
+            String(kSecPrivateKeyAttrs): privateKeyParameters
+        ]
+
+        //Use Apple Security Framework to generate keys, save them to application keychain
+        var error: Unmanaged<CFError>?
+        let privateKey = SecKeyCreateRandomKey(parameters as CFDictionary, &error)
+        if privateKey == nil {
+            print("Error creating keys occured: \(error!.takeRetainedValue() as Error), keys weren't created")
+            return (nil, nil)
+        }
+
+        //Get generated public key
+        let query: [String: Any] = [
+            String(kSecClass): kSecClassKey,
+            String(kSecAttrKeyType): algorithm.secKeyAttrType,
+            String(kSecAttrApplicationTag): tagPublic.data(using: .utf8)!,
+            String(kSecReturnRef): true
+        ]
+
+        var publicKeyReturn: CFTypeRef?
+        let result = SecItemCopyMatching(query as CFDictionary, &publicKeyReturn)
+        if result != errSecSuccess {
+            print("Error getting publicKey fron keychain occured: \(result)")
+            return (privateKey, nil)
+        }
+        // swiftlint:disable:next force_cast
+        let publicKey = publicKeyReturn as! SecKey?
+        return (privateKey, publicKey)
+    }
+
+    func getPublicKeyBits(_ algorithm: KeyAlgorithm, publicKey: SecKey, tagPublic: String) -> (Data?, Int?) {
+        //Set block size
+        let keyBlockSize = SecKeyGetBlockSize(publicKey)
+        //Ask keychain to provide the publicKey in bits
+        let query: [String: Any] = [
+            String(kSecClass): kSecClassKey,
+            String(kSecAttrKeyType): algorithm.secKeyAttrType,
+            String(kSecAttrApplicationTag): tagPublic.data(using: .utf8)!,
+            String(kSecReturnData): true
+        ]
+
+        var tempPublicKeyBits: CFTypeRef?
+        var _ = SecItemCopyMatching(query as CFDictionary, &tempPublicKeyBits)
+
+        guard let keyBits = tempPublicKeyBits as? Data else {
+            return (nil, nil)
+        }
+
+        return (keyBits, keyBlockSize)
+    }
+}

@@ -76,15 +76,25 @@ final class PLDeviceDataPresenter {
                                           deviceId: deviceId)
     }()
 
-    // Date we should send is realative to user, isnt it??? It is not GMT or something like this
-    private var currentDateString: String = {
+    private lazy var currentDate: Date = {
+        return Date()
+    }()
+
+    // We need to use different formats for both dates we are sending
+    private var dateFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "y-MM-dd H:m:ss.SSS"
-        return df.string(from: Date())
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return df
+    }()
+
+    private var parametersDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        return df
     }()
 
     private lazy var parameters: String = {
-        let dateString = self.currentDateString
+        let dateString = self.parametersDateFormatter.string(from: self.currentDate)
         let appId = self.deviceConfiguration.appId
         let deviceId = self.deviceConfiguration.deviceId
         let manufacturer = self.deviceConfiguration.manufacturer
@@ -132,12 +142,12 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
             }.addScenario(parametersScenario) { (updatedValues, output, _) in
                 updatedValues.parametersEncryption = output.encryptedParameters
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
-                updatedValues.publicKey = output.publicKey
-            }.then(scenario: { (transportKeyEncryption, parametersEncryption, publicKey) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
+                updatedValues.publicKey = output.certificate
+            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
-                                                                                        deviceTime: self.currentDateString,
-                                                                                        certificate: publicKey ?? "",
+                                                                                        deviceTime: self.dateFormatter.string(from: self.currentDate),
+                                                                                        certificate: certificate ?? "",
                                                                                         appId: self.deviceConfiguration.appId)
                 let registerDeviceScenario = Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
                 return registerDeviceScenario

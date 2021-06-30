@@ -111,30 +111,48 @@ class PLLoginTrustedDeviceTests: XCTestCase {
 }
 
 
-//PRAGMA MARK: - Other interesting tests for Encryption/Decryption
+//PRAGMA MARK: - Test to make all the reverse process (process it is doing the backend) to get decrypted parameters
 extension PLLoginTrustedDeviceTests {
 
-    // Decryption from encrypted hex string (Reverse process)
-    func testReverseProcess() {
+    // Knowing password, encrypted TKEy base 64 and encrypted parameters base 64 -> Decrypt TKey to decrypt parameters
+    func testReverseCompleteProcess() {
 
         enum Constants {
-
             static let initialVector: Array<UInt8> = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-            static let TKey: Array<UInt8> = [0xAE, 0x12, 0x5F, 0xBC, 0x8D, 0x22, 0x7E, 0x04, 0x6E, 0x56, 0xBB, 0x12, 0xC4, 0x5F, 0x21, 0xB2]
-            static let encryptedParametersStringHexadecimal = "C77109347B4BD1090C6D067F2C9FFA570F16C1D805A3802FDBB3F4C0A35223FE9B003A02CD0FB19E723BDD53163B70646470490F474C2735FDDEA9C58E2C49929295AB87D66914E853E00A108AB5C1BF9D87ACA51A1C5D37F1D1856E9D3A224D35639105DC13EDBB26CB6FFDFCDB89118B00E2E0A8A35C5ADB1AF16B6A3DDD3FBF414BC8D6F91DC37BCF8CF1D00B5019"
+
+            enum Input {
+                static let password = "348x!z"
+                static let encryptedTransportKeyBase64 = "NRYjSGEXRRzhyLNgyD4aBw=="
+                static let parametersStringHexadecimalBase64 = "x3EJNHtL0QkMbQZ/LJ/6Vw8WwdgFo4Av27P0wKNSI/6bADoCzQ+xnnI73VMWO3BkZHBJD0dMJzX93qnFjixJkpKVq4fWaRToU+AKEIq1wb+dh6ylGhxdN/HRhW6dOiJNNWORBdwT7bsmy2/9/NuJEYsA4uCoo1xa2xrxa2o93T+/QUvI1vkdw3vPjPHQC1AZ"
+            }
 
             enum ExpectedResult {
+                static let TKey: Array<UInt8> = [0xAE, 0x12, 0x5F, 0xBC, 0x8D, 0x22, 0x7E, 0x04, 0x6E, 0x56, 0xBB, 0x12, 0xC4, 0x5F, 0x21, 0xB2]
                 static let parametersString = "<2021-04-18 22:01:11.238><<AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><samsung><model><SM-A600FN>>"
             }
         }
 
-        // Tkey encrypted with AES128 with the PassKey and initial vector to 0
-        let aes = try! AES(key: Constants.TKey, blockMode: CBC(iv: Constants.initialVector), padding: .pkcs5)
 
-        let bytes = Constants.encryptedParametersStringHexadecimal.hexaBytes
-        // Decryption
-        let decryptedParametersBytes = try! aes.decrypt(bytes)
+        // TKEY decryption with password
+        let passKeyLength16 = PLLoginTrustedDeviceHelpers.length16Password(Constants.Input.password)
+        let passKeyLength16Bytes = passKeyLength16?.bytes
+
+        let encryptedTKeyData = Data(base64Encoded: Constants.Input.encryptedTransportKeyBase64)
+        let encryptedTKeyBytes = (encryptedTKeyData?.bytes)!
+        //let TKeyBytes = (encryptedTKey64Data!.toHexString().hexaBytes)
+        let aes2 = try! AES(key: passKeyLength16Bytes!, blockMode: CBC(iv: Constants.initialVector), padding: .noPadding)
+        let decryptedTransportKey = try! aes2.decrypt(encryptedTKeyBytes)
+        // Test that decrypted TKey is what we are expecting
+        XCTAssertEqual(decryptedTransportKey, Constants.ExpectedResult.TKey)
+
+
+        // PARAMETERS decryption
+        let encryptedParametersData = Data(base64Encoded: Constants.Input.parametersStringHexadecimalBase64)
+        let encryptedParametersBytes = (encryptedParametersData?.bytes)!
+        let aes = try! AES(key: decryptedTransportKey, blockMode: CBC(iv: Constants.initialVector), padding: .pkcs5)
+        let decryptedParametersBytes = try! aes.decrypt(encryptedParametersBytes)
         let parametersString = String(bytes: decryptedParametersBytes, encoding: .utf8)
+
         XCTAssertEqual(parametersString, Constants.ExpectedResult.parametersString)
 
         //NOTE: The following lines are not needed but I´m testing different conversions to get the same result
