@@ -79,7 +79,7 @@
         "accountEasyPayMinAmount": "300",
         "enableAccountEasyPayForBills": "true",
         "enableAccountEasyPayForStandardNationalTransfers": "true",
-        "enableOtpPush": "true",
+        "enableOtpPush": "false",
         "messageOtpPushBeta": "true",
         "managerWallVersion": "2",
         "enableSCALogin": "false",
