@@ -114,7 +114,7 @@ private struct LoginRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]? = nil
+    let queryParams: [String: Any]? = nil
     let jsonBody: LoginParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
@@ -150,7 +150,7 @@ private struct pubKeyRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]? = nil
+    let queryParams: [String: Any]? = nil
     let jsonBody: AuthenticateInitParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
@@ -186,7 +186,7 @@ private struct AuthenticateInitRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]? = nil
+    let queryParams: [String: Any]? = nil
     let jsonBody: AuthenticateInitParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
@@ -222,7 +222,7 @@ private struct AuthenticateRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]? = nil
+    let queryParams: [String: Any]? = nil
     let jsonBody: AuthenticateParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?

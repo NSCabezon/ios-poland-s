@@ -30,7 +30,7 @@ final class LoanDataSource {
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
     private var headers: [String: String] = [:]
-    private var queryParams: [String: String]? = nil
+    private var queryParams: [String: Any]? = nil
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
@@ -48,7 +48,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
 
         self.queryParams = nil
         if let parametersData = try? JSONEncoder().encode(parameters) {
-            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
+            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : Any]
         }
 
         let serviceName = "\(LoanServiceType.detail.rawValue)/\(accountNumber)/\(systemId)"
@@ -81,7 +81,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
 
         self.queryParams = nil
         if let parameters = parameters, let parametersData = try? JSONEncoder().encode(parameters) {
-            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
+            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : Any]
         }
 
         let serviceName = "\(LoanServiceType.installments.rawValue)/\(accountId)"
@@ -108,7 +108,7 @@ private extension LoanDataSource {
 
         self.queryParams = nil
         if let parameters = parameters, let parametersData = try? JSONEncoder().encode(parameters) {
-            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
+            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : Any]
         }
 
         let serviceName = "\(LoanServiceType.transactions.rawValue)/\(type.rawValue)/\(systemId)/\(accountId)"
@@ -131,7 +131,7 @@ private struct LoanRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]?
+    let queryParams: [String: Any]?
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .none
@@ -145,7 +145,7 @@ private struct LoanRequest: NetworkProviderRequest {
          body: Data? = nil,
          jsonBody: Encodable? = nil,
          headers: [String: String]?,
-         queryParams: [String: String]? = nil,
+         queryParams: [String: Any]? = nil,
          contentType: NetworkProviderContentType,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
