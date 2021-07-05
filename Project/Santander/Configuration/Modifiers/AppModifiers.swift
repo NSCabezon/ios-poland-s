@@ -65,6 +65,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
             return self.accountOtherOperativesActionModifier
         }
+        self.dependencieEngine.register(for: AccountNumberFormatterProtocol.self) { _ in
+            return PLAccountNumberFormatter()
+        }
         self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
             return self.cardHomeActionModifier
         }

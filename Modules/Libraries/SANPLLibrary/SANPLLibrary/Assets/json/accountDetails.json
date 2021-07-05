@@ -1,0 +1,44 @@
+{
+    "12345678Z": {
+        "0": {
+            "number": "31191010482124191332700001",
+            "id": "140490486",
+            "taxAccountId": "0",
+            "currencyCode": "PLN",
+            "name": {
+                "source": "Konto Jakie Chcę",
+                "description": "Konto Jakie Chcę",
+                "userDefined": null
+            },
+            "type": "PERSONAL",
+            "balance": {
+                "value": 12,
+                "currencyCode": "PLN"
+            },
+            "availableFunds": {
+                "value": 12,
+                "currencyCode": "PLN"
+            },
+            "lastUpdate": "2021-06-01",
+            "systemId": 3,
+            "permissions": [
+                "READ",
+                "WRITE",
+                "SIGN",
+                "SEND"
+            ],
+            "defaultForPayments": false,
+            "role": "OWNER",
+            "accountDetails": {
+                "openedDate": "2009-07-27",
+                "interestRate": 0,
+                "overDraftLimit": {
+                    "value": 0,
+                    "currencyCode": "PLN"
+                },
+                "productCode": "125",
+                "accountType": "101"
+            }
+        }
+    }
+}

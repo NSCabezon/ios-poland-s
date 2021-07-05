@@ -124,6 +124,38 @@ public class BSANDataProvider {
         return sessionData.loanInfo.loanDetailDictionary[loanId]
     }
 
+    public func store(accountDetail: AccountDetailDTO, forAccountId accountId: String) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.accountInfo.accountDetailDictionary[accountId] = accountDetail
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+
+    public func getAccountDetail(withAccountId accountId: String) -> AccountDetailDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.accountInfo.accountDetailDictionary[accountId]
+    }
+
+    public func store(swiftBranches: SwiftBranchesDTO, forAccountId accountId: String) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.accountInfo.swiftBranchesDictionary[accountId] = swiftBranches
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+
+    public func getSwiftBranches(withAccountId accountId: String) -> SwiftBranchesDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.accountInfo.swiftBranchesDictionary[accountId]
+    }
+
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {
         objc_sync_enter(dataRepository)
