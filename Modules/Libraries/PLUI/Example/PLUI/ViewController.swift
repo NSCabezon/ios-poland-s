@@ -38,6 +38,7 @@ class ViewController: UIViewController {
 
         components.append(self.maskedPasswordView())
         components.append(self.smsAuthenticationView())
+        components.append(self.trustedDevicePinView())
 
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),

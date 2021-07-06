@@ -109,7 +109,11 @@ private extension PLUIInputCodeView {
                                                                requested: requestedPositions.isRequestedPosition(position: position),
                                                                isSecureEntry: facadeConfiguration.showSecureEntry,
                                                                size: elementSize,
-                                                               font: facadeConfiguration.font))
+                                                               font: facadeConfiguration.font,
+                                                               textColor: facadeConfiguration.textColor,
+                                                               cursorTintColor: facadeConfiguration.cursorTintColor,
+                                                               borderColor: facadeConfiguration.borderColor,
+                                                               borderWidth: facadeConfiguration.borderWidth))
         }
     }
 
