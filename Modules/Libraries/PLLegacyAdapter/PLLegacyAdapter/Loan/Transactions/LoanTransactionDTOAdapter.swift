@@ -14,7 +14,10 @@ final class LoanTransactionDTOAdapter {
         loanTransactionDTO.description = plLoanTransaction.title
         let currencyDTO = CurrencyAdapter().adaptStringToCurrency(plLoanTransaction.extraData?.operationCurrency ?? "")
         if let currency = currencyDTO {
-            loanTransactionDTO.amount = AmountDTO(value: Decimal(plLoanTransaction.interestAmount ?? 0), currency: currency)
+            let amount = Decimal(plLoanTransaction.amount ?? 0)
+            let interestAmount = Decimal(plLoanTransaction.interestAmount ?? 0)
+            let amountValue = amount + interestAmount
+            loanTransactionDTO.amount = AmountDTO(value: amountValue, currency: currency)
         }
         loanTransactionDTO.operationDate = DateFormats.toDate(string: plLoanTransaction.valueDate ?? "", output: .YYYYMMDD)
         loanTransactionDTO.dgoNumber?.number = "\(plLoanTransaction.operationId?.postingDate ?? "")/\(plLoanTransaction.operationId?.operationLP ?? 0)"

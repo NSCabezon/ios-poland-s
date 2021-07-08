@@ -9,37 +9,15 @@ import Commons
 
 final class PLAccountNumberFormatter: AccountNumberFormatterProtocol {
     func accountNumberFormat(_ entity: AccountEntity?) -> String {
-        return self.getIBANFormatted(entity?.getIban())
+        return self.getAccountNumberFormatted(entity?.getIban()?.ibanString)
     }
     
     func accountNumberFormat(_ entity: AccountDetailEntity?) -> String {
-        guard let accountNumber = entity?.accountId,
-              let firsPart = accountNumber.substring(0, 4) else {
-            return ""
-        }
-        guard let secondPart = accountNumber.substring(4) else {
-            return firsPart
-        }
-        return "\(firsPart) \(secondPart)"
+        return self.getAccountNumberFormatted(entity?.accountId)
     }
     
     func getIBANFormatted(_ iban: IBANEntity?) -> String {
-        guard let iban = iban else {
-            return ""
-        }
-        let ibanString = "\(iban.dto.checkDigits)\(iban.dto.codBban)"
-        let ibantrim = ibanString.replacingOccurrences(of: " ", with: "")
-        let numberOfGroups: Int = ibantrim.count / 4
-        var printedIban = String(ibantrim.prefix(4))
-        for iterator in 1..<numberOfGroups {
-            let firstIndex = ibantrim.index(ibantrim.startIndex, offsetBy: 4*iterator)
-            let secondIndex = ibantrim.index(ibantrim.startIndex, offsetBy: 4*(iterator+1) - 1)
-            printedIban += " \(ibantrim[firstIndex...secondIndex])"
-        }
-        if ibantrim.count > 4*numberOfGroups {
-            printedIban += " \(ibantrim.suffix(ibantrim.count - 4*numberOfGroups))"
-        }
-        return "\(iban.dto.countryCode) \(printedIban)"
+        return self.getAccountNumberFormatted(iban?.ibanString)
     }
     
     func accountNumberShortFormat(_ account: AccountEntity?) -> String {
@@ -47,5 +25,25 @@ final class PLAccountNumberFormatter: AccountNumberFormatterProtocol {
             return ""
         }
         return "*" + (accountId.substring(accountId.count - 4) ?? "*")
+    }
+
+    func getAccountNumberFormatted(_ number: String?) -> String {
+        guard let number = number else {
+            return ""
+        }
+        let beginIndex = Int(String(number.substring(0, 2) ?? "")) != nil ? 2 : 4
+        let countryCode = String(number.substring(0, beginIndex) ?? "")
+        let ibanCode = String(number.substring(beginIndex) ?? "")
+        let numberOfGroups: Int = ibanCode.count / 4
+        var printedIban = String(ibanCode.prefix(4))
+        for iterator in 1..<numberOfGroups {
+            let firstIndex = ibanCode.index(ibanCode.startIndex, offsetBy: 4*iterator)
+            let secondIndex = ibanCode.index(ibanCode.startIndex, offsetBy: 4*(iterator+1) - 1)
+            printedIban += " \(ibanCode[firstIndex...secondIndex])"
+        }
+        if ibanCode.count > 4*numberOfGroups {
+            printedIban += " \(ibanCode.suffix(ibanCode.count - 4*numberOfGroups))"
+        }
+        return "\(countryCode) \(printedIban)"
     }
 }

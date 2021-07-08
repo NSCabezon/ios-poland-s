@@ -12,7 +12,7 @@ final class LoanDTOAdapter {
         loanDTO.alias = plLoan.name?.userDefined
         let currencyAdapter = CurrencyAdapter()
         loanDTO.currency = currencyAdapter.adaptStringToCurrency(plLoan.currentLimit?.currencyCode)
-        loanDTO.contractDescription = plLoan.number
+        loanDTO.contractDescription = IBANAdapter.adaptIBANToIBANFormatted(plLoan.number)
         var amount = AmountAdapter.adaptBalanceToAmount(plLoan.currentLimit)
         amount?.value?.negate()
         loanDTO.currentBalance = amount

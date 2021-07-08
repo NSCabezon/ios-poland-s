@@ -36,8 +36,8 @@
                     "value": 0,
                     "currencyCode": "PLN"
                 },
-                "productCode": "125",
-                "accountType": "101"
+                "productCode": 125,
+                "accountType": 101
             }
         }
     }

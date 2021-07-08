@@ -30,8 +30,8 @@ public struct AccountDetailNameDTO: Codable {
 
 public struct AccountDetailAccountDetailsDTO: Codable {
     public let openedDate: String?
-    public let interestRate: Int?
+    public let interestRate: Double?
     public let overDraftLimit: BalanceDTO?
-    public let productCode: String?
-    public let accountType: String?
+    public let productCode: Int?
+    public let accountType: Int?
 }

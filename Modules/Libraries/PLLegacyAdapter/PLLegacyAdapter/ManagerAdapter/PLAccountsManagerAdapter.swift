@@ -33,7 +33,7 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
 
         let accountDetailsParameters = AccountDetailsParameters(includeDetails: true, includePermissions: true)
         let accountDetails = try self.accountManager.getDetails(accountNumber: accountNumber, parameters: accountDetailsParameters).get()
-        let swiftBranches = try self.accountManager.getSwiftBranches(accountNumber: accountNumber).get()
+        let swiftBranches = try? self.accountManager.getSwiftBranches(accountNumber: accountNumber).get()
 
         let adaptedAccountDetail = AccountDetailsDTOAdapter.adaptPLAccountDetailsToAccountDetails(accountDetails, account: plAccount, swiftBranches: swiftBranches)
         return BSANOkResponse(adaptedAccountDetail)
