@@ -70,9 +70,9 @@ extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
 
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration) {
 
-        modelDeviceValueLabel.text = deviceConfiguration.model
-        brandDeviceValueLabel.text = deviceConfiguration.brand
-        idDeviceValueLabel.text = deviceConfiguration.deviceId
+        modelDeviceValueLabel.text = deviceConfiguration.deviceData.model
+        brandDeviceValueLabel.text = deviceConfiguration.deviceData.brand
+        idDeviceValueLabel.text = deviceConfiguration.deviceData.deviceId
     }
 }
 

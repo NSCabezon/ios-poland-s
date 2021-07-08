@@ -8,7 +8,6 @@
 import Commons
 import DomainCommon
 import SANPLLibrary
-import PLCommons
 
 final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
     var dependenciesResolver: DependenciesResolver

@@ -11,12 +11,13 @@ import Models
 import CommonUseCase
 
 protocol PLDeviceDataCoordinatorProtocol {
-    func goToTrustedDevicePIN()
+    func goToTrustedDevicePIN(with trustedDeviceConfiguration: TrustedDeviceConfiguration)
 }
 
 final class PLDeviceDataCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let trustedDevicePinCoordinator: PLTrustedDevicePinCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -24,6 +25,10 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.trustedDevicePinCoordinator = PLTrustedDevicePinCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
         self.setupDependencies()
     }
 
@@ -34,8 +39,11 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
 }
 
 extension PLDeviceDataCoordinator: PLDeviceDataCoordinatorProtocol {
-    func goToTrustedDevicePIN() {
-        //TODO:
+    func goToTrustedDevicePIN(with trustedDeviceConfiguration: TrustedDeviceConfiguration) {
+        self.dependenciesEngine.register(for: TrustedDeviceConfiguration.self) { _ in
+            return trustedDeviceConfiguration
+        }
+        self.trustedDevicePinCoordinator.start()
     }
 }
 

@@ -62,12 +62,13 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         let absoluteUrl = baseUrl + self.basePath
         let serviceName =  TrustDeviceServiceType.registerSoftwareToken.rawValue
         let result: Result<RegisterSoftwareTokenDTO, NetworkProviderError> = self.networkProvider.request(RegisterSoftwareTokenRequest(serviceName: serviceName,
-                                                                                                       serviceUrl: absoluteUrl,
-                                                                                                       method: .post,
-                                                                                                       body: body,
-                                                                                                       jsonBody: parameters,
-                                                                                                       headers: self.headers,
-                                                                                                       localServiceName: .registerSoftwareToken, authorization: .oauth))
+                                                                                                                                       serviceUrl: absoluteUrl,
+                                                                                                                                       method: .post,
+                                                                                                                                       body: body,
+                                                                                                                                       jsonBody: parameters,
+                                                                                                                                       headers: self.headers,
+                                                                                                                                       localServiceName: .registerSoftwareToken,
+                                                                                                                                       authorization: .oauth))
 
         return result
     }

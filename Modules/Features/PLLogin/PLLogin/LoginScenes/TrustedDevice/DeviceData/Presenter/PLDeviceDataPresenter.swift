@@ -8,6 +8,7 @@
 import DomainCommon
 import Commons
 import Models
+import os
 
 protocol PLDeviceDataPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLDeviceDataViewProtocol? { get set }
@@ -63,17 +64,25 @@ final class PLDeviceDataPresenter {
     }
 
     private lazy var deviceConfiguration: TrustedDeviceConfiguration = {
-
-        let model = UIDevice.current.getDeviceName()//UIDevice.current.getDeviceName().components(separatedBy: " ")[1]
-        let brand = Constants.manufacturer//UIDevice.current.model
+        let model = UIDevice.current.getDeviceName()
+        let brand = Constants.manufacturer
         let deviceId = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 9)?.toHexString() ?? ""
         let appId = Constants.oneApp + deviceId
+        let manufacturer = Constants.manufacturer
+        let dateString = self.parametersDateFormatter.string(from: self.currentDate)
+        let parameters = "<\(dateString)><AppId><\(appId)><deviceId><\(deviceId)><manufacturer><\(manufacturer)><model><\(model)>"
+        let deviceTime = self.dateFormatter.string(from: self.currentDate)
 
-        return TrustedDeviceConfiguration(manufacturer: Constants.manufacturer,
-                                          model: model,
-                                          brand: brand,
-                                          appId: appId,
-                                          deviceId: deviceId)
+        let deviceData = TrustedDeviceConfiguration.DeviceData(manufacturer: manufacturer,
+                                                               model: model,
+                                                               brand: brand,
+                                                               appId: appId,
+                                                               deviceId: deviceId,
+                                                               deviceTime: deviceTime,
+                                                               parameters: parameters)
+
+        return TrustedDeviceConfiguration(deviceData: deviceData,
+                                          softwareToken: nil)
     }()
 
     private lazy var currentDate: Date = {
@@ -91,16 +100,6 @@ final class PLDeviceDataPresenter {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         return df
-    }()
-
-    private lazy var parameters: String = {
-        let dateString = self.parametersDateFormatter.string(from: self.currentDate)
-        let appId = self.deviceConfiguration.appId
-        let deviceId = self.deviceConfiguration.deviceId
-        let manufacturer = self.deviceConfiguration.manufacturer
-        let model = self.deviceConfiguration.model
-        let parameters = "<\(dateString)><<AppId><\(appId)><deviceId><\(deviceId)><manufacturer><\(manufacturer)><model><\(model)>>"
-        return parameters
     }()
 
     private lazy var transportKey: String = {
@@ -121,6 +120,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
         guard let password = loginConfiguration.password else {
             // TODO: generate error, password can't be empty
+            // And more important, create a tustedDevieConfiguration for not using the one from loginConfiguration
             return
         }
 
@@ -128,33 +128,37 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                                                                                                 passKey: password)
         let trasportKeyScenario = Scenario(useCase: self.transportKeyEncryptionUseCase, input: transportKeyEncryptionUseCaseInput)
 
-        let parametersEncryptionUseCaseInput = PLDeviceDataParametersEncryptionUseCaseInput(parameters: self.parameters,
+        let parametersEncryptionUseCaseInput = PLDeviceDataParametersEncryptionUseCaseInput(parameters: self.deviceConfiguration.deviceData.parameters,
                                                                                             transportKey: transportKey)
         let parametersScenario = Scenario(useCase: self.parametersEncryptionUseCase, input: parametersEncryptionUseCaseInput)
 
         let certificateCreationUseCaseInput = PLDeviceDataCertificateCreationUseCaseInput()
         let certificateScenario = Scenario(useCase: self.certificatCreationUseCase, input: certificateCreationUseCaseInput)
 
-        let values: (transportKeyEncryption: String?, parametersEncryption: String?, publicKey: String?) = (nil, nil, nil)
+        let values: (transportKeyEncryption: String?, parametersEncryption: String?, certificate: String?, privateKey: SecKey?) = (nil, nil, nil, nil)
         MultiScenario(handledOn: self.dependenciesResolver.resolve(), initialValue: values)
             .addScenario(trasportKeyScenario) { (updatedValues, output, _) in
                 updatedValues.transportKeyEncryption = output.encryptedTransportKey
             }.addScenario(parametersScenario) { (updatedValues, output, _) in
                 updatedValues.parametersEncryption = output.encryptedParameters
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
-                updatedValues.publicKey = output.certificate
-            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
+                updatedValues.certificate = output.certificate
+                updatedValues.privateKey = output.publicKey // Modify with privateKey to encrypt with it (Now we are encrypting with the public one)
+            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
-                                                                                        deviceTime: self.dateFormatter.string(from: self.currentDate),
+                                                                                        deviceTime: self.deviceConfiguration.deviceData.deviceTime,
                                                                                         certificate: certificate ?? "",
-                                                                                        appId: self.deviceConfiguration.appId)
-                let registerDeviceScenario = Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
-                return registerDeviceScenario
+                                                                                        appId: self.deviceConfiguration.deviceData.appId)
+
+                let softwareToken = TrustedDeviceConfiguration.SoftwareToken(privateKey: key,
+                                                                             certificatePEM: certificate)
+                self.deviceConfiguration.softwareToken = softwareToken
+
+                return Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
             })
-            .onSuccess { [weak self] registerDeviceOutput in
+            .onSuccess { [weak self] registerSoftwareTokenOutput in
                 guard let self = self else { return }
-                // TODO: We need to save registeredDeviceOutput
                 self.goToTrustedDevicePIN()
             }.onError { _ in
                 // TODO: Handle error
@@ -162,6 +166,6 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func goToTrustedDevicePIN() {
-        coordinator.goToTrustedDevicePIN()
+        coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
     }
 }

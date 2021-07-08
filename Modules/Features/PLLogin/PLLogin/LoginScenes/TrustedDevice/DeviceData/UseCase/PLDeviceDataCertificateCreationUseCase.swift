@@ -7,13 +7,14 @@
 
 import Commons
 import DomainCommon
-import PLCommons
 import CryptoSwift
 import CertificateSigningRequest
+import os
 
 private struct PLCertificate {
-    let publicKey: String
-    let privateKey: String
+    let pemCertificate: String
+    let publicKey: SecKey
+    let privateKey: SecKey
 }
 
 final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertificateCreationUseCaseInput, PLDeviceDataCertificateCreationUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
@@ -27,7 +28,9 @@ final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertific
 
         do {
             let certificate = try self.generateCertificate()
-            return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate))
+            return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate.pemCertificate,
+                                                                                   publicKey: certificate.publicKey,
+                                                                                   privateKey: certificate.privateKey))
         } catch {
             return UseCaseResponse.error(PLDeviceDataUseCaseErrorOutput(error.localizedDescription))
         }
@@ -38,12 +41,18 @@ private extension PLDeviceDataCertificateCreationUseCase {
 
     enum Constants {
         static let keySize: Int = 1024
+        static let keysTag = "OneApp.TrustedDevice"
+        enum CertificateParameters {
+            static let commonName = "Santander"
+            static let organizationName = "Santander Bank Polska S.A."
+            static let countryName = "PL"
+        }
     }
 
-    func generateCertificate() throws -> String {
-        let random = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 2)?.toHexString() ?? ""
-        let tagPrivate = "OneApp.TrustedDevice.private.\(random)"
-        let tagPublic = "OneApp.TrustedDevice.public.\(random)"
+    func generateCertificate() throws -> PLCertificate {
+        let random = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 4)?.toHexString() ?? ""
+        let tagPrivate = "\(Constants.keysTag).\(random).private"
+        let tagPublic = "\(Constants.keysTag).\(random).public"
         let keyAlgorithm = KeyAlgorithm.rsa(signatureType: .sha256)
         //let sizeOfKey = keyAlgorithm.availableKeySizes[1]
         let sizeOfKey = 1024
@@ -66,10 +75,10 @@ private extension PLDeviceDataCertificateCreationUseCase {
 
         // TODO: We will probably need to add the dates (notBefore, notAfter) to certificate and create a X509v3 instead of v1
         let algorithm = KeyAlgorithm.rsa(signatureType: .sha256)
-                let csr = CertificateSigningRequest(commonName: "Santander",
-                                                    organizationName: "Santander Bank Polska S.A.",
-                                                    countryName: "PL",
-                                                    keyAlgorithm: algorithm)
+        let csr = CertificateSigningRequest(commonName: Constants.CertificateParameters.commonName,
+                                            organizationName: Constants.CertificateParameters.organizationName,
+                                            countryName: Constants.CertificateParameters.countryName,
+                                            keyAlgorithm: algorithm)
 
         guard let builtCSR = csr.buildCSRAndReturnString(publicKeyBits, privateKey: privateKey, publicKey: publicKey) else {
             throw PLDeviceDataEncryptionError.certificateCreationError
@@ -78,8 +87,11 @@ private extension PLDeviceDataCertificateCreationUseCase {
         let certificate = builtCSR
             .replacingOccurrences(of: "-----BEGIN CERTIFICATE REQUEST-----", with: "-----BEGIN CERTIFICATE-----")
             .replacingOccurrences(of: "-----END CERTIFICATE REQUEST-----", with: "-----END CERTIFICATE-----")
-        print("Certificate generated: \(certificate)")
-        return certificate
+        os_log("✅ [TRUSTED DEVICE] Certificate generated: %@", log: .default, type: .info, certificate)
+
+        return PLCertificate(pemCertificate: certificate,
+                             publicKey: publicKey,
+                             privateKey: privateKey)
     }
 }
 
@@ -95,6 +107,8 @@ struct PLDeviceDataCertificateCreationUseCaseInput {
 
 struct PLDeviceDataCertificateCreationUseCaseOutput {
     let certificate: String
+    let publicKey: SecKey
+    let privateKey: SecKey
 }
 
 // MARK: Private extension

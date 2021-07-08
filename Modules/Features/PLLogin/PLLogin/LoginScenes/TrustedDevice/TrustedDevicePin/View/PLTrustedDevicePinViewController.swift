@@ -7,7 +7,7 @@ import PLUI
 import Commons
 import Foundation
 
-protocol PLTrustedDevicePinViewProtocol: class {
+protocol PLTrustedDevicePinViewProtocol: AnyObject {
     func example()
 }
 
@@ -86,7 +86,7 @@ private extension PLTrustedDevicePinViewController {
         continueButton.backgroundColor = UIColor.santanderRed
         continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
         continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
-        continueButton.isEnabled = false
+        continueButton.isEnabled = true //TODO: Disable when PIN validation is done
         continueButton.backgroundColor = UIColor.lightSanGray
         continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
 
@@ -101,6 +101,8 @@ private extension PLTrustedDevicePinViewController {
     // MARK: Button actions
     @objc func continueButtonDidPressed() {
        // TODO: Launch pin format validation
+        
+        self.presenter.registerSoftwareToken(with: true) // TODO: Replace Bool with the selection of the user for biometry
     }
 
     @objc func closeButtonDidPressed() {

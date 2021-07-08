@@ -7,7 +7,6 @@
 
 import Commons
 import DomainCommon
-import PLCommons
 import CryptoSwift
 
 final class PLDeviceDataParametersEncryptionUseCase: UseCase<PLDeviceDataParametersEncryptionUseCaseInput, PLDeviceDataParametersEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
@@ -32,21 +31,22 @@ final class PLDeviceDataParametersEncryptionUseCase: UseCase<PLDeviceDataParamet
 private extension PLDeviceDataParametersEncryptionUseCase {
 
     enum Constants {
-        // The initial vector to encrypt needs to be set to 0
         static let initialVector: Array<UInt8> = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
     }
 
-    // parameters: must be an hexadecimal string of 32 characteres (16 bytes)
-    // transportKey is the password the user introduced (normal or masked password)
+    // parameters: string with parameters to encrypt (i.e. "<2021-04-18 22:01:11.238><AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><Apple><model><iPhone 12>")
+    // transportKey is the secure random transportKey that will be used to encrypt parameters. Must be an hexadecimal string of 32 characteres (16 bytes)
     func encryptParameters(_ parameters: String, with transportKey: String) throws -> String {
-
-        let parametersBytes = parameters.bytes
         let transportKeyBytes = transportKey.hexaBytes
-
         guard transportKeyBytes.count == 16 else { throw PLDeviceDataEncryptionError.transportKeyEncryptionError }
 
-        // Tkey encrypted with AES128 with the TKey and initial vector to 0 (For padding is used .pkcs5 as .nopadding can´t be used due to the string length which will be different to 16 bytes length)
-        guard let aes = try? AES(key: transportKeyBytes, blockMode: CBC(iv: Constants.initialVector), padding: .pkcs5),
+        // Number of characters must be multiple of 16 so we need to add spaces at the end of the parameters (It is necessary so we will encrypt it with .noPadding)
+        let parametersWithSpaces = PLLoginTrustedDeviceHelpers.stringMultipleOf16(parameters)
+        let parametersBytes = parametersWithSpaces.bytes
+        guard parametersBytes.count%16 == 0 else { throw PLDeviceDataEncryptionError.transportKeyEncryptionError }
+
+        // AES/CBC/NoPadding encryption
+        guard let aes = try? AES(key: transportKeyBytes, blockMode: CBC(iv: Constants.initialVector), padding: .noPadding),
               let encryptedParametersBytes = try? aes.encrypt(parametersBytes) else {
             throw PLDeviceDataEncryptionError.parametersEncryptionError
         }
@@ -63,18 +63,4 @@ struct PLDeviceDataParametersEncryptionUseCaseInput {
 
 struct PLDeviceDataParametersEncryptionUseCaseOutput {
     let encryptedParameters: String
-}
-
-
-private extension StringProtocol {
-    var hexaData: Data { .init(hexa) }
-    var hexaBytes: [UInt8] { .init(hexa) }
-    var hexa: UnfoldSequence<UInt8, Index> {
-        sequence(state: startIndex) { startIndex in
-            guard startIndex < self.endIndex else { return nil }
-            let endIndex = self.index(startIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
-            defer { startIndex = endIndex }
-            return UInt8(self[startIndex..<endIndex], radix: 16)
-        }
-    }
 }
