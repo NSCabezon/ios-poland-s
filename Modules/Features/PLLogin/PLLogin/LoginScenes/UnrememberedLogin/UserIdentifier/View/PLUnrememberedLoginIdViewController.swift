@@ -37,11 +37,6 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
         static let animationDuration: TimeInterval = 0.2
     }
 
-    var countTimer:Timer!
-    var unblockRemainingTimeInSecs: Double = 0
-    var dialog: Dialog!
-    var now: Date!
-
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLUnrememberedLoginIdPresenterProtocol) {
         self.presenter = presenter

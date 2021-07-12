@@ -35,10 +35,10 @@ extension PLUIInputCodePinFacade: PLUIInputCodeFacadeProtocol {
             self.horizontalStackView.addArrangedSubview(boxes[position-1])
             boxes[position-1].backgroundColor = .white
             if position == 1 {
-                boxes[position-1].configureCorners(corners: [.topLeft, .bottomLeft], radius: 10)
+                boxes[position-1].configureCorners(corners: [.topLeft, .bottomLeft], radius: 6)
             }
             if position == boxes.count {
-                boxes[position-1].configureCorners(corners: [.topRight, .bottomRight], radius: 10)
+                boxes[position-1].configureCorners(corners: [.topRight, .bottomRight], radius: 6)
             }
          }
          // Embed stackView in a container view to center it

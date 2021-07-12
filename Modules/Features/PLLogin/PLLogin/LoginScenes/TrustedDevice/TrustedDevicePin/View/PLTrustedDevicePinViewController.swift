@@ -20,7 +20,30 @@ final class PLTrustedDevicePinViewController: UIViewController {
     @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var pinDescriptionLabel: UILabel!
     @IBOutlet weak var pinTitleLabel: UILabel!
+    @IBOutlet weak var pinContainerView: UIView!
     @IBOutlet weak var repeatPinTitleLabel: UILabel!
+    @IBOutlet weak var repeatPinContainerView: UIView!
+    private var pinInputComplete: Bool = false
+    private var repeatPinInputComplete: Bool = false
+
+    private lazy var pinInputCodeView = PLUIInputCodeView(keyboardType: .numberPad,
+                                                                             delegate: self,
+                                                                             facade: PLUIInputCodePinFacade(),
+                                                                             elementSize: Constants.pinBoxSize,
+                                                                             requestedPositions: .all,
+                                                                             charactersSet: Constants.pinCharacterSet)
+
+    private lazy var repeatPinInputCodeView = PLUIInputCodeView(keyboardType: .numberPad,
+                                                                             delegate: self,
+                                                                             facade: PLUIInputCodePinFacade(),
+                                                                             elementSize: Constants.pinBoxSize,
+                                                                             requestedPositions: .all,
+                                                                             charactersSet: Constants.pinCharacterSet)
+
+    private enum Constants {
+        static let pinBoxSize =	 CGSize(width: 55.0, height: 56.0)
+        static let pinCharacterSet: CharacterSet = .decimalDigits
+    }
 
     init(nibName: String?, bundle: Bundle?,
          presenter: PLTrustedDevicePinPresenterProtocol) {
@@ -59,6 +82,7 @@ private extension PLTrustedDevicePinViewController {
     func commonInit() {
         configureLabels()
         configureButtons()
+        configurePinView()
         setAccessibility()
         lockImage.image = PLAssets.image(named: "threeDigitsRedLockIcon")
     }
@@ -86,12 +110,29 @@ private extension PLTrustedDevicePinViewController {
         continueButton.backgroundColor = UIColor.santanderRed
         continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
         continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
-        continueButton.isEnabled = true //TODO: Disable when PIN validation is done
         continueButton.backgroundColor = UIColor.lightSanGray
         continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
 
         closeSceneButton.setImage(Assets.image(named: "icnClose"), for: .normal)
         closeSceneButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeButtonDidPressed)))
+    }
+
+    func configurePinView() {
+        self.pinContainerView.addSubview(self.pinInputCodeView)
+        self.repeatPinContainerView.addSubview(self.repeatPinInputCodeView)
+        NSLayoutConstraint.activate([
+            self.pinInputCodeView.leadingAnchor.constraint(equalTo: self.pinContainerView.leadingAnchor),
+            self.pinInputCodeView.trailingAnchor.constraint(equalTo: self.pinContainerView.trailingAnchor),
+            self.pinInputCodeView.topAnchor.constraint(equalTo: self.pinContainerView.topAnchor),
+            self.pinInputCodeView.bottomAnchor.constraint(equalTo: self.pinContainerView.bottomAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            self.repeatPinInputCodeView.leadingAnchor.constraint(equalTo: self.repeatPinContainerView.leadingAnchor),
+            self.repeatPinInputCodeView.trailingAnchor.constraint(equalTo: self.repeatPinContainerView.trailingAnchor),
+            self.repeatPinInputCodeView.topAnchor.constraint(equalTo: self.repeatPinContainerView.topAnchor),
+            self.repeatPinInputCodeView.bottomAnchor.constraint(equalTo: self.repeatPinContainerView.bottomAnchor)
+        ])
     }
 
     func setAccessibility() {
@@ -100,12 +141,86 @@ private extension PLTrustedDevicePinViewController {
 
     // MARK: Button actions
     @objc func continueButtonDidPressed() {
-       // TODO: Launch pin format validation
-        
-        self.presenter.registerSoftwareToken(with: true) // TODO: Replace Bool with the selection of the user for biometry
+        let regexEqualDigits = #"([0-9])\1{2}"#
+        let regexConsecutiveDigits = #"(012|123|234|345|456|567|678|789)"#
+        guard let pinInputText = pinInputCodeView.fulfilledText() else { return }
+        guard let repeatPinInputText = repeatPinInputCodeView.fulfilledText() else { return }
+        if pinInputText.range(of: regexEqualDigits, options: .regularExpression) != nil {
+            self.showEqualDigitsDialog()
+        }
+        else if pinInputText.range(of: regexConsecutiveDigits, options: .regularExpression) != nil {
+            self.showConsecutiveDigitsDialog()
+        }
+        else if !pinInputText.elementsEqual(repeatPinInputText) {
+            self.showNotEqualPinDialog()
+        }
+        else {
+            self.presenter.registerSoftwareToken(with: true) // TODO: Replace Bool with the selection of the user for biometry
+        }
+    }
+
+    private func showEqualDigitsDialog() {
+        let textStyle: LocalizedStylableText = LocalizedStylableText(plainText: localized("pl_onboarding_alert_PIN3digits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PIN3digits").count, attribute: .color(hex: "444444"))])
+        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
+    }
+
+    private func showConsecutiveDigitsDialog() {
+        let textStyle: LocalizedStylableText = LocalizedStylableText(plainText: localized("pl_onboarding_alert_2consequitDigits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_2consequitDigits").count, attribute: .color(hex: "444444"))])
+        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
+    }
+
+    private func showNotEqualPinDialog() {
+        let textStyle: LocalizedStylableText = LocalizedStylableText(plainText: localized("pl_onboarding_alert_PINdiffer"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PINdiffer").count, attribute: .color(hex: "444444"))])
+        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
     @objc func closeButtonDidPressed() {
        // TODO: Show dialog
+    }
+}
+
+extension  PLTrustedDevicePinViewController: PLUIInputCodeViewDelegate {
+
+    func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
+        if view.isFulfilled() {
+            if view == pinInputCodeView {
+                self.pinInputComplete = true
+            }
+            else if view == repeatPinInputCodeView {
+                self.repeatPinInputComplete = true
+            }
+            if pinInputComplete == true && repeatPinInputComplete == true {
+                self.continueButton.isEnabled = true
+                self.continueButton.backgroundColor = UIColor.santanderRed
+            }
+        } else {
+            self.continueButton.isEnabled = view.isFulfilled()
+            self.continueButton.backgroundColor = UIColor.lightSanGray
+        }
+    }
+
+    func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {
+        if string.count == 0 { return true }
+        guard string.count > 0,
+              let character = UnicodeScalar(string),
+              view.charactersSet.contains(character) == true else {
+            return false
+        }
+        return true
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+    }
+
+    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
+    }
+}
+
+extension PLTrustedDevicePinViewController: DialogViewPresentationCapable {
+    var associatedDialogView: UIViewController {
+        return self
     }
 }

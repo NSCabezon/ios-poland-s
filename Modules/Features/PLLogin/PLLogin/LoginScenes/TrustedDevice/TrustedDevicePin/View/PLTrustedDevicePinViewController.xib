@@ -13,8 +13,10 @@
                 <outlet property="closeSceneButton" destination="4F3-iE-Hg1" id="iTJ-h2-VHW"/>
                 <outlet property="continueButton" destination="bLy-bU-Hmg" id="rLd-Dx-9Fw"/>
                 <outlet property="lockImage" destination="j7l-jg-nvB" id="789-8W-IwS"/>
+                <outlet property="pinContainerView" destination="ahd-oO-BBz" id="gWa-gU-2br"/>
                 <outlet property="pinDescriptionLabel" destination="9ig-Ah-NNt" id="Hpi-PQ-rb4"/>
                 <outlet property="pinTitleLabel" destination="GXa-5x-M9W" id="h8j-xs-4bX"/>
+                <outlet property="repeatPinContainerView" destination="5ME-Bi-c6o" id="HO9-yu-1Av"/>
                 <outlet property="repeatPinTitleLabel" destination="w3e-5l-Vr9" id="YHb-XX-CGn"/>
                 <outlet property="sceneTitle" destination="Es8-aU-tvX" id="2F9-Sa-l3a"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -103,7 +105,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahd-oO-BBz">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahd-oO-BBz" userLabel="pinContainerView">
                                     <rect key="frame" x="75" y="158" width="264" height="56"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
@@ -116,7 +118,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ME-Bi-c6o">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ME-Bi-c6o" userLabel="repeatPinContainerView">
                                     <rect key="frame" x="75" y="262" width="264" height="56"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
