@@ -124,6 +124,11 @@ public class BSANDataProvider {
         return sessionData.loanInfo.loanDetailDictionary[loanId]
     }
 
+    public func getCardPAN(cardId: String) -> String? {
+        // TODO: Cards - To be implemented when Card PAN API is implemented and PANs are saved into SessionData
+        return nil
+    }
+    
     public func store(accountDetail: AccountDetailDTO, forAccountId accountId: String) {
         objc_sync_enter(self.dataRepository)
         if let sessionData = try? self.getSessionData() {
