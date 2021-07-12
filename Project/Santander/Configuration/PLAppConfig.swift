@@ -68,6 +68,5 @@ class PLAppConfig: LocalAppConfig {
     let analysisAreaHasTimelineSection: Bool = false
     let analysisAreaIsIncomeSelectable: Bool = false
     let analysisAreaIsExpensesSelectable: Bool = false
-    let isAnalysisAreaHomeEnabled: Bool = false
     let enablePGCardActivation: Bool = true
 }
