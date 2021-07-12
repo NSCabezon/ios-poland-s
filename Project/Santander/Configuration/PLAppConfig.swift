@@ -25,7 +25,7 @@ class PLAppConfig: LocalAppConfig {
     let privateMenu = true
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = false
-    let isEnabledPlusButtonPG = false
+    let isEnabledPlusButtonPG = true
     let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true
@@ -46,7 +46,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledBills: Bool = false
     let isEnabledBillsAndTaxesInMenu: Bool = false
     let isEnabledExploreProductsInMenu: Bool = false
-    let isEnabledPersonalAreaInMenu: Bool = false
+    let isEnabledPersonalAreaInMenu: Bool = true
     let isEnabledHelpUsInMenu: Bool = false
     let isEnabledATMsInMenu: Bool = false
     let enablePortfoliosHome: Bool = true
