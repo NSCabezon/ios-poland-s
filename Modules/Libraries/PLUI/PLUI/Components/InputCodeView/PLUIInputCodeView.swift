@@ -92,6 +92,14 @@ public class PLUIInputCodeView: UIView {
     public func isFulfilled() -> Bool {
         return self.inputCodeBoxArray.fulfilledCount() == self.inputCodeBoxArray.requestedCount()
     }
+
+    /**
+     Returns true if it has some empty position and becomes first responder if it is
+     */
+    @discardableResult public override func becomeFirstResponder() -> Bool {
+        guard let first = self.inputCodeBoxArray.firstEmptyRequested() else { return false }
+        return first.becomeFirstResponder()
+    }
 }
 
 // MARK: Private

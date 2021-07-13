@@ -8,12 +8,12 @@ import Commons
 import Foundation
 
 protocol PLTrustedDevicePinViewProtocol: AnyObject {
-    func example()
 }
 
 final class PLTrustedDevicePinViewController: UIViewController {
     private let presenter: PLTrustedDevicePinPresenterProtocol
     
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var continueButton: UIButton!
     @IBOutlet weak var closeSceneButton: UIButton!
     @IBOutlet weak var sceneTitle: UILabel!
@@ -23,8 +23,13 @@ final class PLTrustedDevicePinViewController: UIViewController {
     @IBOutlet weak var pinContainerView: UIView!
     @IBOutlet weak var repeatPinTitleLabel: UILabel!
     @IBOutlet weak var repeatPinContainerView: UIView!
+    private var biometryInfoView: PLUIInteractiveInfoView?
     private var pinInputComplete: Bool = false
     private var repeatPinInputComplete: Bool = false
+    private var shouldCreateBiometricToken: Bool = false
+    private lazy var shouldAddBiometryView: Bool = {
+        return self.presenter.shouldShowBiometry()
+    }()
 
     private lazy var pinInputCodeView = PLUIInputCodeView(keyboardType: .numberPad,
                                                                              delegate: self,
@@ -68,10 +73,6 @@ final class PLTrustedDevicePinViewController: UIViewController {
 }
 
 extension PLTrustedDevicePinViewController: PLTrustedDevicePinViewProtocol {
-
-    func example() {
-        //TODO:
-    }
 }
 
 private extension PLTrustedDevicePinViewController {
@@ -83,6 +84,7 @@ private extension PLTrustedDevicePinViewController {
         configureLabels()
         configureButtons()
         configurePinView()
+        configureBiometryView()
         setAccessibility()
         lockImage.image = PLAssets.image(named: "threeDigitsRedLockIcon")
     }
@@ -135,6 +137,25 @@ private extension PLTrustedDevicePinViewController {
         ])
     }
 
+    func configureBiometryView() {
+        if self.shouldAddBiometryView == true {
+            guard let image = PLAssets.image(named: "fingerprint") else { return }
+            self.biometryInfoView = PLUIInteractiveInfoView(image: image,
+                                                            title: localized("pl_onboarding_text_biometrics"),
+                                                            text: localized("pl_onboarding_text_biometricsExpl"))
+            self.biometryInfoView?.delegate = self
+            if let biometryInfoView = self.biometryInfoView {
+                self.contentView.addSubview(biometryInfoView)
+
+                NSLayoutConstraint.activate([
+                    biometryInfoView.topAnchor.constraint(equalTo: self.repeatPinContainerView.bottomAnchor, constant: 42),
+                    biometryInfoView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15),
+                    biometryInfoView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15)
+                ])
+            }
+        }
+    }
+
     func setAccessibility() {
         continueButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
     }
@@ -155,7 +176,7 @@ private extension PLTrustedDevicePinViewController {
             self.showNotEqualPinDialog()
         }
         else {
-            self.presenter.registerSoftwareToken(with: true) // TODO: Replace Bool with the selection of the user for biometry
+            self.presenter.registerSoftwareToken(with: self.shouldCreateBiometricToken)
         }
     }
 
@@ -213,6 +234,9 @@ extension  PLTrustedDevicePinViewController: PLUIInputCodeViewDelegate {
     }
 
     func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+        if view == self.pinInputCodeView && view.isFulfilled() && self.repeatPinInputCodeView.isFulfilled() == false {
+            repeatPinInputCodeView.becomeFirstResponder()
+        }
     }
 
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
@@ -222,5 +246,11 @@ extension  PLTrustedDevicePinViewController: PLUIInputCodeViewDelegate {
 extension PLTrustedDevicePinViewController: DialogViewPresentationCapable {
     var associatedDialogView: UIViewController {
         return self
+    }
+}
+
+extension PLTrustedDevicePinViewController: PLUIInteractiveInfoViewDelegate {
+    func interactiveInfoView(_: PLUIInteractiveInfoView, didChangeSwitch value: Bool) {
+        self.shouldCreateBiometricToken = value
     }
 }

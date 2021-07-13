@@ -14,7 +14,7 @@ public final class PLUIInputCodePinFacade {
         static let elementWidth: CGFloat = 55.0
         static let elementHeight: CGFloat = 56.0
         static let spacingBetweenColumns: CGFloat = 2.0
-        static let font =  UIFont.santander(family: .text, type: .regular, size: 28)
+        static let font = UIFont.systemFont(ofSize: 22)
         static let cursorTintColor = UIColor.init(red: 19/255, green: 126/255, blue: 132/255, alpha: 1.0)
     }
 

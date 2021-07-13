@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLTrustedDevicePinViewController" customModule="PLLogin" customModuleProvider="target">
             <connections>
                 <outlet property="closeSceneButton" destination="4F3-iE-Hg1" id="iTJ-h2-VHW"/>
+                <outlet property="contentView" destination="kHZ-e2-Jy0" id="gMu-Xn-IVb"/>
                 <outlet property="continueButton" destination="bLy-bU-Hmg" id="rLd-Dx-9Fw"/>
                 <outlet property="lockImage" destination="j7l-jg-nvB" id="789-8W-IwS"/>
                 <outlet property="pinContainerView" destination="ahd-oO-BBz" id="gWa-gU-2br"/>

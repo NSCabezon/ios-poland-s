@@ -10,14 +10,17 @@ protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDevicePinViewProtocol? { get set }
     func viewDidLoad()
     func registerSoftwareToken(with createBiometricToken: Bool)
+    func shouldShowBiometry() -> Bool
 }
 
 final class PLTrustedDevicePinPresenter {
     weak var view: PLTrustedDevicePinViewProtocol?
     internal let dependenciesResolver: DependenciesResolver
+    private let localAuth: LocalAuthenticationPermissionsManagerProtocol
 
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
+        self.localAuth = dependenciesResolver.resolve(for: LocalAuthenticationPermissionsManagerProtocol.self)
     }
 }
 
@@ -32,7 +35,6 @@ private extension PLTrustedDevicePinPresenter {
 
 extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     func viewDidLoad() {
-        //TODO:
     }
 
     func registerSoftwareToken(with createBiometricToken: Bool) {
@@ -66,6 +68,15 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
                 // TODO: Present errorsecondFactorData
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
             }
+    }
+
+    func shouldShowBiometry() -> Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        let biometryAvailable = self.localAuth.biometryTypeAvailable
+        return biometryAvailable == .faceId || biometryAvailable == .touchId
+        #endif
     }
 }
 
