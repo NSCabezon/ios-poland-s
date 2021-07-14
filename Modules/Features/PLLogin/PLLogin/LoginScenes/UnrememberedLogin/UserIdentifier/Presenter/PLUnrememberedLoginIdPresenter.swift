@@ -38,7 +38,7 @@ final class PLUnrememberedLoginIdPresenter {
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
     func viewDidLoad() {
-        // TODO
+        self.loginManager?.loadData()
     }
     
     func viewWillAppear() {

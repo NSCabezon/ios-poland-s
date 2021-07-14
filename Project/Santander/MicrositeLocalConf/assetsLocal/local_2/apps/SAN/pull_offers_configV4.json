@@ -76,7 +76,7 @@
         ],
         "locations": {
             "PG_CTA": ["181_PG_CtaProf_SPB", "173_PG_CtaProf_PAR", "150_PG_iPhoneX_PAR", "150_PG_iPhoneX_SM"],
-            "PG_CTA_BELOW": [],
+            "PG_CTA_BELOW": ["id_PG_CTA_BELOW"],
             "PG_TAR": ["177_PG_TarCredProf_PAR", "179_PG_TarMiOtraProf_PAR", "185_PG_TarCredProf_SPB"],
             "PG_TAR_BELOW": [],
             "PG_VAL": [],

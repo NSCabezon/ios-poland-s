@@ -8,6 +8,8 @@ import Models
 import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
+import Commons
+import DomainCommon
 
 protocol PLUnrememberedLoginIdCoordinatorProtocol {
     func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration)
@@ -117,6 +119,9 @@ private extension PLUnrememberedLoginIdCoordinator {
             return PLAuthenticateUseCase(dependenciesResolver: resolver)
         }
         
+        self.dependenciesEngine.register(for: LoginPLPullOfferLayer.self) { resolver in
+            return LoginPLPullOfferLayer(dependenciesResolver: resolver)
+        }
         self.dependenciesEngine.register(for: PullOfferCandidatesUseCase.self) { resolver in
            return PullOfferCandidatesUseCase(dependenciesResolver: resolver)
         }
@@ -133,6 +138,48 @@ private extension PLUnrememberedLoginIdCoordinator {
            return CalculateLocationsUseCase(dependenciesResolver: resolver)
         }
         self.registerEnvironmentDependencies()
+    }
+}
+
+protocol LoginPLPullOfferLayerDelegate: class {
+    func loadPullOffersSuccess()
+}
+
+final class LoginPLPullOfferLayer {
+    private let dependenciesResolver: DependenciesResolver
+    private weak var delegate: LoginPLPullOfferLayerDelegate?
+    private var locations = [PullOfferLocation]()
+    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
+    
+    private var pullOfferCandidatesUseCase: PullOfferCandidatesUseCase {
+        return self.dependenciesResolver.resolve(for: PullOfferCandidatesUseCase.self)
+    }
+    
+    lazy var loadPullOffersSuperUseCase: SetupPublicPullOffersSuperUseCase = {
+        let superUseCase = self.dependenciesResolver.resolve(for: SetupPublicPullOffersSuperUseCase.self)
+        superUseCase.delegate = self
+        return superUseCase
+    }()
+    
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
+    }
+    
+    func setDelegate(_ delegate: LoginPLPullOfferLayerDelegate) {
+        self.delegate = delegate
+    }
+    
+    func loadPullOffers() {
+        self.loadPullOffersSuperUseCase.execute()
+    }
+}
+
+extension LoginPLPullOfferLayer: SetupPublicPullOffersSuperUseCaseDelegate {
+    func onSuccess() {
+        self.delegate?.loadPullOffersSuccess()
     }
 }
 
