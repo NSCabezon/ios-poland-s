@@ -9,6 +9,7 @@ import Commons
 
 protocol PLTrustedDevicePinCoordinatorProtocol {
     func goToVoiceBotScene()
+    func goToDeviceTrustDeviceData()
 }
 
 final class PLTrustedDevicePinCoordinator: ModuleCoordinator {
@@ -30,6 +31,10 @@ final class PLTrustedDevicePinCoordinator: ModuleCoordinator {
 extension PLTrustedDevicePinCoordinator: PLTrustedDevicePinCoordinatorProtocol {
     func goToVoiceBotScene() {
         //TODO:
+    }
+
+    func goToDeviceTrustDeviceData() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

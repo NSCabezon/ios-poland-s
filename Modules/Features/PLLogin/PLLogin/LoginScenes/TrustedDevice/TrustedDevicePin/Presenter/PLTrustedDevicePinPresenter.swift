@@ -10,6 +10,7 @@ protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDevicePinViewProtocol? { get set }
     func viewDidLoad()
     func registerSoftwareToken(with createBiometricToken: Bool)
+    func goToDeviceTrustDeviceData()
     func shouldShowBiometry() -> Bool
 }
 
@@ -68,6 +69,10 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
                 // TODO: Present errorsecondFactorData
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
             }
+    }
+
+    func goToDeviceTrustDeviceData() {
+        self.coordinator.goToDeviceTrustDeviceData()
     }
 
     func shouldShowBiometry() -> Bool {
