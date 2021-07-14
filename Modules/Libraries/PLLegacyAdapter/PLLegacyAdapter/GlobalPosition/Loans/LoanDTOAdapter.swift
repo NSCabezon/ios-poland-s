@@ -5,6 +5,7 @@
 
 import SANPLLibrary
 import SANLegacyLibrary
+import PLCommons
 
 final class LoanDTOAdapter {
     static func adaptPLLoanToLoan(_ plLoan: SANPLLibrary.LoanDTO) -> SANLegacyLibrary.LoanDTO {
@@ -12,7 +13,7 @@ final class LoanDTOAdapter {
         loanDTO.alias = plLoan.name?.userDefined
         let currencyAdapter = CurrencyAdapter()
         loanDTO.currency = currencyAdapter.adaptStringToCurrency(plLoan.currentLimit?.currencyCode)
-        loanDTO.contractDescription = IBANAdapter.adaptIBANToIBANFormatted(plLoan.number)
+        loanDTO.contractDescription = IBANFormatter.format(iban: plLoan.number)
         var amount = AmountAdapter.adaptBalanceToAmount(plLoan.currentLimit)
         amount?.value?.negate()
         loanDTO.currentBalance = amount

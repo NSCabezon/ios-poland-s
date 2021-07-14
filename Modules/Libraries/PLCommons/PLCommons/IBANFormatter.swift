@@ -1,16 +1,11 @@
-//
-//  IBANAdapter.swift
-//  PLLegacyAdapter
-//
+import Commons
 
-import Foundation
-
-public final class IBANAdapter {
-    public static func adaptIBANToIBANFormatted(_ iban: String?) -> String? {
+public class IBANFormatter {
+    public static func format(iban: String?) -> String {
         guard let iban = iban else {
             return ""
         }
-        let beginIndex = Int(String(iban.substring(0, 2) ?? "")) != nil ? 2 : 4
+        let beginIndex = self.isExternalIban(iban) ? 4 : 2
         let countryCode = String(iban.substring(0, beginIndex) ?? "")
         let ibanCode = String(iban.substring(beginIndex) ?? "")
         let numberOfGroups: Int = ibanCode.count / 4
@@ -24,5 +19,9 @@ public final class IBANAdapter {
             printedIban += " \(ibanCode.suffix(ibanCode.count - 4*numberOfGroups))"
         }
         return "\(countryCode) \(printedIban)"
+    }
+
+    private static func isExternalIban(_ iban: String) -> Bool {
+        return Int(String(iban.substring(0, 2) ?? "")) == nil
     }
 }
