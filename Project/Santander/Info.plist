@@ -71,7 +71,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>UIUserInterfaceStyle</key>
-    <string>Light</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich zdjęć?</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
