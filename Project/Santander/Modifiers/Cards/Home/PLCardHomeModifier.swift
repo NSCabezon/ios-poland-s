@@ -22,9 +22,6 @@ final class PLCardHomeModifier {
 }
 
 extension PLCardHomeModifier: CardHomeModifierProtocol {
-    func addPrepaidCardOffAction() -> Bool {
-        return false
-    }
 
     func isPANMasked() -> Bool {
         return true
@@ -82,6 +79,10 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
 
     func hideCardsHomeImageDetailsConditions() -> Bool {
         return true
+    }
+
+    func addPrepaidCardOffAction() -> Bool {
+        return false
     }
 
 }

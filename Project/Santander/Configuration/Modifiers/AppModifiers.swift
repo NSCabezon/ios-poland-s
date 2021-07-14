@@ -74,10 +74,12 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
             return self.cardHomeActionModifier
         }
+        self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
+            return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
+        }        
         self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
             return self.cardHomeModifier
         }
-        
 //        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
 //            return self.accountHomeActionModifier
 //        }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */; };
 		0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF736F2666157E00E9A9EE /* ProductIdDelegateModifier.swift */; };
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0C6CE07925DAAAFB3935D99C /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSetupActivateCardUseCase.swift; sourceTree = "<group>"; };
 		0DBF736F2666157E00E9A9EE /* ProductIdDelegateModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductIdDelegateModifier.swift; sourceTree = "<group>"; };
 		0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
 		0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountNumberFormatter.swift; sourceTree = "<group>"; };
@@ -97,8 +99,6 @@
 		6E11E75A38798E9AB57BBF1B /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
 		6E34F24D5FC0326E7CD59FC0 /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
 		7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
-		7E79068D265F90D1008B10E2 /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
-		7E790690265F90D1008B10E2 /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
 		DC746257DD34B39DB49CFF26 /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
 		F99E8A0696E13903CC583130 /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +115,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0DA4CC8A269C564A008E2E4F /* CardBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				0DA4CC8B269C5662008E2E4F /* Activate */,
+			);
+			path = CardBoarding;
+			sourceTree = "<group>";
+		};
+		0DA4CC8B269C5662008E2E4F /* Activate */ = {
+			isa = PBXGroup;
+			children = (
+				0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */,
+			);
+			path = Activate;
+			sourceTree = "<group>";
+		};
 		0DCED399268B0B16001D38CC /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +203,7 @@
 		447D7D2D268F002700F9A70D /* Cards */ = {
 			isa = PBXGroup;
 			children = (
+				0DA4CC8A269C564A008E2E4F /* CardBoarding */,
 				447D7D2E268F004100F9A70D /* Home */,
 			);
 			path = Cards;
@@ -465,6 +482,7 @@
 				66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */,
 				446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */,
 				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
+				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
 				0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */,
 				446E0C23265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift in Sources */,
 				0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */,
