@@ -1,1 +1,1 @@
-# iOS Poland
+# Poland iOS - CONTRIBUTING.md
