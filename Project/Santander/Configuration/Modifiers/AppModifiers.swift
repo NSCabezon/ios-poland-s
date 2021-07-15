@@ -80,6 +80,10 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
             return self.cardHomeModifier
         }
+        self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
+        return MonthlyBalanceUseCase(dependenciesResolver: resolver)
+        }
+        
 //        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
 //            return self.accountHomeActionModifier
 //        }
