@@ -1451,35 +1451,36 @@
         <id>id_PG_TAR_BELOW</id>
         <location>PG_TAR_BELOW</location>
         <rules>
-        </rules>
-        <start_date_utc>2018-04-01</start_date_utc>
-        <end_date_utc>2030-12-31</end_date_utc>
-        <priority>4</priority>
-        <iterations>100000</iterations>
-        <banners>
-            <banner app="ios,android" height="150" width="720">
-                <![CDATA[https://microsite.bancosantander.es/filesFF/apps/SAN/img/148_CambioClavesPAR_6257.jpg]]>
-            </banner>
-        </banners>
-        <banners_contract>
-            <banner app="ios,android" height="200" width="720">
-                <![CDATA[≈]]>
-            </banner>
-        </banners_contract>
-        <action type="open_webview">
-            <top_title>Proyecto 81</top_title>
-            <title>Proyecto 81</title>
-            <open_url>
-                <![CDATA[https://online.bancosantander.es/apps/supernet/contacto/?operativa=siemprecontigo]]>
-            </open_url>
-            <close_url>
-                <![CDATA[https://www.bancosantander.es]]>
-            </close_url>
-            <pdf_name>Proyecto 81</pdf_name>
-            <parameters>
-                <parameter name="userId">$userId</parameter>
-            </parameters>
-        </action>
+            <rules>
+            </rules>
+            <start_date_utc>2018-04-01</start_date_utc>
+            <end_date_utc>2030-12-31</end_date_utc>
+            <priority>4</priority>
+            <iterations>100000</iterations>
+            <banners>
+                <banner app="ios,android" height="150" width="720">
+                    <![CDATA[https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/apple/iphone-12-pro/buy-now/buy-now-consumer/iphone12-buy-now-banner-mobile.jpg]]>
+                </banner>
+            </banners>
+            <banners_contract>
+                <banner app="ios,android" height="200" width="720">
+                    <![CDATA[https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/apple/iphone-12-pro/buy-now/buy-now-consumer/iphone12-buy-now-banner-mobile.jpg]]>
+                </banner>
+            </banners_contract>
+            <action type="open_webview">
+                <top_title>Proyecto 81</top_title>
+                <title>Proyecto 81</title>
+                <open_url>
+                    <![CDATA[https://www.apple.com/es/iphone/]]>
+                </open_url>
+                <close_url>
+                    <![CDATA[https://www.apple.com/es/iphone-12-pro/]]>
+                </close_url>
+                <pdf_name>Proyecto 81</pdf_name>
+                <parameters>
+                    <parameter name="userId">$userId</parameter>
+                </parameters>
+            </action>
     </product>
     <!-- Tarjetas  -->
     <!--  _________________Posición Global Tarjeta Crédito Profesional  PARTICULARES  _________________ -->
