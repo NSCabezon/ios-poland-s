@@ -25,7 +25,7 @@ public class PLUIInteractiveInfoView: UIView {
         static let titleFont =  UIFont.santander(family: .text, type: .bold, size: 16)
         static let descriptionFont =  UIFont.santander(family: .micro, type: .regular, size: 14)
         static let titleTextColor = UIColor(red: 87.0 / 255.0, green: 87.0 / 255.0, blue: 87.0 / 255.0, alpha: 1.0)
-        static let descriptionTextColor = UIColor(red: 72.0 / 255.0, green: 72.0 / 255.0, blue: 72.0 / 255.0, alpha: 1.0)
+        static let descriptionTextColor = UIColor(red: 114.0 / 255.0, green: 114.0 / 255.0, blue: 114.0 / 255.0, alpha: 1.0)
     }
 
     private lazy var verticalStackView: UIStackView = {
@@ -83,7 +83,7 @@ public class PLUIInteractiveInfoView: UIView {
         view.backgroundColor = .white
         view.layer.cornerRadius = 5.0
         view.layer.borderWidth = 1.0
-        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderColor = UIColor(white: 0, alpha: 0.1).cgColor
         return view
     }()
 
