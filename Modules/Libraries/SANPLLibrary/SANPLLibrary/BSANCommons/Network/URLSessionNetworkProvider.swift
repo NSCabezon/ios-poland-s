@@ -25,7 +25,12 @@ private extension URLSessionNetworkProvider {
             throw NetworkProviderError.other
         }
         if let queryParams = request.queryParams {
-            urlComponents.queryItems = queryParams.map { URLQueryItem(name: $0.key, value: $0.value) }
+            urlComponents.queryItems = queryParams.map {
+                var value: String? =  $0.value as? String
+                if value == nil {
+                    value = "\($0.value)"
+                }
+                return URLQueryItem(name: $0.key, value: value) }
         }
         guard let url = urlComponents.url else {
             throw NetworkProviderError.other

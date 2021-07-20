@@ -44,6 +44,9 @@ final class AppModifiers {
         }
         return modifier
     }()
+    private lazy var cardHomeModifier: CardHomeModifierProtocol = {
+        return PLCardHomeModifier(dependenciesEngine: dependencieEngine)
+    }()
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
@@ -65,8 +68,20 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
             return self.accountOtherOperativesActionModifier
         }
+        self.dependencieEngine.register(for: AccountNumberFormatterProtocol.self) { _ in
+            return PLAccountNumberFormatter()
+        }
         self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
             return self.cardHomeActionModifier
+        }
+        self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
+            return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
+        }        
+        self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
+            return self.cardHomeModifier
+        }
+        self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
+        return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
         
 //        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
@@ -86,9 +101,6 @@ private extension AppModifiers {
 //        }
 //        self.dependencieEngine.register(for: GetPTWebViewConfigurationUseCase.self) { resolver in
 //            return GetPTWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
-//            return self.cardHomeActionModifier
 //        }
 //        self.dependencieEngine.register(for: PINProviderCipherProtocol.self) { resolver in
 //            return PINProviderCipher()

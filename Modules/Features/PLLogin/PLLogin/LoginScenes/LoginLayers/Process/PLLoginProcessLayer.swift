@@ -134,9 +134,7 @@ private extension PLLoginProcessLayer {
                 let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
                                                                    passwordType: passwordType,
                                                                    challenge: ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
-                                                                   loginImageData: output.loginImage,
-                                                                   password: nil,
-                                                                   secondFactorDataFinalState: output.secondFactorFinalState)
+                                                                   loginImageData: output.loginImage, password: nil, secondFactorDataFinalState: output.secondFactorFinalState, unblockRemainingTimeInSecs: output.unblockRemainingTimeInSecs)
                 self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }
             .onError { [weak self] error in

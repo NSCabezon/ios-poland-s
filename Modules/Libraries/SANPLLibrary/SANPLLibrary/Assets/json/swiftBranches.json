@@ -1,0 +1,23 @@
+{
+    "12345678Z": {
+        "0": {
+            "swiftBranchList": [
+                {
+                    "branchId": 507140,
+                    "bic": "WBKPPLPPXXX",
+                    "branchCode": "10900004",
+                    "bankName": "SANTANDER BANK POLSKA S.A. (FORMERL",
+                    "countryCode": "PL",
+                    "city": "WARSZAWA",
+                    "address": "AL. JANA PAWLA II 17",
+                    "shortName": "HEAD OFFICE"
+                }
+            ],
+            "page": {
+                "operationCount": 1,
+                "hasNextPage": false,
+                "navigationKey": "1$1"
+            }
+        }
+    }
+}

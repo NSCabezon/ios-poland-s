@@ -3,7 +3,7 @@
         "0": {
             "accounts": [
                 {
-                    "number": "43109011990000000132578056",
+                    "number": "PL43109011990000000132578056",
                     "accountId": {
                         "id": "132578056",
                         "systemId": 3
@@ -352,7 +352,37 @@
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 0
                     }
-                }
+                },
+                {
+                    "maskedPan": "412281_9173",
+                    "virtualPan": "412281P002925860",
+                    "generalStatus": "ACTIVE",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "CREDIT",
+                    "productCode": "PLPV",
+                    "name": {
+                        "description": "Visa Platinum",
+                        "userDefined": "My Visa card"
+                    },
+                    "relatedAccount": "29109014894000000112257854",
+                    "expirationDate": "2023-02-23",
+                    "availableBalance": {
+                        "value": 4000.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 4000.0
+                    },
+                    "creditLimit": {
+                        "value": 5000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5000
+                    },
+                    "disposedAmount": {
+                        "value": 1000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 1000
+                    }
+                },
             ],
             "loans": [
                 {

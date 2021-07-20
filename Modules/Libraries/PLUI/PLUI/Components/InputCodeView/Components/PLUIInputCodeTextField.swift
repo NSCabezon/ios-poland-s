@@ -15,8 +15,6 @@ protocol PLUIInputCodeTextFieldDelegate: UITextFieldDelegate {
 class PLUIInputCodeTextField: UITextField {
 
     private enum Constants {
-        static let textColor = UIColor.white
-        static let tintColor = UIColor.santanderRed
         static let enabledBackgroundColor = UIColor(white: 1.0, alpha: 0.35)
         enum Cursor {
             static let width: CGFloat = 1.0
@@ -25,6 +23,7 @@ class PLUIInputCodeTextField: UITextField {
 
     private let padding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private let isSecureEntry: Bool
+    private let cursorTintColor: UIColor
     private let selectedFont: UIFont
     override var isEnabled: Bool {
         didSet {
@@ -55,11 +54,15 @@ class PLUIInputCodeTextField: UITextField {
      */
     init(delegate: PLUIInputCodeTextFieldDelegate?,
          font: UIFont,
-         isSecureEntry: Bool = true) {
+         isSecureEntry: Bool = true,
+         cursorTintColor: UIColor,
+         textColor: UIColor) {
         self.inputCodeDelegate = delegate
         self.isSecureEntry = isSecureEntry
+        self.cursorTintColor = cursorTintColor
         self.selectedFont = font
         super.init(frame: .zero)
+        self.textColor = textColor
         self.delegate = delegate
         self.translatesAutoresizingMaskIntoConstraints = false
         self.configureView()
@@ -105,9 +108,8 @@ private extension PLUIInputCodeTextField {
         self.borderStyle = .none
         self.isSecureTextEntry = self.isSecureEntry
         self.textAlignment = .center
-        self.textColor = Constants.textColor
         self.font = self.selectedFont
-        self.tintColor = Constants.tintColor
+        self.tintColor = self.cursorTintColor
     }
 }
 

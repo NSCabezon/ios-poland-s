@@ -24,6 +24,7 @@ final class AppDependencies {
     private let hostModule: HostsModuleProtocol
     private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
+    private let ibanFormatter: ShareIbanFormatterProtocol
     
     // MARK: - Dependecies definitions
     
@@ -77,6 +78,7 @@ final class AppDependencies {
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
         appModifiers = AppModifiers(dependenciesEngine: dependencieEngine)
+        self.ibanFormatter = ShareIbanFormatter()
         registerDependencies()
     }
 }
@@ -139,6 +141,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: ProductIdDelegateProtocol.self) { _ in
             return self.productIdDelegate
+        }
+        self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
+            return self.ibanFormatter
         }
     }
 }

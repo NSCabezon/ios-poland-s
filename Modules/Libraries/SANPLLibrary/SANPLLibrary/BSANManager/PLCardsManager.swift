@@ -9,6 +9,7 @@ import SANLegacyLibrary
 
 public protocol PLCardsManagerProtocol {
     func getCards() -> [CardDTO]?
+    func loadCardPAN(cardId: String) -> String?
 }
 
 final class PLCardsManager {
@@ -29,6 +30,10 @@ extension PLCardsManager: PLCardsManagerProtocol {
             return nil
         }
         return cardDTO
+    }
+
+    func loadCardPAN(cardId: String) -> String? {
+        return bsanDataProvider.getCardPAN(cardId: cardId)
     }
 
 }

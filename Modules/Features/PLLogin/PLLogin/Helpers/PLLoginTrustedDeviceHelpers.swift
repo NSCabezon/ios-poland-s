@@ -28,6 +28,16 @@ class PLLoginTrustedDeviceHelpers {
     }
 
     /**
+     Returns the same string adding spaces at the end so the characters number would be multiples of 16
+     */
+    public static func stringMultipleOf16(_ string: String) -> String {
+        let module = string.count%16
+        guard module != 0 else { return string }
+        let spaces = String(Array(repeating: " ", count: 16 - module))
+        return (string + spaces)
+    }
+
+    /**
      Returns an array of bytes secure random
      - Parameter bytesNumber: Number of bytes that will be returned
      i.e: bytesNumber = 16 -> Will return an array of 16 bytes  (16 bytes * 8 bit/byte = 128 bits)

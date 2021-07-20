@@ -31,7 +31,7 @@ pipeline {
 		stage('Distribute Intern') {
 			when {
 				branch 'develop'
-                expression { return  !env.COMMIT_MESSAGE.contains("Updating Version")}
+                expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
             }
 			steps {
 				echo "Distributing android app"
@@ -42,7 +42,7 @@ pipeline {
 		stage('Compile Intern to Appium') {
 			when {
 				branch 'develop'
-				expression { return  !env.COMMIT_MESSAGE.contains("Updating Version")}
+				expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 
             }
 			steps {
@@ -79,7 +79,7 @@ pipeline {
 		stage('Increment Version and Update Repo Version ') {
 			when {
 				anyOf { branch 'develop'; branch 'master'; branch 'release/*' }
-                expression { return  !env.COMMIT_MESSAGE.contains("Updating Version")}
+                expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 			}
 			steps {
 				sh "cd Project && fastlane ios increment_version"

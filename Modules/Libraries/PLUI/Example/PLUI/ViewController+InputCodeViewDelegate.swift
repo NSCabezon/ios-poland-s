@@ -17,9 +17,14 @@ extension ViewController {
             static let boxSize = CGSize(width: 39.0, height: 56.0)
         }
         enum MaskedPassword {
-            static let charactersSet: CharacterSet = .alphanumerics.union(.symbols).union(.punctuationCharacters)
+            static let charactersSet: CharacterSet = CharacterSet.alphanumerics.union(CharacterSet.symbols).union(CharacterSet.punctuationCharacters)
             static let keyboardType: UIKeyboardType = .default
             static let boxSize = CGSize(width: 31.0, height: 56.0)
+        }
+        enum pinConfiguration {
+            static let charactersSet: CharacterSet = .decimalDigits
+            static let keyboardType: UIKeyboardType = .numberPad
+            static let boxSize = CGSize(width: 55.0, height: 56.0)
         }
     }
 
@@ -46,15 +51,24 @@ extension ViewController {
                                                    charactersSet: InputCodeViewConstants.MaskedPassword.charactersSet)
         return maskedPasswordView
     }
+
+    func trustedDevicePinView() -> PLUIInputCodeView {
+
+        let trustedDevicePinView = PLUIInputCodeView(keyboardType: InputCodeViewConstants.pinConfiguration.keyboardType,
+                                                      delegate: self,
+                                                      facade: PLUIInputCodePinFacade(),
+                                                      elementSize: InputCodeViewConstants.pinConfiguration.boxSize,
+                                                      requestedPositions: .all,
+                                                      charactersSet: InputCodeViewConstants.pinConfiguration.charactersSet)
+        return trustedDevicePinView
+    }
 }
 
 
 extension ViewController: PLUIInputCodeViewDelegate {
 
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
-
-        let type = String(describing: type(of: view))
-        print("\(type) Text: \(string) Position: \(position)")
+        print("Text: \(string) Position: \(position)")
     }
 
     func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool {

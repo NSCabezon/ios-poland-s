@@ -27,7 +27,7 @@ final class GlobalPositionDataSource {
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
     private var headers: [String: String] = [:]
-    private var queryParams: [String: String]? = nil
+    private var queryParams: [String: Any]? = nil
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
@@ -72,7 +72,7 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]?
+    let queryParams: [String: Any]?
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .none
@@ -86,7 +86,7 @@ private struct GlobalPositionRequest: NetworkProviderRequest {
          body: Data? = nil,
          jsonBody: Encodable? = nil,
          headers: [String: String]?,
-         queryParams: [String: String]? = nil,
+         queryParams: [String: Any]? = nil,
          contentType: NetworkProviderContentType,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName

@@ -12,7 +12,7 @@ The Poland PLUI framework.
   s.source           = { :git => 'https://santander-one-app.ciber.es/ios/poland.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.3'
-  s.source_files = 'PLUI/**/*.{swift}'
+  s.source_files = "PLUI/**/*.{swift}"
   s.resources = "PLUI/**/*.{xcassets}"
   s.resource_bundles = {
     'PLUI' => ['PLUI/**/*.{storyboard,ttf,json,strings,xib,m4a,caf}']

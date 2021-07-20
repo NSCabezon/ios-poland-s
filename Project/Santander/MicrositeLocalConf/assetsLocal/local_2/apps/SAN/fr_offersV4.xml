@@ -825,24 +825,25 @@
         <iterations>100000</iterations>
         <banners>
             <banner app="ios,android" height="150" width="720">
-                <![CDATA[https://microsite.bancosantander.es/filesFF/apps/SAN/img/148_CambioClavesPAR_6257.jpg]]>
+                <![CDATA[https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/apple/iphone-12-pro/buy-now/buy-now-consumer/iphone12-buy-now-banner-mobile.jpg]]>
             </banner>
         </banners>
         <banners_contract>
             <banner app="ios,android" height="200" width="720">
-                <![CDATA[https://serverftp.ciber-es.com/movilidad/files_negocio/apps/SAN/img/81.png]]>
+                <![CDATA[https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/apple/iphone-12-pro/buy-now/buy-now-consumer/iphone12-buy-now-banner-mobile.jpg]]>
             </banner>
         </banners_contract>
         <action type="open_webview">
             <top_title>Proyecto 81</top_title>
             <title>Proyecto 81</title>
             <open_url>
-                <![CDATA[https://online.bancosantander.es/apps/supernet/contacto/?operativa=siemprecontigo]]>
+                <![CDATA[https://www.apple.com/es/iphone/]]>
             </open_url>
             <close_url>
-                <![CDATA[https://www.bancosantander.es]]>
+                <![CDATA[https://www.apple.com/es/iphone-12-pro/]]>
             </close_url>
             <pdf_name>Proyecto 81</pdf_name>
+            <full_screen_enabled>true</full_screen_enabled>
             <parameters>
                 <parameter name="userId">$userId</parameter>
             </parameters>
@@ -2077,22 +2078,22 @@
         <iterations>100000</iterations>
         <banners>
             <banner app="ios,android" height="150" width="720">
-                <![CDATA[https://microsite.bancosantander.es/filesFF/apps/SAN/img/148_CambioClavesPAR_6257.jpg]]>
+                <![CDATA[https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/apple/iphone-12-pro/buy-now/buy-now-consumer/iphone12-buy-now-banner-mobile.jpg]]>
             </banner>
         </banners>
         <banners_contract>
             <banner app="ios,android" height="200" width="720">
-                <![CDATA[https://serverftp.ciber-es.com/movilidad/files_negocio/apps/SAN/img/81.png]]>
+                <![CDATA[https://www.spark.co.nz/content/dam/telecomcms/responsive/images/shop/apple/iphone-12-pro/buy-now/buy-now-consumer/iphone12-buy-now-banner-mobile.jpg]]>
             </banner>
         </banners_contract>
         <action type="open_webview">
             <top_title>Proyecto 81</top_title>
             <title>Proyecto 81</title>
             <open_url>
-                <![CDATA[https://online.bancosantander.es/apps/supernet/contacto/?operativa=siemprecontigo]]>
+                <![CDATA[https://www.apple.com/es/iphone/]]>
             </open_url>
             <close_url>
-                <![CDATA[https://www.bancosantander.es]]>
+                <![CDATA[https://www.apple.com/es/iphone-12-pro/]]>
             </close_url>
             <pdf_name>Proyecto 81</pdf_name>
             <parameters>

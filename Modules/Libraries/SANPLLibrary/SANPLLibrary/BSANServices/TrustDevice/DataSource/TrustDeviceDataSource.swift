@@ -62,12 +62,13 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         let absoluteUrl = baseUrl + self.basePath
         let serviceName =  TrustDeviceServiceType.registerSoftwareToken.rawValue
         let result: Result<RegisterSoftwareTokenDTO, NetworkProviderError> = self.networkProvider.request(RegisterSoftwareTokenRequest(serviceName: serviceName,
-                                                                                                       serviceUrl: absoluteUrl,
-                                                                                                       method: .post,
-                                                                                                       body: body,
-                                                                                                       jsonBody: parameters,
-                                                                                                       headers: self.headers,
-                                                                                                       localServiceName: .registerSoftwareToken, authorization: .oauth))
+                                                                                                                                       serviceUrl: absoluteUrl,
+                                                                                                                                       method: .post,
+                                                                                                                                       body: body,
+                                                                                                                                       jsonBody: parameters,
+                                                                                                                                       headers: self.headers,
+                                                                                                                                       localServiceName: .registerSoftwareToken,
+                                                                                                                                       authorization: .oauth))
 
         return result
     }
@@ -78,7 +79,7 @@ private struct RegisterDeviceRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]? = nil
+    let queryParams: [String: Any]? = nil
     let jsonBody: RegisterDeviceParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
@@ -114,7 +115,7 @@ private struct RegisterSoftwareTokenRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: String]? = nil
+    let queryParams: [String: Any]? = nil
     let jsonBody: RegisterSoftwareTokenParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?

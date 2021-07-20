@@ -8,6 +8,7 @@
 
 import UIKit
 import PLUI
+import UI
 
 class ViewController: UIViewController {
 
@@ -31,6 +32,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
 
+        UIStyle.setup()
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor(red: 204/256, green: 0, blue: 0, alpha: 1)
@@ -38,6 +40,8 @@ class ViewController: UIViewController {
 
         components.append(self.maskedPasswordView())
         components.append(self.smsAuthenticationView())
+        components.append(self.trustedDevicePinView())
+        components.append(self.interactiveInfoView())
 
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),

@@ -14,6 +14,7 @@ public protocol PLGlobalPositionManagerProtocol {
     func getLoans() throws -> Result<GlobalPositionDTO, NetworkProviderError>
     func getDeposits() throws -> Result<GlobalPositionDTO, NetworkProviderError>
     func getInvestmentFunds() throws -> Result<GlobalPositionDTO, NetworkProviderError>
+    func getGlobalPosition() -> GlobalPositionDTO?
 }
 
 final class PLGlobalPositionManager {
@@ -63,6 +64,14 @@ extension PLGlobalPositionManager: PLGlobalPositionManagerProtocol {
         let result = try self.globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
         self.processResult(result)
         return result
+    }
+
+    func getGlobalPosition() -> GlobalPositionDTO? {
+        guard let sessionData = try? self.bsanDataProvider.getSessionData(),
+              let globalPosition = sessionData.globalPositionDTO else {
+            return nil
+        }
+        return globalPosition
     }
 }
 

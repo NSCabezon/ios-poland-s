@@ -6,8 +6,9 @@ import IQKeyboardManagerSwift
 
 protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
     func resetForm()
-    func showTooltipErrorAccountTemporaryBlocked()
-    func showTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration)
+    func showAccountPermanentlyBlockedDialog()
+    func showInvalidSCADialog(_ configuration: UnrememberedLoginConfiguration)
+    func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration)
 }
 
 final class PLUnrememberedLoginIdViewController: UIViewController {
@@ -83,7 +84,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         self.documentTextField?.setText("")
     }
 
-    func showTooltipErrorAccountTemporaryBlocked() {
+    func showAccountPermanentlyBlockedDialog() {
         let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_userBlocked"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
             alignment: .center,
@@ -94,7 +95,7 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
     }
 
-    func showTooltipInvalidSCAWarning(_ configuration: UnrememberedLoginConfiguration) {
+    func showInvalidSCADialog(_ configuration: UnrememberedLoginConfiguration) {
         let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_attemptLast"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
             alignment: .center,
@@ -103,6 +104,11 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         ))
         let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { self.presenter.goToPasswordScene(configuration) })
         self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
+    }
+
+    func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration) {
+        guard let unblockRemainingTimeInSecs = configuration.unblockRemainingTimeInSecs else { return }
+        PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs).show(in: self)
     }
 
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {

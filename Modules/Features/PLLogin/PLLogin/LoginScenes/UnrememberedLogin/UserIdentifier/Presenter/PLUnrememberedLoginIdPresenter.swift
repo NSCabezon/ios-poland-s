@@ -38,7 +38,7 @@ final class PLUnrememberedLoginIdPresenter {
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
     func viewDidLoad() {
-        // TODO
+        self.loginManager?.loadData()
     }
     
     func viewWillAppear() {
@@ -77,7 +77,10 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
         case .loginWithIdentifierSuccess(let configuration):
             self.view?.dismissLoading(completion: { [weak self] in
                 if configuration.secondFactorDataFinalState.elementsEqual("FINAL") {
-                    self?.view?.showTooltipInvalidSCAWarning(configuration)
+                    self?.view?.showInvalidSCADialog(configuration)
+                }
+                else if configuration.secondFactorDataFinalState.elementsEqual("BLOCKED") && configuration.unblockRemainingTimeInSecs != nil {
+                    self?.view?.showAccountTemporaryBlockedDialog(configuration)
                 }
                 else {
                     self?.goToPasswordScene(configuration)
@@ -85,7 +88,7 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
             })
         case .loginErrorAccountTemporaryBlocked:
             self.view?.dismissLoading(completion: { [weak self] in
-                self?.view?.showTooltipErrorAccountTemporaryBlocked()
+                self?.view?.showAccountPermanentlyBlockedDialog()
             })
         default:
             break // TODO

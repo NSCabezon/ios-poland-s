@@ -28,7 +28,7 @@ public protocol NetworkProviderRequest {
     var method: NetworkProviderMethod { get }
     var serviceUrl: String { get }
     var headers: [String: String]? { get }
-    var queryParams: [String: String]? { get }
+    var queryParams: [String: Any]? { get }
     var jsonBody: Body? { get }
     var formData: Data? { get }
     var bodyEncoding: NetworkProviderBodyEncoding? { get }
