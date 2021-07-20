@@ -69,4 +69,6 @@ class PLAppConfig: LocalAppConfig {
     let analysisAreaIsIncomeSelectable: Bool = false
     let analysisAreaIsExpensesSelectable: Bool = false
     let enablePGCardActivation: Bool = true
+    var isAnalysisAreaHomeEnabled = false
+    var countryCode = "PL"
 }

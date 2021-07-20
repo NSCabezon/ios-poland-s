@@ -22,6 +22,9 @@ final class PLCardHomeModifier {
 }
 
 extension PLCardHomeModifier: CardHomeModifierProtocol {
+    func hideMoreOptionsButton() -> Bool {
+        return true
+    }
 
     func isPANMasked() -> Bool {
         return true
