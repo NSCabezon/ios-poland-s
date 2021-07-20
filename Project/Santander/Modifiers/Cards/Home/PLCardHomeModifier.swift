@@ -78,7 +78,7 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
     }
 
     func hideCardsHomeImageDetailsConditions() -> Bool {
-        return true
+        return false
     }
 
     func addPrepaidCardOffAction() -> Bool {

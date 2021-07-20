@@ -15,6 +15,10 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
         return [.enable, .onCard, .offCard, .instantCash, .pin, .pdfExtract]
     }
 
+    override func getDebitCardHomeActions() -> [CardActionType] {
+        return [.enable, .onCard, .offCard, .pin, .modifyLimits, .mobileTopUp]
+    }
+
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
         switch action {
         default:
