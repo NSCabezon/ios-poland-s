@@ -47,6 +47,9 @@ final class AppModifiers {
     private lazy var cardHomeModifier: CardHomeModifierProtocol = {
         return PLCardHomeModifier(dependenciesEngine: dependencieEngine)
     }()
+    private lazy var currencyProvider: AmountFormatterProvider & CurrencyFormatterProvider = {
+        return PLNumberFormatter()
+    }()
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
@@ -82,6 +85,12 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
         return MonthlyBalanceUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: AmountFormatterProvider.self) { _ in
+            return self.currencyProvider
+        }
+        self.dependencieEngine.register(for: CurrencyFormatterProvider.self) { _ in
+            return self.currencyProvider
         }
         
 //        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
