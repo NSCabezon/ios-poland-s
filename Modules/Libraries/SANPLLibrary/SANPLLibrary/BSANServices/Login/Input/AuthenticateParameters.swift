@@ -37,9 +37,10 @@ public struct Response: Encodable {
 }
 
 public struct Challenge: Encodable {
-    let authorizationType, value: String
+    let value: String
+    let authorizationType: AuthorizationType
 
-    public init(authorizationType: String, value: String) {
+    public init(authorizationType: AuthorizationType, value: String) {
         self.authorizationType = authorizationType
         self.value = value
     }

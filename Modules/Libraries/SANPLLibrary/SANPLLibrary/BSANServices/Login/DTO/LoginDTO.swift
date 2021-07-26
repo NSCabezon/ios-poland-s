@@ -25,7 +25,8 @@ public struct SecondFactorDataDTO: Codable {
 }
 
 public struct ChallengeDTO: Codable {
-    public let authorizationType, value: String
+    public let value: String
+    public let authorizationType: AuthorizationType
 }
 
 public struct TrustedComputerDataDTO: Codable {

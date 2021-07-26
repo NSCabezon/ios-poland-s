@@ -39,7 +39,15 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
 
     func login(password: String) {
         self.loginConfiguration.password = password
-        self.coordinator.goToSMSScene()
+        
+        switch self.loginConfiguration.challenge.authorizationType {
+        case .sms:
+            self.coordinator.goToSMSScene()
+        case .tokenTime:
+            self.coordinator.goToHardwareTokenScene()
+        case .softwareToken:
+            self.coordinator.goToSofwareTokenScene()
+        }        
     }
 
     func viewDidLoad() {
@@ -54,10 +62,6 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
 
     func viewWillAppear() {
         self.loginManager?.getCurrentEnvironments()
-    }
-
-    func goToSMSScene() {
-        self.coordinator.goToSMSScene()
     }
 
     func recoverPasswordOrNewRegistration() {

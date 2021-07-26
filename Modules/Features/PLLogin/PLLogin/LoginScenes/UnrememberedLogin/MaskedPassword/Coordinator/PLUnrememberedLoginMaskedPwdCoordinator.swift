@@ -11,6 +11,8 @@ import CommonUseCase
 
 protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
     func goToSMSScene()
+    func goToSofwareTokenScene()
+    func goToHardwareTokenScene()
 }
 
 final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
@@ -38,6 +40,14 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
 }
 
 extension PLUnrememberedLoginMaskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
+    func goToHardwareTokenScene() {
+        // TODO: start hardware token coordinator
+    }
+    
+    func goToSofwareTokenScene() {
+        // TODO: start software token coordinator
+    }
+    
     func goToSMSScene() {
         self.smsAuthCoordinator.start()
     }
