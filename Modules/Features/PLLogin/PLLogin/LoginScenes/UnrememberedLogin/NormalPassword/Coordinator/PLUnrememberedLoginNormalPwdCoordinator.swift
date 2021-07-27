@@ -19,6 +19,7 @@ final class PLUnrememberedLoginNormalPwdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private let smsAuthCoordinator: PLSmsAuthCoordinator
+    private let hardwareTokenCoordinator: PLHardwareTokenCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -27,6 +28,10 @@ final class PLUnrememberedLoginNormalPwdCoordinator: ModuleCoordinator {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.smsAuthCoordinator = PLSmsAuthCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
+        self.hardwareTokenCoordinator = PLHardwareTokenCoordinator(
             dependenciesResolver: self.dependenciesEngine,
             navigationController: navigationController
         )
@@ -41,7 +46,7 @@ final class PLUnrememberedLoginNormalPwdCoordinator: ModuleCoordinator {
 
 extension PLUnrememberedLoginNormalPwdCoordinator: PLUnrememberedLoginNormalPwdCoordinatorProtocol {
     func goToHardwareTokenScene() {
-        // TODO: start hardware token coordinator
+        self.hardwareTokenCoordinator.start()
     }
 
     func goToSofwareTokenScene() {

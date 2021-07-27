@@ -1,27 +1,29 @@
+//
+//  PLHardwareTokenViewController.swift
+//  PLLogin
+//
+//  Created by Juan Sánchez Marín on 20/7/21.
+//
+
 import UIKit
 import UI
 import PLUI
 import Commons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLHardwareTokenViewProtocol: class, PLLoadingLoginViewCapable {
     func resetForm()
-    func showAccountPermanentlyBlockedDialog()
-    func showInvalidSCADialog(_ configuration: UnrememberedLoginConfiguration)
-    func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration)
 }
 
-final class PLUnrememberedLoginIdViewController: UIViewController {
+final class PLHardwareTokenViewController: UIViewController {
     let dependenciesResolver: DependenciesResolver
-    private let presenter: PLUnrememberedLoginIdPresenterProtocol
-    
+    private let presenter: PLHardwareTokenPresenterProtocol
+
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var regardLabel: UILabel!
-    @IBOutlet private weak var documentTextField: PLDocumentTextField!
-    @IBOutlet private weak var loginButton: UIButton!
-    @IBOutlet weak var environmentButton: UIButton?
-    @IBOutlet weak var tooltipButton: UIButton!
+    @IBOutlet private weak var loginButton: PLLoginButton!
+    @IBOutlet weak var passwordTextField: PLDocumentTextField!
     @IBOutlet weak var buttonBottomAnchorConstraint: NSLayoutConstraint!
     @IBOutlet weak var textfieldConstraintWithoutKeyboard: NSLayoutConstraint!
     private var isShowingKeyboard = false {
@@ -38,185 +40,132 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
-         presenter: PLUnrememberedLoginIdPresenterProtocol) {
+         presenter: PLHardwareTokenPresenterProtocol) {
         self.presenter = presenter
         self.dependenciesResolver = dependenciesResolver
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
+
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.presenter.viewDidLoad()
         self.setupViews()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter.viewWillAppear()
         self.addKeyboardObserver()
         self.setNavigationBar()
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeKeyboardObserver()
+    }
+
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
             .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
-    
+
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     @objc func didSelectMenu() {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
 }
 
-extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {
-    
-    func didUpdateEnvironments() {
-    }
-    
+extension PLHardwareTokenViewController: PLHardwareTokenViewProtocol {
     func resetForm() {
-        self.documentTextField?.setText("")
-    }
-
-    func showAccountPermanentlyBlockedDialog() {
-        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_userBlocked"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 16),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
-        self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
-    }
-
-    func showInvalidSCADialog(_ configuration: UnrememberedLoginConfiguration) {
-        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_attemptLast"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 16),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { self.presenter.goToPasswordScene(configuration) })
-        self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
-    }
-
-    func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration) {
-        guard let unblockRemainingTimeInSecs = configuration.unblockRemainingTimeInSecs else { return }
-        PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs).show(in: self)
-    }
-
-    @IBAction func didSelectChooseEnvironment(_ sender: Any) {
-        self.chooseEnvironment()
-    }
-    
-    func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
+        //TODO
     }
 }
 
-private extension PLUnrememberedLoginIdViewController {
+private extension PLHardwareTokenViewController {
     func isKeyboardDismisserAllowed() -> Bool {
         return parent == nil || parent is UINavigationController
     }
-    
+
     func setupViews() {
         commonInit()
+
     }
-    
+
     func commonInit() {
-        setupEnvironmentButton()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        configureRegardLabel()
+        configureLabels()
         configureBackground()
         configureTextFields()
         configureButtons()
-        configureNavigationController()
         configureKeyboard()
         setAccessibility()
     }
-    
-    func configureRegardLabel() {
+
+    func configureLabels() {
         regardLabel.font = .santander(family: .text, type: .light, size: 40)
         regardLabel.textColor = UIColor.Legacy.uiWhite
         regardLabel.text = regardNow()
     }
-    
+
     func configureBackground() {
         backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
-    
+
     func configureTextFields() {
-        documentTextField.textField.delegate = self
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        print(passwordTextField.keyboardType)
+        passwordTextField.state = .secure
+        passwordTextField.textField.keyboardType = .numberPad
+        passwordTextField.textField.delegate = self
+        passwordTextField.configureLoginTypeLabel(text: localized("pl_login_hint_tokenCode"))
+        passwordTextField.configureTextTextField(text: nil)
+        passwordTextField.textField.returnKeyType = .default
     }
-    
+
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-    
+
     func configureButtons() {
-        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
-        loginButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-        tooltipButton.set(localizedStylableText: localized("pl_login_label_whatIsLogin"), state: .normal)
-        tooltipButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        tooltipButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        tooltipButton.setImage(PLAssets.image(named: "tooltipIcon"), for: .normal)
-        tooltipButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 0)
-        tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
+        loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(smsSendButtonDidPressed)))
+        loginButton.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
     }
 
     func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
     }
-    
+
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
     }
 
-    func configureNavigationController() {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    @objc func smsSendButtonDidPressed() {
+        self.view.endEditing(true)
     }
 
     func configureKeyboard() {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
-    
+
     func addKeyboardObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    @objc func loginButtonDidPressed() {
-        self.view.endEditing(true)
-        self.presenter.login(identification: documentTextField.introducedDocument())
-    }
 
-    @objc func tooltipButtonDidPressed() {
-        let keyTitle = "generic_alert_information"
-        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_whatIsLogin"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 18),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
-        let image = "icnInfoPg"
-        self.showDialog(title: keyTitle, items: [desc], image: image, action: acceptAction, isCloseOptionAvailable: true)
-    }
-    
     @objc func keyboardWillShow(notification: NSNotification) {
         guard self.isShowingKeyboard == false else { return }
         self.isShowingKeyboard = true
@@ -234,7 +183,7 @@ private extension PLUnrememberedLoginIdViewController {
             self?.view.layoutSubviews()
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
         self.isShowingKeyboard = false
         buttonBottomAnchorConstraint.constant = -Constants.bottomDistance
@@ -243,36 +192,27 @@ private extension PLUnrememberedLoginIdViewController {
             self?.view.layoutSubviews()
         }
     }
-    
-    func recoverPasswordOrNewRegistration() {
-        self.presenter.recoverPasswordOrNewRegistration()
-    }
 }
 
-extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {
+extension PLHardwareTokenViewController: RememberMeViewDelegate {
     func checkButtonPressed() {
         self.view.endEditing(true)
     }
 }
 
-extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
-
+extension PLHardwareTokenViewController: UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard string != " " else { return false }
-        let currentText = self.documentTextField.introducedText
+        let currentText = passwordTextField.hiddenText
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
-        if updatedText.count > 20 {
-            return false
-        } else {
-            loginButton.isEnabled = updatedText.count >= 6
-            return true
-        }
-    }
-}
 
-extension PLUnrememberedLoginIdViewController: DialogViewPresentationCapable {
-    var associatedDialogView: UIViewController {
-        return self
+        guard updatedText.count <= 8 else { return false }
+        passwordTextField.hiddenText = updatedText
+        passwordTextField.updatePassword()
+
+        guard updatedText.count == 8 else { return false }
+        loginButton.isEnabled = true
+        return false
     }
 }

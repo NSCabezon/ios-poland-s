@@ -10,11 +10,11 @@ import Commons
 import Models
 import UI
 
-public final class PLDocumentTextField: LegacyDesignableView {
+public class PLDocumentTextField: LegacyDesignableView {
     @IBOutlet public weak var textField: ConfigurableActionsTextField!
     @IBOutlet public weak var titleLabel: UILabel!
 
-    public var maxLenght: Int = 20
+    public var keyboardType: UIKeyboardType = .default
 
     private weak var delegate: UITextFieldDelegate? { didSet { textField.delegate = delegate } }
     private var returnAction: (() -> Void)?
@@ -40,6 +40,28 @@ public final class PLDocumentTextField: LegacyDesignableView {
     }
 
     private var observer: NSObjectProtocol?
+
+    public var hiddenText: String = "" {
+        didSet {
+            if hiddenText.count > maxLength {
+                hiddenText = ""
+                textField?.text = ""
+            }
+            updatePassword()
+        }
+    }
+    public var state: State = .secure {
+        didSet {
+            updatePassword()
+        }
+    }
+
+    public let maxLength: Int = 20
+
+    public enum State {
+        case char
+        case secure
+    }
 
     private enum Constants {
         static let titleLabelFont = UIFont.santander(family: .text, type: .regular, size: 12)
@@ -75,7 +97,7 @@ public final class PLDocumentTextField: LegacyDesignableView {
     override public func commonInit() {
         super.commonInit()
         configureTextField()
-        configureLoginTypeLabel()
+        configureLoginTypeLabel(text: localized("pl_login_label_login"))
         configureView()
     }
 
@@ -87,7 +109,7 @@ public final class PLDocumentTextField: LegacyDesignableView {
 
 // MARK: - Private methods
 
-private extension PLDocumentTextField {
+extension PLDocumentTextField {
 
     @objc func becomeResponder() {
         textField.becomeFirstResponder()
@@ -114,29 +136,48 @@ private extension PLDocumentTextField {
         return newKern >= 0 ? newKern : 0
     }
 
-    func configureTextField() {
+    public func configureTextField() {
         textField.textColor = UIColor.Legacy.uiWhite
         textField.tintColor = Constants.cursorColor
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: Constants.textLabelFont,
-            .foregroundColor: UIColor.white,
-        ]
-        textField.attributedPlaceholder = NSAttributedString(string: localized("pl_login_hint_login"),
-                                                             attributes: attributes)
         textField.adjustsFontSizeToFitWidth = false
         textField.returnKeyType = .next
-        textField.keyboardType = .default
+        textField.keyboardType = keyboardType
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
         if #available(iOS 11, *) {
             textField.textContentType = .username
         }
+        configureTextTextField(text: localized("pl_login_hint_login"))
     }
 
-    func configureLoginTypeLabel() {
+    public func configureTextTextField(text: LocalizedStylableText? = nil) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: Constants.textLabelFont,
+            .foregroundColor: UIColor.white,
+        ]
+        textField.attributedPlaceholder = text != nil ? NSAttributedString(string: text!.plainText,
+                                                                    attributes: attributes) : nil
+    }
+
+    public func updatePassword() {
+        let array = Array(hiddenText)
+        textField?.text = array.reduce("", { return $0 + (state == .secure ? "•" : String($1)) })
+        let correction: CGFloat = Screen.isIphone4or5 ? 4.0 : 0.0
+        textField?.font = UIFont.santander(family: .text, type: .regular, size: (array.isEmpty ? 20 - correction : (state == .secure ? 40.0 - correction : 28.0 - correction)))
+
+        guard let font = textField?.font else { return }
+        let charSpace = (state == .secure ? "•" : "9").size(withAttributes: [NSAttributedString.Key.font: font]).width
+        let total = charSpace * CGFloat(maxLength + 1) + 10
+        if (textField?.frame.width ?? 0.0) - total > 0.0 {
+            textField?.defaultTextAttributes.updateValue((array.isEmpty ? 0.2 : ((textField?.frame.width ?? 0.0) - total) / CGFloat(maxLength - 1)),
+                                                         forKey: NSAttributedString.Key.kern)
+        }
+    }
+
+    public func configureLoginTypeLabel(text: LocalizedStylableText) {
         titleLabel.textColor = .white
-        titleLabel.text = localized("pl_login_label_login").plainText
+        titleLabel.text = text.plainText
         titleLabel.font = Constants.titleLabelFont
     }
 
