@@ -6,17 +6,13 @@
 import Foundation
 
 public struct LoanDetailsParameters: Encodable {
-    public let includeDetails: String
-    public let includePermissions: String?
-    public let includeFunctionalities: String
+    public let includeDetails: Bool
+    public let includePermissions: Bool?
+    public let includeFunctionalities: Bool
 
     public init(includeDetails: Bool, includePermissions: Bool?, includeFunctionalities: Bool) {
-        self.includeDetails = includeDetails ? "true" : "false"
-        if let value = includePermissions {
-            self.includePermissions = value ? "true" : "false"
-        } else {
-            self.includePermissions = nil
-        }
-        self.includeFunctionalities = includeFunctionalities  ? "true" : "false"
+        self.includeDetails = includeDetails
+        self.includePermissions = includePermissions
+        self.includeFunctionalities = includeFunctionalities
     }
 }

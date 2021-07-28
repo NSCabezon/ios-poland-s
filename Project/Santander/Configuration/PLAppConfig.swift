@@ -11,10 +11,12 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
+    let isTransferDetailPDFButtonEnabled = true
+    let isTransferDetailReuseButtonEnabled = true
     let isEnabledHistorical = true
     let isEnabledFavorites = true
     let enableBiometric = true
-    let digitalProfile = true
+    let digitalProfile = false
     let endMorning = 5
     let endAfternoon = 14
     let endNight = 20
@@ -22,8 +24,8 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledPfm = true
     let privateMenu = true
     let isEnabledConfigureWhatYouSee = true
-    let isPortugal = false
-    let isEnabledPlusButtonPG = false
+    let isPortugal = true
+    let isEnabledPlusButtonPG = true
     let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true
@@ -34,20 +36,25 @@ class PLAppConfig: LocalAppConfig {
     let clickableInsuranceSaving = true
     let clickableStockAccount = true
     let clickableLoan = true
-    let isEnabledGoToManager: Bool = true
-    let isEnabledGoToPersonalArea: Bool = true
+    let isEnabledGoToManager: Bool = false
+    let isEnabledGoToPersonalArea: Bool = false
     let isEnabledGoToATMLocator: Bool = true
-    let isEnabledGoToHelpCenter: Bool = true
-    let isEnabledDigitalProfileView: Bool = true
+    let isEnabledGoToHelpCenter: Bool = false
+    let isEnabledDigitalProfileView: Bool = false
     let isEnabledWorld123: Bool = false
-    let isEnabledSendMoney: Bool = true
-    let isEnabledBills: Bool = true
+    let isEnabledSendMoney: Bool = false
+    let isEnabledBills: Bool = false
+    let isEnabledBillsAndTaxesInMenu: Bool = false
+    let isEnabledExploreProductsInMenu: Bool = false
+    let isEnabledPersonalAreaInMenu: Bool = true
+    let isEnabledHelpUsInMenu: Bool = false
+    let isEnabledATMsInMenu: Bool = false
     let enablePortfoliosHome: Bool = true
     let enablePensionsHome: Bool = true
     let enableInsuranceSavingHome: Bool = true
     let enabledChangeAliasProducts: [ProductTypeEntity] = [.card, .account]
     let isEnabledSecurityArea: Bool = true
-    let isEnabledAnalysisArea: Bool = true
+    let isEnabledAnalysisArea: Bool = false
     let isEnabledWithholdings: Bool = true
     let isEnabledCardDetail = true
     let isEnabledForceTouch = true
@@ -58,9 +65,10 @@ class PLAppConfig: LocalAppConfig {
     var maxLengthInternalTransferConcept: Int = 140
     var showATMIntermediateScreen: Bool = false
     var isEnabledEditAlias: Bool = false
-    let analysisAreaHasTimelineSection: Bool = true
-    let analysisAreaIsIncomeSelectable: Bool = true
-    let analysisAreaIsExpensesSelectable: Bool = true
-    let isAnalysisAreaHomeEnabled: Bool = false
+    let analysisAreaHasTimelineSection: Bool = false
+    let analysisAreaIsIncomeSelectable: Bool = false
+    let analysisAreaIsExpensesSelectable: Bool = false
     let enablePGCardActivation: Bool = true
+    var isAnalysisAreaHomeEnabled = false
+    var countryCode = "PL"
 }

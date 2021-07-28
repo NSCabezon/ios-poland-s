@@ -171,18 +171,4 @@ extension PLLoginTrustedDeviceTests {
         let expectedBytes: Array<UInt8> = [0x33, 0x34, 0x38, 0x78, 0x21, 0x7A, 0x33, 0x34, 0x38, 0x78, 0x21, 0x7A, 0x33, 0x34, 0x38, 0x78]
         XCTAssertEqual("348x!z348x!z348x".bytes, expectedBytes)
     }
-
-}
-
-private extension StringProtocol {
-    var hexaData: Data { .init(hexa) }
-    var hexaBytes: [UInt8] { .init(hexa) }
-    var hexa: UnfoldSequence<UInt8, Index> {
-        sequence(state: startIndex) { startIndex in
-            guard startIndex < self.endIndex else { return nil }
-            let endIndex = self.index(startIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
-            defer { startIndex = endIndex }
-            return UInt8(self[startIndex..<endIndex], radix: 16)
-        }
-    }
 }

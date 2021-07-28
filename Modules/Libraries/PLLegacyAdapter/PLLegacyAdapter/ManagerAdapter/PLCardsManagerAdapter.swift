@@ -10,9 +10,13 @@ import SANPLLibrary
 
 final class PLCardsManagerAdapter {
     private let cardsManager: PLCardsManagerProtocol
+    private let bsanDataProvider: BSANDataProvider
+    private let globalPositionManager: PLGlobalPositionManagerProtocol
 
-    public init(cardsManager: PLCardsManagerProtocol) {
+    public init(cardsManager: PLCardsManagerProtocol, bsanDataProvider: BSANDataProvider, globalPositionManager: PLGlobalPositionManagerProtocol) {
         self.cardsManager = cardsManager
+        self.bsanDataProvider = bsanDataProvider
+        self.globalPositionManager = globalPositionManager
     }
 }
 
@@ -38,7 +42,17 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func getCardsDataMap() throws -> BSANResponse<[String : CardDataDTO]> {
-        return BSANOkResponse([:])
+        guard let cardsDTO = cardsManager.getCards() else  {
+            return BSANOkResponse([:])
+        }
+        let cardsDataMap = cardsDTO.reduce([String: CardDataDTO](), { result, card in
+            var new = result
+            let cardData = CardDataDTOAdapter.adaptPLCardToCard(card, customer: nil)
+            guard let cardPAN = cardData.PAN else { return result }
+            new[cardPAN] = cardData
+            return new
+        })
+        return BSANOkResponse(cardsDataMap)
     }
     
     func getPrepaidsCardsDataMap() throws -> BSANResponse<[String : PrepaidCardDataDTO]> {
@@ -54,7 +68,17 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func getCardsBalancesMap() throws -> BSANResponse<[String : CardBalanceDTO]> {
-        return BSANOkResponse([:])
+        guard let cardsDTO = cardsManager.getCards() else  {
+            return BSANOkResponse([:])
+        }
+        let cardsBalanceMap = cardsDTO.reduce([String: CardBalanceDTO](), { result, card in
+            var new = result
+            let cardBalance = CardBalanceDTOAdapter.adaptPLBalance(card)
+            guard let cardPAN = card.maskedPan else { return result }
+            new[cardPAN] = cardBalance
+            return new
+        })
+        return BSANOkResponse(cardsBalanceMap)
     }
     
     func getTemporallyInactiveCardsMap() throws -> BSANResponse<[String : InactiveCardDTO]> {
@@ -354,5 +378,10 @@ private extension PLCardsManagerAdapter {
             return newResult
         })
         return cardsDataMap
+    }
+
+    func getCardFromDTO(_ card: SANLegacyLibrary.CardDTO) -> SANPLLibrary.CardDTO? {
+        let cards = globalPositionManager.getGlobalPosition()?.cards
+        return cards?.first { $0.virtualPan == card.contract?.contractNumber }
     }
 }

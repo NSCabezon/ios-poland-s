@@ -9,7 +9,7 @@ public protocol PLManagersProviderProtocol {
     func getLoginManager() -> PLLoginManagerProtocol
     func getTrustedDeviceManager() -> PLTrustedDeviceManager
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
-//    func getAccountsManager() -> PTAccountsManagerProtocol
+    func getAccountsManager() -> PLAccountManagerProtocol
     func getCardsManager() -> PLCardsManagerProtocol
 //    func getCardTransactionsManager() -> PTCardTransactionsManagerProtocol
 //    func getAuthManager() -> PTAuthManagerProtocol
@@ -30,7 +30,7 @@ public final class PLManagersProvider {
     private let loginManager: PLLoginManager
     private let trustedDeviceManager: PLTrustedDeviceManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
-//    private let accountManager: PTAccountsManager
+    private let accountManager: PLAccountManager
     private let cardsManager: PLCardsManager
 //    private let cardTransactionsManager: PTCardTransactionsManager
 //    private let authManager: PTAuthManager
@@ -61,7 +61,7 @@ public final class PLManagersProvider {
                                                              demoInterpreter: demoInterpreter)
         self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider)
 //        self.cardTransactionsManager = PTCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
-//        self.accountManager = PTAccountsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
+        self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 //        self.authManager = PTAuthManager(networkProvider: networkProvider, dataProvider: bsanDataProvider)
 //        self.depositsManager = PTDepositsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
@@ -102,11 +102,11 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol {
         return globalPositionManager
     }
-//
-//    public func getAccountsManager() -> PTAccountsManagerProtocol {
-//        self.accountManager
-//    }
-//
+
+    public func getAccountsManager() -> PLAccountManagerProtocol {
+        self.accountManager
+    }
+
     public func getCardsManager() -> PLCardsManagerProtocol {
         return self.cardsManager
     }

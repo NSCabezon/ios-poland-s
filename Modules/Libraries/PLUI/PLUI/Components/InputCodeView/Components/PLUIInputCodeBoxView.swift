@@ -25,7 +25,9 @@ public class PLUIInputCodeBoxView: UIView {
     private lazy var codeTextField: PLUIInputCodeTextField = {
         return PLUIInputCodeTextField(delegate: self,
                                       font: self.font,
-                                      isSecureEntry: self.isSecureEntry)
+                                      isSecureEntry: self.isSecureEntry,
+                                      cursorTintColor: self.cursorTintColor,
+                                      textColor: self.textColor)
     }()
     let position: NSInteger
     let showPosition: Bool
@@ -34,6 +36,12 @@ public class PLUIInputCodeBoxView: UIView {
     private let size: CGSize
     private let positionLabel = UILabel()
     private let font: UIFont
+    private let textColor: UIColor
+    private let cursorTintColor: UIColor
+    private var roundCorners: UIRectCorner? = nil
+    private var cornerRadius: CGFloat? = nil
+    private let borderColor: UIColor
+    private let borderWidth: CGFloat
     weak var delegate: PLUIInputCodeBoxViewDelegate?
 
     /**
@@ -44,6 +52,11 @@ public class PLUIInputCodeBoxView: UIView {
      - Parameter requested: If true the user´s entry is needed. If false it will be not editable. It is shown a rounded square in its place
      - Parameter isSecureEntry: If true the characters entered are not shown
      - Parameter size: size of the codeTextField. The positionLabel has its own size
+     - Parameter font: font for the textfield
+     - Parameter textColor: text color in textField
+     - Parameter cursorTintColor: uicolor value to tint the cursor in each textfield
+     - Parameter borderColor: uicolor value for the box border.
+     - Parameter borderRadius: border width
      */
     init(position: NSInteger,
          showPosition: Bool = false,
@@ -51,13 +64,21 @@ public class PLUIInputCodeBoxView: UIView {
          requested: Bool,
          isSecureEntry: Bool = true,
          size: CGSize,
-         font: UIFont) {
+         font: UIFont,
+         textColor: UIColor = .white,
+         cursorTintColor: UIColor,
+         borderColor: UIColor,
+         borderWidth: CGFloat) {
         self.showPosition = showPosition
         self.position = position
         self.requested = requested
         self.isSecureEntry = isSecureEntry
         self.size = size
         self.font = font
+        self.textColor = textColor
+        self.cursorTintColor = cursorTintColor
+        self.borderColor = borderColor
+        self.borderWidth = borderWidth
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.delegate = delegate
@@ -92,6 +113,24 @@ public class PLUIInputCodeBoxView: UIView {
             self.codeTextField.text = newValue
         }
     }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if let corners = self.roundCorners, let radius = self.cornerRadius {
+            self.roundCorners(corners: corners, radius: radius)
+            self.clipsToBounds = true
+        }
+        if borderWidth > 0 {
+            self.addBorder(width: borderWidth, color: borderColor)
+        }
+    }
+
+    func configureCorners(corners: UIRectCorner, radius: CGFloat) {
+        self.cornerRadius = radius
+        self.roundCorners = corners
+        self.clipsToBounds = true
+        setNeedsDisplay()
+    }
 }
 
 private extension PLUIInputCodeBoxView {
@@ -110,6 +149,7 @@ private extension PLUIInputCodeBoxView {
     func configureSubviews() {
         self.codeTextField.translatesAutoresizingMaskIntoConstraints = false
         self.codeTextField.isEnabled = self.requested
+        self.codeTextField.textColor = self.textColor
 
         self.positionLabel.translatesAutoresizingMaskIntoConstraints = false
         self.positionLabel.text = String(self.position)
@@ -132,6 +172,23 @@ private extension PLUIInputCodeBoxView {
             self.positionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.positionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
+    }
+
+    /// Add a border considering the rounded corners, and iOS 10.3 dependency
+    func addBorder(width: CGFloat, color: UIColor) {
+        if let corners = self.roundCorners, let radius = self.cornerRadius {
+            let borderPath = UIBezierPath.init(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+            let borderLayer = CAShapeLayer()
+            borderLayer.path = borderPath.cgPath
+            borderLayer.lineWidth = width + 1
+            borderLayer.strokeColor = color.cgColor
+            borderLayer.fillColor = UIColor.clear.cgColor
+            borderLayer.frame = self.bounds
+            self.layer.addSublayer(borderLayer)
+        } else {
+            self.layer.borderWidth = width
+            self.layer.borderColor = color.cgColor
+        }
     }
 }
 

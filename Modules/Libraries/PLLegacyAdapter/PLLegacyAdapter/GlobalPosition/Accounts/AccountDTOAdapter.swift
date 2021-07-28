@@ -11,6 +11,7 @@ public final class AccountDTOAdapter {
     static func adaptPLAccountToAccount(_ plAccount: SANPLLibrary.AccountDTO) -> SANLegacyLibrary.AccountDTO {
         var accountDTO = SANLegacyLibrary.AccountDTO()
         accountDTO.alias = plAccount.name?.userDefined
+        accountDTO.contractDescription = plAccount.number
         accountDTO.tipoSituacionCto = plAccount.type
         accountDTO.iban = IBANDTOAdapter.adaptDisplayNumberToIBAN(plAccount.number)
         accountDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plAccount.balance)

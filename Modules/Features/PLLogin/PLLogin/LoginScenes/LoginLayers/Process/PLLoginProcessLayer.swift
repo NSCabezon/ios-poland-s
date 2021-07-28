@@ -131,12 +131,14 @@ private extension PLLoginProcessLayer {
                 if output.passwordMaskEnabled == true, let mask = output.passwordMask {
                     passwordType = PasswordType.masked(mask: mask)
                 }
+                let challenge = ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value)
                 let configuration = UnrememberedLoginConfiguration(userIdentifier: info.identification,
                                                                    passwordType: passwordType,
-                                                                   challenge: ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType, value: output.defaultChallenge.value),
+                                                                   challenge: challenge,
                                                                    loginImageData: output.loginImage,
                                                                    password: nil,
-                                                                   secondFactorDataFinalState: output.secondFactorFinalState)
+                                                                   secondFactorDataFinalState: output.secondFactorFinalState,
+                                                                   unblockRemainingTimeInSecs: output.unblockRemainingTimeInSecs)
                 self?.delegate?.handle(event: .loginWithIdentifierSuccess(configuration: configuration))
             }
             .onError { [weak self] error in

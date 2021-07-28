@@ -21,10 +21,12 @@ public struct SecondFactorDataDTO: Codable {
     public let challenges: [ChallengeDTO]?
     public let defaultChallenge: ChallengeDTO
     public let expired: Bool?
+    public let unblockAvailableIn: Double?
 }
 
 public struct ChallengeDTO: Codable {
-    public let authorizationType, value: String
+    public let value: String
+    public let authorizationType: AuthorizationType
 }
 
 public struct TrustedComputerDataDTO: Codable {

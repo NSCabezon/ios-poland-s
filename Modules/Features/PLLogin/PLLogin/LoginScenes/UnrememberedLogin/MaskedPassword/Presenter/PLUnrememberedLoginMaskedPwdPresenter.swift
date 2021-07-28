@@ -54,7 +54,14 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
 
     func login(password: String) {
         self.loginConfiguration.password = password
-        self.coordinator.goToSMSScene()
+        switch self.loginConfiguration.challenge.authorizationType {
+        case .sms:
+            self.coordinator.goToSMSScene()
+        case .tokenTime:
+            self.coordinator.goToHardwareTokenScene()
+        case .softwareToken:
+            self.coordinator.goToSofwareTokenScene()
+        }
     }
 
     func recoverPasswordOrNewRegistration() {

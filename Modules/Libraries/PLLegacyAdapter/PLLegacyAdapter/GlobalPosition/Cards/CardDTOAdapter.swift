@@ -15,6 +15,8 @@ final class CardDTOAdapter {
         cardDTO.PAN = plCard.maskedPan
         cardDTO.alias = plCard.name?.userDefined
         cardDTO.ownershipTypeDesc = OwnershipTypeDesc(plCard.role ?? "")
+        cardDTO.ownershipType = OwnershipType.holder.type
+        cardDTO.allowsDirectMoney = plCard.type?.lowercased() == "credit"
         cardDTO.cardContractStatusType = plCard.generalStatus?.lowercased() == "active" ? CardContractStatusType.active : CardContractStatusType.other
         cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plCard.virtualPan)
         cardDTO.cardTypeDescription = plCard.type
@@ -23,7 +25,7 @@ final class CardDTOAdapter {
 
     static func adaptPLCardToCardData(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDataDTO {
         var cardDataDTO = SANLegacyLibrary.CardDataDTO()
-        cardDataDTO.PAN = plCard.maskedPan
+        cardDataDTO.PAN = repeatElement("X", count: Constants.maskedPANLength).joined() + String(plCard.maskedPan?.suffix(Constants.visiblePANDigits) ?? "")
         cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToAmount(plCard.availableBalance)
         cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plCard.disposedAmount)
         cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToAmount(plCard.creditLimit)
@@ -44,5 +46,12 @@ final class CardDTOAdapter {
         inactiveCardDTO.cardDescription = plCard.name?.userDefined
         inactiveCardDTO.inactiveCardType = .temporallyOff
         return inactiveCardDTO
+    }
+}
+
+private extension CardDTOAdapter {
+    enum Constants {
+        static let maskedPANLength: Int = 12
+        static let visiblePANDigits: Int = 4
     }
 }

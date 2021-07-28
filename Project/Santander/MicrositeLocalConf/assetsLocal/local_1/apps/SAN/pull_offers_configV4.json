@@ -441,14 +441,8 @@
                 "buena_oferta_solo_banner2",
                 "buena_oferta_solo_banner"
             ],
-            "PG_CTA_BELOW": [
-                "buena_oferta_solo_banner2",
-                "buena_oferta_solo_banner"
-            ],
-            "PG_TAR_BELOW": [
-                "buena_oferta_solo_banner2",
-                "buena_oferta_solo_banner"
-            ],
+            "PG_CTA_BELOW": ["id_PG_CTA_BELOW"],
+            "PG_TAR_BELOW": [id_PG_TAR_BELOW],
             "PG_PRE_BELOW": [
                 "buena_oferta_solo_banner2",
                 "buena_oferta_solo_banner"

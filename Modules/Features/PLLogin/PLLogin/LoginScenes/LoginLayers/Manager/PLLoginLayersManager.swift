@@ -62,6 +62,12 @@ final class PLLoginLayersManager {
         return processLayer
     }()
     
+    private lazy var loginPLPullOfferLayer: LoginPLPullOfferLayer = {
+        let pullOfferLayer = self.dependenciesResolver.resolve(for: LoginPLPullOfferLayer.self)
+        pullOfferLayer.setDelegate(self)
+        return pullOfferLayer
+    }()
+    
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
@@ -74,7 +80,11 @@ final class PLLoginLayersManager {
 extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
 
     func loadData() {
-        // TODO
+        self.publicFilesManager.loadPublicFiles(withStrategy: .initialLoad, timeout: 0)
+
+        self.publicFilesManager.add(subscriptor: PLLoginLayersManager.self) { [weak self] in
+            self?.publicFilesLoadingDidFinish()
+        }
     }
     
     func doLogin(type: LoginType) {
@@ -130,5 +140,15 @@ extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
             break
         }
         self.loginPresenterLayer.handle(event: event)
+    }
+}
+
+extension PLLoginLayersManager: LoginPLPullOfferLayerDelegate {
+    func publicFilesLoadingDidFinish() {
+        self.loginPLPullOfferLayer.loadPullOffers()
+    }
+    
+    func loadPullOffersSuccess() {
+        
     }
 }

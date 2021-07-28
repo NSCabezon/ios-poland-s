@@ -7,9 +7,21 @@
 
 public struct TrustedDeviceConfiguration {
 
-    let manufacturer: String
-    let model: String
-    let brand: String
-    let appId: String
-    let deviceId: String
+    let deviceData: DeviceData
+    var softwareToken: SoftwareToken?
+
+    struct DeviceData {
+        let manufacturer: String
+        let model: String
+        let brand: String
+        let appId: String
+        let deviceId: String
+        let deviceTime: String
+        let parameters: String
+    }
+
+    struct SoftwareToken {
+        let privateKey: SecKey?
+        let certificatePEM: String?
+    }
 }

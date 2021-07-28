@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +21,7 @@
                 <outlet property="textfieldConstraintWithKeyboard" destination="kJO-Rq-SUw" id="SJf-wc-ZcH"/>
                 <outlet property="textfieldConstraintWithoutKeyboard" destination="DDS-PA-9au" id="WO3-P1-ViX"/>
                 <outlet property="tooltipButton" destination="6tg-aa-poL" id="zFr-ds-Yjb"/>
-                <outlet property="view" destination="vTt-qt-azL" id="lmN-3d-2dv"/>
+                <outlet property="view" destination="vTt-qt-azL" id="Fne-i3-Fs1"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -139,7 +139,7 @@
     </objects>
     <designables>
         <designable name="4yN-eH-7fk">
-            <size key="intrinsicContentSize" width="54" height="34"/>
+            <size key="intrinsicContentSize" width="54" height="38"/>
         </designable>
     </designables>
     <resources>
