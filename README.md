@@ -1,4 +1,4 @@
-# Poland
+# Poland iOS
 
 This is the Poland santander-one Readme file. In this document you can find a general overview of the app. For more details and common procedures, see the [confluence technical documentation](https://saneu.atlassian.net/wiki/spaces/MOVPL/pages/1122861793/iOS+-+Technical+documentation).
 
@@ -44,7 +44,7 @@ TODO
 │   │   ├── Dependencies -> Dependency Injection
 │   │   ├── MicrositeLocalConf -> local version for debugging
 │   │   └── Modifiers -> Core adaptations for country
-│   └── 
+│   └──
 ├── README.md
 ├── i18n-poland -> Internationalization Poland git submodule
 └── santander-one -> Santander one core git submodule
@@ -55,7 +55,7 @@ TODO
 
 A crucial idea about the project organization is that folders, repositories and modules are different ways of seeing the project. Just consider the following ideas:
 
-- santander-one folder 
+- santander-one folder
     - is a different repository (git submodule)
     - is a physical folder in Mac OS  
     - contains several pod modules that are shown in the project under Development Pods group.
@@ -135,4 +135,3 @@ If you add a new schema, remember to regenerate the pods workspace:
 
 1. Remove podfile.lock, pods/ folder and the .xcworkspace
 2. Execute pod install
-
