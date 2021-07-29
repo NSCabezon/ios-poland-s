@@ -106,7 +106,7 @@
         "immediateTransferInformation": "Coste del servicio de 6€.",
         "urgentTransferInformation": "Coste del servicio 0,6%, mínimo 17€.",
 		"enablePersonalAreaBDP": "true",
-		"enableTimeLine": "true",
+        "enableTimeLine": "false",
 		"enablePregrantedWidget": "true",
 		"enableGlobalSearch": "true",
 		"enableOnlineMessagesInbox": "false",
