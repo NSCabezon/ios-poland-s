@@ -122,7 +122,6 @@ private extension PLHardwareTokenViewController {
 
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        print(passwordTextField.keyboardType)
         passwordTextField.state = .secure
         passwordTextField.textField.keyboardType = .numberPad
         passwordTextField.textField.delegate = self
@@ -202,17 +201,23 @@ extension PLHardwareTokenViewController: RememberMeViewDelegate {
 
 extension PLHardwareTokenViewController: UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string != " " else { return false }
-        let currentText = passwordTextField.hiddenText
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        if evaluateChars(string) {
+            let currentText = passwordTextField.hiddenText
+            guard let stringRange = Range(range, in: currentText) else { return false }
+            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
-        guard updatedText.count <= 8 else { return false }
-        passwordTextField.hiddenText = updatedText
-        passwordTextField.updatePassword()
-
-        guard updatedText.count == 8 else { return false }
-        loginButton.isEnabled = true
+            guard updatedText.count <= 8 else { return false }
+            passwordTextField.hiddenText = updatedText
+            passwordTextField.updatePassword()
+            loginButton.isEnabled = updatedText.count == 8
+            return false
+        }
         return false
     }
+}
+
+func evaluateChars(_ string: String) -> Bool {
+    let allowedCharacters = CharacterSet.decimalDigits
+    let characterSet = CharacterSet(charactersIn: string)
+    return allowedCharacters.isSuperset(of: characterSet)
 }
