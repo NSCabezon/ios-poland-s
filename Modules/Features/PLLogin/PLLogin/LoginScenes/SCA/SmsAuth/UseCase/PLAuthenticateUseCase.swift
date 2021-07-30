@@ -12,24 +12,23 @@ import Repository
 import Models
 import PLCommons
 
-final class PLAuthenticateUseCase: UseCase<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput> {
+final class PLAuthenticateUseCase: UseCase<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLAuthenticateUseCaseInput) throws -> UseCaseResponse<PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLAuthenticateUseCaseInput) throws -> UseCaseResponse<PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let parameters = AuthenticateParameters(encryptedPassword: requestValues.encryptedPassword, userId: requestValues.userId, secondFactorData: SecondFactorDataAuthenticate(response: Response(challenge: Challenge(authorizationType: requestValues.secondFactorData.challenge.authorizationType, value: requestValues.secondFactorData.challenge.value), value: requestValues.secondFactorData.value)))
         let result = try managerProvider.getLoginManager().doAuthenticate(parameters)
         switch result {
         case .success(let authenticateData):
-            let uthenticateOutput = PLAuthenticateUseCaseOkOutput(userId: authenticateData.userId, userCif: authenticateData.userCif, expires: authenticateData.expires, expires_in: authenticateData.expires_in, companyContext: authenticateData.companyContext, trusted_device_token: authenticateData.trusted_device_token, type: authenticateData.type, access_token: authenticateData.access_token, client_id: authenticateData.client_id)
-            return UseCaseResponse.ok(uthenticateOutput)
-        case .failure(_):
-                // TODO: the error management will be implemented in next sprint.
-                return UseCaseResponse.error(PLAuthenticateUseCaseErrorOutput(loginErrorType: .unauthorized))
+            let authenticateOutput = PLAuthenticateUseCaseOkOutput(userId: authenticateData.userId, userCif: authenticateData.userCif, expires: authenticateData.expires, expires_in: authenticateData.expires_in, companyContext: authenticateData.companyContext, trusted_device_token: authenticateData.trusted_device_token, type: authenticateData.type, access_token: authenticateData.access_token, client_id: authenticateData.client_id)
+            return UseCaseResponse.ok(authenticateOutput)
+        case .failure(let error):
+            return .error(self.handle(error: error))
         }
     }
 }

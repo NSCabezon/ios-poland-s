@@ -240,12 +240,6 @@ private extension PLTrustedDevicePinViewController {
     }
 }
 
-extension PLTrustedDevicePinViewController: DialogViewPresentationCapable {
-    var associatedDialogView: UIViewController {
-        return self
-    }
-}
-
 extension  PLTrustedDevicePinViewController: PLUIInputCodeViewDelegate {
 
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {

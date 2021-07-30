@@ -9,9 +9,10 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLHardwareTokenViewProtocol: class, PLLoadingLoginViewCapable {
+protocol PLHardwareTokenViewProtocol: PLGenericErrorPresentableCapable {
     func resetForm()
 }
 
@@ -146,8 +147,9 @@ private extension PLHardwareTokenViewController {
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
     }
-
+    
     @objc func smsSendButtonDidPressed() {
+        presenter.doAuthenticate(token: self.passwordTextField.hiddenText)
         self.view.endEditing(true)
     }
 

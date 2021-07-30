@@ -70,7 +70,23 @@ private extension PLHardwareTokenCoordinator {
         self.dependenciesEngine.register(for: PLHardwareTokenPresenterProtocol.self) { resolver in
             return presenter
         }
-
+        
+        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
+           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+           return PLAuthenticateUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
+           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
+            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PLHardwareTokenViewProtocol.self) { dependenciesResolver in
             return dependenciesResolver.resolve(for: PLHardwareTokenViewController.self)
         }

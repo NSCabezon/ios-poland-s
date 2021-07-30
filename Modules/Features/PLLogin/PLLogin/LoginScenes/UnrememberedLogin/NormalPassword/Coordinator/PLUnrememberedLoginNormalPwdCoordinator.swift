@@ -13,6 +13,7 @@ protocol PLUnrememberedLoginNormalPwdCoordinatorProtocol {
     func goToSMSScene()
     func goToSofwareTokenScene()
     func goToHardwareTokenScene()
+    func goBackToLogin()
 }
 
 final class PLUnrememberedLoginNormalPwdCoordinator: ModuleCoordinator {
@@ -55,6 +56,10 @@ extension PLUnrememberedLoginNormalPwdCoordinator: PLUnrememberedLoginNormalPwdC
     
     func goToSMSScene() {
         self.smsAuthCoordinator.start()
+    }
+    
+    func goBackToLogin() {
+        self.backToLogin()
     }
 }
 

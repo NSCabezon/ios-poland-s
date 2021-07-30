@@ -4,10 +4,12 @@
 
 import DomainCommon
 import Commons
+import PLCommons
 import Models
 import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
+import UI
 
 protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginIdViewProtocol? { get set }
@@ -70,6 +72,11 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
 }
 
 extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
+    
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        return self.view
+    }
+    
     func handle(event: LoginProcessLayerEvent) {
         switch event {
         case .willLogin:
@@ -77,7 +84,9 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
         case .loginWithIdentifierSuccess(let configuration):
             self.view?.dismissLoading(completion: { [weak self] in
                 if configuration.secondFactorDataFinalState.elementsEqual("FINAL") {
-                    self?.view?.showInvalidSCADialog(configuration)
+                    self?.view?.showInvalidSCADialog {
+                        self?.goToPasswordScene(configuration)
+                    }
                 }
                 else if configuration.secondFactorDataFinalState.elementsEqual("BLOCKED") && configuration.unblockRemainingTimeInSecs != nil {
                     self?.view?.showAccountTemporaryBlockedDialog(configuration)
@@ -86,13 +95,22 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
                     self?.goToPasswordScene(configuration)
                 }
             })
-        case .loginErrorAccountTemporaryBlocked:
-            self.view?.dismissLoading(completion: { [weak self] in
-                self?.view?.showAccountPermanentlyBlockedDialog()
-            })
+        case .error(let type):
+            switch type {
+            case .temporaryLocked:
+                self.view?.dismissLoading(completion: { [weak self] in
+                    self?.view?.showAccountPermanentlyBlockedDialog()
+                })
+            default:
+                self.handle(error: .applicationNotWorking)
+            }
         default:
             break // TODO
         }
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        //No need to navigate back.
     }
 
     func handle(event: SessionProcessEvent) {
@@ -121,7 +139,11 @@ private extension  PLUnrememberedLoginIdPresenter {
     }
 
     func doLogin(with type: LoginType) {
-        self.view?.showLoadingWithInfo(completion: {[weak self] in
+        let loadingText = LoadingText(
+            title: localized("login_popup_identifiedUser"),
+            subtitle: localized("loading_label_moment")
+        )
+        self.view?.showLoadingWith(loadingText: loadingText, completion: {[weak self] in
             self?.loginManager?.doLogin(type: type)
         })
     }

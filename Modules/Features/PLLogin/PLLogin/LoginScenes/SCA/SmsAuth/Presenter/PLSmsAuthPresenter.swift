@@ -7,6 +7,7 @@
 
 import DomainCommon
 import Commons
+import PLCommons
 import Models
 import LoginCommon
 import SANPLLibrary
@@ -105,37 +106,37 @@ private extension  PLSmsAuthPresenter {
         return self.dependenciesResolver.resolve(for: PLSmsAuthCoordinatorProtocol.self)
     }
 
-    func doAuthenticateInit() {
+    func doAuthenticateInit() {        
         let caseInput: PLAuthenticateInitUseCaseInput = PLAuthenticateInitUseCaseInput(userId: loginConfiguration.userIdentifier, challenge: loginConfiguration.challenge)
         Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
-            .onError { error in
-                os_log("❌ [LOGIN][Authenticate Init] Error with init SMS: %@", log: .default, type: .error, error.localizedDescription)
+            .onError { [weak self] error in
+                self?.handleError(error)
             }
     }
 
     func doAuthenticate(smscode: String) {
         guard let password = loginConfiguration.password else {
-            // TODO: generate generic error, password can't be empty
+            self.handle(error: .applicationNotWorking)
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
             return
         }
 
         Scenario(useCase: self.getPersistedPubKeyUseCase)
             .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput>? in
+            .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil}
                 let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)
                 let useCaseInput = PLPasswordEncryptionUseCaseInput(plainPassword: password, encryptionKey: encrytionKey)
                 return Scenario(useCase: self.encryptPasswordUseCase, input: useCaseInput)
             })
-            .then(scenario: {  [weak self] (encryptedPasswordOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput>? in
+            .then(scenario: {  [weak self] (encryptedPasswordOutput) -> Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil}
                 let secondFactorAuthentity = SecondFactorDataAuthenticationEntity(challenge: self.loginConfiguration.challenge, value: smscode)
                 let useCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPasswordOutput.encryptedPassword, userId: self.loginConfiguration.userIdentifier, secondFactorData: secondFactorAuthentity)
                 return Scenario(useCase: self.authenticateUseCase, input: useCaseInput)
             })
-            .then(scenario: {  [weak self] _ -> Scenario<Void, PLGetLoginNextSceneUseCaseOkOutput, PLAuthenticateUseCaseErrorOutput>? in
+            .then(scenario: {  [weak self] _ -> Scenario<Void, PLGetLoginNextSceneUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil}
                 return Scenario(useCase: self.getNextSceneUseCase)
             })
@@ -148,9 +149,8 @@ private extension  PLSmsAuthPresenter {
                     self.getGlobalPositionTypeAndNavigate()
                 }
             })
-            .onError { error in
-                // TODO: Present errorsecondFactorData
-                os_log("❌ [LOGIN][Authenticate] Login authorization did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
+            .onError { [weak self] error in
+                self?.handleError(error)
             }
     }
 
@@ -158,18 +158,51 @@ private extension  PLSmsAuthPresenter {
         Scenario(useCase: self.globalPositionOptionUseCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess( { [weak self] output in
-                guard let self = self else { return }
-                self.goToGlobalPosition(output.globalPositionOption)
+                self?.goToGlobalPosition(output.globalPositionOption)
             })
             .onError { [weak self] _ in
-                guard let self = self else { return }
-                self.goToGlobalPosition(.classic)
+                self?.goToGlobalPosition(.classic)
             }
+    }
+    
+    func goBack() {
+        let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
+        coordinatorDelegate.backToLogin()
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
         let coordinatorDelegate: PLLoginCoordinatorProtocol = self.dependenciesResolver.resolve(for: PLLoginCoordinatorProtocol.self)
         self.view?.dismissLoading()
         coordinatorDelegate.goToPrivate(option)
+    }
+}
+
+extension PLSmsAuthPresenter: PLGenericErrorPresenterLayerProtocol {
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        self.view
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        self.goBack()
+    }
+}
+
+private extension PLSmsAuthPresenter {
+    
+    // MARK: Auxiliar methods
+    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>?) {
+        os_log("❌ [LOGIN][Authenticate] Login authorization did fail: %@", log: .default, type: .error, error?.getErrorDesc() ?? "unknown error")
+        switch error {
+        case .error(let error):
+            if error?.error == nil {
+                self.handle(error: error?.genericError ?? .unknown)
+            } else {
+                self.handle(error: .applicationNotWorking)
+            }
+        case .networkUnavailable:
+            self.handle(error: .noConnection)
+        default:
+            self.handle(error: .applicationNotWorking)
+        }
     }
 }

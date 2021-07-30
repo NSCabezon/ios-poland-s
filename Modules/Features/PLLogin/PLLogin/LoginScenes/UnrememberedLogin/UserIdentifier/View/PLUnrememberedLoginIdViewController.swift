@@ -2,12 +2,13 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginIdViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginIdViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func showAccountPermanentlyBlockedDialog()
-    func showInvalidSCADialog(_ configuration: UnrememberedLoginConfiguration)
+    func showInvalidSCADialog(_ completion: @escaping (() -> Void))
     func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration)
 }
 
@@ -95,14 +96,14 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
         self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
     }
 
-    func showInvalidSCADialog(_ configuration: UnrememberedLoginConfiguration) {
+    func showInvalidSCADialog(_ completion: @escaping (() -> Void)) {
         let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_attemptLast"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
             alignment: .center,
             lineHeightMultiple: 1,
             lineBreakMode: .byTruncatingTail
         ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { self.presenter.goToPasswordScene(configuration) })
+        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: completion)
         self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
     }
 
@@ -268,11 +269,5 @@ extension PLUnrememberedLoginIdViewController: UITextFieldDelegate {
             loginButton.isEnabled = updatedText.count >= 6
             return true
         }
-    }
-}
-
-extension PLUnrememberedLoginIdViewController: DialogViewPresentationCapable {
-    var associatedDialogView: UIViewController {
-        return self
     }
 }

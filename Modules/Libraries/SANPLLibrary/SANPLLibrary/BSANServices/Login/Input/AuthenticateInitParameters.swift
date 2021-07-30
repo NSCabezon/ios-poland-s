@@ -39,4 +39,5 @@ public enum AuthorizationType: String, Codable {
     case sms = "SMS_CODE"
     case softwareToken = "SOFTWARE_TOKEN"
     case tokenTime = "TOKEN_TIME"
+    case tokenTimeCR = "TOKEN_TIME_CHALLENGE_RESPONSE"
 }

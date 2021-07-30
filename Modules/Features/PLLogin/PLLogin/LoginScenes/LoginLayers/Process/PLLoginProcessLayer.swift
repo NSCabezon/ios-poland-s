@@ -3,10 +3,12 @@
 //  PLLogin
 
 import Commons
+import PLCommons
 import DomainCommon
 
 public protocol PLLoginProcessLayerEventDelegate: AnyObject {
     func handle(event: LoginProcessLayerEvent)
+    func handle(error: PLGenericError)
 }
 
 protocol PLLoginProcessLayerProtocol {
@@ -14,8 +16,6 @@ protocol PLLoginProcessLayerProtocol {
     func setDemoUserIfNeeded(with loginType: LoginType, completion: @escaping () -> Void)
     func doLogin(with loginType: LoginType)
     func getPublicKey()
-    func doAuthenticateInit(userId: String, challenge: ChallengeEntity)
-    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity)
 }
 
 public class PLLoginProcessLayer {
@@ -42,14 +42,6 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
 
     private var getPublicKeyUseCase: PLGetPublicKeyUseCase {
         self.dependenciesResolver.resolve(for: PLGetPublicKeyUseCase.self)
-    }
-
-    private var authenticateInitUseCase: PLAuthenticateInitUseCase {
-        self.dependenciesResolver.resolve(for: PLAuthenticateInitUseCase.self)
-    }
-
-    private var authenticateUseCase: PLAuthenticateUseCase {
-        self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
     }
 
     func setDemoUserIfNeeded(with loginType: LoginType, completion: @escaping () -> Void) {
@@ -79,31 +71,7 @@ extension PLLoginProcessLayer: PLLoginProcessLayerProtocol {
                 // Nothing to do
             }
             .onError { error in
-                // TODO: Process error: without pub key we can't process SMS SCA
-            }
-    }
-
-    func doAuthenticateInit(userId: String, challenge: ChallengeEntity) {
-        let caseInput: PLAuthenticateInitUseCaseInput = PLAuthenticateInitUseCaseInput(userId: userId, challenge: challenge)
-        Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { [weak self] _ in
-                self?.delegate?.handle(event: .authenticateInitSuccess)
-            }
-            .onError { error in
-                // TODO: Process error: without pub key we can't process SMS SCA
-            }
-    }
-
-    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity) {
-        let caseInput: PLAuthenticateUseCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPassword, userId: userId, secondFactorData: secondFactorData)
-        Scenario(useCase: self.authenticateUseCase, input: caseInput)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { [weak self] _ in
-                self?.delegate?.handle(event: .authenticateSuccess)
-            }
-            .onError { error in
-                // TODO: Process error: without pub key we can't process SMS SCA
+                self.handleError(error)
             }
     }
 }
@@ -151,22 +119,30 @@ private extension PLLoginProcessLayer {
     }
 
     // MARK: Auxiliar methods
-    func handleError<Error: PLLoginUseCaseErrorOutput>(_ error: UseCaseError<Error>?) {
+    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>?) {
+        
         switch error {
         case .error(let error):
-            self.checkLoginError(error?.loginErrorType)
-        case .generic, .intern, .networkUnavailable, .unauthorized, .none:
-            self.delegate?.handle(event: .loginError)
+            guard let loginError = error?.getError() else {
+                self.delegate?.handle(error: error?.genericError ?? .unknown)
+                return
+            }
+            self.checkLoginError(loginError)
+        case .networkUnavailable:
+            self.delegate?.handle(error: .noConnection)
+        case .unauthorized:
+            self.delegate?.handle(event: .error(type: .unauthorized))
+        case .generic, .intern, .none:
+            self.delegate?.handle(event: .error(type: .unauthorized))
         }
     }
 
     func checkLoginError(_ error: LoginErrorType?) {
         switch error {
         case .temporaryLocked:
-            self.delegate?.handle(event: .loginErrorAccountTemporaryBlocked)
-
+            self.delegate?.handle(event: .error(type: .temporaryLocked))
         default:
-            self.delegate?.handle(event: .loginError)
+            self.delegate?.handle(event: .error(type: error ?? .unauthorized))
         }
     }
 
@@ -179,6 +155,5 @@ private extension PLLoginProcessLayer {
         } else {
             return .alias
         }
-
     }
 }

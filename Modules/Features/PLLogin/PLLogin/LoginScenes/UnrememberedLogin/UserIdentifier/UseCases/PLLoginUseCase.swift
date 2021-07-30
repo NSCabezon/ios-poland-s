@@ -9,14 +9,14 @@ import Repository
 import Models
 import PLCommons
 
-final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLLoginUseCaseErrorOutput> {
+final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLLoginUseCaseInput) throws -> UseCaseResponse<PLLoginUseCaseOkOutput, PLLoginUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLLoginUseCaseInput) throws -> UseCaseResponse<PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let parameters = LoginParameters(userId: requestValues.userId, userAlias: requestValues.userAlias)
         let result = try managerProvider.getLoginManager().doLogin(parameters)
@@ -30,13 +30,12 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
             let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: challenge, trustedComputerData: trustedComputer, secondFactorFinalState: loginData.secondFactorData.finalState, unblockRemainingTimeInSecs: loginData.secondFactorData.unblockAvailableIn)
 
             if loginData.secondFactorData.finalState.elementsEqual("BLOCKED") && loginData.secondFactorData.unblockAvailableIn == nil {
-                return UseCaseResponse.error(PLLoginUseCaseErrorOutput(loginErrorType: .temporaryLocked))
+                return UseCaseResponse.error(PLUseCaseErrorOutput(error: .temporaryLocked))
             }
 
             return UseCaseResponse.ok(loginOutput)
-        case .failure(_):
-                // TODO: the error management will be implemented in next sprint.
-                return UseCaseResponse.error(PLLoginUseCaseErrorOutput(loginErrorType: .unauthorized))
+        case .failure(let error):
+            return .error(self.handle(error: error))
         }
     }
 }
@@ -84,24 +83,6 @@ extension PLLoginUseCase: Cancelable {
 struct PLLoginUseCaseInput {
     let userId: String?
     let userAlias: String?
-}
-
-final class PLLoginUseCaseErrorOutput: StringErrorOutput {
-    public var loginErrorType: LoginErrorType?
-
-    public init(loginErrorType: LoginErrorType?) {
-        self.loginErrorType = loginErrorType
-        super.init(nil)
-    }
-
-    public override init(_ errorDesc: String?) {
-        self.loginErrorType = LoginErrorType.serviceFault
-        super.init(errorDesc)
-    }
-
-    public func getLoginErrorType() -> LoginErrorType? {
-        return loginErrorType
-    }
 }
 
 public struct PLLoginUseCaseOkOutput {

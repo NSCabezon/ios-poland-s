@@ -13,6 +13,7 @@ protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
     func goToSMSScene()
     func goToSofwareTokenScene()
     func goToHardwareTokenScene()
+    func goBackToLogin()
 }
 
 final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
@@ -55,6 +56,10 @@ extension PLUnrememberedLoginMaskedPwdCoordinator: PLUnrememberedLoginMaskedPwdC
     
     func goToSMSScene() {
         self.smsAuthCoordinator.start()
+    }
+    
+    func goBackToLogin() {
+        self.backToLogin()
     }
 }
 

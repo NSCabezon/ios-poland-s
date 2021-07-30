@@ -4,6 +4,7 @@
 
 import DomainCommon
 import Commons
+import PLCommons
 import Models
 import LoginCommon
 import SANPLLibrary
@@ -57,10 +58,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         switch self.loginConfiguration.challenge.authorizationType {
         case .sms:
             self.coordinator.goToSMSScene()
-        case .tokenTime:
+        case .tokenTime, .tokenTimeCR:
             self.coordinator.goToHardwareTokenScene()
         case .softwareToken:
-            self.coordinator.goToSofwareTokenScene()
+            self.handle(error: .applicationNotWorking)
         }
     }
 
@@ -94,8 +95,17 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        return self.view
+    }
+    
     func handle(event: LoginProcessLayerEvent) {
-        // TODO
+        switch event {
+        case .error(_):
+            self.handle(error: .applicationNotWorking)
+        default:
+            break
+        }
     }
 
     func handle(event: SessionProcessEvent) {
@@ -111,6 +121,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
 
     func willStartSession() {
         // TODO
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        self.coordinator.goBackToLogin()
     }
 }
 
