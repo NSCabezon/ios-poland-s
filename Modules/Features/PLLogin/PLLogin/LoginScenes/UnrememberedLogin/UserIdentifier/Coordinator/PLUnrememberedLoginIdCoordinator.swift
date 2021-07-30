@@ -114,11 +114,6 @@ private extension PLUnrememberedLoginIdCoordinator {
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
             return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
         }
-
-        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
-            return PLAuthenticateUseCase(dependenciesResolver: resolver)
-        }
-        
         self.dependenciesEngine.register(for: LoginPLPullOfferLayer.self) { resolver in
             return LoginPLPullOfferLayer(dependenciesResolver: resolver)
         }
@@ -141,7 +136,7 @@ private extension PLUnrememberedLoginIdCoordinator {
     }
 }
 
-protocol LoginPLPullOfferLayerDelegate: class {
+protocol LoginPLPullOfferLayerDelegate: AnyObject {
     func loadPullOffersSuccess()
 }
 

@@ -25,14 +25,24 @@ public extension PLLoginErrorHandlerProtocol {
             return PLUseCaseErrorOutput(error: .unauthorized)
         case .other:
             return PLUseCaseErrorOutput(genericError: .applicationNotWorking)
-        case .error(_):
+        case .error(let err):
             switch error.getErrorCode() {
             case 500, 510:
                 return PLUseCaseErrorOutput(genericError: .applicationNotWorking)
             case 401, 403:
                 return PLUseCaseErrorOutput(error: .unauthorized)
             default:
-                return PLUseCaseErrorOutput(genericError: .unknown)
+                let detail = err.getErrorDetail()
+                switch detail?.errorCode {
+                case "UNAUTHORIZED_GRANT":
+                    return PLUseCaseErrorOutput(error: .unauthorized)
+                case "SERVER_ERROR":
+                    return PLUseCaseErrorOutput(error: .serviceFault)
+                case .none:
+                    return PLUseCaseErrorOutput(genericError: .unknown)
+                default:
+                    return PLUseCaseErrorOutput(genericError: .unknown)
+                }
             }
         }
     }

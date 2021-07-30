@@ -20,6 +20,7 @@ final class PLAuthenticateUseCase: UseCase<PLAuthenticateUseCaseInput, PLAuthent
     }
 
     public override func executeUseCase(requestValues: PLAuthenticateUseCaseInput) throws -> UseCaseResponse<PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+        
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let parameters = AuthenticateParameters(encryptedPassword: requestValues.encryptedPassword, userId: requestValues.userId, secondFactorData: SecondFactorDataAuthenticate(response: Response(challenge: Challenge(authorizationType: requestValues.secondFactorData.challenge.authorizationType, value: requestValues.secondFactorData.challenge.value), value: requestValues.secondFactorData.value)))
         let result = try managerProvider.getLoginManager().doAuthenticate(parameters)

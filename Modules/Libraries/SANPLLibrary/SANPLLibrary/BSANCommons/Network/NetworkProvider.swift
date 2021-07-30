@@ -82,15 +82,6 @@ public enum NetworkProviderError: Error {
         }
         return error.code
     }
-    // TODO: Fill
-//    public func getPLErrorMessage() -> String? {
-//        guard case .error(let error) = self,
-//              let data = error.data,
-//              let dto: PLGenericResponseErrorsDTO = try? JSONDecoder().decode(PLGenericResponseErrorsDTO.self, from: data), let errorDescription = dto.errors.first?.errorDescription
-//        else { return nil }
-//        return errorDescription
-//    }
-    
     public func getErrorHeaders() -> [AnyHashable: Any]? {
         guard case .error(let error) = self,
               let headers = error.headerFields else { return nil }
@@ -103,6 +94,22 @@ public struct NetworkProviderResponseError {
     let data: Data?
     let headerFields: [AnyHashable: Any]?
     let error: Error?
+    
+    public func getErrorDetail() -> PLResponseErrorDetail? {
+        guard let data = self.data else { return nil }
+        guard let dto: PLResponseError = try? JSONDecoder().decode(PLResponseError.self, from: data) else {
+            return nil
+        }
+        return dto.errorDetail.first
+   }
+}
+
+public struct PLResponseError: Decodable {
+    public let errorDetail:[PLResponseErrorDetail]
+}
+
+public struct PLResponseErrorDetail: Decodable {
+    public let errorCode, message, errorTime: String
 }
 
 private extension NetworkProviderError {
