@@ -58,7 +58,8 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
     }
 
     func formatPAN(card: CardEntity) -> String? {
-        return card.formattedPAN
+        guard let pan = card.formattedPAN else { return nil }
+        return pan.inserting(separator: "  ", every: 4).replace("X", "•")
     }
 
     func validatePullOffersCandidates(values: CustomCardActionValues, offers: [PullOfferLocation : OfferEntity], entity: CardEntity, actionType: CardActionType, action: ((CardActionType, CardEntity) -> Void)?, candidateOffer: Bool) -> CardActionViewModel? {

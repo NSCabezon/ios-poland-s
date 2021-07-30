@@ -75,6 +75,12 @@
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich zdjęć?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 </dict>

@@ -11,6 +11,7 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
+        
     let isTransferDetailPDFButtonEnabled = true
     let isTransferDetailReuseButtonEnabled = true
     let isEnabledHistorical = true
@@ -47,6 +48,8 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledBillsAndTaxesInMenu: Bool = false
     let isEnabledExploreProductsInMenu: Bool = false
     let isEnabledPersonalAreaInMenu: Bool = true
+    let isEnabledConfigureAlertsInMenu: Bool = true
+    let isEnabledNotificationsInMenu: Bool = true
     let isEnabledHelpUsInMenu: Bool = false
     let isEnabledATMsInMenu: Bool = false
     let enablePortfoliosHome: Bool = true

@@ -49,6 +49,7 @@
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
 		7E790692265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */; };
+		BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */; };
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		6E11E75A38798E9AB57BBF1B /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
 		6E34F24D5FC0326E7CD59FC0 /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
 		7E79068C265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
+		BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionManager.swift; sourceTree = "<group>"; };
 		BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLMonthlyBalanceUseCase.swift; sourceTree = "<group>"; };
 		DC746257DD34B39DB49CFF26 /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
 		F99E8A0696E13903CC583130 /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		446E0C1C265FE42400847FCA /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				BBB8E70A26A990B400E54B2F /* Notification */,
 				0DCED399268B0B16001D38CC /* Accounts */,
 				447D7D2D268F002700F9A70D /* Cards */,
 				446E0C1D265FE42400847FCA /* GlobalPosition */,
@@ -345,6 +348,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BBB8E70A26A990B400E54B2F /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -473,6 +484,7 @@
 				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
 				42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */,
 				446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
+				BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */,
 				7E790692265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
 				446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */,
