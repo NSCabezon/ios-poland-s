@@ -12,6 +12,7 @@ import GlobalPosition
 import Transfer
 import Cards
 import Account
+import Loans
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -46,6 +47,9 @@ final class AppModifiers {
     }()
     private lazy var cardHomeModifier: CardHomeModifierProtocol = {
         return PLCardHomeModifier(dependenciesEngine: dependencieEngine)
+    }()
+    private lazy var loansModifier: LoansModifierProtocol = {
+        return PLLoanModifier(dependenciesEngine: dependencieEngine)
     }()
     private lazy var currencyProvider: AmountFormatterProvider & CurrencyFormatterProvider = {
         return PLNumberFormatter()
@@ -84,7 +88,10 @@ private extension AppModifiers {
             return self.cardHomeModifier
         }
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
-        return MonthlyBalanceUseCase(dependenciesResolver: resolver)
+            return MonthlyBalanceUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: LoansModifierProtocol.self) { resolver in
+            return self.loansModifier
         }
         self.dependencieEngine.register(for: AmountFormatterProvider.self) { _ in
             return self.currencyProvider

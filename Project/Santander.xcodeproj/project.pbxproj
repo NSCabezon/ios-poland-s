@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D4D558D26A6DEEC0032466B /* PLLoanModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */; };
 		0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */; };
 		0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF736F2666157E00E9A9EE /* ProductIdDelegateModifier.swift */; };
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		0C6CE07925DAAAFB3935D99C /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanModifier.swift; sourceTree = "<group>"; };
 		0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSetupActivateCardUseCase.swift; sourceTree = "<group>"; };
 		0DBF736F2666157E00E9A9EE /* ProductIdDelegateModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductIdDelegateModifier.swift; sourceTree = "<group>"; };
 		0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
@@ -121,6 +123,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D4D558B26A6DE6D0032466B /* Loans */ = {
+			isa = PBXGroup;
+			children = (
+				0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */,
+			);
+			path = Loans;
+			sourceTree = "<group>";
+		};
 		0DA4CC8A269C564A008E2E4F /* CardBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +199,7 @@
 				0DCED399268B0B16001D38CC /* Accounts */,
 				447D7D2D268F002700F9A70D /* Cards */,
 				446E0C1D265FE42400847FCA /* GlobalPosition */,
+				0D4D558B26A6DE6D0032466B /* Loans */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -494,6 +505,7 @@
 				446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
+				0D4D558D26A6DEEC0032466B /* PLLoanModifier.swift in Sources */,
 				BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */,
 				446E0C29265FE49F00847FCA /* GetPGFrequentOperativeOption.swift in Sources */,
 				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
