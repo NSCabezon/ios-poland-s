@@ -11,7 +11,8 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
-        
+    var isScheduledTransferDetailDeleteButtonEnabled = false
+    var isScheduledTransferDetailEditButtonEnabled = false
     let isTransferDetailPDFButtonEnabled = true
     let isTransferDetailReuseButtonEnabled = true
     let isEnabledHistorical = true
