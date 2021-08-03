@@ -16,6 +16,7 @@ import PLLegacyAdapter
 import PLCommons
 import Models
 import GlobalPosition
+import Inbox
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -151,7 +152,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager
-            
+        }
+        self.dependencieEngine.register(for: InboxActionBuilderProtocol.self) { resolver in
+            return PLInboxActionBuilder(resolver: resolver)
         }
     }
 }
