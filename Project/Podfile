@@ -7,7 +7,6 @@ def core_dependencies
   
   # Common
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
-  pod 'ModuleInjection', :path => '../santander-one/ModuleInjection'
   pod 'Repository', :path => '../santander-one/Repository'
   pod 'DataRepository', :path => '../santander-one/Modules/Libraries/DataRepository'
   pod 'Operative', :path => '../santander-one/Operative'
