@@ -128,8 +128,6 @@ platform :ios do
 
 private_lane :do_release do |options|
   UI.message "Start lane doRelease"
-  ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "90"
-  ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "90"
   outpudir = File.expand_path("~/CI/")
   clear_derived_data
   configuration = CONFIGURATIONS[options[:deploy_env]]
