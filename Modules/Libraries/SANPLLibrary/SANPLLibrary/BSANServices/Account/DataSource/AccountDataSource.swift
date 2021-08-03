@@ -9,6 +9,7 @@ import SANLegacyLibrary
 protocol AccountDataSourceProtocol {
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError>
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
+    func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError>
 }
 
 private extension AccountDataSource {
@@ -21,13 +22,14 @@ final class AccountDataSource {
     private enum AccountServiceType: String {
         case detail = "/accounts"
         case swiftBranches = "/swiftbranches"
+        case cardwithholdings = "/history/cardwithholdings"
     }
 
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
     private var headers: [String: String] = [:]
-    private var queryParams: [String: String]? = nil
+    private var queryParams: [String: Any]? = nil
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
@@ -45,7 +47,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
 
         self.queryParams = nil
         if let parametersData = try? JSONEncoder().encode(parameters) {
-            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
+            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : Any]
         }
 
         let serviceName = "\(AccountServiceType.detail.rawValue)/\(accountNumber)/\(systemId)"
@@ -60,12 +62,11 @@ extension AccountDataSource: AccountDataSourceProtocol {
         )
         return result
     }
-
+    
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
-
         self.queryParams = nil
 
         let serviceName = "\(AccountServiceType.swiftBranches.rawValue)/\(accountNumber)"
@@ -77,6 +78,27 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                 queryParams: self.queryParams,
                                                                                                                 contentType: .urlEncoded,
                                                                                                                 localServiceName: .swiftBranches)
+        )
+        return result
+    }
+    
+    func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        self.queryParams = ["accountNumbers": accountNumbers]
+
+        let serviceName = "\(AccountServiceType.cardwithholdings.rawValue)"
+        
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<WithholdingListDTO, NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .post,
+                                                                                                                headers: self.headers,
+                                                                                                                queryParams: self.queryParams,
+                                                                                                                contentType: .urlEncoded,
+                                                                                                                localServiceName: .cardWithHoldings)
         )
         return result
     }
@@ -101,7 +123,7 @@ private struct AccountRequest: NetworkProviderRequest {
          body: Data? = nil,
          jsonBody: Encodable? = nil,
          headers: [String: String]?,
-         queryParams: [String: String]? = nil,
+         queryParams: [String: Any]? = nil,
          contentType: NetworkProviderContentType,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
