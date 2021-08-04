@@ -17,7 +17,7 @@ import Loans
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
-        let depositModifier = DepositModifier(dependenciesResolver: self.dependencieEngine)
+        let depositModifier = PLDepositModifier(dependenciesResolver: self.dependencieEngine)
         return depositModifier
     }()
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
