@@ -8,8 +8,8 @@
 import Commons
 import DomainCommon
 import CryptoSwift
-import CertificateSigningRequest
 import os
+import PLSelfSignedCertificate
 
 private struct PLCertificate {
     let pemCertificate: String
@@ -27,7 +27,7 @@ final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertific
     public override func executeUseCase(requestValues: PLDeviceDataCertificateCreationUseCaseInput) throws -> UseCaseResponse<PLDeviceDataCertificateCreationUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
 
         do {
-            let certificate = try self.generateCertificate()
+            let certificate = try self.createCertificate()
             return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate.pemCertificate,
                                                                                    publicKey: certificate.publicKey,
                                                                                    privateKey: certificate.privateKey))
@@ -48,57 +48,6 @@ private extension PLDeviceDataCertificateCreationUseCase {
             static let countryName = "PL"
         }
     }
-
-    func generateCertificate() throws -> PLCertificate {
-        let random = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 4)?.toHexString() ?? ""
-        let tagPrivate = "\(Constants.keysTag).\(random).private"
-        let tagPublic = "\(Constants.keysTag).\(random).public"
-        let keyAlgorithm = KeyAlgorithm.rsa(signatureType: .sha256)
-        //let sizeOfKey = keyAlgorithm.availableKeySizes[1]
-        let sizeOfKey = 1024
-
-        let (potentialPrivateKey, potentialPublicKey) =
-            self.generateKeysAndStoreInKeychain(keyAlgorithm, keySize: sizeOfKey,
-                                                tagPrivate: tagPrivate, tagPublic: tagPublic)
-        guard let privateKey = potentialPrivateKey,
-              let publicKey = potentialPublicKey else {
-            throw PLDeviceDataEncryptionError.certificateCreationError
-        }
-
-        let (potentialPublicKeyBits, potentialPublicKeyBlockSize) =
-            self.getPublicKeyBits(keyAlgorithm,
-                                  publicKey: publicKey, tagPublic: tagPublic)
-        guard let publicKeyBits = potentialPublicKeyBits,
-              potentialPublicKeyBlockSize != nil else {
-            throw PLDeviceDataEncryptionError.certificateCreationError
-        }
-
-        // TODO: We will probably need to add the dates (notBefore, notAfter) to certificate and create a X509v3 instead of v1
-        let algorithm = KeyAlgorithm.rsa(signatureType: .sha256)
-        let csr = CertificateSigningRequest(commonName: Constants.CertificateParameters.commonName,
-                                            organizationName: Constants.CertificateParameters.organizationName,
-                                            countryName: Constants.CertificateParameters.countryName,
-                                            keyAlgorithm: algorithm)
-
-        guard let builtCSR = csr.buildCSRAndReturnString(publicKeyBits, privateKey: privateKey, publicKey: publicKey) else {
-            throw PLDeviceDataEncryptionError.certificateCreationError
-        }
-
-        let certificate = builtCSR
-            .replacingOccurrences(of: "-----BEGIN CERTIFICATE REQUEST-----", with: "-----BEGIN CERTIFICATE-----")
-            .replacingOccurrences(of: "-----END CERTIFICATE REQUEST-----", with: "-----END CERTIFICATE-----")
-        os_log("✅ [TRUSTED DEVICE] Certificate generated: %@", log: .default, type: .info, certificate)
-
-        return PLCertificate(pemCertificate: certificate,
-                             publicKey: publicKey,
-                             privateKey: privateKey)
-    }
-}
-
-private extension String {
-    func addPEMformat() -> String {
-        return "-----BEGIN CERTIFICATE-----" + self + "-----END CERTIFICATE-----"
-    }
 }
 
 // MARK: I/O types definition
@@ -113,74 +62,67 @@ struct PLDeviceDataCertificateCreationUseCaseOutput {
 
 // MARK: Private extension
 private extension PLDeviceDataCertificateCreationUseCase {
-    func generateKeysAndStoreInKeychain(_ algorithm: KeyAlgorithm, keySize: Int,
-                                        tagPrivate: String, tagPublic: String) -> (SecKey?, SecKey?) {
-        let publicKeyParameters: [String: Any] = [
-            String(kSecAttrIsPermanent): true,
-            String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock,
-            String(kSecAttrApplicationTag): tagPublic.data(using: .utf8)!
-        ]
 
-        let privateKeyParameters: [String: Any] = [
-            String(kSecAttrIsPermanent): true,
-            String(kSecAttrAccessible): kSecAttrAccessibleAfterFirstUnlock,
-            String(kSecAttrApplicationTag): tagPrivate.data(using: .utf8)!
-        ]
+    func createCertificate() throws -> PLCertificate {
 
-        //Define what type of keys to be generated here
-        let parameters: [String: Any] = [
-            String(kSecAttrKeyType): algorithm.secKeyAttrType,
-            String(kSecAttrKeySizeInBits): keySize,
-            String(kSecReturnRef): true,
-            String(kSecPublicKeyAttrs): publicKeyParameters,
-            String(kSecPrivateKeyAttrs): privateKeyParameters
-        ]
+        let secIdentity = SecIdentity.create(ofSize: 2048, subjectCommonName: "Santander", subjectOrganizationName: "Santander Bank Polska S.A.", contryName: "PL")
 
-        //Use Apple Security Framework to generate keys, save them to application keychain
-        var error: Unmanaged<CFError>?
-        let privateKey = SecKeyCreateRandomKey(parameters as CFDictionary, &error)
-        if privateKey == nil {
-            print("Error creating keys occured: \(error!.takeRetainedValue() as Error), keys weren't created")
-            return (nil, nil)
+        guard let certificate = secIdentity?.certificate?.data.base64EncodedString(),
+              let publicKey = secIdentity?.certificate?.publicKey,
+              let privateKey = secIdentity?.privateKey else {
+            os_log("❌ [TRUSTED DEVICE][Device Data] Error creating certificate", log: .default, type: .error)
+            throw PLDeviceDataEncryptionError.certificateCreationError
         }
 
-        //Get generated public key
-        let query: [String: Any] = [
-            String(kSecClass): kSecClassKey,
-            String(kSecAttrKeyType): algorithm.secKeyAttrType,
-            String(kSecAttrApplicationTag): tagPublic.data(using: .utf8)!,
-            String(kSecReturnRef): true
-        ]
+        var error: Unmanaged<CFError>? = nil
+        let publicKeyB64 = (SecKeyCopyExternalRepresentation(publicKey, &error) as? Data)?.base64EncodedString()
+        let privateKeyDataB64 = (SecKeyCopyExternalRepresentation(privateKey, &error) as? Data)?.base64EncodedString()
+        let certificatePEM = certificate.addPEMformat(header: String.PEMFormats.certificate.header, footer: String.PEMFormats.certificate.footer)
 
-        var publicKeyReturn: CFTypeRef?
-        let result = SecItemCopyMatching(query as CFDictionary, &publicKeyReturn)
-        if result != errSecSuccess {
-            print("Error getting publicKey fron keychain occured: \(result)")
-            return (privateKey, nil)
+        os_log("✅ [TRUSTED DEVICE][Device Data] Certificate generated: %@", log: .default, type: .info, certificate)
+        os_log("✅ [TRUSTED DEVICE][Device Data] Certificate generated (PEM FORMAT): %@", log: .default, type: .info, certificatePEM)
+        os_log("✅ [TRUSTED DEVICE][Device Data] Public key: %@", log: .default, type: .info, publicKeyB64?.addPEMformat(header: String.PEMFormats.publicKey.header, footer: String.PEMFormats.publicKey.footer) ?? "")
+        os_log("✅ [TRUSTED DEVICE][Device Data] Private key: %@", log: .default, type: .info, privateKeyDataB64?.addPEMformat(header: String.PEMFormats.privateKey.header, footer: String.PEMFormats.privateKey.footer) ?? "")
+
+        return PLCertificate(pemCertificate: certificatePEM,
+                             publicKey: publicKey,
+                             privateKey: privateKey)
+    }
+}
+
+
+private extension String {
+
+    enum PEMFormats {
+        static let newLine = "\n"
+        enum certificate {
+            static let header = "-----BEGIN CERTIFICATE-----\n"
+            static let footer = "\n-----END CERTIFICATE-----\n"
         }
-        // swiftlint:disable:next force_cast
-        let publicKey = publicKeyReturn as! SecKey?
-        return (privateKey, publicKey)
+        enum privateKey {
+            static let header = "-----BEGIN RSA PRIVATE KEY-----\n"
+            static let footer = "\n-----END RSA PRIVATE KEY-----"
+        }
+        enum publicKey {
+            static let header = "-----BEGIN PUBLIC KEY-----\n"
+            static let footer = "\n-----END PUBLIC KEY-----"
+
+        }
     }
 
-    func getPublicKeyBits(_ algorithm: KeyAlgorithm, publicKey: SecKey, tagPublic: String) -> (Data?, Int?) {
-        //Set block size
-        let keyBlockSize = SecKeyGetBlockSize(publicKey)
-        //Ask keychain to provide the publicKey in bits
-        let query: [String: Any] = [
-            String(kSecClass): kSecClassKey,
-            String(kSecAttrKeyType): algorithm.secKeyAttrType,
-            String(kSecAttrApplicationTag): tagPublic.data(using: .utf8)!,
-            String(kSecReturnData): true
-        ]
+    func addPEMformat(header: String, footer: String) -> String {
+        let pemFormatted = header + self.unfoldSubSequences(limitedTo: 64).joined(separator: "\n") + footer
+        return pemFormatted
+    }
+}
 
-        var tempPublicKeyBits: CFTypeRef?
-        var _ = SecItemCopyMatching(query as CFDictionary, &tempPublicKeyBits)
-
-        guard let keyBits = tempPublicKeyBits as? Data else {
-            return (nil, nil)
+private extension Collection {
+    func unfoldSubSequences(limitedTo maxLength: Int) -> UnfoldSequence<SubSequence,Index> {
+        sequence(state: startIndex) { start in
+            guard start < self.endIndex else { return nil }
+            let end = self.index(start, offsetBy: maxLength, limitedBy: self.endIndex) ?? self.endIndex
+            defer { start = end }
+            return self[start..<end]
         }
-
-        return (keyBits, keyBlockSize)
     }
 }

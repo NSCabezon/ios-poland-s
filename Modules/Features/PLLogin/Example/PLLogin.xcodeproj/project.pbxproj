@@ -16,7 +16,7 @@
 		42DCA4322681FCB400D11400 /* PLLoginTrustedDeviceHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA4302681FCB300D11400 /* PLLoginTrustedDeviceHelpersTests.swift */; };
 		42DCA4332681FCB400D11400 /* PLLoginTrustedDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA4312681FCB400D11400 /* PLLoginTrustedDeviceTests.swift */; };
 		42DCA44B26848C8C00D11400 /* PLTrustedDeviceDeviceDataUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA44A26848C8C00D11400 /* PLTrustedDeviceDeviceDataUseCaseTests.swift */; };
-		42DCA459268F275A00D11400 /* PLTrustedDeviceSofTokenUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA458268F275A00D11400 /* PLTrustedDeviceSofTokenUseCaseTests.swift */; };
+		42DCA459268F275A00D11400 /* PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA458268F275A00D11400 /* PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -49,7 +49,7 @@
 		42DCA4302681FCB300D11400 /* PLLoginTrustedDeviceHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLLoginTrustedDeviceHelpersTests.swift; sourceTree = "<group>"; };
 		42DCA4312681FCB400D11400 /* PLLoginTrustedDeviceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLLoginTrustedDeviceTests.swift; sourceTree = "<group>"; };
 		42DCA44A26848C8C00D11400 /* PLTrustedDeviceDeviceDataUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTrustedDeviceDeviceDataUseCaseTests.swift; sourceTree = "<group>"; };
-		42DCA458268F275A00D11400 /* PLTrustedDeviceSofTokenUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTrustedDeviceSofTokenUseCaseTests.swift; sourceTree = "<group>"; };
+		42DCA458268F275A00D11400 /* PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift; sourceTree = "<group>"; };
 		4B3CF3AC010A0048D5F66851 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		57C6288C306AF4149AD1F794 /* Pods-PLLogin_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLLogin_ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PLLogin_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLLogin_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,7 +177,7 @@
 			children = (
 				6611F326267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift */,
 				42DCA44A26848C8C00D11400 /* PLTrustedDeviceDeviceDataUseCaseTests.swift */,
-				42DCA458268F275A00D11400 /* PLTrustedDeviceSofTokenUseCaseTests.swift */,
+				42DCA458268F275A00D11400 /* PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -321,7 +321,6 @@
 				"${PODS_ROOT}/Target Support Files/Pods-PLLogin_Example/Pods-PLLogin_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
-				"${BUILT_PRODUCTS_DIR}/CertificateSigningRequest/CertificateSigningRequest.framework",
 				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
 				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -329,6 +328,7 @@
 				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
@@ -337,6 +337,7 @@
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
 				"${BUILT_PRODUCTS_DIR}/PLLegacyAdapter/PLLegacyAdapter.framework",
 				"${BUILT_PRODUCTS_DIR}/PLLogin/PLLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/PLSelfSignedCertificate/PLSelfSignedCertificate.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
 				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
@@ -344,6 +345,8 @@
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyXMLParser/SwiftyXMLParser.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
@@ -357,7 +360,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CertificateSigningRequest.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
@@ -365,6 +367,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
@@ -373,6 +376,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLegacyAdapter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLSelfSignedCertificate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
@@ -380,6 +384,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyXMLParser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
@@ -447,7 +453,6 @@
 				"${PODS_ROOT}/Target Support Files/Pods-PLLogin_ExampleTests/Pods-PLLogin_ExampleTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
-				"${BUILT_PRODUCTS_DIR}/CertificateSigningRequest/CertificateSigningRequest.framework",
 				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
 				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -455,6 +460,7 @@
 				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
@@ -463,6 +469,7 @@
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
 				"${BUILT_PRODUCTS_DIR}/PLLegacyAdapter/PLLegacyAdapter.framework",
 				"${BUILT_PRODUCTS_DIR}/PLLogin/PLLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/PLSelfSignedCertificate/PLSelfSignedCertificate.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
 				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
@@ -470,6 +477,8 @@
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyXMLParser/SwiftyXMLParser.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
@@ -483,7 +492,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CertificateSigningRequest.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
@@ -491,6 +499,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
@@ -499,6 +508,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLegacyAdapter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLSelfSignedCertificate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
@@ -506,6 +516,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyXMLParser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
@@ -537,7 +549,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42DCA459268F275A00D11400 /* PLTrustedDeviceSofTokenUseCaseTests.swift in Sources */,
+				42DCA459268F275A00D11400 /* PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift in Sources */,
 				6611F327267344D800D1DD54 /* PLPasswordEncryptionUseCaseTests.swift in Sources */,
 				66E57619264AC5AC006804BD /* PLLogin_ExampleTests.swift in Sources */,
 				42DCA44B26848C8C00D11400 /* PLTrustedDeviceDeviceDataUseCaseTests.swift in Sources */,

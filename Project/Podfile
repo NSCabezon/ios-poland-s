@@ -80,6 +80,7 @@ def pl_libraries
   pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
   pod 'PLCommons', :path => '../Modules/Libraries/PLCommons'
   pod 'PLUI', :path => '../Modules/Libraries/PLUI'
+  pod 'PLSelfSignedCertificate', :path => '../Modules/Libraries/PLSelfSignedCertificate'
 end
 
 def pl_thirdparty_dependencies

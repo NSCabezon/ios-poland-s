@@ -9,6 +9,8 @@ import Commons
 import DomainCommon
 import CryptoSwift
 import Security
+import CommonCrypto
+import os
 
 final class PLSoftwareTokenParametersEncryptionUseCase: UseCase<PLSoftwareTokenParametersEncryptionUseCaseInput, PLSoftwareTokenParametersEncryptionUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
     var dependenciesResolver: DependenciesResolver
@@ -31,44 +33,23 @@ final class PLSoftwareTokenParametersEncryptionUseCase: UseCase<PLSoftwareTokenP
 
 private extension PLSoftwareTokenParametersEncryptionUseCase {
 
-    enum Constants {
-        static let initialVector: Array<UInt8> = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-    }
-
     // parameters: string with parameters to encrypt (i.e. "<2021-04-18 22:01:11.238><<AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><Apple><model><iPhone 12>>")
     // key: key that will be use to encrypt parameters.
     func encryptParameters(_ parameters: String, with key: SecKey) throws -> String {
 
         // Transform parameters into what we need before encrypting
-        guard let bytesToEncrypt = Self.separateAndEncryptParameters(parameters: parameters) else {
+        guard let bytesToEncrypt = Self.separateAndParciallyHashParameters(parameters: parameters) else {
             throw PLSoftwareTokenUseCaseErrorOutput.init("Error separating to encrypt")
         }
 
-        //let anotherEncryption = self.encrypt2(bytes: bytesToEncrypt, key: key)
+        guard let signedData = key.customSignWithoutHash(data: bytesToEncrypt)
+        else { throw PLSoftwareTokenUseCaseErrorOutput.init("Error encrypting parameters") }
 
-        guard let encryption = self.encrypt(bytes: bytesToEncrypt, key: key)
-        else {
-            throw PLSoftwareTokenUseCaseErrorOutput.init("Error encrypting parameters")
-        }
+        os_log("✅ [TRUSTED DEVICE][Software Token] Parameters to encrypt: %@", log: .default, type: .info, parameters)
+        os_log("✅ [TRUSTED DEVICE][Software Token] Parameters partially hashed: %@", log: .default, type: .info, Data(bytesToEncrypt).base64EncodedString())
+        os_log("✅ [TRUSTED DEVICE][Software Token] Parameters signed with private key: %@", log: .default, type: .info, signedData.toBase64())
 
-        return encryption
-    }
-
-    func encrypt(bytes: [UInt8], key: SecKey) -> String? {
-        var error: Unmanaged<CFError>?
-        guard let data = SecKeyCreateEncryptedData(key, .rsaEncryptionPKCS1, Data(bytes) as CFData, &error) as Data? else { return nil }
-        return data.base64EncodedString()
-    }
-
-    /// Encrypt a plain text using a public key
-    func encrypt2(bytes: [UInt8], key: SecKey) -> String? {
-        var keySize   = SecKeyGetBlockSize(key)
-        var keyBuffer = [UInt8](repeating: 0, count: keySize)
-
-        guard SecKeyEncrypt(key, SecPadding.PKCS1, bytes, bytes.count, &keyBuffer, &keySize) == errSecSuccess else { return nil }
-        let hexEncondedString = Data(bytes: keyBuffer, count: keySize).base64EncodedString()
-
-        return hexEncondedString
+        return Data(signedData).base64EncodedString()
     }
 }
 
@@ -82,27 +63,40 @@ struct PLSoftwareTokenParametersEncryptionUseCaseOutput {
     let encryptedParameters: String
 }
 
-
 internal extension PLSoftwareTokenParametersEncryptionUseCase {
 
     // Having this string <2021-04-18 22:01:11.238><AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><samsung><model><SM-A600FN>
     // we need to separate in two strings:
     // prefix = <2021-04-18 22:01:11.238><AppId><1234567890abcdef12345678>
     // postfix = <deviceId><8b3339657561287d><manufacturer><samsung><model><SM-A600FN>
-    // and encrypt postfix with SHA256
+    // and hash postfix with SHA256
     // Retuns concatenation of both arrays of bytes
-    static func separateAndEncryptParameters(parameters: String) -> [UInt8]? {
+    static func separateAndParciallyHashParameters(parameters: String) -> [UInt8]? {
         let nsString = parameters as NSString
         let range = nsString.range(of: "<deviceId>")
         guard range.length != 0 else { return nil }
         let prefix = parameters.substring(0, range.location)
-        let prefixBytes = prefix?.bytes
         let postfix = parameters.substring(range.location, parameters.count)
-        let postfixBytes = postfix?.bytes
-        let encryptedPostfixBytes = postfixBytes?.sha256()
         var concatenatedBytes: [UInt8] = Array()
-        concatenatedBytes.append(contentsOf: prefixBytes!)
-        concatenatedBytes.append(contentsOf: encryptedPostfixBytes!)
+        guard let prefixBytes = prefix?.bytes,
+              let hashedPostfixBytes = postfix?.bytes.sha256() else {
+            return nil
+        }
+        concatenatedBytes.append(contentsOf: prefixBytes)
+        concatenatedBytes.append(contentsOf: hashedPostfixBytes)
         return concatenatedBytes
+    }
+}
+
+extension SecKey {
+   public func customSignWithoutHash(data:[UInt8]) -> [UInt8]? {
+        var signature = [UInt8](repeating: 0, count: 1024)
+        var signatureLength = 1024
+        let status = SecKeyRawSign(self, .PKCS1, data, data.count, &signature, &signatureLength)
+        guard status == errSecSuccess else {
+            return nil
+        }
+        let realSignature = signature[0 ..< signatureLength]
+        return Array(realSignature)
     }
 }

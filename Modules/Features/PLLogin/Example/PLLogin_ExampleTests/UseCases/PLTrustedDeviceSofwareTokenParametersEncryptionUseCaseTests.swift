@@ -1,5 +1,5 @@
 //
-//  PLTrustedDeviceSofTokenUseCaseTests.swift
+//  PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests.swift
 //  PLLogin_ExampleTests
 //
 //  Created by Marcos Álvarez Mesa on 2/7/21.
@@ -11,7 +11,7 @@ import DomainCommon
 import CryptoSwift
 @testable import PLLogin
 
-class PLTrustedDeviceSofTokenUseCaseTests: XCTestCase {
+class PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests: XCTestCase {
 
     private let dependencies = DependenciesDefault()
 
@@ -36,6 +36,9 @@ class PLTrustedDeviceSofTokenUseCaseTests: XCTestCase {
             enum Input {
                 static let parameters = "<2021-04-18 22:01:11.238><<AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><samsung><model><SM-A600FN>>"
             }
+            enum Output {
+                static let signedParameters = "w4OtJhk25o8fXb53AyiHAs5t24shVgtwuTZW50KEuecLD8/Mdlcb1b3NiTf6eLClv3ZKGaoHcWnm+3CjRZyVt51depMSIsoo150QV3/tdgDXp5VA2Jio7RMo+rHbEPq3ECiUZ2MTGGGDA/MDog1w+V99OYTHxK7Jx2C1boevfzE="
+            }
         }
 
         do {
@@ -44,7 +47,7 @@ class PLTrustedDeviceSofTokenUseCaseTests: XCTestCase {
             let useCase = PLSoftwareTokenParametersEncryptionUseCase(dependenciesResolver: self.dependencies)
             let response = try useCase.executeUseCase(requestValues: input)
             let output = try? response.getOkResult()
-            XCTAssertNotEqual(output?.encryptedParameters, nil)
+            XCTAssertEqual(output?.encryptedParameters, ParametersEncryption.Output.signedParameters)
             // TODO: We can test that it can be decrypted with the private key but we need also to make the reverse process for the parameters separation sha256 and so on. Or maybe only verify that it was signed with the certificate that was created (which is what tey are doing in the baskend)
         } catch {
             XCTFail("PLPasswordEncryptionUseCase: throw")
@@ -60,7 +63,7 @@ class PLTrustedDeviceSofTokenUseCaseTests: XCTestCase {
             static let result = "PDIwMjEtMDQtMTggMjI6MDE6MTEuMjM4Pjw8QXBwSWQ+PDEyMzQ1Njc4OTBhYmNkZWYxMjM0NTY3OD5MSGwer2CoMmP72bsKJR4jiiLL0iN3tXvHVmT/o8l75Q=="
         }
 
-        let encryptedParameters = PLSoftwareTokenParametersEncryptionUseCase.separateAndEncryptParameters(parameters: Input.parameters)
+        let encryptedParameters = PLSoftwareTokenParametersEncryptionUseCase.separateAndParciallyHashParameters(parameters: Input.parameters)
         XCTAssertEqual(encryptedParameters?.toBase64(), Output.result)
     }
 }
