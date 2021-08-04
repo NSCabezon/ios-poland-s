@@ -84,6 +84,7 @@
         "enableAccountEasyPayForBills": "true",
         "enableAccountEasyPayForStandardNationalTransfers": "true",
         "enableOtpPush": "true",
+        "enableAppInfo": "true",
         "managerWallVersion": "1",
         "enableSCALogin": "true",
         "enableSCAAccountTransactions": "true",
