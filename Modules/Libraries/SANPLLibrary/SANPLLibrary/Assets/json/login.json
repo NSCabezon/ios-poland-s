@@ -16,7 +16,7 @@
                     }
                 ],
                 "defaultChallenge": {
-                    "authorizationType": "SOFTWARE_TOKEN",
+                    "authorizationType": "SMS_CODE",
                     "value": "24646701"
                 },
                 "expired": false
