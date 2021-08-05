@@ -44,6 +44,7 @@ def core_dependencies
   pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
   pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
   pod 'Localization', :path => '../santander-one/Localization'
+  pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
 end
 
 def legacy_libraries

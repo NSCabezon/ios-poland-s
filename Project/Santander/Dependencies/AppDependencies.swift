@@ -16,6 +16,7 @@ import PLLegacyAdapter
 import PLCommons
 import Models
 import GlobalPosition
+import Account
 import Inbox
 
 final class AppDependencies {
@@ -26,7 +27,6 @@ final class AppDependencies {
     private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
-   
     
     // MARK: - Dependecies definitions
     
@@ -59,6 +59,9 @@ final class AppDependencies {
     }()
     private lazy var productIdDelegate: ProductIdDelegateProtocol = {
         return ProductIdDelegateModifier()
+    }()
+    private lazy var accountDetailModifier: AccountDetailModifierProtocol = {
+        return PLAccountDetailModifier()
     }()
     private lazy var notificationPermissionManager: NotificationPermissionsManager = {
         return NotificationPermissionsManager(dependencies: self.dependencieEngine)
@@ -149,6 +152,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
             return self.ibanFormatter
+        }
+        self.dependencieEngine.register(for: AccountDetailModifierProtocol.self) { _ in
+            return self.accountDetailModifier
         }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager

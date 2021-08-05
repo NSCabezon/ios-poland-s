@@ -27,6 +27,14 @@ final class PLLoanModifier {
 }
 
 extension PLLoanModifier: LoansModifierProtocol {
+    var hideFilterButton: Bool {
+        return true
+    }
+    
+    var enabledLoanTransactionDetail: Bool {
+        return false
+    }
+    
     var enabledLoanOptions: Bool {
         return false
     }
