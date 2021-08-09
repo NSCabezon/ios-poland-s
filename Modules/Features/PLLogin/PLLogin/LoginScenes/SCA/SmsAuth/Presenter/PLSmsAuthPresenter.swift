@@ -84,8 +84,9 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     }
 
     func goToDeviceTrustDeviceData() {
-        self.view?.dismissLoading()
-        self.coordinator.goToDeviceTrustDeviceData()
+        self.view?.dismissLoading(completion: { [weak self] in
+            self?.coordinator.goToDeviceTrustDeviceData()
+        })
     }
 }
 
@@ -123,7 +124,7 @@ private extension  PLSmsAuthPresenter {
                 self.getGlobalPositionTypeAndNavigate()
             }
         } onFailure: { [weak self]  error in
-            self?.handleError(error)
+            self?.handle(error: .unauthorized)
         }
     }
 
@@ -139,41 +140,25 @@ private extension  PLSmsAuthPresenter {
     }
     
     func goBack() {
-        coordinator.goToUnrememberedLogindScene()
+        view?.dismissLoading(completion: { [weak self] in
+            self?.coordinator.goToUnrememberedLogindScene()
+        })
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading()
-        coordinator.goToGlobalPositionScene(option)
+        view?.dismissLoading(completion: { [weak self] in
+            self?.coordinator.goToGlobalPositionScene(option)
+
+        })
     }
 }
 
-extension PLSmsAuthPresenter: PLGenericErrorPresenterLayerProtocol {
+extension PLSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol {
     var associatedErrorView: PLGenericErrorPresentableCapable? {
         self.view
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
         self.goBack()
-    }
-}
-
-private extension PLSmsAuthPresenter {
-    
-    // MARK: Auxiliar methods
-    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>?) {
-        os_log("❌ [LOGIN][Authenticate] Login authorization did fail: %@", log: .default, type: .error, error?.getErrorDesc() ?? "unknown error")
-        switch error {
-        case .error(let error):
-            if error?.error == nil {
-                self.handle(error: error?.genericError ?? .unknown)
-            } else {
-                self.handle(error: .applicationNotWorking)
-            }
-        case .networkUnavailable:
-            self.handle(error: .noConnection)
-        default:
-            self.handle(error: .applicationNotWorking)
-        }
     }
 }

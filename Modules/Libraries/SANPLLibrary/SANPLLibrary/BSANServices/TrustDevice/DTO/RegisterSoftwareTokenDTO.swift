@@ -13,6 +13,6 @@ public struct RegisterSoftwareTokenDTO: Codable {
 }
 
 public struct TokenDTO: Codable {
-    public let id, name, key, type, state: String
-    public let timestamp: Int
+    public let name, key, type, state: String
+    public let id, timestamp: Int
 }

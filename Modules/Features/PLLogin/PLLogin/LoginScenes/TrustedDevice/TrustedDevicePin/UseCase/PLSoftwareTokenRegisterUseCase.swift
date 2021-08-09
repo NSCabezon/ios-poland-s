@@ -51,7 +51,7 @@ struct PLSoftwareTokenRegisterUseCaseInput {
 }
 
 struct PLSoftwareTokenRegisterUseCaseOutput {
-    let id: String
+    let id: Int
     let name: String
     let key: String
     let timestamp: Int

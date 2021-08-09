@@ -13,7 +13,7 @@ import Repository
 import Models
 import PLCommons
 
-final class PLAuthenticateInitUseCase: UseCase<PLAuthenticateInitUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginErrorHandlerProtocol {
+final class PLAuthenticateInitUseCase: UseCase<PLAuthenticateInitUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {

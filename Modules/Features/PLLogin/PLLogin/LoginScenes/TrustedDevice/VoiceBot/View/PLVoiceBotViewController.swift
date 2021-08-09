@@ -8,9 +8,10 @@
 import UI
 import PLUI
 import Commons
+import PLCommons
 import Foundation
 
-protocol PLVoiceBotViewProtocol: AnyObject {
+protocol PLVoiceBotViewProtocol: PLGenericErrorPresentableCapable {
 }
 
 final class PLVoiceBotViewController: UIViewController {
@@ -117,7 +118,7 @@ private extension PLVoiceBotViewController {
         initVoiceBotButton.backgroundColor = UIColor.lightSanGray
         initVoiceBotButton.layer.cornerRadius = (initVoiceBotButton?.frame.height ?? 0.0) / 2.0
         initVoiceBotButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        initVoiceBotButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
+        initVoiceBotButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(requestIVRCall)))
     }
 
     private func configureGradient() {
@@ -129,10 +130,16 @@ private extension PLVoiceBotViewController {
     }
 
     // MARK: Button actions
+    @objc func requestIVRCall() {
+        presenter.requestIVRCall()
+    }
+    
     @objc func continueButtonDidPressed() {
+        presenter.getDevices()
     }
 
     @objc func closeButtonDidPressed() {
+        // close
     }
 }
 

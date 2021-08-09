@@ -54,8 +54,9 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     }
 
     func goToDeviceTrustDeviceData() {
-        self.view?.dismissLoading()
-        self.coordinator.goToDeviceTrustDeviceData()
+        self.view?.dismissLoading(completion: { [weak self] in
+            self?.coordinator.goToDeviceTrustDeviceData()
+        })
     }
     
     func doAuthenticate(token: String) {
@@ -84,7 +85,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     }
 }
 
-extension PLHardwareTokenPresenter: PLGenericErrorPresenterLayerProtocol {
+extension PLHardwareTokenPresenter: PLLoginPresenterErrorHandlerProtocol {
     var associatedErrorView: PLGenericErrorPresentableCapable? {
         self.view
     }
@@ -114,28 +115,14 @@ private extension  PLHardwareTokenPresenter {
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading()
-        coordinator.goToGlobalPositionScene(option)
+        view?.dismissLoading(completion: { [weak self] in
+            self?.coordinator.goToGlobalPositionScene(option)
+        })
     }
     
     func goBack() {
-        coordinator.goToUnrememberedLogindScene()
-    }
-    
-    // MARK: Auxiliar methods
-    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) {
-        os_log("❌ [LOGIN][Authenticate] Login authorization did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
-        switch error {
-        case .error(let error):
-            if error?.error == nil {
-                self.handle(error: error?.genericError ?? .unknown)
-            } else {
-                self.handle(error: .applicationNotWorking)
-            }
-        case .networkUnavailable:
-            self.handle(error: .noConnection)
-        default:
-            self.handle(error: .applicationNotWorking)
-        }
+        view?.dismissLoading(completion: { [weak self] in
+            self?.coordinator.goToUnrememberedLogindScene()
+        })
     }
 }

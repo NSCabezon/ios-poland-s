@@ -47,7 +47,15 @@ private extension PLVoiceBotCoordinator {
         self.dependenciesEngine.register(for: PLVoiceBotPresenterProtocol.self) { resolver in
             return PLVoiceBotPresenter(dependenciesResolver: resolver)
         }
-
+        
+        self.dependenciesEngine.register(for: PLIvrRegisterUseCase.self) { resolver in
+            return PLIvrRegisterUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLDevicesUseCase.self) { resolver in
+            return PLDevicesUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PLVoiceBotViewController.self) { resolver in
             var presenter = resolver.resolve(for: PLVoiceBotPresenterProtocol.self)
             let viewController = PLVoiceBotViewController(

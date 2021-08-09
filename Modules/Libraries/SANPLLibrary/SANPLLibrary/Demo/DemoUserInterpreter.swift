@@ -53,4 +53,6 @@ public enum PLLocalServiceName: String {
     case authenticate = "authenticate"
     case registerDeviceTrustDevice = "registerDeviceTrustDevice"
     case registerSoftwareToken = "registerSoftwareToken"
+    case registerIVR = "registerIVR"
+    case devices = "devices"
 }

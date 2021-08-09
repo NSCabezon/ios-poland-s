@@ -9,7 +9,7 @@ import Repository
 import Models
 import PLCommons
 
-final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginErrorHandlerProtocol {
+final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -60,7 +60,7 @@ private extension PLLoginUseCase {
             if let smsChallenge = secondFactorData.challenges?.first(where: { $0.authorizationType == .sms }) {
                 challenge = ChallengeEntity(authorizationType: smsChallenge.authorizationType,
                                             value: smsChallenge.value)
-            } else if let hardwareChallenge = secondFactorData.challenges?.first(where: { $0.authorizationType == .tokenTime }) {
+            } else if let hardwareChallenge = secondFactorData.challenges?.first(where: { $0.authorizationType == .tokenTime || $0.authorizationType == .tokenTimeCR }) {
                 challenge = ChallengeEntity(authorizationType: hardwareChallenge.authorizationType,
                                             value: hardwareChallenge.value)
             } else {

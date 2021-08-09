@@ -1,5 +1,5 @@
 //
-//  PLLoginErrorHandlerProtocol.swift
+//  PLLoginUseCaseErrorHandlerProtocol.swift
 //  Account
 //
 //  Created by Mario Rosales Maillo on 23/7/21.
@@ -10,12 +10,12 @@ import Commons
 import PLCommons
 import SANPLLibrary
 
-public protocol PLLoginErrorHandlerProtocol {
+public protocol PLLoginUseCaseErrorHandlerProtocol {
     func handle(error: NetworkProviderError) -> PLUseCaseErrorOutput<LoginErrorType>
 }
 
-public extension PLLoginErrorHandlerProtocol {
-    
+public extension PLLoginUseCaseErrorHandlerProtocol {
+
     func handle(error: NetworkProviderError) -> PLUseCaseErrorOutput<LoginErrorType> {
         
         switch error {

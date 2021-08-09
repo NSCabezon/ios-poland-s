@@ -10,6 +10,8 @@ import Foundation
 public protocol PLTrustedDeviceManagerProtocol {
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError>
     func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError>
+    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError>
+    func getDevices() throws -> Result<DevicesDTO, NetworkProviderError>
 }
 
 public final class PLTrustedDeviceManager {
@@ -26,6 +28,7 @@ public final class PLTrustedDeviceManager {
 }
 
 extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
+        
     public func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.doRegisterDevice(parameters)
         return result
@@ -33,6 +36,16 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
 
     public func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.doRegisterSoftwareToken(parameters)
+        return result
+    }
+    
+    public func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError> {
+        let result = try trustedDeviceDataSource.doRegisterIvr(parameters)
+        return result
+    }
+    
+    public func getDevices() throws -> Result<DevicesDTO, NetworkProviderError> {
+        let result = try trustedDeviceDataSource.getDevices()
         return result
     }
 }

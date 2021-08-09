@@ -1,0 +1,9 @@
+{
+    "12345678Z": {
+        "0": {
+            "defaultAuthorizationType" : "SMS_CODE",
+            "allowedAuthorizationTypes" : ["SMS_CODE","TOKEN_TIME"],
+            "availableAuthorizationTypes": ["SMS_CODE","TOKEN_TIME"]
+        }
+    }
+}
