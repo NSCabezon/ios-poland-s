@@ -11,12 +11,16 @@ import CommonUseCase
 
 protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
     func goToSMSScene()
+    func goToSofwareTokenScene()
+    func goToHardwareTokenScene()
+    func goBackToLogin()
 }
 
 final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private let smsAuthCoordinator: PLSmsAuthCoordinator
+    private let hardwareTokenCoordinator: PLHardwareTokenCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -25,6 +29,10 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.smsAuthCoordinator = PLSmsAuthCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: navigationController
+        )
+        self.hardwareTokenCoordinator = PLHardwareTokenCoordinator(
             dependenciesResolver: self.dependenciesEngine,
             navigationController: navigationController
         )
@@ -38,8 +46,20 @@ final class PLUnrememberedLoginMaskedPwdCoordinator: ModuleCoordinator {
 }
 
 extension PLUnrememberedLoginMaskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
+    func goToHardwareTokenScene() {
+        self.hardwareTokenCoordinator.start()
+    }
+    
+    func goToSofwareTokenScene() {
+        // TODO: start software token coordinator
+    }
+    
     func goToSMSScene() {
         self.smsAuthCoordinator.start()
+    }
+    
+    func goBackToLogin() {
+        self.backToLogin()
     }
 }
 

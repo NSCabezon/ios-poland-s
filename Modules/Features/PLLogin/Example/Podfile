@@ -28,23 +28,29 @@ def core_dependencies
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
 end
 
+def core_thirdparty_dependencies
+  pod 'Kingfisher', '5.15.8'
+end
+
 def pl_dependencies
   pod 'PLLogin', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
   pod 'PLUI', :path => '../../../Libraries/PLUI'
   pod 'PLLegacyAdapter', :path => '../../../Libraries/PLLegacyAdapter'
-  pod 'CertificateSigningRequest'
+  pod 'PLSelfSignedCertificate', :path => '../../../Libraries/PLSelfSignedCertificate'
 end
 
 target 'PLLogin_Example' do
   example_app_common
   core_dependencies
+  core_thirdparty_dependencies
   pl_dependencies
 end
 
 target 'PLLogin_ExampleTests' do
   example_app_common
   core_dependencies
+  core_thirdparty_dependencies
   pl_dependencies
 end

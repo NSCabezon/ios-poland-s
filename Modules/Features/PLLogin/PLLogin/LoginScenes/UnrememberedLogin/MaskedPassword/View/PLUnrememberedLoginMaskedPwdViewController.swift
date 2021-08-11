@@ -2,9 +2,10 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginMaskedPwdViewProtocol: AnyObject, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginMaskedPwdViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func setUserIdentifier(_ identifier: String)
     func setUserImage(image: UIImage)

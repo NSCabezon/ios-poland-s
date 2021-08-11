@@ -58,7 +58,7 @@ extension PLSignatureAdapter: SANLegacyLibrary.BSANSignatureManager {
         return BSANOkResponse(nil)
     }
     
-    public func consultChangeSignSignaturePositions() throws -> BSANResponse<SignatureWithTokenDTO> {
+    public func consultChangeSignSignaturePositions() throws -> BSANResponse<SCARepresentable> {
         return BSANOkResponse(nil)
     }
     

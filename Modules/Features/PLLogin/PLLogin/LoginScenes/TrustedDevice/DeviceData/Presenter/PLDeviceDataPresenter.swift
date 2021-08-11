@@ -143,7 +143,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 updatedValues.parametersEncryption = output.encryptedParameters
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
                 updatedValues.certificate = output.certificate
-                updatedValues.privateKey = output.publicKey // Modify with privateKey to encrypt with it (Now we are encrypting with the public one)
+                updatedValues.privateKey = output.privateKey
             }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",

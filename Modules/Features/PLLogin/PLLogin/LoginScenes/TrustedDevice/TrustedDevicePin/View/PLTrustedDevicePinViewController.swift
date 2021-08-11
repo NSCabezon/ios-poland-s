@@ -187,17 +187,17 @@ private extension PLTrustedDevicePinViewController {
     }
 
     private func showEqualDigitsDialog() {
-        let textStyle: LocalizedStylableText = LocalizedStylableText(plainText: localized("pl_onboarding_alert_PIN3digits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PIN3digits").count, attribute: .color(hex: "444444"))])
+        let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_PIN3digits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PIN3digits").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
     private func showConsecutiveDigitsDialog() {
-        let textStyle: LocalizedStylableText = LocalizedStylableText(plainText: localized("pl_onboarding_alert_2consequitDigits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_2consequitDigits").count, attribute: .color(hex: "444444"))])
+        let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_2consequitDigits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_2consequitDigits").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
     private func showNotEqualPinDialog() {
-        let textStyle: LocalizedStylableText = LocalizedStylableText(plainText: localized("pl_onboarding_alert_PINdiffer"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PINdiffer").count, attribute: .color(hex: "444444"))])
+        let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_PINdiffer"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PINdiffer").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
@@ -237,12 +237,6 @@ private extension PLTrustedDevicePinViewController {
         ]
         let builder = LisboaDialog(items: components, closeButtonAvailable: true)
         builder.showIn(self)
-    }
-}
-
-extension PLTrustedDevicePinViewController: DialogViewPresentationCapable {
-    var associatedDialogView: UIViewController {
-        return self
     }
 }
 

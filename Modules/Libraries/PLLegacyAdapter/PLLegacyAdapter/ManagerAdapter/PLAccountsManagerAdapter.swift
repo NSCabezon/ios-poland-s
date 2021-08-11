@@ -83,8 +83,13 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
         return BSANErrorResponse(nil)
     }
     
-    func getWithholdingList(iban: String, currency: String) throws -> BSANResponse<WithholdingListDTO> {
-        return BSANErrorResponse(nil)
+    func getWithholdingList(iban: String, currency: String) throws -> BSANResponse<SANLegacyLibrary.WithholdingListDTO> {
+        let withHoldingListDTOResponse = try? accountManager.getWithholdingList(accountNumber: iban).get()
+        
+        guard let withHoldingListDTO = withHoldingListDTOResponse else { return BSANErrorResponse(nil) }
+    
+        let adaptedwithHoldingData = AccountDetailsDTOAdapter.adaptPLWithholdingListToWithholdingList(withholdingList: withHoldingListDTO)
+        return BSANOkResponse(adaptedwithHoldingData)
     }
     
     func getAccountMovements(params: AccountMovementListParams, account: String) throws -> BSANResponse<AccountMovementListDTO> {

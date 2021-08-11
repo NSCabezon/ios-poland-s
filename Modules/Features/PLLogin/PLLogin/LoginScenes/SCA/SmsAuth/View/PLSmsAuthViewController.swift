@@ -9,9 +9,10 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLSmsAuthViewProtocol: class, PLLoadingLoginViewCapable, ChangeEnvironmentViewCapable {
+protocol PLSmsAuthViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func resetForm()
 }
 
@@ -274,7 +275,7 @@ extension PLSmsAuthViewController: RememberMeViewDelegate {
     }
 }
 
-extension  PLSmsAuthViewController: PLUIInputCodeViewDelegate {
+extension PLSmsAuthViewController: PLUIInputCodeViewDelegate {
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
         if let first = view.firstEmptyRequested(), first > Constants.minimumPositionsFulfilled {
             self.loginButton.isEnabled = true
@@ -300,11 +301,5 @@ extension  PLSmsAuthViewController: PLUIInputCodeViewDelegate {
     }
 
     func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
-    }
-}
-
-extension PLSmsAuthViewController: DialogViewPresentationCapable {
-    var associatedDialogView: UIViewController {
-        return self
     }
 }

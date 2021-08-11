@@ -6,29 +6,29 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import SANPLLibrary
 import Repository
 import Models
 import PLCommons
 
-final class PLAuthenticateInitUseCase: UseCase<PLAuthenticateInitUseCaseInput, Void, PLAuthenticateInitUseCaseErrorOutput> {
+final class PLAuthenticateInitUseCase: UseCase<PLAuthenticateInitUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLAuthenticateInitUseCaseInput) throws -> UseCaseResponse<Void, PLAuthenticateInitUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLAuthenticateInitUseCaseInput) throws -> UseCaseResponse<Void, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let parameters = AuthenticateInitParameters(userId: requestValues.userId, secondFactorData: SecondFactorData(defaultChallenge: DefaultChallenge(authorizationType: requestValues.challenge.authorizationType, value: requestValues.challenge.value)))
         let result = try managerProvider.getLoginManager().doAuthenticateInit(parameters)
         switch result {
         case .success(_):
             return UseCaseResponse.ok()
-        case .failure(_):
-            // TODO: the error management will be implemented in next sprint.
-            return UseCaseResponse.error(PLAuthenticateInitUseCaseErrorOutput(loginErrorType: .unauthorized))
+        case .failure(let error):
+            return .error(self.handle(error: error))
         }
     }
 }
@@ -54,22 +54,4 @@ extension PLAuthenticateInitUseCase: Cancelable {
 struct PLAuthenticateInitUseCaseInput {
     let userId: String
     let challenge: ChallengeEntity
-}
-
-final class PLAuthenticateInitUseCaseErrorOutput: StringErrorOutput {
-    public var loginErrorType: LoginErrorType?
-
-    public init(loginErrorType: LoginErrorType?) {
-        self.loginErrorType = loginErrorType
-        super.init(nil)
-    }
-
-    public override init(_ errorDesc: String?) {
-        self.loginErrorType = LoginErrorType.serviceFault
-        super.init(errorDesc)
-    }
-
-    public func getLoginErrorType() -> LoginErrorType? {
-        return loginErrorType
-    }
 }

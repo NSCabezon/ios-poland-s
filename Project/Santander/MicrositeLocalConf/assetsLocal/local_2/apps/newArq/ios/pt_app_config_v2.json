@@ -101,7 +101,7 @@
         "nationalTransferInformation": "Coste variable  de {{BOLD}}0,3% mínimo de 6€{{/BOLD}} entre cuentas Santander. {{BOLD}}0,4% con un mínimo de 6€{{/BOLD}} a otros bancos. Gratuitas para las Día a Día, Zero y Smart.",
         "immediateTransferInformation": "Coste del servicio de 6€.",
         "urgentTransferInformation": "Coste del servicio 0,6%, mínimo 17€.",
-        "enableTimeLine": "true",
+        "enableTimeLine": "false",
         "enablePregrantedWidget": "true",
         "enablePGTopPregrantedBanner": "true",
         "pgTopPregrantedBannerColor": "negro",

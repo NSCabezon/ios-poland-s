@@ -3,6 +3,7 @@
 //  PLLogin
 
 import Foundation
+import Commons
 
 public enum LoginProcessLayerEvent {
     case willLogin
@@ -10,7 +11,5 @@ public enum LoginProcessLayerEvent {
     case authenticateInitSuccess
     case authenticateSuccess
     case loginSuccess
-    case loginError
-    case loginErrorAccountTemporaryBlocked
-    case noConnection
+    case error(type: LoginErrorType)
 }

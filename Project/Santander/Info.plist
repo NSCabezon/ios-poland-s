@@ -19,9 +19,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.33</string>
+	<string>0.0.43</string>
 	<key>CFBundleVersion</key>
-	<string>33</string>
+	<string>43</string>
 	<key>DEMO_AVAILABLE</key>
 	<string>$(DEMO_AVAILABLE)</string>
 	<key>DEFAULT_DEMO_USER</key>
@@ -75,6 +75,12 @@
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich zdjęć?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 </dict>

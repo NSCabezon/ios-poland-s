@@ -2,9 +2,15 @@
 //  LoginModels.swift
 //  PLLogin
 
+import SANPLLibrary
+
 public struct ChallengeEntity {
-    public let authorizationType: String
+    public let authorizationType: AuthorizationType
     public let value: String
+    init(authorizationType: AuthorizationType, value: String) {
+        self.authorizationType = authorizationType
+        self.value = value
+    }
 }
 
 public struct TrustedComputerEntity {

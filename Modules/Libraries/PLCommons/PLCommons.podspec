@@ -18,5 +18,6 @@ The Poland PLCommons framework.
   s.source_files = 'PLCommons/**/*.{swift}'
   
 s.dependency "Commons"
+s.dependency "UI"
 s.dependency "Helpers"
 end

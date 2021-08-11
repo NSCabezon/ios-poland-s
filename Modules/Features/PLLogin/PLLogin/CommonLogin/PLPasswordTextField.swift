@@ -10,7 +10,7 @@ import IQKeyboardManagerSwift
 import Commons
 import UI
 
-public protocol PLPasswordTextFieldDelegate: class {
+public protocol PLPasswordTextFieldDelegate: AnyObject {
     func enterDidPressed()
 }
 

@@ -10,6 +10,8 @@ import Foundation
 protocol TrustDeviceDataSourceProtocol {
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError>
     func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError>
+    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError>
+    func getDevices() throws -> Result<DevicesDTO, NetworkProviderError>
 }
 
 private extension TrustDeviceDataSource {
@@ -28,6 +30,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
     private enum TrustDeviceServiceType: String {
         case registerDevice = "/registration/trusted-device"
         case registerSoftwareToken = "/registration/software-token"
+        case registerIVR = "/registration/ivr"
     }
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -70,6 +73,38 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                                                                                                        localServiceName: .registerSoftwareToken,
                                                                                                                                        authorization: .oauth))
 
+        return result
+    }
+    
+    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName = TrustDeviceServiceType.registerIVR.rawValue + "/" + parameters.appId
+        let networkRequest = RegisterIvrRequest(serviceName: serviceName,
+                                                serviceUrl: absoluteUrl,
+                                                method: .post,
+                                                headers: self.headers,
+                                                localServiceName: .registerIVR,
+                                                authorization: .oauth)
+        let result: Result<Void, NetworkProviderError> = self.networkProvider.request(networkRequest)
+        return result
+    }
+    
+    func getDevices() throws -> Result<DevicesDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let absoluteUrl = baseUrl + self.basePath
+        let networkRequest = DevicesRequest(serviceName: "",
+                                                serviceUrl: absoluteUrl,
+                                                method: .post,
+                                                headers: self.headers,
+                                                localServiceName: .devices,
+                                                authorization: .oauth)
+        let result: Result<DevicesDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
         return result
     }
 }
@@ -145,3 +180,67 @@ private struct RegisterSoftwareTokenRequest: NetworkProviderRequest {
         self.authorization = authorization
     }
 }
+
+private struct RegisterIvrRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding? = nil
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
+    }
+    
+}
+
+private struct DevicesRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding? = nil
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
+    }
+    
+}
+
+

@@ -6,6 +6,7 @@
 import XCTest
 import Commons
 import DomainCommon
+import PLCommons
 @testable import PLLogin
 
 class PLPasswordEncryptionUseCaseTests: XCTestCase {
@@ -42,13 +43,13 @@ private extension PLPasswordEncryptionUseCaseTests {
     }
 
     // MARK: Handle useCase response
-    func passwordEncryptionUseCase(_ input: PLPasswordEncryptionUseCaseInput) throws -> UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput> {
+    func passwordEncryptionUseCase(_ input: PLPasswordEncryptionUseCaseInput) throws -> UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
             let useCase = PLPasswordEncryptionUseCase(dependenciesResolver: self.dependencies)
             let response = try useCase.executeUseCase(requestValues: input)
             return response
     }
 
-   func outputFrom(_ response: UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLAuthenticateUseCaseErrorOutput>) -> PLPasswordEncryptionUseCaseOutput? {
+   func outputFrom(_ response: UseCaseResponse<PLPasswordEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>) -> PLPasswordEncryptionUseCaseOutput? {
             let output = try? response.getOkResult()
             return output
     }

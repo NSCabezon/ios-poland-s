@@ -14,3 +14,11 @@ public struct AccountDetailsParameters: Encodable {
         self.includePermissions = includePermissions.description
     }
 }
+
+public struct WithholdingParameters: Encodable {
+    public let accountNumbers: [String]
+
+    public init(accountNumbers: [String]) {
+        self.accountNumbers = accountNumbers
+    }
+}

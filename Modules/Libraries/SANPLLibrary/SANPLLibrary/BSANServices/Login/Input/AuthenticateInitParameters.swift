@@ -25,12 +25,19 @@ public struct SecondFactorData: Encodable {
     }
 }
 
-
 public struct DefaultChallenge: Encodable {
-    let authorizationType, value: String
+    let value: String
+    let authorizationType: AuthorizationType
 
-    public init(authorizationType: String, value: String) {
+    public init(authorizationType: AuthorizationType, value: String) {
         self.authorizationType = authorizationType
         self.value = value
     }
+}
+
+public enum AuthorizationType: String, Codable {
+    case sms = "SMS_CODE"
+    case softwareToken = "SOFTWARE_TOKEN"
+    case tokenTime = "TOKEN_TIME"
+    case tokenTimeCR = "TOKEN_TIME_CHALLENGE_RESPONSE"
 }

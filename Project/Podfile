@@ -7,7 +7,6 @@ def core_dependencies
   
   # Common
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
-  pod 'ModuleInjection', :path => '../santander-one/ModuleInjection'
   pod 'Repository', :path => '../santander-one/Repository'
   pod 'DataRepository', :path => '../santander-one/Modules/Libraries/DataRepository'
   pod 'Operative', :path => '../santander-one/Operative'
@@ -45,6 +44,7 @@ def core_dependencies
   pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
   pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
   pod 'Localization', :path => '../santander-one/Localization'
+  pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
 end
 
 def legacy_libraries
@@ -67,7 +67,7 @@ end
 def core_thirdparty_dependencies
   pod 'IQKeyboardManagerSwift', '6.5.6'
   pod 'SwiftyBeaver', '1.7.0'
-  pod 'Kingfisher', '4.10.1'
+  pod 'Kingfisher', '5.15.8'
   pod 'lottie-ios'
 end
  
@@ -81,6 +81,7 @@ def pl_libraries
   pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
   pod 'PLCommons', :path => '../Modules/Libraries/PLCommons'
   pod 'PLUI', :path => '../Modules/Libraries/PLUI'
+  pod 'PLSelfSignedCertificate', :path => '../Modules/Libraries/PLSelfSignedCertificate'
 end
 
 def pl_thirdparty_dependencies

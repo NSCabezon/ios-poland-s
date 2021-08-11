@@ -9,6 +9,7 @@ import SANLegacyLibrary
 protocol AccountDataSourceProtocol {
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError>
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
+    func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError>
 }
 
 private extension AccountDataSource {
@@ -21,13 +22,14 @@ final class AccountDataSource {
     private enum AccountServiceType: String {
         case detail = "/accounts"
         case swiftBranches = "/swiftbranches"
+        case cardwithholdings = "/history/cardwithholdings"
     }
 
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
     private var headers: [String: String] = [:]
-    private var queryParams: [String: String]? = nil
+    private var queryParams: [String: Any]? = nil
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
@@ -45,7 +47,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
 
         self.queryParams = nil
         if let parametersData = try? JSONEncoder().encode(parameters) {
-            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : String]
+            self.queryParams = try? JSONSerialization.jsonObject(with: parametersData, options: []) as? [String : Any]
         }
 
         let serviceName = "\(AccountServiceType.detail.rawValue)/\(accountNumber)/\(systemId)"
@@ -60,12 +62,11 @@ extension AccountDataSource: AccountDataSourceProtocol {
         )
         return result
     }
-
+    
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
-
         self.queryParams = nil
 
         let serviceName = "\(AccountServiceType.swiftBranches.rawValue)/\(accountNumber)"
@@ -80,6 +81,27 @@ extension AccountDataSource: AccountDataSourceProtocol {
         )
         return result
     }
+    
+    func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let parameters = WithholdingParameters(accountNumbers: accountNumbers)
+        let serviceName = "\(AccountServiceType.cardwithholdings.rawValue)"
+        
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<WithholdingListDTO, NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .post,
+                                                                                                                jsonBody: parameters,
+                                                                                                                headers: self.headers,
+                                                                                                                bodyEncoding: .body,
+                                                                                                                contentType: .json,
+                                                                                                                localServiceName: .cardWithHoldings)
+        )
+        return result
+    }
 }
 
 private struct AccountRequest: NetworkProviderRequest {
@@ -88,9 +110,9 @@ private struct AccountRequest: NetworkProviderRequest {
     let method: NetworkProviderMethod
     let headers: [String: String]?
     let queryParams: [String: Any]?
-    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let jsonBody: WithholdingParameters?
     let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding? = .none
+    let bodyEncoding: NetworkProviderBodyEncoding?
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
@@ -99,17 +121,20 @@ private struct AccountRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
-         jsonBody: Encodable? = nil,
+         jsonBody: WithholdingParameters? = nil,
          headers: [String: String]?,
-         queryParams: [String: String]? = nil,
+         queryParams: [String: Any]? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .none,
          contentType: NetworkProviderContentType,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
+        self.jsonBody = jsonBody
         self.method = method
         self.formData = body
         self.headers = headers
         self.queryParams = queryParams
+        self.bodyEncoding = bodyEncoding
         self.contentType = contentType
         self.localServiceName = localServiceName
     }

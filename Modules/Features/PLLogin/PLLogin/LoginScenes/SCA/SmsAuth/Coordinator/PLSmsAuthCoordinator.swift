@@ -12,16 +12,10 @@ import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 
-protocol PLSmsAuthCoordinatorProtocol {
-    func goToGlobalPositionScene()
-    func goToUnrememberedLogindScene()
-    func goToDeviceTrustDeviceData()
-}
-
-final class PLSmsAuthCoordinator: ModuleCoordinator {
+final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtocol {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    private let deviceDataCoordinator: PLDeviceDataCoordinator
+    var deviceDataCoordinator: PLDeviceDataCoordinator
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -41,29 +35,15 @@ final class PLSmsAuthCoordinator: ModuleCoordinator {
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
-
-extension PLSmsAuthCoordinator: PLSmsAuthCoordinatorProtocol {
-    func goToGlobalPositionScene() {
-        //TODO:
-    }
-
-    func goToUnrememberedLogindScene() {
-        self.backToLogin()
-    }
-
-    func goToDeviceTrustDeviceData() {
-        self.deviceDataCoordinator.start()
-    }
-}
-
 /**
  #Register Scene depencencies.
 */
 private extension PLSmsAuthCoordinator {
     func setupDependencies() {
         let presenter = PLSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
+        let authProcessUseCase = PLAuthProcessUseCase(dependenciesEngine: self.dependenciesEngine)
 
-        self.dependenciesEngine.register(for: PLSmsAuthCoordinatorProtocol.self) { _ in
+        self.dependenciesEngine.register(for: PLScaAuthCoordinatorProtocol.self) { _ in
             return self
         }
 
@@ -90,24 +70,14 @@ private extension PLSmsAuthCoordinator {
             presenter.loginManager = self.loginLayerManager
             return viewController
         }
-
-        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
-           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
-           return PLAuthenticateUseCase(dependenciesResolver: resolver)
-        }
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
            return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
-           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
         }
         self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
             return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
-            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLAuthProcessUseCase.self) { _ in
+            return authProcessUseCase
         }
         self.registerEnvironmentDependencies()
     }

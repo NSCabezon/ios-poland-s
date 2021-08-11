@@ -4,6 +4,7 @@
 
 import Foundation
 import Commons
+import PLCommons
 import Models
 
 /**
@@ -22,8 +23,6 @@ import Models
 /// This protocol is adopted by the Login Manager and used from scene presenter.
 protocol PLLoginLayersManagerDelegate: AnyObject {
     func doLogin(type: LoginType)
-    func doAuthenticateInit(userId: String, challenge: ChallengeEntity)
-    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity)
     func getCurrentEnvironments()
     func chooseEnvironment()
     func loadData()
@@ -32,7 +31,7 @@ protocol PLLoginLayersManagerDelegate: AnyObject {
 }
 
 /// This protocol is adopted by the scene presenter and used from the Login Manager.
-protocol PLLoginPresenterLayerProtocol: AnyObject {
+protocol PLLoginPresenterLayerProtocol: AnyObject, PLGenericErrorPresenterLayerProtocol {
     func handle(event: LoginProcessLayerEvent)
     func handle(event: SessionProcessEvent)
     func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity)
@@ -95,14 +94,6 @@ extension PLLoginLayersManager: PLLoginLayersManagerDelegate {
         }
     }
 
-    func doAuthenticateInit(userId: String, challenge: ChallengeEntity) {
-        self.loginProcessLayer.doAuthenticateInit(userId: userId, challenge: challenge)
-    }
-
-    func doAuthenticate(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticationEntity) {
-        self.loginProcessLayer.doAuthenticate(encryptedPassword: encryptedPassword, userId: userId, secondFactorData: secondFactorData)
-    }
-    
     func continueWithLoginSuccess() {
         // TODO
     }
@@ -132,6 +123,11 @@ extension PLLoginLayersManager: LoginEnvironmentLayerDelegate {
 
 // MARK: - Process Layer Delegate
 extension PLLoginLayersManager: PLLoginProcessLayerEventDelegate {
+    
+    func handle(error: PLGenericError) {
+        self.loginPresenterLayer.handle(error: error)
+    }
+    
     func handle(event: LoginProcessLayerEvent) {
         switch event {
         case .willLogin:

@@ -22,6 +22,15 @@ final class PLCardHomeModifier {
 }
 
 extension PLCardHomeModifier: CardHomeModifierProtocol {
+    func isDisabledDetail(card: CardEntity) -> Bool {
+        return false
+    }
+    
+    func isInactivePrepaid(card: CardEntity) -> Bool {
+        // TODO: To be implemented
+        return false
+    }
+    
     func hideMoreOptionsButton() -> Bool {
         return true
     }
@@ -87,5 +96,4 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
     func addPrepaidCardOffAction() -> Bool {
         return false
     }
-
 }

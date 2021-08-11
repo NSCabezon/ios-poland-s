@@ -7,7 +7,7 @@ import LoginCommon
 import Commons
 import UI
 
-protocol PLLoginCoordinatorProtocol: class, OpenUrlCapable {
+protocol PLLoginCoordinatorProtocol: AnyObject, OpenUrlCapable {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector { get }
     func goToPrivate(_ globalPositionOption: GlobalPositionOptionEntity)
     func goToFakePrivate(_ name: String?)
