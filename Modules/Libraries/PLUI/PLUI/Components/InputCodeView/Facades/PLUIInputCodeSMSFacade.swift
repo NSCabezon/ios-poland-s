@@ -8,21 +8,33 @@
 import UIKit
 import UI
 
-public final class PLUIInputCodeSMSFacade {
+public enum PLUIInputCodeSMSFacadeStyle {
+    case blackBackground
+    case whiteBackground
+}
 
-    public init() {}
+public final class PLUIInputCodeSMSFacade {
+    
+    private var facadeStyle:PLUIInputCodeSMSFacadeStyle = .blackBackground
+    let cursorTintColor = UIColor.init(red: 19/255, green: 126/255, blue: 132/255, alpha: 1.0)
+
+    public init(facadeStyle:PLUIInputCodeSMSFacadeStyle = .blackBackground) {
+        self.facadeStyle = facadeStyle
+    }
 
     private enum Constants {
         static let elementsNumber = 6
-        static let spacingBetweenColumns: CGFloat = 10.0
         static let font =  UIFont.santander(family: .text, type: .regular, size: 28)
-        static let hyphenWidth = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 24.0, height: 4.0) : CGSize(width: 14, height: 4.0)
+        static let hyphenSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 24.0, height: 4.0) : CGSize(width: 14, height: 4.0)
+        static func getSpacingBetweenColumns(style: PLUIInputCodeSMSFacadeStyle) -> CGFloat {
+            return style == .blackBackground ? 10.0 : 2.0
+        }
     }
 
     private lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = Constants.spacingBetweenColumns
+        stackView.spacing = Constants.getSpacingBetweenColumns(style: facadeStyle)
         stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -32,14 +44,14 @@ public final class PLUIInputCodeSMSFacade {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 2.0
-        view.backgroundColor = .white
-        view.heightAnchor.constraint(equalToConstant: Constants.hyphenWidth.height).isActive = true
-        view.widthAnchor.constraint(equalToConstant: Constants.hyphenWidth.width).isActive = true
+        view.backgroundColor = facadeStyle == .blackBackground ? .white : cursorTintColor
+        view.heightAnchor.constraint(equalToConstant: Constants.hyphenSize.height).isActive = true
+        view.widthAnchor.constraint(equalToConstant: Constants.hyphenSize.width).isActive = true
         let contentView = UIView()
         contentView.addSubview(view)
+        contentView.widthAnchor.constraint(equalToConstant: Constants.hyphenSize.width*2).isActive = true
         view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        
         return contentView
     }()
 }
@@ -47,18 +59,47 @@ public final class PLUIInputCodeSMSFacade {
 extension PLUIInputCodeSMSFacade: PLUIInputCodeFacadeProtocol {
     
     public func view(with boxes: [PLUIInputCodeBoxView]) -> UIView {
+        if facadeStyle == .whiteBackground {
+            configureCorners(with: boxes)
+        }
         for position in 1...boxes.count {
             self.horizontalStackView.addArrangedSubview(boxes[position-1])
         }
-
         self.horizontalStackView.insertArrangedSubview(self.hyphenView, at: 3)
         return horizontalStackView
     }
 
     public func configuration() -> PLUIInputCodeFacadeConfiguration {
-        return PLUIInputCodeFacadeConfiguration(showPositions: false,
-                                                showSecureEntry: false,
-                                                elementsNumber: Constants.elementsNumber,
-                                                font: Constants.font)
+        switch facadeStyle {
+        case .blackBackground:
+            return PLUIInputCodeFacadeConfiguration(showPositions: false,
+                                                    showSecureEntry: false,
+                                                    elementsNumber: Constants.elementsNumber,
+                                                    font: Constants.font)
+        case .whiteBackground:
+            let borderColor = UIColor.init(red: 219/255, green: 224/255, blue: 227/255, alpha: 1.0)
+            return PLUIInputCodeFacadeConfiguration(showPositions: false,
+                                                    showSecureEntry: true,
+                                                    elementsNumber: Constants.elementsNumber,
+                                                    font: Constants.font,
+                                                    cursorTintColor: cursorTintColor,
+                                                    textColor: cursorTintColor,
+                                                    borderColor: borderColor,
+                                                    borderWidth: 1)
+        }
+    }
+}
+
+private extension PLUIInputCodeSMSFacade {
+    func configureCorners(with boxes: [PLUIInputCodeBoxView]) {
+        for position in 1...boxes.count {
+            boxes[position-1].backgroundColor = .white
+            if position == 1 {
+                boxes[position-1].configureCorners(corners: [.topLeft, .bottomLeft], radius: 6)
+            }
+            if position == boxes.count {
+                boxes[position-1].configureCorners(corners: [.topRight, .bottomRight], radius: 6)
+            }
+         }
     }
 }
