@@ -61,8 +61,8 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     
     func doAuthenticate(token: String) {
         guard let password = loginConfiguration.password else {
-            self.handle(error: .applicationNotWorking)
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
         self.view?.showLoading()

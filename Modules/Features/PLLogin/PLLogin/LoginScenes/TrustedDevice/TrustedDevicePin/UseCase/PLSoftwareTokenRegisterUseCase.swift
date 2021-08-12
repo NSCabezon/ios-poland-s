@@ -6,17 +6,18 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import SANPLLibrary
 
-final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
+final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLSoftwareTokenRegisterUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenRegisterUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLSoftwareTokenRegisterUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken, // ??? Depende del dispositivo
                                                          trustedDeviceAuth: TrustedDeviceAuthData(appId: requestValues.appId,
@@ -25,7 +26,9 @@ final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCa
         let result = try managerProvider.getTrustedDeviceManager().doRegisterSoftwareToken(parameters)
         switch result {
         case .success(let registerSoftwareToken):
-            guard registerSoftwareToken.tokens.count > 0 else { throw  PLSoftwareTokenUseCaseErrorOutput("Any token received") }
+            guard registerSoftwareToken.tokens.count > 0 else {
+                throw  PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Any token received")
+            }
             let token = registerSoftwareToken.tokens[0]
             let registerOutput = PLSoftwareTokenRegisterUseCaseOutput(id: token.id,
                                                                       name: token.name,
@@ -34,10 +37,10 @@ final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCa
                                                                       type: token.type,
                                                                       state: token.state,
                                                                       trustedDeviceState: registerSoftwareToken.trustedDeviceState)
-            return UseCaseResponse.ok(registerOutput)
+            return .ok(registerOutput)
 
         case .failure(let error):
-            return UseCaseResponse.error(PLSoftwareTokenUseCaseErrorOutput(error.localizedDescription))
+            return .error(self.handle(error: error))
         }
     }
 }

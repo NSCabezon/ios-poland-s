@@ -7,6 +7,7 @@
 
 import DomainCommon
 import Commons
+import PLCommons
 import Models
 import os
 
@@ -107,6 +108,17 @@ final class PLDeviceDataPresenter {
     }()
 }
 
+extension PLDeviceDataPresenter: PLLoginPresenterErrorHandlerProtocol {
+    
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        return view
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        //
+    }
+}
+
 extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
     func viewDidLoad() {
@@ -119,8 +131,8 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     func registerDevice() {
 
         guard let password = loginConfiguration.password else {
-            // TODO: generate error, password can't be empty
-            // And more important, create a tustedDevieConfiguration for not using the one from loginConfiguration
+            // TODO: create a tustedDevieConfiguration for not using the one from loginConfiguration
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
 
@@ -144,7 +156,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
                 updatedValues.certificate = output.certificate
                 updatedValues.privateKey = output.privateKey
-            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
+            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
                                                                                         deviceTime: self.deviceConfiguration.deviceData.deviceTime,
@@ -158,10 +170,9 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 return Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
             })
             .onSuccess { [weak self] registerSoftwareTokenOutput in
-                guard let self = self else { return }
-                self.goToTrustedDevicePIN()
-            }.onError { _ in
-                // TODO: Handle error
+                self?.goToTrustedDevicePIN()
+            }.onError { [weak self] error in
+                self?.handleError(error)
             }
     }
 

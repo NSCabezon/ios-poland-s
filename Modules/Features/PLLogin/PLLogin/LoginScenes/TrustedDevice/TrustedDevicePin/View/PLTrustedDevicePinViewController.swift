@@ -5,9 +5,10 @@
 import UI
 import PLUI
 import Commons
+import PLCommons
 import Foundation
 
-protocol PLTrustedDevicePinViewProtocol: AnyObject {
+protocol PLTrustedDevicePinViewProtocol: PLGenericErrorPresentableCapable {
 }
 
 final class PLTrustedDevicePinViewController: UIViewController {

@@ -17,10 +17,21 @@ public protocol PLLoginPresenterErrorHandlerProtocol: PLGenericErrorPresenterLay
 extension PLLoginPresenterErrorHandlerProtocol {
     func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) {
         switch error {
-        case .error(let error):
-            if error?.error == nil {
-                self.handle(error: error?.genericError ?? .unknown)
-            } else {
+        case .error(let err):
+            guard let loginError = err?.error else {
+                self.handle(error: err?.genericError ?? .unknown)
+                return
+            }
+        
+            switch loginError {
+            case .unauthorized:
+                self.handle(error: .unauthorized)
+            case .emptyPass:
+                self.associatedErrorView?.presentError("login_popup_passwordRequired", completion: {
+                    otherErrorPresentedWith(error: loginError)
+                })
+             break
+            default:
                 self.handle(error: .applicationNotWorking)
             }
         case .networkUnavailable:

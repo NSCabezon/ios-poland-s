@@ -6,6 +6,7 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import CryptoSwift
 import os
@@ -17,22 +18,22 @@ private struct PLCertificate {
     let privateKey: SecKey
 }
 
-final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertificateCreationUseCaseInput, PLDeviceDataCertificateCreationUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertificateCreationUseCaseInput, PLDeviceDataCertificateCreationUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLDeviceDataCertificateCreationUseCaseInput) throws -> UseCaseResponse<PLDeviceDataCertificateCreationUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLDeviceDataCertificateCreationUseCaseInput) throws -> UseCaseResponse<PLDeviceDataCertificateCreationUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
         do {
             let certificate = try self.createCertificate()
-            return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate.pemCertificate,
+            return .ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate.pemCertificate,
                                                                                    publicKey: certificate.publicKey,
                                                                                    privateKey: certificate.privateKey))
         } catch {
-            return UseCaseResponse.error(PLDeviceDataUseCaseErrorOutput(error.localizedDescription))
+            return .error(PLUseCaseErrorOutput(errorDescription: error.localizedDescription))
         }
     }
 }

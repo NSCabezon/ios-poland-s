@@ -107,8 +107,8 @@ private extension  PLSmsAuthPresenter {
 
     func doAuthenticate(smscode: String) {
         guard let password = loginConfiguration.password else {
-            self.handle(error: .applicationNotWorking)
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
         let authProcessInput = PLAuthProcessInput(scaCode: smscode,

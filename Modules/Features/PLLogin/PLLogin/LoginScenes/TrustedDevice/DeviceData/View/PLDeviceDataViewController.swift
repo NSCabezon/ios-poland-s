@@ -9,8 +9,9 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 
-protocol PLDeviceDataViewProtocol: AnyObject {
+protocol PLDeviceDataViewProtocol: PLGenericErrorPresentableCapable {
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration)
 }
 

@@ -4,6 +4,7 @@
 
 import Models
 import Commons
+import PLCommons
 import os
 
 protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
@@ -40,7 +41,7 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
 
     func registerSoftwareToken(with createBiometricToken: Bool) {
         guard let key = self.deviceConfiguration.softwareToken?.privateKey else {
-            // TODO: Handle it
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
             return
         }
 
@@ -49,7 +50,7 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
                                                                                                   key: key)
         Scenario(useCase: softwareTokenEncryptionUseCase, input: softwareTokenEncryptionUseCaseInput)
             .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: {  [weak self] (output) -> Scenario<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput>? in
+            .then(scenario: {  [weak self] (output) -> Scenario<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
 
                 let softwareTokenRegistrationUseCase = PLSoftwareTokenRegisterUseCase(dependenciesResolver: self.dependenciesResolver)
@@ -62,12 +63,11 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
             })
             .onSuccess({ [weak self] output in
                 // TODO: Save output id, name, etc
-                guard let self = self else { return }
-                self.goToVoiceBotScreen()
+                self?.goToVoiceBotScreen()
             })
-            .onError { error in
-                // TODO: Present errorsecondFactorData
+            .onError { [weak self] error in
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
+                self?.handleError(error)
             }
     }
 
@@ -82,6 +82,16 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
         let biometryAvailable = self.localAuth.biometryTypeAvailable
         return biometryAvailable == .faceId || biometryAvailable == .touchId
         #endif
+    }
+}
+
+extension PLTrustedDevicePinPresenter: PLLoginPresenterErrorHandlerProtocol {
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        return view
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        //
     }
 }
 

@@ -6,27 +6,28 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import CryptoSwift
 import Security
 import CommonCrypto
 import os
 
-final class PLSoftwareTokenParametersEncryptionUseCase: UseCase<PLSoftwareTokenParametersEncryptionUseCaseInput, PLSoftwareTokenParametersEncryptionUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
+final class PLSoftwareTokenParametersEncryptionUseCase: UseCase<PLSoftwareTokenParametersEncryptionUseCaseInput, PLSoftwareTokenParametersEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLSoftwareTokenParametersEncryptionUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenParametersEncryptionUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLSoftwareTokenParametersEncryptionUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenParametersEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
         do {
             let encryptedParameters = try self.encryptParameters(requestValues.parameters,
                                                                  with: requestValues.key)
-            return UseCaseResponse.ok(PLSoftwareTokenParametersEncryptionUseCaseOutput(encryptedParameters: encryptedParameters))
+            return .ok(PLSoftwareTokenParametersEncryptionUseCaseOutput(encryptedParameters: encryptedParameters))
         } catch {
-            return UseCaseResponse.error(PLSoftwareTokenUseCaseErrorOutput(error.localizedDescription))
+            return .error(PLUseCaseErrorOutput(errorDescription: error.localizedDescription))
         }
     }
 }
@@ -39,11 +40,11 @@ private extension PLSoftwareTokenParametersEncryptionUseCase {
 
         // Transform parameters into what we need before encrypting
         guard let bytesToEncrypt = Self.separateAndParciallyHashParameters(parameters: parameters) else {
-            throw PLSoftwareTokenUseCaseErrorOutput.init("Error separating to encrypt")
+            throw PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Error separating to encrypt")
         }
 
         guard let signedData = key.customSignWithoutHash(data: bytesToEncrypt)
-        else { throw PLSoftwareTokenUseCaseErrorOutput.init("Error encrypting parameters") }
+        else { throw PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Error encrypting parameters") }
 
         os_log("✅ [TRUSTED DEVICE][Software Token] Parameters to encrypt: %@", log: .default, type: .info, parameters)
         os_log("✅ [TRUSTED DEVICE][Software Token] Parameters partially hashed: %@", log: .default, type: .info, Data(bytesToEncrypt).base64EncodedString())

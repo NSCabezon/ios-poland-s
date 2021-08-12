@@ -6,24 +6,25 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import CryptoSwift
 
-final class PLDeviceDataTransportKeyEncryptionUseCase: UseCase<PLDeviceDataTransportKeyEncryptionUseCaseInput, PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+final class PLDeviceDataTransportKeyEncryptionUseCase: UseCase<PLDeviceDataTransportKeyEncryptionUseCaseInput, PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLDeviceDataTransportKeyEncryptionUseCaseInput) throws -> UseCaseResponse<PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLDeviceDataTransportKeyEncryptionUseCaseInput) throws -> UseCaseResponse<PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
         do {
             let encryptedTransportKey = try self.encryptTransportKey(requestValues.transportKey,
                                                                      with: requestValues.passKey)
-            return UseCaseResponse.ok(PLDeviceDataTransportKeyEncryptionUseCaseOutput(encryptedTransportKey: encryptedTransportKey))
+            return .ok(PLDeviceDataTransportKeyEncryptionUseCaseOutput(encryptedTransportKey: encryptedTransportKey))
         } catch {
-            return UseCaseResponse.error(PLDeviceDataUseCaseErrorOutput(error.localizedDescription))
+            return .error(PLUseCaseErrorOutput(errorDescription: error.localizedDescription))
         }
     }
 }
