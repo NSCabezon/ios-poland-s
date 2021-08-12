@@ -56,6 +56,10 @@ final class PLSmsAuthPresenter {
     private var authProcessUseCase: PLAuthProcessUseCase {
         self.dependenciesResolver.resolve(for: PLAuthProcessUseCase.self)
     }
+
+    private var sessionUseCase: PLSessionUseCase {
+        self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+    }
 }
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
@@ -121,18 +125,23 @@ private extension  PLSmsAuthPresenter {
             case .trustedDeviceScene:
                 self.goToDeviceTrustDeviceData()
             case .globalPositionScene:
-                self.getGlobalPositionTypeAndNavigate()
+                self.openSessionAndNavigateToGlobalPosition()
             }
         } onFailure: { [weak self]  error in
             self?.handle(error: .unauthorized)
         }
     }
 
-    func getGlobalPositionTypeAndNavigate() {
-        Scenario(useCase: self.globalPositionOptionUseCase)
+    func openSessionAndNavigateToGlobalPosition() {
+        Scenario(useCase: self.sessionUseCase)
             .execute(on: self.dependenciesResolver.resolve())
+            .then(scenario: { [weak self] _ -> Scenario<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { return nil }
+                return Scenario(useCase: self.globalPositionOptionUseCase)
+            })
             .onSuccess( { [weak self] output in
                 self?.goToGlobalPosition(output.globalPositionOption)
+                
             })
             .onError { [weak self] _ in
                 self?.goToGlobalPosition(.classic)

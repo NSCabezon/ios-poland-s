@@ -19,7 +19,7 @@ final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCa
 
     public override func executeUseCase(requestValues: PLSoftwareTokenRegisterUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken, // ??? Depende del dispositivo
+        let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken,
                                                          trustedDeviceAuth: TrustedDeviceAuthData(appId: requestValues.appId,
                                                                                                   parameters: requestValues.parameters,
                                                                                                   deviceTime: requestValues.deviceTime))
@@ -29,6 +29,7 @@ final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCa
             guard registerSoftwareToken.tokens.count > 0 else {
                 throw  PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Any token received")
             }
+            // TODO: Modify to return both tokens
             let token = registerSoftwareToken.tokens[0]
             let registerOutput = PLSoftwareTokenRegisterUseCaseOutput(id: token.id,
                                                                       name: token.name,

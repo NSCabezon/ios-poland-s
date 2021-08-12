@@ -10,15 +10,16 @@ import Commons
 import Repository
 import Models
 import SANPLLibrary
+import PLCommons
 
-final class PLGetGlobalPositionOptionUseCase: UseCase<Void, GetGlobalPositionOptionUseCaseOkOutput, StringErrorOutput> {
+final class PLGetGlobalPositionOptionUseCase: UseCase<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     private let dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<GetGlobalPositionOptionUseCaseOkOutput, StringErrorOutput> {
+    public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let appRepository = self.dependenciesResolver.resolve(for: AppRepositoryProtocol.self)
         let persistedUser = appRepository.getPersistedUser()
         let userId: String?

@@ -60,6 +60,7 @@ private extension URLSessionNetworkProvider {
         switch request.authorization {
         case .oauth:
             try self.addOauthAuthorization(&urlRequest)
+            self.addTrustedDeviceHeadersIfExist(&urlRequest)
         case .none:
             break
         }
@@ -71,6 +72,13 @@ private extension URLSessionNetworkProvider {
             throw NetworkProviderError.other
         }
         urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+    }
+
+    func addTrustedDeviceHeadersIfExist(_ urlRequest: inout URLRequest) {
+        guard let trustedDeviceHeaders = self.dataProvider.getTrustedDeviceHeaders() else { return }
+        urlRequest.addValue(" \(trustedDeviceHeaders.parameters)", forHTTPHeaderField: "X-Trusted-Device-Parameters")
+        urlRequest.addValue(" \(trustedDeviceHeaders.time)", forHTTPHeaderField: "X-Trusted-Device-Time")
+        urlRequest.addValue(" \(trustedDeviceHeaders.appId)", forHTTPHeaderField: "X-Trusted-Device-App-Id")
     }
     
     func executeUrlRequest(_ urlRequest: URLRequest) -> Result<Data, NetworkProviderError> {

@@ -70,10 +70,10 @@ final class PLDeviceDataViewController: UIViewController {
 extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
 
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration) {
-
-        modelDeviceValueLabel.text = deviceConfiguration.deviceData.model
-        brandDeviceValueLabel.text = deviceConfiguration.deviceData.brand
-        idDeviceValueLabel.text = deviceConfiguration.deviceData.deviceId
+        guard let deviceData = deviceConfiguration.deviceData else { return }
+        modelDeviceValueLabel.text = deviceData.model
+        brandDeviceValueLabel.text = deviceData.brand
+        idDeviceValueLabel.text = deviceData.deviceId
     }
 }
 

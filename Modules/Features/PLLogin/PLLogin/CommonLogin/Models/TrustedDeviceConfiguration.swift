@@ -5,10 +5,12 @@
 //  Created by Marcos Álvarez Mesa on 22/6/21.
 //
 
-public struct TrustedDeviceConfiguration {
+public class TrustedDeviceConfiguration {
 
-    let deviceData: DeviceData
+    var deviceData: DeviceData?
     var softwareToken: SoftwareToken?
+    var deviceHeaders: DeviceHeaders?
+    var loginPassword: String?
 
     struct DeviceData {
         let manufacturer: String
@@ -23,5 +25,11 @@ public struct TrustedDeviceConfiguration {
     struct SoftwareToken {
         let privateKey: SecKey?
         let certificatePEM: String?
+    }
+
+    struct DeviceHeaders {
+        let encryptedParameters: String?
+        let time: String?
+        let appId: String
     }
 }

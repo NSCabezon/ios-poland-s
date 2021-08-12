@@ -76,8 +76,8 @@ private extension PLDeviceDataCertificateCreationUseCase {
         }
 
         var error: Unmanaged<CFError>? = nil
-        let publicKeyB64 = (SecKeyCopyExternalRepresentation(publicKey, &error) as? Data)?.base64EncodedString()
-        let privateKeyDataB64 = (SecKeyCopyExternalRepresentation(privateKey, &error) as? Data)?.base64EncodedString()
+        let publicKeyB64 = (SecKeyCopyExternalRepresentation(publicKey, &error) as Data?)?.base64EncodedString()
+        let privateKeyDataB64 = (SecKeyCopyExternalRepresentation(privateKey, &error) as Data?)?.base64EncodedString()
         let certificatePEM = certificate.addPEMformat(header: String.PEMFormats.certificate.header, footer: String.PEMFormats.certificate.footer)
 
         os_log("✅ [TRUSTED DEVICE][Device Data] Certificate generated: %@", log: .default, type: .info, certificate)

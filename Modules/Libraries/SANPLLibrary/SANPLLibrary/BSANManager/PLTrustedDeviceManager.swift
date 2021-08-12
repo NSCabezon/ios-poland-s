@@ -36,6 +36,7 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
 
     public func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.doRegisterSoftwareToken(parameters)
+        self.registerTrustedDeviceHeaders(trustedDeviceAuthData: parameters.trustedDeviceAuth, trusted: result)
         return result
     }
     
@@ -47,5 +48,18 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
     public func getDevices() throws -> Result<DevicesDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.getDevices()
         return result
+    }
+
+    public func getTrustedDeviceHeaders() -> TrustedDeviceHeaders? {
+        return self.bsanDataProvider.getTrustedDeviceHeaders()
+    }
+}
+
+private extension PLTrustedDeviceManager {
+    func registerTrustedDeviceHeaders(trustedDeviceAuthData: TrustedDeviceAuthData, trusted: Result<RegisterSoftwareTokenDTO, NetworkProviderError>) {
+        let trustedDeviceHeaders = TrustedDeviceHeaders(parameters: trustedDeviceAuthData.parameters,
+                                                        time: trustedDeviceAuthData.deviceTime,
+                                                        appId: trustedDeviceAuthData.appId)
+        self.bsanDataProvider.storeTrustedDeviceHeaders(trustedDeviceHeaders)
     }
 }

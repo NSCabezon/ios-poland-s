@@ -58,7 +58,8 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     }
     
     func requestIVRCall() {
-        let input = PLIvrRegisterUseCaseInput(appId: self.deviceConfiguration.deviceData.appId)
+        guard let deviceData = self.deviceConfiguration.deviceData else { return }
+        let input = PLIvrRegisterUseCaseInput(appId: deviceData.appId)
         Scenario(useCase: ivrRegisterUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ _ in

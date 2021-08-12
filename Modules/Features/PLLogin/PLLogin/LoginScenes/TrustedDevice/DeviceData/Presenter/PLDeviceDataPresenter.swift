@@ -82,8 +82,10 @@ final class PLDeviceDataPresenter {
                                                                deviceTime: deviceTime,
                                                                parameters: parameters)
 
-        return TrustedDeviceConfiguration(deviceData: deviceData,
-                                          softwareToken: nil)
+        let trustedDeviceConfiguration = TrustedDeviceConfiguration()
+        trustedDeviceConfiguration.deviceData = deviceData
+
+        return trustedDeviceConfiguration
     }()
 
     private lazy var currentDate: Date = {
@@ -129,8 +131,8 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func registerDevice() {
-
-        guard let password = loginConfiguration.password else {
+        guard let password = loginConfiguration.password,
+              let deviceData = self.deviceConfiguration.deviceData else {
             // TODO: create a tustedDevieConfiguration for not using the one from loginConfiguration
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
@@ -140,7 +142,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                                                                                                 passKey: password)
         let trasportKeyScenario = Scenario(useCase: self.transportKeyEncryptionUseCase, input: transportKeyEncryptionUseCaseInput)
 
-        let parametersEncryptionUseCaseInput = PLDeviceDataParametersEncryptionUseCaseInput(parameters: self.deviceConfiguration.deviceData.parameters,
+        let parametersEncryptionUseCaseInput = PLDeviceDataParametersEncryptionUseCaseInput(parameters: deviceData.parameters,
                                                                                             transportKey: transportKey)
         let parametersScenario = Scenario(useCase: self.parametersEncryptionUseCase, input: parametersEncryptionUseCaseInput)
 
@@ -159,10 +161,11 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
             }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
-                                                                                        deviceTime: self.deviceConfiguration.deviceData.deviceTime,
+                                                                                        deviceTime: deviceData.deviceTime,
                                                                                         certificate: certificate ?? "",
-                                                                                        appId: self.deviceConfiguration.deviceData.appId)
+                                                                                        appId: deviceData.appId)
 
+                // TODO: Save certificate and pair of keys
                 let softwareToken = TrustedDeviceConfiguration.SoftwareToken(privateKey: key,
                                                                              certificatePEM: certificate)
                 self.deviceConfiguration.softwareToken = softwareToken
