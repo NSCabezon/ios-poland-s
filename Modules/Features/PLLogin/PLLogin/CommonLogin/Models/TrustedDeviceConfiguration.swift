@@ -11,6 +11,7 @@ public class TrustedDeviceConfiguration {
     var softwareToken: SoftwareToken?
     var deviceHeaders: DeviceHeaders?
     var loginPassword: String?
+    var ivrInputCode: Int?
 
     struct DeviceData {
         let manufacturer: String

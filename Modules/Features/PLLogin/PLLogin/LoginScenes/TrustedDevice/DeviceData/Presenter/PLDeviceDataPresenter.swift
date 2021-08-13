@@ -173,6 +173,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 return Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
             })
             .onSuccess { [weak self] registerSoftwareTokenOutput in
+                self?.deviceConfiguration.ivrInputCode = registerSoftwareTokenOutput.ivrInputCode
                 self?.goToTrustedDevicePIN()
             }.onError { [weak self] error in
                 self?.handleError(error)

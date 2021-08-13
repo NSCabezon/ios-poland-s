@@ -12,6 +12,8 @@ import PLCommons
 import Foundation
 
 protocol PLVoiceBotViewProtocol: PLGenericErrorPresentableCapable {
+    func setIvrInputCode(_ ivrInputCode: Int)
+    func showIVCCallSendedDialog()
 }
 
 final class PLVoiceBotViewController: UIViewController {
@@ -24,9 +26,9 @@ final class PLVoiceBotViewController: UIViewController {
     @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var initVoiceBotButton: UIButton!
+    @IBOutlet weak var initVoiceBotButton: LisboaButton!
     @IBOutlet weak var codeDescriptionLabel: UILabel!
-    @IBOutlet weak var codeTextField: UITextField!
+    @IBOutlet weak var codeTextField: LisboaTextField!
 
     init(nibName: String?, bundle: Bundle?,
          presenter: PLVoiceBotPresenterProtocol) {
@@ -51,6 +53,14 @@ final class PLVoiceBotViewController: UIViewController {
 }
 
 extension PLVoiceBotViewController: PLVoiceBotViewProtocol {
+    func setIvrInputCode(_ ivrInputCode: Int) {
+        self.numberLabel.text = String(ivrInputCode)
+    }
+
+    func showIVCCallSendedDialog() {
+        let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_IVRcall"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_IVRcall").count, attribute: .color(hex: "444444"))])
+        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .info, duration: 5.0)
+    }
 }
 
 private extension PLVoiceBotViewController {
@@ -68,31 +78,54 @@ private extension PLVoiceBotViewController {
     }
 
     func configureLabels() {
-        sceneTitle.font = .santander(family: .text, type: .bold, size: 16)
-        sceneTitle.textColor = UIColor.Legacy.sanRed
-        sceneTitle.configureText(withKey: "pl_onboarding_title_IVR", andConfiguration: nil)
-        descriptionLabel.font = .santander(family: .text, type: .light, size: 16)
-        descriptionLabel.textColor = UIColor.Legacy.lisboaGrayNew
-        descriptionLabel.configureText(withKey: "pl_onboarding_text_IVRExpl", andConfiguration: nil)
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .center
-        numberLabel.text = "56"
-        numberLabel.font = .santander(family: .text, type: .bold, size: 32)
-        numberLabel.textColor = UIColor(red: 114.0 / 255.0, green: 114.0 / 255.0, blue: 114.0 / 255.0, alpha: 1.0)
+        self.sceneTitle.font = .santander(family: .text, type: .bold, size: 16)
+        self.sceneTitle.textColor = UIColor.Legacy.sanRed
+        self.sceneTitle.configureText(withKey: "pl_onboarding_title_IVR", andConfiguration: nil)
+        self.descriptionLabel.font = .santander(family: .text, type: .light, size: 16)
+        self.descriptionLabel.textColor = UIColor.Legacy.lisboaGrayNew
+        self.descriptionLabel.configureText(withKey: "pl_onboarding_text_IVRExpl", andConfiguration: nil)
+        self.descriptionLabel.numberOfLines = 0
+        self.descriptionLabel.textAlignment = .center
+        self.numberLabel.font = .santander(family: .text, type: .bold, size: 32)
+        self.numberLabel.textColor = .brownishGray
 
-        codeDescriptionLabel.configureText(withKey: "pl_onboarding_text_IVRcode", andConfiguration: nil)
-        codeDescriptionLabel.font = .santander(family: .text, type: .bold, size: 14)
-        codeDescriptionLabel.textColor = UIColor.Legacy.lisboaGrayNew
+        self.codeDescriptionLabel.configureText(withKey: "pl_onboarding_text_IVRcode", andConfiguration: nil)
+        self.codeDescriptionLabel.font = .santander(family: .text, type: .bold, size: 14)
+        self.codeDescriptionLabel.textColor = UIColor.Legacy.lisboaGrayNew
     }
 
     func configureTextFields() {
-        codeTextField.delegate = self
-        codeTextField.font = .santander(family: .text, type: .regular, size: 16)
-        codeTextField.textColor = UIColor(red: 114.0 / 255.0, green: 114.0 / 255.0, blue: 114.0 / 255.0, alpha: 1.0)
-        codeTextField.backgroundColor = UIColor.Legacy.sky30
-        codeTextField.drawBorder(cornerRadius: 4, color: .mediumSkyGray, width: 1)
+
+        var texfieldStyle: LisboaTextFieldStyle {
+            var style = LisboaTextFieldStyle.default
+            style.titleLabelFont = .santander(family: .text, type: .regular, size: 16)
+            style.titleLabelTextColor = .brownishGray
+            style.fieldFont = .santander(family: .text, type: .regular, size: 16)
+            style.fieldTextColor = .lisboaGray
+            style.containerViewBackgroundColor = .skyGray
+            return style
+        }
+
+        let textFieldFormmater = UIFormattedCustomTextField()
+        textFieldFormmater.setMaxLength(maxLength: 4)
+        textFieldFormmater.setAllowOnlyCharacters(.decimalDigits)
+        let configuration = LisboaTextField.WritableTextField(type: .floatingTitle,
+                                                              formatter: textFieldFormmater,
+                                                              disabledActions: [.paste],
+                                                              keyboardReturnAction: nil,
+                                                              textfieldCustomizationBlock: self.customizationBlock(_:))
+
+        let editingStyle = LisboaTextField.EditingStyle.writable(configuration: configuration)
+        self.codeTextField.setEditingStyle(editingStyle)
+        self.codeTextField.setPlaceholder(localized("pl_onboarding_text_IVRcode"))
+        self.codeTextField.setStyle(texfieldStyle)
+        self.codeTextField.updatableDelegate = self
 
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+
+    func customizationBlock(_ components: LisboaTextField.CustomizableComponents) {
+        components.textField.keyboardType = .numberPad
     }
 
     @objc func dismissKeyboard() {
@@ -100,25 +133,27 @@ private extension PLVoiceBotViewController {
     }
 
     func configureButtons() {
-        continueButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
-        continueButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        continueButton.backgroundColor = UIColor.santanderRed
-        continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
-        continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
-        continueButton.backgroundColor = UIColor.lightSanGray
-        continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
+        self.continueButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
+        self.continueButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
+        self.continueButton.backgroundColor = UIColor.santanderRed
+        self.continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
+        self.continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
+        self.continueButton.backgroundColor = UIColor.lightSanGray
+        self.continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
 
-        closeSceneButton.isEnabled = true
-        closeSceneButton.setImage(Assets.image(named: "icnClose"), for: .normal)
-        closeSceneButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeButtonDidPressed)))
+        self.closeSceneButton.isEnabled = true
+        self.closeSceneButton.setImage(Assets.image(named: "icnClose"), for: .normal)
+        self.closeSceneButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeButtonDidPressed)))
 
-        initVoiceBotButton.set(localizedStylableText: localized("pl_onboarding_button_call"), state: .normal)
-        initVoiceBotButton.clipsToBounds = true
-        initVoiceBotButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
-        initVoiceBotButton.backgroundColor = UIColor.lightSanGray
-        initVoiceBotButton.layer.cornerRadius = (initVoiceBotButton?.frame.height ?? 0.0) / 2.0
-        initVoiceBotButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
-        initVoiceBotButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(requestIVRCall)))
+        self.initVoiceBotButton.set(localizedStylableText: localized("pl_onboarding_button_call"), state: .normal)
+        self.initVoiceBotButton.setTitleColor(UIColor.santanderRed, for: .normal)
+        self.initVoiceBotButton.backgroundColor = UIColor.white
+        self.initVoiceBotButton.backgroundPressedColor = .lightSanGray
+        self.initVoiceBotButton.borderWidth = 1
+        self.initVoiceBotButton.borderColor = UIColor.santanderRed
+        self.initVoiceBotButton.layer.cornerRadius = (initVoiceBotButton?.frame.height ?? 0.0) / 2.0
+        self.initVoiceBotButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 14.0)
+        self.initVoiceBotButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(requestIVRCall)))
     }
 
     private func configureGradient() {
@@ -131,6 +166,10 @@ private extension PLVoiceBotViewController {
 
     // MARK: Button actions
     @objc func requestIVRCall() {
+        self.initVoiceBotButton.setTitleColor(UIColor.white, for: .normal)
+        self.initVoiceBotButton.backgroundColor = .lightSanGray
+        self.initVoiceBotButton.borderWidth = 0
+        self.initVoiceBotButton.isEnabled = false
         presenter.requestIVRCall()
     }
     
@@ -143,9 +182,15 @@ private extension PLVoiceBotViewController {
     }
 }
 
-extension PLVoiceBotViewController: UITextFieldDelegate {
-
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return true
+extension PLVoiceBotViewController: UpdatableTextFieldDelegate {
+    func updatableTextFieldDidUpdate() {
+        if self.codeTextField.text?.count == 4 {
+            continueButton.backgroundColor = .santanderRed
+            continueButton.isEnabled = true
+        }
+        else {
+            continueButton.backgroundColor = .lightSanGray
+            continueButton.isEnabled = false
+        }
     }
 }
