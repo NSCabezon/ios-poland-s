@@ -16,9 +16,17 @@ protocol PLTrustedDeviceSmsAuthCoordinatorProtocol {
 final class PLTrustedDeviceSmsAuthCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    
-    init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
+    internal let trustedDeviceConfiguration: TrustedDeviceConfiguration
+    internal let loginConfiguration: UnrememberedLoginConfiguration
+
+    init(dependenciesResolver: DependenciesResolver,
+         trustedDeviceConfiguration: TrustedDeviceConfiguration,
+         loginConfiguration: UnrememberedLoginConfiguration,
+         navigationController: UINavigationController?) {
+        
         self.navigationController = navigationController
+        self.trustedDeviceConfiguration = trustedDeviceConfiguration
+        self.loginConfiguration = loginConfiguration
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.setupDependencies()
     }
@@ -38,6 +46,18 @@ private extension PLTrustedDeviceSmsAuthCoordinator {
         let presenter = PLTrustedDeviceSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
         self.dependenciesEngine.register(for: PLTrustedDeviceSmsAuthPresenterProtocol.self) { resolver in
             return presenter
+        }
+        
+        self.dependenciesEngine.register(for: TrustedDeviceConfiguration.self) { _ in
+            return self.trustedDeviceConfiguration
+        }
+        
+        self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
+            return self.loginConfiguration
+        }
+        
+        self.dependenciesEngine.register(for: PLConfirmationCodeRegisterUseCase.self) { resolver in
+            return PLConfirmationCodeRegisterUseCase(dependenciesResolver: resolver)
         }
         
         self.dependenciesEngine.register(for: PLTrustedDeviceSmsAuthViewController.self) { resolver in

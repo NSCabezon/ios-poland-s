@@ -15,7 +15,10 @@ import CommonUseCase
 final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtocol {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    var deviceDataCoordinator: PLDeviceDataCoordinator
+    lazy var deviceTrustDeviceDataCoordinator: PLDeviceDataCoordinator = {
+        return PLDeviceDataCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                       navigationController: self.navigationController)
+    }()
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -23,10 +26,6 @@ final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtoco
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.deviceDataCoordinator = PLDeviceDataCoordinator(
-            dependenciesResolver: self.dependenciesEngine,
-            navigationController: navigationController
-        )
         self.setupDependencies()
     }
 

@@ -1,5 +1,5 @@
 //
-//  PLDeviceDataController.swift
+//  PLDeviceDataCoordinator.swift
 //  PLLogin
 //
 //  Created by Juan Sánchez Marín on 16/6/21.
@@ -17,7 +17,12 @@ protocol PLDeviceDataCoordinatorProtocol {
 final class PLDeviceDataCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    private let trustedDevicePinCoordinator: PLTrustedDevicePinCoordinator
+    private lazy var trustedDevicePinCoordinator: PLTrustedDevicePinCoordinator = {
+        return PLTrustedDevicePinCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            navigationController: self.navigationController
+        )
+    }()
     private lazy var loginLayerManager: PLLoginLayersManager = {
         return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
     }()
@@ -25,10 +30,6 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.trustedDevicePinCoordinator = PLTrustedDevicePinCoordinator(
-            dependenciesResolver: self.dependenciesEngine,
-            navigationController: navigationController
-        )
         self.setupDependencies()
     }
 

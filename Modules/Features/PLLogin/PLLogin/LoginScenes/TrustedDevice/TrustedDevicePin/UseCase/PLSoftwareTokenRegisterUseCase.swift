@@ -19,7 +19,7 @@ final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCa
 
     public override func executeUseCase(requestValues: PLSoftwareTokenRegisterUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken,
+        let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken, // ??? Depende del dispositivo
                                                          trustedDeviceAuth: TrustedDeviceAuthData(appId: requestValues.appId,
                                                                                                   parameters: requestValues.parameters,
                                                                                                   deviceTime: requestValues.deviceTime))
@@ -29,14 +29,13 @@ final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCa
             guard registerSoftwareToken.tokens.count > 0 else {
                 throw  PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Any token received")
             }
-            // TODO: Modify to return both tokens
-            let token = registerSoftwareToken.tokens[0]
-            let registerOutput = PLSoftwareTokenRegisterUseCaseOutput(id: token.id,
-                                                                      name: token.name,
-                                                                      key: token.key,
-                                                                      timestamp: token.timestamp,
-                                                                      type: token.type,
-                                                                      state: token.state,
+            
+            var softTokens = [TrustedDeviceSoftwareToken]()
+            for token in registerSoftwareToken.tokens {
+                softTokens.append(TrustedDeviceSoftwareToken(name: token.name, key: token.key, type: token.type,
+                                                             state: token.state, id: token.id, timestamp: token.timestamp))
+            }
+            let registerOutput = PLSoftwareTokenRegisterUseCaseOutput(tokens: softTokens,
                                                                       trustedDeviceState: registerSoftwareToken.trustedDeviceState)
             return .ok(registerOutput)
 
@@ -55,11 +54,11 @@ struct PLSoftwareTokenRegisterUseCaseInput {
 }
 
 struct PLSoftwareTokenRegisterUseCaseOutput {
-    let id: Int
-    let name: String
-    let key: String
-    let timestamp: Int
-    let type: String
-    let state: String
+    let tokens: [TrustedDeviceSoftwareToken]
     let trustedDeviceState: String
+}
+
+public struct TrustedDeviceSoftwareToken: Codable {
+    public let name, key, type, state: String
+    public let id, timestamp: Int
 }

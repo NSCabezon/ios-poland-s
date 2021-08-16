@@ -4,6 +4,7 @@
 //
 //  Created by Marcos Álvarez Mesa on 22/6/21.
 //
+import SANPLLibrary
 
 public class TrustedDeviceConfiguration {
 
@@ -11,7 +12,9 @@ public class TrustedDeviceConfiguration {
     var softwareToken: SoftwareToken?
     var deviceHeaders: DeviceHeaders?
     var loginPassword: String?
+    var tokens: [TrustedDeviceSoftwareToken]?
     var ivrInputCode: Int?
+    var ivrOutputCode: Int?
 
     struct DeviceData {
         let manufacturer: String

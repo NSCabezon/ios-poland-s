@@ -27,6 +27,11 @@ final class PLLoanModifier {
 }
 
 extension PLLoanModifier: LoansModifierProtocol {
+    func formatLoanId(_ loanId: String) -> String {
+        //Introduce loan id formatting if necessary
+        return loanId
+    }
+    
     var hideFilterButton: Bool {
         return true
     }

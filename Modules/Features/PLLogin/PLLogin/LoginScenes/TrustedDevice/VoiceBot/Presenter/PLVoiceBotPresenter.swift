@@ -53,7 +53,7 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
         Scenario(useCase: devicesUseCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in
-                // continue next screen
+                self?.goToSmsAuth()
             }).onError({[weak self] error in
                 self?.handleError(error)
             })
@@ -86,5 +86,9 @@ private extension PLVoiceBotPresenter {
 
     func goToHardwareTokenScreen() {
         self.coordinator.goToHardwareToken()
+    }
+    
+    func goToSmsAuth() {
+        self.coordinator.goToSmsAuth()
     }
 }

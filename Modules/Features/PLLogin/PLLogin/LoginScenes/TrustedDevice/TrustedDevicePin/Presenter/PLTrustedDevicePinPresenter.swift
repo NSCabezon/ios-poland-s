@@ -68,9 +68,10 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
                 return Scenario(useCase: softwareTokenRegistrationUseCase, input: softwareTokenRegistrationUseCaseInput)
             })
             .onSuccess({ [weak self] output in
-                // TODO: Save results (output id, name, etc) and BOTH tokens received
-                self?.deviceConfiguration.deviceHeaders = deviceHeaders
-                self?.goToVoiceBotScreen()
+                guard let self = self else { return }
+                self.deviceConfiguration.tokens = output.tokens
+                self.deviceConfiguration.deviceHeaders = deviceHeaders
+                self.goToVoiceBotScreen()
             })
             .onError { [weak self] error in
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")

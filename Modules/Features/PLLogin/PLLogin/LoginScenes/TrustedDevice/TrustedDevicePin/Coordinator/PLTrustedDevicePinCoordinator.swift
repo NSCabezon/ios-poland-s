@@ -14,16 +14,15 @@ protocol PLTrustedDevicePinCoordinatorProtocol {
 
 final class PLTrustedDevicePinCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
-    private let voiceBotCoordinator: PLVoiceBotCoordinator
+    private lazy var voiceBotCoordinator: PLVoiceBotCoordinator = {
+        return PLVoiceBotCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                     navigationController: self.navigationController)
+    }()
     private let dependenciesEngine: DependenciesDefault
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.voiceBotCoordinator = PLVoiceBotCoordinator(
-            dependenciesResolver: self.dependenciesEngine,
-            navigationController: navigationController
-        )
         self.setupDependencies()
     }
     
