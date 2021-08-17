@@ -105,6 +105,7 @@
         "urgentTransferInformation": "Coste del servicio 0,6%, mínimo 17€.",
         "enableTimeLine": "false",
         "enablePregrantedWidget": "true",
+        "enableGlobalSearch": "true",
         "enablePGTopPregrantedBanner": "false",
         "enablePersonalAreaBDP": "true",
         "enabledAnalysisZone":"false",
