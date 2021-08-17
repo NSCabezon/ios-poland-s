@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icnBlik.png",
+      "filename" : "icnCustomerService.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icnBlik@2x.png",
+      "filename" : "icnCustomerService@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icnBlik@3x.png",
+      "filename" : "icnCustomerService@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

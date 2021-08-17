@@ -1,21 +1,21 @@
 //
-//  BLIKPGFrequentOperativeOption.swift
+//  OpenDepositPGFrequentOperativeOption.swift
 //  Santander
 //
-//  Created by Rodrigo Jurado on 26/5/21.
+//  Created by Ernesto Fernandez Calles on 2/8/21.
 //
 
 import Models
 import UI
 import Commons
 
-final class BLIKPGFrequentOperativeOption {
-    let trackName: String? = "blik_pl"
-    let rawValue: String = "blikPoland"
-    let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnBlik.rawValue
+final class OpenDepositPGFrequentOperativeOption {
+    let trackName: String? = "openDeposit"
+    let rawValue: String = "openDepositPoland"
+    let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.openDeposit.rawValue
 }
 
-extension BLIKPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
+extension OpenDepositPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
         return .custom {
             Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -23,13 +23,12 @@ extension BLIKPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     }
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
-        let imageKey: String = "icnBlik"
-        let titleKey: String = "pt_frequentOperative_button_blik"
+        let imageKey: String = "icnOpenDeposit"
+        let titleKey: String = "accountOption_button_openDeposit"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,
                 imageKey: imageKey,
-                renderingMode: .alwaysOriginal,
                 titleAccessibilityIdentifier: titleKey,
                 imageAccessibilityIdentifier: imageKey
             )

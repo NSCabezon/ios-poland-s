@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icnBlik.png",
+      "filename" : "icnExtraAportation.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icnBlik@2x.png",
+      "filename" : "icnExtraAportation@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icnBlik@3x.png",
+      "filename" : "icnExtraAportation@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -14,7 +14,7 @@ final class LoanDetailsDTOAdapter {
         loanDetailDTO.openingDate = DateFormats.toDate(string: plLoanDetails.accountDetails?.openedDate ?? "", output: .YYYYMMDD)
         loanDetailDTO.initialDueDate = DateFormats.toDate(string: plLoanDetails.loanAccountDetails?.finalRepaymentDate ?? "", output: .YYYYMMDD)
         loanDetailDTO.interestTypeDesc = plLoanDetails.loanAccountDetails?.interest?.rateName
-        loanDetailDTO.interestType = "\(plLoanDetails.loanAccountDetails?.interest?.rate ?? 0)" 
+        loanDetailDTO.interestType = String(plLoanDetails.loanAccountDetails?.interest?.rate ?? 0)
         loanDetailDTO.initialAmount = AmountAdapter.adaptBalanceToAmount(plLoanDetails.loanAccountDetails?.grantedCreditLimit)
 
         return loanDetailDTO

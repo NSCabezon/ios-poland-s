@@ -28,10 +28,24 @@ extension GetPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol {
 
 private extension GetPGFrequentOperativeOption {
     func getPGFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
-        return [PaymentsPGFrequentOperativeOption(),
-                ContractPGFrequentOperativeOption(),
-                BillTaxPGFrequentOperativeOption(),
-                BLIKPGFrequentOperativeOption()
+        return [PGFrequentOperativeOption.operate,
+                PaymentsPGFrequentOperativeOption(),
+                TransactionHistoryPGFrequentOperativeOption(),
+                BLIKPGFrequentOperativeOption(),
+                ExploreProductsPGFrequentOperativeOption(),
+                PGFrequentOperativeOption.analysisArea,
+                FinancialAgendaPGFrequentOperativeOption(),
+                PGFrequentOperativeOption.customerCare,
+                PGFrequentOperativeOption.impruve,
+                PGFrequentOperativeOption.atm,
+                PGFrequentOperativeOption.personalArea,
+                AddBanksPGFrequentOperativeOption(),
+                CurrencyExchangePGFrequentOperativeOption(),
+                OpenGoalPGFrequentOperativeOption(),
+                OpenDepositPGFrequentOperativeOption(),
+                BuyInsurancePGFrequentOperativeOption(),
+                CustomerServicePGFrequentOperativeOption(),
+                AccountStatementPGFrequentOperativeOption()
         ]
     }
 }

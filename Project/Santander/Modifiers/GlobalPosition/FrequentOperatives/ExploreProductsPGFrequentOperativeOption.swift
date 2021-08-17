@@ -1,21 +1,21 @@
 //
-//  BLIKPGFrequentOperativeOption.swift
+//  ExploreProductsPGFrequentOperativeOption.swift
 //  Santander
 //
-//  Created by Rodrigo Jurado on 26/5/21.
+//  Created by Ernesto Fernandez Calles on 3/8/21.
 //
 
 import Models
 import UI
 import Commons
 
-final class BLIKPGFrequentOperativeOption {
-    let trackName: String? = "blik_pl"
-    let rawValue: String = "blikPoland"
-    let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnBlik.rawValue
+final class ExploreProductsPGFrequentOperativeOption {
+    let trackName: String? = "exploreProducts"
+    let rawValue: String = "exploreProductsPoland"
+    let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.exploreProducts.rawValue
 }
 
-extension BLIKPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
+extension ExploreProductsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
         return .custom {
             Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -23,13 +23,12 @@ extension BLIKPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     }
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
-        let imageKey: String = "icnBlik"
-        let titleKey: String = "pt_frequentOperative_button_blik"
+        let imageKey: String = "icnExploreProducts"
+        let titleKey: String = "menu_link_contract"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,
                 imageKey: imageKey,
-                renderingMode: .alwaysOriginal,
                 titleAccessibilityIdentifier: titleKey,
                 imageAccessibilityIdentifier: imageKey
             )
