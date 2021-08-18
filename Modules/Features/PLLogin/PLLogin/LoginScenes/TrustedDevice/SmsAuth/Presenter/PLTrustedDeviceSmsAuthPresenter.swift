@@ -41,6 +41,10 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
         self.dependenciesResolver.resolve(for: PLRegisterConfirmUseCase.self)
     }
 
+    private var storeTrustedDeviceHeadersUseCase: PLTrustedDeviceStoreHeadersUseCase {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceStoreHeadersUseCase.self)
+    }
+
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
@@ -68,7 +72,8 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
         Scenario(useCase: self.registerConfirmUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in
-                self?.deviceConfiguration.registrationConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
+                guard let self = self else { return }
+                self.deviceConfiguration.registrationConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
                                                                                                                state: output.state,
                                                                                                                badTriesCount: output.badTriesCount,
                                                                                                                triesAllowed: output.triesAllowed,
@@ -82,11 +87,24 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                                                                                                                badUseCount: output.badUseCount,
                                                                                                                dateOfLastProperUse: output.dateOfLastProperUse,
                                                                                                                dateOfLastBadUse: output.dateOfLastBadUse)
+
+                self.storeTrustedDeviceHeadersPersistenlty()
                 // TODO: Navigate to Success screen
             })
             .onError { [weak self] error in
                 self?.handleError(error)
             }
+    }
+
+    func storeTrustedDeviceHeadersPersistenlty() {
+
+        guard let deviceHeaders = self.deviceConfiguration.deviceHeaders else { return }
+        let input = PLTrustedDeviceStoreHeadersInput(parameters: deviceHeaders.encryptedParameters,
+                                                     time: deviceHeaders.time,
+                                                     appId: deviceHeaders.appId)
+
+        Scenario(useCase: self.storeTrustedDeviceHeadersUseCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
     }
     
     func requestSMSConfirmationCode() {

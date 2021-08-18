@@ -42,9 +42,10 @@ public class BSANDataProvider {
         throw BSANIllegalStateException("AuthCredentials nil in DataRepository")
     }
 
+
     public func storeTrustedDeviceHeaders(_ trustedDeviceHeaders: TrustedDeviceHeaders) {
         objc_sync_enter(self.dataRepository)
-        self.dataRepository.store(trustedDeviceHeaders)
+        self.dataRepository.store(trustedDeviceHeaders, DataRepositoryPolicy.createPersistentPolicy())
         objc_sync_exit(self.dataRepository)
     }
 

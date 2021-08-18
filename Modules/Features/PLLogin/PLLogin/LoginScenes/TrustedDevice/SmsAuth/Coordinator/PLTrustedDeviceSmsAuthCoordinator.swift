@@ -64,6 +64,10 @@ private extension PLTrustedDeviceSmsAuthCoordinator {
             return PLConfirmationCodeRegisterUseCase(dependenciesResolver: resolver)
         }
 
+        self.dependenciesEngine.register(for: PLTrustedDeviceStoreHeadersUseCase.self) { resolver in
+            return PLTrustedDeviceStoreHeadersUseCase(dependenciesResolver: resolver)
+        }
+
         self.dependenciesEngine.register(for: PLTrustedDeviceSecondFactorChallengeUseCase.self) { resolver in
             return PLTrustedDeviceSecondFactorChallengeUseCase()
         }

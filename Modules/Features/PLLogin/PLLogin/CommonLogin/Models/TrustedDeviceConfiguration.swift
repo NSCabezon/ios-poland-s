@@ -33,8 +33,8 @@ public class TrustedDeviceConfiguration {
     }
 
     struct DeviceHeaders {
-        let encryptedParameters: String?
-        let time: String?
+        let encryptedParameters: String
+        let time: String
         let appId: String
     }
 
