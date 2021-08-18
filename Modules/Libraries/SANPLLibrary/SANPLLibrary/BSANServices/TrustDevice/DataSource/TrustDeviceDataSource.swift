@@ -93,7 +93,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                 headers: self.headers,
                                                 localServiceName: .registerIVR,
                                                 authorization: .oauth)
-        let result: Result<Data, NetworkProviderError> = self.networkProvider.request(networkRequest)
+        let result: Result<Data, NetworkProviderError> = self.networkProvider.requestData(networkRequest)
         return result
     }
     
