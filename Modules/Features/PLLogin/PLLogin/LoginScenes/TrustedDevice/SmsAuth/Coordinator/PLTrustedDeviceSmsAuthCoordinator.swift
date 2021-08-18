@@ -10,7 +10,7 @@ import Commons
 import UI
 
 protocol PLTrustedDeviceSmsAuthCoordinatorProtocol {
-
+    func goBack()
 }
 
 final class PLTrustedDeviceSmsAuthCoordinator: ModuleCoordinator {
@@ -43,6 +43,10 @@ final class PLTrustedDeviceSmsAuthCoordinator: ModuleCoordinator {
 private extension PLTrustedDeviceSmsAuthCoordinator {
     func setupDependencies() {
         
+        self.dependenciesEngine.register(for: PLTrustedDeviceSmsAuthCoordinatorProtocol.self) { _ in
+            return self
+        }
+        
         let presenter = PLTrustedDeviceSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
         self.dependenciesEngine.register(for: PLTrustedDeviceSmsAuthPresenterProtocol.self) { resolver in
             return presenter
@@ -74,5 +78,18 @@ private extension PLTrustedDeviceSmsAuthCoordinator {
             presenter.view = viewController
             return viewController
         }
+    }
+}
+
+extension PLTrustedDeviceSmsAuthCoordinator : PLTrustedDeviceSmsAuthCoordinatorProtocol {
+    
+    func goBack() {
+        guard let viewController = self.navigationController?.viewControllers.first(where: { vController in
+            vController is PLDeviceDataViewController
+        }) else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        self.navigationController?.popToViewController(viewController, animated: true)
     }
 }

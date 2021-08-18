@@ -12,6 +12,7 @@ import PLCommons
 import Foundation
 
 protocol PLTrustedDeviceSmsAuthViewProtocol: PLGenericErrorPresentableCapable {
+    func showAuthErrorDialog()
 }
 
 final class PLTrustedDeviceSmsAuthViewController: UIViewController {
@@ -70,7 +71,33 @@ final class PLTrustedDeviceSmsAuthViewController: UIViewController {
 }
 
 extension PLTrustedDeviceSmsAuthViewController: PLTrustedDeviceSmsAuthViewProtocol {
-    
+    func showAuthErrorDialog() {
+        let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 19.0, right: 9.0)
+        let onCancel: () -> Void = { self.presenter.goBack() }
+        let components: [LisboaDialogItem] = [
+            .image(LisboaDialogImageViewItem(image: Assets.image(named: "icnDanger"), size: (70, 70))),
+            .styledText(
+                LisboaDialogTextItem(
+                    text: localized("pl_onboarding_alert_authFailedTitle"),
+                    font: .santander(family: .text, type: .bold, size: 28),
+                    color: .lisboaGray,
+                    alignament: .center,
+                    margins: absoluteMargin)),
+            .margin(12.0),
+            .styledText(
+                LisboaDialogTextItem(
+                    text: localized("pl_onboarding_alert_authFailedText"),
+                    font: .santander(family: .text, type: .light, size: 16),
+                    color: .lisboaGray,
+                    alignament: .center,
+                    margins: absoluteMargin)),
+            .margin(24.0),
+            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"), type: LisboaDialogActionType.red, margins: (left: 16, right: 16), action: onCancel)),
+            .margin(16.0)
+        ]
+        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
+        builder.showIn(self)
+    }
 }
 
 private extension PLTrustedDeviceSmsAuthViewController {

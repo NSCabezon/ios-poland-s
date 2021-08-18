@@ -50,14 +50,14 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     }
     
     func goBack() {
-        // TODO: implement navigate back to device trust pin
+        coordinator.goBack()
     }
     
     func registerConfirm(smsCode: String) {
         guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
               let pinToken = tokens.first(where: { $0.type == "PIN" })
         else {
-            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Required parameter not found")))
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput(errorDescription: "Required parameter not found")))
             return
         }
         let input = PLRegisterConfirmUseCaseInput(pinSoftwareTokenId: pinToken.id,
@@ -129,6 +129,11 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
 }
 
 private extension PLTrustedDeviceSmsAuthPresenter {
+    
+    var coordinator: PLTrustedDeviceSmsAuthCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLTrustedDeviceSmsAuthCoordinatorProtocol.self)
+    }
+
     func getLanguage() -> String {
         return dependenciesResolver.resolve(forOptionalType: StringLoader.self)?.getCurrentLanguage().languageType.rawValue ?? "en"
     }
@@ -141,5 +146,15 @@ extension PLTrustedDeviceSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol 
     
     func genericErrorPresentedWith(error: PLGenericError) {
         self.goBack()
+    }
+    
+    func handle(error: PLGenericError) {
+        if error == .unauthorized {
+            view?.showAuthErrorDialog()
+        } else {
+            associatedErrorView?.presentError(error, completion: { [weak self] in
+                self?.goBack()
+            })
+        }
     }
 }

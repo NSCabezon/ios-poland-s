@@ -77,7 +77,10 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     }
     
     func requestIVRCall() {
-        guard let trustedDeviceId = self.deviceConfiguration.trustedDevice?.trustedDeviceId else { return }
+        guard let trustedDeviceId = self.deviceConfiguration.trustedDevice?.trustedDeviceId else {
+            self.handle(error: .unknown)
+            return
+        }
         let input = PLIvrRegisterUseCaseInput(trustedDeviceId: String(trustedDeviceId))
         Scenario(useCase: ivrRegisterUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
@@ -95,7 +98,7 @@ extension PLVoiceBotPresenter: PLLoginPresenterErrorHandlerProtocol {
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
-        //go back
+        self.coordinator.goBack()
     }
 }
 

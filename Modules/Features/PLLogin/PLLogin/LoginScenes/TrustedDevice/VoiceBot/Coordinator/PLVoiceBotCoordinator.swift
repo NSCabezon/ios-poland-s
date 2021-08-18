@@ -12,6 +12,7 @@ import Commons
 protocol PLVoiceBotCoordinatorProtocol {
     func goToHardwareToken()
     func goToSmsAuth()
+    func goBack()
 }
 
 final class PLVoiceBotCoordinator: ModuleCoordinator {
@@ -32,6 +33,15 @@ final class PLVoiceBotCoordinator: ModuleCoordinator {
 }
 
 extension PLVoiceBotCoordinator: PLVoiceBotCoordinatorProtocol {
+    func goBack() {
+        guard let viewController = self.navigationController?.viewControllers.first(where: { vController in
+            vController is PLDeviceDataViewController
+        }) else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        self.navigationController?.popToViewController(viewController, animated: true)
+    }
     func goToHardwareToken() {
         //TODO:
     }

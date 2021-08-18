@@ -99,7 +99,7 @@ extension PLTrustedDevicePinPresenter: PLLoginPresenterErrorHandlerProtocol {
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
-        //
+        self.coordinator.goToDeviceTrustDeviceData()
     }
 }
 
