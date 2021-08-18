@@ -150,10 +150,9 @@ private extension PLTrustedDeviceSmsAuthViewController {
     // MARK: Button actions
     @objc func continueButtonDidPressed() {
         guard let smsCode = self.smsInputCodeView.fulfilledText() else {
-            // TODO: return error. smsCode can't be empty
             return
         }
-        self.presenter.authenticate(smsCode: smsCode)
+        self.presenter.registerConfirm(smsCode: smsCode)
     }
     
     @objc func closeButtonDidPressed() {

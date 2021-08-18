@@ -13,6 +13,7 @@ public protocol PLTrustedDeviceManagerProtocol {
     func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError>
     func doRegisterConfirmationCode(_ parameters: RegisterConfirmationCodeParameters) throws -> Result<Void, NetworkProviderError>
     func getDevices() throws -> Result<DevicesDTO, NetworkProviderError>
+    func doConfirmRegistration(_ parameters: RegisterConfirmParameters) throws -> Result<ConfirmRegistrationDTO, NetworkProviderError>
 }
 
 public final class PLTrustedDeviceManager {
@@ -53,6 +54,11 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
     
     public func getDevices() throws -> Result<DevicesDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.getDevices()
+        return result
+    }
+
+    public func doConfirmRegistration(_ parameters: RegisterConfirmParameters) throws -> Result<ConfirmRegistrationDTO, NetworkProviderError> {
+        let result = try trustedDeviceDataSource.doRegisterConfirm(parameters)
         return result
     }
 

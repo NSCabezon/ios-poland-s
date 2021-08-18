@@ -64,5 +64,9 @@ private extension PLTrustedDevicePinCoordinator {
             presenter.view = viewController
             return viewController
         }
+
+        self.dependenciesEngine.register(for: PLRegisterConfirmUseCase.self) { resolver in
+           return PLRegisterConfirmUseCase(dependenciesResolver: resolver)
+        }
     }
 }

@@ -173,8 +173,14 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 return Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
             })
             .onSuccess { [weak self] registerSoftwareTokenOutput in
-                self?.deviceConfiguration.ivrInputCode = registerSoftwareTokenOutput.ivrInputCode
-                self?.goToTrustedDevicePIN()
+                guard let self = self else { return }
+                let trustedDeviceInfo = TrustedDeviceConfiguration.TrustedDevice(trustedDeviceId: registerSoftwareTokenOutput.trustedDeviceId,
+                                                                                 userId: registerSoftwareTokenOutput.userId,
+                                                                                 trustedDeviceState: registerSoftwareTokenOutput.trustedDeviceState,
+                                                                                 trustedDeviceTimestamp: registerSoftwareTokenOutput.trustedDeviceTimestamp,
+                                                                                 ivrInputCode: registerSoftwareTokenOutput.ivrInputCode)
+                self.deviceConfiguration.trustedDevice = trustedDeviceInfo
+                self.goToTrustedDevicePIN()
             }.onError { [weak self] error in
                 self?.handleError(error)
             }

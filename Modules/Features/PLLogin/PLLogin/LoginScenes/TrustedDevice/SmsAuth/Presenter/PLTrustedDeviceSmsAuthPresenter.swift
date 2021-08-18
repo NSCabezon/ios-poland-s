@@ -13,7 +13,7 @@ protocol PLTrustedDeviceSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDeviceSmsAuthViewProtocol? { get set }
     func viewDidLoad()
     func goBack()
-    func authenticate(smsCode: String)
+    func registerConfirm(smsCode: String)
 }
 
 final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProtocol {
@@ -33,6 +33,10 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
         self.dependenciesResolver.resolve(for: PLConfirmationCodeRegisterUseCase.self)
     }
 
+    private var registerConfirmUseCase: PLRegisterConfirmUseCase {
+        self.dependenciesResolver.resolve(for: PLRegisterConfirmUseCase.self)
+    }
+
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
@@ -45,12 +49,44 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
         // TODO: implement navigate back to device trust pin
     }
     
-    func authenticate(smsCode: String) {
-        
+    func registerConfirm(smsCode: String) {
+        guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
+              let pinToken = tokens.first(where: { $0.type == "PIN" })
+        else {
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Required parameter not found")))
+            return
+        }
+        let input = PLRegisterConfirmUseCaseInput(pinSoftwareTokenId: pinToken.id,
+                                                  timestamp: pinToken.timestamp,
+                                                  secondFactorResponseDevice: "SMS_CODE", // Tendría que coger esto del AuthorizationType a lo mejor!!
+                                                  secondFactorResponseValue: smsCode)
+
+        Scenario(useCase: self.registerConfirmUseCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess({ [weak self] output in
+                self?.deviceConfiguration.registrationConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
+                                                                                                               state: output.state,
+                                                                                                               badTriesCount: output.badTriesCount,
+                                                                                                               triesAllowed: output.triesAllowed,
+                                                                                                               timestamp: output.timestamp,
+                                                                                                               name: output.name,
+                                                                                                               key: output.key,
+                                                                                                               type: output.type,
+                                                                                                               trustedDeviceId: output.trustedDeviceId,
+                                                                                                               dateOfLastStatusChange: output.dateOfLastStatusChange,
+                                                                                                               properUseCount: output.properUseCount,
+                                                                                                               badUseCount: output.badUseCount,
+                                                                                                               dateOfLastProperUse: output.dateOfLastProperUse,
+                                                                                                               dateOfLastBadUse: output.dateOfLastBadUse)
+                // TODO: Navigate to Success screen
+            })
+            .onError { [weak self] error in
+                self?.handleError(error)
+            }
     }
     
     func requestSMSConfirmationCode() {
-        guard let deviceId = deviceConfiguration.deviceData?.deviceId else {
+        guard let deviceId = deviceConfiguration.trustedDevice?.trustedDeviceId else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
             return
         }
@@ -58,7 +94,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
             self.handle(error: .unauthorized)
             return
         }
-        let input = PLPLConfirmationCodeRegisterInput(trustedDeviceId: deviceId,
+        let input = PLPLConfirmationCodeRegisterInput(trustedDeviceId: String(deviceId),
                                                       secondFactorSmsChallenge: challenge,
                                                       language: getLanguage())
         Scenario(useCase: confirmationCodeRegisterUseCase, input: input)
@@ -77,10 +113,10 @@ private extension PLTrustedDeviceSmsAuthPresenter {
     }
     
     func calculateSecondFactorSmsChallenge() -> String? {
-        guard let ivrCode = deviceConfiguration.ivrInputCode else { return nil }
-        guard let deviceId = deviceConfiguration.deviceData?.deviceId else { return nil }
-        guard let deviceTime = deviceConfiguration.deviceData?.deviceTime else { return nil }
-        guard let tokens = deviceConfiguration.tokens else { return nil }
+        guard let ivrCode = deviceConfiguration.trustedDevice?.ivrInputCode,
+              let deviceId = deviceConfiguration.trustedDevice?.trustedDeviceId,
+              let deviceTime = deviceConfiguration.trustedDevice?.trustedDeviceTimestamp,
+              let tokens = deviceConfiguration.tokens else { return nil }
 
         let userId = Int(loginConfiguration.userIdentifier) ?? 0
         var challenge: String = ""
@@ -90,8 +126,8 @@ private extension PLTrustedDeviceSmsAuthPresenter {
                                                     tokenTimeStamp: token.timestamp,
                                                     id: userId) + "|"
         })
-        challenge = challenge + getChallengeFor(tokenId: Int(deviceId) ?? 0,
-                                                tokenTimeStamp: Int(deviceTime) ?? 0,
+        challenge = challenge + getChallengeFor(tokenId: deviceId,
+                                                tokenTimeStamp: deviceTime,
                                                 id: userId)
         challenge = String(format: "%@|%d", challenge, ivrCode)
         return hashChallenge(challenge)

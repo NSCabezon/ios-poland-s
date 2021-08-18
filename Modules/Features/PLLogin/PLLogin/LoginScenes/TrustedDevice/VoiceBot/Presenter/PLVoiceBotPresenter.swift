@@ -45,7 +45,7 @@ private extension PLVoiceBotPresenter {
 
 extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     func viewDidLoad() {
-        guard let ivrInputCode = deviceConfiguration.ivrInputCode else { return }
+        guard let ivrInputCode = deviceConfiguration.trustedDevice?.ivrInputCode else { return }
         self.view?.setIvrInputCode(ivrInputCode)
     }
     
@@ -60,8 +60,8 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     }
     
     func requestIVRCall() {
-        guard let deviceData = self.deviceConfiguration.deviceData else { return }
-        let input = PLIvrRegisterUseCaseInput(appId: deviceData.appId)
+        guard let trustedDeviceId = self.deviceConfiguration.trustedDevice?.trustedDeviceId else { return }
+        let input = PLIvrRegisterUseCaseInput(trustedDeviceId: String(trustedDeviceId))
         Scenario(useCase: ivrRegisterUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in

@@ -6,6 +6,7 @@ def core_dependencies
   pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
   pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'SANCoreLibrary', :path => '../../../../santander-one/Modules/Libraries/SANCoreLibrary'
   pod 'Models', :path => '../../../../santander-one/Models'
   pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
   pod 'Repository', :path => '../../../../santander-one/Repository'
@@ -18,6 +19,10 @@ def core_dependencies
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
 end
 
+def core_thirdparty_dependencies
+  pod 'Kingfisher', '5.15.8'
+end
+
 def pl_dependencies
   pod 'PLUI', :path => '../'
 end
@@ -25,6 +30,7 @@ end
 target 'PLUI_Example' do
   pl_dependencies
   core_dependencies
+  core_thirdparty_dependencies
 
   target 'PLUI_Tests' do
     inherit! :search_paths

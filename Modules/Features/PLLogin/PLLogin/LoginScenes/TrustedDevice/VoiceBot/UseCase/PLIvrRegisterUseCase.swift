@@ -20,7 +20,7 @@ final class PLIvrRegisterUseCase: UseCase<PLIvrRegisterUseCaseInput, Void, PLUse
     public override func executeUseCase(requestValues: PLIvrRegisterUseCaseInput) throws -> UseCaseResponse<Void, PLUseCaseErrorOutput<LoginErrorType>> {
         
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let parameters = RegisterIvrParameters(appId: requestValues.appId)
+        let parameters = RegisterIvrParameters(trustedDeviceId: requestValues.trustedDeviceId)
         
         let result = try managerProvider.getTrustedDeviceManager().doRegisterIvr(parameters)
         switch result {
@@ -34,5 +34,5 @@ final class PLIvrRegisterUseCase: UseCase<PLIvrRegisterUseCaseInput, Void, PLUse
 
 // MARK: I/O types definition
 struct PLIvrRegisterUseCaseInput {
-    let appId: String
+    let trustedDeviceId: String
 }
