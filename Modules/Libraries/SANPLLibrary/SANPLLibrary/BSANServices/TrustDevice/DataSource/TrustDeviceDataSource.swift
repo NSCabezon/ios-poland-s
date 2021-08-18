@@ -338,5 +338,4 @@ private struct ConfirmRegistrationRequest: NetworkProviderRequest {
         self.authorization = authorization
         self.jsonBody = jsonBody
     }
-
 }
