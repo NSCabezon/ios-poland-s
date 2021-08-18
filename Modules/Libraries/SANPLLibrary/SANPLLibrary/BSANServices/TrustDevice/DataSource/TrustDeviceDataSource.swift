@@ -10,7 +10,7 @@ import Foundation
 protocol TrustDeviceDataSourceProtocol {
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError>
     func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError>
-    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError>
+    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Data, NetworkProviderError>
     func doRegisterConfirmationCode(_ parameters: RegisterConfirmationCodeParameters) throws -> Result<Void, NetworkProviderError>
     func getDevices() throws -> Result<DevicesDTO, NetworkProviderError>
     func doRegisterConfirm(_ parameters: RegisterConfirmParameters) throws -> Result<ConfirmRegistrationDTO, NetworkProviderError>
@@ -80,7 +80,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         return result
     }
     
-    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Void, NetworkProviderError> {
+    func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Data, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
@@ -93,7 +93,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                 headers: self.headers,
                                                 localServiceName: .registerIVR,
                                                 authorization: .oauth)
-        let result: Result<Void, NetworkProviderError> = self.networkProvider.request(networkRequest)
+        let result: Result<Data, NetworkProviderError> = self.networkProvider.request(networkRequest)
         return result
     }
     

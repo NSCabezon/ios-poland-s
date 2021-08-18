@@ -113,7 +113,7 @@ private extension PLTrustedDeviceSmsAuthPresenter {
     }
     
     func calculateSecondFactorSmsChallenge() -> String? {
-        guard let ivrCode = deviceConfiguration.trustedDevice?.ivrInputCode,
+        guard let ivrCode = deviceConfiguration.ivrOutputCode,
               let deviceId = deviceConfiguration.trustedDevice?.trustedDeviceId,
               let deviceTime = deviceConfiguration.trustedDevice?.trustedDeviceTimestamp,
               let tokens = deviceConfiguration.tokens else { return nil }

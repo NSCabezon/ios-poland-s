@@ -13,7 +13,7 @@ import Foundation
 
 protocol PLVoiceBotViewProtocol: PLGenericErrorPresentableCapable {
     func setIvrInputCode(_ ivrInputCode: Int)
-    func showIVCCallSendedDialog()
+    func showIVCCallSendedDialog(code: String)
 }
 
 final class PLVoiceBotViewController: UIViewController {
@@ -57,7 +57,14 @@ extension PLVoiceBotViewController: PLVoiceBotViewProtocol {
         self.numberLabel.text = String(ivrInputCode)
     }
 
-    func showIVCCallSendedDialog() {
+    func showIVCCallSendedDialog(code: String) {
+       
+        // TODO: remove this in the future also remove code parameter
+        self.codeTextField.setText(code)
+        continueButton.backgroundColor = .santanderRed
+        continueButton.isEnabled = true
+        // -------
+        
         let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_IVRcall"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_IVRcall").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .info, duration: 5.0)
     }
@@ -174,6 +181,8 @@ private extension PLVoiceBotViewController {
     }
     
     @objc func continueButtonDidPressed() {
+        guard let textCode = self.codeTextField.text, let code = Int(textCode) else { return }
+        presenter.setIvrOutputcode(code: code)
         presenter.getDevices()
     }
 

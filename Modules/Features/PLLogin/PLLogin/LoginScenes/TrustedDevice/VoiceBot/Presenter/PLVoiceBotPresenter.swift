@@ -8,12 +8,14 @@
 import Models
 import Commons
 import PLCommons
+import SANPLLibrary
 import os
 
 protocol PLVoiceBotPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLVoiceBotViewProtocol? { get set }
     func viewDidLoad()
     func getDevices()
+    func setIvrOutputcode(code: Int)
     func requestIVRCall()
 }
 
@@ -44,6 +46,11 @@ private extension PLVoiceBotPresenter {
 }
 
 extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
+    
+    func setIvrOutputcode(code: Int) {
+        self.deviceConfiguration.ivrOutputCode = code
+    }
+    
     func viewDidLoad() {
         guard let ivrInputCode = deviceConfiguration.trustedDevice?.ivrInputCode else { return }
         self.view?.setIvrInputCode(ivrInputCode)
@@ -53,7 +60,17 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
         Scenario(useCase: devicesUseCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in
-                self?.goToSmsAuth()
+                guard let self = self else { return }
+                let challenge = self.getChallenge(from: output.defaultAuthorizationType,
+                                                  allowedAuthTypes: output.allowedAuthorizationTypes)
+                
+                if challenge == .sms {
+                    self.goToSmsAuthScreen()
+                } else if challenge == .tokenTime {
+                    self.goToHardwareTokenAuthScreen()
+                } else {
+                    self.handle(error: .applicationNotWorking)
+                }
             }).onError({[weak self] error in
                 self?.handleError(error)
             })
@@ -64,8 +81,8 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
         let input = PLIvrRegisterUseCaseInput(trustedDeviceId: String(trustedDeviceId))
         Scenario(useCase: ivrRegisterUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess({ [weak self] output in
-                self?.view?.showIVCCallSendedDialog()
+            .onSuccess({ [weak self] code in
+                self?.view?.showIVCCallSendedDialog(code: code)
             }).onError({ [weak self] error in
                 self?.handleError(error)
             })
@@ -78,17 +95,34 @@ extension PLVoiceBotPresenter: PLLoginPresenterErrorHandlerProtocol {
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
-        self.goToHardwareTokenScreen()
+        //go back
     }
 }
 
 private extension PLVoiceBotPresenter {
 
-    func goToHardwareTokenScreen() {
+    
+    func goToSmsAuthScreen() {
+        self.coordinator.goToSmsAuth()
+    }
+    
+    func goToHardwareTokenAuthScreen() {
         self.coordinator.goToHardwareToken()
     }
     
-    func goToSmsAuth() {
-        self.coordinator.goToSmsAuth()
+    func getChallenge(from defaultAuthType: AuthorizationType,
+                      allowedAuthTypes: [AuthorizationType]?) -> AuthorizationType? {
+        switch defaultAuthType {
+        case .softwareToken:
+            if (allowedAuthTypes?.first(where: { $0 == .sms })) != nil {
+                return .sms
+            } else if (allowedAuthTypes?.first(where: { $0 == .tokenTime || $0 == .tokenTimeCR })) != nil {
+                return .tokenTime
+            } else {
+                return .softwareToken
+            }
+        default:
+           return defaultAuthType
+        }
     }
 }
