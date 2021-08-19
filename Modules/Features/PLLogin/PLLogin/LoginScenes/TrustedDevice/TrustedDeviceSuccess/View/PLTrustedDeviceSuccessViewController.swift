@@ -79,8 +79,10 @@ private extension PLTrustedDeviceSuccessViewController {
         self.continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
         self.continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         self.continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
+        self.continueButton.isEnabled = true
     }
 
     @objc func continueButtonDidPressed() {
+        self.presenter.continueButtonDidPressed()
     }
 }

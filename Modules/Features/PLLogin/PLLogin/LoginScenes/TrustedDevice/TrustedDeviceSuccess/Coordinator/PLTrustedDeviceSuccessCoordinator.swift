@@ -9,12 +9,13 @@ import UI
 import Models
 import Commons
 
-protocol PLTrustedDeviceSuccessCoordinatorProtocol {
+protocol PLTrustedDeviceSuccessCoordinatorProtocol: PLLoginCoordinatorProtocol {
+    func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity)
 }
 
 final class PLTrustedDeviceSuccessCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
-    private let dependenciesEngine: DependenciesDefault
+    internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -29,6 +30,9 @@ final class PLTrustedDeviceSuccessCoordinator: ModuleCoordinator {
 }
 
 extension PLTrustedDeviceSuccessCoordinator: PLTrustedDeviceSuccessCoordinatorProtocol {
+    func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity) {
+        self.goToPrivate(option)
+    }
 }
 
 /**
@@ -55,4 +59,3 @@ private extension PLTrustedDeviceSuccessCoordinator {
         }
     }
 }
-

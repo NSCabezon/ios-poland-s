@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLTrustedDeviceSuccessViewController" customModule="PLLogin" customModuleProvider="target">
             <connections>
-                <outlet property="continueButton" destination="qRP-Ro-urm" id="2CT-Hc-XHB"/>
+                <outlet property="continueButton" destination="qRP-Ro-urm" id="EzG-Gg-RIY"/>
                 <outlet property="descriptionLabel" destination="tLZ-90-wwq" id="bgW-7H-PEX"/>
                 <outlet property="sanIconImageView" destination="xer-Ms-P7R" id="OGQ-as-fbS"/>
                 <outlet property="subTitleLabel" destination="Xch-Xn-gsz" id="bnF-ii-idE"/>
