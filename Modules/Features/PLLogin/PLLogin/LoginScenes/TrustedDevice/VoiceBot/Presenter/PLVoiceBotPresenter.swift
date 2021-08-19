@@ -57,6 +57,10 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     }
     
     func getDevices() {
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
         Scenario(useCase: devicesUseCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in
@@ -104,13 +108,18 @@ extension PLVoiceBotPresenter: PLLoginPresenterErrorHandlerProtocol {
 
 private extension PLVoiceBotPresenter {
 
-    
     func goToSmsAuthScreen() {
-        self.coordinator.goToSmsAuth()
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToSmsAuth()
+        })
     }
     
     func goToHardwareTokenAuthScreen() {
-        self.coordinator.goToHardwareToken()
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToHardwareToken()
+        })
     }
     
     func getChallenge(from defaultAuthType: AuthorizationType,

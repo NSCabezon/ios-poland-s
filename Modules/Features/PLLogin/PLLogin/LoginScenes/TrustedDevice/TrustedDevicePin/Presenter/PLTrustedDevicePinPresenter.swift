@@ -45,6 +45,10 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
             return
         }
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
 
         var deviceHeaders: TrustedDeviceConfiguration.DeviceHeaders?
 
@@ -99,13 +103,19 @@ extension PLTrustedDevicePinPresenter: PLLoginPresenterErrorHandlerProtocol {
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
-        self.coordinator.goToDeviceTrustDeviceData()
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToDeviceTrustDeviceData()
+        })
     }
 }
 
 private extension PLTrustedDevicePinPresenter {
 
     func goToVoiceBotScreen() {
-        self.coordinator.goToVoiceBotScene()
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToVoiceBotScene()
+        })
     }
 }

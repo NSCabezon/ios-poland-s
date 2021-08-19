@@ -64,6 +64,11 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput(errorDescription: "Required parameter not found")))
             return
         }
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
         let input = PLRegisterConfirmUseCaseInput(pinSoftwareTokenId: pinToken.id,
                                                   timestamp: pinToken.timestamp,
                                                   secondFactorResponseDevice: "SMS_CODE",
@@ -88,9 +93,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                                                                                                                dateOfLastProperUse: output.dateOfLastProperUse,
                                                                                                                dateOfLastBadUse: output.dateOfLastBadUse)
                 self.storeTrustedDeviceHeadersPersistenlty()
-                
-                //TODO: Revisar navegación a trustedDeviceSuccess
-                self.coordinator.goToTrustedDeviceSuccess()
+                self.goToTrustedDeviceSuccess()
             })
             .onError { [weak self] error in
                 self?.handleError(error)
@@ -155,6 +158,13 @@ private extension PLTrustedDeviceSmsAuthPresenter {
 
     func getLanguage() -> String {
         return dependenciesResolver.resolve(forOptionalType: StringLoader.self)?.getCurrentLanguage().languageType.rawValue ?? "en"
+    }
+    
+    func goToTrustedDeviceSuccess() {
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToTrustedDeviceSuccess()
+        })
     }
 }
 

@@ -10,6 +10,7 @@ import Commons
 import PLCommons
 import Models
 import os
+import UI
 
 protocol PLDeviceDataPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLDeviceDataViewProtocol? { get set }
@@ -131,6 +132,11 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func registerDevice() {
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
         guard let password = loginConfiguration.password,
               let deviceData = self.deviceConfiguration.deviceData else {
             // TODO: create a tustedDevieConfiguration for not using the one from loginConfiguration
@@ -187,6 +193,9 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func goToTrustedDevicePIN() {
-        coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
+        })
     }
 }
