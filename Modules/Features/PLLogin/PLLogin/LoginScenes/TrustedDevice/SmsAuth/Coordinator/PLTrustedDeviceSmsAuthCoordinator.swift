@@ -56,10 +56,6 @@ private extension PLTrustedDeviceSmsAuthCoordinator {
         self.dependenciesEngine.register(for: PLTrustedDeviceSmsAuthPresenterProtocol.self) { resolver in
             return presenter
         }
-
-        self.dependenciesEngine.register(for:PLTrustedDeviceSmsAuthCoordinatorProtocol.self) { _ in
-            return self
-        }
         
         self.dependenciesEngine.register(for: TrustedDeviceConfiguration.self) { _ in
             return self.trustedDeviceConfiguration

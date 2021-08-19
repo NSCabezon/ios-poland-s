@@ -17,6 +17,7 @@ protocol PLVoiceBotPresenterProtocol: MenuTextWrapperProtocol {
     func getDevices()
     func setIvrOutputcode(code: Int)
     func requestIVRCall()
+    func goBack()
 }
 
 final class PLVoiceBotPresenter {
@@ -93,6 +94,10 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
             }).onError({ [weak self] error in
                 self?.handleError(error)
             })
+    }
+
+    func goBack() {
+        self.coordinator.goBack()
     }
 }
 
