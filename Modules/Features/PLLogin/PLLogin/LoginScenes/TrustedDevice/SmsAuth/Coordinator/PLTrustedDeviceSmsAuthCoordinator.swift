@@ -10,6 +10,7 @@ import Commons
 import UI
 
 protocol PLTrustedDeviceSmsAuthCoordinatorProtocol {
+    func goToTrustedDeviceSuccess()
     func goBack()
 }
 
@@ -18,6 +19,10 @@ final class PLTrustedDeviceSmsAuthCoordinator: ModuleCoordinator {
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     internal let trustedDeviceConfiguration: TrustedDeviceConfiguration
     internal let loginConfiguration: UnrememberedLoginConfiguration
+    private lazy var trustedDeviceCoordinator: PLTrustedDeviceSuccessCoordinator = {
+        return PLTrustedDeviceSuccessCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                     navigationController: self.navigationController)
+    }()
 
     init(dependenciesResolver: DependenciesResolver,
          trustedDeviceConfiguration: TrustedDeviceConfiguration,
@@ -50,6 +55,10 @@ private extension PLTrustedDeviceSmsAuthCoordinator {
         let presenter = PLTrustedDeviceSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
         self.dependenciesEngine.register(for: PLTrustedDeviceSmsAuthPresenterProtocol.self) { resolver in
             return presenter
+        }
+
+        self.dependenciesEngine.register(for:PLTrustedDeviceSmsAuthCoordinatorProtocol.self) { _ in
+            return self
         }
         
         self.dependenciesEngine.register(for: TrustedDeviceConfiguration.self) { _ in
@@ -95,5 +104,9 @@ extension PLTrustedDeviceSmsAuthCoordinator : PLTrustedDeviceSmsAuthCoordinatorP
             return
         }
         self.navigationController?.popToViewController(viewController, animated: true)
+    }
+
+    func goToTrustedDeviceSuccess() {
+        self.trustedDeviceCoordinator.start()
     }
 }

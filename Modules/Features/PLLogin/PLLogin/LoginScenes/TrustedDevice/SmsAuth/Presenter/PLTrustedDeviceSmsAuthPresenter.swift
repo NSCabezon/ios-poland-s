@@ -87,9 +87,10 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                                                                                                                badUseCount: output.badUseCount,
                                                                                                                dateOfLastProperUse: output.dateOfLastProperUse,
                                                                                                                dateOfLastBadUse: output.dateOfLastBadUse)
-
                 self.storeTrustedDeviceHeadersPersistenlty()
-                // TODO: Navigate to Success screen
+                
+                //TODO: Revisar navegación a trustedDeviceSuccess
+                self.coordinator.goToTrustedDeviceSuccess()
             })
             .onError { [weak self] error in
                 self?.handleError(error)
