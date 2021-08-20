@@ -6,38 +6,41 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import SANPLLibrary
 
-final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
+final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLSoftwareTokenRegisterUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenRegisterUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLSoftwareTokenRegisterUseCaseInput) throws -> UseCaseResponse<PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken, // ??? Depende del dispositivo
+        let parameters = RegisterSoftwareTokenParameters(createBiometricsToken: requestValues.createBiometricsToken,
                                                          trustedDeviceAuth: TrustedDeviceAuthData(appId: requestValues.appId,
                                                                                                   parameters: requestValues.parameters,
                                                                                                   deviceTime: requestValues.deviceTime))
         let result = try managerProvider.getTrustedDeviceManager().doRegisterSoftwareToken(parameters)
         switch result {
         case .success(let registerSoftwareToken):
-            guard registerSoftwareToken.tokens.count > 0 else { throw  PLSoftwareTokenUseCaseErrorOutput("Any token received") }
-            let token = registerSoftwareToken.tokens[0]
-            let registerOutput = PLSoftwareTokenRegisterUseCaseOutput(id: token.id,
-                                                                      name: token.name,
-                                                                      key: token.key,
-                                                                      timestamp: token.timestamp,
-                                                                      type: token.type,
-                                                                      state: token.state,
+            guard registerSoftwareToken.tokens.count > 0 else {
+                throw  PLUseCaseErrorOutput<LoginErrorType>(errorDescription: "Any token received")
+            }
+            
+            var softTokens = [TrustedDeviceSoftwareToken]()
+            for token in registerSoftwareToken.tokens {
+                softTokens.append(TrustedDeviceSoftwareToken(name: token.name, key: token.key, type: token.type,
+                                                             state: token.state, id: token.id, timestamp: token.timestamp))
+            }
+            let registerOutput = PLSoftwareTokenRegisterUseCaseOutput(tokens: softTokens,
                                                                       trustedDeviceState: registerSoftwareToken.trustedDeviceState)
-            return UseCaseResponse.ok(registerOutput)
+            return .ok(registerOutput)
 
         case .failure(let error):
-            return UseCaseResponse.error(PLSoftwareTokenUseCaseErrorOutput(error.localizedDescription))
+            return .error(self.handle(error: error))
         }
     }
 }
@@ -51,11 +54,11 @@ struct PLSoftwareTokenRegisterUseCaseInput {
 }
 
 struct PLSoftwareTokenRegisterUseCaseOutput {
-    let id: Int
-    let name: String
-    let key: String
-    let timestamp: Int
-    let type: String
-    let state: String
+    let tokens: [TrustedDeviceSoftwareToken]
     let trustedDeviceState: String
+}
+
+public struct TrustedDeviceSoftwareToken: Codable {
+    public let name, key, type, state: String
+    public let id, timestamp: Int
 }

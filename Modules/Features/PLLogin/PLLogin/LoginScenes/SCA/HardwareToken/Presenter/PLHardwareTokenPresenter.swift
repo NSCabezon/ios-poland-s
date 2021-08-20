@@ -39,6 +39,10 @@ final class PLHardwareTokenPresenter {
     private var authProcessUseCase: PLAuthProcessUseCase {
         self.dependenciesResolver.resolve(for: PLAuthProcessUseCase.self)
     }
+
+    private var sessionUseCase: PLSessionUseCase {
+        self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+    }
 }
 
 extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
@@ -61,8 +65,8 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     
     func doAuthenticate(token: String) {
         guard let password = loginConfiguration.password else {
-            self.handle(error: .applicationNotWorking)
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
         self.view?.showLoading()
@@ -77,7 +81,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             case .trustedDeviceScene:
                 self.goToDeviceTrustDeviceData()
             case .globalPositionScene:
-                self.getGlobalPositionTypeAndNavigate()
+                self.openSessionAndNavigateToGlobalPosition()
             }
         } onFailure: { [weak self]  error in
             self?.handleError(error)
@@ -101,16 +105,19 @@ private extension  PLHardwareTokenPresenter {
         return self.dependenciesResolver.resolve(for: PLScaAuthCoordinatorProtocol.self)
     }
 
-    func getGlobalPositionTypeAndNavigate() {
-        Scenario(useCase: self.globalPositionOptionUseCase)
+    func openSessionAndNavigateToGlobalPosition() {
+        Scenario(useCase: self.sessionUseCase)
             .execute(on: self.dependenciesResolver.resolve())
+            .then(scenario: { [weak self] _ -> Scenario<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { return nil }
+                return Scenario(useCase: self.globalPositionOptionUseCase)
+            })
             .onSuccess( { [weak self] output in
-                guard let self = self else { return }
-                self.goToGlobalPosition(output.globalPositionOption)
+                self?.goToGlobalPosition(output.globalPositionOption)
+
             })
             .onError { [weak self] _ in
-                guard let self = self else { return }
-                self.goToGlobalPosition(.classic)
+                self?.goToGlobalPosition(.classic)
             }
     }
 

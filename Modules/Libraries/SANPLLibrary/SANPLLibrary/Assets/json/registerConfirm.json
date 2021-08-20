@@ -1,0 +1,17 @@
+{
+    "12345678Z": {
+        "0": {
+            "id": 145739,
+            "trustedDeviceId": 4666870,
+            "name": "12396994781604328028",
+            "timestamp": 947475928,
+            "type": "PIN",
+            "state": "CLOSED",
+            "dateOfLastStatusChange": "2021-01-11T12:06:52.000",
+            "badTriesCount": 0,
+            "triesAllowed": 15,
+            "properUseCount": 0,
+            "badUseCount": 0
+        }
+    }
+}

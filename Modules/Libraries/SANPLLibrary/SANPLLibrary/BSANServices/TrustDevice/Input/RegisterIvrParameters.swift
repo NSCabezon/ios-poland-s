@@ -9,9 +9,9 @@ import Foundation
 
 public struct RegisterIvrParameters: Encodable {
 
-    let appId: String
+    let trustedDeviceId: String
 
-    public init(appId: String) {
-        self.appId = appId
+    public init(trustedDeviceId: String) {
+        self.trustedDeviceId = trustedDeviceId
     }
 }

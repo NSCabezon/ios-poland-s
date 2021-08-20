@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "fCommunicationSocialBSocialFb010BlinkSocialBlink.png",
+      "filename" : "icnBlik.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "fCommunicationSocialBSocialFb010BlinkSocialBlink@2x.png",
+      "filename" : "icnBlik@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "fCommunicationSocialBSocialFb010BlinkSocialBlink@3x.png",
+      "filename" : "icnBlik@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

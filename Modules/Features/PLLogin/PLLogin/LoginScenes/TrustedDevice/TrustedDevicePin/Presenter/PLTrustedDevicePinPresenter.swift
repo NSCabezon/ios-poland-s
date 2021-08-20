@@ -4,6 +4,7 @@
 
 import Models
 import Commons
+import PLCommons
 import os
 
 protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
@@ -39,35 +40,46 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     }
 
     func registerSoftwareToken(with createBiometricToken: Bool) {
-        guard let key = self.deviceConfiguration.softwareToken?.privateKey else {
-            // TODO: Handle it
+        guard let key = self.deviceConfiguration.softwareToken?.privateKey,
+              let deviceData = self.deviceConfiguration.deviceData else {
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
             return
         }
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+
+        var deviceHeaders: TrustedDeviceConfiguration.DeviceHeaders?
 
         let softwareTokenEncryptionUseCase = PLSoftwareTokenParametersEncryptionUseCase(dependenciesResolver: self.dependenciesResolver)
-        let softwareTokenEncryptionUseCaseInput = PLSoftwareTokenParametersEncryptionUseCaseInput(parameters: self.deviceConfiguration.deviceData.parameters,
+        let softwareTokenEncryptionUseCaseInput = PLSoftwareTokenParametersEncryptionUseCaseInput(parameters: deviceData.parameters,
                                                                                                   key: key)
         Scenario(useCase: softwareTokenEncryptionUseCase, input: softwareTokenEncryptionUseCaseInput)
             .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: {  [weak self] (output) -> Scenario<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLSoftwareTokenUseCaseErrorOutput>? in
+            .then(scenario: {  [weak self] (output) -> Scenario<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
+
+                deviceHeaders = TrustedDeviceConfiguration.DeviceHeaders(encryptedParameters: output.encryptedParameters,
+                                                                         time: deviceData.deviceTime,
+                                                                         appId: deviceData.appId)
 
                 let softwareTokenRegistrationUseCase = PLSoftwareTokenRegisterUseCase(dependenciesResolver: self.dependenciesResolver)
                 let softwareTokenRegistrationUseCaseInput = PLSoftwareTokenRegisterUseCaseInput(createBiometricsToken: createBiometricToken,
-                                                                                                appId: self.deviceConfiguration.deviceData.appId,
+                                                                                                appId: deviceData.appId,
                                                                                                 parameters: output.encryptedParameters,
-                                                                                                deviceTime: self.deviceConfiguration.deviceData.deviceTime)
+                                                                                                deviceTime: deviceData.deviceTime)
                 return Scenario(useCase: softwareTokenRegistrationUseCase, input: softwareTokenRegistrationUseCaseInput)
-
             })
             .onSuccess({ [weak self] output in
-                // TODO: Save output id, name, etc
                 guard let self = self else { return }
+                self.deviceConfiguration.tokens = output.tokens
+                self.deviceConfiguration.deviceHeaders = deviceHeaders
                 self.goToVoiceBotScreen()
             })
-            .onError { error in
-                // TODO: Present errorsecondFactorData
+            .onError { [weak self] error in
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
+                self?.handleError(error)
             }
     }
 
@@ -85,9 +97,25 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     }
 }
 
+extension PLTrustedDevicePinPresenter: PLLoginPresenterErrorHandlerProtocol {
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        return view
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToDeviceTrustDeviceData()
+        })
+    }
+}
+
 private extension PLTrustedDevicePinPresenter {
 
     func goToVoiceBotScreen() {
-        self.coordinator.goToVoiceBotScene()
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToVoiceBotScene()
+        })
     }
 }

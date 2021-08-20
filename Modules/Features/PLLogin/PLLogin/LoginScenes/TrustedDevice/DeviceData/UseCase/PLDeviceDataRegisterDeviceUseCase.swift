@@ -6,17 +6,18 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import SANPLLibrary
 
-final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLDeviceDataRegisterDeviceUseCaseInput) throws -> UseCaseResponse<PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLDeviceDataRegisterDeviceUseCaseInput) throws -> UseCaseResponse<PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let parameters = RegisterDeviceParameters(transportKey: requestValues.transportKey,
                                                   deviceParameters: requestValues.deviceParameters,
@@ -31,10 +32,10 @@ final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDevic
                                                                          userId: registerDeviceData.userId,
                                                                          trustedDeviceTimestamp: registerDeviceData.trustedDeviceTimestamp,
                                                                          ivrInputCode: registerDeviceData.ivrInputCode)
-            return UseCaseResponse.ok(registerOutput)
+            return .ok(registerOutput)
 
         case .failure(let error):
-            return UseCaseResponse.error(PLDeviceDataUseCaseErrorOutput(error.localizedDescription))
+            return .error(PLUseCaseErrorOutput(errorDescription: error.localizedDescription))
         }
     }
 }

@@ -20,6 +20,7 @@ def core_dependencies
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'SQLCipher', '4.4.2'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'SANCoreLibrary', :path => '../../../../santander-one/Modules/Libraries/SANCoreLibrary'
   pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'

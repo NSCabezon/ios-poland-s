@@ -6,6 +6,7 @@
 //
 
 import Commons
+import PLCommons
 import DomainCommon
 import CryptoSwift
 import os
@@ -17,22 +18,22 @@ private struct PLCertificate {
     let privateKey: SecKey
 }
 
-final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertificateCreationUseCaseInput, PLDeviceDataCertificateCreationUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+final class PLDeviceDataCertificateCreationUseCase: UseCase<PLDeviceDataCertificateCreationUseCaseInput, PLDeviceDataCertificateCreationUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLDeviceDataCertificateCreationUseCaseInput) throws -> UseCaseResponse<PLDeviceDataCertificateCreationUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLDeviceDataCertificateCreationUseCaseInput) throws -> UseCaseResponse<PLDeviceDataCertificateCreationUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
         do {
             let certificate = try self.createCertificate()
-            return UseCaseResponse.ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate.pemCertificate,
+            return .ok(PLDeviceDataCertificateCreationUseCaseOutput(certificate: certificate.pemCertificate,
                                                                                    publicKey: certificate.publicKey,
                                                                                    privateKey: certificate.privateKey))
         } catch {
-            return UseCaseResponse.error(PLDeviceDataUseCaseErrorOutput(error.localizedDescription))
+            return .error(PLUseCaseErrorOutput(errorDescription: error.localizedDescription))
         }
     }
 }
@@ -75,8 +76,8 @@ private extension PLDeviceDataCertificateCreationUseCase {
         }
 
         var error: Unmanaged<CFError>? = nil
-        let publicKeyB64 = (SecKeyCopyExternalRepresentation(publicKey, &error) as? Data)?.base64EncodedString()
-        let privateKeyDataB64 = (SecKeyCopyExternalRepresentation(privateKey, &error) as? Data)?.base64EncodedString()
+        let publicKeyB64 = (SecKeyCopyExternalRepresentation(publicKey, &error) as Data?)?.base64EncodedString()
+        let privateKeyDataB64 = (SecKeyCopyExternalRepresentation(privateKey, &error) as Data?)?.base64EncodedString()
         let certificatePEM = certificate.addPEMformat(header: String.PEMFormats.certificate.header, footer: String.PEMFormats.certificate.footer)
 
         os_log("✅ [TRUSTED DEVICE][Device Data] Certificate generated: %@", log: .default, type: .info, certificate)

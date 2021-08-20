@@ -8,7 +8,8 @@
 import Models
 
 protocol PLScaAuthCoordinatorProtocol: PLLoginCoordinatorProtocol {
-    var deviceDataCoordinator: PLDeviceDataCoordinator { get }
+    var deviceTrustDeviceDataCoordinator: PLDeviceDataCoordinator { get set }
+    var navigationController: UINavigationController? { get set }
     func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity)
     func goToUnrememberedLogindScene()
     func goToDeviceTrustDeviceData()
@@ -24,6 +25,6 @@ extension PLScaAuthCoordinatorProtocol {
     }
 
     func goToDeviceTrustDeviceData() {
-        self.deviceDataCoordinator.start()
+        self.deviceTrustDeviceDataCoordinator.start()
     }
 }

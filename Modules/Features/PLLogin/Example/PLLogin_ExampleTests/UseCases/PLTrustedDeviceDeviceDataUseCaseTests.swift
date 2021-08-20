@@ -9,6 +9,7 @@
 import XCTest
 import Commons
 import DomainCommon
+import PLCommons
 import CryptoSwift
 @testable import PLLogin
 
@@ -80,13 +81,13 @@ class PLTrustedDeviceDeviceDataUseCaseTests: XCTestCase {
 private extension PLTrustedDeviceDeviceDataUseCaseTests {
 
     // MARK: Handle useCase response
-    func transportKeyEncryptionUseCase(_ input: PLDeviceDataTransportKeyEncryptionUseCaseInput) throws -> UseCaseResponse<PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+    func transportKeyEncryptionUseCase(_ input: PLDeviceDataTransportKeyEncryptionUseCaseInput) throws -> UseCaseResponse<PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let useCase = PLDeviceDataTransportKeyEncryptionUseCase(dependenciesResolver: self.dependencies)
             let response = try useCase.executeUseCase(requestValues: input)
             return response
     }
 
-   func outputFromTransportKeyEncryption(_ response: UseCaseResponse<PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput>) -> PLDeviceDataTransportKeyEncryptionUseCaseOutput? {
+   func outputFromTransportKeyEncryption(_ response: UseCaseResponse<PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>) -> PLDeviceDataTransportKeyEncryptionUseCaseOutput? {
             let output = try? response.getOkResult()
             return output
     }
@@ -96,13 +97,13 @@ private extension PLTrustedDeviceDeviceDataUseCaseTests {
 private extension PLTrustedDeviceDeviceDataUseCaseTests {
 
     // MARK: Handle useCase response
-    func parametersEncryptionUseCase(_ input: PLDeviceDataParametersEncryptionUseCaseInput) throws -> UseCaseResponse<PLDeviceDataParametersEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput> {
+    func parametersEncryptionUseCase(_ input: PLDeviceDataParametersEncryptionUseCaseInput) throws -> UseCaseResponse<PLDeviceDataParametersEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let useCase = PLDeviceDataParametersEncryptionUseCase(dependenciesResolver: self.dependencies)
             let response = try useCase.executeUseCase(requestValues: input)
             return response
     }
 
-   func outputFromParameterEncryption(_ response: UseCaseResponse<PLDeviceDataParametersEncryptionUseCaseOutput, PLDeviceDataUseCaseErrorOutput>) -> PLDeviceDataParametersEncryptionUseCaseOutput? {
+   func outputFromParameterEncryption(_ response: UseCaseResponse<PLDeviceDataParametersEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>) -> PLDeviceDataParametersEncryptionUseCaseOutput? {
             let output = try? response.getOkResult()
             return output
     }

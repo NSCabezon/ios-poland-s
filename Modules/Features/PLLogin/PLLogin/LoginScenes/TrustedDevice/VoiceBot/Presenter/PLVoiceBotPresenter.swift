@@ -8,13 +8,16 @@
 import Models
 import Commons
 import PLCommons
+import SANPLLibrary
 import os
 
 protocol PLVoiceBotPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLVoiceBotViewProtocol? { get set }
     func viewDidLoad()
     func getDevices()
+    func setIvrOutputcode(code: Int)
     func requestIVRCall()
+    func goBack()
 }
 
 final class PLVoiceBotPresenter {
@@ -44,28 +47,57 @@ private extension PLVoiceBotPresenter {
 }
 
 extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
+    
+    func setIvrOutputcode(code: Int) {
+        self.deviceConfiguration.ivrOutputCode = code
+    }
+    
     func viewDidLoad() {
+        guard let ivrInputCode = deviceConfiguration.trustedDevice?.ivrInputCode else { return }
+        self.view?.setIvrInputCode(ivrInputCode)
     }
     
     func getDevices() {
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
         Scenario(useCase: devicesUseCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in
-                // continue next screen
+                guard let self = self else { return }
+                let challenge = self.getChallenge(from: output.defaultAuthorizationType,
+                                                  allowedAuthTypes: output.allowedAuthorizationTypes)
+                
+                if challenge == .sms {
+                    self.goToSmsAuthScreen()
+                } else if challenge == .tokenTime {
+                    self.goToHardwareTokenAuthScreen()
+                } else {
+                    self.handle(error: .applicationNotWorking)
+                }
             }).onError({[weak self] error in
                 self?.handleError(error)
             })
     }
     
     func requestIVRCall() {
-        let input = PLIvrRegisterUseCaseInput(appId: self.deviceConfiguration.deviceData.appId)
+        guard let trustedDeviceId = self.deviceConfiguration.trustedDevice?.trustedDeviceId else {
+            self.handle(error: .unknown)
+            return
+        }
+        let input = PLIvrRegisterUseCaseInput(trustedDeviceId: String(trustedDeviceId))
         Scenario(useCase: ivrRegisterUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess({ _ in
-                //show toast on view...
+            .onSuccess({ [weak self] code in
+                self?.view?.showIVCCallSendedDialog(code: code)
             }).onError({ [weak self] error in
                 self?.handleError(error)
             })
+    }
+
+    func goBack() {
+        self.coordinator.goBack()
     }
 }
 
@@ -75,13 +107,39 @@ extension PLVoiceBotPresenter: PLLoginPresenterErrorHandlerProtocol {
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
-        self.goToHardwareTokenScreen()
+        self.coordinator.goBack()
     }
 }
 
 private extension PLVoiceBotPresenter {
 
-    func goToHardwareTokenScreen() {
-        self.coordinator.goToHardwareToken()
+    func goToSmsAuthScreen() {
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToSmsAuth()
+        })
+    }
+    
+    func goToHardwareTokenAuthScreen() {
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToHardwareToken()
+        })
+    }
+    
+    func getChallenge(from defaultAuthType: AuthorizationType,
+                      allowedAuthTypes: [AuthorizationType]?) -> AuthorizationType? {
+        switch defaultAuthType {
+        case .softwareToken:
+            if (allowedAuthTypes?.first(where: { $0 == .sms })) != nil {
+                return .sms
+            } else if (allowedAuthTypes?.first(where: { $0 == .tokenTime || $0 == .tokenTimeCR })) != nil {
+                return .tokenTime
+            } else {
+                return .softwareToken
+            }
+        default:
+           return defaultAuthType
+        }
     }
 }

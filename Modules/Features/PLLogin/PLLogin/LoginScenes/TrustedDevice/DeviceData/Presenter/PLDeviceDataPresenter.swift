@@ -7,8 +7,10 @@
 
 import DomainCommon
 import Commons
+import PLCommons
 import Models
 import os
+import UI
 
 protocol PLDeviceDataPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLDeviceDataViewProtocol? { get set }
@@ -81,8 +83,10 @@ final class PLDeviceDataPresenter {
                                                                deviceTime: deviceTime,
                                                                parameters: parameters)
 
-        return TrustedDeviceConfiguration(deviceData: deviceData,
-                                          softwareToken: nil)
+        let trustedDeviceConfiguration = TrustedDeviceConfiguration()
+        trustedDeviceConfiguration.deviceData = deviceData
+
+        return trustedDeviceConfiguration
     }()
 
     private lazy var currentDate: Date = {
@@ -107,6 +111,17 @@ final class PLDeviceDataPresenter {
     }()
 }
 
+extension PLDeviceDataPresenter: PLLoginPresenterErrorHandlerProtocol {
+    
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        return view
+    }
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        //
+    }
+}
+
 extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
     func viewDidLoad() {
@@ -117,10 +132,15 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func registerDevice() {
-
-        guard let password = loginConfiguration.password else {
-            // TODO: generate error, password can't be empty
-            // And more important, create a tustedDevieConfiguration for not using the one from loginConfiguration
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
+        guard let password = loginConfiguration.password,
+              let deviceData = self.deviceConfiguration.deviceData else {
+            // TODO: create a tustedDevieConfiguration for not using the one from loginConfiguration
+            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
 
@@ -128,7 +148,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                                                                                                 passKey: password)
         let trasportKeyScenario = Scenario(useCase: self.transportKeyEncryptionUseCase, input: transportKeyEncryptionUseCaseInput)
 
-        let parametersEncryptionUseCaseInput = PLDeviceDataParametersEncryptionUseCaseInput(parameters: self.deviceConfiguration.deviceData.parameters,
+        let parametersEncryptionUseCaseInput = PLDeviceDataParametersEncryptionUseCaseInput(parameters: deviceData.parameters,
                                                                                             transportKey: transportKey)
         let parametersScenario = Scenario(useCase: self.parametersEncryptionUseCase, input: parametersEncryptionUseCaseInput)
 
@@ -144,13 +164,14 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
                 updatedValues.certificate = output.certificate
                 updatedValues.privateKey = output.privateKey
-            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLDeviceDataUseCaseErrorOutput> in
+            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
-                                                                                        deviceTime: self.deviceConfiguration.deviceData.deviceTime,
+                                                                                        deviceTime: deviceData.deviceTime,
                                                                                         certificate: certificate ?? "",
-                                                                                        appId: self.deviceConfiguration.deviceData.appId)
+                                                                                        appId: deviceData.appId)
 
+                // TODO: Save certificate and pair of keys
                 let softwareToken = TrustedDeviceConfiguration.SoftwareToken(privateKey: key,
                                                                              certificatePEM: certificate)
                 self.deviceConfiguration.softwareToken = softwareToken
@@ -159,13 +180,22 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
             })
             .onSuccess { [weak self] registerSoftwareTokenOutput in
                 guard let self = self else { return }
+                let trustedDeviceInfo = TrustedDeviceConfiguration.TrustedDevice(trustedDeviceId: registerSoftwareTokenOutput.trustedDeviceId,
+                                                                                 userId: registerSoftwareTokenOutput.userId,
+                                                                                 trustedDeviceState: registerSoftwareTokenOutput.trustedDeviceState,
+                                                                                 trustedDeviceTimestamp: registerSoftwareTokenOutput.trustedDeviceTimestamp,
+                                                                                 ivrInputCode: registerSoftwareTokenOutput.ivrInputCode)
+                self.deviceConfiguration.trustedDevice = trustedDeviceInfo
                 self.goToTrustedDevicePIN()
-            }.onError { _ in
-                // TODO: Handle error
+            }.onError { [weak self] error in
+                self?.handleError(error)
             }
     }
 
     func goToTrustedDevicePIN() {
-        coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
+        })
     }
 }

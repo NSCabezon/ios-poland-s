@@ -11,7 +11,7 @@ import Account
 
 final class PLAccountDetailModifier: AccountDetailModifierProtocol {
     var isEnabledEditAlias: Bool {
-        return true
+        return false
     }
     
     var isEnabledAccountHolder: Bool {

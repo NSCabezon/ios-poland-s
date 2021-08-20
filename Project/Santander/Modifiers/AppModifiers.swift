@@ -54,6 +54,21 @@ final class AppModifiers {
     private lazy var currencyProvider: AmountFormatterProvider & CurrencyFormatterProvider = {
         return PLNumberFormatter()
     }()
+    private lazy var getGPCardsOperativeOptionProtocol: GetGPCardOperativeModifier = {
+        return GetGPCardOperativeModifier()
+    }()
+    private lazy var getGPAccountsOperativeOptionProtocol: GetGPAccountOperativeModifier = {
+        return GetGPAccountOperativeModifier()
+    }()
+    private lazy var getGPInsuranceProtectionOperativeOptionProtocol: GetGPInsuranceProtectionOperativeModifier = {
+        return GetGPInsuranceProtectionOperativeModifier()
+    }()
+    private lazy var getGPOtherOperativeOptionProtocol: GetGPOtherOperativeModifier = {
+        return GetGPOtherOperativeModifier()
+    }()
+    private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
+        return OtherOperativesModifier()
+    }()
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
@@ -93,10 +108,30 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: LoansModifierProtocol.self) { resolver in
             return self.loansModifier
         }
-        
-//        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
-//            return self.accountHomeActionModifier
-//        }
+        self.dependencieEngine.register(for: AmountFormatterProvider.self) { _ in
+            return self.currencyProvider
+        }
+        self.dependencieEngine.register(for: CurrencyFormatterProvider.self) { _ in
+            return self.currencyProvider
+        }
+        self.dependencieEngine.register(for: GetGPCardsOperativeOptionProtocol.self) { _ in
+            return self.getGPCardsOperativeOptionProtocol
+        }
+        self.dependencieEngine.register(for: GetGPAccountOperativeOptionProtocol.self) { _ in
+            return self.getGPAccountsOperativeOptionProtocol
+        }
+        self.dependencieEngine.register(for: GetGPInsuranceProtectionOperativeOptionProtocol.self) { _ in
+            return self.getGPInsuranceProtectionOperativeOptionProtocol
+        }
+        self.dependencieEngine.register(for: GetGPOtherOperativeOptionProtocol.self) { _ in
+            return self.getGPOtherOperativeOptionProtocol
+        }
+        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
+            return self.accountHomeActionModifier
+        }
+        self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
+            return self.otherOperativesModifier
+        }
 //        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
 //            return self.transferHomeActionModifier
 //        }
@@ -126,9 +161,6 @@ private extension AppModifiers {
 //        }
 //        self.dependencieEngine.register(for: GetIpdCredentialsUseCaseProtocol.self) { resolver in
 //            return GetIpdCredentialsUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
-//            return self.otherOperativesModifier
 //        }
     }
 }

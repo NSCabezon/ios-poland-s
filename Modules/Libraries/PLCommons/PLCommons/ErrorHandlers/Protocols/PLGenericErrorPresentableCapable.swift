@@ -12,6 +12,7 @@ import UI
 public protocol PLGenericErrorPresentableCapable: LoadingViewPresentationCapable, DialogViewPresentationCapable {
     func showLoadingWith(loadingText: LoadingText, completion: (() -> Void)?)
     func presentError(_ error: PLGenericError, completion: @escaping (() -> Void))
+    func presentError(_ textKey: String, completion: @escaping (() -> Void))
     func presentError(_ error: PLGenericError)
 }
 
@@ -40,6 +41,19 @@ extension UIViewController : PLGenericErrorPresentableCapable {
         
         associatedLoadingView.dismissLoading(completion: { [weak self] in
             self?.associatedDialogView.showDialog(items: [.styledConfiguredText(text,configuration: config)],
+                                                  action: Dialog.Action(title: localized("generic_button_understand"),
+                                                                        style: .red,
+                                                                        action: completion),
+                                                  closeButton: Dialog.CloseButton.none)
+        })
+    }
+    
+    public func presentError(_ textKey: String, completion: @escaping (() -> Void) = {}) {
+        let textStylableText:LocalizedStylableText = localized(textKey)
+        let config = LocalizedStylableTextConfiguration(alignment: .center)
+        
+        associatedLoadingView.dismissLoading(completion: { [weak self] in
+            self?.associatedDialogView.showDialog(items: [.styledConfiguredText(textStylableText,configuration: config)],
                                                   action: Dialog.Action(title: localized("generic_button_understand"),
                                                                         style: .red,
                                                                         action: completion),

@@ -22,7 +22,7 @@ final class PLGetPersistedPubKeyUseCase: UseCase<Void, PLGetPersistedPubKeyUseCa
             let publicKeyData = try managerProvider.getLoginManager().getPersistedPubKey()
             return .ok(PLGetPersistedPubKeyUseCaseOkOutput(modulus: publicKeyData.modulus, exponent: publicKeyData.exponent))
         } catch {
-            return .error(PLUseCaseErrorOutput(errorDescription: "Public key not available"))
+            return .error(PLUseCaseErrorOutput(errorDescription: "Public key not available: \(error.localizedDescription)" ))
         }
     }
 }
