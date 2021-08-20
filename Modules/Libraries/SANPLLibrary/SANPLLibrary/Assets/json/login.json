@@ -8,6 +8,9 @@
                 "finalState": "NOT_FINAL",
                 "challenges": [
                     {
+                        "authorizationType": "TOKEN_TIME",
+                        "value": "24646701"
+                    },{
                         "authorizationType": "SMS_CODE",
                         "value": "24646701"
                     }

@@ -65,10 +65,6 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
         self.loginManager?.getCurrentEnvironments()
     }
 
-    func goToSMSScene() {
-        self.coordinator.goToSMSScene()
-    }
-
     func recoverPasswordOrNewRegistration() {
         // TODO
     }

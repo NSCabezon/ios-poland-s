@@ -124,7 +124,7 @@ private extension PLVoiceBotViewController {
 
         let editingStyle = LisboaTextField.EditingStyle.writable(configuration: configuration)
         self.codeTextField.setEditingStyle(editingStyle)
-        self.codeTextField.setPlaceholder(localized("pl_onboarding_text_IVRcode"))
+        self.codeTextField.setPlaceholder(localized("pl_onboarding_label_IVRcode"))
         self.codeTextField.setStyle(texfieldStyle)
         self.codeTextField.updatableDelegate = self
 

@@ -22,11 +22,12 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
         let result = try managerProvider.getLoginManager().doLogin(parameters)
         switch result {
         case .success(let loginData):
+            
             // TODO: Check if loginData.userId must be a string
-            let loginChallenge = ChallengeEntity(authorizationType: loginData.secondFactorData.defaultChallenge.authorizationType,
-                value: loginData.secondFactorData.defaultChallenge.value)
-            let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state, register: loginData.trustedComputerData?.register)
-            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: loginChallenge, trustedComputerData: trustedComputer, secondFactorFinalState: loginData.secondFactorData.finalState, unblockRemainingTimeInSecs: loginData.secondFactorData.unblockAvailableIn)
+            let challenge = getChallenge(from: loginData.secondFactorData)
+            let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state,
+                                                        register: loginData.trustedComputerData?.register)
+            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: challenge, trustedComputerData: trustedComputer, secondFactorFinalState: loginData.secondFactorData.finalState, unblockRemainingTimeInSecs: loginData.secondFactorData.unblockAvailableIn)
 
             if loginData.secondFactorData.finalState.elementsEqual("BLOCKED") && loginData.secondFactorData.unblockAvailableIn == nil {
                 return UseCaseResponse.error(PLUseCaseErrorOutput(error: .temporaryLocked))
