@@ -12,11 +12,13 @@ final class PLCardsManagerAdapter {
     private let cardsManager: PLCardsManagerProtocol
     private let bsanDataProvider: BSANDataProvider
     private let globalPositionManager: PLGlobalPositionManagerProtocol
+    private let cardTransactionsManager: PLCardTransactionsManagerProtocol
 
-    public init(cardsManager: PLCardsManagerProtocol, bsanDataProvider: BSANDataProvider, globalPositionManager: PLGlobalPositionManagerProtocol) {
+    public init(cardsManager: PLCardsManagerProtocol, bsanDataProvider: BSANDataProvider, globalPositionManager: PLGlobalPositionManagerProtocol, cardTransactionsManager: PLCardTransactionsManagerProtocol) {
         self.cardsManager = cardsManager
         self.bsanDataProvider = bsanDataProvider
         self.globalPositionManager = globalPositionManager
+        self.cardTransactionsManager = cardTransactionsManager
     }
 }
 
@@ -159,15 +161,15 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func getAllCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, dateFilter: DateFilter?) throws -> BSANResponse<CardTransactionsListDTO> {
-        return BSANErrorResponse(nil)
+        return self.loadCardTransactions(cardDTO: cardDTO, dateFilter: dateFilter)
     }
     
     func getCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, dateFilter: DateFilter?) throws -> BSANResponse<CardTransactionsListDTO> {
-        return BSANErrorResponse(nil)
+        return self.loadCardTransactions(cardDTO: cardDTO, dateFilter: dateFilter)
     }
     
     func getCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, dateFilter: DateFilter?, cached: Bool) throws -> BSANResponse<CardTransactionsListDTO> {
-        return BSANErrorResponse(nil)
+        return self.loadCardTransactions(cardDTO: cardDTO, pagination: pagination, dateFilter: dateFilter)
     }
     
     func getCardTransactionDetail(cardDTO: SANLegacyLibrary.CardDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO) throws -> BSANResponse<CardTransactionDetailDTO> {
@@ -383,5 +385,43 @@ private extension PLCardsManagerAdapter {
     func getCardFromDTO(_ card: SANLegacyLibrary.CardDTO) -> SANPLLibrary.CardDTO? {
         let cards = globalPositionManager.getGlobalPosition()?.cards
         return cards?.first { $0.virtualPan == card.contract?.contractNumber }
+    }
+    
+    func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, dateFilter: DateFilter?) -> BSANResponse<CardTransactionsListDTO> {
+        guard let cardId = cardDTO.contract?.contractNumber,
+              let transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId, pagination: nil, filters: nil) else {
+            return BSANErrorResponse(nil)
+        }
+        switch transactions {
+        case .success(let plCardTransactions):
+            let cardTransactionsAdapter = CardTransactionsDTOAdapter()
+            let cardTransactions = cardTransactionsAdapter.adaptPLCardTransactionsToCardTransactionsList(plCardTransactions)
+            return BSANOkResponse(cardTransactions)
+        case .failure:
+            return BSANErrorResponse(nil)
+        }
+    }
+    
+    func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, dateFilter: DateFilter?, cached: Bool = false) -> BSANResponse<CardTransactionsListDTO> {
+        let cardPagination = TransactionsLinksDTO(first: nil, next: pagination?.repositionXML, previous: pagination?.accountAmountXML)
+        guard let cardId = cardDTO.contract?.contractNumber else {
+            return BSANErrorResponse(nil)
+        }
+        let transactions: Result<CardTransactionListDTO, NetworkProviderError>?
+        if let dates = dateFilter {
+            transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId, pagination: cardPagination, filters: dates.stringQuery)
+        } else {
+            transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId, pagination: cardPagination, filters: nil)
+        }
+        switch transactions {
+        case .success(let plCardTransactions):
+            let cardTransactionsAdapter = CardTransactionsDTOAdapter()
+            let cardTransactions = cardTransactionsAdapter.adaptPLCardTransactionsToCardTransactionsList(plCardTransactions)
+            return BSANOkResponse(cardTransactions)
+        case .failure:
+            return BSANErrorResponse(nil)
+        default:
+            return BSANErrorResponse(nil)
+        }
     }
 }

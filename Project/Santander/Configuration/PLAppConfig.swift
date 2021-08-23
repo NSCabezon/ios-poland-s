@@ -23,7 +23,7 @@ class PLAppConfig: LocalAppConfig {
     let endAfternoon = 14
     let endNight = 20
     let language: LanguageType = .polish
-    let isEnabledPfm = true
+    let isEnabledPfm = false
     let privateMenu = true
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = true

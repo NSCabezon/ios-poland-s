@@ -190,6 +190,15 @@ public class BSANDataProvider {
         }
         return sessionData.accountInfo.withHoldingListDictionary[accountId]
     }
+    
+    public func storeCardTransactions(_ cardId: String, _ dto: CardTransactionListDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.cardsTransactions[cardId] = dto
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
 
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {

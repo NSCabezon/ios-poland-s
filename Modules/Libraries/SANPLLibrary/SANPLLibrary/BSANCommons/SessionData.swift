@@ -11,6 +11,7 @@ public class SessionData: Codable {
     public var globalPositionDTO: GlobalPositionDTO?
     public var loanInfo: LoanInfo = LoanInfo()
     public var accountInfo: AccountInfo = AccountInfo()
+    public var cardsTransactions: [String : CardTransactionListDTO] = [:]
 
     public init(_ userDTO: UserDTO) {
         self.loggedUserDTO = userDTO

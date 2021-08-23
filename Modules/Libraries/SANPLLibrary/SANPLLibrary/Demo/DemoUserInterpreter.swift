@@ -48,6 +48,7 @@ public enum PLLocalServiceName: String {
     case accountDetails = "accountDetails"
     case swiftBranches = "swiftBranches"
     case cardWithHoldings = "cardWithholdings"
+    case searchbycard = "searchbycard"
     case pubKey = "pub_key"
     case authenticateInit = "authenticate_init"
     case authenticate = "authenticate"
