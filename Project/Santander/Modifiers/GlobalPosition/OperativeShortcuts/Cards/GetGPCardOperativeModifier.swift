@@ -13,7 +13,7 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
         self.shortcutsOperativesAvailable = [.offCard,
                                              .onCard,
                                              .payOff,
-                                             .applePay,
+                                             PLApplePayOperative().getActionType(),
                                              PLSetUpAlertsOperative().getAtionType(),
                                              PLPostponeBuyOperative().getAtionType(),
                                              .changeAlias
@@ -25,7 +25,7 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
         return [.offCard,
                 .onCard,
                 .payOff,
-                .applePay,
+                PLApplePayOperative().getActionType(),
                 PLSetUpAlertsOperative().getAtionType(),
                 PLPostponeBuyOperative().getAtionType(),
                 .changeAlias
