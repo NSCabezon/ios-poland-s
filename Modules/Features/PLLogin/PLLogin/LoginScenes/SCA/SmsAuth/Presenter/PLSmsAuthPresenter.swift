@@ -128,7 +128,7 @@ private extension  PLSmsAuthPresenter {
                 self.openSessionAndNavigateToGlobalPosition()
             }
         } onFailure: { [weak self]  error in
-            self?.handle(error: .unauthorized)
+            self?.handleError(error)
         }
     }
 
