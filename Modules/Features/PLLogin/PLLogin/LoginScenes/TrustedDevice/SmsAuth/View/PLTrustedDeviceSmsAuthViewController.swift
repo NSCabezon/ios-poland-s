@@ -247,7 +247,4 @@ extension PLTrustedDeviceSmsAuthViewController: PLUIInputCodeViewDelegate {
 
     func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
     }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
-    }
 }

@@ -64,7 +64,7 @@ final class PLSmsAuthPresenter {
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     func didSelectLoginRestartAfterTimeOut() {
-        // TODO
+        self.coordinator.goToUnrememberedLogindScene()
     }
 
     func viewDidLoad() {

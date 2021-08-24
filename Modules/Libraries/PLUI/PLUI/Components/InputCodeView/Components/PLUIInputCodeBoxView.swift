@@ -11,7 +11,7 @@ protocol PLUIInputCodeBoxViewDelegate: AnyObject {
     func codeBoxViewShouldChangeString (_ codeBoxView: PLUIInputCodeBoxView, replacementString string: String) -> Bool
     func codeBoxViewDidBeginEditing (_ codeBoxView: PLUIInputCodeBoxView)
     func codeBoxViewDidEndEditing (_ codeBoxView: PLUIInputCodeBoxView)
-    func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView)
+    func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView, goToPrevious: Bool)
 }
 
 public class PLUIInputCodeBoxView: UIView {
@@ -194,9 +194,9 @@ private extension PLUIInputCodeBoxView {
 
 extension PLUIInputCodeBoxView: PLUIInputCodeTextFieldDelegate {
 
-    func didDeleteTextField(_ textField: PLUIInputCodeTextField) {
+    func didDeleteTextField(_ textField: PLUIInputCodeTextField, goToPrevious: Bool) {
 
-        self.delegate?.codeBoxViewDidDelete(self)
+        self.delegate?.codeBoxViewDidDelete(self, goToPrevious: goToPrevious)
     }
 
     public func textFieldDidBeginEditing(_ textField: UITextField) {

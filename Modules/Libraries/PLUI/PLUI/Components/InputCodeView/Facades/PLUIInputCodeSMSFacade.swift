@@ -24,7 +24,7 @@ public final class PLUIInputCodeSMSFacade {
 
     private enum Constants {
         static let elementsNumber = 6
-        static let font =  UIFont.santander(family: .text, type: .regular, size: 28)
+        static let font = UIFont.systemFont(ofSize: 22)
         static let hyphenSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 24.0, height: 4.0) : CGSize(width: 14, height: 4.0)
         static func getSpacingBetweenColumns(style: PLUIInputCodeSMSFacadeStyle) -> CGFloat {
             return style == .blackBackground ? 10.0 : 2.0
@@ -73,7 +73,7 @@ extension PLUIInputCodeSMSFacade: PLUIInputCodeFacadeProtocol {
         switch facadeStyle {
         case .blackBackground:
             return PLUIInputCodeFacadeConfiguration(showPositions: false,
-                                                    showSecureEntry: false,
+                                                    showSecureEntry: true,
                                                     elementsNumber: Constants.elementsNumber,
                                                     font: Constants.font)
         case .whiteBackground:

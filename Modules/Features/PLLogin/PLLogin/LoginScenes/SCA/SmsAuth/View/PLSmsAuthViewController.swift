@@ -36,11 +36,11 @@ final class PLSmsAuthViewController: UIViewController {
         return self.smsInputCodeView.bottomAnchor.constraint(equalTo: self.loginButton.topAnchor, constant: -45)
     }()
     private lazy var smsInputCodeView: PLUIInputCodeView = PLUIInputCodeView(keyboardType: .numberPad,
-                                                                                        delegate: self,
-                                                                                        facade: PLUIInputCodeSMSFacade(),
-                                                                                        elementSize: Constants.smsBoxSize,
-                                                                                        requestedPositions: .all,
-                                                                                        charactersSet: Constants.smsCharacterSet)
+                                                                             delegate: self,
+                                                                             facade: PLUIInputCodeSMSFacade(),
+                                                                             elementSize: Constants.smsBoxSize,
+                                                                             requestedPositions: .all,
+                                                                             charactersSet: Constants.smsCharacterSet)
     private var isShowingKeyboard = false {
         didSet {
             self.smsConstraintWithoutKeyboard?.isActive = !isShowingKeyboard
@@ -144,7 +144,7 @@ private extension PLSmsAuthViewController {
         regardLabel.text = regardNow()
         smsLabel.font = .santander(family: .text, type: .regular, size: 12)
         smsLabel.textColor = UIColor.Legacy.uiWhite
-        smsLabel.text = localized("pl_login_hint_smsCode").plainText
+        smsLabel.text = localized("pl_login_hint_smsCode").text
     }
 
     func configureConstraints() {
@@ -178,7 +178,6 @@ private extension PLSmsAuthViewController {
         ])
     }
 
-
     func showExpiredSignatureMessage() {
         let message = Dialog.Item.styledConfiguredText(localized("pl_login_alert_expiredSignature"), configuration: LocalizedStylableTextConfiguration(
             font: .santander(family: .text, type: .regular, size: 16),
@@ -204,7 +203,7 @@ private extension PLSmsAuthViewController {
     }
 
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).text
     }
 
     func addKeyboardObserver() {
@@ -220,7 +219,6 @@ private extension PLSmsAuthViewController {
     @objc func smsSendButtonDidPressed() {
         self.view.endEditing(true)
         guard let smsCode = self.smsInputCodeView.fulfilledText() else {
-            // TODO: return error. smsCode can't be empty
             return
         }
 		if finishedTimeValidateSMS {
@@ -298,8 +296,5 @@ extension PLSmsAuthViewController: PLUIInputCodeViewDelegate {
     }
 
     func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
     }
 }

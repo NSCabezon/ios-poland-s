@@ -10,7 +10,6 @@ public protocol PLUIInputCodeViewDelegate: AnyObject {
     func codeView(_ view: PLUIInputCodeView, willChange string: String, for position: NSInteger) -> Bool
     func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger)
     func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger)
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger)
 }
 
 public enum RequestedPositions {
@@ -147,6 +146,10 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
             return false
         }
 
+        if string.isBackSpace {
+            return true
+        }
+
         codeBoxView.text = string
 
         self.delegate?.codeView(self, didChange: string, for: codeBoxView.position)
@@ -169,9 +172,9 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
         self.delegate?.codeView(self, didEndEditing: codeBoxView.position)
     }
 
-    func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView) {
-        self.delegate?.codeView(self, didDelete: codeBoxView.position)
-        if let previousPasswordInputBoxView = self.inputCodeBoxArray.previousRequested(from: codeBoxView.position) {
+    func codeBoxViewDidDelete (_ codeBoxView: PLUIInputCodeBoxView, goToPrevious: Bool) {
+        self.delegate?.codeView(self, didChange: codeBoxView.text ?? "", for: codeBoxView.position)
+        if goToPrevious, let previousPasswordInputBoxView = self.inputCodeBoxArray.previousRequested(from: codeBoxView.position) {
             previousPasswordInputBoxView.becomeFirstResponder()
         }
     }

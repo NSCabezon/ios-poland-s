@@ -9,7 +9,7 @@ import UIKit
 import UI
 
 protocol PLUIInputCodeTextFieldDelegate: UITextFieldDelegate {
-    func didDeleteTextField(_ textField: PLUIInputCodeTextField)
+    func didDeleteTextField(_ textField: PLUIInputCodeTextField, goToPrevious: Bool)
 }
 
 class PLUIInputCodeTextField: UITextField {
@@ -73,8 +73,9 @@ class PLUIInputCodeTextField: UITextField {
     }
 
     override func deleteBackward() {
+        let wasEmpty = self.text == ""
         super.deleteBackward()
-        self.inputCodeDelegate?.didDeleteTextField(self)
+        self.inputCodeDelegate?.didDeleteTextField(self, goToPrevious: wasEmpty)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {

@@ -279,9 +279,6 @@ extension  PLTrustedDevicePinViewController: PLUIInputCodeViewDelegate {
             repeatPinInputCodeView.becomeFirstResponder()
         }
     }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
-    }
 }
 
 extension PLTrustedDevicePinViewController: PLUIInteractiveInfoViewDelegate {
