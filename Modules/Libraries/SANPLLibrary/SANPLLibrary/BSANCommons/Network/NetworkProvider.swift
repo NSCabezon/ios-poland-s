@@ -67,7 +67,7 @@ public enum NetworkProviderError: Error {
     case unauthorized
     case other
     case noConnection
-    case otpExpired
+    case unprocessableEntity
     
     public func getErrorBody<ErrorDTO: Codable>() -> ErrorDTO? {
         guard let body = self.getErrorBody() else {

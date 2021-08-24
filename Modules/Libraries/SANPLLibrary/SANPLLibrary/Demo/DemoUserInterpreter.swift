@@ -9,7 +9,6 @@ import Foundation
 
 public protocol DemoUserProtocol {
     func isDemoUser(userName: String) -> Bool
-    func getAnswerNumber(serviceName: PLLocalServiceName) -> Int
     var isDemoModeAvailable: Bool { get }
 }
 
@@ -27,10 +26,6 @@ public class DemoUserInterpreter: DemoUserProtocol {
 
     public func isDemoUser(userName: String) -> Bool {
         return userName.uppercased() == DemoUserInterpreter.demoUser
-    }
-    
-    public func getAnswerNumber(serviceName: PLLocalServiceName) -> Int {
-        return PLLocalAnswerType.success.rawValue
     }
 }
 

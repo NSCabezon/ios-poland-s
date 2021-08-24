@@ -24,12 +24,27 @@ extension BSANLocalManager: NetworkProvider {
         do {
             guard let stringToParse = try self.getJsonContentsFrom(serviceNameFile: request.localServiceName.rawValue),
                   let jsonDictionary = try self.getJsonDictionary(from: Data(stringToParse.utf8)),
-                  let answerElement = self.getAnswers(from: jsonDictionary, for: self.demoId),
-                  let outputJSON = self.getJSON(from: answerElement, serviceName: request.localServiceName) else {
+                  let answerElement = self.getAnswers(from: jsonDictionary, for: self.demoId) else {
                 return .failure(.other)
             }
-            let data = try JSONSerialization.data(withJSONObject: outputJSON, options: .prettyPrinted)
-            return .success(data)
+            
+            if let outputJSON = self.getJSON(from: answerElement, result: .success) {
+                let data = try JSONSerialization.data(withJSONObject: outputJSON, options: .prettyPrinted)
+                return .success(data)
+            } else if let outputJSON = self.getJSON(from: answerElement, result: .error) {
+                let error = outputJSON["errorCode"] as? Int ?? 500
+                let data = try JSONSerialization.data(withJSONObject: outputJSON, options: .prettyPrinted)
+                switch error {
+                case 401:
+                    return .failure(NetworkProviderError.unauthorized)
+                case 422:
+                    return .failure(NetworkProviderError.unprocessableEntity)
+                default:
+                    return .failure(NetworkProviderError.error(NetworkProviderResponseError(code: error, data: data, headerFields: nil, error: nil)))
+                }
+            } else {
+                return .failure(.other)
+            }
         } catch {
             return .failure(.other)
         }
@@ -129,10 +144,8 @@ private extension BSANLocalManager {
         }
     }
     
-    func getJSON(from element: (key: String, value: JSON), serviceName: PLLocalServiceName) -> JSON? {
-        let answer = demoInterpreter.getAnswerNumber(serviceName: serviceName)
-        guard element.value.count > answer,
-              let value = element.value["\(answer)"] as? JSON else {
+    func getJSON(from element: (key: String, value: JSON), result: PLLocalAnswerType) -> JSON? {
+        guard let value = element.value["\(result.rawValue)"] as? JSON else {
             return nil
         }
         return value

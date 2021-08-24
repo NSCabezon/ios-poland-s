@@ -10,7 +10,7 @@ import PLCommons
 import DomainCommon
 import SANPLLibrary
 
-final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol{
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -35,7 +35,7 @@ final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDevic
             return .ok(registerOutput)
 
         case .failure(let error):
-            return .error(PLUseCaseErrorOutput(errorDescription: error.localizedDescription))
+            return .error(self.handle(error: error))
         }
     }
 }

@@ -21,6 +21,6 @@ extension PLGenericErrorPresenterLayerProtocol {
         })
     }
     public func otherErrorPresentedWith<T>(error: T) {
-        genericErrorPresentedWith(error: .unknown)
+        genericErrorPresentedWith(error: .other("\(error)"))
     }
 }

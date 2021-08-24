@@ -178,9 +178,22 @@ extension PLTrustedDeviceSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol 
     }
     
     func handle(error: PLGenericError) {
-        if error == .unauthorized {
+        switch error {
+        case .unauthorized:
             view?.showAuthErrorDialog()
-        } else {
+        case .other(let description):
+            //Expired otp (error 422)
+            guard description == "UNPROCESSABLE_ENTITY" else {
+                associatedErrorView?.presentError(error, completion: { [weak self] in
+                    self?.goBack()
+                })
+                return
+            }
+            self.associatedErrorView?.presentError(("pl_onboarding_alert_timeExpTitle",
+                                                    "pl_onboarding_alert_timeExpText"), completion: { [weak self] in
+                self?.goBack()
+            })
+        default:
             associatedErrorView?.presentError(error, completion: { [weak self] in
                 self?.goBack()
             })

@@ -115,6 +115,11 @@ private extension  PLSmsAuthPresenter {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
         let authProcessInput = PLAuthProcessInput(scaCode: smscode,
                                                   password: password,
                                                   userId: loginConfiguration.userIdentifier,

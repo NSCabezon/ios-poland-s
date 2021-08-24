@@ -21,8 +21,10 @@ public extension PLLoginUseCaseErrorHandlerProtocol {
         switch error {
         case .noConnection:
             return PLUseCaseErrorOutput(genericError: .noConnection)
-        case .unauthorized, .otpExpired:
+        case .unauthorized:
             return PLUseCaseErrorOutput(error: .unauthorized)
+        case .unprocessableEntity:
+            return PLUseCaseErrorOutput(genericError: .other("UNPROCESSABLE_ENTITY"))
         case .other:
             return PLUseCaseErrorOutput(genericError: .applicationNotWorking)
         case .error(let err):
