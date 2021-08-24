@@ -103,7 +103,7 @@
         "enableWithdrawMoneyQR": "false",
         "simulationfamilyCode": "['T05']",
         "simulationcampaignsCode": "['E01', 'E04', 'E05', 'E18', 'E21', 'E22']",
-        "enableGlobalSearch": "true",
+        "enableGlobalSearch": "false",
         "enableCardTransactionsMap": "false",
         "enableAccountsHomeFutureBills": "true",
         "enableBillsHomeFutureBills": "false",

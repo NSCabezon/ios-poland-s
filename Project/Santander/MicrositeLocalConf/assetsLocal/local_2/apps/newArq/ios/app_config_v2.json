@@ -107,7 +107,7 @@
         "urgentTransferInformation": "Coste del servicio 0,6%, mínimo 17€.",
         "enableTimeLine": "false",
         "enablePregrantedWidget": "true",
-        "enableGlobalSearch": "true",
+        "enableGlobalSearch": "false",
         "enablePGTopPregrantedBanner": "true",
         "pgTopPregrantedBannerColor": "negro",
         "pgTopPregrantedBannerText1": "{{BOLD}}{{VALUE}}{{/BOLD}} para lo que {{BOLD}}{{COLOR:#EC0000}}tú quieras{{/COLOR}}{{/BOLD}}",

@@ -48,7 +48,9 @@ private extension PLInboxActionBuilder {
             description: localized("mailbox_text_onlineMail"),
             extras: inboxActionExtras,
             accessibilityIdentifier: AccesibilityInbox.messages,
-            action: isWebViewConfiguration ? self.delegate?.didSelectWebAction : nil,
+            action: { _ in
+                self.showToast()
+            },
             offerAction: isWebViewConfiguration ? nil : self.delegate?.didSelectOffer
         )
         self.inboxActions.append(viewModel)
