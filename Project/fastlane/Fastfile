@@ -237,9 +237,17 @@ end
   private_lane :push_version do
     Dir.chdir("..") do
       branch = git_branch      
-      UI.message("🚀  Git branch #{branch}")      
+      UI.message("🚀  Current branch: #{branch}")      
+      git_add(path: "./Project/Santander.xcodeproj/project.pbxproj")
       git_add(path: "./Project/Santander/Info.plist")
-      git_commit(path: "./Project/Santander/Info.plist", message: "Updating Version #{Actions.lane_context[SharedValues::VERSION_NUMBER]}")
+      git_commit(
+        path: 
+        [
+          "./Project/Santander.xcodeproj/project.pbxproj",
+          "./Project/Santander/Info.plist"
+        ],
+        message: "Updating Version #{Actions.lane_context[SharedValues::VERSION_NUMBER]}"
+        )
       reset_git_repo(force: true)
       git_pull(rebase: true)
       sh "git pull origin #{branch}"
