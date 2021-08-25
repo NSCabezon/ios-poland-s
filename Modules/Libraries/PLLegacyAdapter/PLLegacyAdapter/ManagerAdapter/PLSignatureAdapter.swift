@@ -6,6 +6,7 @@
 //
 
 import SANLegacyLibrary
+import SANCoreLibrary
 
 public final class PLSignatureAdapter {}
 

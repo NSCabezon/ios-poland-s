@@ -6,6 +6,7 @@
 //
 
 import SANLegacyLibrary
+import SANCoreLibrary
 import SANPLLibrary
 
 final class PLCardsManagerAdapter {
@@ -23,6 +24,10 @@ final class PLCardsManagerAdapter {
 }
 
 extension PLCardsManagerAdapter: BSANCardsManager {
+    func getAmortizationEasyPay(cardDTO: SANLegacyLibrary.CardDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO, feeDataDTO: FeeDataDTO, numFeesSelected: String, balanceCode: Int, movementIndex: Int) throws -> BSANResponse<EasyPayAmortizationDTO> {
+        return BSANErrorResponse(nil)
+    }
+
     func getFractionablePurchaseDetail(input: FractionablePurchaseDetailParameters) throws -> BSANResponse<FinanceableMovementDetailDTO> {
         return BSANErrorResponse(nil)
     }
