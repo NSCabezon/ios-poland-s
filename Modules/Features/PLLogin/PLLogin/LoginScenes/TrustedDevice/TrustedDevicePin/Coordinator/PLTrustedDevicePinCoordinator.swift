@@ -9,6 +9,7 @@ import Commons
 
 protocol PLTrustedDevicePinCoordinatorProtocol {
     func goToVoiceBotScene()
+    func goToHardwareToken()
     func goToDeviceTrustDeviceData()
 }
 
@@ -18,6 +19,11 @@ final class PLTrustedDevicePinCoordinator: ModuleCoordinator {
         return PLVoiceBotCoordinator(dependenciesResolver: self.dependenciesEngine,
                                      navigationController: self.navigationController)
     }()
+    private lazy var hardwareTokenCoordinator: PLTrustedDeviceHardwareTokenCoordinator = {
+        return PLTrustedDeviceHardwareTokenCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                     navigationController: self.navigationController)
+    }()
+
     private let dependenciesEngine: DependenciesDefault
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
@@ -35,6 +41,10 @@ final class PLTrustedDevicePinCoordinator: ModuleCoordinator {
 extension PLTrustedDevicePinCoordinator: PLTrustedDevicePinCoordinatorProtocol {
     func goToVoiceBotScene() {
         self.voiceBotCoordinator.start()
+    }
+
+    func goToHardwareToken() {
+        self.hardwareTokenCoordinator.start()
     }
 
     func goToDeviceTrustDeviceData() {
