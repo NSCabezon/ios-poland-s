@@ -9,5 +9,5 @@ public struct LoanInstallmentDTO: Codable {
     public let interestPayment: Double?
     public let paymentDate: String?
     public let principalBalance: Double?
-    public let totalPayment: String?
+    public let totalPayment: Double?
 }

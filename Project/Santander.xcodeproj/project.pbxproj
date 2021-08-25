@@ -84,6 +84,8 @@
 		7E9939C526B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */; };
 		7E9939C726B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C626B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift */; };
 		7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
 		BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */; };
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
 /* End PBXBuildFile section */
@@ -173,6 +175,7 @@
 		7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialAgendaPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E9939C626B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreProductsPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountDetailModifier.swift; sourceTree = "<group>"; };
+		A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLLoanDetailModifier.swift; sourceTree = "<group>"; };
 		BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionManager.swift; sourceTree = "<group>"; };
 		BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLMonthlyBalanceUseCase.swift; sourceTree = "<group>"; };
 		DC746257DD34B39DB49CFF26 /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +205,7 @@
 		0D4D558B26A6DE6D0032466B /* Loans */ = {
 			isa = PBXGroup;
 			children = (
+				A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */,
 				0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */,
 			);
 			path = Loans;
@@ -657,6 +661,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
 				0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */,
@@ -700,6 +705,7 @@
 				0DAA4D5D26C3ED63005A921C /* PLAccountNotificationsOperative.swift in Sources */,
 				0DB4957C26C155F000F0985F /* PLDomesticTransferOperative.swift in Sources */,
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
+				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
 				7E9939C726B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift in Sources */,
 				0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */,
 				0DAA4D5B26C3ECC0005A921C /* PLPayTaxOperative.swift in Sources */,

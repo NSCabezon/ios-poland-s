@@ -33,13 +33,13 @@
                     "totalPayment": "302.51 "
                 }
             ],
-            "page": [
+            "page":
                 {
                     "operationCount": 23,
                     "hasNextPage": false,
                     "navigationKey": "fdsfdsffsdfsdfsdfsdfsdfsdfsd "
                 }
-            ]
+            
         }
     }
 }

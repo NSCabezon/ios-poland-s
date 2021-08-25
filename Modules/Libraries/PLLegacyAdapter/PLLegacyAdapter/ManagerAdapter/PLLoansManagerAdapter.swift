@@ -40,8 +40,9 @@ extension PLLoansManagerAdapter: BSANLoansManager {
 
         let loanDetailsParameters = LoanDetailsParameters(includeDetails: true, includePermissions: true, includeFunctionalities: true)
         let loanDetails = try self.loanManager.getDetails(accountNumber: accountNumber, parameters: loanDetailsParameters).get()
+        let loanInstallments = try self.loanManager.getInstallments(accountId: loanDetails.id!, parameters: nil).get()
 
-        let adaptedLoanDetail = LoanDetailsDTOAdapter.adaptPLLoanDetailsToLoanDetails(loanDetails)
+        let adaptedLoanDetail = LoanDetailsDTOAdapter.adaptPLLoanDetailsToLoanDetails(loanDetails, plLoanInstallments: loanInstallments)
         return BSANOkResponse(adaptedLoanDetail)
     }
     
