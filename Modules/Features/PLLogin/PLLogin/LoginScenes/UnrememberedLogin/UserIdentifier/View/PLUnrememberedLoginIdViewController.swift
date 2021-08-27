@@ -244,10 +244,6 @@ private extension PLUnrememberedLoginIdViewController {
             self?.view.layoutSubviews()
         }
     }
-    
-    func recoverPasswordOrNewRegistration() {
-        self.presenter.recoverPasswordOrNewRegistration()
-    }
 }
 
 extension PLUnrememberedLoginIdViewController: RememberMeViewDelegate {

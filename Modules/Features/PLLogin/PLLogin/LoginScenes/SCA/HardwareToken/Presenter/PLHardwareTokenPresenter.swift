@@ -12,7 +12,6 @@ import os
 
 protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLHardwareTokenViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
     func goToDeviceTrustDeviceData()
@@ -21,7 +20,6 @@ protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol {
 
 final class PLHardwareTokenPresenter {
     weak var view: PLHardwareTokenViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     init(dependenciesResolver: DependenciesResolver) {
@@ -54,7 +52,6 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     }
 
     func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
     }
 
     func goToDeviceTrustDeviceData() {

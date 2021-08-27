@@ -13,18 +13,13 @@ import PLUI
 
 protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func login(password: String)
     func viewDidLoad()
-    func viewWillAppear()
-    func recoverPasswordOrNewRegistration()
-    func didSelectChooseEnvironment()
     func requestedPositions() -> [Int]
 }
 
 final class PLUnrememberedLoginMaskedPwdPresenter {
     weak var view: PLUnrememberedLoginMaskedPwdViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
@@ -48,11 +43,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
             self.view?.setUserImage(image: image)
         }
     }
-
-    func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
-    }
-
+    
     func login(password: String) {
         self.loginConfiguration.password = password
         switch self.loginConfiguration.challenge.authorizationType {
@@ -63,14 +54,6 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         case .softwareToken:
             self.handle(error: .applicationNotWorking)
         }
-    }
-
-    func recoverPasswordOrNewRegistration() {
-        // TODO
-    }
-
-    func didSelectChooseEnvironment() {
-        // TODO
     }
 
     /// Returns [Int] with the positions requested for the masked password
@@ -93,34 +76,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
     }
 }
 
-extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterLayerProtocol {
+extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterErrorHandlerProtocol {
 
     var associatedErrorView: PLGenericErrorPresentableCapable? {
         return self.view
-    }
-    
-    func handle(event: LoginProcessLayerEvent) {
-        switch event {
-        case .error(_):
-            self.handle(error: .applicationNotWorking)
-        default:
-            break
-        }
-    }
-
-    func handle(event: SessionProcessEvent) {
-        // TODO
-    }
-
-    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
-        self.publicFilesEnvironment = publicFilesEnvironment
-        let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
-        let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
-        self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
-    }
-
-    func willStartSession() {
-        // TODO
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {

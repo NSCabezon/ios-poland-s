@@ -13,18 +13,15 @@ import UI
 
 protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginIdViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
     func login(identification: String)
-    func recoverPasswordOrNewRegistration()
     func didSelectChooseEnvironment()
     func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration)
 }
 
 final class PLUnrememberedLoginIdPresenter {
     weak var view: PLUnrememberedLoginIdViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
@@ -32,32 +29,49 @@ final class PLUnrememberedLoginIdPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+    
+    private var loginProcessUseCase: PLLoginProcessUseCase {
+        self.dependenciesResolver.resolve(for: PLLoginProcessUseCase.self)
+    }
 
     private var loginConfiguration: UnrememberedLoginConfiguration {
         self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
+    }
+    
+    private var getPLCurrentEnvironmentUseCase: GetPLCurrentEnvironmentUseCase {
+        self.dependenciesResolver.resolve(for: GetPLCurrentEnvironmentUseCase.self)
+    }
+    
+    private var publicFilesManager: PublicFilesManagerProtocol {
+        return self.dependenciesResolver.resolve(for: PublicFilesManagerProtocol.self)
+    }
+    
+    private lazy var loginPLPullOfferLayer: LoginPLPullOfferLayer = {
+        return self.dependenciesResolver.resolve(for: LoginPLPullOfferLayer.self)
+    }()
+    
+    deinit {
+        self.publicFilesManager.remove(subscriptor: PLUnrememberedLoginIdPresenter.self)
     }
 }
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
     func viewDidLoad() {
-        self.loginManager?.loadData()
+        self.loadData()
     }
     
     func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
+        self.getCurrentEnvironments()
     }
     
     func login(identification: String) {
+        self.publicFilesManager.cancelPublicFilesLoad(withStrategy: .initialLoad)
         self.doLogin(with: .notPersisted(info: LoginTypeInfo(identification: identification)))
-    }
-    
-    func recoverPasswordOrNewRegistration() {
-        // TODO
     }
     
     func didSelectChooseEnvironment() {
         self.coordinatorDelegate.goToEnvironmentsSelector { [weak self] in
-            self?.loginManager?.chooseEnvironment()
+            self?.chooseEnvironment()
         }
     }
 
@@ -71,56 +85,75 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
     }
 }
 
-extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
+//MARK: - Private Methods
+private extension  PLUnrememberedLoginIdPresenter {
     
-    var associatedErrorView: PLGenericErrorPresentableCapable? {
-        return self.view
+    var coordinator: PLUnrememberedLoginIdCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginIdCoordinatorProtocol.self)
     }
     
-    func handle(event: LoginProcessLayerEvent) {
-        switch event {
-        case .willLogin:
-            break // TODO
-        case .loginWithIdentifierSuccess(let configuration):
-            self.view?.dismissLoading(completion: { [weak self] in
-                if configuration.secondFactorDataFinalState.elementsEqual("FINAL") {
-                    self?.view?.showInvalidSCADialog {
-                        self?.goToPasswordScene(configuration)
-                    }
-                }
-                else if configuration.secondFactorDataFinalState.elementsEqual("BLOCKED") && configuration.unblockRemainingTimeInSecs != nil {
-                    self?.view?.showAccountTemporaryBlockedDialog(configuration)
-                }
-                else {
-                    self?.goToPasswordScene(configuration)
-                }
-            })
-        case .error(let type):
+    var coordinatorDelegate: LoginCoordinatorDelegate {
+        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
+    }
+
+    func doLogin(with type: LoginType) {
+        let loadingText = LoadingText(title: localized("login_popup_identifiedUser"),
+                                      subtitle: localized("loading_label_moment"))
+        self.view?.showLoadingWith(loadingText: loadingText, completion: { [weak self] in
+            
             switch type {
-            case .temporaryLocked:
-                self.view?.dismissLoading(completion: { [weak self] in
-                    self?.view?.showAccountPermanentlyBlockedDialog()
-                })
+            case .notPersisted(let info):
+                self?.loginProcessUseCase.executeNonPersistedLogin(type: type,
+                                                                   identification: info.identification) { [weak self] config in
+                    guard let config = config else {
+                        self?.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
+                        return
+                    }
+                    self?.loginSuccess(configuration: config)
+                } onFailure: { [weak self]  error in
+                    self?.handleError(error)
+                }
             default:
-                self.handle(error: .applicationNotWorking)
+                break
             }
-        default:
-            break // TODO
+        })
+    }
+    
+    func getCurrentEnvironments() {
+        MainThreadUseCaseWrapper(
+            with: self.getPLCurrentEnvironmentUseCase,
+            onSuccess: { [weak self] result in
+                self?.didLoadEnvironment(result.bsanEnvironment,
+                                         publicFilesEnvironment: result.publicFilesEnvironment)
+        })
+    }
+    
+    func chooseEnvironment() {
+        self.publicFilesManager.loadPublicFiles(withStrategy: .reload, timeout: 5)
+        self.getCurrentEnvironments()
+    }
+    
+    func loadData() {
+        self.publicFilesManager.loadPublicFiles(withStrategy: .initialLoad, timeout: 0)
+        self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
+            self?.loginPLPullOfferLayer.loadPullOffers()
         }
     }
     
-    func genericErrorPresentedWith(error: PLGenericError) {
-        //No need to navigate back.
+    func loginSuccess(configuration: UnrememberedLoginConfiguration) {
+        self.view?.dismissLoading(completion: { [weak self] in
+            if configuration.isFinal() {
+                self?.view?.showInvalidSCADialog {
+                    self?.goToPasswordScene(configuration)
+                }
+            } else if configuration.isBlocked() {
+                self?.view?.showAccountTemporaryBlockedDialog(configuration)
+            } else {
+                self?.goToPasswordScene(configuration)
+            }
+        })
     }
-
-    func handle(event: SessionProcessEvent) {
-        // TODO
-    }
-
-    func willStartSession() {
-        // TODO
-    }
-
+    
     func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
         self.publicFilesEnvironment = publicFilesEnvironment
         let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
@@ -129,22 +162,30 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterLayerProtocol {
     }
 }
 
-//MARK: - Private Methods
-private extension  PLUnrememberedLoginIdPresenter {
-    var coordinator: PLUnrememberedLoginIdCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: PLUnrememberedLoginIdCoordinatorProtocol.self)
+extension PLUnrememberedLoginIdPresenter: PLLoginPresenterErrorHandlerProtocol {
+    var associatedErrorView: PLGenericErrorPresentableCapable? {
+        self.view
     }
-    var coordinatorDelegate: LoginCoordinatorDelegate {
-        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
+    
+    func genericErrorPresentedWith(error: PLGenericError) {
+        //No need to navigate back.
     }
-
-    func doLogin(with type: LoginType) {
-        let loadingText = LoadingText(
-            title: localized("login_popup_identifiedUser"),
-            subtitle: localized("loading_label_moment")
-        )
-        self.view?.showLoadingWith(loadingText: loadingText, completion: {[weak self] in
-            self?.loginManager?.doLogin(type: type)
+    
+    func handle(error: PLGenericError) {
+        switch error {
+        case .other(let description):
+            if description == "TEMPORARY_LOCKED" {
+                self.view?.dismissLoading(completion: { [weak self] in
+                    self?.view?.showAccountPermanentlyBlockedDialog()
+                })
+                return
+            }
+        default:
+            break
+        }
+        self.associatedErrorView?.presentError(error, completion: { [weak self] in
+            self?.genericErrorPresentedWith(error: error)
         })
     }
 }
+

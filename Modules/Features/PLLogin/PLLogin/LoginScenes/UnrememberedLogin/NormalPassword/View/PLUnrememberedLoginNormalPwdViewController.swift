@@ -5,7 +5,7 @@ import Commons
 import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginNormalPwdViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginNormalPwdViewProtocol: PLGenericErrorPresentableCapable {
     func resetForm()
     func setUserIdentifier(_ identifier: String)
     func setUserImage(image: UIImage)
@@ -57,7 +57,6 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.presenter.viewWillAppear()
         self.addKeyboardObserver()
         self.setNavigationBar()
     }
@@ -92,14 +91,7 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
     func resetForm() {
         self.passwordTextField?.setText("")
     }
-    
-    @IBAction func didSelectChooseEnvironment(_ sender: Any) {
-        self.chooseEnvironment()
-    }
-    
-    func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
-    }
+
 
     func setUserImage(image: UIImage) {
         self.userImageView.image = image
@@ -121,7 +113,6 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     func commonInit() {
-        setupEnvironmentButton()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
         configureRegardLabel()
         configureBackground()
@@ -240,10 +231,6 @@ private extension PLUnrememberedLoginNormalPwdViewController {
             self?.userImageView.alpha = self?.userImageView.image != nil ? 1.0 : 0.0
             self?.view.layoutSubviews()
         }
-    }
-    
-    func recoverPasswordOrNewRegistration() {
-        self.presenter.recoverPasswordOrNewRegistration()
     }
 }
 

@@ -81,7 +81,7 @@ final class PLAuthProcessUseCase {
                 return Scenario(useCase: self.authenticateUseCase, input: useCaseInput)
             })
             .then(scenario: { [weak self] _ -> Scenario<Void, PLGetLoginNextSceneUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-                guard let self = self else { return nil}
+                guard let self = self else { return nil }
                 return Scenario(useCase: self.getNextSceneUseCase)
             })
             .onSuccess({ nextSceneResult in

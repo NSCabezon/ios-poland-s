@@ -22,4 +22,12 @@ public final class UnrememberedLoginConfiguration {
         self.secondFactorDataFinalState = secondFactorDataFinalState
         self.unblockRemainingTimeInSecs = unblockRemainingTimeInSecs
     }
+    
+    public func isFinal() -> Bool {
+        return secondFactorDataFinalState.elementsEqual("FINAL")
+    }
+    
+    public func isBlocked() -> Bool {
+        return secondFactorDataFinalState.elementsEqual("BLOCKED") && unblockRemainingTimeInSecs != nil
+    }
 }

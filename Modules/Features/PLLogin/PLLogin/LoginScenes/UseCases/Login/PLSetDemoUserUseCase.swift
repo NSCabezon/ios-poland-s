@@ -7,24 +7,22 @@
 
 import Commons
 import DomainCommon
+import PLCommons
 import SANPLLibrary
 
-final class PLSetDemoUserUseCase: UseCase<PLSetDemoUserUseCaseInput, PLSetDemoUserUseCaseOkOutput, PLSetDemoUserUseCaseErrorOutput> {
+final class PLSetDemoUserUseCase: UseCase<PLSetDemoUserUseCaseInput, PLSetDemoUserUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
 
-    public override func executeUseCase(requestValues: PLSetDemoUserUseCaseInput) throws -> UseCaseResponse<PLSetDemoUserUseCaseOkOutput, PLSetDemoUserUseCaseErrorOutput> {
+    public override func executeUseCase(requestValues: PLSetDemoUserUseCaseInput) throws -> UseCaseResponse<PLSetDemoUserUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let isDemoUser = managerProvider.getLoginManager().setDemoModeIfNeeded(for: requestValues.userId)
         return UseCaseResponse.ok(PLSetDemoUserUseCaseOkOutput(isDemoUser: isDemoUser))
     }
 }
-
-// MARK: I/O types definition
-final class PLSetDemoUserUseCaseErrorOutput: StringErrorOutput {}
 
 public struct PLSetDemoUserUseCaseInput {
     let userId: String

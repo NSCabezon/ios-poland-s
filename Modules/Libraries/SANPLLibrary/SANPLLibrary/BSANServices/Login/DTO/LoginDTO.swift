@@ -14,6 +14,10 @@ public struct LoginDTO: Codable {
     public let passwordMaskEnabled: Bool?
     public let secondFactorData: SecondFactorDataDTO
     public let trustedComputerData: TrustedComputerDataDTO?
+    
+    public func isBlocked() -> Bool {
+        return secondFactorData.finalState.elementsEqual("BLOCKED") && secondFactorData.unblockAvailableIn == nil
+    }
 }
 
 public struct SecondFactorDataDTO: Codable {

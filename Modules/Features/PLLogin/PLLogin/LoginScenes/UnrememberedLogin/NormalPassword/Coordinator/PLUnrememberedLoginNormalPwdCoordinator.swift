@@ -21,9 +21,6 @@ final class PLUnrememberedLoginNormalPwdCoordinator: ModuleCoordinator {
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private let smsAuthCoordinator: PLSmsAuthCoordinator
     private let hardwareTokenCoordinator: PLHardwareTokenCoordinator
-    private lazy var loginLayerManager: PLLoginLayersManager = {
-        return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
-    }()
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -74,10 +71,6 @@ private extension PLUnrememberedLoginNormalPwdCoordinator {
             return self
         }
 
-        self.dependenciesEngine.register(for: PLLoginPresenterLayerProtocol.self) { _ in
-            return presenter
-        }
-
         self.dependenciesEngine.register(for: PLUnrememberedLoginNormalPwdPresenterProtocol.self) { resolver in
             return presenter
         }
@@ -98,7 +91,6 @@ private extension PLUnrememberedLoginNormalPwdCoordinator {
                 dependenciesResolver: resolver,
                 presenter: presenter)
             presenter.view = viewController
-            presenter.loginManager = self.loginLayerManager
             return viewController
         }
     }

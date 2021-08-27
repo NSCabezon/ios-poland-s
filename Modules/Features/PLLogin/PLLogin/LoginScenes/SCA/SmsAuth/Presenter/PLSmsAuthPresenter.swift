@@ -17,7 +17,6 @@ import os
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
     func authenticate(smsCode: String)
@@ -32,7 +31,6 @@ enum EncryptionError: Error {
 
 final class PLSmsAuthPresenter {
     weak var view: PLSmsAuthViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
@@ -72,21 +70,12 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     }
 
     func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
     }
 
     func authenticate(smsCode: String) {
         self.doAuthenticate(smscode: smsCode)
     }
-
-    func recoverPasswordOrNewRegistration() {
-        // TODO
-    }
-
-    func didSelectChooseEnvironment() {
-        // TODO
-    }
-
+    
     func goToDeviceTrustDeviceData() {
         self.view?.dismissLoading(completion: { [weak self] in
             self?.coordinator.goToDeviceTrustDeviceData()

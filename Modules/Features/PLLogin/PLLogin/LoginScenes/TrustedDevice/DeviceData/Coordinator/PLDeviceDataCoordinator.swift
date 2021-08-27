@@ -23,9 +23,6 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
             navigationController: self.navigationController
         )
     }()
-    private lazy var loginLayerManager: PLLoginLayersManager = {
-        return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
-    }()
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController

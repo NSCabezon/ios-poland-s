@@ -31,6 +31,8 @@ extension PLLoginPresenterErrorHandlerProtocol {
                                                         "login_popup_passwordRequired"), completion: {
                     otherErrorPresentedWith(error: loginError)
                 })
+            case .temporaryLocked:
+                self.handle(error: .other("TEMPORARY_LOCKED"))
              break
             default:
                 self.handle(error: .applicationNotWorking)

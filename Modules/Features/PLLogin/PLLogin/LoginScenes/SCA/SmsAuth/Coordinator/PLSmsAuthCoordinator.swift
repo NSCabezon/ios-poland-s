@@ -19,9 +19,6 @@ final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtoco
         return PLDeviceDataCoordinator(dependenciesResolver: self.dependenciesEngine,
                                        navigationController: self.navigationController)
     }()
-    private lazy var loginLayerManager: PLLoginLayersManager = {
-        return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
-    }()
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -66,7 +63,6 @@ private extension PLSmsAuthCoordinator {
                 dependenciesResolver: resolver,
                 presenter: presenter)
             presenter.view = viewController
-            presenter.loginManager = self.loginLayerManager
             return viewController
         }
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in

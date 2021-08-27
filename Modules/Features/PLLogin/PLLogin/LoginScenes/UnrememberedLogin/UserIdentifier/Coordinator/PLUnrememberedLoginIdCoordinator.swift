@@ -21,9 +21,6 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private let normalPwdCoordinator: PLUnrememberedLoginNormalPwdCoordinator
     private let maskedPwdCoordinator: PLUnrememberedLoginMaskedPwdCoordinator
-    private lazy var loginLayerManager: PLLoginLayersManager = {
-        return PLLoginLayersManager(dependenciesResolver: self.dependenciesEngine)
-    }()
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -66,19 +63,16 @@ extension PLUnrememberedLoginIdCoordinator: PLUnrememberedLoginIdCoordinatorProt
 private extension PLUnrememberedLoginIdCoordinator {
     func setupDependencies() {
         let presenter = PLUnrememberedLoginIdPresenter(dependenciesResolver: self.dependenciesEngine)
+        let authProcessUseCase = PLLoginProcessUseCase(dependenciesEngine: self.dependenciesEngine)
+
+        self.dependenciesEngine.register(for: PLLoginProcessUseCase.self) { _ in
+            return authProcessUseCase
+        }
         
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdCoordinatorProtocol.self) { _ in
             return self
         }
-        
-        self.dependenciesEngine.register(for: PLLoginPresenterLayerProtocol.self) { _ in
-            return presenter
-        }
 
-        self.dependenciesEngine.register(for: PLLoginProcessLayerProtocol.self) { resolver in
-            return PLLoginProcessLayer(dependenciesResolver: resolver)
-        }
-        
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdPresenterProtocol.self) { resolver in
             return presenter
         }
@@ -99,16 +93,7 @@ private extension PLUnrememberedLoginIdCoordinator {
                 dependenciesResolver: resolver,
                 presenter: presenter)
             presenter.view = viewController
-            presenter.loginManager = self.loginLayerManager
             return viewController
-        }
-
-        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
-            return PLLoginUseCase(dependenciesResolver: resolver)
-        }
-
-        self.dependenciesEngine.register(for: PLGetPublicKeyUseCase.self) { resolver in
-            return PLGetPublicKeyUseCase(dependenciesResolver: resolver)
         }
 
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
@@ -136,13 +121,8 @@ private extension PLUnrememberedLoginIdCoordinator {
     }
 }
 
-protocol LoginPLPullOfferLayerDelegate: AnyObject {
-    func loadPullOffersSuccess()
-}
-
 final class LoginPLPullOfferLayer {
     private let dependenciesResolver: DependenciesResolver
-    private weak var delegate: LoginPLPullOfferLayerDelegate?
     private var locations = [PullOfferLocation]()
     
     private var useCaseHandler: UseCaseHandler {
@@ -154,27 +134,15 @@ final class LoginPLPullOfferLayer {
     }
     
     lazy var loadPullOffersSuperUseCase: SetupPublicPullOffersSuperUseCase = {
-        let superUseCase = self.dependenciesResolver.resolve(for: SetupPublicPullOffersSuperUseCase.self)
-        superUseCase.delegate = self
-        return superUseCase
+        return self.dependenciesResolver.resolve(for: SetupPublicPullOffersSuperUseCase.self)
     }()
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
     
-    func setDelegate(_ delegate: LoginPLPullOfferLayerDelegate) {
-        self.delegate = delegate
-    }
-    
     func loadPullOffers() {
         self.loadPullOffersSuperUseCase.execute()
-    }
-}
-
-extension LoginPLPullOfferLayer: SetupPublicPullOffersSuperUseCaseDelegate {
-    func onSuccess() {
-        self.delegate?.loadPullOffersSuccess()
     }
 }
 
