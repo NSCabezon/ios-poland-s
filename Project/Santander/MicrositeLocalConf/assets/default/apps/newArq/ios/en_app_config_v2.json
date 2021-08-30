@@ -82,7 +82,7 @@
         "enableOtpPush": "false",
         "managerWallVersion": "1",
         "enableSCALogin": "true",
-        "enableSCAAccountTransactions": "true",
+        "enableSCAAccountTransactions": "false",
 		"otpAndroidServiceNames": "['validaAltaDispositivoLa', 'validarCargaDescargaPrepagoOTP_LA', 'validaAltaTarjetaCesOtpLa', 'validarConsultaDeCVV2OTP_LA', 'validaRecargaMovilOtpLa', 'validarModificarDiferidaLa', 'validaPeriodicasSepaOtpLa', 'validaPeriodicasSepaLa', 'validarConsultaDePINOTP_LA', 'validarNacionalOTPSEPA_LA', 'validarEmisionSacarDineroOTP_LA', 'validaDiferidasSepaOtpLa', 'validasolicitgarOTPSCALa]",
         "isNegativeCreditBalanceCardSuperSpeed": "true",
         "enableNoSepaTransferAddFavorite": "true",

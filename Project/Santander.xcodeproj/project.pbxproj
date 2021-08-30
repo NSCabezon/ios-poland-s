@@ -44,6 +44,8 @@
 		42BF5874264D13C900136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5871264D13C900136E8D /* pl.strings */; };
 		42BF5875264D13C900136E8D /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5872264D13C900136E8D /* en.strings */; };
 		446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446325432692E9530050334F /* PLCardHomeActionModifier.swift */; };
+		446C4F8E26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */; };
+		446C4F9226D798640080D7EC /* PLAccountTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C4F9126D798640080D7EC /* PLAccountTransaction.swift */; };
 		446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C1E265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift */; };
 		446E0C23265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C1F265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift */; };
 		446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446E0C20265FE42400847FCA /* ContractPGFrequentOperativeOption.swift */; };
@@ -130,6 +132,8 @@
 		42BF5871264D13C900136E8D /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
 		42BF5872264D13C900136E8D /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
 		446325432692E9530050334F /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
+		446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetFilteredAccountTransactionsUseCase.swift; sourceTree = "<group>"; };
+		446C4F9126D798640080D7EC /* PLAccountTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountTransaction.swift; sourceTree = "<group>"; };
 		446E0C1E265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLIKPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		446E0C1F265FE42400847FCA /* PaymentsPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		446E0C20265FE42400847FCA /* ContractPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -319,9 +323,10 @@
 		0DCED399268B0B16001D38CC /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
-				7EC5A29C26AECB5800E14C68 /* Detail */,
 				0DCED39D268B286F001D38CC /* AccountFormatters */,
+				7EC5A29C26AECB5800E14C68 /* Detail */,
 				0DCED39A268B0B21001D38CC /* Home */,
+				446C4F8C26D659620080D7EC /* Transactions */,
 			);
 			path = Accounts;
 			sourceTree = "<group>";
@@ -351,6 +356,15 @@
 				42BF5871264D13C900136E8D /* pl.strings */,
 			);
 			name = Strings;
+			sourceTree = "<group>";
+		};
+		446C4F8C26D659620080D7EC /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */,
+				446C4F9126D798640080D7EC /* PLAccountTransaction.swift */,
+			);
+			path = Transactions;
 			sourceTree = "<group>";
 		};
 		446E0C1C265FE42400847FCA /* Modifiers */ = {
@@ -687,6 +701,7 @@
 				7E2CCA8D26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift in Sources */,
 				446E0C25265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift in Sources */,
 				446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */,
+				446C4F8E26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift in Sources */,
 				7E2CCA8726B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				44BA78AD26D3B7970076F914 /* PLApplePayOperative.swift in Sources */,
@@ -709,6 +724,7 @@
 				7E9939C726B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift in Sources */,
 				0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */,
 				0DAA4D5B26C3ECC0005A921C /* PLPayTaxOperative.swift in Sources */,
+				446C4F9226D798640080D7EC /* PLAccountTransaction.swift in Sources */,
 				66C68A452694972E007B9884 /* PLNumberFormatter.swift in Sources */,
 				0DCD893426C547FA00275A90 /* PLSetUpAlertsOperative.swift in Sources */,
 				7E2CCA8226B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift in Sources */,

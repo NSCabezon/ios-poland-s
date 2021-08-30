@@ -10,6 +10,7 @@ protocol AccountDataSourceProtocol {
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError>
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
     func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError>
+    func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
 }
 
 private extension AccountDataSource {
@@ -23,6 +24,7 @@ final class AccountDataSource {
         case detail = "/accounts"
         case swiftBranches = "/swiftbranches"
         case cardwithholdings = "/history/cardwithholdings"
+        case transactions = "/history/search"
     }
 
     private let networkProvider: NetworkProvider
@@ -102,6 +104,24 @@ extension AccountDataSource: AccountDataSourceProtocol {
         )
         return result
     }
+
+    func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let serviceName = AccountServiceType.transactions.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<AccountTransactionsDTO, NetworkProviderError> = self.networkProvider.request(AccountTransactionRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .post,
+                                                                                                                jsonBody: parameters,
+                                                                                                                headers: self.headers,
+                                                                                                                contentType: .json,
+                                                                                                                localServiceName: .accountTransactions)
+        )
+        return result
+    }
 }
 
 private struct AccountRequest: NetworkProviderRequest {
@@ -135,6 +155,40 @@ private struct AccountRequest: NetworkProviderRequest {
         self.headers = headers
         self.queryParams = queryParams
         self.bodyEncoding = bodyEncoding
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+
+private struct AccountTransactionRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]?
+    let jsonBody: AccountTransactionsParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .body
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: AccountTransactionsParameters?,
+         headers: [String: String]?,
+         queryParams: [String: String]? = nil,
+         contentType: NetworkProviderContentType,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.jsonBody = jsonBody
+        self.headers = headers
+        self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
     }

@@ -162,6 +162,12 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: InboxActionBuilderProtocol.self) { resolver in
             return PLInboxActionBuilder(resolver: resolver)
         }
+        self.dependencieEngine.register(for: GetFilteredAccountTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
+            return PLAccountTransaction()
+        }
     }
 }
 

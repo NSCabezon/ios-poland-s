@@ -138,6 +138,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
             return self.otherOperativesModifier
         }
+        self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
+            return PLAccountTransaction()
+        }
 //        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
 //            return self.transferHomeActionModifier
 //        }

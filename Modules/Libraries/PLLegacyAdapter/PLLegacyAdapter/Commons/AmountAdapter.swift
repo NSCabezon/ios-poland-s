@@ -15,7 +15,7 @@ public final class AmountAdapter {
         return self.makeAmountDTO(value: balance?.valueInBaseCurrency, currencyCode: balance?.currencyCode)
     }
     
-    private static func makeAmountDTO(value: Double?, currencyCode: String?) -> AmountDTO? {
+    public static func makeAmountDTO(value: Double?, currencyCode: String?) -> AmountDTO? {
         guard let amount = value,
               let currencyCode = currencyCode else {
             return nil

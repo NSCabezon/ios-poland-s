@@ -21,6 +21,7 @@ def core_dependencies
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
   pod 'CoreDomain', :path => '../santander-one/Modules/Libraries/CoreDomain'
+  pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   
   # Microsite configuration
   pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
