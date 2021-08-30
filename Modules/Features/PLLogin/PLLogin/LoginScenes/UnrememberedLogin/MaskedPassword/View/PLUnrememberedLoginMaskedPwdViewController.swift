@@ -20,7 +20,6 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: PLDocumentTextField!
     @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
     private lazy var maskedPasswordConstraintWithoutKeyboard: NSLayoutConstraint? = {
         return self.maskedPasswordInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)

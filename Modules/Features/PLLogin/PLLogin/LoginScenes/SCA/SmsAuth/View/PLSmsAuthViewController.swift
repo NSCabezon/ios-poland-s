@@ -12,7 +12,7 @@ import Commons
 import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLSmsAuthViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
+protocol PLSmsAuthViewProtocol: PLGenericErrorPresentableCapable {
     func resetForm()
 }
 
@@ -25,7 +25,6 @@ final class PLSmsAuthViewController: UIViewController {
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet weak var smsLabel: UILabel!
     @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
 
     private var finishedTimeValidateSMS: Bool = false
@@ -98,20 +97,8 @@ final class PLSmsAuthViewController: UIViewController {
 }
 
 extension PLSmsAuthViewController: PLSmsAuthViewProtocol {
-    
-    func didUpdateEnvironments() {
-    }
-
     func resetForm() {
         //TODO
-    }
-
-    @IBAction func didSelectChooseEnvironment(_ sender: Any) {
-        self.chooseEnvironment()
-    }
-
-    func chooseEnvironment() {
-
     }
 }
 
@@ -126,7 +113,6 @@ private extension PLSmsAuthViewController {
     }
 
     func commonInit() {
-        setupEnvironmentButton()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
         configureLabels()
         configureBackground()

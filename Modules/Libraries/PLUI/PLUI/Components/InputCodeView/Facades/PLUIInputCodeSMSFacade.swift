@@ -17,6 +17,7 @@ public final class PLUIInputCodeSMSFacade {
     
     private var facadeStyle:PLUIInputCodeSMSFacadeStyle = .blackBackground
     let cursorTintColor = UIColor.init(red: 19/255, green: 126/255, blue: 132/255, alpha: 1.0)
+    let hyphenTintColor = UIColor.init(red: 219/255, green: 224/255, blue: 227/255, alpha: 1.0)
 
     public init(facadeStyle:PLUIInputCodeSMSFacadeStyle = .blackBackground) {
         self.facadeStyle = facadeStyle
@@ -44,7 +45,7 @@ public final class PLUIInputCodeSMSFacade {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 2.0
-        view.backgroundColor = facadeStyle == .blackBackground ? .white : cursorTintColor
+        view.backgroundColor = facadeStyle == .blackBackground ? .white : hyphenTintColor
         view.heightAnchor.constraint(equalToConstant: Constants.hyphenSize.height).isActive = true
         view.widthAnchor.constraint(equalToConstant: Constants.hyphenSize.width).isActive = true
         let contentView = UIView()

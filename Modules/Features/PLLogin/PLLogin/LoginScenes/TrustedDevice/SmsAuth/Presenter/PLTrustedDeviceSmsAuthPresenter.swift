@@ -69,27 +69,28 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
             guard let self = self else { return }
             let input = PLRegisterConfirmUseCaseInput(pinSoftwareTokenId: pinToken.id,
                                                       timestamp: pinToken.timestamp,
-                                                      secondFactorResponseDevice: "SMS_CODE",
+                                                      secondFactorResponseDevice: AuthorizationType.sms.rawValue,
                                                       secondFactorResponseValue: smsCode)
 
             Scenario(useCase: self.registerConfirmUseCase, input: input)
                 .execute(on: self.dependenciesResolver.resolve())
                 .onSuccess({ [weak self] output in
                     guard let self = self else { return }
-                    self.deviceConfiguration.registrationConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
-                                                                                                                   state: output.state,
-                                                                                                                   badTriesCount: output.badTriesCount,
-                                                                                                                   triesAllowed: output.triesAllowed,
-                                                                                                                   timestamp: output.timestamp,
-                                                                                                                   name: output.name,
-                                                                                                                   key: output.key,
-                                                                                                                   type: output.type,
-                                                                                                                   trustedDeviceId: output.trustedDeviceId,
-                                                                                                                   dateOfLastStatusChange: output.dateOfLastStatusChange,
-                                                                                                                   properUseCount: output.properUseCount,
-                                                                                                                   badUseCount: output.badUseCount,
-                                                                                                                   dateOfLastProperUse: output.dateOfLastProperUse,
-                                                                                                                   dateOfLastBadUse: output.dateOfLastBadUse)
+                    let rConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
+                                                                            state: output.state,
+                                                                            badTriesCount: output.badTriesCount,
+                                                                            triesAllowed: output.triesAllowed,
+                                                                            timestamp: output.timestamp,
+                                                                            name: output.name,
+                                                                            key: output.key,
+                                                                            type: output.type,
+                                                                            trustedDeviceId: output.trustedDeviceId,
+                                                                            dateOfLastStatusChange: output.dateOfLastStatusChange,
+                                                                            properUseCount: output.properUseCount,
+                                                                            badUseCount: output.badUseCount,
+                                                                            dateOfLastProperUse: output.dateOfLastProperUse,
+                                                                            dateOfLastBadUse: output.dateOfLastBadUse)
+                    self.deviceConfiguration.registrationConfirm = rConfirm
                     self.storeTrustedDeviceHeadersPersistenlty()
                     self.goToTrustedDeviceSuccess()
                 })
@@ -116,21 +117,9 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
             return
         }
 
-        guard let ivrCode = deviceConfiguration.ivrOutputCode,
-              let trustedDeviceId = deviceConfiguration.trustedDevice?.trustedDeviceId,
-              let deviceTime = deviceConfiguration.trustedDevice?.trustedDeviceTimestamp,
-              let tokens = deviceConfiguration.tokens else { return }
-
         let userId = Int(loginConfiguration.userIdentifier) ?? 0
-        let challengeTokens = tokens.compactMap {
-            return PLTrustedDeviceSecondFactorChallengeInput.PLTrustedDeviceSecondFactorChallengeToken(id: $0.id,
-                                                                                                       timestamp: $0.timestamp)
-        }
-        let secondFactorChallengeInput = PLTrustedDeviceSecondFactorChallengeInput(ivrCode: ivrCode,
-                                                                                   trustedDeviceId: trustedDeviceId,
-                                                                                   deviceTimestamp: deviceTime,
-                                                                                   userId: userId,
-                                                                                   tokens: challengeTokens)
+        let secondFactorChallengeInput = PLTrustedDeviceSecondFactorChallengeInput(userId: userId,
+                                                                                   configuration: deviceConfiguration)
         Scenario(useCase: self.secondFactorChallengeUseCase, input: secondFactorChallengeInput)
             .execute(on: self.dependenciesResolver.resolve())
             .then(scenario: {  [weak self] (output) -> Scenario<PLPLConfirmationCodeRegisterInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
@@ -173,7 +162,10 @@ extension PLTrustedDeviceSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol 
     }
     
     func genericErrorPresentedWith(error: PLGenericError) {
-        self.goBack()
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.goBack()
+        })
     }
     
     func handle(error: PLGenericError) {

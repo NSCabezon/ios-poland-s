@@ -10,14 +10,27 @@ import Commons
 
 protocol PLTrustedDeviceHardwareTokenCoordinatorProtocol {
     func goToDeviceTrustDeviceData()
+    func goToTrustedDeviceSuccess()
 }
 
 final class PLTrustedDeviceHardwareTokenCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    internal let loginConfiguration: UnrememberedLoginConfiguration
+    internal let trustedDeviceConfiguration: TrustedDeviceConfiguration
+    private lazy var trustedDeviceCoordinator: PLTrustedDeviceSuccessCoordinator = {
+        return PLTrustedDeviceSuccessCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                     navigationController: self.navigationController)
+    }()
 
-    init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
+    init(dependenciesResolver: DependenciesResolver,
+         trustedDeviceConfiguration: TrustedDeviceConfiguration,
+         loginConfiguration: UnrememberedLoginConfiguration,
+         navigationController: UINavigationController?) {
+        
         self.navigationController = navigationController
+        self.trustedDeviceConfiguration = trustedDeviceConfiguration
+        self.loginConfiguration = loginConfiguration
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.setupDependencies()
     }
@@ -39,6 +52,10 @@ extension PLTrustedDeviceHardwareTokenCoordinator: PLTrustedDeviceHardwareTokenC
         }
         self.navigationController?.popToViewController(viewController, animated: true)
     }
+    
+    func goToTrustedDeviceSuccess() {
+        self.trustedDeviceCoordinator.start()
+    }
 }
 
 /**
@@ -52,6 +69,22 @@ private extension PLTrustedDeviceHardwareTokenCoordinator {
 
         self.dependenciesEngine.register(for: PLTrustedDeviceHardwareTokenPresenterProtocol.self) { resolver in
             return PLTrustedDeviceHardwareTokenPresenter(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLTrustedDeviceStoreHeadersUseCase.self) { resolver in
+            return PLTrustedDeviceStoreHeadersUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLTrustedDeviceSecondFactorChallengeUseCase.self) { resolver in
+            return PLTrustedDeviceSecondFactorChallengeUseCase()
+        }
+        
+        self.dependenciesEngine.register(for: TrustedDeviceConfiguration.self) { _ in
+            return self.trustedDeviceConfiguration
+        }
+        
+        self.dependenciesEngine.register(for: UnrememberedLoginConfiguration.self) { _ in
+            return self.loginConfiguration
         }
 
         self.dependenciesEngine.register(for: PLTrustedDeviceHardwareTokenViewController.self) { resolver in

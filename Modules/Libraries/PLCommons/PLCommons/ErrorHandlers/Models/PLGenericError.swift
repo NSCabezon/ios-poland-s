@@ -28,7 +28,7 @@ public enum PLGenericError {
         case .other(_):
             return localized("generic_error_txt")
         case .applicationNotWorking:
-            return localized("pl_login_alert_applicationNotWorking")
+            return localized("pl_onboarding_alert_genFailedText")
         case .unauthorized:
             return localized("pl_login_alert_loginError")
         }

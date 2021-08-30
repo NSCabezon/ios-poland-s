@@ -36,34 +36,8 @@ extension UIViewController : PLGenericErrorPresentableCapable {
     }
     
     public func presentError(_ error: PLGenericError, completion: @escaping (() -> Void) = {}) {
-        
-        let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 19.0, right: 9.0)
-        let components: [LisboaDialogItem] = [
-            .image(LisboaDialogImageViewItem(image: Assets.image(named: "icnDanger"), size: (70, 70))),
-            .styledText(
-                LisboaDialogTextItem(
-                    text: localized("pl_onboarding_alert_genFailedTitle"),
-                    font: .santander(family: .text, type: .bold, size: 28),
-                    color: .lisboaGray,
-                    alignament: .center,
-                    margins: absoluteMargin)),
-            .margin(12.0),
-            .styledText(
-                LisboaDialogTextItem(
-                    text: localized(error.getErrorDesc()),
-                    font: .santander(family: .text, type: .light, size: 16),
-                    color: .lisboaGray,
-                    alignament: .center,
-                    margins: absoluteMargin)),
-            .margin(24.0),
-            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"), type: LisboaDialogActionType.red, margins: (left: 16, right: 16), action: completion)),
-            .margin(16.0)
-        ]
-        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
-        associatedLoadingView.dismissLoading(completion: { [weak self] in
-            guard let self = self else { return }
-            builder.showIn(self.associatedDialogView)
-        })
+        self.presentError((titleKey: "pl_onboarding_alert_genFailedTitle",
+                           descriptionKey: error.getErrorDesc()), completion: completion)
     }
     
     public func presentError(_ textKeys: (titleKey: String, descriptionKey: String),

@@ -19,11 +19,8 @@ final class PLTrustedDeviceSecondFactorChallengeUseCase: UseCase<PLTrustedDevice
 
 // MARK: I/O types definition
 struct PLTrustedDeviceSecondFactorChallengeInput {
-    let ivrCode: Int
-    let trustedDeviceId: Int
-    let deviceTimestamp: Int
     let userId: Int
-    let tokens: [PLTrustedDeviceSecondFactorChallengeToken]
+    let configuration: TrustedDeviceConfiguration
 
     struct PLTrustedDeviceSecondFactorChallengeToken {
         let id: Int
@@ -41,16 +38,26 @@ extension PLTrustedDeviceSecondFactorChallengeUseCase {
     func calculateSecondFactorSmsChallenge(input: PLTrustedDeviceSecondFactorChallengeInput) -> String? {
 
         var challenge: String = ""
+        
+        guard let ivrCode = input.configuration.ivrOutputCode,
+              let trustedDeviceId = input.configuration.trustedDevice?.trustedDeviceId,
+              let deviceTime = input.configuration.trustedDevice?.trustedDeviceTimestamp,
+              let tokens = input.configuration.tokens else { return challenge }
 
-        input.tokens.forEach({ token in
+        let challengeTokens = tokens.compactMap {
+            return PLTrustedDeviceSecondFactorChallengeInput.PLTrustedDeviceSecondFactorChallengeToken(id: $0.id,
+                                                                                                       timestamp: $0.timestamp)
+        }
+
+        challengeTokens.forEach({ token in
             challenge = challenge + getChallengeFor(tokenId: token.id,
                                                     tokenTimeStamp: token.timestamp,
                                                     id: input.userId) + "|"
         })
-        challenge = challenge + getChallengeFor(tokenId: input.trustedDeviceId,
-                                                tokenTimeStamp: input.deviceTimestamp,
+        challenge = challenge + getChallengeFor(tokenId: trustedDeviceId,
+                                                tokenTimeStamp: deviceTime,
                                                 id: input.userId)
-        challenge = String(format: "%@|%d", challenge, input.ivrCode)
+        challenge = String(format: "%@|%d", challenge, ivrCode)
         return hashChallenge(challenge)
     }
 

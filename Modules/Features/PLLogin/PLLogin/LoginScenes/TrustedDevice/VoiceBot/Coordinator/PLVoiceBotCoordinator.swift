@@ -19,6 +19,7 @@ final class PLVoiceBotCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private var trustedSmsAuthCoordinator: PLTrustedDeviceSmsAuthCoordinator?
+    private var hardwareTokenCoordinator: PLTrustedDeviceHardwareTokenCoordinator?
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -42,16 +43,23 @@ extension PLVoiceBotCoordinator: PLVoiceBotCoordinatorProtocol {
         }
         self.navigationController?.popToViewController(viewController, animated: true)
     }
+    
     func goToHardwareToken() {
-        //TODO:
+        self.hardwareTokenCoordinator = PLTrustedDeviceHardwareTokenCoordinator(
+            dependenciesResolver: self.dependenciesEngine,
+            trustedDeviceConfiguration: self.dependenciesEngine.resolve(for: TrustedDeviceConfiguration.self),
+            loginConfiguration: self.dependenciesEngine.resolve(for: UnrememberedLoginConfiguration.self),
+            navigationController: navigationController)
+        self.hardwareTokenCoordinator?.start()
     }
+    
     func goToSmsAuth() {
         self.trustedSmsAuthCoordinator = PLTrustedDeviceSmsAuthCoordinator(
             dependenciesResolver: self.dependenciesEngine,
             trustedDeviceConfiguration: self.dependenciesEngine.resolve(for: TrustedDeviceConfiguration.self),
             loginConfiguration: self.dependenciesEngine.resolve(for: UnrememberedLoginConfiguration.self),
             navigationController: navigationController)
-        trustedSmsAuthCoordinator?.start()
+        self.trustedSmsAuthCoordinator?.start()
     }
 }
 

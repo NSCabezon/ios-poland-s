@@ -10,6 +10,8 @@ import Foundation
 import IQKeyboardManagerSwift
 
 protocol PLTrustedDeviceHardwareTokenViewProtocol: PLGenericErrorPresentableCapable {
+    func showChallenge(challenge: String)
+    func showAuthErrorDialog()
 }
 
 final class PLTrustedDeviceHardwareTokenViewController: UIViewController {
@@ -37,6 +39,7 @@ final class PLTrustedDeviceHardwareTokenViewController: UIViewController {
     private enum Constants {
         static let bottomDistance: CGFloat = 32
         static let animationDuration: TimeInterval = 0.2
+        static let tokenDigits: Int = 8
     }
 
     init(nibName: String?, bundle: Bundle?,
@@ -63,6 +66,16 @@ final class PLTrustedDeviceHardwareTokenViewController: UIViewController {
 }
 
 extension PLTrustedDeviceHardwareTokenViewController: PLTrustedDeviceHardwareTokenViewProtocol {
+    func showAuthErrorDialog() {
+        self.presentError((titleKey: "pl_onboarding_alert_authFailedTitle",
+                           descriptionKey: "pl_onboarding_alert_authFailedText")) { [weak self] in
+            self?.presenter.goToDeviceTrustDeviceData()
+        }
+    }
+    
+    func showChallenge(challenge: String) {
+        self.tokenChallengeValueLabel.text = challenge
+    }
 }
 
 private extension PLTrustedDeviceHardwareTokenViewController {
@@ -93,7 +106,6 @@ private extension PLTrustedDeviceHardwareTokenViewController {
         tokenChallengeTitleLabel.configureText(withKey: "pl_onboarding_text_tokenChallenge", andConfiguration: nil)
         tokenChallengeValueLabel.font = .santander(family: .text, type: .bold, size: 32)
         tokenChallengeValueLabel.textColor = UIColor.brownishGray
-        tokenChallengeValueLabel.text = "29401340"
         tokenResponseTitleLabel.font = .santander(family: .text, type: .bold, size: 14)
         tokenResponseTitleLabel.textColor = UIColor.Legacy.lisboaGrayNew
         tokenResponseTitleLabel.configureText(withKey: "pl_onboarding_text_tokenResp", andConfiguration: nil)
@@ -113,7 +125,7 @@ private extension PLTrustedDeviceHardwareTokenViewController {
         }
 
         let textFieldFormmater = UIFormattedCustomTextField()
-        textFieldFormmater.setMaxLength(maxLength: 4)
+        textFieldFormmater.setMaxLength(maxLength: Constants.tokenDigits)
         textFieldFormmater.setAllowOnlyCharacters(.decimalDigits)
         let configuration = LisboaTextField.WritableTextField(type: .floatingTitle,
                                                               formatter: textFieldFormmater,
@@ -176,44 +188,17 @@ private extension PLTrustedDeviceHardwareTokenViewController {
 
     // MARK: Button actions
     @objc func continueButtonDidPressed() {
+        guard let code = self.tokenResponseValueTextField.text else {
+            return
+        }
+        self.presenter.registerConfirm(code: code)
     }
 
     @objc func closeButtonDidPressed() {
-        let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 19.0, right: 9.0)
-        let onCancel: () -> Void = { }
-        let onAccept: () -> Void = { self.presenter.goToDeviceTrustDeviceData() }
-        let components: [LisboaDialogItem] = [
-            .image(LisboaDialogImageViewItem(image: Assets.image(named: "icnDanger"), size: (70, 70))),
-            .styledText(
-                LisboaDialogTextItem(
-                    text: localized("pl_onboarding_alert_PINQuitTitle"),
-                    font: .santander(family: .text, type: .bold, size: 28),
-                    color: .lisboaGray,
-                    alignament: .center,
-                    margins: absoluteMargin)),
-            .margin(12.0),
-            .styledText(
-                LisboaDialogTextItem(
-                    text: localized("pl_onboarding_alert_PINQuitText"),
-                    font: .santander(family: .text, type: .light, size: 16),
-                    color: .lisboaGray,
-                    alignament: .center,
-                    margins: absoluteMargin)),
-            .margin(24.0),
-            .horizontalActions(
-                HorizontalLisboaDialogActions(
-                    left: LisboaDialogAction(title: localized("generic_link_no"),
-                                             type: .white,
-                                             margins: absoluteMargin,
-                                             action: onCancel),
-                    right: LisboaDialogAction(title: localized("generic_link_yes"),
-                                              type: .red,
-                                              margins: absoluteMargin,
-                                              action: onAccept))),
-            .margin(16.0)
-        ]
-        let builder = LisboaDialog(items: components, closeButtonAvailable: true)
-        builder.showIn(self)
+        PLLoginCommonDialogs.presentCloseDialog(on: self, onCancel: {
+        }, onAccept: { [weak self] in
+            self?.presenter.goToDeviceTrustDeviceData()
+        })
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -250,11 +235,10 @@ private extension PLTrustedDeviceHardwareTokenViewController {
 
 extension PLTrustedDeviceHardwareTokenViewController: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        if self.tokenResponseValueTextField.text?.count == 8 {
+        if self.tokenResponseValueTextField.text?.count == Constants.tokenDigits {
             continueButton.backgroundColor = .santanderRed
             continueButton.isEnabled = true
-        }
-        else {
+        } else {
             continueButton.backgroundColor = .lightSanGray
             continueButton.isEnabled = false
         }
