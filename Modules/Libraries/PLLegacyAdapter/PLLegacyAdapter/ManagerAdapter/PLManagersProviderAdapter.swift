@@ -6,7 +6,7 @@
 //
 
 import SANLegacyLibrary
-import SANCoreLibrary
+import CoreDomain
 import SANPLLibrary
 
 public protocol PLManagersProviderAdapterProtocol {

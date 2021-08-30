@@ -20,7 +20,7 @@ def core_dependencies
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
-  pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
+  pod 'CoreDomain', :path => '../santander-one/Modules/Libraries/CoreDomain'
   
   # Microsite configuration
   pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
@@ -41,7 +41,7 @@ def core_dependencies
   pod 'GlobalSearch', :path => '../santander-one/GlobalSearch'
   pod 'BranchLocator', :path => '../santander-one/Modules/Features/BranchLocator'
   pod 'FinantialTimeline', :path => '../santander-one/Modules/Features/FinantialTimeline'
-  pod 'SANCoreLibrary', :path => '../santander-one/Modules/Libraries/SANCoreLibrary'
+  pod 'CoreDomain', :path => '../santander-one/Modules/Libraries/CoreDomain'
   pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
   pod 'Localization', :path => '../santander-one/Localization'
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'

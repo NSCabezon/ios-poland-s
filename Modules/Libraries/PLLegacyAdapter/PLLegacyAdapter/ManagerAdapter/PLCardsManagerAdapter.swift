@@ -6,7 +6,7 @@
 //
 
 import SANLegacyLibrary
-import SANCoreLibrary
+import CoreDomain
 import SANPLLibrary
 
 final class PLCardsManagerAdapter {

@@ -6,7 +6,7 @@ def core_dependencies
   pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
   pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
-  pod 'SANCoreLibrary', :path => '../../../../santander-one/Modules/Libraries/SANCoreLibrary'
+  pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
   pod 'Models', :path => '../../../../santander-one/Models'
   pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
   pod 'Repository', :path => '../../../../santander-one/Repository'
