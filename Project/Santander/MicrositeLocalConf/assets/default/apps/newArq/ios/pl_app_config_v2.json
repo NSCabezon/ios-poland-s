@@ -138,7 +138,7 @@
         "enableTrusteer": "false",
         "enableFinancingZone": "false",
         "enabledCarruselFavoritosDestinatario": "false",
-        "enabledWhatsNew": "true",
+        "enabledWhatsNew": "false",
         "enableWhatsNewPregrantedBanner": "false",
         "enableBillEmittersPayment": "false",
         "enabledWhatsNewLastLogin": "false",

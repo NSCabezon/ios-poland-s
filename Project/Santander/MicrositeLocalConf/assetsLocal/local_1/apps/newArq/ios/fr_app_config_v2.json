@@ -126,7 +126,7 @@
         "sidebarProductsTitle": "Te podría interesar",
         "enableTrusteer": "true",
         "enabledCarruselFavoritosDestinatario": "true",
-        "enabledWhatsNew": "true",
+        "enabledWhatsNew": "false",
         "enableWhatsNewPregrantedBanner": "true",
         "enabledWhatsNewLastLogin": "true",
         "enableRequestMoneyBizumNative": "true",

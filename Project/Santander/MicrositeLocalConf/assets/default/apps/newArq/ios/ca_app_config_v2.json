@@ -131,7 +131,7 @@
 		"enabledEnvioDineroPGClasica": "false",
         "enableTrusteer": "false",
         "enabledCarruselFavoritosDestinatario": "false",
-        "enabledWhatsNew": "true",
+        "enabledWhatsNew": "false",
         "enableWhatsNewPregrantedBanner": "false",
         "enabledCarruselFavoritosDestinatario": "false",
         "enabledWhatsNewLastLogin": "false",

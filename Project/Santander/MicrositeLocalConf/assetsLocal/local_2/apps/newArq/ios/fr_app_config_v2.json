@@ -121,7 +121,7 @@
         "sidebarProductsTitle": "Te podría interesar",
         "enableTrusteer": "true",
         "enabledCarruselFavoritosDestinatario": "false",
-        "enabledWhatsNew": "true",
+        "enabledWhatsNew": "false",
         "enableWhatsNewPregrantedBanner": "false",
         "enabledWhatsNewLastLogin": "false",
         "enableClick2Call": "false",

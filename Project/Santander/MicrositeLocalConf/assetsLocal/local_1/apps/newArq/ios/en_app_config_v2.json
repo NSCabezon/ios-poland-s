@@ -129,7 +129,7 @@
         "enablePublicProducts": "true",
         "enableTrusteer": "true",
         "enabledCarruselFavoritosDestinatario": "true",
-        "enabledWhatsNew": "true",
+        "enabledWhatsNew": "false",
         "enableWhatsNewPregrantedBanner": "true",
         "enableBizumNative": "true",
         "enableSendMoneyBizumNative": "true",

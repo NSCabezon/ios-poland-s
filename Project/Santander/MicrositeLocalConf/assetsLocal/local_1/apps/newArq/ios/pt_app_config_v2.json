@@ -139,7 +139,7 @@
         "sidebarProductsTitle": "Te podría interesar",
         "enabledTrusteer" : "true",
         "enabledCarruselFavoritosDestinatario": "true",
-        "enabledWhatsNew": "true",
+        "enabledWhatsNew": "false",
         "mailboxText":"Buzón",
         "globalSearchText":"Buscar",
         "menuText":"Menu",
