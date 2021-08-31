@@ -58,6 +58,10 @@ private extension PLHardwareTokenCoordinator {
         self.dependenciesEngine.register(for: PLLoginCoordinatorProtocol.self) { _ in
             return self
         }
+        
+        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
+            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+        }
 
         self.dependenciesEngine.register(for: PLHardwareTokenViewController.self) { resolver in
             var presenter = resolver.resolve(for: PLHardwareTokenPresenterProtocol.self)
