@@ -31,11 +31,6 @@ final class PLDeviceDataPresenter {
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
 
-    private enum Constants {
-        static let oneApp = "OneApp"
-        static let manufacturer = "Apple"
-    }
-
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
@@ -61,49 +56,16 @@ final class PLDeviceDataPresenter {
         self.dependenciesResolver.resolve(for: PLDeviceDataRegisterDeviceUseCase.self)
     }
 
+    private var generateDeviceDataUseCase: PLDeviceDataGenerateDataUseCase {
+        self.dependenciesResolver.resolve(for: PLDeviceDataGenerateDataUseCase.self)
+    }
+
     var coordinator: PLDeviceDataCoordinatorProtocol {
         self.dependenciesResolver.resolve(for: PLDeviceDataCoordinatorProtocol.self)
     }
 
     private lazy var deviceConfiguration: TrustedDeviceConfiguration = {
-        let model = UIDevice.current.getDeviceName()
-        let brand = Constants.manufacturer
-        let deviceId = PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 9)?.toHexString() ?? ""
-        let appId = Constants.oneApp + deviceId
-        let manufacturer = Constants.manufacturer
-        let dateString = self.parametersDateFormatter.string(from: self.currentDate)
-        let parameters = "<\(dateString)><AppId><\(appId)><deviceId><\(deviceId)><manufacturer><\(manufacturer)><model><\(model)>"
-        let deviceTime = self.dateFormatter.string(from: self.currentDate)
-
-        let deviceData = TrustedDeviceConfiguration.DeviceData(manufacturer: manufacturer,
-                                                               model: model,
-                                                               brand: brand,
-                                                               appId: appId,
-                                                               deviceId: deviceId,
-                                                               deviceTime: deviceTime,
-                                                               parameters: parameters)
-
-        let trustedDeviceConfiguration = TrustedDeviceConfiguration()
-        trustedDeviceConfiguration.deviceData = deviceData
-
-        return trustedDeviceConfiguration
-    }()
-
-    private lazy var currentDate: Date = {
-        return Date()
-    }()
-
-    // We need to use different formats for both dates we are sending
-    private var dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return df
-    }()
-
-    private var parametersDateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-        return df
+        return TrustedDeviceConfiguration()
     }()
 
     private lazy var transportKey: String = {
@@ -125,10 +87,10 @@ extension PLDeviceDataPresenter: PLLoginPresenterErrorHandlerProtocol {
 extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
     func viewDidLoad() {
-        view?.addDeviceConfiguration(self.deviceConfiguration)
     }
 
     func viewWillAppear() {
+        self.generateDeviceData()
     }
 
     func registerDevice() {
@@ -197,5 +159,18 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
             guard let self = self else { return }
             self.coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
         })
+    }
+}
+
+private extension PLDeviceDataPresenter {
+
+    func generateDeviceData() {
+        Scenario(useCase: self.generateDeviceDataUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { output in
+                self.deviceConfiguration.deviceData = output.deviceData
+            }.finally {
+                self.view?.addDeviceConfiguration(self.deviceConfiguration)
+            }
     }
 }
