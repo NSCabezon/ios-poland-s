@@ -36,36 +36,56 @@ extension UIViewController : PLGenericErrorPresentableCapable {
     }
     
     public func presentError(_ error: PLGenericError, completion: @escaping (() -> Void) = {}) {
-        self.presentError((titleKey: "pl_onboarding_alert_genFailedTitle",
-                           descriptionKey: error.getErrorDesc()), completion: completion)
+        self.presentError(localizedTitleKey: "pl_onboarding_alert_genFailedTitle",
+                          localizedDescriptionKey: error.getErrorDesc(),
+                          completion: completion)
     }
     
     public func presentError(_ textKeys: (titleKey: String, descriptionKey: String),
                              completion: @escaping (() -> Void) = {}) {
-        let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 19.0, right: 9.0)
+        self.presentError(localizedTitleKey: textKeys.titleKey,
+                          localizedDescriptionKey: textKeys.descriptionKey,
+                          completion: completion)
+    }
+}
+
+private extension UIViewController {
+
+    enum Constants {
+        static let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 19.0, right: 9.0)
+        static let image = LisboaDialogImageViewItem(image: Assets.image(named: "icnDanger"), size: (70, 70))
+        static let titleFont = UIFont.santander(family: .text, type: .bold, size: 28)
+        static let descriptionFont = UIFont.santander(family: .text, type: .light, size: 16)
+    }
+
+    func presentError(localizedTitleKey: String,
+                      localizedDescriptionKey: String,
+                      completion: @escaping (() -> Void) = {}) {
         let components: [LisboaDialogItem] = [
-            .image(LisboaDialogImageViewItem(image: Assets.image(named: "icnDanger"), size: (70, 70))),
+            .image(Constants.image),
             .styledText(
                 LisboaDialogTextItem(
-                    text: localized(textKeys.titleKey),
-                    font: .santander(family: .text, type: .bold, size: 28),
+                    text: localized(localizedTitleKey),
+                    font: Constants.titleFont,
                     color: .lisboaGray,
                     alignament: .center,
-                    margins: absoluteMargin)),
+                    margins: Constants.absoluteMargin)),
             .margin(12.0),
             .styledText(
                 LisboaDialogTextItem(
-                    text:  localized(textKeys.descriptionKey),
-                    font: .santander(family: .text, type: .light, size: 16),
+                    text:  localized(localizedDescriptionKey),
+                    font: Constants.descriptionFont,
                     color: .lisboaGray,
                     alignament: .center,
-                    margins: absoluteMargin)),
+                    margins: Constants.absoluteMargin)),
             .margin(24.0),
-            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"), type: LisboaDialogActionType.red, margins: (left: 16, right: 16), action: completion)),
+            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"),
+                                                       type: LisboaDialogActionType.red,
+                                                       margins: (left: 16, right: 16), action: completion)),
             .margin(16.0)
         ]
         let builder = LisboaDialog(items: components, closeButtonAvailable: false)
-        associatedLoadingView.dismissLoading(completion: { [weak self] in
+        self.associatedLoadingView.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
             builder.showIn(self.associatedDialogView)
         })
