@@ -106,6 +106,11 @@ private extension PLTrustedDevicePinViewController {
         repeatPinTitleLabel.font = .santander(family: .micro, type: .bold, size: 14)
         repeatPinTitleLabel.textColor = UIColor.Legacy.lisboaGrayNew
         repeatPinTitleLabel.configureText(withKey: "pl_onboarding_text_repeatPIN", andConfiguration: nil)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     func configureButtons() {
