@@ -89,7 +89,12 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func getTemporallyInactiveCardsMap() throws -> BSANResponse<[String : InactiveCardDTO]> {
-        return BSANOkResponse([:])
+        guard let cardsDTO = self.cardsManager.getCards() else  {
+            return BSANOkResponse([:])
+        }
+        let temporallyOffCardsDTO = self.filterTemporallyOffCards(cardsDTO)
+        let temporallyOffCardsDTOMap = self.createListOfInactiveCards(temporallyOffCardsDTO)
+        return BSANOkResponse(temporallyOffCardsDTOMap)
     }
     
     func getInactiveCardsMap() throws -> BSANResponse<[String : InactiveCardDTO]> {
@@ -373,6 +378,10 @@ extension PLCardsManagerAdapter: BSANCardsManager {
 //MARK: - Private Methods
 private extension PLCardsManagerAdapter {
     func filterInactiveCards(_ cards: [SANPLLibrary.CardDTO]) -> [SANPLLibrary.CardDTO] {
+        return cards.filter { $0.generalStatus == "INACTIVE" }
+    }
+
+    func filterTemporallyOffCards(_ cards: [SANPLLibrary.CardDTO]) -> [SANPLLibrary.CardDTO] {
         return cards.filter { $0.generalStatus != "ACTIVE" }
     }
 

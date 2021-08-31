@@ -1,15 +1,15 @@
 //
-//  PLRepaymentOperative.swift
+//  PLTurnOffOperative.swift
 //  Santander
 //
 
 import Models
 import Commons
 
-final class PLRepaymentOperative {
-    private let identifier: String = "operateBtnPayOffOperativePoland"
-    private let localizedKey: String = "cardsOption_button_cardEntry"
-    private let icon: String = "icnDepositCard"
+final class PLTurnOffOperative {
+    private let identifier: String = "cardsOptionButtonTurnOffPoland"
+    private let localizedKey: String = "cardsOption_button_turnOff"
+    private let icon: String = "icnOff"
 
     func getActionType() -> CardOperativeActionType {
         return .custom(

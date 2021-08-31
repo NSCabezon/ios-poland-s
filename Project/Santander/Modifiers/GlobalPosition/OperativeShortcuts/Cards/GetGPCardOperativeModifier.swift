@@ -10,8 +10,8 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
     var shortcutsOperativesAvailable: [CardOperativeActionType] = []
 
     public func getCountryCardsOperativeActionType(cards: [CardEntity]) -> [CardOperativeActionType] {
-        self.shortcutsOperativesAvailable = [.offCard,
-                                             .onCard,
+        self.shortcutsOperativesAvailable = [PLTurnOffOperative().getActionType(),
+                                             PLTurnOnOperative().getActionType(),
                                              PLRepaymentOperative().getActionType(),
                                              PLApplePayOperative().getActionType(),
                                              PLSetUpAlertsOperative().getAtionType(),
@@ -22,8 +22,8 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
     }
 
     public func getAllCardsOperativeActionType() -> [CardOperativeActionType] {
-        return [.offCard,
-                .onCard,
+        return [PLTurnOffOperative().getActionType(),
+                PLTurnOnOperative().getActionType(),
                 PLRepaymentOperative().getActionType(),
                 PLApplePayOperative().getActionType(),
                 PLSetUpAlertsOperative().getAtionType(),

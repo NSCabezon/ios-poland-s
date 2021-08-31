@@ -93,7 +93,7 @@
         "enableNoSepaTransferAddFavorite": "true",
         "enableManagerMenu": "true",
         "highlightMenu": "{\"global_position\":\"Accede a tu posición global en un instante.\", \"smart\":\"¿Eres el más Smart? ¡Demuéstralo!\", \"my_products\":\"Todos tus productos a un toque de distancia.\", \"one_pay\":\"\"}",
-        "enableInAppEnrollment": "false",
+        "enableInAppEnrollment": "true",
         "enableCardsHomeLocationMap": "false",
         "enableApplyBySanflix": "true",
         "enableWithdrawMoneyQR": "false",

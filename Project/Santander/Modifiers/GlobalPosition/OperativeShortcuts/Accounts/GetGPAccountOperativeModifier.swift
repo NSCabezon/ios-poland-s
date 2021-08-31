@@ -10,7 +10,7 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
     public func getAllAccountOperativeActionType() -> [AccountOperativeActionTypeProtocol] {
         return [PLSendMoneyOperative(),
                 PLDomesticTransferOperative(),
-                PLInternalTransferOperative(),
+                AccountOperativeActionType.internalTransfer,
                 PLSendMoneyFavouriteOperative(),
                 PLBlikOperative(),
                 PLMakeDonationOperative(),
@@ -24,7 +24,7 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
     public func getCountryAccountOperativeActionType(accounts: [AccountEntity]) -> [AccountOperativeActionTypeProtocol] {
         return [PLSendMoneyOperative(),
                 PLDomesticTransferOperative(),
-                PLInternalTransferOperative(),
+                AccountOperativeActionType.internalTransfer,
                 PLSendMoneyFavouriteOperative(),
                 PLBlikOperative(),
                 PLMakeDonationOperative(),
