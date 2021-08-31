@@ -44,7 +44,17 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
     }
     
     func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, dateFilter: DateFilter?) throws -> BSANResponse<AccountTransactionsListDTO> {
-        return BSANErrorResponse(nil)
+        guard
+            let iban = account.iban?.description,
+            let accountTransactionsDTO = try? accountManager.loadAccountTransactions(parameters: AccountTransactionsParameters(accountNumbers: [iban])).get() else {
+            return BSANErrorResponse(nil)
+        }
+        var accountTransactionListsDTO = SANLegacyLibrary.AccountTransactionsListDTO()
+        let transactions = accountTransactionsDTO.entries?.compactMap({ (element) -> SANLegacyLibrary.AccountTransactionDTO? in
+            return AccountTransactionDTOAdapter.adaptPLAccountTransactionToAccountTransaction(element)
+        })
+        accountTransactionListsDTO.transactionDTOs = transactions ?? [SANLegacyLibrary.AccountTransactionDTO]()
+        return BSANOkResponse(accountTransactionListsDTO)
     }
     
     func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, dateFilter: DateFilter?, cached: Bool) throws -> BSANResponse<AccountTransactionsListDTO> {
@@ -52,14 +62,27 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
     }
     
     func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
+        guard
+            let accountNumber = account.iban?.description else {
+            return BSANErrorResponse(nil)
+        }
+        let adaptedFilter = TransferFilterInputAdapter.adaptToPLFilter(accountNumber: accountNumber, filter: filter)
+        guard let accountTransactionsDTO = try? accountManager.loadAccountTransactions(parameters: adaptedFilter).get() else {
+            return BSANErrorResponse(nil)
+        }
+        var accountTransactionListsDTO = SANLegacyLibrary.AccountTransactionsListDTO()
+        let transactions = accountTransactionsDTO.entries?.compactMap({ (element) -> SANLegacyLibrary.AccountTransactionDTO? in
+            return AccountTransactionDTOAdapter.adaptPLAccountTransactionToAccountTransaction(element)
+        })
+        accountTransactionListsDTO.transactionDTOs = transactions ?? [SANLegacyLibrary.AccountTransactionDTO]()
+        return BSANOkResponse(accountTransactionListsDTO)
+    }
+    
+    func getAccountTransactionDetail(from transactionDTO: SANLegacyLibrary.AccountTransactionDTO) throws -> BSANResponse<AccountTransactionDetailDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func getAccountTransactionDetail(from transactionDTO: AccountTransactionDTO) throws -> BSANResponse<AccountTransactionDetailDTO> {
-        return BSANErrorResponse(nil)
-    }
-    
-    func checkAccountMovementPdf(accountDTO: SANLegacyLibrary.AccountDTO, accountTransactionDTO: AccountTransactionDTO) throws -> BSANResponse<DocumentDTO> {
+    func checkAccountMovementPdf(accountDTO: SANLegacyLibrary.AccountDTO, accountTransactionDTO: SANLegacyLibrary.AccountTransactionDTO) throws -> BSANResponse<DocumentDTO> {
         return BSANErrorResponse(nil)
     }
     

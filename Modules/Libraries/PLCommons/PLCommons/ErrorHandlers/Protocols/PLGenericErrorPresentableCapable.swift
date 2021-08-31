@@ -12,7 +12,7 @@ import UI
 public protocol PLGenericErrorPresentableCapable: LoadingViewPresentationCapable, DialogViewPresentationCapable {
     func showLoadingWith(loadingText: LoadingText, completion: (() -> Void)?)
     func presentError(_ error: PLGenericError, completion: @escaping (() -> Void))
-    func presentError(_ textKey: String, completion: @escaping (() -> Void))
+    func presentError(_ textKeys: (titleKey: String, descriptionKey: String), completion: @escaping (() -> Void))
     func presentError(_ error: PLGenericError)
 }
 
@@ -36,28 +36,58 @@ extension UIViewController : PLGenericErrorPresentableCapable {
     }
     
     public func presentError(_ error: PLGenericError, completion: @escaping (() -> Void) = {}) {
-        let text:LocalizedStylableText = localized(error.getErrorDesc())
-        let config = LocalizedStylableTextConfiguration(alignment: .center)
-        
-        associatedLoadingView.dismissLoading(completion: { [weak self] in
-            self?.associatedDialogView.showDialog(items: [.styledConfiguredText(text,configuration: config)],
-                                                  action: Dialog.Action(title: localized("generic_button_understand"),
-                                                                        style: .red,
-                                                                        action: completion),
-                                                  closeButton: Dialog.CloseButton.none)
-        })
+        self.presentError(localizedTitleKey: "pl_onboarding_alert_genFailedTitle",
+                          localizedDescriptionKey: error.getErrorDesc(),
+                          completion: completion)
     }
     
-    public func presentError(_ textKey: String, completion: @escaping (() -> Void) = {}) {
-        let textStylableText:LocalizedStylableText = localized(textKey)
-        let config = LocalizedStylableTextConfiguration(alignment: .center)
-        
-        associatedLoadingView.dismissLoading(completion: { [weak self] in
-            self?.associatedDialogView.showDialog(items: [.styledConfiguredText(textStylableText,configuration: config)],
-                                                  action: Dialog.Action(title: localized("generic_button_understand"),
-                                                                        style: .red,
-                                                                        action: completion),
-                                                  closeButton: Dialog.CloseButton.none)
+    public func presentError(_ textKeys: (titleKey: String, descriptionKey: String),
+                             completion: @escaping (() -> Void) = {}) {
+        self.presentError(localizedTitleKey: textKeys.titleKey,
+                          localizedDescriptionKey: textKeys.descriptionKey,
+                          completion: completion)
+    }
+}
+
+private extension UIViewController {
+
+    enum Constants {
+        static let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 19.0, right: 9.0)
+        static let image = LisboaDialogImageViewItem(image: Assets.image(named: "icnDanger"), size: (70, 70))
+        static let titleFont = UIFont.santander(family: .text, type: .bold, size: 28)
+        static let descriptionFont = UIFont.santander(family: .text, type: .light, size: 16)
+    }
+
+    func presentError(localizedTitleKey: String,
+                      localizedDescriptionKey: String,
+                      completion: @escaping (() -> Void) = {}) {
+        let components: [LisboaDialogItem] = [
+            .image(Constants.image),
+            .styledText(
+                LisboaDialogTextItem(
+                    text: localized(localizedTitleKey),
+                    font: Constants.titleFont,
+                    color: .lisboaGray,
+                    alignament: .center,
+                    margins: Constants.absoluteMargin)),
+            .margin(12.0),
+            .styledText(
+                LisboaDialogTextItem(
+                    text:  localized(localizedDescriptionKey),
+                    font: Constants.descriptionFont,
+                    color: .lisboaGray,
+                    alignament: .center,
+                    margins: Constants.absoluteMargin)),
+            .margin(24.0),
+            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"),
+                                                       type: LisboaDialogActionType.red,
+                                                       margins: (left: 16, right: 16), action: completion)),
+            .margin(16.0)
+        ]
+        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
+        self.associatedLoadingView.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            builder.showIn(self.associatedDialogView)
         })
     }
 }

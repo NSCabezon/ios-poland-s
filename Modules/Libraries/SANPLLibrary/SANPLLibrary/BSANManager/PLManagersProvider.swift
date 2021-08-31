@@ -11,7 +11,7 @@ public protocol PLManagersProviderProtocol {
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
     func getAccountsManager() -> PLAccountManagerProtocol
     func getCardsManager() -> PLCardsManagerProtocol
-//    func getCardTransactionsManager() -> PTCardTransactionsManagerProtocol
+    func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
 //    func getAuthManager() -> PTAuthManagerProtocol
 //    func getDepositsManager() -> PTDepositsManagerProtocol
 //    func getLoansManager() -> PTLoansManagerProtocol
@@ -32,7 +32,7 @@ public final class PLManagersProvider {
     private let globalPositionManager: PLGlobalPositionManagerProtocol
     private let accountManager: PLAccountManager
     private let cardsManager: PLCardsManager
-//    private let cardTransactionsManager: PTCardTransactionsManager
+    private let cardTransactionsManager: PLCardTransactionsManager
 //    private let authManager: PTAuthManager
 //    private let depositsManager: PTDepositsManager
     private let loansManager: PLLoanManager
@@ -60,7 +60,7 @@ public final class PLManagersProvider {
                                                              networkProvider: networkProvider,
                                                              demoInterpreter: demoInterpreter)
         self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider)
-//        self.cardTransactionsManager = PTCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.cardTransactionsManager = PLCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 //        self.authManager = PTAuthManager(networkProvider: networkProvider, dataProvider: bsanDataProvider)
 //        self.depositsManager = PTDepositsManager(networkProvider: networkProvider, bsanDataProvider: bsanDataProvider)
@@ -145,9 +145,9 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 //        return self.mbwayManager
 //    }
 //
-//    public func getCardTransactionsManager() -> PTCardTransactionsManagerProtocol {
-//        self.cardTransactionsManager
-//    }
+    public func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol {
+        self.cardTransactionsManager
+    }
 //
 //    public func getCustomersManager() -> PTCustomersManagerProtocol {
 //        return self.customersManager

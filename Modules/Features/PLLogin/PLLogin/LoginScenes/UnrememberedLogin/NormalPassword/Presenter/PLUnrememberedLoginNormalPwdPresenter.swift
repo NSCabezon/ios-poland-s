@@ -12,17 +12,12 @@ import PLLegacyAdapter
 
 protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLUnrememberedLoginNormalPwdViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func login(password: String)
     func viewDidLoad()
-    func viewWillAppear()
-    func recoverPasswordOrNewRegistration()
-    func didSelectChooseEnvironment()
 }
 
 final class PLUnrememberedLoginNormalPwdPresenter {
     weak var view: PLUnrememberedLoginNormalPwdViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
@@ -60,47 +55,16 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
             self.view?.setUserImage(image: image)
         }
     }
-
-    func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
-    }
-
-    func recoverPasswordOrNewRegistration() {
-        // TODO
-    }
-
-    func didSelectChooseEnvironment() {
-        // TODO
-    }
 }
 
-extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterLayerProtocol {
+extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterErrorHandlerProtocol {
 
     var associatedErrorView: PLGenericErrorPresentableCapable? {
         return self.view
     }
-    
-    func handle(event: LoginProcessLayerEvent) {
-        // TODO
-    }
 
-    func handle(event: SessionProcessEvent) {
-        // TODO
-    }
-    
-    func willStartSession() {
-        // TODO
-    }
-    
     func genericErrorPresentedWith(error: PLGenericError) {
         self.coordinator.goBackToLogin()
-    }
-
-    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
-        self.publicFilesEnvironment = publicFilesEnvironment
-        let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
-        let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
-        self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
     }
 }
 

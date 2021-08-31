@@ -27,12 +27,18 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
             let challenge = getChallenge(from: loginData.secondFactorData)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state,
                                                         register: loginData.trustedComputerData?.register)
-            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId, loginImage: loginData.loginImageData ,passwordMaskEnabled: loginData.passwordMaskEnabled, passwordMask: loginData.passwordMask, defaultChallenge: challenge, trustedComputerData: trustedComputer, secondFactorFinalState: loginData.secondFactorData.finalState, unblockRemainingTimeInSecs: loginData.secondFactorData.unblockAvailableIn)
+            let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId,
+                                                     loginImage: loginData.loginImageData,
+                                                     passwordMaskEnabled: loginData.passwordMaskEnabled,
+                                                     passwordMask: loginData.passwordMask,
+                                                     defaultChallenge: challenge,
+                                                     trustedComputerData: trustedComputer,
+                                                     secondFactorFinalState: loginData.secondFactorData.finalState,
+                                                     unblockRemainingTimeInSecs: loginData.secondFactorData.unblockAvailableIn)
 
-            if loginData.secondFactorData.finalState.elementsEqual("BLOCKED") && loginData.secondFactorData.unblockAvailableIn == nil {
+            guard loginData.isBlocked() == false else {
                 return UseCaseResponse.error(PLUseCaseErrorOutput(error: .temporaryLocked))
             }
-
             return UseCaseResponse.ok(loginOutput)
         case .failure(let error):
             return .error(self.handle(error: error))

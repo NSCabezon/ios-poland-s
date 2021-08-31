@@ -9,7 +9,6 @@ import Foundation
 
 public protocol DemoUserProtocol {
     func isDemoUser(userName: String) -> Bool
-    func getAnswerNumber(serviceName: PLLocalServiceName) -> Int
     var isDemoModeAvailable: Bool { get }
 }
 
@@ -28,10 +27,6 @@ public class DemoUserInterpreter: DemoUserProtocol {
     public func isDemoUser(userName: String) -> Bool {
         return userName.uppercased() == DemoUserInterpreter.demoUser
     }
-    
-    public func getAnswerNumber(serviceName: PLLocalServiceName) -> Int {
-        return PLLocalAnswerType.success.rawValue
-    }
 }
 
 public enum PLLocalAnswerType: Int {
@@ -48,6 +43,8 @@ public enum PLLocalServiceName: String {
     case accountDetails = "accountDetails"
     case swiftBranches = "swiftBranches"
     case cardWithHoldings = "cardWithholdings"
+    case accountTransactions = "accountTransactions"
+    case searchbycard = "searchbycard"
     case pubKey = "pub_key"
     case authenticateInit = "authenticate_init"
     case authenticate = "authenticate"

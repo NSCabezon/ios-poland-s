@@ -5,7 +5,7 @@ import Commons
 import PLCommons
 import IQKeyboardManagerSwift
 
-protocol PLUnrememberedLoginMaskedPwdViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
+protocol PLUnrememberedLoginMaskedPwdViewProtocol: PLGenericErrorPresentableCapable {
     func resetForm()
     func setUserIdentifier(_ identifier: String)
     func setUserImage(image: UIImage)
@@ -20,7 +20,6 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     @IBOutlet private weak var regardLabel: UILabel!
     @IBOutlet private weak var documentTextField: PLDocumentTextField!
     @IBOutlet private weak var loginButton: PLLoginButton!
-    @IBOutlet weak var environmentButton: UIButton?
     @IBOutlet weak var buttonBottomAnchorConstant: NSLayoutConstraint!
     private lazy var maskedPasswordConstraintWithoutKeyboard: NSLayoutConstraint? = {
         return self.maskedPasswordInputCodeView.topAnchor.constraint(equalTo: self.documentTextField.bottomAnchor, constant: 24)
@@ -75,7 +74,6 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.presenter.viewWillAppear()
         self.addKeyboardObserver()
         self.setNavigationBar()
     }
@@ -104,14 +102,6 @@ extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedP
         //TODO: Need to add a reset for PLUIInputCodeView
     }
     
-    @IBAction func didSelectChooseEnvironment(_ sender: Any) {
-        self.chooseEnvironment()
-    }
-    
-    func chooseEnvironment() {
-        self.presenter.didSelectChooseEnvironment()
-    }
-
     func setUserIdentifier(_ identifier: String) {
         self.documentTextField.setText(identifier)
     }
@@ -136,7 +126,6 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func commonInit() {
-        setupEnvironmentButton()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
         configureRegardLabel()
         configureBackground()
@@ -259,10 +248,6 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
             self?.view.layoutSubviews()
         }
     }
-    
-    func recoverPasswordOrNewRegistration() {
-        self.presenter.recoverPasswordOrNewRegistration()
-    }
 }
 
 extension PLUnrememberedLoginMaskedPwdViewController: RememberMeViewDelegate {
@@ -295,8 +280,5 @@ extension  PLUnrememberedLoginMaskedPwdViewController: PLUIInputCodeViewDelegate
     }
 
     func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didDelete position: NSInteger) {
     }
 }

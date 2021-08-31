@@ -11,6 +11,7 @@ public enum PLGenericError {
     
     case noConnection
     case unknown
+    case other(_ errorTypeDescription: String)
     case applicationNotWorking
     case unauthorized
     
@@ -24,8 +25,10 @@ public enum PLGenericError {
             return localized("generic_error_internetConnection")
         case .unknown:
             return localized("generic_error_txt")
+        case .other(_):
+            return localized("generic_error_txt")
         case .applicationNotWorking:
-            return localized("pl_login_alert_applicationNotWorking")
+            return localized("pl_onboarding_alert_genFailedText")
         case .unauthorized:
             return localized("pl_login_alert_loginError")
         }

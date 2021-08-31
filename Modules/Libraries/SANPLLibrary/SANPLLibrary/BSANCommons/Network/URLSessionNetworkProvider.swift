@@ -108,6 +108,8 @@ private extension URLSessionNetworkProvider {
             return .success(data)
         case 401:
             return .failure(NetworkProviderError.unauthorized)
+        case 422:
+            return .failure(NetworkProviderError.unprocessableEntity)
         default:
             let error = NetworkProviderResponseError(code: statusCode,
                                                 data: data,
@@ -130,6 +132,8 @@ private extension URLSessionNetworkProvider {
             return .success(NetworkProviderResponseWithHeaders(response: data, headers: httpResponse.allHeaderFields))
         case 401:
             return .failure(NetworkProviderError.unauthorized)
+        case 422:
+            return .failure(NetworkProviderError.unprocessableEntity)
         default:
             let error = NetworkProviderResponseError(code: statusCode,
                                                 data: data,
@@ -154,6 +158,8 @@ private extension URLSessionNetworkProvider {
                                                               statusCode: httpResponse.statusCode))
         case 401:
             return .failure(NetworkProviderError.unauthorized)
+        case 422:
+            return .failure(NetworkProviderError.unprocessableEntity)
         default:
             let error = NetworkProviderResponseError(code: statusCode,
                                                 data: data,

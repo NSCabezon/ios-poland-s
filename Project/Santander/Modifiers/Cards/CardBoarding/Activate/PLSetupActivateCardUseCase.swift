@@ -9,6 +9,7 @@ import DomainCommon
 import Models
 import Operative
 import SANLegacyLibrary
+import CoreDomain
 import UI
 
 final class PLSetupActivateCardUseCase: UseCase<SetupActivateCardUseCaseInput, SetupActivateCardUseCaseOkOutput, StringErrorOutput> {

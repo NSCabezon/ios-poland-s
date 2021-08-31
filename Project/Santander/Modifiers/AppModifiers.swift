@@ -51,6 +51,9 @@ final class AppModifiers {
     private lazy var loansModifier: LoansModifierProtocol = {
         return PLLoanModifier(dependenciesEngine: dependencieEngine)
     }()
+    private lazy var loanDetailModifier: LoanDetailModifierProtocol = {
+        return PLLoanDetailModifier(dependenciesEngine: dependencieEngine)
+    }()
     private lazy var currencyProvider: AmountFormatterProvider & CurrencyFormatterProvider = {
         return PLNumberFormatter()
     }()
@@ -108,6 +111,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: LoansModifierProtocol.self) { resolver in
             return self.loansModifier
         }
+        self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { resolver in
+            return self.loanDetailModifier
+        }
         self.dependencieEngine.register(for: AmountFormatterProvider.self) { _ in
             return self.currencyProvider
         }
@@ -131,6 +137,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
             return self.otherOperativesModifier
+        }
+        self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
+            return PLAccountTransaction()
         }
 //        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
 //            return self.transferHomeActionModifier

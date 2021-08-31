@@ -18,6 +18,7 @@ final class PLTrustedDevicePinCoordinator: ModuleCoordinator {
         return PLVoiceBotCoordinator(dependenciesResolver: self.dependenciesEngine,
                                      navigationController: self.navigationController)
     }()
+
     private let dependenciesEngine: DependenciesDefault
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {

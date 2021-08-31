@@ -18,11 +18,6 @@ public struct TrustedComputerEntity {
     public let register: Bool?
 }
 
-public enum UserIdentifierType {
-    case nik
-    case alias
-}
-
 public enum PasswordType {
     case normal
     case masked(mask: Int)
@@ -40,4 +35,20 @@ public struct SecondFactorDataAuthenticationEntity {
 public struct EncryptionKeyEntity {
     let modulus: String
     let exponent: String
+}
+
+enum LoginType {
+    case notPersisted(info: LoginTypeInfo)
+    case persisted(info: LoginTypeInfo)
+
+    var indentification: String {
+        switch self {
+        case .notPersisted(let info): return info.identification
+        case .persisted(let info): return info.identification
+        }
+    }
+}
+
+struct LoginTypeInfo {
+    var identification: String = ""
 }

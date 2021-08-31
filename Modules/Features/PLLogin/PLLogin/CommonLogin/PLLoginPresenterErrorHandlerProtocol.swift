@@ -27,9 +27,12 @@ extension PLLoginPresenterErrorHandlerProtocol {
             case .unauthorized:
                 self.handle(error: .unauthorized)
             case .emptyPass:
-                self.associatedErrorView?.presentError("login_popup_passwordRequired", completion: {
+                self.associatedErrorView?.presentError(("pl_onboarding_alert_genFailedTitle",
+                                                        "login_popup_passwordRequired"), completion: {
                     otherErrorPresentedWith(error: loginError)
                 })
+            case .temporaryLocked:
+                self.handle(error: .other("TEMPORARY_LOCKED"))
              break
             default:
                 self.handle(error: .applicationNotWorking)

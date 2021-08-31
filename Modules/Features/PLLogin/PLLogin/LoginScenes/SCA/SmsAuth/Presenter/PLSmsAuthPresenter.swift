@@ -17,7 +17,6 @@ import os
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
-    var loginManager: PLLoginLayersManagerDelegate? { get set }
     func viewDidLoad()
     func viewWillAppear()
     func authenticate(smsCode: String)
@@ -32,7 +31,6 @@ enum EncryptionError: Error {
 
 final class PLSmsAuthPresenter {
     weak var view: PLSmsAuthViewProtocol?
-    weak var loginManager: PLLoginLayersManagerDelegate?
     internal let dependenciesResolver: DependenciesResolver
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
@@ -64,7 +62,7 @@ final class PLSmsAuthPresenter {
 
 extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     func didSelectLoginRestartAfterTimeOut() {
-        // TODO
+        self.coordinator.goToUnrememberedLogindScene()
     }
 
     func viewDidLoad() {
@@ -72,21 +70,12 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     }
 
     func viewWillAppear() {
-        self.loginManager?.getCurrentEnvironments()
     }
 
     func authenticate(smsCode: String) {
         self.doAuthenticate(smscode: smsCode)
     }
-
-    func recoverPasswordOrNewRegistration() {
-        // TODO
-    }
-
-    func didSelectChooseEnvironment() {
-        // TODO
-    }
-
+    
     func goToDeviceTrustDeviceData() {
         self.view?.dismissLoading(completion: { [weak self] in
             self?.coordinator.goToDeviceTrustDeviceData()
@@ -115,6 +104,11 @@ private extension  PLSmsAuthPresenter {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
             return
         }
+        
+        self.view?.showLoading(title: localized("generic_popup_loading"),
+                               subTitle: localized("loading_label_moment"),
+                               completion: nil)
+        
         let authProcessInput = PLAuthProcessInput(scaCode: smscode,
                                                   password: password,
                                                   userId: loginConfiguration.userIdentifier,
@@ -128,7 +122,7 @@ private extension  PLSmsAuthPresenter {
                 self.openSessionAndNavigateToGlobalPosition()
             }
         } onFailure: { [weak self]  error in
-            self?.handle(error: .unauthorized)
+            self?.handleError(error)
         }
     }
 

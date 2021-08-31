@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +13,6 @@
                 <outlet property="backgroundImageView" destination="MFm-pN-t0c" id="7sD-oA-BQB"/>
                 <outlet property="buttonBottomAnchorConstant" destination="3S0-QG-qPE" id="Iiy-8x-flz"/>
                 <outlet property="documentTextField" destination="ALE-qB-Yfr" id="oFy-Tt-zMs"/>
-                <outlet property="environmentButton" destination="Mnk-2a-nRa" id="99a-lc-fSQ"/>
                 <outlet property="loginButton" destination="4yN-eH-7fk" id="hEJ-6A-3Y5"/>
                 <outlet property="regardLabel" destination="Fqj-VQ-BIu" id="QbF-uG-FWT"/>
                 <outlet property="sanIconImageView" destination="ncR-i9-Y80" id="fKm-30-5aB"/>
@@ -75,19 +73,6 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="btnLogin"/>
                     </userDefinedRuntimeAttributes>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mnk-2a-nRa" customClass="ResponsiveButton" customModule="UI">
-                    <rect key="frame" x="368" y="43" width="46" height="71"/>
-                    <color key="backgroundColor" systemColor="systemGrayColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="71" id="rya-LC-7TX"/>
-                    </constraints>
-                    <state key="normal" title="Button">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <connections>
-                        <action selector="didSelectChooseEnvironment:" destination="-1" eventType="touchUpInside" id="yXj-MV-W1F"/>
-                    </connections>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="yqX-5V-s55"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -103,11 +88,9 @@
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="21" id="VuW-XX-4nW"/>
                 <constraint firstItem="4yN-eH-7fk" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" constant="24" id="cle-Z2-7I0"/>
                 <constraint firstItem="ncR-i9-Y80" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-26" id="edJ-9H-8T8"/>
-                <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Mnk-2a-nRa" secondAttribute="trailing" id="gKt-Ox-fig"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="5fR-Jr-Ai5" secondAttribute="trailing" constant="24" id="o5l-97-cfz"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="MFm-pN-t0c" secondAttribute="trailing" id="rt2-fq-6hX"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="top" secondItem="ncR-i9-Y80" secondAttribute="bottom" priority="980" constant="39" id="tcO-Gs-mcx"/>
-                <constraint firstItem="Mnk-2a-nRa" firstAttribute="top" secondItem="yqX-5V-s55" secondAttribute="top" constant="-1" id="w5o-Oq-fAo"/>
                 <constraint firstAttribute="bottom" secondItem="MFm-pN-t0c" secondAttribute="bottom" id="zEq-q9-K6C"/>
                 <constraint firstItem="Fqj-VQ-BIu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ncR-i9-Y80" secondAttribute="bottom" constant="4" id="ziW-NX-L4j"/>
             </constraints>
@@ -119,9 +102,4 @@
             <size key="intrinsicContentSize" width="54" height="34"/>
         </designable>
     </designables>
-    <resources>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>
