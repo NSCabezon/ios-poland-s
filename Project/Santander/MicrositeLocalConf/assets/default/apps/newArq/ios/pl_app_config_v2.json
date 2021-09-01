@@ -113,7 +113,7 @@
 		"enablePersonalAreaBDP": "true",
         "enableTimeLine": "false",
 		"enablePregrantedWidget": "true",
-		"enableGlobalSearch": "false",
+        "enableGlobalSearch": "true",
 		"enableOnlineMessagesInbox": "false",
 		"duplicatedMovementsPhoneNumber": "900811381",
 		"timerLoadingTips": "4",

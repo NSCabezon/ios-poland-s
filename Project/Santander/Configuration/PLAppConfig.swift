@@ -11,6 +11,7 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
+    var isEnabledMailbox = false
     var isScheduledTransferDetailDeleteButtonEnabled = false
     var isScheduledTransferDetailEditButtonEnabled = false
     let isTransferDetailPDFButtonEnabled = true
@@ -28,7 +29,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = true
     let isEnabledPlusButtonPG = true
-    let isEnabledMagnifyingGlass = true
+    let isEnabledMagnifyingGlass = false
     let isEnabledTimeline = true
     let isEnabledPregranted = true
     let languageList: [LanguageType] = [.polish, .english]
