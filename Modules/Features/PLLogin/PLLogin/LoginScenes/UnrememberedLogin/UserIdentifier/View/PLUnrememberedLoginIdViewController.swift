@@ -86,25 +86,11 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
     }
 
     func showAccountPermanentlyBlockedDialog() {
-        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_userBlocked"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 16),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: {})
-        self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
     }
 
     func showInvalidSCADialog(_ completion: @escaping (() -> Void)) {
-        let desc = Dialog.Item.styledConfiguredText(localized("pl_login_alert_attemptLast"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 16),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: completion)
-        self.showDialog(items: [desc], action: acceptAction, isCloseOptionAvailable: false)
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_attemptLast", completion: completion)
     }
 
     func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration) {

@@ -165,16 +165,9 @@ private extension PLSmsAuthViewController {
     }
 
     func showExpiredSignatureMessage() {
-        let message = Dialog.Item.styledConfiguredText(localized("pl_login_alert_expiredSignature"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 16),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { [weak self] in
-                self?.presenter.didSelectLoginRestartAfterTimeOut()
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_expiredSignature", completion: { [weak self] in
+            self?.presenter.didSelectLoginRestartAfterTimeOut()
         })
-        self.showDialog(items: [message], action: acceptAction, isCloseOptionAvailable: false)
     }
 
     func initTimeValidateSMS() {

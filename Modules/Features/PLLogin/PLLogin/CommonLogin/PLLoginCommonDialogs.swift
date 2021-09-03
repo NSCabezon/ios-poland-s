@@ -10,6 +10,28 @@ import UI
 import Commons
 
 final class PLLoginCommonDialogs {
+
+    static func presentGenericDialogWithText(on viewController: UIViewController, textKey: String, completion: (() -> Void)? = nil) {
+        let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 16.0, right: 16.0)
+        let components: [LisboaDialogItem] = [
+            .margin(16.0),
+            .styledText(
+                LisboaDialogTextItem(
+                    text: localized(textKey),
+                    font: .santander(family: .text, type: .regular, size: 16),
+                    color: .lisboaGray,
+                    alignament: .center,
+                    margins: absoluteMargin)),
+            .margin(24.0),
+            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"),
+                                                              type: .red,
+                                                              margins: absoluteMargin,
+                                                              action: completion ?? {} )),
+            .margin(16.0)
+        ]
+        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
+        builder.showIn(viewController)
+    }
     
     static func presentCloseDialog(on viewController: UIViewController,
                         onCancel: @escaping () -> Void,
