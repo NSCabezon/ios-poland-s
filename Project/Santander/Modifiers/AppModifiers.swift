@@ -7,6 +7,7 @@
 
 //import UI
 //import Models
+import RetailLegacy
 import Commons
 import GlobalPosition
 import Transfer
@@ -140,6 +141,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
+        }
+        self.dependencieEngine.register(for: OnboardingPermissionOptionsProtocol.self) { _ in
+            return OnboardingPermissionOptions()
         }
 //        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
 //            return self.transferHomeActionModifier
