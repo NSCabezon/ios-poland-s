@@ -69,6 +69,10 @@ private extension PLUnrememberedLoginIdCoordinator {
             return authProcessUseCase
         }
         
+        self.dependenciesEngine.register(for: PLValidateVersionUseCase.self) { resolver in
+            return PLValidateVersionUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdCoordinatorProtocol.self) { _ in
             return self
         }

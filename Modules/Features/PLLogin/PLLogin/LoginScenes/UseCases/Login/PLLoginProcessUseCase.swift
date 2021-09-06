@@ -12,6 +12,10 @@ import PLCommons
 final class PLLoginProcessUseCase {
     
     var dependenciesEngine: DependenciesResolver & DependenciesInjector
+    
+    private var validateVersionUseCase: PLValidateVersionUseCase {
+        self.dependenciesEngine.resolve(for: PLValidateVersionUseCase.self)
+    }
 
     private var loginUseCase: PLLoginUseCase {
         self.dependenciesEngine.resolve(for: PLLoginUseCase.self)
@@ -41,49 +45,54 @@ final class PLLoginProcessUseCase {
                         onSuccess: @escaping (UnrememberedLoginConfiguration?) -> Void,
                         onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
         
-            let identifierType = self.getIdentifierType(identification)
-            var caseInput: PLLoginUseCaseInput
-            var configuration: UnrememberedLoginConfiguration? = nil
+        let identifierType = self.getIdentifierType(identification)
+        var caseInput: PLLoginUseCaseInput
+        var configuration: UnrememberedLoginConfiguration? = nil
             
-            switch identifierType {
-            case .nik:
-                caseInput = PLLoginUseCaseInput(userId: identification, userAlias: nil)
-            case .alias:
-                caseInput = PLLoginUseCaseInput(userId: nil, userAlias: identification)
-            }
-            guard let loginUseCase = self.loginUseCase.setRequestValues(requestValues: caseInput) as? PLLoginUseCase else {
-                return
-            }
+        switch identifierType {
+        case .nik:
+            caseInput = PLLoginUseCaseInput(userId: identification, userAlias: nil)
+        case .alias:
+            caseInput = PLLoginUseCaseInput(userId: nil, userAlias: identification)
+        }
+        guard let loginUseCase = self.loginUseCase.setRequestValues(requestValues: caseInput) as? PLLoginUseCase else {
+            return
+        }
             
-            Scenario(useCase: setDemoUserUseCase, input: PLSetDemoUserUseCaseInput(userId: identification))
-                .execute(on: self.dependenciesEngine.resolve())
-                .then(scenario: { (_) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
-                    return Scenario(useCase: loginUseCase, input: caseInput)
-                })
-                .then(scenario: { [weak self] output ->Scenario<Void, PLGetPublicKeyUseCaseOkOutput,
+        Scenario(useCase: validateVersionUseCase)
+            .execute(on: self.dependenciesEngine.resolve())
+            .then(scenario: { [weak self] Void -> Scenario<PLSetDemoUserUseCaseInput, PLSetDemoUserUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { return nil }
+                let demoUserInput = PLSetDemoUserUseCaseInput(userId: identification)
+                return Scenario(useCase: self.setDemoUserUseCase, input: demoUserInput)
+            })
+            .then(scenario: { (_) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
+                return Scenario(useCase: loginUseCase, input: caseInput)
+            })
+            .then(scenario: { [weak self] output ->Scenario<Void, PLGetPublicKeyUseCaseOkOutput,
                                                                 PLUseCaseErrorOutput<LoginErrorType>>? in
-                    guard let self = self else { return nil }
-                    var passwordType = PasswordType.normal
-                    if output.passwordMaskEnabled == true, let mask = output.passwordMask {
-                        passwordType = PasswordType.masked(mask: mask)
-                    }
-                    let challenge = ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType,
+                guard let self = self else { return nil }
+                var passwordType = PasswordType.normal
+                if output.passwordMaskEnabled == true, let mask = output.passwordMask {
+                    passwordType = PasswordType.masked(mask: mask)
+                }
+                let challenge = ChallengeEntity(authorizationType: output.defaultChallenge.authorizationType,
                                                     value: output.defaultChallenge.value)
-                    configuration = UnrememberedLoginConfiguration(userIdentifier: identification,
-                                                                   passwordType: passwordType,
-                                                                   challenge: challenge,
-                                                                   loginImageData: output.loginImage,
-                                                                   password: nil,
-                                                                   secondFactorDataFinalState: output.secondFactorFinalState,
-                                                                   unblockRemainingTimeInSecs: output.unblockRemainingTimeInSecs)
-                    return Scenario(useCase: self.getPublicKeyUseCase)
-                })
-                .onSuccess {  _ in
-                    onSuccess(configuration)
-                }
-                .onError { error in
-                    onFailure(error)
-                }
+                configuration = UnrememberedLoginConfiguration(userIdentifier: identification,
+                                                               passwordType: passwordType,
+                                                               challenge: challenge,
+                                                               loginImageData: output.loginImage,
+                                                               password: nil,
+                                                               secondFactorDataFinalState: output.secondFactorFinalState,
+                                                               unblockRemainingTimeInSecs: output.unblockRemainingTimeInSecs)
+                return Scenario(useCase: self.getPublicKeyUseCase)
+            })
+            .onSuccess {  _ in
+                onSuccess(configuration)
+            }
+            .onError { error in
+                onFailure(error)
+            }
         }
 }
 

@@ -8,6 +8,7 @@ import IQKeyboardManagerSwift
 protocol PLUnrememberedLoginIdViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func showAccountPermanentlyBlockedDialog()
+    func showDeprecatedVersionDialog()
     func showInvalidSCADialog(_ completion: @escaping (() -> Void))
     func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration)
 }
@@ -83,6 +84,12 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
     
     func resetForm() {
         self.documentTextField?.setText("")
+    }
+    
+    func showDeprecatedVersionDialog() {
+        PLLoginCommonDialogs.presentDeprecatedVersionDialog(on: self) { [weak self] in
+            self?.presenter.openAppStore()
+        }
     }
 
     func showAccountPermanentlyBlockedDialog() {
@@ -165,7 +172,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).text
     }
 
     func configureNavigationController() {

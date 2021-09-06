@@ -33,7 +33,8 @@ extension PLLoginPresenterErrorHandlerProtocol {
                 })
             case .temporaryLocked:
                 self.handle(error: .other("TEMPORARY_LOCKED"))
-             break
+            case .versionBlocked(let description):
+                self.handle(error: .other(description))
             default:
                 self.handle(error: .applicationNotWorking)
             }
