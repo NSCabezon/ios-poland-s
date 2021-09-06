@@ -28,7 +28,15 @@ class ViewController: UIViewController {
         static let reuseIdentifier = "Cell"
     }
 
-    private var components = [Any]()
+    private lazy var components: [Any] = {
+        var newComponents = [Any]()
+        newComponents.append(self.maskedPasswordView())
+        newComponents.append(self.smsAuthenticationView())
+        newComponents.append(self.smsAuthenticationViewWithDifferentStyle())
+        newComponents.append(self.trustedDevicePinView())
+        newComponents.append(self.interactiveInfoView())
+        return newComponents
+    }()
 
     override func viewDidLoad() {
 
@@ -37,11 +45,6 @@ class ViewController: UIViewController {
 
         self.view.backgroundColor = UIColor(red: 204/256, green: 0, blue: 0, alpha: 1)
         self.view.addSubview(self.tableView)
-
-        components.append(self.maskedPasswordView())
-        components.append(self.smsAuthenticationView())
-        components.append(self.trustedDevicePinView())
-        components.append(self.interactiveInfoView())
 
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),

@@ -43,6 +43,9 @@ public class PLUIInputCodeBoxView: UIView {
     private let borderColor: UIColor
     private let borderWidth: CGFloat
     weak var delegate: PLUIInputCodeBoxViewDelegate?
+    public var isEmpty: Bool {
+        return self.text?.count ?? 0 == 0
+    }
 
     /**
      - Parameters:

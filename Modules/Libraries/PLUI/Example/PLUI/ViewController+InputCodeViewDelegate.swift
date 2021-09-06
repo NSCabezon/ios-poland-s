@@ -39,6 +39,17 @@ extension ViewController {
         return smsAuthenticationView
     }
 
+    func smsAuthenticationViewWithDifferentStyle() -> PLUIInputCodeView {
+
+        let smsAuthenticationView = PLUIInputCodeView(keyboardType: InputCodeViewConstants.SMS.keyboardType,
+                                                      delegate: self,
+                                                      facade: PLUIInputCodeSMSFacade(facadeStyle: .whiteBackground),
+                                                      elementSize: InputCodeViewConstants.SMS.boxSize,
+                                                      requestedPositions: .all,
+                                                      charactersSet: InputCodeViewConstants.SMS.charactersSet)
+        return smsAuthenticationView
+    }
+
     func maskedPasswordView() -> PLUIInputCodeView {
 
         let requestedPositions: [NSInteger] = [1, 3, 5, 8, 14, 16, 19, 20]
