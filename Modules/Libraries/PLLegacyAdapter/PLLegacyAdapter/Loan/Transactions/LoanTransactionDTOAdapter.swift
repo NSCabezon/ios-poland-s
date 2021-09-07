@@ -20,7 +20,8 @@ final class LoanTransactionDTOAdapter {
             loanTransactionDTO.amount = AmountDTO(value: amountValue, currency: currency)
         }
         loanTransactionDTO.operationDate = DateFormats.toDate(string: plLoanTransaction.valueDate ?? "", output: .YYYYMMDD)
-        loanTransactionDTO.dgoNumber?.number = "\(plLoanTransaction.operationId?.postingDate ?? "")/\(plLoanTransaction.operationId?.operationLP ?? 0)"
+        loanTransactionDTO.valueDate = DateFormats.toDate(string: plLoanTransaction.operationId?.postingDate ?? "", output: .YYYYMMDD)
+        loanTransactionDTO.transactionNumber = "\(plLoanTransaction.operationId?.postingDate ?? "")/\(plLoanTransaction.operationId?.operationLP ?? 0)"
         return loanTransactionDTO
     }
 }

@@ -306,6 +306,10 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
     
+    func checkCardExtractPdf(cardDTO: SANLegacyLibrary.CardDTO, dateFilter: DateFilter, isPCAS: Bool) throws -> BSANResponse<DocumentDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
     func checkCardExtractPdf(cardDTO: SANLegacyLibrary.CardDTO, dateFilter: DateFilter) throws -> BSANResponse<DocumentDTO> {
         return BSANErrorResponse(nil)
     }

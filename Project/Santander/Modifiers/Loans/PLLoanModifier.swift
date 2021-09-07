@@ -27,6 +27,7 @@ final class PLLoanModifier {
 }
 
 extension PLLoanModifier: LoansModifierProtocol {
+    
     func formatLoanId(_ loanId: String) -> String {
         //Introduce loan id formatting if necessary
         return loanId
@@ -37,6 +38,10 @@ extension PLLoanModifier: LoansModifierProtocol {
     }
     
     var enabledLoanTransactionDetail: Bool {
+        return true
+    }
+    
+    var useLegacyTransactionDetailStyle: Bool {
         return false
     }
     

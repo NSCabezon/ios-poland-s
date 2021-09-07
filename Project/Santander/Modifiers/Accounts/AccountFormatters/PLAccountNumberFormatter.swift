@@ -17,6 +17,10 @@ final class PLAccountNumberFormatter: AccountNumberFormatterProtocol {
         return IBANFormatter.format(iban: entity?.accountId)
     }
     
+    func accountNumberFormat(_ accountNumber: String?) -> String {
+        return IBANFormatter.format(iban: accountNumber)
+    }
+    
     func getIBANFormatted(_ iban: IBANEntity?) -> String {
         return IBANFormatter.format(iban: iban?.ibanString)
     }
