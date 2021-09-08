@@ -123,7 +123,7 @@
 		"enabledAnalysisZoneMovements": "true",
 		"enabledAnalysisZoneFinancialHealth": "true",
 		"enabledEnvioDineroPGSmart": "false",
-		"enabledAnalysisZone":"false",
+		"enabledAnalysisZone":"true",
 		"billsHomeMonthsLimit": "12",
 		"enablePersonaldoc": "false",
 		"enableTripMode": "true",

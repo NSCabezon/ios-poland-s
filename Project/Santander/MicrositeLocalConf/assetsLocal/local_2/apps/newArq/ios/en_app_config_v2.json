@@ -108,7 +108,7 @@
         "enableGlobalSearch": "true",
         "enablePGTopPregrantedBanner": "false",
         "enablePersonalAreaBDP": "true",
-        "enabledAnalysisZone":"false",
+        "enabledAnalysisZone":"true",
         "enablePersonaldoc": "false",
         "billsHomeMonthsLimit": "10",
         "enableTripMode": "true",

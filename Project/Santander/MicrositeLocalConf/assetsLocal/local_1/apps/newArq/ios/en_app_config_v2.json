@@ -108,7 +108,7 @@
         "enablePregrantedWidget": "true",
         "enablePGTopPregrantedBanner": "true",
         "enablePersonalAreaBDP": "false",
-        "enabledAnalysisZone":"false",
+        "enabledAnalysisZone":"true",
         "enablePersonaldoc": "true",
         "billsHomeMonthsLimit": "5",
         "enableTripMode": "true",
