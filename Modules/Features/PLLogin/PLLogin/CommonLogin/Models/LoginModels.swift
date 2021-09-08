@@ -18,13 +18,17 @@ public struct TrustedComputerEntity {
     public let register: Bool?
 }
 
+public struct SecondFactorDataEntity {
+    public let finalState: String
+    public let challenges: [ChallengeEntity]?
+    public let defaultChallenge: ChallengeEntity
+    public let expired: Bool?
+    public let unblockAvailableIn: Double?
+}
+
 public enum PasswordType {
     case normal
     case masked(mask: Int)
-}
-
-struct SecondFactorDataEntity {
-    let defaultChallenge: ChallengeEntity
 }
 
 public struct SecondFactorDataAuthenticationEntity {

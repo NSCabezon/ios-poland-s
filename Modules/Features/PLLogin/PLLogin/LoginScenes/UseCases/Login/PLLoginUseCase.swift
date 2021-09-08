@@ -22,16 +22,23 @@ final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput,
         let result = try managerProvider.getLoginManager().doLogin(parameters)
         switch result {
         case .success(let loginData):
-            
-            // TODO: Check if loginData.userId must be a string
-            let challenge = getChallenge(from: loginData.secondFactorData)
             let trustedComputer = TrustedComputerEntity(state: loginData.trustedComputerData?.state,
                                                         register: loginData.trustedComputerData?.register)
+            let secondFactorChallengeEntities = loginData.secondFactorData.challenges?.compactMap{ ChallengeEntity(authorizationType: $0.authorizationType,
+                                                                                                                   value: $0.value)
+            }
+            let defaultChallenge = ChallengeEntity(authorizationType: loginData.secondFactorData.defaultChallenge.authorizationType,
+                                                    value: loginData.secondFactorData.defaultChallenge.value)
+            let secondFactorData = SecondFactorDataEntity(finalState: loginData.secondFactorData.finalState,
+                                                          challenges: secondFactorChallengeEntities,
+                                                          defaultChallenge: defaultChallenge,
+                                                          expired: loginData.secondFactorData.expired,
+                                                          unblockAvailableIn: loginData.secondFactorData.unblockAvailableIn)
             let loginOutput = PLLoginUseCaseOkOutput(userId: loginData.userId,
                                                      loginImage: loginData.loginImageData,
                                                      passwordMaskEnabled: loginData.passwordMaskEnabled,
                                                      passwordMask: loginData.passwordMask,
-                                                     defaultChallenge: challenge,
+                                                     secondFactorData:  secondFactorData,
                                                      trustedComputerData: trustedComputer,
                                                      secondFactorFinalState: loginData.secondFactorData.finalState,
                                                      unblockRemainingTimeInSecs: loginData.secondFactorData.unblockAvailableIn)
@@ -57,28 +64,6 @@ private extension PLLoginUseCase {
             return nil
         }
     }
-    
-    func getChallenge(from secondFactorData: SecondFactorDataDTO) -> ChallengeEntity {
-        let challenge: ChallengeEntity
-        let defaultChallenge = secondFactorData.defaultChallenge
-        switch defaultChallenge.authorizationType {
-        case .softwareToken:
-            if let smsChallenge = secondFactorData.challenges?.first(where: { $0.authorizationType == .sms }) {
-                challenge = ChallengeEntity(authorizationType: smsChallenge.authorizationType,
-                                            value: smsChallenge.value)
-            } else if let hardwareChallenge = secondFactorData.challenges?.first(where: { $0.authorizationType == .tokenTime || $0.authorizationType == .tokenTimeCR }) {
-                challenge = ChallengeEntity(authorizationType: hardwareChallenge.authorizationType,
-                                            value: hardwareChallenge.value)
-            } else {
-                challenge = ChallengeEntity(authorizationType: defaultChallenge.authorizationType,
-                                            value: defaultChallenge.value)
-            }
-        default:
-            challenge = ChallengeEntity(authorizationType: defaultChallenge.authorizationType,
-                                        value: defaultChallenge.value)
-        }
-        return challenge
-    }
 }
 
 extension PLLoginUseCase: Cancelable {
@@ -96,7 +81,7 @@ public struct PLLoginUseCaseOkOutput {
     public let loginImage: String?
     public let passwordMaskEnabled: Bool?
     public let passwordMask: Int?
-    public let defaultChallenge: ChallengeEntity
+    public let secondFactorData: SecondFactorDataEntity
     public let trustedComputerData: TrustedComputerEntity?
     public let secondFactorFinalState: String
     public let unblockRemainingTimeInSecs: Double?
