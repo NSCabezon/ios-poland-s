@@ -62,6 +62,7 @@ public final class PLManagersProviderAdapter {
     private let fintechManager: PLFintechManagerAdapter
     private let signBasicOperationManager: PLSignBasicOperationManagerAdapter
     private let subscriptionManager: PLSubscriptionManagerAdapter
+    private let customerManager: PLCustomerManagerAdapter
 
     public init(bsanDataProvider:SANPLLibrary.BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -119,6 +120,7 @@ public final class PLManagersProviderAdapter {
         self.fintechManager = PLFintechManagerAdapter()
         self.signBasicOperationManager = PLSignBasicOperationManagerAdapter()
         self.subscriptionManager = PLSubscriptionManagerAdapter()
+        self.customerManager = PLCustomerManagerAdapter(customerManager: self.plManagersProvider.getCustomerManager(), bsanDataProvider: bsanDataProvider)
     }
 }
 
@@ -208,7 +210,7 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
     }
     
     public func getBsanPersonDataManager() -> BSANPersonDataManager {
-        return self.personDataManager
+        return self.customerManager
     }
     
     public func getBsanTouchIdManager() -> BSANTouchIdManager {

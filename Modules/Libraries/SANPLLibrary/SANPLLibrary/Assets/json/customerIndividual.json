@@ -1,0 +1,40 @@
+{
+    "12345678Z": {
+        "0": {
+            "contactData": {
+                "phoneNo": {
+                    "prefix": "48",
+                    "number": "512998074"
+                },
+                "email": "XXX@SANTANDER.PL"
+            },
+            "address": {
+                "name": "JAN KOWALSKI",
+                "city": "JASTRZĘBIE-ZDRÓJ",
+                "street": "UL. MARUSARZÓWNY",
+                "propertyNo": "7/9",
+                "zip": "44-330",
+                "countryCode": "616",
+                "voivodship": "24"
+            },
+            "correspondenceAddress": {
+                "name": "JAN KOWALSKI",
+                "city": "JASTRZĘBIE-ZDRÓJ",
+                "street": "UL. MARUSARZÓWNY",
+                "propertyNo": "7/9",
+                "zip": "44-330",
+                "countryCode": "616",
+                "voivodship": "24"
+            },
+            "marketingSegment": "99",
+            "cif": 1631136189,
+            "firstName": "JAN",
+            "secondName": null,
+            "lastName": "KOWALSKI",
+            "dateOfBirth": "1980-02-14",
+            "pesel": "80021414107",
+            "citizenship": "616",
+            "multipleContexts": true
+        }
+    }
+}
