@@ -62,7 +62,7 @@ final class AppModifiers {
         return GetGPCardOperativeModifier()
     }()
     private lazy var getGPAccountsOperativeOptionProtocol: GetGPAccountOperativeModifier = {
-        return GetGPAccountOperativeModifier()
+        return GetGPAccountOperativeModifier(dependenciesEngine: self.dependencieEngine)
     }()
     private lazy var getGPInsuranceProtectionOperativeOptionProtocol: GetGPInsuranceProtectionOperativeModifier = {
         return GetGPInsuranceProtectionOperativeModifier()
