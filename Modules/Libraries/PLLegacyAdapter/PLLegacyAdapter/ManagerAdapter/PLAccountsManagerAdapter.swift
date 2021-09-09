@@ -45,8 +45,8 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
     
     func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, dateFilter: DateFilter?) throws -> BSANResponse<AccountTransactionsListDTO> {
         guard
-            let iban = account.iban?.description,
-            let accountTransactionsDTO = try? accountManager.loadAccountTransactions(parameters: AccountTransactionsParameters(accountNumbers: [iban])).get() else {
+            let accountNumber = account.iban?.description,
+            let accountTransactionsDTO = try? accountManager.loadAccountTransactions(parameters: AccountTransactionsParameters(accountNumbers: [accountNumber])).get() else {
             return BSANErrorResponse(nil)
         }
         var accountTransactionListsDTO = SANLegacyLibrary.AccountTransactionsListDTO()
@@ -79,7 +79,8 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
     }
     
     func getAccountTransactionDetail(from transactionDTO: SANLegacyLibrary.AccountTransactionDTO) throws -> BSANResponse<AccountTransactionDetailDTO> {
-        return BSANErrorResponse(nil)
+        let accountTransactionDetailDTO = AccountTransactionDetailDTOAdapter.adaptPLAccountTransactionToAccountTransactionDetail(transactionDTO)
+        return BSANOkResponse(accountTransactionDetailDTO)
     }
     
     func checkAccountMovementPdf(accountDTO: SANLegacyLibrary.AccountDTO, accountTransactionDTO: SANLegacyLibrary.AccountTransactionDTO) throws -> BSANResponse<DocumentDTO> {

@@ -145,6 +145,12 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: OnboardingPermissionOptionsProtocol.self) { _ in
             return OnboardingPermissionOptions()
         }
+        self.dependencieEngine.register(for: AccountTransactionDetailProtocol.self) { _ in
+            return PLAccountTransactionDetail()
+        }
+        self.dependencieEngine.register(for: AccountTransactionDetailActionProtocol.self) { _ in
+            return PLAccountTransactionDetailAction()
+        }
 //        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
 //            return self.transferHomeActionModifier
 //        }

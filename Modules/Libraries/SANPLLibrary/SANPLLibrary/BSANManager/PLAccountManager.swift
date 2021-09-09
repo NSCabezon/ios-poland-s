@@ -45,7 +45,6 @@ extension PLAccountManager: PLAccountManagerProtocol {
     }
     
     func getWithholdingList(accountNumber: String) throws -> Result<SANPLLibrary.WithholdingListDTO, NetworkProviderError> {
-       
         if let cachedWithholdingList = self.getCachedWithholdingList(accountNumber) {
             return .success(cachedWithholdingList)
         }
@@ -57,7 +56,13 @@ extension PLAccountManager: PLAccountManagerProtocol {
     }
 
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {
+        let accountNumber = parameters?.accountNumbers.first ?? ""
+        if let cachedTransactions = self.getCachedTransactions(accountNumber) {
+            return .success(cachedTransactions)
+        }
+
         let result = try self.accountDataSource.loadAccountTransactions(parameters: parameters)
+        self.processTransactionsResult(accountNumber, result: result)
         return result
     }
 }
@@ -90,6 +95,16 @@ private extension PLAccountManager {
     private func processWithholdingListResult(_ accountNumber: String, result: Result<WithholdingListDTO, NetworkProviderError>) {
         if case .success(let withholdingListDTO) = result {
             self.bsanDataProvider.store(withholdingListDTO: withholdingListDTO, forAccountId: accountNumber)
+        }
+    }
+
+    private func getCachedTransactions(_ accountNumber: String) -> AccountTransactionsDTO? {
+        return self.bsanDataProvider.getAccountTransactions(withAccountId: accountNumber)
+    }
+
+    private func processTransactionsResult(_ accountNumber: String, result: Result<AccountTransactionsDTO, NetworkProviderError>) {
+        if case .success(let transactionsDTO) = result {
+            self.bsanDataProvider.store(accountTransactions: transactionsDTO, forAccountId: accountNumber)
         }
     }
 }
