@@ -45,7 +45,7 @@
 		42BF471526495D3400136E8D /* HostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF471426495D3400136E8D /* HostModule.swift */; };
 		42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF484326497C9200136E8D /* BSANEnvironments.swift */; };
 		42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */; };
-		42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */; };
+		42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF486C264A88B200136E8D /* TealiumCompilation.swift */; };
 		42BF4876264A8E5700136E8D /* AppModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4875264A8E5700136E8D /* AppModifiers.swift */; };
 		42BF5873264D13C900136E8D /* es.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5870264D13C900136E8D /* es.strings */; };
 		42BF5874264D13C900136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5871264D13C900136E8D /* pl.strings */; };
@@ -140,7 +140,7 @@
 		42BF471426495D3400136E8D /* HostModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostModule.swift; sourceTree = "<group>"; };
 		42BF484326497C9200136E8D /* BSANEnvironments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSANEnvironments.swift; sourceTree = "<group>"; };
 		42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySiriAssistant.swift; sourceTree = "<group>"; };
-		42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTealiumCompilation.swift; sourceTree = "<group>"; };
+		42BF486C264A88B200136E8D /* TealiumCompilation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TealiumCompilation.swift; sourceTree = "<group>"; };
 		42BF4875264A8E5700136E8D /* AppModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModifiers.swift; sourceTree = "<group>"; };
 		42BF5870264D13C900136E8D /* es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es.strings; path = "../../i18n-poland/clients/iOS/es.strings"; sourceTree = "<group>"; };
 		42BF5871264D13C900136E8D /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
@@ -493,6 +493,7 @@
 				66BC8FEB26411FFE00654CC5 /* Legacy */,
 				66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */,
 				66BC8A57263FEDF600654CC5 /* AppDependencies.swift */,
+				42BF486C264A88B200136E8D /* TealiumCompilation.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -536,7 +537,6 @@
 				66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */,
 				66BC8FEC2641200900654CC5 /* EmptyTrusteerRepository.swift */,
 				42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */,
-				42BF486C264A88B200136E8D /* EmptyTealiumCompilation.swift */,
 			);
 			path = Legacy;
 			sourceTree = "<group>";
@@ -711,7 +711,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42BF486D264A88B200136E8D /* EmptyTealiumCompilation.swift in Sources */,
+				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
 				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,

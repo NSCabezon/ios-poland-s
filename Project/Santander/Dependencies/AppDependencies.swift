@@ -142,7 +142,7 @@ private extension AppDependencies {
             return EmptySiriAssistant()
         }
         self.dependencieEngine.register(for: TealiumCompilationProtocol.self) { _ in
-            return EmptyTealiumCompilation()
+            return TealiumCompilation()
         }
         self.dependencieEngine.register(for: SharedDependenciesDelegate.self) { _ in
             return self
