@@ -6,7 +6,7 @@
 //
 
 //import UI
-//import Models
+import Models
 import RetailLegacy
 import Commons
 import GlobalPosition
@@ -14,6 +14,8 @@ import Transfer
 import Cards
 import Account
 import Loans
+import SANLegacyLibrary
+import DomainCommon
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -24,20 +26,6 @@ final class AppModifiers {
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
         let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
-    }()
-    private lazy var accountHomeActionModifier: Account.AccountHomeActionModifier = {
-        let modifier = AccountHomeActionModifier(dependenciesResolver: self.dependencieEngine)
-        modifier.setCompletion { resolver in
-            modifier.add(PLAccountHomeActionModifier(dependenciesResolver: resolver))
-        }
-        return modifier
-    }()
-    private lazy var accountOtherOperativesActionModifier: Account.AccountOtherOperativesActionModifier = {
-        let modifier = AccountOtherOperativesActionModifier(dependenciesResolver: self.dependencieEngine)
-        modifier.setCompletion { resolver in
-            modifier.add(PLAccountOtherOperativesActionModifier(dependenciesResolver: resolver))
-        }
-        return modifier
     }()
     private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
         let modifier = CardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
@@ -88,12 +76,6 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: FundModifier.self) { _ in
             return self.fundModifiers
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
-            return self.accountHomeActionModifier
-        }
-        self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
-            return self.accountOtherOperativesActionModifier
-        }
         self.dependencieEngine.register(for: AccountNumberFormatterProtocol.self) { _ in
             return PLAccountNumberFormatter()
         }
@@ -133,9 +115,6 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: GetGPOtherOperativeOptionProtocol.self) { _ in
             return self.getGPOtherOperativeOptionProtocol
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
-            return self.accountHomeActionModifier
-        }
         self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
             return self.otherOperativesModifier
         }
@@ -150,6 +129,17 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: AccountTransactionDetailActionProtocol.self) { _ in
             return PLAccountTransactionDetailAction()
+        }
+        self.dependencieEngine.register(for: GetAccountHomeActionUseCaseProtocol.self) { resolver in
+            return GetPLAccountHomeActionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: GetAccountOtherOperativesActionUseCaseProtocol.self) { resolver in
+            return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
+            return PLAccountHomeActionModifier()
+        }
+        self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in return PLAccountOtherOperativesActionModifier()
         }
 //        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
 //            return self.transferHomeActionModifier
