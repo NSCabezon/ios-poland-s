@@ -32,7 +32,7 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
     }
     
     func hideMoreOptionsButton() -> Bool {
-        return true
+        return false
     }
 
     func isPANMasked() -> Bool {
@@ -66,8 +66,15 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
     }
 
     func validatePullOffersCandidates(values: CustomCardActionValues, offers: [PullOfferLocation : OfferEntity], entity: CardEntity, actionType: CardActionType, action: ((CardActionType, CardEntity) -> Void)?, candidateOffer: Bool) -> CardActionViewModel? {
-        // To be implemented
-        return nil
+        return CardActionViewModel(entity: entity,
+                                   type: actionType,
+                                   action: action,
+                                   isDisabled: isDisabledEntity(values: values, entity: entity),
+                                   renderingMode: isDisabledEntity(values: values, entity: entity) ? .alwaysTemplate : .alwaysOriginal)
+    }
+
+    private func isDisabledEntity(values: CustomCardActionValues, entity: CardEntity) -> Bool {
+        return values.isDisabled(entity)
     }
 
     func loadOffers(dependenciesResolver: DependenciesResolver) -> [PullOfferLocation : OfferEntity] {
