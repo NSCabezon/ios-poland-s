@@ -118,6 +118,7 @@
         "pgTopPregrantedBannerColor": "negro",
         "pgTopPregrantedBannerText1": "{{BOLD}}{{VALUE}}{{/BOLD}} para lo que {{BOLD}}{{COLOR:#EC0000}}tú quieras{{/COLOR}}{{/BOLD}}",
         "enablePersonalAreaBDP": "true",
+        "enableSecuritySettingPersonalArea": "true",
         "enabledAnalysisZone":"true",
         "enablePersonaldoc": "true",
         "billsHomeMonthsLimit": "12",

@@ -16,6 +16,7 @@ import Account
 import Loans
 import SANLegacyLibrary
 import DomainCommon
+import PersonalArea
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -61,7 +62,9 @@ final class AppModifiers {
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
         return OtherOperativesModifier()
     }()
-
+    private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
+        return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
+    }()
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
         self.registerDependencies()
@@ -123,6 +126,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: OnboardingPermissionOptionsProtocol.self) { _ in
             return OnboardingPermissionOptions()
+        }
+        self.dependencieEngine.register(for: PersonalAreaSectionsSecurityModifierProtocol.self) { _ in
+            return self.personalAreaSectionsSecurityModifier
         }
         self.dependencieEngine.register(for: AccountTransactionDetailProtocol.self) { _ in
             return PLAccountTransactionDetail()

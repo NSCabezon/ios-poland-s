@@ -18,6 +18,7 @@ import Models
 import GlobalPosition
 import Account
 import Inbox
+import PersonalArea
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -71,9 +72,9 @@ final class AppDependencies {
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
 //    }()
-//    private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
-//        return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
-//    }()
+    private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
+        return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
+    }()
     
     // MARK: Dependencies init
     init() {
@@ -167,6 +168,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
+        }
+        self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
+            return self.personalAreaSections
         }
     }
 }
