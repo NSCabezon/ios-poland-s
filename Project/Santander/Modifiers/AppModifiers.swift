@@ -14,6 +14,7 @@ import Transfer
 import Cards
 import Account
 import Loans
+import PersonalArea
 import SANLegacyLibrary
 import DomainCommon
 import PersonalArea
@@ -87,7 +88,7 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
             return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
-        }        
+        }
         self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
             return self.cardHomeModifier
         }
@@ -121,6 +122,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
             return self.otherOperativesModifier
         }
+        self.dependencieEngine.register(for: GetPersonalBasicInfoUseCaseProtocol.self) { resolver in
+            return PLGetPersonalBasicInfoUseCase(dependencies: resolver)
+        }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
@@ -145,37 +149,8 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
             return PLAccountHomeActionModifier()
         }
-        self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in return PLAccountOtherOperativesActionModifier()
+        self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in
+            return PLAccountOtherOperativesActionModifier()
         }
-//        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
-//            return self.transferHomeActionModifier
-//        }
-//        self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
-//            return self.accountOtherOperativesActionModifier
-//        }
-//        self.dependencieEngine.register(for: GetDepositWebViewConfigurationUseCase.self) { resolver in
-//            return GetDepositWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: GetFundWebViewConfigurationUseCase.self) { resolver in
-//            return GetFundWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: GetPTWebViewConfigurationUseCase.self) { resolver in
-//            return GetPTWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: PINProviderCipherProtocol.self) { resolver in
-//            return PINProviderCipher()
-//        }
-//        self.dependencieEngine.register(for: PINProviderProtocol.self) { resolver in
-//            return PINProvider(cryptoCipher: resolver.resolve(for: PINProviderCipherProtocol.self))
-//        }
-//        self.dependencieEngine.register(for: GetPersistedUserUseCaseProtocol.self) { resolver in
-//            return GetPersistedUserUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: SetPersistedUserUseCaseProtocol.self) { resolver in
-//            return SetPersistedUserUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: GetIpdCredentialsUseCaseProtocol.self) { resolver in
-//            return GetIpdCredentialsUseCase(dependenciesResolver: resolver)
-//        }
     }
 }

@@ -215,7 +215,6 @@ public class BSANDataProvider {
         }
         return sessionData.customer
     }
-    
 
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {

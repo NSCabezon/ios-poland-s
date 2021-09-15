@@ -34,7 +34,6 @@ public final class PLManagersProviderAdapter {
     private let mobileRechargeManager: PLMobileRechargeManagerAdapter
     private let stocksManager: PLStocksManagerAdapter
     private let billTaxesManager: PLBillTaxesManagerAdapter
-    private let personDataManager: PLPersonDataManagerAdapter
     private let touchIdManager: PLTouchIdManagerAdapter
     private let loansManager: PLLoansManagerAdapter
     private let fundsManager: PLFundsManagerAdapter
@@ -82,7 +81,6 @@ public final class PLManagersProviderAdapter {
         self.mobileRechargeManager = PLMobileRechargeManagerAdapter()
         self.stocksManager = PLStocksManagerAdapter()
         self.billTaxesManager = PLBillTaxesManagerAdapter()
-        self.personDataManager = PLPersonDataManagerAdapter()
         self.touchIdManager = PLTouchIdManagerAdapter()
         self.fundsManager = PLFundsManagerAdapter()
         self.cashWithdrawalManager = PLCashWithdrawalManagerAdapter()

@@ -5,7 +5,7 @@
 //  Created by Ernesto Fernandez Calles on 7/9/21.
 //
 
-import Foundation
+import SANLegacyLibrary
 
 public struct CustomerDTO: Codable {
     public let contactData: ContactDetailDTO?
@@ -39,4 +39,53 @@ public struct AddressDetailDTO: Codable {
     public let zip: String?
     public let countryCode: String?
     public let voivodship: String?
+}
+
+extension CustomerDTO: PersonalBasicInfoRepresentable {
+
+    public var mainAddress: String? {
+        address?.name
+    }
+
+    public var addressNodes: [String]? {
+        [address?.name ?? "",
+         address?.city ?? "",
+         address?.street ?? "",
+         address?.propertyNo ?? "",
+         address?.zip ?? "",
+         address?.countryCode ?? "",
+         address?.voivodship ?? ""]
+    }
+
+    public var documentType: DocumentType? {
+        nil
+    }
+
+    public var documentNumber: String? {
+        nil
+    }
+
+    public var birthdayDate: Date? {
+        nil
+    }
+
+    public var birthString: String? {
+        nil
+    }
+
+    public var phoneNumber: String? {
+        contactData?.phoneNo?.number
+    }
+
+    public var contactHourFrom: Date? {
+        nil
+    }
+
+    public var contactHourTo: Date? {
+        nil
+    }
+
+    public var email: String? {
+        return contactData?.email
+    }
 }
