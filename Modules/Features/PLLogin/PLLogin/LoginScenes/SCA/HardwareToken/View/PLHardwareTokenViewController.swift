@@ -36,7 +36,7 @@ final class PLHardwareTokenViewController: UIViewController {
 
     @IBOutlet weak var textfieldConstraintWithKeyboard: NSLayoutConstraint!
     private enum Constants {
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 67
         static let animationDuration: TimeInterval = 0.2
     }
 

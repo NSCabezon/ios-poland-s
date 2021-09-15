@@ -47,7 +47,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bp-GV-MVA" userLabel="CTAButton" customClass="PLLoginButton" customModule="PLLogin" customModuleProvider="target">
-                    <rect key="frame" x="24" y="782" width="366" height="48"/>
+                    <rect key="frame" x="24" y="747" width="366" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="dPL-sA-50E"/>
                     </constraints>
@@ -73,7 +73,7 @@
                 <constraint firstItem="IgJ-t6-hkU" firstAttribute="trailing" secondItem="ucx-rV-Igj" secondAttribute="trailing" id="5gj-P0-qQF"/>
                 <constraint firstItem="IgJ-t6-hkU" firstAttribute="trailing" secondItem="kk4-x2-Tgq" secondAttribute="trailing" constant="23" id="6Ic-oW-v2o"/>
                 <constraint firstItem="IgJ-t6-hkU" firstAttribute="trailing" secondItem="qE7-vv-Y9V" secondAttribute="trailing" constant="21" id="Ic3-EP-H4d"/>
-                <constraint firstItem="3bp-GV-MVA" firstAttribute="bottom" secondItem="IgJ-t6-hkU" secondAttribute="bottom" constant="-32" id="JMJ-8x-Wly"/>
+                <constraint firstItem="3bp-GV-MVA" firstAttribute="bottom" secondItem="IgJ-t6-hkU" secondAttribute="bottom" constant="-67" id="JMJ-8x-Wly"/>
                 <constraint firstItem="qE7-vv-Y9V" firstAttribute="top" secondItem="dds-dH-EUu" secondAttribute="bottom" priority="980" constant="39" id="Nwy-ZI-Q9l"/>
                 <constraint firstItem="ucx-rV-Igj" firstAttribute="top" secondItem="fzS-P3-Esh" secondAttribute="top" id="SI2-pt-1yI"/>
                 <constraint firstItem="ucx-rV-Igj" firstAttribute="leading" secondItem="IgJ-t6-hkU" secondAttribute="leading" id="SNA-dY-bcZ"/>
@@ -96,7 +96,7 @@
     </objects>
     <designables>
         <designable name="3bp-GV-MVA">
-            <size key="intrinsicContentSize" width="54" height="38"/>
+            <size key="intrinsicContentSize" width="54" height="34"/>
         </designable>
     </designables>
 </document>

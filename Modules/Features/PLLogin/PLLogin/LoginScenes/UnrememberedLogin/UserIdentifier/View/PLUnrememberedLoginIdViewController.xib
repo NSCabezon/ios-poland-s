@@ -69,7 +69,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yN-eH-7fk" customClass="PLLoginButton" customModule="PLLogin" customModuleProvider="target">
-                    <rect key="frame" x="24" y="782" width="366" height="48"/>
+                    <rect key="frame" x="24" y="747" width="366" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="sGE-fb-qt1"/>
                     </constraints>
@@ -107,7 +107,7 @@
                 <constraint firstItem="MFm-pN-t0c" firstAttribute="leading" secondItem="yqX-5V-s55" secondAttribute="leading" id="4oS-6Q-Yw5"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" priority="750" constant="50" id="4vN-my-x2V"/>
                 <constraint firstItem="6tg-aa-poL" firstAttribute="top" secondItem="5fR-Jr-Ai5" secondAttribute="bottom" constant="12" id="6mk-Qr-W2a"/>
-                <constraint firstItem="4yN-eH-7fk" firstAttribute="bottom" secondItem="yqX-5V-s55" secondAttribute="bottom" constant="-32" id="8Qd-et-KM1"/>
+                <constraint firstItem="4yN-eH-7fk" firstAttribute="bottom" secondItem="yqX-5V-s55" secondAttribute="bottom" constant="-67" id="8Qd-et-KM1"/>
                 <constraint firstItem="yqX-5V-s55" firstAttribute="trailing" secondItem="Fqj-VQ-BIu" secondAttribute="trailing" constant="21" id="BRm-aK-tBP"/>
                 <constraint firstItem="MFm-pN-t0c" firstAttribute="top" secondItem="vTt-qt-azL" secondAttribute="top" id="CfV-sz-hne"/>
                 <constraint firstItem="5fR-Jr-Ai5" firstAttribute="top" secondItem="Fqj-VQ-BIu" secondAttribute="bottom" constant="90" id="DDS-PA-9au"/>
@@ -139,7 +139,7 @@
     </objects>
     <designables>
         <designable name="4yN-eH-7fk">
-            <size key="intrinsicContentSize" width="54" height="38"/>
+            <size key="intrinsicContentSize" width="54" height="34"/>
         </designable>
     </designables>
     <resources>

@@ -50,7 +50,7 @@ final class PLSmsAuthViewController: UIViewController {
     private enum Constants {
         static let smsBoxSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 39.0, height: 56.0) : CGSize(width: 34, height: 49)
         static let smsCharacterSet: CharacterSet = .decimalDigits
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 67
         static let separationDistance: CGFloat = 10
         static let distanceToRegardLabel: CGFloat = 90.0
         static let animationDuration: TimeInterval = 0.2

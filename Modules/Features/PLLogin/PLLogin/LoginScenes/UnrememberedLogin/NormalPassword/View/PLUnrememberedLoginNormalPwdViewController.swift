@@ -33,7 +33,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     }
 
     private enum Constants {
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 67
         static let animationDuration: TimeInterval = 0.2
         static let userImageSize = CGSize(width: 56.0, height: 56.0)
     }
