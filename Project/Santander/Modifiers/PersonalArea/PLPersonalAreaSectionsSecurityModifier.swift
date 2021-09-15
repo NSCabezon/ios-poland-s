@@ -21,19 +21,19 @@ final class PLPersonalAreaSectionsSecurityModifier {
 }
 
 extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol {
-    var isDisabledUserPoland: Bool {
+    var isDisabledUser: Bool {
         return false
     }
-    var isEnabledPasswordPoland: Bool {
+    var isEnabledPassword: Bool {
         return false
     }
-    var isEnabledSignaturePoland : Bool {
+    var isEnabledSignature: Bool {
         return false
     }
-    var isEnabledDataPrivacyPoland: Bool {
+    var isEnabledDataPrivacy: Bool {
         return false
     }
-    var isDisabledLastAccessPoland: Bool {
+    var isDisabledLastAccess: Bool {
         return false
     }
 }
