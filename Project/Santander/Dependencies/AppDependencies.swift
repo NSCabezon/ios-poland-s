@@ -166,11 +166,19 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetFilteredAccountTransactionsUseCaseProtocol.self) { resolver in
             return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver)
         }
+        self.dependencieEngine.register(for: GetAccountTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetAccountTransactionsUseCase(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
+<<<<<<< HEAD
+        self.dependencieEngine.register(for: FiltersAlertModifier.self) { _ in
+            return PLFiltersAlertModifier()
+=======
         self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
             return self.personalAreaSections
+>>>>>>> develop
         }
     }
 }

@@ -159,22 +159,6 @@ public class BSANDataProvider {
         return sessionData.accountInfo.accountDetailDictionary[accountId]
     }
 
-    public func store(accountTransactions: AccountTransactionsDTO, forAccountId accountId: String) {
-        objc_sync_enter(self.dataRepository)
-        if let sessionData = try? self.getSessionData() {
-            sessionData.accountInfo.transactionsDictionary[accountId] = accountTransactions
-            self.updateSessionData(sessionData)
-        }
-        objc_sync_exit(self.dataRepository)
-    }
-
-    public func getAccountTransactions(withAccountId accountId: String) -> AccountTransactionsDTO? {
-        guard let sessionData = try? self.getSessionData() else {
-            return nil
-        }
-        return sessionData.accountInfo.transactionsDictionary[accountId]
-    }
-
     public func store(swiftBranches: SwiftBranchesDTO, forAccountId accountId: String) {
         objc_sync_enter(self.dataRepository)
         if let sessionData = try? self.getSessionData() {

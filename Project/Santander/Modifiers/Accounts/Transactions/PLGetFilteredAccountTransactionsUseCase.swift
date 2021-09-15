@@ -34,6 +34,12 @@ final class PLGetFilteredAccountTransactionsUseCase: UseCase<GetFilteredAccountT
                 return AccountTransactionDTOAdapter.adaptPLAccountTransactionToAccountTransaction(element)
             })
             accountTransactionListsDTO.transactionDTOs = transactions ?? [SANLegacyLibrary.AccountTransactionDTO]()
+            if let next = accountTransactionsDTO.pagingLast {
+                accountTransactionListsDTO.pagination.endList = false
+                accountTransactionListsDTO.pagination.repositionXML = next
+            } else {
+                accountTransactionListsDTO.pagination.endList = true
+            }
             let transactionList = AccountTransactionListEntity(accountTransactionListsDTO)
             if transactionList.transactions.count > 0 {
                 return .ok(GetFilteredAccountTransactionsUseCaseOkOutput(transactionList: transactionList))
@@ -46,17 +52,34 @@ final class PLGetFilteredAccountTransactionsUseCase: UseCase<GetFilteredAccountT
     }
 
     private func makeAccountTransactionsParameters(forAccountNumber accountNumber: String, fromRequestValues requestValues: GetFilteredAccountTransactionsUseCaseInput) -> AccountTransactionsParameters {
-        let description = requestValues.tagDescription
-        let date = Date().getDateByAdding(days: -89, ignoreHours: true)
-        let fromDate = requestValues.starDate > date ? requestValues.starDate : date
-        let toDate = requestValues.endDate ?? fromDate
+        let filters = requestValues.filters
+        let description = filters?.getTransactionDescription()
+        let dateInterval = filters?.getDateRange()
+        let fromDate = dateInterval?.fromDate.toString(format: "yyyy-MM-dd")
+        let toDate = dateInterval?.toDate.toString(format: "yyyy-MM-dd")
+        let movementType = adaptMovementType(filters?.getMovementType())
         let parameters = AccountTransactionsParameters(accountNumbers: [accountNumber],
-                                                    from: fromDate.toString(format: "yyyy-MM-dd"),
-                                                    to: toDate.toString(format: "yyyy-MM-dd"),
+                                                    from: fromDate,
+                                                    to: toDate,
                                                     text: description,
-                                                    sortOrder: "DESCENDING"
+                                                    amountFrom: filters?.fromAmount,
+                                                    amountTo: filters?.toAmount,
+                                                    sortOrder: "DESCENDING",
+                                                    debitFlag: movementType,
+                                                    pagingLast: requestValues.pagination?.dto?.repositionXML
         )
         return parameters
+    }
+
+    private func adaptMovementType(_ movement: TransactionConceptType?) -> String? {
+        switch movement {
+        case .expenses:
+            return "DEBIT"
+        case .income:
+            return "CREDIT"
+        default:
+            return nil
+        }
     }
 }
 
