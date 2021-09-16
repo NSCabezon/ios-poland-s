@@ -79,6 +79,7 @@
 		66C68A452694972E007B9884 /* PLNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C68A442694972E007B9884 /* PLNumberFormatter.swift */; };
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
+		7E29680B26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */; };
 		7E2CCA8226B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8126B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift */; };
 		7E2CCA8526B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */; };
 		7E2CCA8726B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8626B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift */; };
@@ -184,6 +185,7 @@
 		66C68A442694972E007B9884 /* PLNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLNumberFormatter.swift; sourceTree = "<group>"; };
 		66E57605264A6C32006804BD /* assetsLocal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assetsLocal; sourceTree = "<group>"; };
 		66E57607264A6C3A006804BD /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionsPDFGeneratorProtocol.swift; sourceTree = "<group>"; };
 		7E2CCA8126B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExchangePGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E2CCA8626B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGoalPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -401,7 +403,6 @@
 			children = (
 				7E8AD11E26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift */,
 				A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */,
-				A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */,
 				4485C4CE26E8967900C8D3FC /* GetPLAccountOtherOperativesUseCase.swift */,
 			);
 			path = OtherOperatives;
@@ -410,6 +411,7 @@
 		446C4F8C26D659620080D7EC /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */,
 				446C4F9126D798640080D7EC /* PLAccountTransaction.swift */,
 				0D42455E26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift */,
 				0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */,
@@ -793,6 +795,7 @@
 				446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */,
 				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
 				0DAA4D5D26C3ED63005A921C /* PLAccountNotificationsOperative.swift in Sources */,
+				7E29680B26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift in Sources */,
 				7E8AD12126F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift in Sources */,
 				0DB4957C26C155F000F0985F /* PLDomesticTransferOperative.swift in Sources */,
 				A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */,

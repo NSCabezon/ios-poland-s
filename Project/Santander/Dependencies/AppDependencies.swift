@@ -64,6 +64,9 @@ final class AppDependencies {
     private lazy var accountDetailModifier: AccountDetailModifierProtocol = {
         return PLAccountDetailModifier()
     }()
+    private lazy var accountTransactionsPDFModifier: AccountTransactionsPDFGeneratorProtocol = {
+        return PLAccountTransactionsPDFGeneratorProtocol(dependenciesResolver: dependencieEngine)
+    }()
     private lazy var notificationPermissionManager: NotificationPermissionsManager = {
         return NotificationPermissionsManager(dependencies: self.dependencieEngine)
     }()
@@ -156,6 +159,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: AccountDetailModifierProtocol.self) { _ in
             return self.accountDetailModifier
+        }
+        self.dependencieEngine.register(for: AccountTransactionsPDFGeneratorProtocol.self) { _ in
+            return self.accountTransactionsPDFModifier
         }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager
