@@ -92,6 +92,25 @@ class PLLoginChallengeSelectionUseCaseTests: XCTestCase {
         }
     }
 
+    func testChallengeWithSoftTokenAndTokenTimeAndSMS() throws {
+        do {
+            let defaultChallenge = ChallengeEntity(authorizationType: .softwareToken, value: "83355571")
+            let challenges = [ChallengeEntity(authorizationType: .tokenTime, value: ""),
+                              ChallengeEntity(authorizationType: .tokenTimeCR, value: "83355571"),
+                              ChallengeEntity(authorizationType: .sms, value: "83355571"),
+                              ChallengeEntity(authorizationType: .softwareToken, value: "83355571")]
+
+            let useCase = PLLoginChallengeSelectionUseCase(dependenciesResolver: dependencies)
+            let input = PLLoginChallengeSelectionUseCaseInput(challenges: challenges,
+                                                              defaultChallenge: defaultChallenge)
+            let response = try useCase.executeUseCase(requestValues: input)
+            XCTAssertEqual(try response.getOkResult().challengeEntity, challenges[0])
+        } catch {
+            XCTFail("Failed to get the correct challenge")
+        }
+    }
+
+
     func testChallengeWithSoftTokenAndError() throws {
         do {
             let defaultChallenge = ChallengeEntity(authorizationType: .softwareToken, value: "54583329")
