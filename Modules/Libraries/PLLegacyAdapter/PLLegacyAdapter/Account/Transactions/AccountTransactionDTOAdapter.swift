@@ -7,12 +7,13 @@
 
 import SANPLLibrary
 import SANLegacyLibrary
+import Models
 
 public final class AccountTransactionDTOAdapter {
-    public static func adaptPLAccountTransactionToAccountTransaction(_ plAccountTransaction: SANPLLibrary.AccountTransactionDTO) -> SANLegacyLibrary.AccountTransactionDTO {
+    public static func adaptPLAccountTransactionToAccountTransaction(_ plAccountTransaction: SANPLLibrary.AccountTransactionDTO, customer: SANPLLibrary.CustomerDTO?) -> SANLegacyLibrary.AccountTransactionDTO {
         var accountTransactionDTO = SANLegacyLibrary.AccountTransactionDTO()
-        accountTransactionDTO.operationDate = plAccountTransaction.sourceDate?.getDate(withFormat: "yyyy-MM-dd")
-        accountTransactionDTO.valueDate = plAccountTransaction.postedDate?.getDate(withFormat: "yyyy-MM-dd")
+        accountTransactionDTO.operationDate = DateFormats.toDate(string: plAccountTransaction.sourceDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
+        accountTransactionDTO.valueDate = DateFormats.toDate(string: plAccountTransaction.postedDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
         accountTransactionDTO.transactionNumber = String(plAccountTransaction.lp ?? 0)
         let transactionCurrency = plAccountTransaction.currency ?? plAccountTransaction.currencyCodeDt
         var amount = AmountAdapter.makeAmountDTO(value: plAccountTransaction.amount, currencyCode: transactionCurrency)
@@ -23,11 +24,22 @@ public final class AccountTransactionDTOAdapter {
         accountTransactionDTO.balance = AmountAdapter.makeAmountDTO(value: plAccountTransaction.balance, currencyCode: transactionCurrency)
         accountTransactionDTO.description = plAccountTransaction.transTitle
         let isDebit = plAccountTransaction.debitFlag?.lowercased() == "debit"
-        accountTransactionDTO.status = plAccountTransaction.state
-        accountTransactionDTO.recipientData = isDebit ? plAccountTransaction.othCustName : plAccountTransaction.custName
+        let customerName = plAccountTransaction.custName?.capitalized ?? self.getOwnerData(from: customer)
+        accountTransactionDTO.status = plAccountTransaction.state?.capitalized
+        accountTransactionDTO.recipientData = isDebit ? plAccountTransaction.othCustName?.capitalized : customerName
         accountTransactionDTO.recipientAccountNumber = isDebit ? plAccountTransaction.othCustAccNo : plAccountTransaction.accountNumber
-        accountTransactionDTO.senderData = isDebit ? plAccountTransaction.custName : plAccountTransaction.othCustName
+        accountTransactionDTO.senderData = isDebit ? customerName : plAccountTransaction.othCustName?.capitalized
         accountTransactionDTO.senderAccountNumber = isDebit ? plAccountTransaction.accountNumber : plAccountTransaction.othCustAccNo
         return accountTransactionDTO
+    }
+
+    private static func getOwnerData(from customer: SANPLLibrary.CustomerDTO?) -> String {
+        guard let customer = customer else { return "" }
+        let name = customer.address?.name ?? ""
+        let street = customer.address?.street ?? ""
+        let propertyNo = customer.address?.propertyNo ?? ""
+        let zip = customer.address?.zip ?? ""
+        let city = customer.address?.city ?? ""
+        return "\(name), \(street) \(propertyNo), \(zip) \(city)".camelCasedString
     }
 }

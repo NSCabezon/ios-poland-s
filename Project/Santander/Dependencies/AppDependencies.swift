@@ -170,10 +170,10 @@ private extension AppDependencies {
             return PLInboxActionBuilder(resolver: resolver)
         }
         self.dependencieEngine.register(for: GetFilteredAccountTransactionsUseCaseProtocol.self) { resolver in
-            return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver)
+            return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: GetAccountTransactionsUseCaseProtocol.self) { resolver in
-            return PLGetAccountTransactionsUseCase(dependenciesResolver: resolver)
+            return PLGetAccountTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()

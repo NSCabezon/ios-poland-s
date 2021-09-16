@@ -22,10 +22,10 @@ public final class AccountTransactionDetailDTOAdapter {
             literals.append(LiteralDTO(concept: state, literal: localized("transaction_label_statusDetail")))
         }
         if let senderDataConcept = accountTransaction.senderData, !senderDataConcept.isBlank {
-            literals.append(LiteralDTO(concept: senderDataConcept, literal: localized("pl_cardDetail_label_senderData")))
+            literals.append(LiteralDTO(concept: senderDataConcept, literal: localized("transaction_label_senderData")))
         }
         if let senderAccountNumberConcept = accountTransaction.senderAccountNumber, !senderAccountNumberConcept.isBlank {
-            literals.append(LiteralDTO(concept: IBANFormatter.format(iban: senderAccountNumberConcept), literal: localized("pl_cardDetail_label_senderAccountNumber")))
+            literals.append(LiteralDTO(concept: IBANFormatter.format(iban: senderAccountNumberConcept), literal: localized("transaction_label_senderAccountNumber")))
         }
         accountTransactionDetailDTO.literalDTOs = literals
         return accountTransactionDetailDTO

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */; };
 		0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */; };
 		0D13A93126E8A84200359D5B /* PLAccountTransactionDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */; };
 		0D13A93326E91CFB00359D5B /* PLSwitchBetweenAccountOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D13A93226E91CFB00359D5B /* PLSwitchBetweenAccountOperative.swift */; };
@@ -107,6 +108,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C6CE07925DAAAFB3935D99C /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailShareableInfo.swift; sourceTree = "<group>"; };
 		0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOperativesModifier.swift; sourceTree = "<group>"; };
 		0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailAction.swift; sourceTree = "<group>"; };
 		0D13A93226E91CFB00359D5B /* PLSwitchBetweenAccountOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSwitchBetweenAccountOperative.swift; sourceTree = "<group>"; };
@@ -415,6 +418,7 @@
 				446C4F9126D798640080D7EC /* PLAccountTransaction.swift */,
 				0D42455E26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift */,
 				0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */,
+				0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */,
 				4488918A26EB8F0E00F5FA24 /* PLFiltersAlertModifier.swift */,
 				4488918826EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift */,
 				446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */,
@@ -756,6 +760,8 @@
 				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
 				446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
 				BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */,
+				0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */,
+				7E790692265F90D1008B10E2 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
 				446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */,
 				0D9E176526B96A9B00781A95 /* PLFundModifier.swift in Sources */,

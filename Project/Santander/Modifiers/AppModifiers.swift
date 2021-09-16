@@ -149,6 +149,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
             return PLAccountHomeActionModifier()
         }
+        self.dependencieEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
+            return PLAccountTransactionDetailShareableInfo()
+        }
         self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in
             return PLAccountOtherOperativesActionModifier()
         }

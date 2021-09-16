@@ -15,9 +15,11 @@ import PLLegacyAdapter
 
 final class PLGetAccountTransactionsUseCase: UseCase<GetAccountTransactionsUseCaseInput, GetAccountTransactionsUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
+    private let bsanDataProvider: BSANDataProvider
 
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, bsanDataProvider: BSANDataProvider) {
         self.dependenciesResolver = dependenciesResolver
+        self.bsanDataProvider = bsanDataProvider
     }
 
     override func executeUseCase(requestValues: GetAccountTransactionsUseCaseInput) throws -> UseCaseResponse<GetAccountTransactionsUseCaseOkOutput, StringErrorOutput> {
@@ -78,8 +80,9 @@ final class PLGetAccountTransactionsUseCase: UseCase<GetAccountTransactionsUseCa
         let result = try provider.loadAccountTransactions(parameters: parameters)
         if case .success(let accountTransactionsDTO) = result {
             var accountTransactionListsDTO = SANLegacyLibrary.AccountTransactionsListDTO()
+            let customer = self.bsanDataProvider.getCustomerIndividual()
             let transactions = accountTransactionsDTO.entries?.compactMap({ (element) -> SANLegacyLibrary.AccountTransactionDTO? in
-                return AccountTransactionDTOAdapter.adaptPLAccountTransactionToAccountTransaction(element)
+                return AccountTransactionDTOAdapter.adaptPLAccountTransactionToAccountTransaction(element, customer: customer)
             })
             accountTransactionListsDTO.transactionDTOs = transactions ?? [SANLegacyLibrary.AccountTransactionDTO]()
             if let next = accountTransactionsDTO.pagingLast {
