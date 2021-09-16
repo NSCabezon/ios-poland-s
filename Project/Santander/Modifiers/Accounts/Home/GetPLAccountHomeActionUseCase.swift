@@ -11,7 +11,8 @@ final class GetPLAccountHomeActionUseCase: UseCase<GetAccountHomeActionUseCaseIn
                                                    accesibilityIdentifier: "blik",
                                                    trackName: "blik",
                                                    localizedKey: "pt_frequentOperative_button_blik",
-                                                   icon: "icnBlik")
+                                                   icon: "icnBlik",
+                                                   renderingMode: .alwaysOriginal)
     
     private let savingsGoals: AccountActionType = .custome(identifier: "savingsGoals",
                                                            accesibilityIdentifier: "savingsGoals",

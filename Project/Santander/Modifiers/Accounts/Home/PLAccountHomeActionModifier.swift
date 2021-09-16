@@ -16,6 +16,5 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     func getActionButtonFillViewType(for accountType: AccountActionType) -> ActionButtonFillViewType? {
         return nil
     }
-    
 
 }
