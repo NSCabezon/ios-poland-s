@@ -170,12 +170,12 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
     
-    func getAllCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, dateFilter: DateFilter?) throws -> BSANResponse<CardTransactionsListDTO> {
-        return self.loadCardTransactions(cardDTO: cardDTO, dateFilter: dateFilter)
+    func getAllCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, searchTerm: String?, dateFilter: DateFilter?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) throws -> BSANResponse<CardTransactionsListDTO> {
+        return self.loadCardTransactions(cardDTO: cardDTO, searchTerm: searchTerm, dateFilter: dateFilter, fromAmount: fromAmount, toAmount: toAmount, movementType: movementType, cardOperationType: cardOperationType)
     }
     
     func getCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, dateFilter: DateFilter?) throws -> BSANResponse<CardTransactionsListDTO> {
-        return self.loadCardTransactions(cardDTO: cardDTO, dateFilter: dateFilter)
+        return self.loadCardTransactions(cardDTO: cardDTO, pagination: pagination, dateFilter: dateFilter)
     }
     
     func getCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, dateFilter: DateFilter?, cached: Bool) throws -> BSANResponse<CardTransactionsListDTO> {
@@ -405,9 +405,17 @@ private extension PLCardsManagerAdapter {
         return cards?.first { $0.virtualPan == card.contract?.contractNumber }
     }
     
-    func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, dateFilter: DateFilter?) -> BSANResponse<CardTransactionsListDTO> {
+    private func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, searchTerm: String? = nil, dateFilter: DateFilter?, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil) -> BSANResponse<CardTransactionsListDTO> {
         guard let cardId = cardDTO.contract?.contractNumber,
-              let transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId, pagination: nil, filters: nil) else {
+              let transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId,
+                                                                              pagination: nil,
+                                                                              searchTerm: searchTerm,
+                                                                              startDate: dateFilter?.fromDateModel?.stringReverseWithDashSeparator,
+                                                                              endDate: dateFilter?.toDateModel?.stringReverseWithDashSeparator,
+                                                                              fromAmount: fromAmount,
+                                                                              toAmount: toAmount,
+                                                                              movementType: movementType,
+                                                                              cardOperationType: cardOperationType) else {
             return BSANErrorResponse(nil)
         }
         switch transactions {
@@ -420,17 +428,21 @@ private extension PLCardsManagerAdapter {
         }
     }
     
-    func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, dateFilter: DateFilter?, cached: Bool = false) -> BSANResponse<CardTransactionsListDTO> {
+    private func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, searchTerm: String? = nil, dateFilter: DateFilter?, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil, cached: Bool = false) -> BSANResponse<CardTransactionsListDTO> {
         let cardPagination = TransactionsLinksDTO(first: nil, next: pagination?.repositionXML, previous: pagination?.accountAmountXML)
         guard let cardId = cardDTO.contract?.contractNumber else {
             return BSANErrorResponse(nil)
         }
         let transactions: Result<CardTransactionListDTO, NetworkProviderError>?
-        if let dates = dateFilter {
-            transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId, pagination: cardPagination, filters: dates.stringQuery)
-        } else {
-            transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId, pagination: cardPagination, filters: nil)
-        }
+        transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId,
+                                                                    pagination: cardPagination,
+                                                                    searchTerm: searchTerm,
+                                                                    startDate: dateFilter?.fromDateModel?.stringReverseWithDashSeparator,
+                                                                    endDate: dateFilter?.toDateModel?.stringReverseWithDashSeparator,
+                                                                    fromAmount: fromAmount,
+                                                                    toAmount: toAmount,
+                                                                    movementType: movementType,
+                                                                    cardOperationType: cardOperationType)
         switch transactions {
         case .success(let plCardTransactions):
             let cardTransactionsAdapter = CardTransactionsDTOAdapter()
