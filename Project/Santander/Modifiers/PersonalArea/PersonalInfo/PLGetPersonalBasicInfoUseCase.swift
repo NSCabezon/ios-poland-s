@@ -46,6 +46,6 @@ private extension PLGetPersonalBasicInfoUseCase {
                                                      phoneNumber: representable.phoneNumber,
                                                      contactHourFrom: representable.contactHourFrom,
                                                      contactHourTo: representable.contactHourTo,
-                                                     email: representable.email))
+                                                     email: representable.email ?? localized("personalArea_text_uninformed")))
     }
 }
