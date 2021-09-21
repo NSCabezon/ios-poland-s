@@ -29,8 +29,28 @@ final public class CardTransactionsDTOAdapter {
             var cardTransaction = SANLegacyLibrary.CardTransactionDTO()
             cardTransaction.identifier = plCardTransaction.sourceRef
             cardTransaction.operationDate = DateFormats.toDate(string: plCardTransaction.sourceDate ?? "", output: .YYYYMMDD)
+
+            let currencyType: CurrencyType
+            if let currencyOth = plCardTransaction.currencyOth {
+                switch currencyOth {
+                case "EUR":
+                    currencyType = .eur
+                case "USD":
+                    currencyType = .dollar
+                case "GBP":
+                    currencyType = .pound
+                case "CHF":
+                    currencyType = .swissFranc
+                case "PLN":
+                    currencyType = .złoty
+                default:
+                    currencyType = .other
+                }
+            } else {
+                currencyType = .złoty
+            }
             
-            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: .złoty)
+            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: currencyType)
             cardTransaction.amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
             cardTransaction.description = plCardTransaction.transTitle
             cardTransactions.append(cardTransaction)
