@@ -26,16 +26,16 @@ final class CardDTOAdapter {
     static func adaptPLCardToCardData(_ plCard: SANPLLibrary.CardDTO) -> SANLegacyLibrary.CardDataDTO {
         var cardDataDTO = SANLegacyLibrary.CardDataDTO()
         cardDataDTO.PAN = repeatElement("X", count: Constants.maskedPANLength).joined() + String(plCard.maskedPan?.suffix(Constants.visiblePANDigits) ?? "")
-        cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToAmount(plCard.availableBalance)
-        cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plCard.disposedAmount)
-        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToAmount(plCard.creditLimit)
+        cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.availableBalance)
+        cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
+        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.creditLimit)
         cardDataDTO.visualCode = plCard.productCode
         if plCard.type?.lowercased() == "credit" {
-            var amount = AmountAdapter.adaptBalanceToAmount(plCard.disposedAmount)
+            var amount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
             amount?.value?.negate()
             cardDataDTO.currentBalance = amount
         } else {
-            cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plCard.disposedAmount)
+            cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
         }
         return cardDataDTO
     }
