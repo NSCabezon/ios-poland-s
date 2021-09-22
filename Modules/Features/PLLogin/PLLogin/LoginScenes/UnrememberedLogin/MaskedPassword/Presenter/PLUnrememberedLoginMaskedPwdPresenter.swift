@@ -11,7 +11,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLUI
 
-protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol {
+protocol PLUnrememberedLoginMaskedPwdPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLUnrememberedLoginMaskedPwdViewProtocol? { get set }
     func login(password: String)
     func viewDidLoad()
@@ -74,6 +74,10 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
         }
         return requestedPositions
     }
+    
+    func didSelectMenu() {
+        self.coordinatorDelegate.didSelectMenu()
+    }
 }
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterErrorHandlerProtocol {
@@ -91,5 +95,9 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLLoginPresenterErrorHandlerPro
 private extension  PLUnrememberedLoginMaskedPwdPresenter {
     var coordinator: PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLUnrememberedLoginMaskedPwdCoordinatorProtocol.self)
+    }
+    
+    var coordinatorDelegate: LoginCoordinatorDelegate {
+        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
 }

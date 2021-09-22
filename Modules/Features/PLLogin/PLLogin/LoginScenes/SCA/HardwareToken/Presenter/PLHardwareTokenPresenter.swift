@@ -8,9 +8,10 @@
 import Models
 import Commons
 import PLCommons
+import LoginCommon
 import os
 
-protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol {
+protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLHardwareTokenViewProtocol? { get set }
     func viewDidLoad()
     func viewWillAppear()
@@ -84,6 +85,10 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             self?.handleError(error)
         }
     }
+    
+    func didSelectMenu() {
+        self.coordinatorDelegate.didSelectMenu()
+    }
 }
 
 extension PLHardwareTokenPresenter: PLLoginPresenterErrorHandlerProtocol {
@@ -100,6 +105,10 @@ extension PLHardwareTokenPresenter: PLLoginPresenterErrorHandlerProtocol {
 private extension  PLHardwareTokenPresenter {
     var coordinator: PLScaAuthCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLScaAuthCoordinatorProtocol.self)
+    }
+    
+    var coordinatorDelegate: LoginCoordinatorDelegate {
+        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
 
     func openSessionAndNavigateToGlobalPosition() {

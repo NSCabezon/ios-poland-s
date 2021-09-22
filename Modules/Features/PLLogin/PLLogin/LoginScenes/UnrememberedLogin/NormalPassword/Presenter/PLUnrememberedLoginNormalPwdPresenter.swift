@@ -10,7 +10,7 @@ import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter
 
-protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol {
+protocol PLUnrememberedLoginNormalPwdPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLUnrememberedLoginNormalPwdViewProtocol? { get set }
     func login(password: String)
     func viewDidLoad()
@@ -55,6 +55,10 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
             self.view?.setUserImage(image: image)
         }
     }
+    
+    func didSelectMenu() {
+        self.coordinatorDelegate.didSelectMenu()
+    }
 }
 
 extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterErrorHandlerProtocol {
@@ -72,5 +76,9 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLLoginPresenterErrorHandlerPro
 private extension  PLUnrememberedLoginNormalPwdPresenter {
     var coordinator: PLUnrememberedLoginNormalPwdCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLUnrememberedLoginNormalPwdCoordinatorProtocol.self)
+    }
+    
+    var coordinatorDelegate: LoginCoordinatorDelegate {
+        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
 }

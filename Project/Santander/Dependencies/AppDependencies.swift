@@ -19,6 +19,7 @@ import GlobalPosition
 import Account
 import Inbox
 import PersonalArea
+import Menu
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -183,6 +184,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
             return self.personalAreaSections
+        }
+        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
+            return PLPublicMenuViewContainer(resolver: resolver)
         }
     }
 }

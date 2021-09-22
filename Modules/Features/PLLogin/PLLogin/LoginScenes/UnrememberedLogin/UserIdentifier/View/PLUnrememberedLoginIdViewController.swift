@@ -73,7 +73,7 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     }
     
     @objc func didSelectMenu() {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        self.presenter.didSelectMenu()
     }
 }
 

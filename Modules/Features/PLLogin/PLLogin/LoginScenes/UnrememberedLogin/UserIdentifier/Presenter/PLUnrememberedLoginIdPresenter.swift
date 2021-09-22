@@ -12,7 +12,7 @@ import PLLegacyAdapter
 import UI
 import Repository
 
-protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol {
+protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLUnrememberedLoginIdViewProtocol? { get set }
     func viewDidLoad()
     func viewWillAppear()
@@ -83,6 +83,10 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
         self.coordinatorDelegate.goToEnvironmentsSelector { [weak self] in
             self?.chooseEnvironment()
         }
+    }
+    
+    func didSelectMenu() {
+        self.coordinatorDelegate.didSelectMenu()
     }
 
     func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration) {
