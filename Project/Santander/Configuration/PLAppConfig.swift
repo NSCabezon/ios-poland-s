@@ -75,4 +75,5 @@ class PLAppConfig: LocalAppConfig {
     let enablePGCardActivation: Bool = true
     var isAnalysisAreaHomeEnabled = false
     var countryCode = "PL"
+    let isEnabledTopUpsPrivateMenu: Bool = false
 }
