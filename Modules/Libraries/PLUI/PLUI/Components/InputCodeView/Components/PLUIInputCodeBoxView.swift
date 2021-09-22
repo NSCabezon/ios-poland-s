@@ -162,11 +162,13 @@ private extension PLUIInputCodeBoxView {
     }
 
     func configureConstraints() {
+        let widthConstraint = self.codeTextField.widthAnchor.constraint(equalToConstant: self.size.width)
+        widthConstraint.priority = .defaultHigh
         NSLayoutConstraint.activate([
+            widthConstraint,
             self.codeTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.codeTextField.topAnchor.constraint(equalTo: self.topAnchor),
             self.codeTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.codeTextField.widthAnchor.constraint(equalToConstant: self.size.width),
             self.codeTextField.heightAnchor.constraint(equalToConstant: self.size.height),
 
             self.positionLabel.topAnchor.constraint(equalTo: self.codeTextField.bottomAnchor),

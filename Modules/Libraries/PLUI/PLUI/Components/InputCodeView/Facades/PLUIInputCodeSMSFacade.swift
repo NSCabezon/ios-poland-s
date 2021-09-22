@@ -36,7 +36,7 @@ public final class PLUIInputCodeSMSFacade {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = Constants.getSpacingBetweenColumns(style: facadeStyle)
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -50,7 +50,6 @@ public final class PLUIInputCodeSMSFacade {
         view.widthAnchor.constraint(equalToConstant: Constants.hyphenSize.width).isActive = true
         let contentView = UIView()
         contentView.addSubview(view)
-        contentView.widthAnchor.constraint(equalToConstant: Constants.hyphenSize.width*2).isActive = true
         view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         return contentView

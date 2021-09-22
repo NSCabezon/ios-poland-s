@@ -35,7 +35,8 @@ extension PLUIInputCodeMaskedPasswordFacade: PLUIInputCodeFacadeProtocol {
         for row in 1...Constants.rowsNumber {
             let stackView = UIStackView()
             stackView.axis = .horizontal
-            stackView.distribution = .equalSpacing
+            stackView.distribution = .fillEqually
+            stackView.spacing = 2.0
             stackView.translatesAutoresizingMaskIntoConstraints = false
 
             for position in 0...Constants.elementsPerRow-1 {

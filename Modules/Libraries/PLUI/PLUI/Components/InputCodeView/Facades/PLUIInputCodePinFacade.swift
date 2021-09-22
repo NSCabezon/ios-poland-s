@@ -23,7 +23,7 @@ public final class PLUIInputCodePinFacade {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = Constants.spacingBetweenColumns
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()

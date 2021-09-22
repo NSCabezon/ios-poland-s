@@ -26,6 +26,7 @@ class ViewController: UIViewController {
 
     private enum Constants {
         static let reuseIdentifier = "Cell"
+        static let borderWidth: CGFloat = 10.0
     }
 
     private lazy var components: [Any] = {
@@ -49,8 +50,8 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10)
+            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: Constants.borderWidth),
+            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -Constants.borderWidth)
         ])
     }
 

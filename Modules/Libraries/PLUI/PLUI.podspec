@@ -11,7 +11,7 @@ The Poland PLUI framework.
   s.author           = { 'Jose C. Yebes' => 'jose.yebes@ciberexperis.es' }
   s.source           = { :git => 'https://santander-one-app.ciber.es/ios/poland.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '10.3'
+  s.ios.deployment_target = '11.0'
   s.source_files = "PLUI/**/*.{swift}"
   s.resources = "PLUI/**/*.{xcassets}"
   s.resource_bundles = {
@@ -20,5 +20,4 @@ The Poland PLUI framework.
   s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
 
   s.dependency "UI"
-#  s.dependency "Commons"
 end
