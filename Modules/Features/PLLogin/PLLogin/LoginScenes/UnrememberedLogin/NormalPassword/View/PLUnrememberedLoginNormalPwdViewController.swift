@@ -246,6 +246,10 @@ extension PLUnrememberedLoginNormalPwdViewController: RememberMeViewDelegate {
 }
 
 extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return false
+    }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard string != " " else { return false }
