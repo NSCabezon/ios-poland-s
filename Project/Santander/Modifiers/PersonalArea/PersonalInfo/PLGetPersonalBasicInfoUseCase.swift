@@ -37,7 +37,8 @@ extension PLGetPersonalBasicInfoUseCase: GetPersonalBasicInfoUseCaseProtocol { }
 
 private extension PLGetPersonalBasicInfoUseCase {
     func basicInfoRepresentableToEntity(_ representable: PersonalBasicInfoRepresentable) -> PersonalInformationEntity {
-        PersonalInformationEntity(PersonBasicDataDTO(mainAddress: representable.mainAddress,
+        let email = (representable.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : representable.email
+        return PersonalInformationEntity(PersonBasicDataDTO(mainAddress: representable.mainAddress,
                                                      addressNodes: representable.addressNodes,
                                                      documentType: representable.documentType,
                                                      documentNumber: representable.documentNumber,
@@ -46,6 +47,6 @@ private extension PLGetPersonalBasicInfoUseCase {
                                                      phoneNumber: representable.phoneNumber,
                                                      contactHourFrom: representable.contactHourFrom,
                                                      contactHourTo: representable.contactHourTo,
-                                                     email: representable.email ?? localized("personalArea_text_uninformed")))
+                                                     email: email))
     }
 }
