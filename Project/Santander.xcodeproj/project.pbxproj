@@ -1323,7 +1323,7 @@
 				MARKETING_VERSION = 0.0.71;
 				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.bancosantander.oneapp.pre.0.0 1632219042";
+				PROVISIONING_PROFILE_SPECIFIER = WildCardDebug;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1405,7 +1405,7 @@
 				MARKETING_VERSION = 0.0.71;
 				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.bancosantander.oneapp.pre.0.0 1632219042";
+				PROVISIONING_PROFILE_SPECIFIER = WildCardDebug;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
