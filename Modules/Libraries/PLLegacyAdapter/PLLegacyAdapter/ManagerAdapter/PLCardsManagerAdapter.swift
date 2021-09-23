@@ -401,7 +401,7 @@ private extension PLCardsManagerAdapter {
     }
 
     func getCardFromDTO(_ card: SANLegacyLibrary.CardDTO) -> SANPLLibrary.CardDTO? {
-        let cards = globalPositionManager.getGlobalPosition()?.cards
+        let cards = self.bsanDataProvider.getGlobalPosition()?.cards
         return cards?.first { $0.virtualPan == card.contract?.contractNumber }
     }
     
