@@ -24,16 +24,22 @@ final class PLCustomerManager {
 }
 
 extension PLCustomerManager: PLCustomerManagerProtocol {
-    
     func getIndividual() throws -> Result<CustomerDTO, NetworkProviderError> {
+        if let cachedIndividual = self.getCachedIndividual() {
+            return .success(cachedIndividual)
+        }
         let result = try self.customerDataSource.getIndividual()
-        self.processResult(result)
+        self.processIndividualResult(result)
         return result
     }
 }
 
 private extension PLCustomerManager {
-    private func processResult(_ result: Result<CustomerDTO, NetworkProviderError>) {
+    private func getCachedIndividual() -> CustomerDTO? {
+        return self.bsanDataProvider.getCustomerIndividual()
+    }
+
+    private func processIndividualResult(_ result: Result<CustomerDTO, NetworkProviderError>) {
         if case .success(let customer) = result {
             self.bsanDataProvider.storeCustomerIndivual(dto: customer)
         }

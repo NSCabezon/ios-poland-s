@@ -106,6 +106,13 @@ public class BSANDataProvider {
         objc_sync_exit(dataRepository)
     }
 
+    public func getGlobalPosition() -> GlobalPositionDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.globalPositionDTO
+    }
+
     public func store(loanOperationList: LoanOperationListDTO, forLoanId loanId: String) {
         objc_sync_enter(self.dataRepository)
         if let sessionData = try? self.getSessionData() {
