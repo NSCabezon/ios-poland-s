@@ -10,10 +10,10 @@ Pod::Spec.new do |spec|
   spec.homepage     = "http://EXAMPLE/PLLogin"
   spec.license      = { :type => 'MIT', :file => 'LICENSE' }
   spec.author       = { 'Jose C. Yebes' => 'jose.yebes@ciberexperis.es' }
-  spec.platform     = :ios, "10.3"
+#  spec.platform     = :ios, "11.0"
   spec.source       = { :git => "http://gitlab/PLLogin.git", :tag => "#{spec.version}" }
   spec.source_files  = "PLLogin", "PLLogin/**/*.{swift}"
-  spec.ios.deployment_target = '10.3'
+  spec.ios.deployment_target = '11.0'
   
   spec.resource_bundles = {
     'PLLogin' => ['PLLogin/**/*{xib,xcassets}']

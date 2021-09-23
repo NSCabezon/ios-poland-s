@@ -1,4 +1,4 @@
-platform :ios, '10.3'
+platform :ios, '11.0'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -47,6 +47,7 @@ def core_dependencies
   pod 'Localization', :path => '../santander-one/Localization'
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives'
+  pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
 end
 
 def legacy_libraries

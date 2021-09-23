@@ -30,17 +30,26 @@ class PLTrustedDeviceSecondFactorChallengeUseCaseTests: XCTestCase {
         }
 
         do {
-            let tokens = [PLTrustedDeviceSecondFactorChallengeInput.PLTrustedDeviceSecondFactorChallengeToken(id: 152424,
-                                                                                                              timestamp: 1314411585)]
-            let input = PLTrustedDeviceSecondFactorChallengeInput(ivrCode: 9556,
-                                                                  trustedDeviceId: 4679654,
-                                                                  deviceTimestamp: 1313188078,
-                                                                  userId: 36167469,
-                                                                  tokens: tokens)
-            let useCase = PLTrustedDeviceSecondFactorChallengeUseCase()
-            let response = try useCase.executeUseCase(requestValues: input)
-            let output = try? response.getOkResult()
-            XCTAssertEqual(output?.challenge, ExpectedResult.challenge)
+            let tokens: [TrustedDeviceSoftwareToken] = [TrustedDeviceSoftwareToken(name: "",
+                                                                                   key: "",
+                                                                                   type: "",
+                                                                                   state: "",
+                                                                                   id: 152424,
+                                                                                   timestamp: 1314411585)]
+            let trustedDeviceConf = TrustedDeviceConfiguration()
+            trustedDeviceConf.tokens = tokens
+            trustedDeviceConf.ivrOutputCode = 9556
+            let trustedDevice = TrustedDeviceConfiguration.TrustedDevice(trustedDeviceId: 4679654,
+                                                                         userId: 36167469,
+                                                                         trustedDeviceState: "",
+                                                                         trustedDeviceTimestamp: 1313188078,
+                                                                         ivrInputCode: 9556)
+            trustedDeviceConf.trustedDevice = trustedDevice
+
+            let input = PLTrustedDeviceSecondFactorChallengeInput(userId: 36167469,
+                                                                  configuration: trustedDeviceConf)
+            let output = try self.executeUseCase(input: input)
+            XCTAssertEqual(output.challenge, ExpectedResult.challenge)
         } catch {
             XCTFail("PLTrustedDeviceSecondFactorChallengeUseCaseTests.testSecondFactorChallenge failed")
         }
@@ -54,22 +63,45 @@ class PLTrustedDeviceSecondFactorChallengeUseCaseTests: XCTestCase {
         }
 
         do {
-            let tokens = [PLTrustedDeviceSecondFactorChallengeInput.PLTrustedDeviceSecondFactorChallengeToken(id: 152427,
-                                                                                                              timestamp: 1320906670),
-                          PLTrustedDeviceSecondFactorChallengeInput.PLTrustedDeviceSecondFactorChallengeToken(id: 152428,
-                                                                                                              timestamp: 1320903722)]
-            let input = PLTrustedDeviceSecondFactorChallengeInput(ivrCode: 9556,
-                                                                  trustedDeviceId: 4679668,
-                                                                  deviceTimestamp: 1320809298,
-                                                                  userId: 36167469,
-                                                                  tokens: tokens)
-            let useCase = PLTrustedDeviceSecondFactorChallengeUseCase()
-            let response = try useCase.executeUseCase(requestValues: input)
-            let output = try? response.getOkResult()
-            XCTAssertEqual(output?.challenge, ExpectedResult.challenge)
+            let tokens: [TrustedDeviceSoftwareToken] =
+                [TrustedDeviceSoftwareToken(name: "",
+                                            key: "",
+                                            type: "",
+                                            state: "",
+                                            id: 152427,
+                                            timestamp: 1320906670),
+                 TrustedDeviceSoftwareToken(name: "",
+                                            key: "",
+                                            type: "",
+                                            state: "",
+                                            id: 152428,
+                                            timestamp: 1320903722)]
+
+            let trustedDeviceConf = TrustedDeviceConfiguration()
+            trustedDeviceConf.tokens = tokens
+            trustedDeviceConf.ivrOutputCode = 9556
+            let trustedDevice = TrustedDeviceConfiguration.TrustedDevice(trustedDeviceId: 4679668,
+                                                                         userId: 36167469,
+                                                                         trustedDeviceState: "",
+                                                                         trustedDeviceTimestamp: 1320809298,
+                                                                         ivrInputCode: 9556)
+            trustedDeviceConf.trustedDevice = trustedDevice
+
+            let input = PLTrustedDeviceSecondFactorChallengeInput(userId: 36167469,
+                                                                  configuration: trustedDeviceConf)
+            let output = try self.executeUseCase(input: input)
+            XCTAssertEqual(output.challenge, ExpectedResult.challenge)
         } catch {
             XCTFail("PLTrustedDeviceSecondFactorChallengeUseCaseTests.testSecondFactorChallenge failed")
         }
     }
 }
 
+private extension PLTrustedDeviceSecondFactorChallengeUseCaseTests {
+    func executeUseCase(input: PLTrustedDeviceSecondFactorChallengeInput) throws -> PLTrustedDeviceSecondFactorChallengeOutput {
+
+        let useCase = PLTrustedDeviceSecondFactorChallengeUseCase()
+        let response = try useCase.executeUseCase(requestValues: input)
+        return try response.getOkResult()
+    }
+}

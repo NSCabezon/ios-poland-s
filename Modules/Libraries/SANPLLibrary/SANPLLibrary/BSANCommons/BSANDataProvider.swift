@@ -199,6 +199,22 @@ public class BSANDataProvider {
         }
         objc_sync_exit(self.dataRepository)
     }
+    
+    public func storeCustomerIndivual(dto: CustomerDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.customer = dto
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+    
+    public func getCustomerIndividual() -> CustomerDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.customer
+    }
 
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {

@@ -37,6 +37,7 @@ public struct AccountTransactionDTO: Codable {
     public let acceptor: String?
     public let acceptorType: String?
     public let othCustAccNo: String?
+    public let othCustName: String?
     public let amountOth: Double?
     public let amountPln: Double?
     public let currencyOth: String?

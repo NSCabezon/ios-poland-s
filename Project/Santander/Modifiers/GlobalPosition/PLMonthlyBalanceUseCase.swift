@@ -66,9 +66,9 @@ private extension MonthlyBalanceUseCase {
         // currentDate = currentDate.getDateByAdding(months: -1, ignoreHours: true)
         // }
         // return .ok(MonthlyBalanceUseCaseOkOutput(pfmMonthEntities: pfmEntities.reversed()))
-        let entity1 = PFMMonthEntity(date: Date(), expense: 1250, income: 1250)
-        let entity2 = PFMMonthEntity(date: Date(), expense: 1500, income: 1500)
-        let entity3 = PFMMonthEntity(date: Date(), expense: 4500, income: 4500)
+        let entity1 = PFMMonthEntity(date: Date().dateByAdding(months: -2), expense: 0, income: 0)
+        let entity2 = PFMMonthEntity(date: Date().dateByAdding(months: -1), expense: 0, income: 0)
+        let entity3 = PFMMonthEntity(date: Date(), expense: 0, income: 0)
         let pfmMonthEntities: [PFMMonthEntity] = [entity1, entity2, entity3]
         return .ok(MonthlyBalanceUseCaseOkOutput(pfmMonthEntities: pfmMonthEntities))
     }

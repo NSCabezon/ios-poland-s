@@ -164,8 +164,13 @@ extension PLUIInputCodeView: PLUIInputCodeBoxViewDelegate {
     }
 
     func codeBoxViewDidBeginEditing (_ codeBoxView: PLUIInputCodeBoxView) {
-        codeBoxView.setKeyboardType(self.keyboardType)
-        self.delegate?.codeView(self, didBeginEditing: codeBoxView.position)
+        let firstEmptyRequested = self.inputCodeBoxArray.firstEmptyRequested()
+        if (codeBoxView.isEmpty && firstEmptyRequested != codeBoxView) {
+            firstEmptyRequested?.becomeFirstResponder()
+        } else {
+            codeBoxView.setKeyboardType(self.keyboardType)
+            self.delegate?.codeView(self, didBeginEditing: codeBoxView.position)
+        }
     }
 
     func codeBoxViewDidEndEditing (_ codeBoxView: PLUIInputCodeBoxView) {

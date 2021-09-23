@@ -2,8 +2,6 @@
 //  PLRepaymentOperative.swift
 //  Santander
 //
-//  Created by Rodrigo Jurado on 24/8/21.
-//
 
 import Models
 import Commons

@@ -9,8 +9,7 @@ import Foundation
 
 // MARK: - CardTransactionsDataSourceProtocol Protocol
 protocol CardTransactionsDataSourceProtocol {
-    func getCardTransactions(cardId: String, pagination: TransactionsLinksDTO?) -> CardTransactionListDTO?
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, filters: String?) -> Result<CardTransactionListDTO, NetworkProviderError>
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>
 }
 
 final class CardTransactionsDataSource {
@@ -48,29 +47,15 @@ extension CardTransactionsDataSource: CardTransactionsDataSourceProtocol {
         return sessionData.cardsTransactions[cardId]
     }
     
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?) -> Result<CardTransactionListDTO, NetworkProviderError> {
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String? = nil, endDate: String? = nil, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil) -> Result<CardTransactionListDTO, NetworkProviderError> {
         guard let baseUrl = getBaseUrl() else { return .failure(NetworkProviderError.other) }
         let absoluteUrl = baseUrl + basePath + serviceNamePath
         
-        let parameters = CardTransactionsParameters(cardNo: cardId)
+        // Both cardOperation and movementType filters apply to the same parameter in the service (debitFlag)
+        // Their functionality is to filter between credit (incomes) and debit operations (expenses)
+        // cardOperationType is hidden by default in Poland
         
-        let request = CardTransationsRequest(serviceName: self.serviceName,
-                                             serviceUrl: absoluteUrl,
-                                             method: .post,
-                                             jsonBody: parameters,
-                                             headers: nil,
-                                             bodyEncoding: .body,
-                                             contentType: .json,
-                                             localServiceName: .searchbycard)
-        let result: Result<CardTransactionListDTO, NetworkProviderError> = self.networkProvider.request(request)
-        return result
-    }
-    
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, filters: String?) -> Result<CardTransactionListDTO, NetworkProviderError> {
-        guard let baseUrl = getBaseUrl() else { return .failure(NetworkProviderError.other) }
-        let absoluteUrl = baseUrl + basePath + serviceNamePath
-        
-        let parameters = CardTransactionsParameters(cardNo: cardId)
+        let parameters = CardTransactionsParameters(cardNo: cardId, text: searchTerm, startDate: startDate, endDate: endDate, amountFrom: fromAmount, amountTo: toAmount, debitFlag: movementType)
         
         let request = CardTransationsRequest(serviceName: self.serviceName,
                                              serviceUrl: absoluteUrl,

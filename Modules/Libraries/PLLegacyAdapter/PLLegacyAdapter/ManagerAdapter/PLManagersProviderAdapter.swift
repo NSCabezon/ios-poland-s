@@ -34,7 +34,6 @@ public final class PLManagersProviderAdapter {
     private let mobileRechargeManager: PLMobileRechargeManagerAdapter
     private let stocksManager: PLStocksManagerAdapter
     private let billTaxesManager: PLBillTaxesManagerAdapter
-    private let personDataManager: PLPersonDataManagerAdapter
     private let touchIdManager: PLTouchIdManagerAdapter
     private let loansManager: PLLoansManagerAdapter
     private let fundsManager: PLFundsManagerAdapter
@@ -62,6 +61,7 @@ public final class PLManagersProviderAdapter {
     private let fintechManager: PLFintechManagerAdapter
     private let signBasicOperationManager: PLSignBasicOperationManagerAdapter
     private let subscriptionManager: PLSubscriptionManagerAdapter
+    private let customerManager: PLCustomerManagerAdapter
 
     public init(bsanDataProvider:SANPLLibrary.BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -81,7 +81,6 @@ public final class PLManagersProviderAdapter {
         self.mobileRechargeManager = PLMobileRechargeManagerAdapter()
         self.stocksManager = PLStocksManagerAdapter()
         self.billTaxesManager = PLBillTaxesManagerAdapter()
-        self.personDataManager = PLPersonDataManagerAdapter()
         self.touchIdManager = PLTouchIdManagerAdapter()
         self.fundsManager = PLFundsManagerAdapter()
         self.cashWithdrawalManager = PLCashWithdrawalManagerAdapter()
@@ -102,7 +101,7 @@ public final class PLManagersProviderAdapter {
         self.userSegmentManagerAdapter = PLUserSegmentManagerAdapter()
         self.demoInterpreter = demoInterpreter
         self.portfoliosPBManagerAdapter = PLPortfoliosPBManagerAdapter()
-        self.globalPositionManagerAdapter = PLGlobalPositionManagerAdapter(globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), bsanDataProvider: bsanDataProvider)
+        self.globalPositionManagerAdapter = PLGlobalPositionManagerAdapter(globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), bsanDataProvider: bsanDataProvider, customerManager: self.plManagersProvider.getCustomerManager())
         self.transfersManager = PLTransfersManagerAdapter()
         self.accountsManager = PLAccountsManagerAdapter(accountManager: self.plManagersProvider.getAccountsManager(), bsanDataProvider: bsanDataProvider)
         self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager(), bsanDataProvider: bsanDataProvider, globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), cardTransactionsManager: self.plManagersProvider.getCardTransactionsManager())
@@ -119,6 +118,7 @@ public final class PLManagersProviderAdapter {
         self.fintechManager = PLFintechManagerAdapter()
         self.signBasicOperationManager = PLSignBasicOperationManagerAdapter()
         self.subscriptionManager = PLSubscriptionManagerAdapter()
+        self.customerManager = PLCustomerManagerAdapter(customerManager: self.plManagersProvider.getCustomerManager(), bsanDataProvider: bsanDataProvider)
     }
 }
 
@@ -208,7 +208,7 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
     }
     
     public func getBsanPersonDataManager() -> BSANPersonDataManager {
-        return self.personDataManager
+        return self.customerManager
     }
     
     public func getBsanTouchIdManager() -> BSANTouchIdManager {

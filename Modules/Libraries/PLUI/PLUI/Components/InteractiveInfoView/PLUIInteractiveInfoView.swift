@@ -134,13 +134,8 @@ private extension PLUIInteractiveInfoView {
         NSLayoutConstraint.activate([
             self.verticalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 12.0),
             self.verticalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15.0),
-            self.verticalStackView.leadingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: Constants.horizontalSpacing),
+            self.verticalStackView.leadingAnchor.constraint(equalTo: (self.image != nil ? self.imageView.trailingAnchor : self.leadingAnchor), constant: Constants.horizontalSpacing),
             self.verticalStackView.trailingAnchor.constraint(equalTo: self.switcher.leadingAnchor, constant: -Constants.horizontalSpacing),
-
-            self.imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15.0),
-            self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8.0),
-            self.imageView.widthAnchor.constraint(equalToConstant: 44.0),
-            self.imageView.heightAnchor.constraint(equalToConstant: 44.0),
 
             self.backgroundView.topAnchor.constraint(equalTo: self.topAnchor),
             self.backgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -1.0),
@@ -150,6 +145,15 @@ private extension PLUIInteractiveInfoView {
             self.switcher.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.switcher.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
         ])
+
+        if self.image != nil {
+            NSLayoutConstraint.activate([
+                self.imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15.0),
+                self.imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8.0),
+                self.imageView.widthAnchor.constraint(equalToConstant: 44.0),
+                self.imageView.heightAnchor.constraint(equalToConstant: 44.0),
+            ])
+        }
     }
 
     @objc func switcherDidChangeValue(_ sender: UISwitch) {

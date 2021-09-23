@@ -47,7 +47,14 @@ extension PLLoansManagerAdapter: BSANLoansManager {
     }
     
     func getLoanTransactionDetail(forLoan loan: SANLegacyLibrary.LoanDTO, loanTransaction: SANLegacyLibrary.LoanTransactionDTO) throws -> BSANResponse<LoanTransactionDetailDTO> {
-        return BSANErrorResponse(nil)
+        guard let accountNumber = loan.contractDescription?.replace(" ", ""),
+              let loanOperationList = self.bsanDataProvider.getLoanOperationList(withLoanId: accountNumber)?.operationList,
+              let loanOperation = loanOperationList.first(where: { loanTransaction.transactionNumber == "\($0.operationId?.postingDate ?? "")/\($0.operationId?.operationLP ?? 0)" }) else {
+            return BSANErrorResponse(nil)
+        }
+
+        let adaptedLoanTransactionDetail = LoanTransactionDetailDTOAdapter.adaptPLLoanTransactionToLoanTransactionDetail(loanOperation)
+        return BSANOkResponse(adaptedLoanTransactionDetail)
     }
     
     func removeLoanDetail(loanDTO: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<Void> {

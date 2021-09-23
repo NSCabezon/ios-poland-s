@@ -18,6 +18,8 @@ import Models
 import GlobalPosition
 import Account
 import Inbox
+import PersonalArea
+import Menu
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -63,6 +65,9 @@ final class AppDependencies {
     private lazy var accountDetailModifier: AccountDetailModifierProtocol = {
         return PLAccountDetailModifier()
     }()
+    private lazy var accountTransactionsPDFModifier: AccountTransactionsPDFGeneratorProtocol = {
+        return PLAccountTransactionsPDFGeneratorProtocol(dependenciesResolver: dependencieEngine)
+    }()
     private lazy var notificationPermissionManager: NotificationPermissionsManager = {
         return NotificationPermissionsManager(dependencies: self.dependencieEngine)
     }()
@@ -71,9 +76,9 @@ final class AppDependencies {
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
 //    }()
-//    private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
-//        return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
-//    }()
+    private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
+        return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
+    }()
     
     // MARK: Dependencies init
     init() {
@@ -142,7 +147,7 @@ private extension AppDependencies {
             return EmptySiriAssistant()
         }
         self.dependencieEngine.register(for: TealiumCompilationProtocol.self) { _ in
-            return EmptyTealiumCompilation()
+            return TealiumCompilation()
         }
         self.dependencieEngine.register(for: SharedDependenciesDelegate.self) { _ in
             return self
@@ -156,6 +161,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountDetailModifierProtocol.self) { _ in
             return self.accountDetailModifier
         }
+        self.dependencieEngine.register(for: AccountTransactionsPDFGeneratorProtocol.self) { _ in
+            return self.accountTransactionsPDFModifier
+        }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager
         }
@@ -163,10 +171,22 @@ private extension AppDependencies {
             return PLInboxActionBuilder(resolver: resolver)
         }
         self.dependencieEngine.register(for: GetFilteredAccountTransactionsUseCaseProtocol.self) { resolver in
-            return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver)
+            return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
+        }
+        self.dependencieEngine.register(for: GetAccountTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetAccountTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
+        }
+        self.dependencieEngine.register(for: FiltersAlertModifier.self) { _ in
+            return PLFiltersAlertModifier()
+        }
+        self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
+            return self.personalAreaSections
+        }
+        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
+            return PLPublicMenuViewContainer(resolver: resolver)
         }
     }
 }

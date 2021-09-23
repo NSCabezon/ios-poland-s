@@ -12,10 +12,12 @@ final class PLGlobalPositionManagerAdapter {
     
     private let globalPositionManager: PLGlobalPositionManagerProtocol
     private let bsanDataProvider: BSANDataProvider
+    private let customerManager: PLCustomerManagerProtocol
     
-    init(globalPositionManager: PLGlobalPositionManagerProtocol, bsanDataProvider: BSANDataProvider) {
+    init(globalPositionManager: PLGlobalPositionManagerProtocol, bsanDataProvider: BSANDataProvider, customerManager: PLCustomerManagerProtocol) {
         self.bsanDataProvider = bsanDataProvider
         self.globalPositionManager = globalPositionManager
+        self.customerManager = customerManager
     }
 }
 
@@ -36,7 +38,19 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
         }
 
         let clientPersonCode = String(authCredentials.userId ?? 0)
-        let adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(globalPosition, clientPersonCode: clientPersonCode)
+        var adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(globalPosition, clientPersonCode: clientPersonCode)
+        let name = getName()
+        adaptedGlobalPosition.clientName = name
+        adaptedGlobalPosition.clientNameWithoutSurname = name
         return BSANOkResponse(adaptedGlobalPosition)
+    }
+}
+
+private extension PLGlobalPositionManagerAdapter {
+    func getName() -> String? {
+        guard let customerPersonalsData = try? self.customerManager.getIndividual().get() else {
+            return nil
+        }
+        return customerPersonalsData.firstName?.components(separatedBy: " ").first
     }
 }

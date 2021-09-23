@@ -66,14 +66,17 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess({ [weak self] output in
                 guard let self = self else { return }
-                let challenge = self.getChallenge(from: output.defaultAuthorizationType,
-                                                  allowedAuthTypes: output.allowedAuthorizationTypes)
-                
-                if challenge == .sms {
-                    self.goToSmsAuthScreen()
-                } else if challenge == .tokenTime {
-                    self.goToHardwareTokenAuthScreen()
-                } else {
+                do {
+                    let challenge = try self.getChallenge(from: output.defaultAuthorizationType,
+                                                          allowedAuthTypes: output.allowedAuthorizationTypes)
+                    if challenge == .sms {
+                        self.goToSmsAuthScreen()
+                    } else if (challenge == .tokenTime || challenge == .tokenTimeCR) {
+                        self.goToHardwareTokenAuthScreen()
+                    } else {
+                        self.handle(error: .applicationNotWorking)
+                    }
+                } catch {
                     self.handle(error: .applicationNotWorking)
                 }
             }).onError({[weak self] error in
@@ -128,16 +131,14 @@ private extension PLVoiceBotPresenter {
     }
     
     func getChallenge(from defaultAuthType: AuthorizationType,
-                      allowedAuthTypes: [AuthorizationType]?) -> AuthorizationType? {
+                      allowedAuthTypes: [AuthorizationType]?) throws -> AuthorizationType {
         switch defaultAuthType {
         case .softwareToken:
-            if (allowedAuthTypes?.first(where: { $0 == .sms })) != nil {
-                return .sms
-            } else if (allowedAuthTypes?.first(where: { $0 == .tokenTime || $0 == .tokenTimeCR })) != nil {
-                return .tokenTime
-            } else {
-                return .softwareToken
+            guard let firstAuthorizationType = allowedAuthTypes?.first,
+                  (firstAuthorizationType == .sms || firstAuthorizationType == .tokenTime || firstAuthorizationType == .tokenTimeCR) else {
+                throw BSANException("We should have .sms, .tokenTime or .tokenTimeCR in challenges")
             }
+            return firstAuthorizationType
         default:
            return defaultAuthType
         }

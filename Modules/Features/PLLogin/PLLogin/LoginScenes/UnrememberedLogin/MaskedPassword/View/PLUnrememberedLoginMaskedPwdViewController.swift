@@ -49,7 +49,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     private enum Constants {
         static let makedPasswordBoxSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 31, height: 56) : CGSize(width: 22, height: 34)
         static let maskedPasswordCharacterSet: CharacterSet = CharacterSet.alphanumerics.union(.symbols).union(.punctuationCharacters)
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 67
         static let animationDuration: TimeInterval = 0.2
         static let minimumPositionsFulfilled = 8
         static let userImageSize = CGSize(width: 56.0, height: 56.0)
@@ -89,7 +89,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     }
     
     @objc func didSelectMenu() {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        self.presenter.didSelectMenu()
     }
 }
 

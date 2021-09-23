@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol PLCardTransactionsManagerProtocol {
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, filters: String?) -> Result<CardTransactionListDTO, NetworkProviderError>?
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>?
 }
 
 final class PLCardTransactionsManager {
@@ -26,9 +26,17 @@ extension PLCardTransactionsManager: PLCardTransactionsManagerProtocol {
         return dataSource.getCardTransactions(cardId: cardId, pagination: pagination)
     }
     
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, filters: String?) -> Result<CardTransactionListDTO, NetworkProviderError>? {
-        if let filters = filters {
-            let result = dataSource.loadCardTransactions(cardId: cardId, pagination: pagination, filters: filters)
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>? {
+        if searchTerm != nil || (startDate != nil && endDate != nil) || (fromAmount != nil && toAmount != nil) || movementType !=  nil || cardOperationType != nil {
+            let result = dataSource.loadCardTransactions(cardId: cardId,
+                                                         pagination: pagination,
+                                                         searchTerm: searchTerm,
+                                                         startDate: startDate,
+                                                         endDate: endDate,
+                                                         fromAmount: fromAmount,
+                                                         toAmount: toAmount,
+                                                         movementType: movementType,
+                                                         cardOperationType: cardOperationType)
             switch result {
             case .success(let cardTransactions):
                 self.dataProvider.storeCardTransactions(cardId, cardTransactions)
@@ -37,10 +45,7 @@ extension PLCardTransactionsManager: PLCardTransactionsManagerProtocol {
                 return .failure(NetworkProviderError.other)
             }
         } else {
-            if let cardTransactions = getCardTransactions(cardId: cardId, pagination: pagination) {
-                return .success(cardTransactions)
-            }
-            let result = dataSource.loadCardTransactions(cardId: cardId, pagination: pagination, filters: nil)
+            let result = dataSource.loadCardTransactions(cardId: cardId, pagination: pagination)
             switch result {
             case .success(let cardTransactions):
                 self.dataProvider.storeCardTransactions(cardId, cardTransactions)

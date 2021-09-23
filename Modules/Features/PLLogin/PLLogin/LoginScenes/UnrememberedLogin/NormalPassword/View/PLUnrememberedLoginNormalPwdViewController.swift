@@ -33,7 +33,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     }
 
     private enum Constants {
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 67
         static let animationDuration: TimeInterval = 0.2
         static let userImageSize = CGSize(width: 56.0, height: 56.0)
     }
@@ -71,7 +71,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     }
     
     @objc func didSelectMenu() {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        self.presenter.didSelectMenu()
     }
 }
 
@@ -246,6 +246,10 @@ extension PLUnrememberedLoginNormalPwdViewController: RememberMeViewDelegate {
 }
 
 extension PLUnrememberedLoginNormalPwdViewController: UITextFieldDelegate {
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return false
+    }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard string != " " else { return false }

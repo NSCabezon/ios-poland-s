@@ -1,6 +1,16 @@
 # Poland iOS
 
-This is the Poland santander-one Readme file. In this document you can find a general overview of the app. For more details and common procedures, see the [confluence technical documentation](https://saneu.atlassian.net/wiki/spaces/MOVPL/pages/1122861793/iOS+-+Technical+documentation).
+One Europe leads the way to team-work and digital synergies, with the aim of having the best mobile banking app in Europe.
+
+A common app that will become the best Santander showcase and universalize the use of the app as the reference channel on our relationship with clients
+
+This project provides the iOS Core functionalities for any country app for the OneApp application.
+
+OneApp is the ambition of delivering the best digital relationship model on each European market, a common app that will become the best Santander showcase and universalize the use of the app as the reference channel on our relationship with clients OneApp is built implementing a base common app on all European geographies as a starting point and evolving it in a common development hub, that optimizes resources, improves quality and accelerates delivery
+
+This README will guide you on your quest to perform some tasks like creating a new module or the styleguide that should be used.
+
+For more details and common procedures, see the [confluence technical documentation](https://sanone.atlassian.net/wiki/spaces/MOVPL/pages/3797778736/OA-iOS+-+Technical+documentation).
 
 ## First steps
 
@@ -30,8 +40,11 @@ We use fastlane and match to manage development certificates. To install a devel
 2. Execute in poland/Project
 
 ```
-TODO
+$ fastlane ios certificates version:0.0
 ```
+The 0.0 version is just inherited from other one app release bundle ids. In Poland app the bundle does not change.
+
+The passphrase is "Santander2021"
 
 ## Folder structure overview
 ```
@@ -75,51 +88,37 @@ From here, the app starts with the main app container, created with BaseMenuView
 
 The dependendencies engine must adopt the **DependenciesResolver** and **DependenciesInjector** protocols.
 
-## How are view actions handled?
-TODO
-## How is model data applied to the view?
-TODO
-## How are navigation and other non-model state handled?
-TODO
-## What testing strategies are used?
-TODO
 
 # App configuration
 We use __xcconfig__ files to keep country local app configuration at building time and a microsite configuration mechanism to get runtime configuration.
 
-## Build time configuration
-You can check local configuration for each schema in __Santader/Configuration__ folder. For example you can see the Intern schema configuration in INTERN.xcconfig
+See [confluence technical documentation about app configuration](https://sanone.atlassian.net/wiki/spaces/MOVPL/pages/3797779600/OA-App+configuration). 
 
-### Adding xcconfig variables
-
-Each variable described in this file has an equivalent entry in the app info.plist. If you need to add a new value in some point in the future, you will need to update the info.plist with an entry like:
-
-```
-<key>ENVIRONMENTS_AVAILABLE</key>
-<string>$(ENVIRONMENTS_AVAILABLE)</string>
-```
-and in the xcconfig file you will add the value for each environment:
-
-```
-ENVIRONMENTS_AVAILABLE = YES
-```
-We can configure also general iOS environment variables from xcconfig files. For instance, the CFBundleName is connected to $PRODUCT_NAME variable, which is defined in the xcconfig file.
-
-### Accessing xcconfig variables
-TODO
-
-## Microsite dynamic configuration
-The app can be configured with a remote microsite json configuration file. This file can be loaded locally for testing and debugging purposes.
-
-### Local configuration folder
+## Local configuration folder
 
 You can find a local copy of microsite configuration files in __Santander/MicrositeLocalConf/__ folder. This configuration files can be modified locally to test app behaviors without changing the actual microsite content.
 
 There are two local configurations that can be selected in test/debug builds from a selector in login screen. The path to these configurations can be found in __PublicFilesHostProvider__ struct.
 
-### Remote microsite URLs
+## Remote microsite URLs
 
 The URL for microsite configuration can change depending on the selected schema. You can set or modify the configuration URLs in __PublicFilesHostProvider__ struct.
+
+## Deprecated version configuration
+
+The app store App id used to redirect the user when current version is deprecated can be configured in the PLCommons submodule in PLConstants
+
+```
+public static let appStoreId:Int = 461736062
+``` 
+A particular version is deprecated if the "versions" node in microsite confguration contains the version with the "active" node with a false value.
+
+```
+"versions": {
+        "4.0.60": {
+            "active": "false",
+...
+```
 
 # Other tips & tricks
 

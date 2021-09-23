@@ -6,13 +6,18 @@
 //
 
 //import UI
-//import Models
+import Models
+import RetailLegacy
 import Commons
 import GlobalPosition
 import Transfer
 import Cards
 import Account
 import Loans
+import PersonalArea
+import SANLegacyLibrary
+import DomainCommon
+import PersonalArea
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -23,20 +28,6 @@ final class AppModifiers {
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
         let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
-    }()
-    private lazy var accountHomeActionModifier: Account.AccountHomeActionModifier = {
-        let modifier = AccountHomeActionModifier(dependenciesResolver: self.dependencieEngine)
-        modifier.setCompletion { resolver in
-            modifier.add(PLAccountHomeActionModifier(dependenciesResolver: resolver))
-        }
-        return modifier
-    }()
-    private lazy var accountOtherOperativesActionModifier: Account.AccountOtherOperativesActionModifier = {
-        let modifier = AccountOtherOperativesActionModifier(dependenciesResolver: self.dependencieEngine)
-        modifier.setCompletion { resolver in
-            modifier.add(PLAccountOtherOperativesActionModifier(dependenciesResolver: resolver))
-        }
-        return modifier
     }()
     private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
         let modifier = CardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
@@ -61,7 +52,7 @@ final class AppModifiers {
         return GetGPCardOperativeModifier()
     }()
     private lazy var getGPAccountsOperativeOptionProtocol: GetGPAccountOperativeModifier = {
-        return GetGPAccountOperativeModifier()
+        return GetGPAccountOperativeModifier(dependenciesEngine: self.dependencieEngine)
     }()
     private lazy var getGPInsuranceProtectionOperativeOptionProtocol: GetGPInsuranceProtectionOperativeModifier = {
         return GetGPInsuranceProtectionOperativeModifier()
@@ -72,7 +63,13 @@ final class AppModifiers {
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
         return OtherOperativesModifier()
     }()
+    private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
+        return PLCardTransactionsSearchModifier(dependenciesEngine: dependencieEngine)
+    }()
 
+    private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
+        return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
+    }()
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
         self.registerDependencies()
@@ -87,12 +84,6 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: FundModifier.self) { _ in
             return self.fundModifiers
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
-            return self.accountHomeActionModifier
-        }
-        self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
-            return self.accountOtherOperativesActionModifier
-        }
         self.dependencieEngine.register(for: AccountNumberFormatterProtocol.self) { _ in
             return PLAccountNumberFormatter()
         }
@@ -101,7 +92,7 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
             return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
-        }        
+        }
         self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
             return self.cardHomeModifier
         }
@@ -132,44 +123,44 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: GetGPOtherOperativeOptionProtocol.self) { _ in
             return self.getGPOtherOperativeOptionProtocol
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifier.self) { _ in
-            return self.accountHomeActionModifier
-        }
         self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
             return self.otherOperativesModifier
+        }
+        self.dependencieEngine.register(for: GetPersonalBasicInfoUseCaseProtocol.self) { resolver in
+            return PLGetPersonalBasicInfoUseCase(dependencies: resolver)
         }
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
-//        self.dependencieEngine.register(for: TransferHomeActionModifier.self) { _ in
-//            return self.transferHomeActionModifier
-//        }
-//        self.dependencieEngine.register(for: AccountOtherOperativesActionModifier.self) { _ in
-//            return self.accountOtherOperativesActionModifier
-//        }
-//        self.dependencieEngine.register(for: GetDepositWebViewConfigurationUseCase.self) { resolver in
-//            return GetDepositWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: GetFundWebViewConfigurationUseCase.self) { resolver in
-//            return GetFundWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: GetPTWebViewConfigurationUseCase.self) { resolver in
-//            return GetPTWebViewConfigurationUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: PINProviderCipherProtocol.self) { resolver in
-//            return PINProviderCipher()
-//        }
-//        self.dependencieEngine.register(for: PINProviderProtocol.self) { resolver in
-//            return PINProvider(cryptoCipher: resolver.resolve(for: PINProviderCipherProtocol.self))
-//        }
-//        self.dependencieEngine.register(for: GetPersistedUserUseCaseProtocol.self) { resolver in
-//            return GetPersistedUserUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: SetPersistedUserUseCaseProtocol.self) { resolver in
-//            return SetPersistedUserUseCase(dependenciesResolver: resolver)
-//        }
-//        self.dependencieEngine.register(for: GetIpdCredentialsUseCaseProtocol.self) { resolver in
-//            return GetIpdCredentialsUseCase(dependenciesResolver: resolver)
-//        }
+        self.dependencieEngine.register(for: CardTransactionsSearchModifierProtocol.self) { resolver in
+            return self.cardTransactionsSearchModifier
+        }
+        self.dependencieEngine.register(for: OnboardingPermissionOptionsProtocol.self) { _ in
+            return OnboardingPermissionOptions()
+        }
+        self.dependencieEngine.register(for: PersonalAreaSectionsSecurityModifierProtocol.self) { _ in
+            return self.personalAreaSectionsSecurityModifier
+        }
+        self.dependencieEngine.register(for: AccountTransactionDetailProtocol.self) { _ in
+            return PLAccountTransactionDetail()
+        }
+        self.dependencieEngine.register(for: AccountTransactionDetailActionProtocol.self) { _ in
+            return PLAccountTransactionDetailAction()
+        }
+        self.dependencieEngine.register(for: GetAccountHomeActionUseCaseProtocol.self) { resolver in
+            return GetPLAccountHomeActionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: GetAccountOtherOperativesActionUseCaseProtocol.self) { resolver in
+            return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
+            return PLAccountHomeActionModifier()
+        }
+        self.dependencieEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
+            return PLAccountTransactionDetailShareableInfo()
+        }
+        self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in
+            return PLAccountOtherOperativesActionModifier()
+        }
     }
 }

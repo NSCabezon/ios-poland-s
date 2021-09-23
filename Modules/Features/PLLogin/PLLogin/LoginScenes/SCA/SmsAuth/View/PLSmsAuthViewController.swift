@@ -50,7 +50,7 @@ final class PLSmsAuthViewController: UIViewController {
     private enum Constants {
         static let smsBoxSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 39.0, height: 56.0) : CGSize(width: 34, height: 49)
         static let smsCharacterSet: CharacterSet = .decimalDigits
-        static let bottomDistance: CGFloat = 32
+        static let bottomDistance: CGFloat = 67
         static let separationDistance: CGFloat = 10
         static let distanceToRegardLabel: CGFloat = 90.0
         static let animationDuration: TimeInterval = 0.2
@@ -92,7 +92,7 @@ final class PLSmsAuthViewController: UIViewController {
     }
 
     @objc func didSelectMenu() {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        self.presenter.didSelectMenu()
     }
 }
 
@@ -165,16 +165,9 @@ private extension PLSmsAuthViewController {
     }
 
     func showExpiredSignatureMessage() {
-        let message = Dialog.Item.styledConfiguredText(localized("pl_login_alert_expiredSignature"), configuration: LocalizedStylableTextConfiguration(
-            font: .santander(family: .text, type: .regular, size: 16),
-            alignment: .center,
-            lineHeightMultiple: 1,
-            lineBreakMode: .byTruncatingTail
-        ))
-        let acceptAction = Dialog.Action(title: "generic_button_understand", style: .red, action: { [weak self] in
-                self?.presenter.didSelectLoginRestartAfterTimeOut()
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_expiredSignature", completion: { [weak self] in
+            self?.presenter.didSelectLoginRestartAfterTimeOut()
         })
-        self.showDialog(items: [message], action: acceptAction, isCloseOptionAvailable: false)
     }
 
     func initTimeValidateSMS() {

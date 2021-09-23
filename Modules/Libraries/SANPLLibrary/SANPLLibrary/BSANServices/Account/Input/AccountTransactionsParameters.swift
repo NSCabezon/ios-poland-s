@@ -23,7 +23,7 @@ public struct AccountTransactionsParameters: Encodable {
     public let pagingFirst: String?
     public let pagingLast: String?
 
-    public init(accountNumbers: [String], firstOper: Int? = 25, from: String? = nil, to: String? = nil, state: String? = nil, text: String? = nil, postedFrom: String? = nil, postedTo: String? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, sortOrder: String? = nil, debitFlag: String? = nil, pagingFirst: String? = nil, pagingLast: String? = nil) {
+    public init(accountNumbers: [String], firstOper: Int? = 100, from: String? = nil, to: String? = nil, state: String? = nil, text: String? = nil, postedFrom: String? = nil, postedTo: String? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, sortOrder: String? = nil, debitFlag: String? = nil, pagingFirst: String? = nil, pagingLast: String? = nil) {
         self.accountNumbers = accountNumbers
         self.firstOper = firstOper
         self.from = from

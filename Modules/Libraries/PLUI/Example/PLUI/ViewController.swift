@@ -26,9 +26,18 @@ class ViewController: UIViewController {
 
     private enum Constants {
         static let reuseIdentifier = "Cell"
+        static let borderWidth: CGFloat = 10.0
     }
 
-    private var components = [Any]()
+    private lazy var components: [Any] = {
+        var newComponents = [Any]()
+        newComponents.append(self.maskedPasswordView())
+        newComponents.append(self.smsAuthenticationView())
+        newComponents.append(self.smsAuthenticationViewWithDifferentStyle())
+        newComponents.append(self.trustedDevicePinView())
+        newComponents.append(self.interactiveInfoView())
+        return newComponents
+    }()
 
     override func viewDidLoad() {
 
@@ -38,16 +47,11 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 204/256, green: 0, blue: 0, alpha: 1)
         self.view.addSubview(self.tableView)
 
-        components.append(self.maskedPasswordView())
-        components.append(self.smsAuthenticationView())
-        components.append(self.trustedDevicePinView())
-        components.append(self.interactiveInfoView())
-
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10)
+            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: Constants.borderWidth),
+            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -Constants.borderWidth)
         ])
     }
 

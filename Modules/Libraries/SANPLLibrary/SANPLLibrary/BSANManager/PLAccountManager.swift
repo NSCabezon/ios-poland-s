@@ -45,7 +45,6 @@ extension PLAccountManager: PLAccountManagerProtocol {
     }
     
     func getWithholdingList(accountNumber: String) throws -> Result<SANPLLibrary.WithholdingListDTO, NetworkProviderError> {
-       
         if let cachedWithholdingList = self.getCachedWithholdingList(accountNumber) {
             return .success(cachedWithholdingList)
         }

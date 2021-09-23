@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '10.3'
+platform :ios, '11.0'
 
 def core_dependencies
   pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
@@ -31,6 +31,7 @@ target 'PLUI_Example' do
   pl_dependencies
   core_dependencies
   core_thirdparty_dependencies
+  pod 'SnapshotTesting', '~> 1.9.0'
 
   target 'PLUI_Tests' do
     inherit! :search_paths

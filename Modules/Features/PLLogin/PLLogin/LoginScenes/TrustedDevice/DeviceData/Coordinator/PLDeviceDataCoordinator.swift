@@ -87,6 +87,9 @@ private extension PLDeviceDataCoordinator {
         self.dependenciesEngine.register(for: PLDeviceDataRegisterDeviceUseCase.self) { resolver in
            return PLDeviceDataRegisterDeviceUseCase(dependenciesResolver: resolver)
         }
+        self.dependenciesEngine.register(for: PLDeviceDataGenerateDataUseCase.self) { resolver in
+           return PLDeviceDataGenerateDataUseCase(dependenciesResolver: resolver)
+        }
     }
 }
 

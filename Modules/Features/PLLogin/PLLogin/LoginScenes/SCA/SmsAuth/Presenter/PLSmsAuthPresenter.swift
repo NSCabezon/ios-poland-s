@@ -15,7 +15,7 @@ import PLLegacyAdapter
 import Security
 import os
 
-protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
+protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
     func viewDidLoad()
     func viewWillAppear()
@@ -81,12 +81,20 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
             self?.coordinator.goToDeviceTrustDeviceData()
         })
     }
+    
+    func didSelectMenu() {
+        self.coordinatorDelegate.didSelectMenu()
+    }
 }
 
 //MARK: - Private Methods
 private extension  PLSmsAuthPresenter {
     var coordinator: PLScaAuthCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: PLScaAuthCoordinatorProtocol.self)
+    }
+    
+    var coordinatorDelegate: LoginCoordinatorDelegate {
+        return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
 
     func doAuthenticateInit() {        
