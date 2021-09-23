@@ -65,7 +65,7 @@ final class PLAccountTransactionsPDFGeneratorProtocol: AccountTransactionsPDFGen
                 self?.transactions.append(contentsOf: transactionsTransformed)
                 
                 if !(self?.pagination?.isEnd ?? false), self?.transactions.count ?? 0 < 1000 {
-                    self?.loadNextPage(for: account, withFilters: withFilters, pagination: pagination, completion: completion)
+                    self?.loadNextPage(for: account, withFilters: withFilters, pagination: self?.pagination, completion: completion)
                 } else {
                     completion()
                 }
