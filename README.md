@@ -1,6 +1,16 @@
 # Poland iOS
 
-This is the Poland santander-one Readme file. In this document you can find a general overview of the app. For more details and common procedures, see the [confluence technical documentation](https://sanone.atlassian.net/wiki/spaces/MOVPL/pages/3797778736/OA-iOS+-+Technical+documentation).
+One Europe leads the way to team-work and digital synergies, with the aim of having the best mobile banking app in Europe.
+
+A common app that will become the best Santander showcase and universalize the use of the app as the reference channel on our relationship with clients
+
+This project provides the iOS Core functionalities for any country app for the OneApp application.
+
+OneApp is the ambition of delivering the best digital relationship model on each European market, a common app that will become the best Santander showcase and universalize the use of the app as the reference channel on our relationship with clients OneApp is built implementing a base common app on all European geographies as a starting point and evolving it in a common development hub, that optimizes resources, improves quality and accelerates delivery
+
+This README will guide you on your quest to perform some tasks like creating a new module or the styleguide that should be used.
+
+For more details and common procedures, see the [confluence technical documentation](https://sanone.atlassian.net/wiki/spaces/MOVPL/pages/3797778736/OA-iOS+-+Technical+documentation).
 
 ## First steps
 
@@ -30,8 +40,11 @@ We use fastlane and match to manage development certificates. To install a devel
 2. Execute in poland/Project
 
 ```
-TODO
+$ fastlane ios certificates version:0.0
 ```
+The 0.0 version is just inherited from other one app release bundle ids. In Poland app the bundle does not change.
+
+The passphrase is "Santander2021"
 
 ## Folder structure overview
 ```

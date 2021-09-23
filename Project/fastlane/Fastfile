@@ -52,7 +52,7 @@ platform :ios do
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do |options|
     match(
-      git_url: "ssh://git@santander-one-app.ciber.es:5793/ios/certificates.git",
+      git_url: "git@github.com:santander-group-europe/ios-certificates-development.git",
       app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
        "pl.bancosantander.oneapp.intern.#{options[:version]}",
        "pl.bancosantander.oneapp.pre.#{options[:version]}"],
@@ -64,7 +64,7 @@ platform :ios do
   desc 'Fetch Distribution certificates and provisioning profiles'
   lane :certificates_release do |options|
     match(
-      git_url: "ssh://git@santander-one-app.ciber.es:5793/admins/certificates-release.git",
+      git_url: "git@github.com:santander-group-europe/ios-certificates-development.git",
       app_identifier: [
       "pl.bancosantander.oneapp.intern.#{options[:version]}",
       "pl.bancosantander.oneapp.pre.#{options[:version]}"],
