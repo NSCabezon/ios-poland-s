@@ -102,7 +102,11 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
 
     func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration) {
         guard let unblockRemainingTimeInSecs = configuration.unblockRemainingTimeInSecs else { return }
-        PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs).show(in: self)
+        PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs) { [weak self] allowLogin in
+            if allowLogin {
+                self?.presenter.setAllowLoginBlockedUsers()
+            }
+        }.show(in: self)
     }
 
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {

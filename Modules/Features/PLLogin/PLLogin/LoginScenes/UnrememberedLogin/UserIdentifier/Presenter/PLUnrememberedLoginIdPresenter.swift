@@ -20,11 +20,13 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol, PLPubl
     func didSelectChooseEnvironment()
     func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration)
     func openAppStore()
+    func setAllowLoginBlockedUsers()
 }
 
 final class PLUnrememberedLoginIdPresenter {
     weak var view: PLUnrememberedLoginIdViewProtocol?
     internal let dependenciesResolver: DependenciesResolver
+    private var allowLoginBlockedUsers = false
 
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
     
@@ -66,6 +68,11 @@ final class PLUnrememberedLoginIdPresenter {
 }
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
+    
+    func setAllowLoginBlockedUsers() {
+        allowLoginBlockedUsers = true
+    }
+    
     func viewDidLoad() {
         self.loadData()
     }
@@ -160,15 +167,22 @@ private extension  PLUnrememberedLoginIdPresenter {
     }
     
     func loginSuccess(configuration: UnrememberedLoginConfiguration) {
+
+        let time = Date(timeIntervalSince1970: configuration.unblockRemainingTimeInSecs ?? 0)
+        let now = Date()
+        
         self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
             if configuration.isFinal() {
-                self?.view?.showInvalidSCADialog {
-                    self?.goToPasswordScene(configuration)
+                self.view?.showInvalidSCADialog {
+                    self.goToPasswordScene(configuration)
                 }
-            } else if configuration.isBlocked() {
-                self?.view?.showAccountTemporaryBlockedDialog(configuration)
+            } else if self.allowLoginBlockedUsers {
+                self.goToPasswordScene(configuration)
+            } else if configuration.isBlocked() && time > now {
+                self.view?.showAccountTemporaryBlockedDialog(configuration)
             } else {
-                self?.goToPasswordScene(configuration)
+                self.goToPasswordScene(configuration)
             }
         })
     }

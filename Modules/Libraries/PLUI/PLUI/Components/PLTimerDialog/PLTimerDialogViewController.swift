@@ -12,9 +12,11 @@ import Models
 
 public struct PLDialogTime {
     let dateTimeStamp: Double
+    let completion: (Bool)->()
 
-    public init(dateTimeStamp: Double) {
+    public init(dateTimeStamp: Double, completion: @escaping (Bool)->()) {
         self.dateTimeStamp = dateTimeStamp
+        self.completion = completion
     }
 
     public func show(in viewController: UIViewController) {
@@ -56,14 +58,14 @@ class PLTimerDialogViewController: UIViewController {
                                                       userInfo: nil,
                                                       repeats: true)
         self.contentView.isHidden = false
+        self.updateText()
     }
 
     // MARK: - Private
     
     @objc private func updateText() {
-        if self.dateTimeStamp > 0 {
-            let date = Date(timeIntervalSince1970: self.dateTimeStamp)
-            guard date > now else { return }
+        let date = Date(timeIntervalSince1970: self.dateTimeStamp)
+        if date > now {
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour, .minute, .second]
 
@@ -86,9 +88,10 @@ class PLTimerDialogViewController: UIViewController {
             let text = localized("pl_login_alert_tryAgain", [StringPlaceholder(.value, minutes)])
             self.textLabel.text = text.plainText
             self.dateTimeStamp -= 1
-        }
-        else {
+        } else {
             countTimer.invalidate()
+            dialog.completion(true)
+            self.dismiss(animated: true)
         }
     }
 
@@ -109,6 +112,8 @@ class PLTimerDialogViewController: UIViewController {
     }
 
     @objc private func buttonSelected() {
+        countTimer.invalidate()
+        dialog.completion(false)
         self.dismiss(animated: true)
     }
 }
