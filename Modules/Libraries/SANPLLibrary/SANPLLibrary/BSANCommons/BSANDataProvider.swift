@@ -16,6 +16,16 @@ public class BSANDataProvider {
         self.dataRepository = dataRepository
     }
     
+    public func storeAppInfo(_ appInfo: AppInfo) {
+        objc_sync_enter(dataRepository)
+        dataRepository.store(appInfo, .createPersistentPolicy())
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func getAppInfo() -> AppInfo? {
+        return dataRepository.get(AppInfo.self, .createPersistentPolicy())
+    }
+    
     public func storeEnviroment(_ enviroment: BSANPLEnvironmentDTO) {
         objc_sync_enter(dataRepository)
         dataRepository.store(enviroment)

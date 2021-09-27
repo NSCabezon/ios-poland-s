@@ -15,6 +15,8 @@ public protocol PLLoginManagerProtocol {
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError>
     func getAuthCredentials() throws -> AuthCredentials
+    func getAppInfo() -> AppInfo?
+    func setAppInfo(_ appInfo: AppInfo)
 }
 
 public final class PLLoginManager {
@@ -30,6 +32,15 @@ public final class PLLoginManager {
 }
 
 extension PLLoginManager: PLLoginManagerProtocol {
+    
+    public func setAppInfo(_ appInfo: AppInfo) {
+        self.bsanDataProvider.storeAppInfo(appInfo)
+    }
+    
+    public func getAppInfo() -> AppInfo? {
+        return self.bsanDataProvider.getAppInfo()
+    }
+
     public func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
         let result = try loginDataSource.doLogin(parameters)
         self.processLoginResult(parameters.selectedId, result: result)
