@@ -40,7 +40,8 @@ public final class PLManagersProvider {
         self.globalPositionManager = PLGlobalPositionManager(bsanDataProvider: bsanDataProvider,
                                                              networkProvider: networkProvider,
                                                              demoInterpreter: demoInterpreter)
-        self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider)
+        self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider,
+                                           networkProvider: networkProvider)
         self.cardTransactionsManager = PLCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)

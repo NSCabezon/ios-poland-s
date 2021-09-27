@@ -1,0 +1,28 @@
+{
+    "12345678Z": {
+        "0": {
+            "relatedAccountData": {
+                "accountNo": "06109010140000000003027389",
+                "creditLimit": {
+                    "value": 602.82,
+                    "currencyCode": "PLN"
+                },
+                "balance": {
+                    "value": 602.82,
+                    "currencyCode": "PLN"
+                },
+                "availableFunds": {
+                    "value": 602.82,
+                    "currencyCode": "PLN"
+                }
+            },
+            "virtualPan": "421352I039028243",
+            "maskedPan": "421352_7566",
+            "emboss1": "ELŻBIETA BRZEZIŃSKA",
+            "emboss2": "",
+            "generalStatus": "ACTIVE",
+            "alias": "Karta podstawowa",
+            "cardExpirationDate":"2022-05-31",
+        }
+    }
+}
