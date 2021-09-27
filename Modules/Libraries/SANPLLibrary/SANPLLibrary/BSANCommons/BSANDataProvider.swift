@@ -250,6 +250,11 @@ public class BSANDataProvider {
     public func removePublicKey() {
         self.dataRepository.remove(PubKeyDTO.self)
     }
+
+    public func closeSession() {
+        self.dataRepository.remove(AuthCredentials.self)
+        self.dataRepository.remove(SessionData.self)
+    }
 }
 
 extension BSANDataProvider: BSANDemoProviderProtocol {

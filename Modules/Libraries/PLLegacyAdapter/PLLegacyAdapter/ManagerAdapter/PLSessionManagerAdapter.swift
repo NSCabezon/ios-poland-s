@@ -6,8 +6,15 @@
 //
 
 import SANLegacyLibrary
+import SANPLLibrary
 
-final class PLSessionManagerAdapter {}
+final class PLSessionManagerAdapter {
+    private let bsanDataProvider: BSANDataProvider
+
+    public init(bsanDataProvider: BSANDataProvider) {
+        self.bsanDataProvider = bsanDataProvider
+    }
+}
  
 extension PLSessionManagerAdapter: BSANSessionManager {
     func isDemo() throws -> BSANResponse<Bool> {
@@ -19,6 +26,7 @@ extension PLSessionManagerAdapter: BSANSessionManager {
     }
     
     func logout() -> BSANResponse<Void> {
+        self.bsanDataProvider.closeSession()
         return BSANOkEmptyResponse()
     }
     
@@ -27,5 +35,6 @@ extension PLSessionManagerAdapter: BSANSessionManager {
     }
     
     func cleanSessionData() throws {
+        try self.bsanDataProvider.cleanSessionData()
     }
 }
