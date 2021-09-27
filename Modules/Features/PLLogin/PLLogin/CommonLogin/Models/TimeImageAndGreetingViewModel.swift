@@ -19,9 +19,9 @@ final class TimeImageAndGreetingViewModel {
         let calendar = Calendar(identifier: .gregorian)
         let parts = calendar.dateComponents([.hour], from: now)
         switch parts.hour! {
-        case 6..<12:
+        case 3..<12:
             return .goodMorning
-        case 12..<19:
+        case 12..<20:
             return .goodAfternoon
         default:
             return .goodNight
