@@ -45,7 +45,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
  
     private let repayInInstallmentsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.repayInInstallmentsPL.rawValue,
-                               localizedKey: "pl_cardsOption_button_repayInstallments",
+                               localizedKey: "cardsOption_button_repayInstallments",
                                icon: "icnRatio",
                                section: "otherOperatives",
                                location: "",
@@ -78,7 +78,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private let changeAliasesPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.changeAliasesPL.rawValue,
-                               localizedKey: "pl_cardsOption_button_changeAliases",
+                               localizedKey: "cardsOption_button_changeAlias",
                                icon: "icnChangeAlias",
                                section: "otherOperatives",
                                location: "",
