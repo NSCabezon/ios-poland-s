@@ -13,6 +13,7 @@ public protocol PLManagersProviderProtocol {
     func getCardsManager() -> PLCardsManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
+    func getNotificationManager() -> PLNotificationManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -25,6 +26,7 @@ public final class PLManagersProvider {
     private let cardTransactionsManager: PLCardTransactionsManager
     private let loansManager: PLLoanManager
     private let customerManager: PLCustomerManager
+    private let notificationManager: PLNotificationManager
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -46,6 +48,7 @@ public final class PLManagersProvider {
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.customerManager = PLCustomerManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.notificationManager = PLNotificationManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
     }
 }
 
@@ -87,5 +90,9 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     
     public func getCustomerManager() -> PLCustomerManagerProtocol {
         self.customerManager
+    }
+
+    public func getNotificationManager() -> PLNotificationManagerProtocol {
+        self.notificationManager
     }
 }

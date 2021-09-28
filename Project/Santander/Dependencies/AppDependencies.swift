@@ -20,6 +20,7 @@ import Account
 import Inbox
 import PersonalArea
 import Menu
+import PLNotifications
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -70,6 +71,12 @@ final class AppDependencies {
     }()
     private lazy var notificationPermissionManager: NotificationPermissionsManager = {
         return NotificationPermissionsManager(dependencies: self.dependencieEngine)
+    }()
+    private lazy var notificationsHandler: NotificationsHandlerProtocol = {
+        return NotificationsHandler(dependencies: self.dependencieEngine)
+    }()
+    private lazy var firebaseNotificationsService: FirebaseNotificationsService = {
+        return FirebaseNotificationsService(dependenciesResolver: self.dependencieEngine)
     }()
 
     // MARK: Features
@@ -166,6 +173,10 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager
+        }
+        self.dependencieEngine.register(for: NotificationsHandlerProtocol.self) { _ in
+            self.notificationsHandler.addService(self.firebaseNotificationsService)
+            return self.notificationsHandler
         }
         self.dependencieEngine.register(for: InboxActionBuilderProtocol.self) { resolver in
             return PLInboxActionBuilder(resolver: resolver)

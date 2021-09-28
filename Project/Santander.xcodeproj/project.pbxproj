@@ -42,6 +42,7 @@
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
 		0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */; };
+		42A7628D26FD0578000C5D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42A7628C26FD0578000C5D67 /* GoogleService-Info.plist */; };
 		42BF471526495D3400136E8D /* HostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF471426495D3400136E8D /* HostModule.swift */; };
 		42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF484326497C9200136E8D /* BSANEnvironments.swift */; };
 		42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */; };
@@ -49,6 +50,10 @@
 		42BF5873264D13C900136E8D /* es.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5870264D13C900136E8D /* es.strings */; };
 		42BF5874264D13C900136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5871264D13C900136E8D /* pl.strings */; };
 		42BF5875264D13C900136E8D /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5872264D13C900136E8D /* en.strings */; };
+		42CEB7C126E8EE0700349ACD /* GoogleService-Info-intern.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CEB7BD26E8EDF300349ACD /* GoogleService-Info-intern.plist */; };
+		42CEB7C226E8EE0700349ACD /* GoogleService-Info-production.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CEB7BE26E8EDFB00349ACD /* GoogleService-Info-production.plist */; };
+		42CEB7C326E8EE0700349ACD /* GoogleService-Info-pre.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CEB7BF26E8EE0100349ACD /* GoogleService-Info-pre.plist */; };
+		42CEB7C426E8EE0700349ACD /* GoogleService-Info-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CEB7C026E8EE0700349ACD /* GoogleService-Info-development.plist */; };
 		446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446325432692E9530050334F /* PLCardHomeActionModifier.swift */; };
 		446C4F8E26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */; };
 		446C4F9226D798640080D7EC /* PLAccountTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C4F9126D798640080D7EC /* PLAccountTransaction.swift */; };
@@ -150,6 +155,7 @@
 		0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareIbanFormatter.swift; sourceTree = "<group>"; };
 		120567B20B07B6DDAB036BC8 /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
 		385264D3A1A6928019A86EBB /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
+		42A7628C26FD0578000C5D67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Configuration/GoogleServices/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42BF471426495D3400136E8D /* HostModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostModule.swift; sourceTree = "<group>"; };
 		42BF484326497C9200136E8D /* BSANEnvironments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSANEnvironments.swift; sourceTree = "<group>"; };
 		42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySiriAssistant.swift; sourceTree = "<group>"; };
@@ -158,6 +164,11 @@
 		42BF5870264D13C900136E8D /* es.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = es.strings; path = "../../i18n-poland/clients/iOS/es.strings"; sourceTree = "<group>"; };
 		42BF5871264D13C900136E8D /* pl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl.strings; path = "../../i18n-poland/clients/iOS/pl.strings"; sourceTree = "<group>"; };
 		42BF5872264D13C900136E8D /* en.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en.strings; path = "../../i18n-poland/clients/iOS/en.strings"; sourceTree = "<group>"; };
+		42CEB7BD26E8EDF300349ACD /* GoogleService-Info-intern.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-intern.plist"; sourceTree = "<group>"; };
+		42CEB7BE26E8EDFB00349ACD /* GoogleService-Info-production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production.plist"; sourceTree = "<group>"; };
+		42CEB7BF26E8EE0100349ACD /* GoogleService-Info-pre.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-pre.plist"; sourceTree = "<group>"; };
+		42CEB7C026E8EE0700349ACD /* GoogleService-Info-development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development.plist"; sourceTree = "<group>"; };
+		42CEB7CA26E91D7400349ACD /* SantanderIntern-Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SantanderIntern-Debug.entitlements"; sourceTree = "<group>"; };
 		446325432692E9530050334F /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
 		446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetFilteredAccountTransactionsUseCase.swift; sourceTree = "<group>"; };
 		446C4F9126D798640080D7EC /* PLAccountTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountTransaction.swift; sourceTree = "<group>"; };
@@ -411,6 +422,17 @@
 			name = Strings;
 			sourceTree = "<group>";
 		};
+		42CEB7BC26E8EDD600349ACD /* GoogleServices */ = {
+			isa = PBXGroup;
+			children = (
+				42CEB7C026E8EE0700349ACD /* GoogleService-Info-development.plist */,
+				42CEB7BD26E8EDF300349ACD /* GoogleService-Info-intern.plist */,
+				42CEB7BF26E8EE0100349ACD /* GoogleService-Info-pre.plist */,
+				42CEB7BE26E8EDFB00349ACD /* GoogleService-Info-production.plist */,
+			);
+			path = GoogleServices;
+			sourceTree = "<group>";
+		};
 		443C4BC026EA560E00FA5929 /* OtherOperatives */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,6 +539,7 @@
 		66B3CFA82639C6C5000AAD0F /* Santander */ = {
 			isa = PBXGroup;
 			children = (
+				42CEB7CA26E91D7400349ACD /* SantanderIntern-Debug.entitlements */,
 				66E57596264A68DF006804BD /* MicrositeLocalConf */,
 				66BC8A5A263FFCFB00654CC5 /* Configuration */,
 				66BC8A55263FED9F00654CC5 /* Dependencies */,
@@ -527,6 +550,7 @@
 				66B3CFB22639C6C8000AAD0F /* PolandAssets.xcassets */,
 				66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */,
 				66B3CFB72639C6C8000AAD0F /* Info.plist */,
+				42A7628C26FD0578000C5D67 /* GoogleService-Info.plist */,
 			);
 			path = Santander;
 			sourceTree = "<group>";
@@ -545,6 +569,7 @@
 		66BC8A5A263FFCFB00654CC5 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				42CEB7BC26E8EDD600349ACD /* GoogleServices */,
 				66BC8A6D263FFFF000654CC5 /* PLAppConfig.swift */,
 				66C68A442694972E007B9884 /* PLNumberFormatter.swift */,
 				66BC8A5F263FFD7C00654CC5 /* XCConfig.swift */,
@@ -685,6 +710,7 @@
 				88783119AB063848F03B0C54 /* [CP] Check Pods Manifest.lock */,
 				66B3CFA22639C6C5000AAD0F /* Sources */,
 				66B3CFA32639C6C5000AAD0F /* Frameworks */,
+				42CEB7BB26E8ED0B00349ACD /* Firebase GoogleServices */,
 				66B3CFA42639C6C5000AAD0F /* Resources */,
 				AAF9FC63D62F2C71C99612DF /* [CP] Embed Pods Frameworks */,
 			);
@@ -735,16 +761,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				66B3CFB62639C6C8000AAD0F /* LaunchScreen.storyboard in Resources */,
+				42CEB7C326E8EE0700349ACD /* GoogleService-Info-pre.plist in Resources */,
 				66E57606264A6C32006804BD /* assetsLocal in Resources */,
 				42BF5873264D13C900136E8D /* es.strings in Resources */,
 				66B3CFB32639C6C8000AAD0F /* PolandAssets.xcassets in Resources */,
+				42CEB7C426E8EE0700349ACD /* GoogleService-Info-development.plist in Resources */,
+				42CEB7C226E8EE0700349ACD /* GoogleService-Info-production.plist in Resources */,
 				66E57608264A6C3A006804BD /* assets in Resources */,
 				66BC8A68263FFE4C00654CC5 /* INTERN.xcconfig in Resources */,
 				66BC8DFC2640A58D00654CC5 /* README.md in Resources */,
 				66BC8A6A263FFE4C00654CC5 /* PRO.xcconfig in Resources */,
+				42A7628D26FD0578000C5D67 /* GoogleService-Info.plist in Resources */,
 				66BC8A6B263FFE4C00654CC5 /* DEV.xcconfig in Resources */,
 				42BF5875264D13C900136E8D /* en.strings in Resources */,
 				66BC8A69263FFE4C00654CC5 /* PRE.xcconfig in Resources */,
+				42CEB7C126E8EE0700349ACD /* GoogleService-Info-intern.plist in Resources */,
 				42BF5874264D13C900136E8D /* pl.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -752,6 +783,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		42CEB7BB26E8ED0B00349ACD /* Firebase GoogleServices */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase GoogleServices";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "RESOURCE_PATH=$SRCROOT/Santander/Configuration/GoogleServices\nDST=GoogleService-Info.plist\n \nDEV=GoogleService-Info-development.plist\nINTERN=GoogleService-Info-intern.plist\nPRE=GoogleService-Info-pre.plist\nPROD=GoogleService-Info-production.plist\n\necho $RESOURCE_PATH/$DST \n \nif [[ \"$CONFIGURATION\" == \"Dev-Debug\" ]]; then\n    cp $RESOURCE_PATH/$DEV $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Intern-Debug\" ]]; then\n    cp $RESOURCE_PATH/$INTERN $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Intern-Release\" ]]; then\n    cp $RESOURCE_PATH/$INTERN $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pre-Debug\" ]]; then\n    cp $RESOURCE_PATH/$PRE $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pre-Release\" ]]; then\n    cp $RESOURCE_PATH/$PRE $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pro-Debug\" ]]; then\n    cp $RESOURCE_PATH/$PROD $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pro-Release\" ]]; then\n    cp $RESOURCE_PATH/$PROD $RESOURCE_PATH/$DST\nfi\n";
+		};
 		88783119AB063848F03B0C54 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1040,7 +1089,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1065,7 +1114,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1141,7 +1190,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = "Santander/SantanderIntern-Debug.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 72;
@@ -1153,7 +1202,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.intern.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.bancosantander.oneapp.intern.0.0 1632219009";
 				SWIFT_VERSION = 5.0;
@@ -1241,7 +1290,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.dev.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.bancosantander.oneapp.dev.0.0 1632218964";
 				SWIFT_VERSION = 5.0;
@@ -1329,7 +1378,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.bancosantander.oneapp.pre.0.0 1632219042";
 				SWIFT_VERSION = 5.0;
@@ -1411,7 +1460,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse pl.bancosantander.oneapp.pre.0.0";
 				SWIFT_VERSION = 5.0;
@@ -1493,7 +1542,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.72;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.intern.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse pl.bancosantander.oneapp.intern.0.0";
 				SWIFT_VERSION = 5.0;
