@@ -51,15 +51,6 @@ def core_dependencies
 end
 
 def legacy_libraries
-  pod 'RefreshableSantander', :path => '../santander-one/Modules/Libraries/RefreshableSantander'
-  pod 'GlobileSquadsCore/UIComponents', :path => '../santander-one/Modules/Libraries/GlobileSquadsCore'
-  pod 'CacheLib', :path => '../santander-one/Modules/Libraries/CacheLib'
-  pod 'GlobileUtilsLib', :path => '../santander-one/Modules/Libraries/GlobileUtilsLib'
-  pod 'HapticResponseLib', :path => '../santander-one/Modules/Libraries/HapticResponseLib'
-  pod 'SantanderUIKitLib', :path => '../santander-one/Modules/Libraries/SantanderUIKitLib'
-  pod 'SensorsLib', :path => '../santander-one/Modules/Libraries/SensorsLib'
-  pod 'ServiceInvocationLib', :path => '../santander-one/Modules/Libraries/ServiceInvocationLib'
-  pod 'WebViewBridgeLib', :path => '../santander-one/Modules/Libraries/WebViewBridgeLib'
   pod 'Locker', :path => '../santander-one/Modules/Libraries/Locker'
   pod 'Logger', :path => '../santander-one/Modules/Libraries/Logger'
   pod 'Helpers', :path => '../santander-one/Modules/Libraries/Helpers'
