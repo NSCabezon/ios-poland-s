@@ -102,4 +102,8 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
     func addPrepaidCardOffAction() -> Bool {
         return false
     }
+
+    func isPANAlwaysSharable() -> Bool {
+        return false
+    }
 }

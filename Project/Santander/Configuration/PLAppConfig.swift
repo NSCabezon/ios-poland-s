@@ -11,6 +11,7 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
+    var isEnabledTopUpsPrivateMenu = false
     var isEnabledMailbox = false
     var isScheduledTransferDetailDeleteButtonEnabled = false
     var isScheduledTransferDetailEditButtonEnabled = false
