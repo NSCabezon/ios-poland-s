@@ -61,6 +61,7 @@ def core_thirdparty_dependencies
   pod 'IQKeyboardManagerSwift', '6.5.6'
   pod 'Kingfisher', '5.15.8'
   pod 'lottie-ios'
+  pod 'TealiumIOS', '5.6.6'
 end
  
 # --------- Poland only dependencies
