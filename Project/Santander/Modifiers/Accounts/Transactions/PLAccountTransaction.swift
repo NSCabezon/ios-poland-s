@@ -22,4 +22,6 @@ final class PLAccountTransaction: AccountTransactionProtocol {
     let isEnabledAmountRangeFilter: Bool = true
 
     let isEnabledDateFilter: Bool = true
+
+    let disabledEasyPayAccount: Bool = true
 }

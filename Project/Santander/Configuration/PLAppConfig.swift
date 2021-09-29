@@ -11,6 +11,7 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
+    let isEnabledOnboardingLocationDialog = false
     var isEnabledTopUpsPrivateMenu = false
     var isEnabledMailbox = false
     var isScheduledTransferDetailDeleteButtonEnabled = false
