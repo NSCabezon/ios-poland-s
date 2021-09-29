@@ -10,6 +10,6 @@ end
 target 'PLNotifications_Tests' do
   core_dependencies
   pod 'PLNotifications', :path => '../'
-  pod 'Firebase/Messaging', '~> 8'
+  pod 'Firebase/Messaging', '~> 8.7.0'
   
 end
