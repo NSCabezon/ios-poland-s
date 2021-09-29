@@ -37,7 +37,7 @@
                     },
                     "lastUpdate": "2021-06-07",
                     "bankId": 0,
-                    "defaultForPayments": false
+                    "defaultForPayments": true
                 },
                 {
                     "number": "14150025980000000142214872",

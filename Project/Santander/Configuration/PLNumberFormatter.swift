@@ -7,10 +7,11 @@ import SANLegacyLibrary
 
 final class PLNumberFormatter: AmountFormatterProvider {
     func formatterForRepresentation(_ amountRepresentation: AmountRepresentation) -> NumberFormatter? {
+        let fractionDigits = self.getFractionDigits(for: amountRepresentation)
         let numberFormatter = NumberFormatter()
         numberFormatter.groupingSeparator = " "
-        numberFormatter.maximumFractionDigits = 2
-        numberFormatter.minimumFractionDigits = 2
+        numberFormatter.maximumFractionDigits = fractionDigits
+        numberFormatter.minimumFractionDigits = fractionDigits
         numberFormatter.maximumIntegerDigits = 12
         numberFormatter.minimumIntegerDigits = 1
         numberFormatter.numberStyle = .decimal
@@ -29,12 +30,26 @@ extension PLNumberFormatter: CurrencyFormatterProvider {
     }
 
     func assembleCurrencyString(for value: String, with symbol: String, representation: AmountRepresentation) -> CurrencySymbolPosition {
+        let formattedValue = self.getFormattedValue(for: value, with: representation)
         let formattedSymbol = self.getFormattedCurrency(for: symbol)
-        return .custom(formattedString: "\(value) \(formattedSymbol)")
+        return .custom(formattedString: "\(formattedValue) \(formattedSymbol)")
     }
 }
 
 private extension PLNumberFormatter {
+    private func getFractionDigits(for amountRepresentation: AmountRepresentation) -> Int {
+        switch amountRepresentation {
+        case .with1M:
+            return 3
+        default:
+            return 2
+        }
+    }
+
+    private func getFormattedValue(for value: String, with representation: AmountRepresentation) -> String {
+        return "\(value)\(self.isOneMillionFormat(representation) ? "M" : "")"
+    }
+
     private func getFormattedCurrency(for symbol: String) -> String {
         switch symbol {
         case "€":
@@ -48,5 +63,12 @@ private extension PLNumberFormatter {
         default:
             return symbol.uppercased()
         }
+    }
+
+    private func isOneMillionFormat(_ representation: AmountRepresentation) -> Bool {
+        if case AmountRepresentation.with1M = representation {
+            return true
+        }
+        return false
     }
 }

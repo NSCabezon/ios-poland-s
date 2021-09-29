@@ -8,7 +8,7 @@
 import Account
 import Commons
 
-final class PLAccountTransaction: AccountTransactionProtocol {
+final class PLAccountTransaction: AccountTransactionProtocol {    
     func getError() -> String {
         return localized("transaction_label_emptyError")
     }
