@@ -38,6 +38,7 @@ private extension PLSmsAuthCoordinator {
     func setupDependencies() {
         let presenter = PLSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
         let authProcessUseCase = PLAuthProcessUseCase(dependenciesEngine: self.dependenciesEngine)
+        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
 
         self.dependenciesEngine.register(for: PLScaAuthCoordinatorProtocol.self) { _ in
             return self
@@ -53,6 +54,10 @@ private extension PLSmsAuthCoordinator {
 
         self.dependenciesEngine.register(for: PLLoginCoordinatorProtocol.self) { _ in
             return self
+        }
+
+        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
+            return notificationGetTokenAndRegisterUseCase
         }
 
         self.dependenciesEngine.register(for: PLSmsAuthViewController.self) { resolver in

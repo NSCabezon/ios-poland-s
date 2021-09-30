@@ -38,6 +38,7 @@ private extension PLHardwareTokenCoordinator {
     func setupDependencies() {
         let presenter = PLHardwareTokenPresenter(dependenciesResolver: self.dependenciesEngine)
         let authProcessUseCase = PLAuthProcessUseCase(dependenciesEngine: self.dependenciesEngine)
+        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
         
         self.dependenciesEngine.register(for: PLScaAuthCoordinatorProtocol.self) { _ in
             return self
@@ -61,6 +62,10 @@ private extension PLHardwareTokenCoordinator {
         
         self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
             return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
+            return notificationGetTokenAndRegisterUseCase
         }
 
         self.dependenciesEngine.register(for: PLHardwareTokenViewController.self) { resolver in
