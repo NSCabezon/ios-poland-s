@@ -42,6 +42,8 @@ extension BSANLocalManager: NetworkProvider {
                 default:
                     return .failure(NetworkProviderError.error(NetworkProviderResponseError(code: error, data: data, headerFields: nil, error: nil)))
                 }
+            } else if let data = self.getData(from: answerElement, result: .success) {
+                return .success(data)
             } else {
                 return .failure(.other)
             }
@@ -149,6 +151,10 @@ private extension BSANLocalManager {
             return nil
         }
         return value
+    }
+    
+    func getData(from element: (key: String, value: JSON), result: PLLocalAnswerType) -> Data? {
+        return try? JSONSerialization.data(withJSONObject: element.value["\(result.rawValue)"], options: .prettyPrinted)
     }
 }
 
