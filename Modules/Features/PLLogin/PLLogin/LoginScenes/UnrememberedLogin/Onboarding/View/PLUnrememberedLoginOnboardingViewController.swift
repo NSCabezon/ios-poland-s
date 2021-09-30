@@ -94,7 +94,7 @@ private extension PLUnrememberedLoginOnboardingViewController {
     func setupCreateAccountButton() {
         createAccountButton.set(localizedStylableText: localized("pl_onboarding_button_openAccount"), state: .normal)
         createAccountButton.setTitleColor(UIColor.santanderRed, for: .normal)
-        createAccountButton.backgroundColor = UIColor.white
+        createAccountButton.backgroundNormalColor = UIColor.white
         createAccountButton.backgroundPressedColor = .lightSanGray
         createAccountButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 16.0)
         createAccountButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCreateAccountButtonSelected)))
