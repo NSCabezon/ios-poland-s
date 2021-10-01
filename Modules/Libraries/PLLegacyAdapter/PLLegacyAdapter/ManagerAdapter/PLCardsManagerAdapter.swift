@@ -125,9 +125,17 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     func loadCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
-    
+
     func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<SANLegacyLibrary.CardDetailDTO> {
-        return BSANErrorResponse(nil)
+        guard let cardId = cardDTO.PAN else { return BSANErrorResponse(nil) }
+        let result = try cardsManager.getCardDetail(cardId: cardId)
+        switch result {
+        case .success(let cardDetail):
+            let adaptedCardDetail = CardDetailDTOAdapter.adaptPLCardToCardDetail(cardDetail)
+            return BSANOkResponse(adaptedCardDetail)
+        case .failure( _):
+            return BSANErrorResponse(nil)
+        }
     }
     
     func getCardBalance(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<CardBalanceDTO> {
