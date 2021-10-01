@@ -264,72 +264,12 @@
             ],
             "cards": [
                 {
-                    "maskedPan": "421352_6506",
-                    "virtualPan": "421352I013731844",
-                    "generalStatus": "INACTIVE",
-                    "cardStatus": "00",
-                    "role": "NOT_OWNER",
-                    "type": "DEBIT",
-                    "productCode": "KAFV",
-                    "name": {
-                        "description": "Dopasowana Visa",
-                        "userDefined": "Dopasowana Visa"
-                    },
-                    "relatedAccount": "43109011990000000132578056",
-                    "expirationDate": "2022-04-30",
-                    "availableBalance": {
-                        "value": 48268.74,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 48268.74
-                    },
-                    "creditLimit": {
-                        "value": 2000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 2000
-                    },
-                    "disposedAmount": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    }
-                },
-                {
-                    "maskedPan": "421352_7895",
-                    "virtualPan": "421352I037372333",
-                    "generalStatus": "CANCELLED",
-                    "cardStatus": "00",
-                    "role": "OWNER",
-                    "type": "DEBIT",
-                    "productCode": "KAFV",
-                    "name": {
-                        "description": "Dopasowana Visa",
-                        "userDefined": "Dopasowana Visa"
-                    },
-                    "relatedAccount": "14150025980000000142214872",
-                    "expirationDate": "2023-04-30",
-                    "availableBalance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "creditLimit": {
-                        "value": 5000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 5000
-                    },
-                    "disposedAmount": {
-                        "value": 12477.4,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 12477.4
-                    }
-                },
-                {
                     "maskedPan": "438371_5284",
                     "virtualPan": "438371I013523051",
                     "generalStatus": "ACTIVE",
                     "cardStatus": "00",
                     "role": "NOT_OWNER",
-                    "type": "DEBIT",
+                    "type": "CREDIT",
                     "productCode": "HCEV",
                     "name": {
                         "description": "Visa-Mobile Debetowa",
@@ -354,9 +294,39 @@
                     }
                 },
                 {
-                    "maskedPan": "412281_9173",
-                    "virtualPan": "412281P002925860",
-                    "generalStatus": "ACTIVE",
+                    "maskedPan": "421352_6506",
+                    "virtualPan": "421352I013731844",
+                    "generalStatus": "INACTIVE",
+                    "cardStatus": "00",
+                    "role": "NOT_OWNER",
+                    "type": "CREDIT",
+                    "productCode": "KAFV",
+                    "name": {
+                        "description": "Dopasowana Visa",
+                        "userDefined": "Dopasowana Visa"
+                    },
+                    "relatedAccount": "43109011990000000132578056",
+                    "expirationDate": "2022-04-30",
+                    "availableBalance": {
+                        "value": 48268.74,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 48268.74
+                    },
+                    "creditLimit": {
+                        "value": 2000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 2000
+                    },
+                    "disposedAmount": {
+                        "value": 0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
+                    }
+                },
+                {
+                    "maskedPan": "412281_9533",
+                    "virtualPan": "512281P002925830",
+                    "generalStatus": "BLOCKED",
                     "cardStatus": "00",
                     "role": "OWNER",
                     "type": "CREDIT",
@@ -383,6 +353,66 @@
                         "valueInBaseCurrency": 1000
                     }
                 },
+                {
+                    "maskedPan": "421352_7895",
+                    "virtualPan": "421352I037372333",
+                    "generalStatus": "CANCELLED",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "CREDIT",
+                    "productCode": "KAFV",
+                    "name": {
+                        "description": "Dopasowana Visa",
+                        "userDefined": "Dopasowana Visa"
+                    },
+                    "relatedAccount": "14150025980000000142214872",
+                    "expirationDate": "2023-04-30",
+                    "availableBalance": {
+                        "value": 0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
+                    },
+                    "creditLimit": {
+                        "value": 5000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5000
+                    },
+                    "disposedAmount": {
+                        "value": 12477.4,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 12477.4
+                    }
+                },
+                {
+                    "maskedPan": "412281_9333",
+                    "virtualPan": "412281P002323860",
+                    "generalStatus": "OTHER",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "CREDIT",
+                    "productCode": "PLPV",
+                    "name": {
+                        "description": "Visa Platinum",
+                        "userDefined": "My Visa card"
+                    },
+                    "relatedAccount": "29109014894000000112257854",
+                    "expirationDate": "2023-02-23",
+                    "availableBalance": {
+                        "value": 4000.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 4000.0
+                    },
+                    "creditLimit": {
+                        "value": 5000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5000
+                    },
+                    "disposedAmount": {
+                        "value": 1000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 1000
+                    }
+                }
             ],
             "loans": [
                 {

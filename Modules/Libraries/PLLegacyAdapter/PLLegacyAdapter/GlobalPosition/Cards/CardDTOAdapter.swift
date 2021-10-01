@@ -17,7 +17,18 @@ final class CardDTOAdapter {
         cardDTO.ownershipTypeDesc = OwnershipTypeDesc(plCard.role ?? "")
         cardDTO.ownershipType = OwnershipType.holder.type
         cardDTO.allowsDirectMoney = plCard.type?.lowercased() == "credit"
-        cardDTO.cardContractStatusType = plCard.generalStatus?.lowercased() == "active" ? CardContractStatusType.active : CardContractStatusType.other
+        switch plCard.generalStatus?.lowercased() {
+        case "active":
+            cardDTO.cardContractStatusType = .active
+        case "inactive":
+            cardDTO.cardContractStatusType = .other
+        case "blocked":
+            cardDTO.cardContractStatusType = .blocked
+        case "cancelled":
+            cardDTO.cardContractStatusType = .cancelled
+        default:
+            cardDTO.cardContractStatusType = .cancelled
+        }
         cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plCard.virtualPan)
         cardDTO.cardTypeDescription = plCard.type
         return cardDTO
