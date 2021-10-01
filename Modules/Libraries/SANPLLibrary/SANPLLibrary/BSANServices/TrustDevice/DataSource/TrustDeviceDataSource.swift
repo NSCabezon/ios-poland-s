@@ -8,6 +8,7 @@
 import Foundation
 
 protocol TrustDeviceDataSourceProtocol {
+    func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError>
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError>
     func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError>
     func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Data, NetworkProviderError>
@@ -35,11 +36,30 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         case registerIVR = "/registration/ivr"
         case registerConfirmationCode = "/registration/send-confirmation-code"
         case registerConfirm = "/registration/confirm"
+        case beforeLogin = "/trusted-devices/before-login"
     }
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
         self.dataProvider = dataProvider
+    }
+    
+    func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName =  TrustDeviceServiceType.beforeLogin.rawValue + "?trustedDeviceAppId=" + parameters.trustedDeviceAppId + parameters.retrieveOptions.flatMap({ option in
+                return "&retrieveOptions=\(option)"
+        })
+        let networkRequest = BeforeLoginRequest(serviceName: serviceName,
+                                                serviceUrl: absoluteUrl,
+                                                method: .get,
+                                                headers: self.headers,
+                                                localServiceName: .beforeLogin,
+                                                authorization: .none)
+        let result: Result<BeforeLoginDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
+        return result
     }
 
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError> {
@@ -143,6 +163,36 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                         authorization: .oauth)
         let result: Result<ConfirmRegistrationDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
         return result
+    }
+}
+
+private struct BeforeLoginRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding? = nil
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
     }
 }
 

@@ -33,7 +33,7 @@ final class PLUnrememberedLoginOnboardingCoordinator: ModuleCoordinator {
     
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginOnboardingViewController.self)
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.setViewControllers([controller], animated: false)
     }
 }
 

@@ -19,7 +19,6 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol, PLPubl
     func login(identification: String)
     func didSelectChooseEnvironment()
     func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration)
-    func openAppStore()
     func setAllowLoginBlockedUsers()
 }
 
@@ -38,10 +37,6 @@ final class PLUnrememberedLoginIdPresenter {
         self.dependenciesResolver.resolve(for: PLLoginProcessUseCase.self)
     }
     
-    private var validateVersionUseCase: PLValidateVersionUseCase {
-        self.dependenciesResolver.resolve(for: PLValidateVersionUseCase.self)
-    }
-
     private var loginConfiguration: UnrememberedLoginConfiguration {
         self.dependenciesResolver.resolve(for: UnrememberedLoginConfiguration.self)
     }
@@ -56,10 +51,6 @@ final class PLUnrememberedLoginIdPresenter {
     
     private lazy var loginPLPullOfferLayer: LoginPLPullOfferLayer = {
         return self.dependenciesResolver.resolve(for: LoginPLPullOfferLayer.self)
-    }()
-    
-    private lazy var appStoreNavigator: PLAppStoreNavigator = {
-        return PLAppStoreNavigator()
     }()
         
     deinit {
@@ -103,10 +94,6 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
         case .masked:
             self.coordinator.goToMaskedPasswordScene(configuration: configuration)
         }
-    }
-    
-    func openAppStore() {
-        appStoreNavigator.openAppStore()
     }
 }
 
@@ -159,10 +146,8 @@ private extension  PLUnrememberedLoginIdPresenter {
     }
     
     func loadData() {
-        self.publicFilesManager.loadPublicFiles(withStrategy: .initialLoad, timeout: 0)
         self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
             self?.loginPLPullOfferLayer.loadPullOffers()
-            self?.checkValidVersion()
         }
     }
     
@@ -193,13 +178,6 @@ private extension  PLUnrememberedLoginIdPresenter {
         let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
         self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
     }
-    
-    func checkValidVersion() {
-        Scenario(useCase: validateVersionUseCase).execute(on: self.dependenciesResolver.resolve())
-        .onError({[weak self] error in
-            self?.handleError(error)
-        })
-    }
 }
 
 extension PLUnrememberedLoginIdPresenter: PLLoginPresenterErrorHandlerProtocol {
@@ -218,11 +196,6 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterErrorHandlerProtocol {
             case "TEMPORARY_LOCKED":
                 self.view?.dismissLoading(completion: { [weak self] in
                     self?.view?.showAccountPermanentlyBlockedDialog()
-                })
-                return
-            case "DEPRECATED_VERSION":
-                self.view?.dismissLoading(completion: { [weak self] in
-                    self?.view?.showDeprecatedVersionDialog()
                 })
                 return
             default:

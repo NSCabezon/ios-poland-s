@@ -58,6 +58,10 @@ public class BSANDataProvider {
         self.dataRepository.store(trustedDeviceHeaders, DataRepositoryPolicy.createPersistentPolicy())
         objc_sync_exit(self.dataRepository)
     }
+    
+    public func deleteTrustedDeviceHeaders() {
+        self.dataRepository.remove(TrustedDeviceHeaders.self, .createPersistentPolicy())
+    }
 
     public func getTrustedDeviceHeaders() -> TrustedDeviceHeaders? {
         guard let trustedDeviceHeaders = self.dataRepository.get(TrustedDeviceHeaders.self, DataRepositoryPolicy.createPersistentPolicy()) else {
