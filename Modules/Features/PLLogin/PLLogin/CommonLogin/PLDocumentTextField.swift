@@ -114,6 +114,7 @@ extension PLDocumentTextField {
     }
 
     func configureTextAttributes() {
+        textField.text = introducedText
         let currentTextWidth = (introducedText as NSString).size(withAttributes: self.textfieldAttributes).width
         if currentTextWidth > textfieldUsableWidth {
             kern = self.calculateNewKern(for: currentTextWidth)
@@ -152,6 +153,7 @@ extension PLDocumentTextField {
         }
         textField.defaultTextAttributes = self.textfieldAttributes
         configureTextTextField(text: localized("pl_login_hint_login"))
+        self.resetDefaultAttributedTextKern()
     }
 
     public func configureTextTextField(text: LocalizedStylableText? = nil) {
