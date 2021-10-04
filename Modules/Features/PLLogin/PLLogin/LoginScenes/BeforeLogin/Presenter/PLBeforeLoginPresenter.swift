@@ -58,12 +58,14 @@ private extension PLBeforeLoginPresenter {
     func validateVersionAndUser() {
         view?.loadStart()
         Scenario(useCase: validateVersionUseCase).execute(on: self.dependenciesResolver.resolve())
-        .then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-            guard let self = self else { return nil }
-            return Scenario(useCase: self.beforeLoginUseCase)
-        })
+//      Add everything again when Remembered Login is ready
+//        .then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+//            guard let self = self else { return nil }
+//            return Scenario(useCase: self.beforeLoginUseCase)
+//        })
         .onSuccess({ [weak self] result in
-            self?.navigate(isTrustedDevice: result.isTrustedDevice)
+//            self?.navigate(isTrustedDevice: result.isTrustedDevice)
+            self?.navigate(isTrustedDevice: false)
         })
         .onError({[weak self] error in
             self?.handleError(error)
