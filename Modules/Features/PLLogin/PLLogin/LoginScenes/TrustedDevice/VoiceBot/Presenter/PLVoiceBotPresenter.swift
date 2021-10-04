@@ -134,13 +134,15 @@ private extension PLVoiceBotPresenter {
                       allowedAuthTypes: [AuthorizationType]?) throws -> AuthorizationType {
         switch defaultAuthType {
         case .softwareToken:
-            guard let firstAuthorizationType = allowedAuthTypes?.first,
-                  (firstAuthorizationType == .sms || firstAuthorizationType == .tokenTime || firstAuthorizationType == .tokenTimeCR) else {
+            if let smsAuthType = allowedAuthTypes?.first(where: { $0 == .sms }) {
+                return smsAuthType
+            } else if let hardwareAuthType = allowedAuthTypes?.first(where: { $0 == .tokenTime || $0 == .tokenTimeCR }) {
+                return hardwareAuthType
+            } else {
                 throw BSANException("We should have .sms, .tokenTime or .tokenTimeCR in challenges")
             }
-            return firstAuthorizationType
         default:
-           return defaultAuthType
+            return defaultAuthType
         }
     }
 }

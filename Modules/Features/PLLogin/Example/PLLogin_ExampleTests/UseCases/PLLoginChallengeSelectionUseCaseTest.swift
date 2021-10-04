@@ -82,11 +82,8 @@ class PLLoginChallengeSelectionUseCaseTests: XCTestCase {
             let challenges = [ChallengeEntity(authorizationType: .tokenTimeCR, value: "54583329"),
                               ChallengeEntity(authorizationType: .softwareToken, value: "54583329")]
 
-            let useCase = PLLoginChallengeSelectionUseCase(dependenciesResolver: dependencies)
-            let input = PLLoginChallengeSelectionUseCaseInput(challenges: challenges,
-                                                              defaultChallenge: defaultChallenge)
-            let response = try useCase.executeUseCase(requestValues: input)
-            XCTAssertEqual(try response.getOkResult().challengeEntity, challenges[0])
+            let output = try self.executeUseCase(challenges: challenges, defaultChallenge: defaultChallenge)
+            XCTAssertEqual(output.challengeEntity, challenges[0])
         } catch {
             XCTFail("Failed to get the correct challenge")
         }
@@ -100,11 +97,8 @@ class PLLoginChallengeSelectionUseCaseTests: XCTestCase {
                               ChallengeEntity(authorizationType: .sms, value: "83355571"),
                               ChallengeEntity(authorizationType: .softwareToken, value: "83355571")]
 
-            let useCase = PLLoginChallengeSelectionUseCase(dependenciesResolver: dependencies)
-            let input = PLLoginChallengeSelectionUseCaseInput(challenges: challenges,
-                                                              defaultChallenge: defaultChallenge)
-            let response = try useCase.executeUseCase(requestValues: input)
-            XCTAssertEqual(try response.getOkResult().challengeEntity, challenges[0])
+            let output = try self.executeUseCase(challenges: challenges, defaultChallenge: defaultChallenge)
+            XCTAssertEqual(output.challengeEntity, challenges[2])
         } catch {
             XCTFail("Failed to get the correct challenge")
         }
@@ -129,7 +123,6 @@ class PLLoginChallengeSelectionUseCaseTests: XCTestCase {
             let challenges: [ChallengeEntity]? = nil
 
             let _ = try self.executeUseCase(challenges: challenges, defaultChallenge: defaultChallenge)
-
             XCTAssertThrowsError("It should be throwing an error")
         } catch {
             XCTAssertTrue(true)
