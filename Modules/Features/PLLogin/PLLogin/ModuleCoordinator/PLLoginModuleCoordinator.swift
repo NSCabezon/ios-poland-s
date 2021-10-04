@@ -15,6 +15,11 @@ public class PLLoginModuleCoordinator: ModuleSectionedCoordinator {
         return PLUnrememberedLoginIdCoordinator(dependenciesResolver: dependenciesEngine, navigationController: navigationController)
     }()
     
+    private lazy var rememberedLoginPinCoordinator: PLRememberedLoginPinCoordinator = {
+        return PLRememberedLoginPinCoordinator(dependenciesResolver: dependenciesEngine, navigationController: navigationController)
+    }()
+    
+    
     private lazy var unrememberedLoginOnboardingCoordinator: PLUnrememberedLoginOnboardingCoordinator = {
         return PLUnrememberedLoginOnboardingCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.navigationController)
     }()
@@ -48,17 +53,16 @@ extension PLLoginModuleCoordinator: LoginModuleCoordinatorProtocol {
 extension PLLoginModuleCoordinator : PLLoginModuleCoordinatorProtocol {
     
     public func loadUnrememberedLogin() {
-        //TODO: (SHOW ONBOARDING ONLY THE FIRST TIME) checkFirstLaunch()
+        //checkFirstLaunch() SHOW ONBOARDING ONLY THE FIRST TIME
         self.unrememberedLoginOnboardingCoordinator.start()
     }
     
     public func loadRememberedLogin() {
-        //TODO: Load remembered user pin screen
+        self.rememberedLoginPinCoordinator.start()
     }
 }
 
-private extension PLLoginModuleCoordinator {
-    
+/*private extension PLLoginModuleCoordinator {
     func checkFirstLaunch() {
         Scenario(useCase: self.isFirstLaunchUseCase, input: PLFirstLaunchUseCaseInput(shouldSetFirstLaunch: false))
             .execute(on: self.dependenciesEngine.resolve())
@@ -70,4 +74,4 @@ private extension PLLoginModuleCoordinator {
                 }
             }
     }
-}
+}*/

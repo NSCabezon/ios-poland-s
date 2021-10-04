@@ -61,7 +61,7 @@ final class PLUnrememberedLoginIdPresenter {
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
     
     func setAllowLoginBlockedUsers() {
-        allowLoginBlockedUsers = true
+        self.allowLoginBlockedUsers = true
     }
     
     func viewDidLoad() {
