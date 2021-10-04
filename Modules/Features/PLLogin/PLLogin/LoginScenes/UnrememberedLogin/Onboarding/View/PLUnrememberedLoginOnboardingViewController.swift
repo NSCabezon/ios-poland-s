@@ -57,7 +57,8 @@ private extension PLUnrememberedLoginOnboardingViewController {
     }
     
     @objc func didSelectMenu() {
-        presenter.didSelectMenu()
+//        self.presenter.didSelectMenu()
+        Toast.show(localized("generic_alert_notAvailableOperation"))
     }
     
     func setupViews() {

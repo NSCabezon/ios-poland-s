@@ -80,7 +80,8 @@ final class PLHardwareTokenViewController: UIViewController {
     }
 
     @objc func didSelectMenu() {
-        self.presenter.didSelectMenu()
+//        self.presenter.didSelectMenu()
+        Toast.show(localized("generic_alert_notAvailableOperation"))
     }
 }
 
