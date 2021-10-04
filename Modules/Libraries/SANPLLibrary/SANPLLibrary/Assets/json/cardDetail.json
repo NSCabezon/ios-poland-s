@@ -23,6 +23,7 @@
             "generalStatus": "ACTIVE",
             "alias": "Karta podstawowa",
             "cardExpirationDate":"2022-05-31",
+            "insuranceFlag": true,
         }
     }
 }
