@@ -15,7 +15,7 @@ final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
     var isCardHolderEnabled: Bool = true
-    var cardDetailElements: [CardDetailDataType] = [.pan, .alias, .holder, .linkedAccount, .paymentModality, .situation, .status, .currency, .creditCardAccountNumber]
+    var cardDetailElements: [CardDetailDataType] = [.pan, .alias, .holder, .linkedAccount, .paymentModality, .situation, .status, .currency, .creditCardAccountNumber, .insurance]
     var prepaidCardHeaderElements: [PrepaidCardHeaderElements] = [.availableBalance]
     var debitCardHeaderElements: [DebitCardHeaderElements] = []
     var creditCardHeaderElements: [CreditCardHeaderElements] = [.limitCredit, .availableCredit, .withdrawnCredit]

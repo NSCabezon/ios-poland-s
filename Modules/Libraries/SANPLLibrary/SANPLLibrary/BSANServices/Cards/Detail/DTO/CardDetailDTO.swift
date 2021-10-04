@@ -15,7 +15,7 @@ public struct CardDetailDTO: Codable {
     public let emboss1: String
     public let emboss2: String
     public let generalStatus: String?
-    public let alias: String
+    public let alias: String?
     public let insuranceFlag: Bool?
 }
 

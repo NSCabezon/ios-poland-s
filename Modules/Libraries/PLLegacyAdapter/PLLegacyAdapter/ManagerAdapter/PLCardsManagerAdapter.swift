@@ -127,12 +127,19 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
 
     func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<SANLegacyLibrary.CardDetailDTO> {
-        guard let cardId = cardDTO.PAN else { return BSANErrorResponse(nil) }
+        guard let cards = self.bsanDataProvider.getGlobalPosition()?.cards else { return BSANErrorResponse(nil) }
+        let card = cards.first { $0.virtualPan == cardDTO.contract?.contractNumber }
+        guard let cardId = card?.virtualPan else { return BSANErrorResponse(nil) }
         let result = try cardsManager.getCardDetail(cardId: cardId)
         switch result {
         case .success(let cardDetail):
-            let adaptedCardDetail = CardDetailDTOAdapter.adaptPLCardToCardDetail(cardDetail)
-            return BSANOkResponse(adaptedCardDetail)
+            if cardDTO.cardTypeDescription?.lowercased() == "credit" {
+                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLCreditCardToCardDetail(cardDetail)
+                return BSANOkResponse(adaptedCardDetail)
+            } else {
+                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLDebitCardToCardDetail(cardDetail)
+                return BSANOkResponse(adaptedCardDetail)
+            }
         case .failure( _):
             return BSANErrorResponse(nil)
         }
