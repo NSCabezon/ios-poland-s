@@ -5,6 +5,7 @@
 /// This model will be inyected as dependency to pass information between login scenes
 public final class UnrememberedLoginConfiguration {
 
+    public let displayUserIdentifier: String
     public let userIdentifier: String
     public let passwordType: PasswordType
     public let challenge: ChallengeEntity
@@ -13,7 +14,8 @@ public final class UnrememberedLoginConfiguration {
     public let secondFactorDataFinalState: String
     public let unblockRemainingTimeInSecs: Double?
 
-    public init(userIdentifier: String, passwordType: PasswordType, challenge: ChallengeEntity, loginImageData: String?, password: String?, secondFactorDataFinalState: String, unblockRemainingTimeInSecs: Double?) {
+    public init(displayUserIdentifier:String, userIdentifier: String, passwordType: PasswordType, challenge: ChallengeEntity, loginImageData: String?, password: String?, secondFactorDataFinalState: String, unblockRemainingTimeInSecs: Double?) {
+        self.displayUserIdentifier = displayUserIdentifier
         self.userIdentifier = userIdentifier
         self.passwordType = passwordType
         self.challenge = challenge

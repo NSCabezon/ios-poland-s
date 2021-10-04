@@ -35,7 +35,7 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
-        self.view?.setUserIdentifier(loginConfiguration.userIdentifier)
+        self.view?.setUserIdentifier(loginConfiguration.displayUserIdentifier)
 
         if let imageString = loginConfiguration.loginImageData,
            let data = Data(base64Encoded: imageString),

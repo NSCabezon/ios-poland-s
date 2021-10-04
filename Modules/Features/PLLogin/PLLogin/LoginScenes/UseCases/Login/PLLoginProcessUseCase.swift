@@ -80,7 +80,8 @@ final class PLLoginProcessUseCase {
                 if challengeUseCaseOutput.passwordMaskEnabled == true, let mask = challengeUseCaseOutput.passwordMask {
                     passwordType = PasswordType.masked(mask: mask)
                 }
-                configuration = UnrememberedLoginConfiguration(userIdentifier: String(challengeUseCaseOutput.userId),
+                configuration = UnrememberedLoginConfiguration(displayUserIdentifier: identification,
+                                                               userIdentifier: String(challengeUseCaseOutput.userId),
                                                                passwordType: passwordType,
                                                                challenge: output.challengeEntity,
                                                                loginImageData: challengeUseCaseOutput.loginImage,
