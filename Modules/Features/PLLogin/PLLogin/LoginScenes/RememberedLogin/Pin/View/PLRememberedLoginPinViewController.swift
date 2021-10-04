@@ -106,10 +106,10 @@ private extension PLRememberedLoginPinViewController {
     func setupLabels() {
         
         titleLabel.font = .santander(family: .text, type: .light, size: 40)
-        titleLabel.textColor = .Legacy.uiWhite
+        titleLabel.textColor = UIColor.Legacy.uiWhite
         titleLabel.numberOfLines = 2
         biometrySmallLabel.font = .santander(family: .text, type: .regular, size: 14)
-        biometrySmallLabel.textColor = .Legacy.uiWhite
+        biometrySmallLabel.textColor = UIColor.Legacy.uiWhite
         
         /*
         let stringLoader = dependenciesResolver.resolve(forOptionalType: StringLoader.self)
@@ -129,8 +129,8 @@ private extension PLRememberedLoginPinViewController {
         blikButton.setImage(Assets.image(named: "icnBlik")?.withRenderingMode(.alwaysOriginal), for: .normal)
         blikButton.backgroundColor = .santanderRed
         blikButton.titleLabel?.font = .santander(family: .text, type: .bold, size: 14)
-        blikButton.titleLabel?.textColor = .Legacy.uiWhite
-        blikButton.tintColor = .Legacy.uiWhite
+        blikButton.titleLabel?.textColor = UIColor.Legacy.uiWhite
+        blikButton.tintColor = UIColor.Legacy.uiWhite
         blikButton.roundCorners(corners: .allCorners, radius: blikButton.frame.size.height/2)
         blikButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(didSelectBlikButton)))
