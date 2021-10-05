@@ -26,7 +26,7 @@ final class PLBeforeLoginCoordinator: ModuleCoordinator {
     
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLBeforeLoginViewController.self)
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.setViewControllers([controller], animated: false)
     }
 }
 
