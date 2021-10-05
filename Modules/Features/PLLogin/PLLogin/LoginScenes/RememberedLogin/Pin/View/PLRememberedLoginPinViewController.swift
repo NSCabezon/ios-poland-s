@@ -17,7 +17,9 @@ import PLUI
 
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable {
     func showAccountPermanentlyBlockedDialog()
-    func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration)
+    func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
+    func showInvalidSCADialog()
+    func showDeviceConfigurationErrorDialog()
 }
 
 final class PLRememberedLoginPinViewController: UIViewController {
@@ -152,7 +154,8 @@ private extension PLRememberedLoginPinViewController {
     }
     
     func showBiometryAlert() {
-        let type = presenter.getBiometryTypeAvailable()
+       // let type = presenter.getBiometryTypeAvailable()
+        Toast.show(localized("generic_alert_notAvailableOperation"))
     }
     
     func configureNumberPadButtons() {
@@ -198,7 +201,15 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
     }
     
-    func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration) {
+    func showDeviceConfigurationErrorDialog() {
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError")
+    }
+    
+    func showInvalidSCADialog() {
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_attemptLast")
+    }
+    
+    func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration) {
         guard let unblockRemainingTimeInSecs = configuration.unblockRemainingTimeInSecs else { return }
         PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs) { [weak self] allowLogin in
             if allowLogin {

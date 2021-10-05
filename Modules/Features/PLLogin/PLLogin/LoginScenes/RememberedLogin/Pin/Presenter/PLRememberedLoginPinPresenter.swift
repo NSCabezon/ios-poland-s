@@ -21,13 +21,14 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func didSelectMenu()
     func getBiometryTypeAvailable() -> BiometryTypeEntity
     func setAllowLoginBlockedUsers()
+    func loginSuccess(configuration: RememberedLoginConfiguration)
 }
 
 final class PLRememberedLoginPinPresenter {
     internal let dependenciesResolver: DependenciesResolver
     weak var view: PLRememberedLoginPinViewControllerProtocol?
     private let localAuth: LocalAuthenticationPermissionsManagerProtocol
-    private var allowLoginBlockedUsers = false
+    private var allowLoginBlockedUsers = true
 
     var coordinatorDelegate: LoginCoordinatorDelegate {
         return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
@@ -40,6 +41,32 @@ final class PLRememberedLoginPinPresenter {
 }
 
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
+    
+    func loginSuccess(configuration: RememberedLoginConfiguration) {
+       
+        guard allowLoginBlockedUsers else {
+            self.view?.dismissLoading(completion: { [weak self] in
+                self?.view?.showAccountTemporaryBlockedDialog(configuration)
+            })
+            return
+        }
+        let time = Date(timeIntervalSince1970: configuration.unblockRemainingTimeInSecs ?? 0)
+        let now = Date()
+        
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            if configuration.challenge.authorizationType == .softwareToken {
+                self.view?.showDeviceConfigurationErrorDialog()
+            } else if configuration.isFinal() {
+                self.view?.showInvalidSCADialog()
+            } else if configuration.isBlocked() && time > now {
+                self.allowLoginBlockedUsers = false
+                self.view?.showAccountTemporaryBlockedDialog(configuration)
+            } else {
+                //TODO: Login Success
+            }
+        })
+    }
    
     func setAllowLoginBlockedUsers() {
         self.allowLoginBlockedUsers = true

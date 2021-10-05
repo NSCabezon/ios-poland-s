@@ -1,5 +1,5 @@
 //
-//  UnrememberedLoginConfiguration.swift
+//  LoginConfigurations.swift
 //  PLLogin
 
 /// This model will be inyected as dependency to pass information between login scenes
@@ -21,6 +21,29 @@ public final class UnrememberedLoginConfiguration {
         self.challenge = challenge
         self.loginImageData = loginImageData
         self.password = password
+        self.secondFactorDataFinalState = secondFactorDataFinalState
+        self.unblockRemainingTimeInSecs = unblockRemainingTimeInSecs
+    }
+    
+    public func isFinal() -> Bool {
+        return secondFactorDataFinalState.elementsEqual("FINAL")
+    }
+    
+    public func isBlocked() -> Bool {
+        return secondFactorDataFinalState.elementsEqual("BLOCKED") && unblockRemainingTimeInSecs != nil
+    }
+}
+
+public final class RememberedLoginConfiguration {
+
+    public let userIdentifier: String
+    public let challenge: ChallengeEntity
+    public let secondFactorDataFinalState: String
+    public let unblockRemainingTimeInSecs: Double?
+
+    public init(userIdentifier: String, challenge: ChallengeEntity, secondFactorDataFinalState: String, unblockRemainingTimeInSecs: Double?) {
+        self.userIdentifier = userIdentifier
+        self.challenge = challenge
         self.secondFactorDataFinalState = secondFactorDataFinalState
         self.unblockRemainingTimeInSecs = unblockRemainingTimeInSecs
     }
