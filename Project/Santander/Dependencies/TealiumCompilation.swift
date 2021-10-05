@@ -12,5 +12,5 @@ final class TealiumCompilation: TealiumCompilationProtocol {
 
     let account = "santander"
     let appName = "OneApp Retail Poland"
-    let clientKey = "client_encrypted_id"
+    let clientKey = "client_id"
 }
