@@ -80,7 +80,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-            .setRightActions(.menu(action: #selector(didSelectMenu)))
+//            .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
     
@@ -89,8 +89,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     }
     
     @objc func didSelectMenu() {
-//        self.presenter.didSelectMenu()
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        self.presenter.didSelectMenu()
     }
 }
 
