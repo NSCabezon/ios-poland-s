@@ -242,11 +242,11 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     )
 
     override func getCreditCardHomeActions() -> [CardActionType] {
-        return [.onCard, .offCard, .enable, sendMoneyPL, .applePay, changeLimitsPL, changeAliasesPL, generateQRCodePL, alerts24PL, customerServicePL, .detail, blockedFundsPL, viewStatementsPL, managePinPL, blockPL, viewCvvPL, usingCardAbroadPL, refundForPurchasesPL, exploreProductsPL, creditLimitIncreasePL, repayInInstallmentsPL, cardRepaymentPL]
+        return [.onCard, .offCard, .enable, sendMoneyPL, repayInInstallmentsPL, cardRepaymentPL, .applePay, changeLimitsPL, changeAliasesPL, generateQRCodePL, alerts24PL, customerServicePL, .detail, blockedFundsPL, viewStatementsPL, managePinPL, blockPL, viewCvvPL, usingCardAbroadPL, refundForPurchasesPL, exploreProductsPL, creditLimitIncreasePL]
     }
 
     override func getDebitCardHomeActions() -> [CardActionType] {
-        return [.onCard, .offCard, managePinPL, changeLimitsPL, .applePay, .enable, alerts24PL, .detail, blockedFundsPL, blockPL, viewCvvPL, usingCardAbroadPL, exploreProductsPL, multicurrencyPL, atmPackagePL]
+        return [.onCard, .offCard, .enable, managePinPL, changeLimitsPL, .applePay, alerts24PL, .detail, blockedFundsPL, blockPL, viewCvvPL, usingCardAbroadPL, exploreProductsPL, multicurrencyPL, atmPackagePL]
     }
 
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
