@@ -90,13 +90,18 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
             return
         }
         let input = PLIvrRegisterUseCaseInput(trustedDeviceId: String(trustedDeviceId))
-        Scenario(useCase: ivrRegisterUseCase, input: input)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess({ [weak self] code in
-                self?.view?.showIVCCallSendedDialog(code: code)
-            }).onError({ [weak self] error in
-                self?.handleError(error)
-            })
+        self.view?.showLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            Scenario(useCase: self.ivrRegisterUseCase, input: input)
+                .execute(on: self.dependenciesResolver.resolve())
+                .onSuccess({ [weak self] code in
+                    self?.view?.dismissLoading(completion: { [weak self] in
+                        self?.view?.showIVCCallSendedDialog(code: code)
+                    })
+                }).onError({ [weak self] error in
+                    self?.handleError(error)
+                })
+        })
     }
 
     func goBack() {

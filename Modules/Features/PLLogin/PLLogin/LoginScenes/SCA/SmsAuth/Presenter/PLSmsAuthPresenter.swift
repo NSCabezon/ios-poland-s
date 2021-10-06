@@ -163,10 +163,7 @@ private extension  PLSmsAuthPresenter {
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading(completion: { [weak self] in
-            self?.coordinator.goToGlobalPositionScene(option)
-
-        })
+        self.coordinator.goToGlobalPositionScene(option)
     }
 }
 

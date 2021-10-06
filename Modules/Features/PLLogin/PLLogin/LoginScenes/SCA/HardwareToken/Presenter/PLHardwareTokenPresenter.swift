@@ -133,9 +133,7 @@ private extension  PLHardwareTokenPresenter {
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading(completion: { [weak self] in
-            self?.coordinator.goToGlobalPositionScene(option)
-        })
+        self.coordinator.goToGlobalPositionScene(option)
     }
     
     func goBack() {
