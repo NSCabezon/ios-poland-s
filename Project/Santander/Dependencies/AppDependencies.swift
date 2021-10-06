@@ -20,6 +20,7 @@ import Account
 import Inbox
 import PersonalArea
 import Menu
+import Cards
 import PLNotifications
 
 final class AppDependencies {
@@ -30,14 +31,14 @@ final class AppDependencies {
     private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
-    
+
     // MARK: - Dependecies definitions
-    
+
     // MARK: Data layer and country data adapters
     private lazy var dataRepository: DataRepository = {
         return DataRepositoryBuilder(dependenciesResolver: dependencieEngine).build()
     }()
-    
+
     private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
     }
@@ -86,7 +87,7 @@ final class AppDependencies {
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
         return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
     }()
-    
+
     // MARK: Dependencies init
     init() {
         self.dependencieEngine = DependenciesDefault()
@@ -198,6 +199,12 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
+        }
+        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+            PLCardTransactionDetailActionFactoryModifier()
+        }
+        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { resolver in
+            PLCardTransactionDetailViewConfiguration()
         }
     }
 }

@@ -53,7 +53,16 @@ final public class CardTransactionsDTOAdapter {
             let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: currencyType)
             cardTransaction.amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
             cardTransaction.description = plCardTransaction.transTitle
+            
+            cardTransaction.state = .getState(plCardTransaction.state)
+            cardTransaction.postedDate = plCardTransaction.operTime
+            cardTransaction.recipient = plCardTransaction.acceptor
+            cardTransaction.cardAccountNumber = plCardTransaction.accountNumber
+            cardTransaction.operationType = plCardTransaction.debitFlag
+            
             cardTransactions.append(cardTransaction)
+            
+            
         }
         return cardTransactions
     }
