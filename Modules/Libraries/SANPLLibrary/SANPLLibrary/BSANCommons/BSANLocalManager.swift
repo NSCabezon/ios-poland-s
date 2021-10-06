@@ -42,7 +42,7 @@ extension BSANLocalManager: NetworkProvider {
                 default:
                     return .failure(NetworkProviderError.error(NetworkProviderResponseError(code: error, data: data, headerFields: nil, error: nil)))
                 }
-            } else if let data = self.getData(from: answerElement, result: .success) {
+            } else if let data = self.getData(from: answerElement, result: self.demoInterpreter.expectedResponse) {
                 return .success(data)
             } else {
                 return .failure(.other)
@@ -95,7 +95,7 @@ extension BSANLocalManager: NetworkProvider {
             return .failure(error)
         }
     }
-
+    
 }
 
 // MARK: - Private Methods
@@ -153,12 +153,13 @@ private extension BSANLocalManager {
         return value
     }
     
-    func getData(from element: (key: String, value: JSON), result: PLLocalAnswerType) -> Data? {
-        return try? JSONSerialization.data(withJSONObject: element.value["\(result.rawValue)"], options: .prettyPrinted)
+    func getData(from element: (key: String, value: JSON), result: Int) -> Data? {
+        guard let element = element.value["\(result)"] else { return nil }
+        return try? JSONSerialization.data(withJSONObject: element, options: .prettyPrinted)
     }
 }
 
-fileprivate extension String {
+extension String {
     public func split(_ value: String) -> [String] {
         return self.components(separatedBy: value)
     }

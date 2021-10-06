@@ -18,6 +18,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		78923C9E2705BD91005DD540 /* PLTransferManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78923C9D2705BD91005DD540 /* PLTransferManagerTest.swift */; };
 		7EBBC5F9265D115400C64888 /* PLGLobalPositionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBBC5F8265D115400C64888 /* PLGLobalPositionManagerTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		65347D0B6EC9DF1C2F9496E9 /* Pods_SANPLLibrary_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SANPLLibrary_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		78923C9D2705BD91005DD540 /* PLTransferManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransferManagerTest.swift; sourceTree = "<group>"; };
 		7EBBC5F8265D115400C64888 /* PLGLobalPositionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGLobalPositionManagerTests.swift; sourceTree = "<group>"; };
 		AA0911059BB0FD5E0E406D32 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		BA9029326D433A0C1C003ED0 /* Pods-SANPLLibrary_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SANPLLibrary_Tests.debug.xcconfig"; path = "Target Support Files/Pods-SANPLLibrary_Tests/Pods-SANPLLibrary_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				78923C9C2705BD4F005DD540 /* Transfers */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				427287A72654144A00AF43DB /* PLLoginManagerTests.swift */,
 				7EBBC5F8265D115400C64888 /* PLGLobalPositionManagerTests.swift */,
@@ -168,6 +171,14 @@
 				59279F376599B6B72EF6AF2B /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		78923C9C2705BD4F005DD540 /* Transfers */ = {
+			isa = PBXGroup;
+			children = (
+				78923C9D2705BD91005DD540 /* PLTransferManagerTest.swift */,
+			);
+			path = Transfers;
 			sourceTree = "<group>";
 		};
 		8678FF6C092F0F6A9825255E /* Frameworks */ = {
@@ -313,15 +324,13 @@
 				"${PODS_ROOT}/Target Support Files/Pods-SANPLLibrary_Example/Pods-SANPLLibrary_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
-				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
 				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
-				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
-				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
@@ -335,15 +344,13 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
@@ -396,6 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78923C9E2705BD91005DD540 /* PLTransferManagerTest.swift in Sources */,
 				7EBBC5F9265D115400C64888 /* PLGLobalPositionManagerTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				427287882654119B00AF43DB /* DataRepositoryBuilder.swift in Sources */,

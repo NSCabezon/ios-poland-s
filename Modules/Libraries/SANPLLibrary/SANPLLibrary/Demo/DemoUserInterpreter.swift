@@ -10,6 +10,7 @@ import Foundation
 public protocol DemoUserProtocol {
     func isDemoUser(userName: String) -> Bool
     var isDemoModeAvailable: Bool { get }
+    var expectedResponse: Int { get }
 }
 
 public class DemoUserInterpreter: DemoUserProtocol {
@@ -17,11 +18,16 @@ public class DemoUserInterpreter: DemoUserProtocol {
     static let demoUser = "12345678Z"
     let bsanDataProvider: BSANDataProvider
     let defaultDemoUser: String
-
-    public init(bsanDataProvider: BSANDataProvider, defaultDemoUser: String, demoModeAvailable: Bool = false) {
+    private let expectedAnswer: Int?
+    public var expectedResponse: Int {
+        return expectedAnswer ?? 0
+    }
+    
+    public init(bsanDataProvider: BSANDataProvider, defaultDemoUser: String, demoModeAvailable: Bool = false, expectedAnswer: Int? = 0) {
         self.bsanDataProvider = bsanDataProvider
         self.defaultDemoUser = defaultDemoUser
         self.isDemoModeAvailable = demoModeAvailable
+        self.expectedAnswer = expectedAnswer
     }
 
     public func isDemoUser(userName: String) -> Bool {
@@ -58,4 +64,8 @@ public enum PLLocalServiceName: String {
     case customerIndividual = "customerIndividual"
     case notificationTokenRegister = "notificationTokenRegister"
     case cardDetail = "cardDetail"
+    case accountsForDebit = "accountsForDebit"
+    case getPayees
+    case recentRecipients
+    case ibanValidation = "ibanValidation"
 }
