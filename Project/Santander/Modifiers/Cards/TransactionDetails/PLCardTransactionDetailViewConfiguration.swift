@@ -68,8 +68,8 @@ struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfi
         viewConfigurations.append(row2)
         
         var row3 = CardTransactionDetailViewConfiguration()
-        let accountNumber = accountNumber(str: from.dto.cardAccountNumber ?? "")
-        row3.left = .init(title: localized("transaction_label_cardAccountNumber"), value: accountNumber)
+        let accountNumberString = accountNumber(str: from.dto.cardAccountNumber ?? "")
+        row3.left = .init(title: localized("transaction_label_cardAccountNumber"), value: accountNumberString)
         viewConfigurations.append(row3)
         
         var row4 = CardTransactionDetailViewConfiguration()
