@@ -31,7 +31,7 @@ final class CardDetailDTOAdapter {
         cardDataDTO.expirationDate = DateFormats.toDate(string: plCard.cardExpirationDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
         cardDataDTO.currency = plCard.relatedAccountData?.availableFunds?.currencyCode
         cardDataDTO.linkedAccountDescription = plCard.relatedAccountData?.accountNo
-        cardDataDTO.insurance = String(plCard.insuranceFlag ?? false).capitalizingFirstLetter()
+        cardDataDTO.insurance = (plCard.insuranceFlag ?? false) ? localized("generic_link_yes") : localized("generic_link_no")
         return cardDataDTO
     }
 }
