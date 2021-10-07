@@ -169,6 +169,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in
             return PLAccountOtherOperativesActionModifier()
         }
+        self.dependencieEngine.register(for: AccountsHomePresenterModifier.self) { _ in
+            return PLAccountsHomePresenterModifier()
+        }
         self.dependencieEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
             return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)
         }
