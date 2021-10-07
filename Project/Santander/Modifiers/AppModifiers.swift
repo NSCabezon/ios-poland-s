@@ -18,6 +18,7 @@ import PersonalArea
 import SANLegacyLibrary
 import DomainCommon
 import PersonalArea
+import TransferOperatives
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -167,6 +168,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in
             return PLAccountOtherOperativesActionModifier()
+        }
+        self.dependencieEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
+            return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)
         }
     }
 }
