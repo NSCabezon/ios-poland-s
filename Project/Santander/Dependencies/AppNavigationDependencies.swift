@@ -9,6 +9,7 @@ import LoginCommon
 import PLLogin
 import Commons
 import RetailLegacy
+import PersonalArea
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -16,6 +17,7 @@ final class AppNavigationDependencies {
     private lazy var sendMoneyCoordinator =
         SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
                              drawer: self.drawer)
+    private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as! UINavigationController)
     
     init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.drawer = drawer
@@ -29,6 +31,10 @@ final class AppNavigationDependencies {
         
         dependenciesEngine.register(for: SendMoneyCoordinatorProtocol.self) { _ in
             return self.sendMoneyCoordinator
+        }
+        
+        dependenciesEngine.register(for: PersonalAreaModuleCoordinator.self) { _ in
+            return self.personalAreaModuleCoordinator
         }
     }
 }

@@ -22,6 +22,7 @@ import PersonalArea
 import Menu
 import Cards
 import PLNotifications
+import iOSPublicFiles
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -78,6 +79,12 @@ final class AppDependencies {
     }()
     private lazy var firebaseNotificationsService: FirebaseNotificationsService = {
         return FirebaseNotificationsService(dependenciesResolver: self.dependencieEngine)
+    }()
+    private lazy var plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository = {
+        let assetsClient = AssetsClient()
+        let netClient = NetClientImplementation()
+        let fileClient = FileClient()
+        return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
 
     // MARK: Features
@@ -151,6 +158,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: EmmaTrackEventListProtocol.self) { _ in
             return EmptyEmmaTrackEventList()
         }
+        self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
+            return self.plAccountOtherOperativesInfoRepository
+        }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
         }
@@ -162,6 +172,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: ProductIdDelegateProtocol.self) { _ in
             return self.productIdDelegate
+        }
+        self.dependencieEngine.register(for: AdditionalUseCasesProviderProtocol.self) { resolver in
+            return LoadPLAccountOtherOperativesInfoUseCaseImpl(dependencies: resolver)
         }
         self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
             return self.ibanFormatter
@@ -196,6 +209,13 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
             return self.personalAreaSections
+        }
+        self.dependencieEngine.register(for: GetPLAccountOtherOperativesActionUseCase.self) { resolver in
+            return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
+            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
