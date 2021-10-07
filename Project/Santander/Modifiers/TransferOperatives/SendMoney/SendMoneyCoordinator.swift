@@ -16,9 +16,10 @@ protocol SendMoneyCoordinatorProtocol: ModuleCoordinator { }
 final class SendMoneyCoordinator {
     weak var navigationController: UINavigationController?
     let dependenciesResolver: DependenciesResolver
+    private let drawer: BaseMenuController
     
-    init (dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
-        self.navigationController = navigationController
+    init (dependenciesResolver: DependenciesResolver, drawer: BaseMenuController) {
+        self.drawer = drawer
         self.dependenciesResolver = dependenciesResolver
     }
     
@@ -31,7 +32,7 @@ extension SendMoneyCoordinator: SendMoneyCoordinatorProtocol { }
 
 extension SendMoneyCoordinator: OperativeLauncherHandler {
     var operativeNavigationController: UINavigationController? {
-        return self.navigationController
+        return self.drawer.currentRootViewController as? UINavigationController
     }
     
     func showOperativeLoading(completion: @escaping () -> Void) {
@@ -50,6 +51,6 @@ extension SendMoneyCoordinator: OperativeLauncherHandler {
 extension SendMoneyCoordinator: SendMoneyOperativeLauncher { }
 extension SendMoneyCoordinator: LoadingViewPresentationCapable {
     var associatedLoadingView: UIViewController {
-        return self.navigationController?.topViewController ?? UIViewController()
+        return self.operativeNavigationController?.topViewController ?? UIViewController()
     }
 }

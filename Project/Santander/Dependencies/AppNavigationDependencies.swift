@@ -15,7 +15,7 @@ final class AppNavigationDependencies {
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private lazy var sendMoneyCoordinator =
         SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
-                             navigationController: self.drawer.currentRootViewController as? UINavigationController)
+                             drawer: self.drawer)
     
     init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.drawer = drawer
