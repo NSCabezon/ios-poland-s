@@ -21,9 +21,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.80</string>
+	<string>0.0.81</string>
 	<key>CFBundleVersion</key>
-	<string>80</string>
+	<string>81</string>
 	<key>DEMO_AVAILABLE</key>
 	<string>$(DEMO_AVAILABLE)</string>
 	<key>DEFAULT_DEMO_USER</key>
