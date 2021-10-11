@@ -17,6 +17,7 @@ public protocol PLLoginManagerProtocol {
     func getAuthCredentials() throws -> AuthCredentials
     func getAppInfo() -> AppInfo?
     func setAppInfo(_ appInfo: AppInfo)
+    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError>
 }
 
 public final class PLLoginManager {
@@ -72,6 +73,11 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func getAuthCredentials() throws -> AuthCredentials {
         return try self.bsanDataProvider.getAuthCredentials()
+    }
+
+    public func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError> {
+        let result = try loginDataSource.getPendingChallenge(parameters)
+        return result
     }
 
     public func setDemoModeIfNeeded(for user: String) -> Bool {
