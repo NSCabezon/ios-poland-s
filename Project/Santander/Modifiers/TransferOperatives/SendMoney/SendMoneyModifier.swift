@@ -3,7 +3,7 @@ import Models
 
 final class SendMoneyModifier: SendMoneyModifierProtocol {
     var selectionDateOneFilterViewModel: SelectionDateOneFilterViewModel? {
-        let labelViewModel = OneLabelViewModel(type: .normal, mainText: "transfer_label_periodicity")
+        let labelViewModel = OneLabelViewModel(type: .normal, mainTextKey: "transfer_label_periodicity")
         let viewModel = SelectionDateOneFilterViewModel(oneLabelViewModel: labelViewModel, options: ["sendMoney_tab_today", "sendMoney_tab_chooseDay"])
         return viewModel
     }
