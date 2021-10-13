@@ -13,4 +13,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     var bussinessOneInputSelectViewModel: OneInputSelectViewModel? {
         return OneInputSelectViewModel(status: .activated, pickerData: ["sendMoney_label_previousWorkingDay", "sendMoney_label_previousWorkingDay"], selectedInput: 0)
     }
+    var requiredDescription: Bool {
+        return true
+    }
 }
