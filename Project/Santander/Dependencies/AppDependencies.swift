@@ -226,6 +226,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { resolver in
             PLCardTransactionDetailViewConfiguration()
         }
+        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { resolver in
+            PLEditBudgetHelperModifier()
+        }
     }
 }
 
