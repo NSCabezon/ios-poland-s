@@ -77,6 +77,7 @@
 		669A37D8270F573F00C0F272 /* PLAccountOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37D7270F573F00C0F272 /* PLAccountOtherOperativesWebConfiguration.swift */; };
 		669A37DB270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37DA270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift */; };
 		669A37DE270F575F00C0F272 /* LoadPLAccountOtherOperativesInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37DD270F575F00C0F272 /* LoadPLAccountOtherOperativesInfoUseCase.swift */; };
+		669A37E02717508300C0F272 /* PLEditBudgetHelperModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37DF2717508300C0F272 /* PLEditBudgetHelperModifier.swift */; };
 		66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */; };
 		66B3CFB32639C6C8000AAD0F /* PolandAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB22639C6C8000AAD0F /* PolandAssets.xcassets */; };
 		66B3CFB62639C6C8000AAD0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66B3CFB42639C6C8000AAD0F /* LaunchScreen.storyboard */; };
@@ -122,7 +123,7 @@
 		9E92903E26F9EAF700A0178A /* PLPublicMenuViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E92903D26F9EAF700A0178A /* PLPublicMenuViewComponents.swift */; };
 		9E92904226F9EB0800A0178A /* PLPublicMenuViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E92904126F9EB0800A0178A /* PLPublicMenuViewContainer.swift */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
 		BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */; };
 		BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */; };
@@ -212,6 +213,7 @@
 		669A37D7270F573F00C0F272 /* PLAccountOtherOperativesWebConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesWebConfiguration.swift; sourceTree = "<group>"; };
 		669A37DA270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesInfoRepository.swift; sourceTree = "<group>"; };
 		669A37DD270F575F00C0F272 /* LoadPLAccountOtherOperativesInfoUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadPLAccountOtherOperativesInfoUseCase.swift; sourceTree = "<group>"; };
+		669A37DF2717508300C0F272 /* PLEditBudgetHelperModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLEditBudgetHelperModifier.swift; sourceTree = "<group>"; };
 		66B3CFA62639C6C5000AAD0F /* Santander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Santander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B3CFA92639C6C5000AAD0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66B3CFB22639C6C8000AAD0F /* PolandAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PolandAssets.xcassets; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 		446E0C1D265FE42400847FCA /* GlobalPosition */ = {
 			isa = PBXGroup;
 			children = (
+				669A37DF2717508300C0F272 /* PLEditBudgetHelperModifier.swift */,
 				0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */,
 				0D9E176426B96A9B00781A95 /* PLFundModifier.swift */,
 				BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */,
@@ -986,7 +989,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
 				0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */,
@@ -1086,6 +1089,7 @@
 				669A37CF270F564800C0F272 /* PLAccountOtherOperativesIdentifier.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 				0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */,
+				669A37E02717508300C0F272 /* PLEditBudgetHelperModifier.swift in Sources */,
 				BB29665126CFB5210012599D /* PLGetPersonalBasicInfoUseCase.swift in Sources */,
 				7E8AD11D26F0C13B00FC54D0 /* PLApplePayOperative.swift in Sources */,
 				0D603D6626C679A60035C671 /* GetPGFrequentOperativeOption.swift in Sources */,

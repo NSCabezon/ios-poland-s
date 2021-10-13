@@ -2,11 +2,6 @@
 //  PLEditBudgetHelperModifier.swift
 //  Santander
 //
-//  Template created by Alvaro Royo.
-//  Linkedin: https://www.linkedin.com/in/alvaroroyo
-//
-//  
-//
 
 import Commons
 
