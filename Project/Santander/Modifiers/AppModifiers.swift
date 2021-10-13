@@ -18,6 +18,7 @@ import PersonalArea
 import SANLegacyLibrary
 import DomainCommon
 import PersonalArea
+import TransferOperatives
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -38,6 +39,9 @@ final class AppModifiers {
     }()
     private lazy var cardHomeModifier: CardHomeModifierProtocol = {
         return PLCardHomeModifier(dependenciesEngine: dependencieEngine)
+    }()
+    private lazy var cardDetailModifier: CardDetailModifierProtocol = {
+        return PLCardDetailModifier(dependenciesEngine: dependencieEngine)
     }()
     private lazy var loansModifier: LoansModifierProtocol = {
         return PLLoanModifier(dependenciesEngine: dependencieEngine)
@@ -66,9 +70,11 @@ final class AppModifiers {
     private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
         return PLCardTransactionsSearchModifier(dependenciesEngine: dependencieEngine)
     }()
-
     private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
+    }()
+    private lazy var sendMoneyOperativeModifier: SendMoneyOperativeModifierProtocol = {
+        return SendMoneyOperativeModifier(dependenciesEngine: dependencieEngine)
     }()
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
@@ -95,6 +101,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
             return self.cardHomeModifier
+        }
+        self.dependencieEngine.register(for: CardDetailModifierProtocol.self) { _ in
+            return self.cardDetailModifier
         }
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
@@ -159,8 +168,17 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
             return PLAccountTransactionDetailShareableInfo()
         }
-        self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { _ in
-            return PLAccountOtherOperativesActionModifier()
+        self.dependencieEngine.register(for: AccountOtherOperativesActionModifierProtocol.self) { resolver in
+            return PLAccountOtherOperativesActionModifier(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: AccountsHomePresenterModifier.self) { _ in
+            return PLAccountsHomePresenterModifier()
+        }
+        self.dependencieEngine.register(for: SendMoneyOperativeModifierProtocol.self) { resolver in
+            return self.sendMoneyOperativeModifier
+        }
+        self.dependencieEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
+            return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)
         }
     }
 }

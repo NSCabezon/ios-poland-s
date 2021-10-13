@@ -14,6 +14,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import Security
 import os
+//import PLNotifications
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
@@ -57,6 +58,10 @@ final class PLSmsAuthPresenter {
 
     private var sessionUseCase: PLSessionUseCase {
         self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+    }
+
+    private var notificationGetTokenAndRegisterUseCase: PLGetNotificationTokenAndRegisterUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetNotificationTokenAndRegisterUseCase.self)
     }
 }
 
@@ -129,6 +134,7 @@ private extension  PLSmsAuthPresenter {
             case .globalPositionScene:
                 self.openSessionAndNavigateToGlobalPosition()
             }
+            self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
         } onFailure: { [weak self]  error in
             self?.handleError(error)
         }
@@ -157,10 +163,7 @@ private extension  PLSmsAuthPresenter {
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading(completion: { [weak self] in
-            self?.coordinator.goToGlobalPositionScene(option)
-
-        })
+        self.coordinator.goToGlobalPositionScene(option)
     }
 }
 

@@ -16,6 +16,16 @@ public class BSANDataProvider {
         self.dataRepository = dataRepository
     }
     
+    public func storeAppInfo(_ appInfo: AppInfo) {
+        objc_sync_enter(dataRepository)
+        dataRepository.store(appInfo, .createPersistentPolicy())
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func getAppInfo() -> AppInfo? {
+        return dataRepository.get(AppInfo.self, .createPersistentPolicy())
+    }
+    
     public func storeEnviroment(_ enviroment: BSANPLEnvironmentDTO) {
         objc_sync_enter(dataRepository)
         dataRepository.store(enviroment)
@@ -47,6 +57,10 @@ public class BSANDataProvider {
         objc_sync_enter(self.dataRepository)
         self.dataRepository.store(trustedDeviceHeaders, DataRepositoryPolicy.createPersistentPolicy())
         objc_sync_exit(self.dataRepository)
+    }
+    
+    public func deleteTrustedDeviceHeaders() {
+        self.dataRepository.remove(TrustedDeviceHeaders.self, .createPersistentPolicy())
     }
 
     public func getTrustedDeviceHeaders() -> TrustedDeviceHeaders? {
@@ -239,6 +253,11 @@ public class BSANDataProvider {
 
     public func removePublicKey() {
         self.dataRepository.remove(PubKeyDTO.self)
+    }
+
+    public func closeSession() {
+        self.dataRepository.remove(AuthCredentials.self)
+        self.dataRepository.remove(SessionData.self)
     }
 }
 

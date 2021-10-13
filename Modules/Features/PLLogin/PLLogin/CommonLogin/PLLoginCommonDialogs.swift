@@ -79,6 +79,7 @@ final class PLLoginCommonDialogs {
     static func presentDeprecatedVersionDialog(on viewController: UIViewController,
                                                onAccept: @escaping () -> Void) {
         let components: [LisboaDialogItem] = [
+            .margin(8.0),
             .image(LisboaDialogImageViewItem(image: Assets.image(named: "icnSantanderBalance"), size: (56, 56))),
             .styledText(
                 LisboaDialogTextItem(
@@ -101,7 +102,7 @@ final class PLLoginCommonDialogs {
             .verticalAction(VerticalLisboaDialogAction(title: localized("login_label_nowUpdate"), type: LisboaDialogActionType.red, margins: (left: 16, right: 16), action: onAccept)),
             .margin(16.0)
         ]
-        let builder = LisboaDialog(items: components, closeButtonAvailable: true)
+        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
         builder.showIn(viewController)
     }
 }

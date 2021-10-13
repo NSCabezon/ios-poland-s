@@ -42,6 +42,10 @@ final class PLHardwareTokenPresenter {
     private var sessionUseCase: PLSessionUseCase {
         self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
     }
+
+    private var notificationGetTokenAndRegisterUseCase: PLGetNotificationTokenAndRegisterUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetNotificationTokenAndRegisterUseCase.self)
+    }
 }
 
 extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
@@ -81,6 +85,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             case .globalPositionScene:
                 self.openSessionAndNavigateToGlobalPosition()
             }
+            self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
         } onFailure: { [weak self]  error in
             self?.handleError(error)
         }
@@ -128,9 +133,7 @@ private extension  PLHardwareTokenPresenter {
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading(completion: { [weak self] in
-            self?.coordinator.goToGlobalPositionScene(option)
-        })
+        self.coordinator.goToGlobalPositionScene(option)
     }
     
     func goBack() {

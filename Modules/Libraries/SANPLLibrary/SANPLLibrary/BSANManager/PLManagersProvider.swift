@@ -13,6 +13,8 @@ public protocol PLManagersProviderProtocol {
     func getCardsManager() -> PLCardsManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
+    func getNotificationManager() -> PLNotificationManagerProtocol
+    func getTransferManager() -> PLTransfersManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -25,6 +27,8 @@ public final class PLManagersProvider {
     private let cardTransactionsManager: PLCardTransactionsManager
     private let loansManager: PLLoanManager
     private let customerManager: PLCustomerManager
+    private let notificationManager: PLNotificationManager
+    private let transferManger: PLTransfersManager
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -40,11 +44,14 @@ public final class PLManagersProvider {
         self.globalPositionManager = PLGlobalPositionManager(bsanDataProvider: bsanDataProvider,
                                                              networkProvider: networkProvider,
                                                              demoInterpreter: demoInterpreter)
-        self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider)
+        self.cardsManager = PLCardsManager(bsanDataProvider: bsanDataProvider,
+                                           networkProvider: networkProvider)
         self.cardTransactionsManager = PLCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.customerManager = PLCustomerManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.notificationManager = PLNotificationManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.transferManger = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
     }
 }
 
@@ -86,5 +93,13 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     
     public func getCustomerManager() -> PLCustomerManagerProtocol {
         self.customerManager
+    }
+
+    public func getNotificationManager() -> PLNotificationManagerProtocol {
+        self.notificationManager
+    }
+    
+    public func getTransferManager() -> PLTransfersManagerProtocol {
+        self.transferManger
     }
 }

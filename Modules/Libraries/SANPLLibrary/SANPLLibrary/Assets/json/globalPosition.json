@@ -37,7 +37,7 @@
                     },
                     "lastUpdate": "2021-06-07",
                     "bankId": 0,
-                    "defaultForPayments": false
+                    "defaultForPayments": true
                 },
                 {
                     "number": "14150025980000000142214872",
@@ -264,6 +264,66 @@
             ],
             "cards": [
                 {
+                    "maskedPan": "438371_5284",
+                    "virtualPan": "438371I013523051",
+                    "generalStatus": "ACTIVE",
+                    "cardStatus": "00",
+                    "role": "NOT_OWNER",
+                    "type": "DEBIT",
+                    "productCode": "HCEV",
+                    "name": {
+                        "description": "DEBIT (Active)",
+                        "userDefined": "DEBIT (Active)"
+                    },
+                    "relatedAccount": "43109011990000000132578056",
+                    "expirationDate": "2022-02-28",
+                    "availableBalance": {
+                        "value": 8268.74,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 8268.74
+                    },
+                    "creditLimit": {
+                        "value": 500,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 500
+                    },
+                    "disposedAmount": {
+                        "value": 0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
+                    }
+                },
+                {
+                    "maskedPan": "421352_6505",
+                    "virtualPan": "421352I013731834",
+                    "generalStatus": "ACTIVE",
+                    "cardStatus": "00",
+                    "role": "NOT_OWNER",
+                    "type": "CREDIT",
+                    "productCode": "HCEV",
+                    "name": {
+                        "description": "CREDIT (Active)",
+                        "userDefined": "CREDIT (Active)"
+                    },
+                    "relatedAccount": "43109011990000000132578056",
+                    "expirationDate": "2022-03-01",
+                    "availableBalance": {
+                        "value": 3000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 3000
+                    },
+                    "creditLimit": {
+                        "value": 4000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 8000
+                    },
+                    "disposedAmount": {
+                        "value": 1000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 1000
+                    }
+                },
+                {
                     "maskedPan": "421352_6506",
                     "virtualPan": "421352I013731844",
                     "generalStatus": "INACTIVE",
@@ -272,8 +332,8 @@
                     "type": "DEBIT",
                     "productCode": "KAFV",
                     "name": {
-                        "description": "Dopasowana Visa",
-                        "userDefined": "Dopasowana Visa"
+                        "description": "DEBIT (Inactive)",
+                        "userDefined": "DEBIT (Inactive)"
                     },
                     "relatedAccount": "43109011990000000132578056",
                     "expirationDate": "2022-04-30",
@@ -294,76 +354,16 @@
                     }
                 },
                 {
-                    "maskedPan": "421352_7895",
-                    "virtualPan": "421352I037372333",
-                    "generalStatus": "CANCELLED",
-                    "cardStatus": "00",
-                    "role": "OWNER",
-                    "type": "DEBIT",
-                    "productCode": "KAFV",
-                    "name": {
-                        "description": "Dopasowana Visa",
-                        "userDefined": "Dopasowana Visa"
-                    },
-                    "relatedAccount": "14150025980000000142214872",
-                    "expirationDate": "2023-04-30",
-                    "availableBalance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "creditLimit": {
-                        "value": 5000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 5000
-                    },
-                    "disposedAmount": {
-                        "value": 12477.4,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 12477.4
-                    }
-                },
-                {
-                    "maskedPan": "438371_5284",
-                    "virtualPan": "438371I013523051",
-                    "generalStatus": "ACTIVE",
-                    "cardStatus": "00",
-                    "role": "NOT_OWNER",
-                    "type": "DEBIT",
-                    "productCode": "HCEV",
-                    "name": {
-                        "description": "Visa-Mobile Debetowa",
-                        "userDefined": "Visa-Mobile Debetowa"
-                    },
-                    "relatedAccount": "43109011990000000132578056",
-                    "expirationDate": "2022-02-28",
-                    "availableBalance": {
-                        "value": 48268.74,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 48268.74
-                    },
-                    "creditLimit": {
-                        "value": 500,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 500
-                    },
-                    "disposedAmount": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    }
-                },
-                {
-                    "maskedPan": "412281_9173",
-                    "virtualPan": "412281P002925860",
-                    "generalStatus": "ACTIVE",
+                    "maskedPan": "412281_9533",
+                    "virtualPan": "512281P002925830",
+                    "generalStatus": "BLOCKED",
                     "cardStatus": "00",
                     "role": "OWNER",
                     "type": "CREDIT",
                     "productCode": "PLPV",
                     "name": {
-                        "description": "Visa Platinum",
-                        "userDefined": "My Visa card"
+                        "description": "CREDIT (Blocked)",
+                        "userDefined": "CREDIT (Blocked)"
                     },
                     "relatedAccount": "29109014894000000112257854",
                     "expirationDate": "2023-02-23",
@@ -383,6 +383,36 @@
                         "valueInBaseCurrency": 1000
                     }
                 },
+                {
+                    "maskedPan": "421352_7895",
+                    "virtualPan": "421352I037372333",
+                    "generalStatus": "CANCELLED",
+                    "cardStatus": "00",
+                    "role": "OWNER",
+                    "type": "CREDIT",
+                    "productCode": "KAFV",
+                    "name": {
+                        "description": "CREDIT (Cancelled)",
+                        "userDefined": "CREDIT (Cancelled)"
+                    },
+                    "relatedAccount": "14150025980000000142214872",
+                    "expirationDate": "2023-04-30",
+                    "availableBalance": {
+                        "value": 0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 0
+                    },
+                    "creditLimit": {
+                        "value": 5000,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5000
+                    },
+                    "disposedAmount": {
+                        "value": 12477.4,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 12477.4
+                    }
+                }
             ],
             "loans": [
                 {

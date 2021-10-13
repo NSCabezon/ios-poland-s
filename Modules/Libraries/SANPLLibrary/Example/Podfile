@@ -6,10 +6,10 @@ def core_dependencies
   pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
-  pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'Models', :path => '../../../../santander-one/Models'
   pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
   pod 'Repository', :path => '../../../../santander-one/Repository'
+  pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
 
   # Microsite configuration
   pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'

@@ -7,12 +7,12 @@
     This handler be inyected in the webview presentation call when a webview requires Poland custom url actions (app://, santander://...).
  */
 import Foundation
-import RetailLegacy
 import Commons
 import WebViews
 import DomainCommon
 import Models
 import os
+import WebViews
 
 
 public class PLWebviewCustomLinkHandler: WebViewLinkHandler {

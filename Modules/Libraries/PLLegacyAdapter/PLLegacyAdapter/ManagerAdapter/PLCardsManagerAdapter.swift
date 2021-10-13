@@ -66,11 +66,11 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANOkResponse([:])
     }
     
-    func getCardsDetailMap() throws -> BSANResponse<[String : CardDetailDTO]> {
+    func getCardsDetailMap() throws -> BSANResponse<[String : SANLegacyLibrary.CardDetailDTO]> {
         return BSANErrorResponse(nil)
     }
     
-    func getCardsWithDetailMap() throws -> BSANResponse<[String : CardDetailDTO]> {
+    func getCardsWithDetailMap() throws -> BSANResponse<[String : SANLegacyLibrary.CardDetailDTO]> {
         return BSANErrorResponse(nil)
     }
     
@@ -125,16 +125,31 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     func loadCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
-    
-    func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<CardDetailDTO> {
-        return BSANErrorResponse(nil)
+
+    func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<SANLegacyLibrary.CardDetailDTO> {
+        guard let cards = self.bsanDataProvider.getGlobalPosition()?.cards else { return BSANErrorResponse(nil) }
+        let card = cards.first { $0.virtualPan == cardDTO.contract?.contractNumber }
+        guard let cardId = card?.virtualPan else { return BSANErrorResponse(nil) }
+        let result = try cardsManager.getCardDetail(cardId: cardId)
+        switch result {
+        case .success(let cardDetail):
+            if cardDTO.cardTypeDescription?.lowercased() == "credit" {
+                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLCreditCardToCardDetail(cardDetail)
+                return BSANOkResponse(adaptedCardDetail)
+            } else {
+                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLDebitCardToCardDetail(cardDetail)
+                return BSANOkResponse(adaptedCardDetail)
+            }
+        case .failure( _):
+            return BSANErrorResponse(nil)
+        }
     }
     
     func getCardBalance(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<CardBalanceDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmPayOff(cardDTO: SANLegacyLibrary.CardDTO, cardDetailDTO: CardDetailDTO, amountDTO: AmountDTO, signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<Void> {
+    func confirmPayOff(cardDTO: SANLegacyLibrary.CardDTO, cardDetailDTO: SANLegacyLibrary.CardDetailDTO, amountDTO: AmountDTO, signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
@@ -262,7 +277,7 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
     
-    func getTransactionDetailEasyPay(cardDTO: SANLegacyLibrary.CardDTO, cardDetailDTO: CardDetailDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO, cardTransactionDetailDTO: CardTransactionDetailDTO, easyPayContractTransactionDTO: EasyPayContractTransactionDTO) throws -> BSANResponse<EasyPayDTO> {
+    func getTransactionDetailEasyPay(cardDTO: SANLegacyLibrary.CardDTO, cardDetailDTO: SANLegacyLibrary.CardDetailDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO, cardTransactionDetailDTO: CardTransactionDetailDTO, easyPayContractTransactionDTO: EasyPayContractTransactionDTO) throws -> BSANResponse<EasyPayDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -282,7 +297,7 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
     
-    func confirmationEasyPay(cardDTO: SANLegacyLibrary.CardDTO, cardDetailDTO: CardDetailDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO, cardTransactionDetailDTO: CardTransactionDetailDTO, easyPayDTO: EasyPayDTO, easyPayAmortizationDTO: EasyPayAmortizationDTO, easyPayContractTransactionDTO: EasyPayContractTransactionDTO) throws -> BSANResponse<Void> {
+    func confirmationEasyPay(cardDTO: SANLegacyLibrary.CardDTO, cardDetailDTO: SANLegacyLibrary.CardDetailDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO, cardTransactionDetailDTO: CardTransactionDetailDTO, easyPayDTO: EasyPayDTO, easyPayAmortizationDTO: EasyPayAmortizationDTO, easyPayContractTransactionDTO: EasyPayContractTransactionDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
@@ -334,7 +349,7 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
     
-    func confirmApplePay(card: SANLegacyLibrary.CardDTO, cardDetail: CardDetailDTO, otpValidation: OTPValidationDTO, otpCode: String, encryptionScheme: String, publicCertificates: [Data], nonce: Data, nonceSignature: Data) throws -> BSANResponse<ApplePayConfirmationDTO> {
+    func confirmApplePay(card: SANLegacyLibrary.CardDTO, cardDetail: SANLegacyLibrary.CardDetailDTO, otpValidation: OTPValidationDTO, otpCode: String, encryptionScheme: String, publicCertificates: [Data], nonce: Data, nonceSignature: Data) throws -> BSANResponse<ApplePayConfirmationDTO> {
         return BSANErrorResponse(nil)
     }
     

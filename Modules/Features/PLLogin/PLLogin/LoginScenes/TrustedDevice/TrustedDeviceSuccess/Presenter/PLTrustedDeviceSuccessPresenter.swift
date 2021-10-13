@@ -44,7 +44,9 @@ extension PLTrustedDeviceSuccessPresenter: PLTrustedDeviceSuccessPresenterProtoc
     }
 
     func continueButtonDidPressed() {
-        self.openSessionAndNavigateToGlobalPosition()
+        self.view?.showLoading(completion: { [weak self] in
+            self?.openSessionAndNavigateToGlobalPosition()
+        })
     }
 }
 
@@ -68,8 +70,6 @@ private extension  PLTrustedDeviceSuccessPresenter {
     }
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        view?.dismissLoading(completion: { [weak self] in
-            self?.coordinator.goToGlobalPositionScene(option)
-        })
+        self.coordinator.goToGlobalPositionScene(option)
     }
 }

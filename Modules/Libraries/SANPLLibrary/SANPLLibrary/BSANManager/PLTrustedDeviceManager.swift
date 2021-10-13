@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol PLTrustedDeviceManagerProtocol {
+    func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError>
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError>
     func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError>
     func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Data, NetworkProviderError>
@@ -30,7 +31,11 @@ public final class PLTrustedDeviceManager {
 }
 
 extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
-        
+    
+    public func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError> {
+        let result = try trustedDeviceDataSource.doBeforeLogin(parameters)
+        return result
+    }
     public func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.doRegisterDevice(parameters)
         return result
@@ -63,6 +68,10 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
 
     public func getTrustedDeviceHeaders() -> TrustedDeviceHeaders? {
         return self.bsanDataProvider.getTrustedDeviceHeaders()
+    }
+    
+    public func deleteTrustedDeviceHeaders() {
+        return self.bsanDataProvider.deleteTrustedDeviceHeaders()
     }
 
     public func storeTrustedDeviceHeaders(_ headers: TrustedDeviceHeaders) {

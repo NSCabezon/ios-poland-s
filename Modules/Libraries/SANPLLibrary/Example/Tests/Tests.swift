@@ -1,12 +1,12 @@
 import XCTest
 @testable import SANPLLibrary
 import DataRepository
-import Commons
 import Repository
 import SANLegacyLibrary
 
 class Tests: XCTestCase {
-
+    
+    private var expectedAnswer: Int?
     private lazy var dataRepository: DataRepository = {
 
         let versionInfo = VersionInfoDTO(bundleIdentifier: "BSANPLLibrary",
@@ -21,7 +21,8 @@ class Tests: XCTestCase {
 
     public var demoInterpreter: DemoUserInterpreter {
         return DemoUserInterpreter(bsanDataProvider: self.bsanDataProvider,
-                                   defaultDemoUser: "123456789Z")
+                                   defaultDemoUser: "12345678Z", demoModeAvailable: true,
+                                   expectedAnswer: self.expectedAnswer)
     }
 
     public var networkProvider: NetworkProvider {
@@ -32,7 +33,6 @@ class Tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-
         self.bsanDataProvider.storeEnviroment(BSANEnvironments.environmentPre)
     }
     
@@ -43,5 +43,12 @@ class Tests: XCTestCase {
     func testPerformanceExample() {
         self.measure() {
         }
+    }
+    
+    func setUpDemoUser(_ answer: Int? = 0) {
+        self.expectedAnswer = answer
+        guard self.demoInterpreter.isDemoModeAvailable,
+              self.demoInterpreter.isDemoUser(userName: "12345678Z") else { return }
+        self.bsanDataProvider.setDemoMode(true, "12345678Z")
     }
 }

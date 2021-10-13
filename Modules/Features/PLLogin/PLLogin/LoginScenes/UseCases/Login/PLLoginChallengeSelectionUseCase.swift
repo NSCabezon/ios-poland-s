@@ -38,11 +38,13 @@ private extension PLLoginChallengeSelectionUseCase {
                       defaultChallenge: ChallengeEntity) throws -> ChallengeEntity {
         switch defaultChallenge.authorizationType {
         case .softwareToken:
-            guard let firstChallenge = challenges?.first,
-                  (firstChallenge.authorizationType == .sms || firstChallenge.authorizationType == .tokenTime || firstChallenge.authorizationType == .tokenTimeCR) else {
+            if let smsChallenge = challenges?.first(where: { $0.authorizationType == .sms }) {
+                return smsChallenge
+            } else if let hardwareChallenge = challenges?.first(where: { $0.authorizationType == .tokenTime || $0.authorizationType == .tokenTimeCR }) {
+                return hardwareChallenge
+            } else {
                 throw BSANException("We should have .sms, .tokenTime or .tokenTimeCR in challenges")
             }
-            return firstChallenge
         default:
             return defaultChallenge
         }

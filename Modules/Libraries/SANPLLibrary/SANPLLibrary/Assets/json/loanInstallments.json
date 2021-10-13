@@ -6,31 +6,31 @@
                     "interestPayment": 40.5,
                     "paymentDate": "2021-05-12",
                     "principalBalance": 100.01,
-                    "totalPayment": "140.51 "
+                    "totalPayment": 140.51
                 },
                 {
                     "interestPayment": 40.5,
                     "paymentDate": "2021-06-12",
                     "principalBalance": 140.51,
-                    "totalPayment": "181.01 "
+                    "totalPayment": 181.01
                 },
                 {
                     "interestPayment": 40.5,
                     "paymentDate": "2021-07-12",
                     "principalBalance": 181.01,
-                    "totalPayment": "221.51 "
+                    "totalPayment": 221.51
                 },
                 {
                     "interestPayment": 40.5,
                     "paymentDate": "2021-08-12",
                     "principalBalance": 221.51,
-                    "totalPayment": "262.01 "
+                    "totalPayment": 262.01
                 },
                 {
                     "interestPayment": 40.5,
                     "paymentDate": "2021-09-12",
                     "principalBalance": 262.01,
-                    "totalPayment": "302.51 "
+                    "totalPayment": 302.51
                 }
             ],
             "page":

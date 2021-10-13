@@ -10,9 +10,9 @@ import PLCommons
 import CoreDomain
 
 final class PLAccountNumberFormatter: AccountNumberFormatterProtocol {
-//    func accountNumberFormat(_ account: AccountRepresentable?) -> String {
-//        return IBANFormatter.format(iban: account?.getIBANString)
-//    }
+    func accountNumberFormat(_ account: AccountRepresentable?) -> String {
+        return IBANFormatter.format(iban: account?.getIBANString)
+    }
     func accountNumberFormat(_ entity: AccountEntity?) -> String {
         return IBANFormatter.format(iban: entity?.getIban()?.ibanString)
     }

@@ -27,6 +27,8 @@ def core_dependencies
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
   pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
+  pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
+  pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
 end
 
 def core_thirdparty_dependencies
@@ -40,6 +42,7 @@ def pl_dependencies
   pod 'PLUI', :path => '../../../Libraries/PLUI'
   pod 'PLLegacyAdapter', :path => '../../../Libraries/PLLegacyAdapter'
   pod 'PLSelfSignedCertificate', :path => '../../../Libraries/PLSelfSignedCertificate'
+  pod 'PLNotifications', :path => '../../../Libraries/PLNotifications'
 end
 
 target 'PLLogin_Example' do

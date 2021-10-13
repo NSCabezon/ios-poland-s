@@ -20,5 +20,5 @@ The Poland PLCommons framework.
 s.dependency "Commons"
 s.dependency "UI"
 s.dependency "Helpers"
-s.dependency "RetailLegacy"
+s.dependency "WebViews"
 end

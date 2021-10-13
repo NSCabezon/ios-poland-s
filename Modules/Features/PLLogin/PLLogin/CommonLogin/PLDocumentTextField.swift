@@ -16,7 +16,6 @@ public class PLDocumentTextField: LegacyDesignableView {
 
     public var keyboardType: UIKeyboardType = .default
 
-    private weak var delegate: UITextFieldDelegate? { didSet { textField.delegate = delegate } }
     private var returnAction: (() -> Void)?
 
     public var introducedText: String = "" {
@@ -103,7 +102,6 @@ public class PLDocumentTextField: LegacyDesignableView {
 
     override public func layoutSubviews() {
         superview?.layoutSubviews()
-        self.configureTextAttributes()
     }
 }
 
@@ -116,16 +114,21 @@ extension PLDocumentTextField {
     }
 
     func configureTextAttributes() {
-        textField.attributedText = NSAttributedString(string: self.introducedText,
-                                                      attributes: self.textfieldAttributes)
+        textField.text = introducedText
         let currentTextWidth = (introducedText as NSString).size(withAttributes: self.textfieldAttributes).width
         if currentTextWidth > textfieldUsableWidth {
             kern = self.calculateNewKern(for: currentTextWidth)
+            self.resetDefaultAttributedTextKern()
             configureTextAttributes()
         } else if currentTextWidth < (textfieldUsableWidth - Constants.margin) && kern < Constants.characterSpacing {
             kern = Constants.characterSpacing
+            self.resetDefaultAttributedTextKern()
             configureTextAttributes()
         }
+    }
+
+    func resetDefaultAttributedTextKern() {
+        textField.defaultTextAttributes.updateValue(self.kern, forKey: .kern)
     }
 
     func calculateNewKern(for currentTextWidth: CGFloat) -> CGFloat {
@@ -148,16 +151,19 @@ extension PLDocumentTextField {
         if #available(iOS 11, *) {
             textField.textContentType = .username
         }
+        textField.defaultTextAttributes = self.textfieldAttributes
         configureTextTextField(text: localized("pl_login_hint_login"))
+        self.resetDefaultAttributedTextKern()
     }
 
     public func configureTextTextField(text: LocalizedStylableText? = nil) {
+        guard let text = text else { return }
         let attributes: [NSAttributedString.Key: Any] = [
             .font: Constants.textLabelFont,
             .foregroundColor: UIColor.white,
         ]
-        textField.attributedPlaceholder = text != nil ? NSAttributedString(string: text!.plainText,
-                                                                    attributes: attributes) : nil
+        textField.attributedPlaceholder = NSAttributedString(string: text.text,
+                                                             attributes: attributes)
     }
 
     public func updatePassword() {
@@ -177,7 +183,7 @@ extension PLDocumentTextField {
 
     public func configureLoginTypeLabel(text: LocalizedStylableText) {
         titleLabel.textColor = .white
-        titleLabel.text = text.plainText
+        titleLabel.text = text.text
         titleLabel.font = Constants.titleLabelFont
     }
 

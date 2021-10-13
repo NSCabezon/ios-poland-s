@@ -20,6 +20,9 @@ import Account
 import Inbox
 import PersonalArea
 import Menu
+import Cards
+import PLNotifications
+import iOSPublicFiles
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -29,14 +32,14 @@ final class AppDependencies {
     private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
-    
+
     // MARK: - Dependecies definitions
-    
+
     // MARK: Data layer and country data adapters
     private lazy var dataRepository: DataRepository = {
         return DataRepositoryBuilder(dependenciesResolver: dependencieEngine).build()
     }()
-    
+
     private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
     }
@@ -71,6 +74,18 @@ final class AppDependencies {
     private lazy var notificationPermissionManager: NotificationPermissionsManager = {
         return NotificationPermissionsManager(dependencies: self.dependencieEngine)
     }()
+    private lazy var notificationsHandler: NotificationsHandlerProtocol = {
+        return NotificationsHandler(dependencies: self.dependencieEngine)
+    }()
+    private lazy var firebaseNotificationsService: FirebaseNotificationsService = {
+        return FirebaseNotificationsService(dependenciesResolver: self.dependencieEngine)
+    }()
+    private lazy var plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository = {
+        let assetsClient = AssetsClient()
+        let netClient = NetClientImplementation()
+        let fileClient = FileClient()
+        return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
 
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
@@ -79,7 +94,7 @@ final class AppDependencies {
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
         return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
     }()
-    
+
     // MARK: Dependencies init
     init() {
         self.dependencieEngine = DependenciesDefault()
@@ -143,6 +158,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: EmmaTrackEventListProtocol.self) { _ in
             return EmptyEmmaTrackEventList()
         }
+        self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
+            return self.plAccountOtherOperativesInfoRepository
+        }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
         }
@@ -155,6 +173,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: ProductIdDelegateProtocol.self) { _ in
             return self.productIdDelegate
         }
+        self.dependencieEngine.register(for: AdditionalUseCasesProviderProtocol.self) { resolver in
+            return LoadPLAccountOtherOperativesInfoUseCaseImpl(dependencies: resolver)
+        }
         self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
             return self.ibanFormatter
         }
@@ -166,6 +187,10 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager
+        }
+        self.dependencieEngine.register(for: NotificationsHandlerProtocol.self) { _ in
+            self.notificationsHandler.addService(self.firebaseNotificationsService)
+            return self.notificationsHandler
         }
         self.dependencieEngine.register(for: InboxActionBuilderProtocol.self) { resolver in
             return PLInboxActionBuilder(resolver: resolver)
@@ -185,8 +210,24 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
             return self.personalAreaSections
         }
+        self.dependencieEngine.register(for: GetPLAccountOtherOperativesActionUseCase.self) { resolver in
+            return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
+            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
+        }
+        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+            PLCardTransactionDetailActionFactoryModifier()
+        }
+        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { resolver in
+            PLCardTransactionDetailViewConfiguration()
+        }
+        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { resolver in
+            PLEditBudgetHelperModifier()
         }
     }
 }

@@ -38,7 +38,7 @@ final class PLUnrememberedLoginIdCoordinator: ModuleCoordinator {
     
     func start() {
         let controller = self.dependenciesEngine.resolve(for: PLUnrememberedLoginIdViewController.self)
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.setViewControllers([controller], animated: false)
     }
 }
 
@@ -67,10 +67,6 @@ private extension PLUnrememberedLoginIdCoordinator {
 
         self.dependenciesEngine.register(for: PLLoginProcessUseCase.self) { _ in
             return authProcessUseCase
-        }
-        
-        self.dependenciesEngine.register(for: PLValidateVersionUseCase.self) { resolver in
-            return PLValidateVersionUseCase(dependenciesResolver: resolver)
         }
         
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdCoordinatorProtocol.self) { _ in

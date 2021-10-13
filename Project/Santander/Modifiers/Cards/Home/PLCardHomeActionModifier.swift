@@ -45,12 +45,12 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
  
     private let repayInInstallmentsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.repayInInstallmentsPL.rawValue,
-                               localizedKey: "pl_cardsOption_button_repayInstallments",
+                               localizedKey: "cardsOption_button_repayInstallments",
                                icon: "icnRatio",
                                section: "otherOperatives",
                                location: "",
                                isDisabled: { card in
-                                return card.isInactive || card.isDisabled
+                                return card.isInactive
                                })
     )
 
@@ -61,7 +61,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
                                section: "otherOperatives",
                                location: "",
                                isDisabled: { card in
-                                return card.isInactive || card.isDisabled
+                                return card.isInactive
                                })
     )
 
@@ -78,7 +78,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private let changeAliasesPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.changeAliasesPL.rawValue,
-                               localizedKey: "pl_cardsOption_button_changeAliases",
+                               localizedKey: "cardsOption_button_changeAlias",
                                icon: "icnChangeAlias",
                                section: "otherOperatives",
                                location: "",
@@ -127,7 +127,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
                                section: "queries",
                                location: "",
                                isDisabled: { card in
-                                return card.isInactive || card.isDisabled
+                                return card.isInactive
                                })
     )
 
@@ -138,7 +138,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
                                section: "queries",
                                location: "",
                                isDisabled: { card in
-                                return card.isInactive || card.isDisabled
+                                return card.isInactive
                                })
     )
 
@@ -177,12 +177,12 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private let exploreProductsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.exploreProductsPL.rawValue,
-                               localizedKey: "cardsOption_button_usingCardAbroad",
+                               localizedKey: "menu_link_contract",
                                icon: "icnExploreProducts",
                                section: "contract",
                                location: "",
                                isDisabled: { card in
-                                return card.isInactive || card.isDisabled
+                                return card.isInactive || card.isContractCancelled
                                })
     )
 
@@ -230,12 +230,23 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
                                })
     )
 
+    private let blockPL: CardActionType = .custome(
+        CustomCardActionValues(identifier: PLCardHomeActionIdentifier.atmPackagePL.rawValue,
+                               localizedKey: "cardsOption_button_block",
+                               icon: "icnBlockCard",
+                               section: "security",
+                               location: "",
+                               isDisabled: { card in
+                                return card.isContractCancelled
+                               })
+    )
+
     override func getCreditCardHomeActions() -> [CardActionType] {
-        return [.offCard, sendMoneyPL, repayInInstallmentsPL, cardRepaymentPL, .applePay, .enable, changeLimitsPL, changeAliasesPL, generateQRCodePL, alerts24PL, customerServicePL, .detail, blockedFundsPL, viewStatementsPL, managePinPL, .block, viewCvvPL, usingCardAbroadPL, refundForPurchasesPL, exploreProductsPL, creditLimitIncreasePL]
+        return [.onCard, .offCard, .enable, sendMoneyPL, repayInInstallmentsPL, cardRepaymentPL, .applePay, changeLimitsPL, changeAliasesPL, generateQRCodePL, alerts24PL, customerServicePL, .detail, blockedFundsPL, viewStatementsPL, managePinPL, blockPL, viewCvvPL, usingCardAbroadPL, refundForPurchasesPL, exploreProductsPL, creditLimitIncreasePL]
     }
 
     override func getDebitCardHomeActions() -> [CardActionType] {
-        return [.offCard, managePinPL, changeLimitsPL, .applePay, .enable, alerts24PL, .detail, blockedFundsPL, .block, viewCvvPL, usingCardAbroadPL, exploreProductsPL, multicurrencyPL, atmPackagePL]
+        return [.onCard, .offCard, .enable, managePinPL, changeLimitsPL, .applePay, alerts24PL, .detail, blockedFundsPL, blockPL, viewCvvPL, usingCardAbroadPL, exploreProductsPL, multicurrencyPL, atmPackagePL]
     }
 
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {

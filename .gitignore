@@ -115,3 +115,8 @@ Modules/Features/MBWay/Example/Pods/
 
 Project/Santander.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 Project/Santander.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# GoogleServices
+# This is used in build phase script (Firebase GoogleService)
+Project/Santander/Configuration/GoogleServices/GoogleService-Info.plist
+

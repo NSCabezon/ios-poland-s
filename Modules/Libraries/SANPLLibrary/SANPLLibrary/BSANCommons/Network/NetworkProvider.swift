@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 // MARK: - NetworkProvider
 
 public protocol NetworkProvider {

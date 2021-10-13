@@ -28,7 +28,6 @@ public final class PLPasswordTextField: LegacyDesignableView, UITextFieldDelegat
     @IBOutlet public weak var textField: UITextField?
 
     public weak var delegate: PLPasswordTextFieldDelegate?
-    public var observer: NSObjectProtocol?
 
     public var hiddenText: String = "" {
         didSet {
@@ -58,24 +57,12 @@ public final class PLPasswordTextField: LegacyDesignableView, UITextFieldDelegat
 
     public func reset() { hiddenText = "" }
 
-    public override func removeFromSuperview() {
-        super.removeFromSuperview()
-        if let observer = observer { NotificationCenter.default.removeObserver(observer) }
-    }
-
     // MARK: - privateMethods
-
     override public func commonInit() {
         super.commonInit()
-
         configureTextField()
-
         contentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(becomeResponder)))
         contentView?.isUserInteractionEnabled = true
-
-        observer = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) { [weak self] (notification) in
-            self?.setText((notification.object as? UITextField)?.text)
-        }
     }
 
     private func configureTextField() {
@@ -116,7 +103,6 @@ public final class PLPasswordTextField: LegacyDesignableView, UITextFieldDelegat
     }
 
     // MARK: - UITextFieldDelegate methods
-
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = localized("publicHome_button_enter")
         textField.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(doneDidPressed))

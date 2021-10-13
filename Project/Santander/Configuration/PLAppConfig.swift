@@ -11,6 +11,8 @@ import Commons
 import Models
 
 class PLAppConfig: LocalAppConfig {
+    let isEnabledOnboardingLocationDialog = false
+    var isEnabledTopUpsPrivateMenu = false
     var isEnabledMailbox = false
     var isScheduledTransferDetailDeleteButtonEnabled = false
     var isScheduledTransferDetailEditButtonEnabled = false
@@ -77,5 +79,4 @@ class PLAppConfig: LocalAppConfig {
     let enablePGCardActivation: Bool = true
     var isAnalysisAreaHomeEnabled = false
     var countryCode = "PL"
-    let isEnabledTopUpsPrivateMenu: Bool = false
 }

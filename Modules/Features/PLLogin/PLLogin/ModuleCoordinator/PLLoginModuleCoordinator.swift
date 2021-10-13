@@ -2,27 +2,76 @@ import UI
 import Commons
 import LoginCommon
 
+public protocol PLLoginModuleCoordinatorProtocol: AnyObject {
+    func loadUnrememberedLogin()
+    func loadRememberedLogin()
+}
+
 public class PLLoginModuleCoordinator: ModuleSectionedCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let unrememberdLoginIdCoordinator: PLUnrememberedLoginIdCoordinator
     
+    private lazy var unrememberdLoginIdCoordinator: PLUnrememberedLoginIdCoordinator = {
+        return PLUnrememberedLoginIdCoordinator(dependenciesResolver: dependenciesEngine, navigationController: navigationController)
+    }()
+    
+    private lazy var rememberedLoginPinCoordinator: PLRememberedLoginPinCoordinator = {
+        return PLRememberedLoginPinCoordinator(dependenciesResolver: dependenciesEngine, navigationController: navigationController)
+    }()
+    
+    
+    private lazy var unrememberedLoginOnboardingCoordinator: PLUnrememberedLoginOnboardingCoordinator = {
+        return PLUnrememberedLoginOnboardingCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.navigationController)
+    }()
+    
+    private lazy var beforeLoginCoordinator: PLBeforeLoginCoordinator = {
+        return PLBeforeLoginCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                        navigationController: self.navigationController)
+    }()
+    
+    private lazy var isFirstLaunchUseCase: PLFirstLaunchUseCase = {
+        return PLFirstLaunchUseCase(dependenciesResolver: dependenciesEngine)
+    }()
+
     public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.unrememberdLoginIdCoordinator = PLUnrememberedLoginIdCoordinator(dependenciesResolver: dependenciesEngine, navigationController: navigationController)
+        
+        self.dependenciesEngine.register(for: PLLoginModuleCoordinatorProtocol.self) { resolver in
+            return self
+        }
     }
 }
 
 extension PLLoginModuleCoordinator: LoginModuleCoordinatorProtocol {
+    
     public func start(_ section: LoginSection) {
-        switch section {
-        case .unrememberedLogin:
-            return self.unrememberdLoginIdCoordinator.start()
-        case .loginRemembered:
-            break
-        case .quickBalance:
-            break
-        }
+        self.beforeLoginCoordinator.start()
     }
 }
+
+extension PLLoginModuleCoordinator : PLLoginModuleCoordinatorProtocol {
+    
+    public func loadUnrememberedLogin() {
+        //checkFirstLaunch() SHOW ONBOARDING ONLY THE FIRST TIME
+        self.unrememberedLoginOnboardingCoordinator.start()
+    }
+    
+    public func loadRememberedLogin() {
+        self.rememberedLoginPinCoordinator.start()
+    }
+}
+
+/*private extension PLLoginModuleCoordinator {
+    func checkFirstLaunch() {
+        Scenario(useCase: self.isFirstLaunchUseCase, input: PLFirstLaunchUseCaseInput(shouldSetFirstLaunch: false))
+            .execute(on: self.dependenciesEngine.resolve())
+            .onSuccess { result in
+                if result.isFirstLaunch {
+                    self.unrememberedLoginOnboardingCoordinator.start()
+                } else {
+                    self.unrememberdLoginIdCoordinator.start()
+                }
+            }
+    }
+}*/

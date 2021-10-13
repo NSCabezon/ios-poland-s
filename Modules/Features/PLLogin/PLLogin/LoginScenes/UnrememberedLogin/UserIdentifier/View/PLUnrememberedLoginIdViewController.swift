@@ -8,7 +8,6 @@ import IQKeyboardManagerSwift
 protocol PLUnrememberedLoginIdViewProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func resetForm()
     func showAccountPermanentlyBlockedDialog()
-    func showDeprecatedVersionDialog()
     func showInvalidSCADialog(_ completion: @escaping (() -> Void))
     func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration)
 }
@@ -64,7 +63,7 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-            .setRightActions(.menu(action: #selector(didSelectMenu)))
+//            .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
     
@@ -85,12 +84,6 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
     func resetForm() {
         self.documentTextField?.setText("")
     }
-    
-    func showDeprecatedVersionDialog() {
-        PLLoginCommonDialogs.presentDeprecatedVersionDialog(on: self) { [weak self] in
-            self?.presenter.openAppStore()
-        }
-    }
 
     func showAccountPermanentlyBlockedDialog() {
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
@@ -102,7 +95,11 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
 
     func showAccountTemporaryBlockedDialog(_ configuration: UnrememberedLoginConfiguration) {
         guard let unblockRemainingTimeInSecs = configuration.unblockRemainingTimeInSecs else { return }
-        PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs).show(in: self)
+        PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs) { [weak self] allowLogin in
+            if allowLogin {
+                self?.presenter.setAllowLoginBlockedUsers()
+            }
+        }.show(in: self)
     }
 
     @IBAction func didSelectChooseEnvironment(_ sender: Any) {

@@ -36,6 +36,10 @@ extension PLInboxActionBuilder: InboxActionBuilderProtocol {
     func addDelegate(_ delegate: InboxActionDelegate) {
         self.delegate = delegate
     }
+
+    func trackTapNotificationInbox(_ handler: @escaping () -> Void) {
+        handler()
+    }
 }
 
 private extension PLInboxActionBuilder {

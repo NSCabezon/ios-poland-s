@@ -26,12 +26,12 @@ final class PLGLobalPositionManagerTests: Tests {
         super.tearDown()
     }
         
-    func testGetAllProducts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition()
+    func testGetAllProducts() {
+        let result = try? globalPositionManager.getAllProducts()
         
         switch result {
-        case .success(let globalPosition):
-            XCTAssert()
+        case .success:
+            XCTAssert(true)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting global position")
@@ -40,12 +40,12 @@ final class PLGLobalPositionManagerTests: Tests {
         }
     }
     
-    func getAccounts() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .accounts))
+    func testGetAccounts() {
+        let result = try? globalPositionManager.getAccounts()
         
         switch result {
-        case .success(let globalPosition):
-            XCTAssert()
+        case .success:
+            XCTAssert(true)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting global position")
@@ -54,12 +54,12 @@ final class PLGLobalPositionManagerTests: Tests {
         }
     }
     
-    func getCards() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .cards))
+    func testGetCards() {
+        let result = try? globalPositionManager.getCards()
         
         switch result {
-        case .success(let globalPosition):
-            XCTAssert()
+        case .success:
+            XCTAssert(true)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting global position")
@@ -68,12 +68,12 @@ final class PLGLobalPositionManagerTests: Tests {
         }
     }
 
-    func getDeposits() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .deposits))
+    func testGetDeposits() {
+        let result = try? globalPositionManager.getDeposits()
         
         switch result {
-        case .success(let globalPosition):
-            XCTAssert()
+        case .success:
+            XCTAssert(true)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting global position")
@@ -82,12 +82,12 @@ final class PLGLobalPositionManagerTests: Tests {
         }
     }
 
-    func getInvestmentFunds() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .investmentFunds))
+    func testGetInvestmentFunds() {
+        let result = try? globalPositionManager.getInvestmentFunds()
         
         switch result {
-        case .success(let globalPosition):
-            XCTAssert()
+        case .success:
+            XCTAssert(true)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting global position")
@@ -96,12 +96,12 @@ final class PLGLobalPositionManagerTests: Tests {
         }
     }
 
-    func getLoans() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        let result = try globalPositionDataSource.getGlobalPosition(GlobalPositionParameters(filterBy: .loans))
+    func testGetLoans() {
+        let result = try? globalPositionManager.getLoans()
         
         switch result {
-        case .success(let globalPosition):
-            XCTAssert()
+        case .success:
+            XCTAssert(true)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not getting global position")

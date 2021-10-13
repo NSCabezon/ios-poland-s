@@ -134,7 +134,8 @@
         "enabledEnvioDineroPGSmart": "true",
         "enabledEnvioDineroPGClasica": "true",
         "enableNextSettlementCreditCard": "true",
-        "mulMovUrls": "['click2callapp.pru.bsch', 'sanesp-pre.pru.bsch']"
+        "mulMovUrls": "['click2callapp.pru.bsch', 'sanesp-pre.pru.bsch']",
+        "enabledNewSendMoney": "true"
     },
     "versions": {
         "4.0.60": {

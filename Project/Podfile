@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '12.3'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -20,7 +20,6 @@ def core_dependencies
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
-  pod 'CoreDomain', :path => '../santander-one/Modules/Libraries/CoreDomain'
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   
   # Microsite configuration
@@ -60,9 +59,9 @@ end
 
 def core_thirdparty_dependencies
   pod 'IQKeyboardManagerSwift', '6.5.6'
-  pod 'SwiftyBeaver', '1.7.0'
   pod 'Kingfisher', '5.15.8'
   pod 'lottie-ios'
+  pod 'TealiumIOS', '5.6.6'
 end
  
 # --------- Poland only dependencies
@@ -76,6 +75,7 @@ def pl_libraries
   pod 'PLCommons', :path => '../Modules/Libraries/PLCommons'
   pod 'PLUI', :path => '../Modules/Libraries/PLUI'
   pod 'PLSelfSignedCertificate', :path => '../Modules/Libraries/PLSelfSignedCertificate'
+  pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
 end
 
 def pl_thirdparty_dependencies

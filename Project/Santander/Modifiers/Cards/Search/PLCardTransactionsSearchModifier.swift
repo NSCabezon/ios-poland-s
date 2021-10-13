@@ -22,6 +22,9 @@ final class PLCardTransactionsSearchModifier {
 }
 
 extension PLCardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol {
+    var isSearchLimitedBySCA: Bool {
+        return false
+    }
     var isTransactionNameFilterEnabled: Bool {
         return true
     }

@@ -8,7 +8,7 @@
 import Account
 import Commons
 
-final class PLAccountTransaction: AccountTransactionProtocol {
+final class PLAccountTransaction: AccountTransactionProtocol {    
     func getError() -> String {
         return localized("transaction_label_emptyError")
     }
@@ -22,4 +22,6 @@ final class PLAccountTransaction: AccountTransactionProtocol {
     let isEnabledAmountRangeFilter: Bool = true
 
     let isEnabledDateFilter: Bool = true
+
+    let disabledEasyPayAccount: Bool = true
 }
