@@ -14,7 +14,6 @@ import Models
 import os
 import WebViews
 
-
 public class PLWebviewCustomLinkHandler: WebViewLinkHandler {
     public var configuration: WebViewConfiguration
     weak public var delegate: WebViewLinkHandlerDelegate?

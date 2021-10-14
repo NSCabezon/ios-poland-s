@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */; };
 		0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */; };
 		0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */; };
 		0D13A93126E8A84200359D5B /* PLAccountTransactionDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */; };
@@ -123,7 +124,7 @@
 		9E92903E26F9EAF700A0178A /* PLPublicMenuViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E92903D26F9EAF700A0178A /* PLPublicMenuViewComponents.swift */; };
 		9E92904226F9EB0800A0178A /* PLPublicMenuViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E92904126F9EB0800A0178A /* PLPublicMenuViewContainer.swift */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
 		BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */; };
 		BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */; };
@@ -139,6 +140,7 @@
 
 /* Begin PBXFileReference section */
 		039E27D06B25F10C2CD056AD /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
+		04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLWebViewCoordinatorNavigator.swift; sourceTree = "<group>"; };
 		0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailShareableInfo.swift; sourceTree = "<group>"; };
 		0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOperativesModifier.swift; sourceTree = "<group>"; };
 		0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailAction.swift; sourceTree = "<group>"; };
@@ -671,6 +673,7 @@
 		66BC8A55263FED9F00654CC5 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */,
 				66BC8A57263FEDF600654CC5 /* AppDependencies.swift */,
 				66BC8D9C264092B500654CC5 /* AppNavigationDependencies.swift */,
 				42BF486C264A88B200136E8D /* TealiumCompilation.swift */,
@@ -989,7 +992,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
 				0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */,
@@ -1053,6 +1056,7 @@
 				669A37DE270F575F00C0F272 /* LoadPLAccountOtherOperativesInfoUseCase.swift in Sources */,
 				0DB4957C26C155F000F0985F /* PLDomesticTransferOperative.swift in Sources */,
 				A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
+				04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */,
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
 				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
 				7E9939C726B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift in Sources */,

@@ -33,6 +33,10 @@ final class AppNavigationDependencies {
             return self.sendMoneyCoordinator
         }
         
+        dependenciesEngine.register(for: PLLoginWebViewCoordinatorDelegate.self) { _ in
+            return PLWebViewCoordinatorNavigator(dependenciesResolver: self.dependenciesEngine, drawer: self.drawer)
+        }
+        
         dependenciesEngine.register(for: PersonalAreaModuleCoordinator.self) { _ in
             return self.personalAreaModuleCoordinator
         }
