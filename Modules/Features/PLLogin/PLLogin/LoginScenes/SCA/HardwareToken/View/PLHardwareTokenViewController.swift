@@ -208,10 +208,17 @@ extension PLHardwareTokenViewController: UITextFieldDelegate {
             guard let stringRange = Range(range, in: currentText) else { return false }
             let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
-            guard updatedText.count <= 8 else { return false }
+            guard updatedText.count <= 8 else {
+                return false
+            }
             passwordTextField.hiddenText = updatedText
             passwordTextField.updatePassword()
-            loginButton.isEnabled = updatedText.count == 8
+            if updatedText.count == 8 {
+                loginButton.isEnabled  = true
+                textField.resignFirstResponder()
+            } else {
+                loginButton.isEnabled = false
+            }
             return false
         }
         return false

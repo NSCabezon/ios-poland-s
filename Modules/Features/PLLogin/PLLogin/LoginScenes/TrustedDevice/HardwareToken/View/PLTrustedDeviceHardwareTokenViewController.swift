@@ -238,6 +238,7 @@ extension PLTrustedDeviceHardwareTokenViewController: UpdatableTextFieldDelegate
         if self.tokenResponseValueTextField.text?.count == Constants.tokenDigits {
             continueButton.backgroundColor = .santanderRed
             continueButton.isEnabled = true
+            view.endEditing(true)
         } else {
             continueButton.backgroundColor = .lightSanGray
             continueButton.isEnabled = false
