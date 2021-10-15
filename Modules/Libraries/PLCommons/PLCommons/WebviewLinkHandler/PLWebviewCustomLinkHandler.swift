@@ -12,7 +12,6 @@ import WebViews
 import DomainCommon
 import Models
 import os
-import WebViews
 
 public class PLWebviewCustomLinkHandler: WebViewLinkHandler {
     public var configuration: WebViewConfiguration

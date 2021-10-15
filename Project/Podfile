@@ -67,6 +67,13 @@ end
 # --------- Poland only dependencies
 def pl_features
   pod 'PLLogin', :path => '../Modules/Features/PLLogin'
+  pod 'BLIK', :path => '../Modules/Features/BLIK'
+  pod 'CreditCardRepayment', :path => '../Modules/Features/CreditCardRepayment'
+  pod 'PLHelpCenter', :path => '../Modules/Features/PLHelpCenter'
+  pod 'LoanSchedule', :path => '../Modules/Features/LoanSchedule'
+  pod 'mCommerce', :path => '../Modules/Features/mCommerce'
+  pod 'PLNotificationsInbox', :path => '../Modules/Features/PLNotificationsInbox'
+  pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
 end
 
 def pl_libraries
@@ -74,6 +81,7 @@ def pl_libraries
   pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
   pod 'PLCommons', :path => '../Modules/Libraries/PLCommons'
   pod 'PLUI', :path => '../Modules/Libraries/PLUI'
+  pod 'DemoAuthenticator', :path => '../Modules/Libraries/DemoAuthenticator'
   pod 'PLSelfSignedCertificate', :path => '../Modules/Libraries/PLSelfSignedCertificate'
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
 end

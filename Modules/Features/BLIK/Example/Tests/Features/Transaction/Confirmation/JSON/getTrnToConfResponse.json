@@ -1,0 +1,17 @@
+{
+"trnId": 192246,
+"title": "Przelew",
+"date": "2021-06-28",
+"time": "2021-07-05T14:17:00.331+02:00",
+"transferType": "BLIK_WEB_PURCHASES",
+"amount":
+    {
+        "amount": 14.99
+    },
+"merchant":
+    {
+        "shortName": "Sklep",
+        "address": "Miastowa 8",
+        "city": "Kraków"
+    }
+}

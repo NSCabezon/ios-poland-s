@@ -1,0 +1,886 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0014550226DCD75E00810CDB /* CreateCreditCardRepaymentFormUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0014550126DCD75E00810CDB /* CreateCreditCardRepaymentFormUseCase.swift */; };
+		0E19B2D4269DCAC500F154A1 /* GetAccountsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19B2D3269DCAC500F154A1 /* GetAccountsUseCaseTests.swift */; };
+		0E19B2E9269DE8D700F154A1 /* PLCreditCardRepaymentManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19B2E4269DE8D700F154A1 /* PLCreditCardRepaymentManagerMock.swift */; };
+		0E19B2EB269DE8D700F154A1 /* PLManagersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19B2E6269DE8D700F154A1 /* PLManagersProviderMock.swift */; };
+		0E19B2ED269DEA9400F154A1 /* getGlobalPositionSuccessResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 0E19B2EC269DEA9400F154A1 /* getGlobalPositionSuccessResponse.json */; };
+		0E37B7A726A8425100144191 /* CreditCardRepaymentSummaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E37B7A626A8425100144191 /* CreditCardRepaymentSummaryPresenterTests.swift */; };
+		0E37B7A926A8437A00144191 /* CreditCardRepaymentSummaryViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E37B7A826A8437A00144191 /* CreditCardRepaymentSummaryViewMock.swift */; };
+		0E4DB4C626A04802009EB656 /* CreditCardChooseListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4DB4C426A047E1009EB656 /* CreditCardChooseListPresenterTests.swift */; };
+		0E4DB4C826A054D8009EB656 /* CreditCardRepaymentFormManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4DB4C726A054D8009EB656 /* CreditCardRepaymentFormManagerMock.swift */; };
+		0E4DB4CA26A0594A009EB656 /* CreditCardChooseListViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4DB4C926A0594A009EB656 /* CreditCardChooseListViewMock.swift */; };
+		0EA0C521269EEB8400441869 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA0C520269EEB8400441869 /* Constants.swift */; };
+		0EE983A826B033A000959ABE /* CreditCardRepaymentDetailsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE983A726B033A000959ABE /* CreditCardRepaymentDetailsPresenterTests.swift */; };
+		0EE983AA26B034D600959ABE /* CreditCardRepaymentDetailsViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE983A926B034D600959ABE /* CreditCardRepaymentDetailsViewMock.swift */; };
+		3645DFD026E6569D005647F2 /* sendCreditCardSuccessResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 3645DFCF26E6569D005647F2 /* sendCreditCardSuccessResponse.json */; };
+		364D264426DD224C001CC783 /* SendCreateCreditCardRepaymentUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364D264326DD224C001CC783 /* SendCreateCreditCardRepaymentUseCaseTests.swift */; };
+		364D264626DE43EF001CC783 /* getAccountForDebitSuccessResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 364D264526DE43EF001CC783 /* getAccountForDebitSuccessResponse.json */; };
+		364D264826DE57A8001CC783 /* getAccountForCreditSuccessResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 364D264726DE57A8001CC783 /* getAccountForCreditSuccessResponse.json */; };
+		3672524026E0C81700C192C9 /* CreditCardRepaymentConfirmationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672523F26E0C81700C192C9 /* CreditCardRepaymentConfirmationPresenterTests.swift */; };
+		3672524226E0E32400C192C9 /* CreditCardRepaymentConfirmationViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3672524126E0E32400C192C9 /* CreditCardRepaymentConfirmationViewMock.swift */; };
+		36FDC21026A1B8D60062A1B9 /* GetCreditCardsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FDC20F26A1B8D60062A1B9 /* GetCreditCardsUseCaseTests.swift */; };
+		36FDC21826A5B5270062A1B9 /* AccountChooseListViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FDC21626A5B5270062A1B9 /* AccountChooseListViewMock.swift */; };
+		36FDC21E26A717AF0062A1B9 /* AccountChooseListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FDC21D26A717AF0062A1B9 /* AccountChooseListPresenterTests.swift */; };
+		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
+		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
+		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
+		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		74F591C6347F116EFCB04BE8 /* Pods_CreditCardRepayment_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381CAFB078379A843D0B21D9 /* Pods_CreditCardRepayment_Example.framework */; };
+		778E3E3EF62C00FDA8933AD4 /* Pods_CreditCardRepayment_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4620D668E91043002D3C4C /* Pods_CreditCardRepayment_Tests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = CreditCardRepayment;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0014550126DCD75E00810CDB /* CreateCreditCardRepaymentFormUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCreditCardRepaymentFormUseCase.swift; sourceTree = "<group>"; };
+		048E799FA8A4F9420196AE63 /* Pods-CreditCardRepayment_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRepayment_Tests.debug.xcconfig"; path = "Target Support Files/Pods-CreditCardRepayment_Tests/Pods-CreditCardRepayment_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		0B4620D668E91043002D3C4C /* Pods_CreditCardRepayment_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreditCardRepayment_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B80170556191359F26EF0B1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		0E05D356125C94A259DF6D61 /* Pods-CreditCardRepayment_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRepayment_Tests.release.xcconfig"; path = "Target Support Files/Pods-CreditCardRepayment_Tests/Pods-CreditCardRepayment_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		0E19B2D3269DCAC500F154A1 /* GetAccountsUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAccountsUseCaseTests.swift; sourceTree = "<group>"; };
+		0E19B2E4269DE8D700F154A1 /* PLCreditCardRepaymentManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCreditCardRepaymentManagerMock.swift; sourceTree = "<group>"; };
+		0E19B2E6269DE8D700F154A1 /* PLManagersProviderMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLManagersProviderMock.swift; sourceTree = "<group>"; };
+		0E19B2EC269DEA9400F154A1 /* getGlobalPositionSuccessResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = getGlobalPositionSuccessResponse.json; sourceTree = "<group>"; };
+		0E37B7A626A8425100144191 /* CreditCardRepaymentSummaryPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentSummaryPresenterTests.swift; sourceTree = "<group>"; };
+		0E37B7A826A8437A00144191 /* CreditCardRepaymentSummaryViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentSummaryViewMock.swift; sourceTree = "<group>"; };
+		0E4DB4C426A047E1009EB656 /* CreditCardChooseListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardChooseListPresenterTests.swift; sourceTree = "<group>"; };
+		0E4DB4C726A054D8009EB656 /* CreditCardRepaymentFormManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentFormManagerMock.swift; sourceTree = "<group>"; };
+		0E4DB4C926A0594A009EB656 /* CreditCardChooseListViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardChooseListViewMock.swift; sourceTree = "<group>"; };
+		0EA0C520269EEB8400441869 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0EE983A726B033A000959ABE /* CreditCardRepaymentDetailsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentDetailsPresenterTests.swift; sourceTree = "<group>"; };
+		0EE983A926B034D600959ABE /* CreditCardRepaymentDetailsViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentDetailsViewMock.swift; sourceTree = "<group>"; };
+		3645DFCF26E6569D005647F2 /* sendCreditCardSuccessResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sendCreditCardSuccessResponse.json; sourceTree = "<group>"; };
+		364D264326DD224C001CC783 /* SendCreateCreditCardRepaymentUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCreateCreditCardRepaymentUseCaseTests.swift; sourceTree = "<group>"; };
+		364D264526DE43EF001CC783 /* getAccountForDebitSuccessResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = getAccountForDebitSuccessResponse.json; sourceTree = "<group>"; };
+		364D264726DE57A8001CC783 /* getAccountForCreditSuccessResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = getAccountForCreditSuccessResponse.json; sourceTree = "<group>"; };
+		3672523F26E0C81700C192C9 /* CreditCardRepaymentConfirmationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentConfirmationPresenterTests.swift; sourceTree = "<group>"; };
+		3672524126E0E32400C192C9 /* CreditCardRepaymentConfirmationViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRepaymentConfirmationViewMock.swift; sourceTree = "<group>"; };
+		36FDC20F26A1B8D60062A1B9 /* GetCreditCardsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCreditCardsUseCaseTests.swift; sourceTree = "<group>"; };
+		36FDC21426A5ABA40062A1B9 /* AccountChooseListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountChooseListPresenterTests.swift; sourceTree = "<group>"; };
+		36FDC21626A5B5270062A1B9 /* AccountChooseListViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountChooseListViewMock.swift; sourceTree = "<group>"; };
+		36FDC21D26A717AF0062A1B9 /* AccountChooseListPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountChooseListPresenterTests.swift; sourceTree = "<group>"; };
+		381CAFB078379A843D0B21D9 /* Pods_CreditCardRepayment_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreditCardRepayment_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55A4001A824B6EAA1A1390D7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		57C5DFAD89AB30CB812FCEF9 /* CreditCardRepayment.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CreditCardRepayment.podspec; path = ../CreditCardRepayment.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		607FACD01AFB9204008FA782 /* CreditCardRepayment_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreditCardRepayment_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		607FACE51AFB9204008FA782 /* CreditCardRepayment_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreditCardRepayment_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8CDB8B4BFE3D71959AF1FFA8 /* Pods-CreditCardRepayment_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRepayment_Example.debug.xcconfig"; path = "Target Support Files/Pods-CreditCardRepayment_Example/Pods-CreditCardRepayment_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		BE1DA396593D562E6517CF87 /* Pods-CreditCardRepayment_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRepayment_Example.release.xcconfig"; path = "Target Support Files/Pods-CreditCardRepayment_Example/Pods-CreditCardRepayment_Example.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74F591C6347F116EFCB04BE8 /* Pods_CreditCardRepayment_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE21AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				778E3E3EF62C00FDA8933AD4 /* Pods_CreditCardRepayment_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		047EC46DEF732BB67C4215E9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8CDB8B4BFE3D71959AF1FFA8 /* Pods-CreditCardRepayment_Example.debug.xcconfig */,
+				BE1DA396593D562E6517CF87 /* Pods-CreditCardRepayment_Example.release.xcconfig */,
+				048E799FA8A4F9420196AE63 /* Pods-CreditCardRepayment_Tests.debug.xcconfig */,
+				0E05D356125C94A259DF6D61 /* Pods-CreditCardRepayment_Tests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		0E19B2D2269DCAC500F154A1 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				0E19B2D3269DCAC500F154A1 /* GetAccountsUseCaseTests.swift */,
+				36FDC20F26A1B8D60062A1B9 /* GetCreditCardsUseCaseTests.swift */,
+				0014550126DCD75E00810CDB /* CreateCreditCardRepaymentFormUseCase.swift */,
+				364D264326DD224C001CC783 /* SendCreateCreditCardRepaymentUseCaseTests.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		0E19B2E1269DE8D700F154A1 /* JSONs */ = {
+			isa = PBXGroup;
+			children = (
+				3645DFCF26E6569D005647F2 /* sendCreditCardSuccessResponse.json */,
+				0E19B2EC269DEA9400F154A1 /* getGlobalPositionSuccessResponse.json */,
+				364D264526DE43EF001CC783 /* getAccountForDebitSuccessResponse.json */,
+				364D264726DE57A8001CC783 /* getAccountForCreditSuccessResponse.json */,
+			);
+			path = JSONs;
+			sourceTree = "<group>";
+		};
+		0E19B2E3269DE8D700F154A1 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				36FDC21626A5B5270062A1B9 /* AccountChooseListViewMock.swift */,
+				0E4DB4C926A0594A009EB656 /* CreditCardChooseListViewMock.swift */,
+				0EE983A926B034D600959ABE /* CreditCardRepaymentDetailsViewMock.swift */,
+				0E4DB4C726A054D8009EB656 /* CreditCardRepaymentFormManagerMock.swift */,
+				3672524126E0E32400C192C9 /* CreditCardRepaymentConfirmationViewMock.swift */,
+				0E37B7A826A8437A00144191 /* CreditCardRepaymentSummaryViewMock.swift */,
+				0E19B2E4269DE8D700F154A1 /* PLCreditCardRepaymentManagerMock.swift */,
+				0E19B2E6269DE8D700F154A1 /* PLManagersProviderMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		0E4DB4C326A047C7009EB656 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				36FDC21D26A717AF0062A1B9 /* AccountChooseListPresenterTests.swift */,
+				0E4DB4C426A047E1009EB656 /* CreditCardChooseListPresenterTests.swift */,
+				0EE983A726B033A000959ABE /* CreditCardRepaymentDetailsPresenterTests.swift */,
+				0E37B7A626A8425100144191 /* CreditCardRepaymentSummaryPresenterTests.swift */,
+				3672523F26E0C81700C192C9 /* CreditCardRepaymentConfirmationPresenterTests.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		0EA0C51E269EEB4A00441869 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				0EA0C51F269EEB5000441869 /* Constants */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		0EA0C51F269EEB5000441869 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				0EA0C520269EEB8400441869 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		36FDC21C26A717530062A1B9 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				36FDC21426A5ABA40062A1B9 /* AccountChooseListPresenterTests.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		607FACC71AFB9204008FA782 = {
+			isa = PBXGroup;
+			children = (
+				607FACF51AFB993E008FA782 /* Podspec Metadata */,
+				607FACD21AFB9204008FA782 /* Example for CreditCardRepayment */,
+				607FACE81AFB9204008FA782 /* Tests */,
+				607FACD11AFB9204008FA782 /* Products */,
+				047EC46DEF732BB67C4215E9 /* Pods */,
+				E7D7387168FAD1E3C807ED54 /* Frameworks */,
+				36FDC21C26A717530062A1B9 /* Recovered References */,
+			);
+			sourceTree = "<group>";
+		};
+		607FACD11AFB9204008FA782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD01AFB9204008FA782 /* CreditCardRepayment_Example.app */,
+				607FACE51AFB9204008FA782 /* CreditCardRepayment_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		607FACD21AFB9204008FA782 /* Example for CreditCardRepayment */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				607FACD31AFB9204008FA782 /* Supporting Files */,
+			);
+			name = "Example for CreditCardRepayment";
+			path = CreditCardRepayment;
+			sourceTree = "<group>";
+		};
+		607FACD31AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD41AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACE81AFB9204008FA782 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0E4DB4C326A047C7009EB656 /* Presenters */,
+				0EA0C51E269EEB4A00441869 /* Commons */,
+				0E19B2E1269DE8D700F154A1 /* JSONs */,
+				0E19B2E3269DE8D700F154A1 /* Mocks */,
+				607FACE91AFB9204008FA782 /* Supporting Files */,
+				0E19B2D2269DCAC500F154A1 /* UseCases */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		607FACE91AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACEA1AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				57C5DFAD89AB30CB812FCEF9 /* CreditCardRepayment.podspec */,
+				55A4001A824B6EAA1A1390D7 /* README.md */,
+				0B80170556191359F26EF0B1 /* LICENSE */,
+			);
+			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		E7D7387168FAD1E3C807ED54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				381CAFB078379A843D0B21D9 /* Pods_CreditCardRepayment_Example.framework */,
+				0B4620D668E91043002D3C4C /* Pods_CreditCardRepayment_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		607FACCF1AFB9204008FA782 /* CreditCardRepayment_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CreditCardRepayment_Example" */;
+			buildPhases = (
+				E6F0ED397B510E7A32B0B065 /* [CP] Check Pods Manifest.lock */,
+				607FACCC1AFB9204008FA782 /* Sources */,
+				607FACCD1AFB9204008FA782 /* Frameworks */,
+				607FACCE1AFB9204008FA782 /* Resources */,
+				671DBAB7DEA182606962850E /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CreditCardRepayment_Example;
+			productName = CreditCardRepayment;
+			productReference = 607FACD01AFB9204008FA782 /* CreditCardRepayment_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		607FACE41AFB9204008FA782 /* CreditCardRepayment_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CreditCardRepayment_Tests" */;
+			buildPhases = (
+				E70DC0EF6B9FCA0DAA557F0B /* [CP] Check Pods Manifest.lock */,
+				607FACE11AFB9204008FA782 /* Sources */,
+				607FACE21AFB9204008FA782 /* Frameworks */,
+				607FACE31AFB9204008FA782 /* Resources */,
+				299B6E2221430C847036AC42 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
+			);
+			name = CreditCardRepayment_Tests;
+			productName = Tests;
+			productReference = 607FACE51AFB9204008FA782 /* CreditCardRepayment_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		607FACC81AFB9204008FA782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = CocoaPods;
+				TargetAttributes = {
+					607FACCF1AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0900;
+					};
+					607FACE41AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0900;
+						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+				};
+			};
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "CreditCardRepayment" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 607FACC71AFB9204008FA782;
+			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607FACCF1AFB9204008FA782 /* CreditCardRepayment_Example */,
+				607FACE41AFB9204008FA782 /* CreditCardRepayment_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		607FACCE1AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE31AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				364D264626DE43EF001CC783 /* getAccountForDebitSuccessResponse.json in Resources */,
+				3645DFD026E6569D005647F2 /* sendCreditCardSuccessResponse.json in Resources */,
+				364D264826DE57A8001CC783 /* getAccountForCreditSuccessResponse.json in Resources */,
+				0E19B2ED269DEA9400F154A1 /* getGlobalPositionSuccessResponse.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		299B6E2221430C847036AC42 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CreditCardRepayment_Tests/Pods-CreditCardRepayment_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
+				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
+				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CreditCardRepayment/CreditCardRepayment.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
+				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/LoginCommon/LoginCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLLegacyAdapter/PLLegacyAdapter.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPublicFiles/iOSPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPullOffers/iOSPullOffers.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CreditCardRepayment.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLegacyAdapter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPullOffers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CreditCardRepayment_Tests/Pods-CreditCardRepayment_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		671DBAB7DEA182606962850E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CreditCardRepayment_Example/Pods-CreditCardRepayment_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
+				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
+				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CreditCardRepayment/CreditCardRepayment.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
+				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/LoginCommon/LoginCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLLegacyAdapter/PLLegacyAdapter.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPublicFiles/iOSPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPullOffers/iOSPullOffers.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CreditCardRepayment.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLLegacyAdapter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPullOffers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CreditCardRepayment_Example/Pods-CreditCardRepayment_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6F0ED397B510E7A32B0B065 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CreditCardRepayment_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E70DC0EF6B9FCA0DAA557F0B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CreditCardRepayment_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		607FACCC1AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE11AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0014550226DCD75E00810CDB /* CreateCreditCardRepaymentFormUseCase.swift in Sources */,
+				0E19B2EB269DE8D700F154A1 /* PLManagersProviderMock.swift in Sources */,
+				0E19B2E9269DE8D700F154A1 /* PLCreditCardRepaymentManagerMock.swift in Sources */,
+				3672524026E0C81700C192C9 /* CreditCardRepaymentConfirmationPresenterTests.swift in Sources */,
+				0EE983A826B033A000959ABE /* CreditCardRepaymentDetailsPresenterTests.swift in Sources */,
+				0E19B2D4269DCAC500F154A1 /* GetAccountsUseCaseTests.swift in Sources */,
+				0EA0C521269EEB8400441869 /* Constants.swift in Sources */,
+				36FDC21026A1B8D60062A1B9 /* GetCreditCardsUseCaseTests.swift in Sources */,
+				36FDC21E26A717AF0062A1B9 /* AccountChooseListPresenterTests.swift in Sources */,
+				0E4DB4CA26A0594A009EB656 /* CreditCardChooseListViewMock.swift in Sources */,
+				0EE983AA26B034D600959ABE /* CreditCardRepaymentDetailsViewMock.swift in Sources */,
+				0E4DB4C626A04802009EB656 /* CreditCardChooseListPresenterTests.swift in Sources */,
+				0E37B7A726A8425100144191 /* CreditCardRepaymentSummaryPresenterTests.swift in Sources */,
+				0E4DB4C826A054D8009EB656 /* CreditCardRepaymentFormManagerMock.swift in Sources */,
+				36FDC21826A5B5270062A1B9 /* AccountChooseListViewMock.swift in Sources */,
+				364D264426DD224C001CC783 /* SendCreateCreditCardRepaymentUseCaseTests.swift in Sources */,
+				3672524226E0E32400C192C9 /* CreditCardRepaymentConfirmationViewMock.swift in Sources */,
+				0E37B7A926A8437A00144191 /* CreditCardRepaymentSummaryViewMock.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* CreditCardRepayment_Example */;
+			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDA1AFB9204008FA782 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDF1AFB9204008FA782 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		607FACED1AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		607FACEE1AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		607FACF01AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8CDB8B4BFE3D71959AF1FFA8 /* Pods-CreditCardRepayment_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CreditCardRepayment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		607FACF11AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE1DA396593D562E6517CF87 /* Pods-CreditCardRepayment_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CreditCardRepayment/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		607FACF31AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 048E799FA8A4F9420196AE63 /* Pods-CreditCardRepayment_Tests.debug.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CreditCardRepayment_Example.app/CreditCardRepayment_Example";
+			};
+			name = Debug;
+		};
+		607FACF41AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E05D356125C94A259DF6D61 /* Pods-CreditCardRepayment_Tests.release.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CreditCardRepayment_Example.app/CreditCardRepayment_Example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "CreditCardRepayment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACED1AFB9204008FA782 /* Debug */,
+				607FACEE1AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CreditCardRepayment_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF01AFB9204008FA782 /* Debug */,
+				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CreditCardRepayment_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF31AFB9204008FA782 /* Debug */,
+				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
+}

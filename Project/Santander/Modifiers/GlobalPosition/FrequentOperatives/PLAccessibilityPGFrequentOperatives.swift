@@ -12,6 +12,8 @@ enum PLAccessibilityPGFrequentOperatives: String {
     case btnContract
     case btnBillTax
     case btnBlik
+    case btnHelpCenter
+    case btnDebugMenu // Temporary [DEBUG MENU] on GlobalPosition
     case btnTransactionHistory
     case currencyExchange
     case openGoal

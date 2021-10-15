@@ -85,6 +85,7 @@ private extension PLEnvironmentsManagerAdapter {
     func getPLEnvironment(from coreEnvironment: BSANEnvironmentDTO) throws -> BSANPLEnvironmentDTO {
 
         return try BSANPLEnvironmentDTO(name: coreEnvironment.name,
+                                        blikAuthBaseUrl: "", //TODO: - Add blikAuthBaseUrl in to the core environment object
                                         urlBase: coreEnvironment.urlBase,
                                         clientId: dataProvider.getEnvironment().clientId)
     }

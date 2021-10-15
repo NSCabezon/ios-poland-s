@@ -8,17 +8,26 @@
 import Models
 import UI
 import Commons
+import BLIK
 
 final class BLIKPGFrequentOperativeOption {
     let trackName: String? = "blik_pl"
     let rawValue: String = "blikPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnBlik.rawValue
+    
+    private let dependencyResolver: DependenciesResolver
+   
+    init(dependencyResolver: DependenciesResolver) {
+        self.dependencyResolver = dependencyResolver
+    }
 }
 
 extension BLIKPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
-        return .custom {
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+        return .custom {[weak self] in
+            guard let self = self else { return }
+            let blikCoordinator: BLIKHomeCoordinator = self.dependencyResolver.resolve()
+            blikCoordinator.start()
         }
     }
 

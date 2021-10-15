@@ -13,6 +13,7 @@ import GlobalPosition
 import Transfer
 import Cards
 import Account
+import PLCommons
 import Loans
 import PersonalArea
 import SANLegacyLibrary
@@ -23,11 +24,11 @@ import TransferOperatives
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
-        let depositModifier = PLDepositModifier(dependenciesResolver: self.dependencieEngine)
+        let depositModifier = DepositModifier(dependenciesResolver: self.dependencieEngine)
         return depositModifier
     }()
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
-        let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
+        let fundModifier = FundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
     }()
     private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
@@ -106,10 +107,7 @@ private extension AppModifiers {
             return self.cardDetailModifier
         }
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
-            return MonthlyBalanceUseCase(dependenciesResolver: resolver)
-        }
-        self.dependencieEngine.register(for: LoansModifierProtocol.self) { resolver in
-            return self.loansModifier
+        return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { resolver in
             return self.loanDetailModifier

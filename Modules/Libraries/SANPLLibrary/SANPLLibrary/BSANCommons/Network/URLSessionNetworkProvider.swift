@@ -7,6 +7,9 @@
 
 import Foundation
 
+// *** NOTE: All changes except for addOauthAuthorization was copied from lates Spain repo ***
+// *** In case of future merge with their repo, all their chances should be taken ***
+
 public final class URLSessionNetworkProvider {
     private let dataProvider: BSANDataProvider
     private let urlSession: URLSession

@@ -79,6 +79,7 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
         PublicFilesEnvironmentDTO("QA", "https://serverftp.ciber-es.com/one_app/pl/files_qa/", false),
         PublicFilesEnvironmentDTO("DEV", "https://serverftp.ciber-es.com/one_app/pl/files_dev/", false),
         PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false),
+        PublicFilesEnvironmentDTO("FILES_PL", "https://micrositeoneapp2.santanderbankpolska.pl/oneapp/", false),
         PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
         PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
         PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true),

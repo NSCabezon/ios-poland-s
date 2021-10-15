@@ -21,4 +21,6 @@ s.dependency "Commons"
 s.dependency "UI"
 s.dependency "Helpers"
 s.dependency "WebViews"
+s.dependency "SANPLLibrary"
+
 end

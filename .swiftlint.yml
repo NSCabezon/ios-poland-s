@@ -11,15 +11,12 @@ excluded:
   - "**/R.generated.swift"
   - "**/Example/**"
   - "**/Pods/**"
-  - Modules/Utilities/PTCommonUseCase/Example/
   
 included:
-  - Modules/Features/PLLogin/PLLogin
-  - Modules/Libraries/PLCommons/PLCommons
-  - Modules/Libraries/PLLegacyAdapter/PLLegacyAdapter
-  - Modules/Libraries/PLUI/PLUI
+  - Modules/Features/**
+  - Modules/Libraries/**
   - Project
-  
+
 cyclomatic_complexity:
   warning: 10
   error: 25

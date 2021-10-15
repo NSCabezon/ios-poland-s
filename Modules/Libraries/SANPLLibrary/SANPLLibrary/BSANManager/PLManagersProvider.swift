@@ -7,6 +7,9 @@ import Foundation
 public protocol PLManagersProviderProtocol {
     func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol
     func getLoginManager() -> PLLoginManagerProtocol
+    func getBLIKManager() -> PLBLIKManagerProtocol
+    func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol
+    func getHelpCenterManager() -> PLHelpCenterManagerProtocol
     func getTrustedDeviceManager() -> PLTrustedDeviceManager
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
     func getAccountsManager() -> PLAccountManagerProtocol
@@ -14,12 +17,16 @@ public protocol PLManagersProviderProtocol {
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
     func getNotificationManager() -> PLNotificationManagerProtocol
+    func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol
     func getTransferManager() -> PLTransfersManagerProtocol
 }
 
 public final class PLManagersProvider {
     private let environmentsManager: PLEnvironmentsManager
     private let loginManager: PLLoginManager
+    private let blikManager: PLBLIKManagerProtocol
+    private let creditCardRepaymentManager: PLCreditCardRepaymentManagerProtocol
+    private let helpCenterManager: PLHelpCenterManagerProtocol
     private let trustedDeviceManager: PLTrustedDeviceManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
     private let accountManager: PLAccountManager
@@ -28,6 +35,7 @@ public final class PLManagersProvider {
     private let loansManager: PLLoanManager
     private let customerManager: PLCustomerManager
     private let notificationManager: PLNotificationManager
+    private let loanScheduleManager: PLLoanScheduleManager
     private let transferManger: PLTransfersManager
 
     public init(bsanDataProvider: BSANDataProvider,
@@ -38,6 +46,9 @@ public final class PLManagersProvider {
         self.loginManager = PLLoginManager(bsanDataProvider: bsanDataProvider,
                                            networkProvider: networkProvider,
                                            demoInterpreter: demoInterpreter)
+        self.blikManager = PLBLIKManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.creditCardRepaymentManager = PLCreditCardRepaymentManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.helpCenterManager = PLHelpCenterManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.trustedDeviceManager = PLTrustedDeviceManager(bsanDataProvider: bsanDataProvider,
                                                            networkProvider: networkProvider,
                                                            demoInterpreter: demoInterpreter)
@@ -51,6 +62,7 @@ public final class PLManagersProvider {
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.customerManager = PLCustomerManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.notificationManager = PLNotificationManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.transferManger = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
     }
 }
@@ -65,6 +77,18 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getLoginManager() -> PLLoginManagerProtocol {
         return self.loginManager
+    }
+
+    public func getBLIKManager() -> PLBLIKManagerProtocol {
+        return self.blikManager
+    }
+
+    public func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol {
+        return self.creditCardRepaymentManager
+    }
+    
+    public func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
+        return self.helpCenterManager
     }
 
     public func getTrustedDeviceManager() -> PLTrustedDeviceManager {
@@ -97,6 +121,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getNotificationManager() -> PLNotificationManagerProtocol {
         self.notificationManager
+    }
+    
+    public func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol {
+        self.loanScheduleManager
     }
     
     public func getTransferManager() -> PLTransfersManagerProtocol {

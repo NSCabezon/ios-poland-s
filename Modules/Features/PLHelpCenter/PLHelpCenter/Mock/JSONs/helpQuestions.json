@@ -1,0 +1,181 @@
+{
+  "check-interval": 2,
+  "category-by-language": {
+    "pl": {
+      "main-window-category-title": "Co chcesz zrobiÄ?",
+      "is-default": "true",
+      "sections": [
+        {
+          "profiles": [
+            "klient_indywidualny"
+          ],
+          "questions": [
+            {
+              "name": "SprawdziÄ saldo rachunku",
+                    "answer": "JeĹli posiadasz usĹugi bankowoĹci elektronicznej w kaĹźdej chwili przez 24 godziny na dobÄ masz dostÄp do konta przez internet lub telefon komĂłrkowy. Wystarczy siÄ zalogowaÄ do Santander internet lub mobile i zobaczyÄ dostÄpne Ĺrodki na swoich kontach. <b>WiÄcej szczegĂłĹĂłw</b> - <a href=\"http://www.santander.pl/klient-indywidualny/kontakt/pytania-i-odpowiedzi-konta\">http://www.santander.pl/klient-indywidualny/kontakt/pytania-i-odpowiedzi-konta</a>"
+            },
+            {
+              "name": "WykonaÄ przelew krajowy i zagraniczny",
+              "answer": "Przelew krajowy wykonasz..."
+            },
+            {
+              "name": "Zastrzec lub zablokowaÄ kartÄ pĹatniczÄ",
+              "answer": "KartÄ zastrzeĹźesz..."
+            }
+          ]
+        },
+        {
+          "profiles": [
+            "klient_firmowy"
+          ],
+          "questions": [
+            {
+              "name": "SprawdziÄ saldo rachunku firmowego",
+              "answer": "Saldo moĹźesz sprawdziÄ..."
+            },
+            {
+              "name": "WykonaÄ przelew krajowy i zagraniczny z rachunku firmowego",
+              "answer": "Przelew krajowy wykonasz..."
+            },
+            {
+              "name": "Zastrzec lub zablokowaÄ kartÄ firmowÄ",
+              "answer": "KartÄ zastrzeĹźesz..."
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "main-window-category-title": "What you want to do?",
+      "is-default": "false",
+      "sections": [
+        {
+          "profiles": [
+            "klient_indywidualny"
+          ],
+          "questions": [
+            {
+              "name": "Check the balance of the accounts",
+              "answer": "You can check the balance ..."
+            },
+            {
+              "name": "Make a domestic and foreign transfer",
+              "answer": "You will make a domestic transfer ..."
+            },
+            {
+              "name": "Block a payment card",
+              "answer": "You can block the card ..."
+            }
+          ]
+        },
+        {
+          "profiles": [
+            "klient_firmowy"
+          ],
+          "questions": [
+            {
+              "name": "Check the balance of the company account",
+              "answer": "You can check the balance ..."
+            },
+            {
+              "name": "Make a domestic and foreign transfer from a company account",
+              "answer": "You will make a domestic transfer ..."
+            },
+            {
+              "name": "Block a payment company card",
+              "answer": "You can block the card ..."
+            }
+          ]
+        }
+      ]
+    },
+    "uk": {
+      "main-window-category-title": "Đ˘Đľ, ŃĐž Đ˛Đ¸ ŃĐžŃĐľŃĐľ ĐˇŃĐžĐąĐ¸ŃĐ¸?",
+      "is-default": "false",
+      "sections": [
+        {
+          "profiles": [
+            "klient_indywidualny"
+          ],
+          "questions": [
+            {
+              "name": "ĐĐľŃĐľĐ˛ŃŃŃĐľ ĐąĐ°ĐťĐ°Đ˝Ń ŃĐ˛ĐžĐłĐž ŃĐ°ŃŃĐ˝ĐşŃ",
+              "answer": "ĐĐ¸ ĐźĐžĐśĐľŃĐľ ĐżĐľŃĐľĐ˛ŃŃĐ¸ŃĐ¸ ĐąĐ°ĐťĐ°Đ˝Ń ..."
+            },
+            {
+              "name": "ĐĐ´ŃĐšŃĐ˝Đ¸ŃĐ¸ Đ˛Đ˝ŃŃŃŃŃĐ˝ŃĐš ŃĐ° ŃĐ˝ĐžĐˇĐľĐźĐ˝Đ¸Đš ŃŃĐ°Đ˝ŃŃĐľŃ",
+              "answer": "ĐĐ¸ ĐˇŃĐžĐąĐ¸ŃĐľ Đ˛Đ˝ŃŃŃŃŃĐ˝ŃĐš ŃŃĐ°Đ˝ŃŃĐľŃ ..."
+            },
+            {
+              "name": "ĐĐ°ĐąĐťĐžĐşŃĐšŃĐľ ĐżĐťĐ°ŃŃĐśĐ˝Ń ĐşĐ°ŃŃĐşŃ",
+              "answer": "ĐĐ¸ ĐźĐžĐśĐľŃĐľ ĐˇĐ°ĐąĐťĐžĐşŃĐ˛Đ°ŃĐ¸ ĐşĐ°ŃŃĐşŃ"
+            }
+          ]
+        },
+        {
+          "profiles": [
+            "klient_firmowy"
+          ],
+          "questions": [
+            {
+              "name": "ĐĐľŃĐľĐ˛ŃŃŃĐľ ĐˇĐ°ĐťĐ¸ŃĐžĐş Đ˝Đ° ŃĐ°ŃŃĐ˝ĐşŃ ĐşĐžĐźĐżĐ°Đ˝ŃŃ",
+              "answer": "ĐĐ¸ ĐźĐžĐśĐľŃĐľ ĐżĐľŃĐľĐ˛ŃŃĐ¸ŃĐ¸ ĐąĐ°ĐťĐ°Đ˝Ń ..."
+            },
+            {
+              "name": "ĐĐ´ŃĐšŃĐ˝Đ¸ŃĐ¸ Đ˛Đ˝ŃŃŃŃŃĐ˝ŃĐš ŃĐ° ŃĐ˝ĐžĐˇĐľĐźĐ˝Đ¸Đš ĐżĐľŃĐľĐşĐ°Đˇ Đˇ ŃĐ°ŃŃĐ˝ĐşŃ ĐşĐžĐźĐżĐ°Đ˝ŃŃ",
+              "answer": "ĐĐ¸ ĐˇŃĐžĐąĐ¸ŃĐľ Đ˛Đ˝ŃŃŃŃŃĐ˝ŃĐš ŃŃĐ°Đ˝ŃŃĐľŃ ..."
+            },
+            {
+              "name": "ĐĐ°ĐąĐťĐžĐşŃĐšŃĐľ ĐşĐ°ŃŃĐşŃ ĐşĐžĐźĐżĐ°Đ˝ŃŃ",
+              "answer": "ĐĐ¸ ĐźĐžĐśĐľŃĐľ ĐˇĐ°ĐąĐťĐžĐşŃĐ˛Đ°ŃĐ¸ ĐşĐ°ŃŃĐşŃ"
+            }
+          ]
+        }
+      ]
+    },
+    "ru": {
+      "main-window-category-title": "Đ§ŃĐž ŃŃ ŃĐžŃĐľŃŃ Đ´ĐľĐťĐ°ŃŃ?",
+      "is-default": "false",
+      "sections": [
+        {
+          "profiles": [
+            "klient_indywidualny"
+          ],
+          "questions": [
+            {
+              "name": "ĐŃĐžĐ˛ĐľŃŃŃĐľ ĐąĐ°ĐťĐ°Đ˝Ń ŃĐ˛ĐžĐľĐłĐž ŃŃĐľŃĐ°",
+              "answer": "ĐŃ ĐźĐžĐśĐľŃĐľ ĐżŃĐžĐ˛ĐľŃĐ¸ŃŃ ĐąĐ°ĐťĐ°Đ˝Ń ..."
+            },
+            {
+              "name": "ĐĄĐ´ĐľĐťĐ°ĐšŃĐľ Đ˛Đ˝ŃŃŃĐľĐ˝Đ˝Đ¸Đš Đ¸ ĐˇĐ°ŃŃĐąĐľĐśĐ˝ŃĐš ĐżĐľŃĐľĐ˛ĐžĐ´",
+              "answer": "ĐŃ ŃĐ´ĐľĐťĐ°ĐľŃĐľ Đ˛Đ˝ŃŃŃĐľĐ˝Đ˝Đ¸Đš ŃŃĐ°Đ˝ŃŃĐľŃ ..."
+            },
+            {
+              "name": "ĐĐ°ĐąĐťĐžĐşĐ¸ŃŃĐšŃĐľ ĐżĐťĐ°ŃĐľĐśĐ˝ŃŃ ĐşĐ°ŃŃŃ",
+              "answer": "ĐŃ ĐźĐžĐśĐľŃĐľ ĐˇĐ°ĐąĐťĐžĐşĐ¸ŃĐžĐ˛Đ°ŃŃ ĐşĐ°ŃŃ"
+            }
+          ]
+        },
+        {
+          "profiles": [
+            "klient_firmowy"
+          ],
+          "questions": [
+            {
+              "name": "ĐŃĐžĐ˛ĐľŃĐ¸ŃŃ ĐąĐ°ĐťĐ°Đ˝Ń ŃŃĐľŃĐ° ĐşĐžĐźĐżĐ°Đ˝Đ¸Đ¸",
+              "answer": "ĐŃ ĐźĐžĐśĐľŃĐľ ĐżŃĐžĐ˛ĐľŃĐ¸ŃŃ ĐąĐ°ĐťĐ°Đ˝Ń ..."
+            },
+            {
+              "name": "ĐĄĐ´ĐľĐťĐ°ĐšŃĐľ Đ˛Đ˝ŃŃŃĐľĐ˝Đ˝Đ¸Đš Đ¸ ĐˇĐ°ŃŃĐąĐľĐśĐ˝ŃĐš ĐżĐľŃĐľĐ˛ĐžĐ´ ŃĐž ŃŃĐľŃĐ° ĐşĐžĐźĐżĐ°Đ˝Đ¸Đ¸",
+              "answer": "ĐŃ ŃĐ´ĐľĐťĐ°ĐľŃĐľ Đ˛Đ˝ŃŃŃĐľĐ˝Đ˝Đ¸Đš ŃŃĐ°Đ˝ŃŃĐľŃ ..."
+            },
+            {
+              "name": "ĐĐ°ĐąĐťĐžĐşĐ¸ŃĐžĐ˛Đ°ŃŃ ĐşĐ°ŃŃĐžŃĐşŃ ĐşĐžĐźĐżĐ°Đ˝Đ¸Đ¸",
+              "answer": "ĐŃ ĐźĐžĐśĐľŃĐľ ĐˇĐ°ĐąĐťĐžĐşĐ¸ŃĐžĐ˛Đ°ŃŃ ĐşĐ°ŃŃ"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

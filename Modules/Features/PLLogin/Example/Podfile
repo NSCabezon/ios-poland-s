@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '12.3'
 
 use_frameworks!
 
@@ -26,6 +26,7 @@ def core_dependencies
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
   pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
+  pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'

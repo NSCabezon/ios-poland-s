@@ -1,0 +1,405 @@
+{
+  "paymentSchedule" : {
+    "currency" : {
+      "currencyNumberLocal" : "985",
+      "currencyCode" : "PLN",
+      "currencyNumber" : "0",
+      "currencyCodeLocal" : "PLN"
+    },
+    "scheduleItems" : [
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 68.450000000000003,
+        "interestAmount" : 25.640000000000001,
+        "balanceAfterPayment" : 4388.1199999999999,
+        "date" : "2021-10-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 68,
+        "interestAmount" : 26.09,
+        "balanceAfterPayment" : 4320.1199999999999,
+        "date" : "2021-11-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 69.239999999999995,
+        "interestAmount" : 24.850000000000001,
+        "balanceAfterPayment" : 4250.8800000000001,
+        "date" : "2021-12-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 68.819999999999993,
+        "interestAmount" : 25.27,
+        "balanceAfterPayment" : 4182.0600000000004,
+        "date" : "2022-01-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 69.219999999999999,
+        "interestAmount" : 24.870000000000001,
+        "balanceAfterPayment" : 4112.8400000000001,
+        "date" : "2022-02-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 72.010000000000005,
+        "interestAmount" : 22.079999999999998,
+        "balanceAfterPayment" : 4040.8299999999999,
+        "date" : "2022-03-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 70.060000000000002,
+        "interestAmount" : 24.030000000000001,
+        "balanceAfterPayment" : 3970.77,
+        "date" : "2022-04-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 71.25,
+        "interestAmount" : 22.84,
+        "balanceAfterPayment" : 3899.52,
+        "date" : "2022-05-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 70.909999999999997,
+        "interestAmount" : 23.18,
+        "balanceAfterPayment" : 3828.6100000000001,
+        "date" : "2022-06-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 72.060000000000002,
+        "interestAmount" : 22.030000000000001,
+        "balanceAfterPayment" : 3756.5500000000002,
+        "date" : "2022-07-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 71.75,
+        "interestAmount" : 22.34,
+        "balanceAfterPayment" : 3684.8000000000002,
+        "date" : "2022-08-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 72.189999999999998,
+        "interestAmount" : 21.899999999999999,
+        "balanceAfterPayment" : 3612.6100000000001,
+        "date" : "2022-09-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 73.299999999999997,
+        "interestAmount" : 20.789999999999999,
+        "balanceAfterPayment" : 3539.3099999999999,
+        "date" : "2022-10-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 73.049999999999997,
+        "interestAmount" : 21.039999999999999,
+        "balanceAfterPayment" : 3466.2600000000002,
+        "date" : "2022-11-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 74.150000000000006,
+        "interestAmount" : 19.940000000000001,
+        "balanceAfterPayment" : 3392.1100000000001,
+        "date" : "2022-12-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 73.920000000000002,
+        "interestAmount" : 20.170000000000002,
+        "balanceAfterPayment" : 3318.1900000000001,
+        "date" : "2023-01-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 74.359999999999999,
+        "interestAmount" : 19.73,
+        "balanceAfterPayment" : 3243.8299999999999,
+        "date" : "2023-02-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 76.680000000000007,
+        "interestAmount" : 17.41,
+        "balanceAfterPayment" : 3167.1500000000001,
+        "date" : "2023-03-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 75.260000000000005,
+        "interestAmount" : 18.829999999999998,
+        "balanceAfterPayment" : 3091.8899999999999,
+        "date" : "2023-04-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 76.299999999999997,
+        "interestAmount" : 17.789999999999999,
+        "balanceAfterPayment" : 3015.5900000000001,
+        "date" : "2023-05-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 76.159999999999997,
+        "interestAmount" : 17.93,
+        "balanceAfterPayment" : 2939.4299999999998,
+        "date" : "2023-06-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 77.180000000000007,
+        "interestAmount" : 16.91,
+        "balanceAfterPayment" : 2862.25,
+        "date" : "2023-07-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 77.069999999999993,
+        "interestAmount" : 17.02,
+        "balanceAfterPayment" : 2785.1799999999998,
+        "date" : "2023-08-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 77.530000000000001,
+        "interestAmount" : 16.559999999999999,
+        "balanceAfterPayment" : 2707.6500000000001,
+        "date" : "2023-09-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 78.519999999999996,
+        "interestAmount" : 15.57,
+        "balanceAfterPayment" : 2629.1300000000001,
+        "date" : "2023-10-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 78.450000000000003,
+        "interestAmount" : 15.640000000000001,
+        "balanceAfterPayment" : 2550.6799999999998,
+        "date" : "2023-11-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 79.420000000000002,
+        "interestAmount" : 14.67,
+        "balanceAfterPayment" : 2471.2600000000002,
+        "date" : "2023-12-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 79.420000000000002,
+        "interestAmount" : 14.67,
+        "balanceAfterPayment" : 2391.8400000000001,
+        "date" : "2024-01-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 79.909999999999997,
+        "interestAmount" : 14.18,
+        "balanceAfterPayment" : 2311.9299999999998,
+        "date" : "2024-02-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 81.260000000000005,
+        "interestAmount" : 12.83,
+        "balanceAfterPayment" : 2230.6700000000001,
+        "date" : "2024-03-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 80.870000000000005,
+        "interestAmount" : 13.220000000000001,
+        "balanceAfterPayment" : 2149.8000000000002,
+        "date" : "2024-04-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 81.75,
+        "interestAmount" : 12.34,
+        "balanceAfterPayment" : 2068.0500000000002,
+        "date" : "2024-05-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 81.829999999999998,
+        "interestAmount" : 12.26,
+        "balanceAfterPayment" : 1986.22,
+        "date" : "2024-06-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 82.700000000000003,
+        "interestAmount" : 11.390000000000001,
+        "balanceAfterPayment" : 1903.52,
+        "date" : "2024-07-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 82.799999999999997,
+        "interestAmount" : 11.289999999999999,
+        "balanceAfterPayment" : 1820.72,
+        "date" : "2024-08-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 83.299999999999997,
+        "interestAmount" : 10.789999999999999,
+        "balanceAfterPayment" : 1737.4200000000001,
+        "date" : "2024-09-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 84.120000000000005,
+        "interestAmount" : 9.9700000000000006,
+        "balanceAfterPayment" : 1653.3,
+        "date" : "2024-10-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 84.290000000000006,
+        "interestAmount" : 9.8000000000000007,
+        "balanceAfterPayment" : 1569.01,
+        "date" : "2024-11-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 85.079999999999998,
+        "interestAmount" : 9.0099999999999998,
+        "balanceAfterPayment" : 1483.9300000000001,
+        "date" : "2024-12-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 85.280000000000001,
+        "interestAmount" : 8.8100000000000005,
+        "balanceAfterPayment" : 1398.6500000000001,
+        "date" : "2025-01-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 85.780000000000001,
+        "interestAmount" : 8.3100000000000005,
+        "balanceAfterPayment" : 1312.8699999999999,
+        "date" : "2025-02-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 87.040000000000006,
+        "interestAmount" : 7.0499999999999998,
+        "balanceAfterPayment" : 1225.8299999999999,
+        "date" : "2025-03-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 86.799999999999997,
+        "interestAmount" : 7.29,
+        "balanceAfterPayment" : 1139.03,
+        "date" : "2025-04-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 87.540000000000006,
+        "interestAmount" : 6.5499999999999998,
+        "balanceAfterPayment" : 1051.49,
+        "date" : "2025-05-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 87.840000000000003,
+        "interestAmount" : 6.25,
+        "balanceAfterPayment" : 963.64999999999998,
+        "date" : "2025-06-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 88.540000000000006,
+        "interestAmount" : 5.5499999999999998,
+        "balanceAfterPayment" : 875.11000000000001,
+        "date" : "2025-07-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 88.890000000000001,
+        "interestAmount" : 5.2000000000000002,
+        "balanceAfterPayment" : 786.22000000000003,
+        "date" : "2025-08-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 89.409999999999997,
+        "interestAmount" : 4.6799999999999997,
+        "balanceAfterPayment" : 696.80999999999995,
+        "date" : "2025-09-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 90.090000000000003,
+        "interestAmount" : 4,
+        "balanceAfterPayment" : 606.72000000000003,
+        "date" : "2025-10-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 90.480000000000004,
+        "interestAmount" : 3.6099999999999999,
+        "balanceAfterPayment" : 516.24000000000001,
+        "date" : "2025-11-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 91.120000000000005,
+        "interestAmount" : 2.9700000000000002,
+        "balanceAfterPayment" : 425.12,
+        "date" : "2025-12-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 91.560000000000002,
+        "interestAmount" : 2.5299999999999998,
+        "balanceAfterPayment" : 333.56,
+        "date" : "2026-01-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 92.109999999999999,
+        "interestAmount" : 1.98,
+        "balanceAfterPayment" : 241.44999999999999,
+        "date" : "2026-02-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 92.790000000000006,
+        "interestAmount" : 1.3,
+        "balanceAfterPayment" : 148.66,
+        "date" : "2026-03-17"
+      },
+      {
+        "amount" : 94.090000000000003,
+        "principalAmount" : 93.209999999999994,
+        "interestAmount" : 0.88,
+        "balanceAfterPayment" : 55.450000000000003,
+        "date" : "2026-04-17"
+      },
+      {
+        "amount" : 55.770000000000003,
+        "principalAmount" : 55.450000000000003,
+        "interestAmount" : 0.32000000000000001,
+        "balanceAfterPayment" : 0,
+        "date" : "2026-05-17"
+      }
+    ]
+  },
+  "correlationId" : "e7a764ad94611799f92f7826910ff508"
+}

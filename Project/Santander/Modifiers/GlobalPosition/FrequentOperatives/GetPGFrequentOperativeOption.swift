@@ -31,7 +31,9 @@ private extension GetPGFrequentOperativeOption {
         return [PGFrequentOperativeOption.operate,
                 PaymentsPGFrequentOperativeOption(dependenciesResolver: self.dependenciesResolver),
                 TransactionHistoryPGFrequentOperativeOption(),
-                BLIKPGFrequentOperativeOption(),
+                BLIKPGFrequentOperativeOption(dependencyResolver: dependenciesResolver),
+                PLHelpCenterFrequentOperativeOption(dependencyResolver: dependenciesResolver),
+                PLDebugMenuFrequentOperativeOption(dependencyResolver: dependenciesResolver), // Temporary [DEBUG MENU] on GlobalPosition
                 ExploreProductsPGFrequentOperativeOption(),
                 PGFrequentOperativeOption.analysisArea,
                 FinancialAgendaPGFrequentOperativeOption(),

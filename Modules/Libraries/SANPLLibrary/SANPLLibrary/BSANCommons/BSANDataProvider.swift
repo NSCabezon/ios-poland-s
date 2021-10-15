@@ -237,6 +237,90 @@ public class BSANDataProvider {
         return sessionData.customer
     }
 
+    // MARK: CreditCardRepayment Cache
+    
+    public func store(creditCardRepaymentDebitAccounts accounts: [CCRAccountDTO]) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.creditCardRepaymentInfo.accountsForDebit = accounts
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func store(creditCardRepaymentCreditAccounts accounts: [CCRAccountDTO]) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.creditCardRepaymentInfo.accountsForCredit = accounts
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func store(creditCardRepaymentCards cards: [CCRCardDTO]) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.creditCardRepaymentInfo.cards = cards
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func getCreditCardRepaymentInfo() -> CreditCardRepaymentInfo? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.creditCardRepaymentInfo
+    }
+    
+    public func cleanCreditCardRepaymentInfo() {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.creditCardRepaymentInfo.accountsForDebit = []
+            sessionData.creditCardRepaymentInfo.accountsForCredit = []
+            sessionData.creditCardRepaymentInfo.cards = []
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+    
+    // MARK: Help Center Cache
+    
+    public func store(helpCenterOnlineAdvisor onlineAdvisor: OnlineAdvisorDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.helpCenterInfo.onlineAdvisor = onlineAdvisor
+            sessionData.helpCenterInfo.onlineAdvisorStoreDate = Date()
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func getHelpCenterInfo() -> HelpCenterInfo? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.helpCenterInfo
+    }
+    
+    public func store(helpCenterHelpQuestions helpQuestions: HelpQuestionsDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.helpQuestionsInfo.helpQuestions = helpQuestions
+            sessionData.helpQuestionsInfo.helpQuestionsStoreDate = Date()
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func getHelpQuestionsInfo() -> HelpQuestionsInfo? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.helpQuestionsInfo
+    }
+    
+
     // MARK: Login public key store management
     public func storePublicKey(_ pubKey: PubKeyDTO) {
         objc_sync_enter(dataRepository)

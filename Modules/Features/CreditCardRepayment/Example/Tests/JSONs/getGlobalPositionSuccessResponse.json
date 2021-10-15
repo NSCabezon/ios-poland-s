@@ -1,0 +1,64 @@
+{
+   "cards":[
+      {
+         "maskedPan":"545250_5713",
+         "virtualPan":"545250P038230083",
+         "generalStatus":"ACTIVE",
+         "cardStatus":"00",
+         "role":"OWNER",
+         "type":"CREDIT",
+         "productCode":"MKKS",
+         "name":{
+            "description":"MasterCard Silver",
+            "userDefined":"MasterCard Silver"
+         },
+         "relatedAccount":"63109014894000000121600961",
+         "expirationDate":"2025-06-30",
+         "availableBalance":{
+            "value":5200.00,
+            "currencyCode":"PLN",
+            "valueInBaseCurrency":5200.00
+         },
+         "creditLimit":{
+            "value":2500.00,
+            "currencyCode":"PLN",
+            "valueInBaseCurrency":2500.00
+         },
+         "disposedAmount":{
+            "value":0.00,
+            "currencyCode":"PLN",
+            "valueInBaseCurrency":0.00
+         }
+      },
+      {
+         "maskedPan":"545250_8846",
+         "virtualPan":"545250P005094962",
+         "generalStatus":"ACTIVE",
+         "cardStatus":"00",
+         "role":"OWNER",
+         "type":"CREDIT",
+         "productCode":"CCMB",
+         "name":{
+            "description":"Karta kredytowa 123",
+            "userDefined":"Karta kredytowa 123"
+         },
+         "relatedAccount":"45109014894000000121577326",
+         "expirationDate":"2023-04-30",
+         "availableBalance":{
+            "value":5200.00,
+            "currencyCode":"PLN",
+            "valueInBaseCurrency":5200.00
+         },
+         "creditLimit":{
+            "value":2500.00,
+            "currencyCode":"PLN",
+            "valueInBaseCurrency":2500.00
+         },
+         "disposedAmount":{
+            "value":0.00,
+            "currencyCode":"PLN",
+            "valueInBaseCurrency":0.00
+         }
+      }
+   ]
+}

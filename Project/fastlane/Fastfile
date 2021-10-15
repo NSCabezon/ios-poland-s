@@ -9,11 +9,109 @@
 #
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
-
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
+fastlane_require './constants.rb'
 
 default_platform(:ios)
+
+def remove_old_keychain
+  delete_keychain(name: Constants.keychain_name) if File.exist? File.expand_path("~/Library/Keychains/#{Constants.keychain_name}-db")
+end
+
+def create_own_keychain
+  remove_old_keychain
+  password = SecureRandom.base64
+  create_keychain(
+    name: Constants.keychain_name,
+    password: password,
+    unlock: true,
+    timeout: 3600
+  )
+  password
+end
+
+def upload_testflight
+  app_store_connect_api_key(
+    key_id: "#{ENV['KEY_ID']}",
+    issuer_id: "#{ENV['ISSUER_ID']}",
+    key_content: "#{ENV['KEY_CONTENT']}"
+  )
+  pilot(app_identifier: Constants.app_identifier,
+        skip_submission: true,
+        skip_waiting_for_build_processing: true)
+end
+
+def build_adhoc()
+  password = create_own_keychain
+  unless password
+    UI.crash! 'Missing keychain password. Perhaps the keychain creation failed.'
+  end
+  export_method = 'ad-hoc'
+  match_type = 'adhoc'
+
+  match(git_url: Constants.cert_repo_url,
+        type: match_type,
+        app_identifier: Constants.app_identifier,
+        keychain_name: Constants.keychain_name,
+        keychain_password: password,
+        #verbose: true,
+        readonly: true)
+  
+  gym(
+    workspace: Constants.workspace,
+    scheme: Constants.scheme_dev,
+    clean: true,
+    export_method: export_method,
+    export_team_id: Constants.team_id, 
+    skip_profile_detection: false,
+    output_name: "Santander.ipa",
+    suppress_xcode_output: true,
+    export_options: {
+      provisioningProfiles: { 
+        Constants.app_identifier => "match AdHoc pl.santander.oneapp.dev"
+      },
+      compileBitcode: false,
+      includeBitcode: false,
+      includeSymbols: false
+    }
+   )
+end
+
+def build_appstore()
+  password = create_own_keychain
+  unless password
+    UI.crash! 'Missing keychain password. Perhaps the keychain creation failed.'
+  end
+  export_method = 'app-store'
+  match_type = 'appstore'
+
+  match(git_url: Constants.cert_repo_url,
+        type: match_type,
+        app_identifier: Constants.app_identifier,
+        keychain_name: Constants.keychain_name,
+        keychain_password: password,
+        #verbose: true,
+        readonly: true)
+  
+  gym(
+    workspace: Constants.workspace,
+    scheme: Constants.scheme_intern,
+    clean: true,
+    export_method: export_method,
+    export_team_id: Constants.team_id, 
+    skip_profile_detection: false,
+    suppress_xcode_output: true,
+    export_options: {
+      provisioningProfiles: { 
+        Constants.app_identifier => "match AppStore pl.santander.oneapp.dev"
+      },
+      compileBitcode: false,
+      includeBitcode: false,
+      includeSymbols: false
+    }
+   )
+end
 
 CONFIGURATIONS = {
   "intern" => { name: "Intern", configuration: "Intern-Release", appcenter: "Poland-v0.0-Intern-iOS"},
@@ -30,15 +128,72 @@ def calculateVersionCode(versionName)
   (major * 100 + minor) * 1000 + build
 end
 
+def microsite_upload 
+    version_name = get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")
+    build_adhoc
+    date = Time.now.strftime("%Y-%m-%d_%H.%M")
+    artifactory(
+      api_key: "#{ENV['ARTIFACTORY_API_KEY']}",
+      endpoint: 'https://ewsi.centrala.bzwbk/artifactory/',
+      file: 'Santander.ipa',
+      repo: 'OUIT-Prod',
+      repo_path: "/BZWBK/SYSTEM_PATCHES/Installs/ios/Oneapp_#{version_name}_#{date}_#{ENV['CI_COMMIT_SHORT_SHA']}.ipa"
+
+    )
+
+    sh("curl -H 'Content-Type: application/json' -H 'token: #{ENV['MICROSITE_TOKEN']}' -d \"{ 'name': 'Oneapp_#{version_name}_#{date}_#{ENV['CI_COMMIT_SHORT_SHA']}.ipa' }\" #{ENV['MICROSITE_URL']}")
+
+end
+
+def testflight_upload
+  version_name = get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")
+  build_appstore
+
+  date = Time.now.strftime('%Y-%m-%d_%H.%M')
+  artifactory(
+    api_key: "#{ENV['ARTIFACTORY_API_KEY']}",
+    endpoint: 'https://ewsi.centrala.bzwbk/artifactory/',
+    file: 'PL-INTERN-0.0.59.ipa',
+    repo: 'OUIT-Prod',
+    repo_path: "/BZWBK/SYSTEM_PATCHES/Installs/ios/Oneapp-INT_#{version_name}_#{date}_#{ENV['CI_COMMIT_SHORT_SHA']}.ipa"
+  )
+  #upload_testflight
+end
+
 platform :ios do
+
+  before_all do |_lane|
+    xcversion(version: '~> 12.5')
+    clean_cocoapods_cache
+    clear_derived_data
+    cocoapods(repo_update: true)
+  end
+
+  desc 'Build and send to Microsite and TestFlight'
+  lane :upload_for_tests do
+    microsite_upload
+    # testflight_upload
+  end
+
+  after_all do
+    desc 'Success'
+    remove_old_keychain
+    #clean_build_artifacts
+  end
+
+  error do |_lane, exception|
+    remove_old_keychain
+    puts 'Fail' + exception.message
+  end
+
 
   desc "Create app id"
   lane :create_app_id do |options|
-    CONFIGURATIONS.each do |k, v|
+#    CONFIGURATIONS.each do |k, v|
       produce(
-        app_name: "Poland #{k.upcase} #{options[:version].gsub '.',' '}",
+        app_name: "Poland Santander OneApp #{options[:version].gsub '.',' '}",
         skip_itc: true,
-        app_identifier: "pl.bancosantander.oneapp.#{k}.#{options[:version]}", # TODO: final PL bundle id
+        app_identifier: "pl.santander.oneapp.dev", # TODO: final PL bundle id
         enable_services: {
             app_group: "on",
             associated_domains: "on",
@@ -46,7 +201,7 @@ platform :ios do
             push_notification: "on"
         }
       )
-    end
+#    end
   end
 
   desc 'Fetch certificates and provisioning profiles'
@@ -128,6 +283,8 @@ platform :ios do
 
 private_lane :do_release do |options|
   UI.message "Start lane doRelease"
+  ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "90"
+  ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "90"
   outpudir = File.expand_path("~/CI/")
   clear_derived_data
   configuration = CONFIGURATIONS[options[:deploy_env]]
@@ -213,7 +370,6 @@ end
     push_tag()
     increment_version_number(xcodeproj: "Santander.xcodeproj", bump_type: "patch")
     increment_build_number(build_number: calculateVersionCode(get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")))
-    upload_build_settings_versions()
     push_version()
   end
 
