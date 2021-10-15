@@ -137,8 +137,6 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         self.documentTextField.isUserInteractionEnabled = false
         passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
-        passwordTextField?.setText("Qwertyuiop1!") // Temporary [DEBUG PASSWORD] on Login
-        loginButton.isEnabled = true // Temporary [DEBUG PASSWORD] on Login
         passwordTextField?.delegate = self
         passwordTextField?.textField?.delegate = self
     }
