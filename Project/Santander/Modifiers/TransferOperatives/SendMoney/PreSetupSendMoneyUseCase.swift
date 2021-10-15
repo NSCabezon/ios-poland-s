@@ -34,7 +34,7 @@ final class PreSetupSendMoneyUseCase: UseCase<Void, PreSetupSendMoneyUseCaseOkOu
             accounts.forEach { account in
                 var found = false
                 gpNotVisibleAccounts.forEach { notVisibleAccout in
-                    if account.equalsTo(other: notVisibleAccout.dto) {
+                    if account.equalsTo(other: notVisibleAccout.accountRepresentable) {
                         found = true
                     }
                 }
