@@ -8,6 +8,7 @@
 import Commons
 
 public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
+    public var reloadSessionOnClose: Bool    
     public var initialURL: String
     public var webToolbarTitleKey: String?
     public var pdfToolbarTitleKey: String?
@@ -26,5 +27,6 @@ public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
         self.pdfToolbarTitleKey = pdfToolbarTitleKey
         self.engine = .custom(engine: "uiwebview")
         self.isCachePdfEnabled = false
+        self.reloadSessionOnClose = false
     }
 }

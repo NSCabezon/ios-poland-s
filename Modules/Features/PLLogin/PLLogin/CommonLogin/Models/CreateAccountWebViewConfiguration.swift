@@ -20,6 +20,7 @@ struct CreateAccountWebViewConfiguration: WebViewConfiguration {
     let isCachePdfEnabled: Bool = false
     let isFullScreenEnabled: Bool? = false
     let showBackNavigationItem: Bool = false
+    var reloadSessionOnClose: Bool = false
 
     init(initialURL: String) {
         self.initialURL = initialURL
