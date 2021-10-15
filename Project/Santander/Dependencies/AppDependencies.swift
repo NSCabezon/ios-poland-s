@@ -23,6 +23,7 @@ import Menu
 import Cards
 import PLNotifications
 import iOSPublicFiles
+import CoreDomain
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -85,6 +86,9 @@ final class AppDependencies {
         let netClient = NetClientImplementation()
         let fileClient = FileClient()
         return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var servicesLibrary: ServicesLibrary = {
+        return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
     }()
 
     // MARK: Features
@@ -228,6 +232,12 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { resolver in
             PLEditBudgetHelperModifier()
+        }
+        self.dependencieEngine.register(for: TransfersRepository.self) { _ in
+            return self.servicesLibrary.transfersRepository
+        }
+        self.dependencieEngine.register(for: PLTransfersRepository.self) { _ in
+            return self.servicesLibrary.transfersRepository
         }
     }
 }
