@@ -14,6 +14,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		9EE5652627183F8500B7E0C7 /* PLSelfSignedCertificateSecIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE5652527183F8500B7E0C7 /* PLSelfSignedCertificateSecIdentityTests.swift */; };
 		FE722053CB42FC22E651EF11 /* Pods_PLSelfSignedCertificate_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1C912B7CD79D1F5EA3EE89 /* Pods_PLSelfSignedCertificate_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6D1C912B7CD79D1F5EA3EE89 /* Pods_PLSelfSignedCertificate_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PLSelfSignedCertificate_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EE5652527183F8500B7E0C7 /* PLSelfSignedCertificateSecIdentityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSelfSignedCertificateSecIdentityTests.swift; sourceTree = "<group>"; };
 		A3C9B852A7B836214BE69D31 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E05558CE4E6EF446071FB76D /* Pods-PLSelfSignedCertificate_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLSelfSignedCertificate_Tests.release.xcconfig"; path = "Target Support Files/Pods-PLSelfSignedCertificate_Tests/Pods-PLSelfSignedCertificate_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				9EE5652527183F8500B7E0C7 /* PLSelfSignedCertificateSecIdentityTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -347,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				9EE5652627183F8500B7E0C7 /* PLSelfSignedCertificateSecIdentityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
