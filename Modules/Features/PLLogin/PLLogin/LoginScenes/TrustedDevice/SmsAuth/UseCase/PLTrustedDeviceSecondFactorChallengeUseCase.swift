@@ -90,6 +90,6 @@ extension PLTrustedDeviceSecondFactorChallengeUseCase {
         }
         challengeNumber += blockChallengeNumber
         challengeNumber &= 4294967295
-        return String(format: "%d", challengeNumber % 100000000)
+        return String(format: "%08d", challengeNumber % 100000000)
     }
 }
