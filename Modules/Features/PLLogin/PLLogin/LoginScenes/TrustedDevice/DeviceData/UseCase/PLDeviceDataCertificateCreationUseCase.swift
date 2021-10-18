@@ -10,7 +10,7 @@ import PLCommons
 import DomainCommon
 import CryptoSwift
 import os
-import PLSelfSignedCertificate
+import SelfSignedCertificate
 
 private struct PLCertificate {
     let pemCertificate: String
