@@ -239,6 +239,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PLTransfersRepository.self) { _ in
             return self.servicesLibrary.transfersRepository
         }
+        self.dependencieEngine.register(for: ContactsSortedHandlerProtocol.self) { _ in
+            return ContactsSortedHandler()
+        }
     }
 }
 
