@@ -1,5 +1,5 @@
-import Foundation
 import Commons
+import DomainCommon
 import PLUI
 
 protocol SmsConfirmationPresenterProtocol {
@@ -8,17 +8,22 @@ protocol SmsConfirmationPresenterProtocol {
 }
 
 final class SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: PhoneTransferSettingsCoordinatorProtocol
     private let registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol
     private let selectedAccountNumber: String
-    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     public weak var view: SmsConfirmationView?
     
     init(
+        dependenciesResolver: DependenciesResolver,
         coordinator: PhoneTransferSettingsCoordinatorProtocol,
         registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol,
         selectedAccountNumber: String
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.coordinator = coordinator
         self.registerPhoneNumberUseCase = registerPhoneNumberUseCase
         self.selectedAccountNumber = selectedAccountNumber
@@ -32,7 +37,7 @@ final class SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
         
         view?.showLoader()
         Scenario(useCase: registerPhoneNumberUseCase, input: request)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {

@@ -38,6 +38,7 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
     
     public func start() {
         let presenter = AccountSelectorPresenter(
+            dependenciesResolver: dependenciesEngine,
             coordinator: self,
             loadAccountsUseCase: LoadCustomerAccountsUseCase(
                 managersProvider: dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)

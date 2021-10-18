@@ -27,6 +27,7 @@ final class PhoneTransferSettingsFactory: PhoneTransferSettingsProducing {
         coordinator: PhoneTransferSettingsCoordinatorProtocol
     ) -> PhoneTransferSettingsViewController {
         let presenter = PhoneTransferSettingsPresenter(
+            dependenciesResolver: dependenciesResolver,
             coordinator: coordinator,
             unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCase(
                 managersProvider: dependenciesResolver.resolve(

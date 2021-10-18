@@ -6,6 +6,7 @@
 //
 
 import Commons
+import DomainCommon
 
 protocol ChequePinPresenterProtocol {
     func viewDidLoad()
@@ -14,22 +15,28 @@ protocol ChequePinPresenterProtocol {
 }
 
 final class ChequePinPresenter: ChequePinPresenterProtocol {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: ChequesCoordinatorProtocol
     private let saveChequePinUseCase: SaveChequePinUseCaseProtocol
     private let encryptChequePinUseCase: EncryptChequePinUseCaseProtocol
     private let validator: ChequePinValidating
     private let didSetPin: () -> Void
-    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: ChequePinViewProtocol?
     var confirmationVisibility: ChequePinConfirmationFieldVisibility
     
-    init(confirmationVisibility: ChequePinConfirmationFieldVisibility,
-         coordinator: ChequesCoordinatorProtocol,
-         saveChequePinUseCase: SaveChequePinUseCaseProtocol,
-         encryptChequePinUseCase: EncryptChequePinUseCaseProtocol,
-         validator: ChequePinValidating,
-         didSetPin: @escaping () -> Void
+    init(
+        dependenciesResolver: DependenciesResolver,
+        confirmationVisibility: ChequePinConfirmationFieldVisibility,
+        coordinator: ChequesCoordinatorProtocol,
+        saveChequePinUseCase: SaveChequePinUseCaseProtocol,
+        encryptChequePinUseCase: EncryptChequePinUseCaseProtocol,
+        validator: ChequePinValidating,
+        didSetPin: @escaping () -> Void
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.confirmationVisibility = confirmationVisibility
         self.coordinator = coordinator
         self.saveChequePinUseCase = saveChequePinUseCase
@@ -67,7 +74,7 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
     private func encryptAndSavePin(_ pin: ChequePin) {
         view?.showLoader()
         Scenario(useCase: encryptChequePinUseCase, input: pin)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] params in
                 self?.save(enctiptedPin: params)
             }
@@ -80,7 +87,7 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
     
     private func save(enctiptedPin: String) {
         Scenario(useCase: saveChequePinUseCase, input: enctiptedPin)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] params in
                 self?.view?.hideLoader(completion: {
                     self?.view?.showSnackbar(

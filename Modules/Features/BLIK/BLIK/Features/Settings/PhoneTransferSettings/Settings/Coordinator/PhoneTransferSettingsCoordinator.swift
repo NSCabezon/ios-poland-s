@@ -78,6 +78,7 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
         let viewModelMapper = PhoneTransferRegistrationFormViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         let viewModel = viewModelMapper.map(wallet.sourceAccount)
         let presenter = PhoneTransferRegistrationFormPresenter(
+            dependenciesResolver: dependenciesEngine,
             coordinator: self,
             initialViewModel: viewModel,
             viewModelMapper: viewModelMapper,
@@ -109,6 +110,7 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     
     func showSmsConfirmationScreen(selectedAccountNumber: String) {
         let presenter = SmsConfirmationPresenter(
+            dependenciesResolver: dependenciesEngine,
             coordinator: self,
             registerPhoneNumberUseCase: RegisterPhoneNumberUseCase(
                 managersProvider: dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)

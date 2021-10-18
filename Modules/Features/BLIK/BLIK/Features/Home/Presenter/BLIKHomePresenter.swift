@@ -1,5 +1,6 @@
-import Models
 import Commons
+import DomainCommon
+import Models
 import SANPLLibrary
 import PLUI
 
@@ -34,6 +35,10 @@ final class BLIKHomePresenter {
     
     private var getTrnToConfUseCase: GetTrnToConfProtocol {
         dependenciesResolver.resolve()
+    }
+    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
 
     init(dependenciesResolver: DependenciesResolver) {
@@ -138,7 +143,7 @@ private extension BLIKHomePresenter {
         view?.showLoader()
         
         Scenario(useCase: getWalletsActiveUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] output in
                 switch output.serviceStatus {
                 case let .available(wallet):
@@ -164,7 +169,7 @@ private extension BLIKHomePresenter {
 
     func generateNewCode(_ updateCode: Bool = false) {
         Scenario(useCase: getTicketUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] output in
                 DispatchQueue.main.async {
                     self?.view?.hideLoader() {
@@ -187,7 +192,7 @@ private extension BLIKHomePresenter {
     func getInitialTransactionsToConfirm() {
 
         Scenario(useCase: getTrnToConfUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader() {
                     UIDevice.current.vibrate()
@@ -209,7 +214,7 @@ private extension BLIKHomePresenter {
 
     func getTransactionsToConfirm() {
         Scenario(useCase: getTrnToConfUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader() {
                     UIDevice.current.vibrate()

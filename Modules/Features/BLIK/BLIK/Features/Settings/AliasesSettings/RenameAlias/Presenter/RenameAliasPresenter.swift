@@ -6,6 +6,7 @@
 //
 
 import Commons
+import DomainCommon
 import UI
 import PLUI
 
@@ -30,6 +31,9 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
     private var confirmationDialogFactory: ConfirmationDialogProducing {
         dependenciesResolver.resolve()
     }
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: RenameAliasView?
     
     init(
@@ -48,7 +52,7 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
         view?.showLoader()
         let updatedAlias = blikAliasNewLabelMapper.map(alias: alias, withNewLabel: label)
         Scenario(useCase: registerAliasUseCase, input: updatedAlias)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {
                     self?.handleAliasUpdateSuccess()

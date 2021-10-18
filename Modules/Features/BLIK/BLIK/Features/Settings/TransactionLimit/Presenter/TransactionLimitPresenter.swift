@@ -1,6 +1,6 @@
 import Commons
+import DomainCommon
 import PLCommons
-import Commons
 import PLUI
 
 protocol TransactionLimitPresenterProtocol {
@@ -11,21 +11,28 @@ protocol TransactionLimitPresenterProtocol {
 }
 
 final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: BlikSettingsCoordinatorProtocol
     private var initialViewModel: TransactionLimitViewModel
     private let setTransactionsLimitUseCase: SetTransactionsLimitUseCaseProtocol
     private let validator: TransactionsLimitValidation
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let viewModelMapper: TransactionLimitViewModelMapping
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: TransactionLimitViewController?
     
-    init(wallet: GetWalletUseCaseOkOutput.Wallet,
-         viewModelMapper: TransactionLimitViewModelMapping,
-         setTransactionsLimitUseCase: SetTransactionsLimitUseCaseProtocol,
-         validator: TransactionsLimitValidation,
-         coordinator: BlikSettingsCoordinatorProtocol,
-         confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
+    init(
+        dependenciesResolver: DependenciesResolver,
+        wallet: GetWalletUseCaseOkOutput.Wallet,
+        viewModelMapper: TransactionLimitViewModelMapping,
+        setTransactionsLimitUseCase: SetTransactionsLimitUseCaseProtocol,
+        validator: TransactionsLimitValidation,
+        coordinator: BlikSettingsCoordinatorProtocol,
+        confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.initialViewModel = viewModelMapper.map(wallet)
         self.setTransactionsLimitUseCase = setTransactionsLimitUseCase
         self.validator = validator
@@ -143,7 +150,7 @@ private extension TransactionLimitPresenter {
     func saveTransactionLimit(model: TransactionLimitModel) {
         view?.showLoader()
         Scenario(useCase: setTransactionsLimitUseCase, input: model)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
                 self?.view?.hideLoader(completion: {
                     self?.coordinator.close()

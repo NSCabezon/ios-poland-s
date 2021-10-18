@@ -5,8 +5,9 @@
 //  Created by Piotr Mielcarzewicz on 22/07/2021.
 //
 
-import UI
 import Commons
+import DomainCommon
+import UI
 import PLUI
 
 protocol PhoneTransferSettingsPresenterProtocol {
@@ -18,14 +19,20 @@ protocol PhoneTransferSettingsPresenterProtocol {
 }
 
 final class PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtocol {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: PhoneTransferSettingsCoordinatorProtocol
     private let unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCaseProtocol
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: PhoneTransferSettingsView?
     
     init(
+        dependenciesResolver: DependenciesResolver,
         coordinator: PhoneTransferSettingsCoordinatorProtocol,
         unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCaseProtocol
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.coordinator = coordinator
         self.unregisterPhoneNumberUseCase = unregisterPhoneNumberUseCase
     }
@@ -55,7 +62,7 @@ final class PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtoc
     private func unregisterPhoneNumber() {
         view?.showLoader()
         Scenario(useCase: unregisterPhoneNumberUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {
                     self?.showUnregisteredPhoneNumberState()

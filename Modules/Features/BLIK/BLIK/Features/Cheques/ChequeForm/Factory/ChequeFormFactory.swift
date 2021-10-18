@@ -31,6 +31,7 @@ public final class ChequeFormFactory: ChequeFormProducing {
         amountFormatter.currencySymbol = currency
         let amountLimitWithCurrency = amountFormatter.string(for: maxChequeAmount) ?? "\(maxChequeAmount) \(currency)"
         let presenter = ChequeFormPresenter(
+            dependenciesResolver: dependenciesResolver,
             validator: ChequeFormValidator(
                 amountLimit: maxChequeAmount,
                 currency: currency,

@@ -9,6 +9,7 @@
 import UIKit
 import BLIK
 import Commons
+import DomainCommon
 import SANPLLibrary
 
 class ViewController: UIViewController {
@@ -23,7 +24,10 @@ class ViewController: UIViewController {
         defaultResolver.register(for: PLHostProviderProtocol.self) { resolver in
             return MockHostProvider()
         }
-
+        
+        defaultResolver.register(for: UseCaseHandler.self) { _ in
+            return UseCaseHandler(maxConcurrentOperationCount: 8)
+        }
         return defaultResolver
     }()
 

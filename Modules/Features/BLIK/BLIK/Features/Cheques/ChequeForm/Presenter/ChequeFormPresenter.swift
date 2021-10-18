@@ -6,6 +6,7 @@
 //
 
 import Commons
+import DomainCommon
 import UI
 
 protocol ChequeFormPresenterProtocol {
@@ -16,19 +17,25 @@ protocol ChequeFormPresenterProtocol {
 }
 
 final class ChequeFormPresenter: ChequeFormPresenterProtocol {
+    private let dependenciesResolver: DependenciesResolver
     private let validator: ChequeFormValidating
     private let coordinator: ChequesCoordinatorProtocol
     private let createChequeUseCase: CreateChequeUseCaseProtocol
     private let viewModel: ChequeFormViewModel
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: ChequeFormViewProtocol?
     
     init(
+        dependenciesResolver: DependenciesResolver,
         validator: ChequeFormValidating,
         coordinator: ChequesCoordinatorProtocol,
         createChequeUseCase: CreateChequeUseCaseProtocol,
         amountLimit: String,
         currency: String
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.validator = validator
         self.coordinator = coordinator
         self.createChequeUseCase = createChequeUseCase
@@ -73,7 +80,7 @@ final class ChequeFormPresenter: ChequeFormPresenterProtocol {
     private func createCheque(with request: CreateChequeRequest) {
         view?.showLoader()
         Scenario(useCase: self.createChequeUseCase, input: request)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {

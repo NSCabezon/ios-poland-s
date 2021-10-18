@@ -6,7 +6,7 @@ import SANPLLibrary
 
 struct MockHostProvider: PLHostProviderProtocol {
     var environmentDefault: BSANPLEnvironmentDTO {
-        .init(name: "default", authBaseUrl: "", urlBase: "https://micrositeoneapp2.santanderbankpolska.pl", clientId: "123")
+        .init(name: "default", blikAuthBaseUrl: "", urlBase: "https://micrositeoneapp2.santanderbankpolska.pl", clientId: "123")
     }
     
     func getEnvironments() -> [BSANPLEnvironmentDTO] {

@@ -39,6 +39,7 @@ public final class ChequesFactory: ChequesProducing {
     
     private func createChequeListController(coordinator: ChequesCoordinator, listType: ChequeListType) -> UIViewController {
         let presenter = ChequeListPresenter(
+            dependenciesResolver: dependenciesResolver,
             coordinator: coordinator,
             listType: listType,
             loadChequesUseCase: LoadChequesUseCase(

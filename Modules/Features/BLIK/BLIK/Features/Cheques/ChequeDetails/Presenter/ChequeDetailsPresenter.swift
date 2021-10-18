@@ -8,6 +8,7 @@
 import UIKit
 import UI
 import Commons
+import DomainCommon
 
 protocol ChequeDetailsPresenterProtocol {
     func viewDidLoad(completion: (ChequeDetailsViewModel) -> Void)
@@ -17,18 +18,25 @@ protocol ChequeDetailsPresenterProtocol {
 }
 
 final class ChequeDetailsPresenter {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: ChequesCoordinatorProtocol
     private let cheque: BlikCheque
     private let viewModelMapper: ChequeDetailsViewModelMapperProtocol
     private let removeUserCase: RemoveChequeUseCaseProtocol
     private var viewModel: ChequeDetailsViewModel?
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: ChequeDetailsViewProtocol?
     
-    init(coordinator: ChequesCoordinatorProtocol,
-         cheque: BlikCheque,
-         removeUserCase: RemoveChequeUseCaseProtocol,
-         viewModelMapper: ChequeDetailsViewModelMapperProtocol
+    init(
+        dependenciesResolver: DependenciesResolver,
+        coordinator: ChequesCoordinatorProtocol,
+        cheque: BlikCheque,
+        removeUserCase: RemoveChequeUseCaseProtocol,
+        viewModelMapper: ChequeDetailsViewModelMapperProtocol
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.coordinator = coordinator
         self.cheque = cheque
         self.viewModelMapper = viewModelMapper
@@ -56,7 +64,7 @@ extension ChequeDetailsPresenter: ChequeDetailsPresenterProtocol {
             
             strongSelf.view?.showLoader()
             Scenario(useCase: strongSelf.removeUserCase, input: strongSelf.cheque.id)
-                .execute(on: DispatchQueue.global())
+                .execute(on: strongSelf.useCaseHandler)
                 .onSuccess { [weak self] in
                     self?.view?.hideLoader(completion: {
                         self?.showSuccessMessageAndGoBack()

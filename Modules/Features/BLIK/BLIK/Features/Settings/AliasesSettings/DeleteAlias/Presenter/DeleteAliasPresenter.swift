@@ -6,6 +6,7 @@
 //
 
 import Commons
+import DomainCommon
 import UI
 import PLUI
 
@@ -22,6 +23,9 @@ final class DeleteAliasPresenter: DeleteAliasPresenterProtocol {
     }
     private var deleteAliasUseCase: DeleteAliasUseCaseProtocol {
         dependenciesResolver.resolve()
+    }
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
     weak var view: DeleteAliasView?
     
@@ -40,7 +44,7 @@ final class DeleteAliasPresenter: DeleteAliasPresenterProtocol {
         )
         view?.showLoader()
         Scenario(useCase: deleteAliasUseCase, input: request)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {
                     self?.handleAliasDeletion()

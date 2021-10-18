@@ -7,6 +7,7 @@
 
 import UI
 import Commons
+import DomainCommon
 
 protocol ChequeListPresenterProtocol {
     func viewDidLoad()
@@ -17,20 +18,23 @@ protocol ChequeListPresenterProtocol {
 }
 
 final class ChequeListPresenter: ChequeListPresenterProtocol {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: ChequesCoordinatorProtocol
     private let listType: ChequeListType
     private let loadChequesUseCase: LoadChequesUseCaseProtocol
     private let loadWalletParamsUseCase: LoadWalletParamsUseCaseProtocol
     private let viewModelMapper: ChequeViewModelMapperProtocol
     private let discardingLock: DiscardingLocking
-    
     private var viewDidAppearBefore = false
     private var fetchedCheques: [BlikCheque] = []
     private var walletParams: WalletParams?
-    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: ChequeListViewProtocol?
     
     init(
+        dependenciesResolver: DependenciesResolver,
         coordinator: ChequesCoordinatorProtocol,
         listType: ChequeListType,
         loadChequesUseCase: LoadChequesUseCaseProtocol,
@@ -38,6 +42,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         viewModelMapper: ChequeViewModelMapperProtocol,
         discardingLock: DiscardingLocking
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.coordinator = coordinator
         self.listType = listType
         self.loadChequesUseCase = loadChequesUseCase
@@ -106,7 +111,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         
         dispatchGroup.enter()
         Scenario(useCase: loadChequesUseCase, input: listType)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { cheques in
                 chequesResult = .success(cheques)
                 dispatchGroup.leave()
@@ -118,7 +123,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         
         dispatchGroup.enter()
         Scenario(useCase: loadWalletParamsUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { params in
                 walletParamsResult = .success(params)
                 dispatchGroup.leave()
@@ -148,7 +153,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
                 return
             }
             Scenario(useCase: strongSelf.loadChequesUseCase, input: strongSelf.listType)
-                .execute(on: DispatchQueue.global())
+                .execute(on: strongSelf.useCaseHandler)
                 .onSuccess { cheques in
                     guard let strongSelf = self else {
                         releaseBlock()

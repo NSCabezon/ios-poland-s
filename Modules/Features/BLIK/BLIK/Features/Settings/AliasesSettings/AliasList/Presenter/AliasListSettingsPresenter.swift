@@ -5,6 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 31/08/2021.
 //
 
+import DomainCommon
 import Commons
 import PLUI
 
@@ -26,6 +27,9 @@ final class AliasListSettingsPresenter: AliasListSettingsPresenterProtocol {
     }
     private var viewModelMapper: AliasListSettingsViewModelMapping {
         dependenciesResolver.resolve()
+    }
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
     weak var view: AliasListSettingsView?
     
@@ -52,7 +56,7 @@ final class AliasListSettingsPresenter: AliasListSettingsPresenterProtocol {
     private func loadAndDisplayFreshData() {
         view?.showLoader()
         Scenario(useCase: getAliasesUseCase)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] aliases in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {

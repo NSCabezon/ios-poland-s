@@ -66,6 +66,7 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
     
     func showTransferLimitsSettings() {
         let presenter = TransactionLimitPresenter(
+            dependenciesResolver: dependenciesEngine,
             wallet: wallet,
             viewModelMapper: TransactionLimitViewModelMapper(
                 amountFormatterWithCurrency: .PLAmountNumberFormatter,

@@ -1,4 +1,5 @@
 import Commons
+import DomainCommon
 import PLCommons
 
 protocol PhoneTransferRegistrationFormPresenterProtocol {
@@ -13,19 +14,25 @@ protocol PhoneTransferRegistrationFormDelegate: AnyObject {
 }
 
 final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormPresenterProtocol, PhoneTransferRegistrationFormDelegate {
+    private let dependenciesResolver: DependenciesResolver
     private let coordinator: PhoneTransferSettingsCoordinatorProtocol
     private let initialViewModel: PhoneTransferRegistrationFormViewModel
     private let viewModelMapper: PhoneTransferRegistrationFormViewModelMapping
     private let registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol
     private var selectedAccountNumber: String
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     weak var view: PhoneTransferRegistrationFormViewController?
     
     init(
+        dependenciesResolver: DependenciesResolver,
         coordinator: PhoneTransferSettingsCoordinatorProtocol,
         initialViewModel: PhoneTransferRegistrationFormViewModel,
         viewModelMapper: PhoneTransferRegistrationFormViewModelMapping,
         registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.coordinator = coordinator
         self.initialViewModel = initialViewModel
         self.viewModelMapper = viewModelMapper
@@ -45,7 +52,7 @@ final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFor
         
         view?.showLoader()
         Scenario(useCase: registerPhoneNumberUseCase, input: request)
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {

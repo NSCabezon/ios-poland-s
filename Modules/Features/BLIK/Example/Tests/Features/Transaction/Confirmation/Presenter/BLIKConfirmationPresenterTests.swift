@@ -74,5 +74,9 @@ private extension BLIKConfirmationPresenterTests {
         dependencies.register(for: PLBLIKManagerProtocol.self) { resolver in
             MockBLIKManager()
         }
+        
+        dependencies.register(for: UseCaseHandler.self) { _ in
+            return UseCaseHandler(maxConcurrentOperationCount: 8)
+        }
     }
 }

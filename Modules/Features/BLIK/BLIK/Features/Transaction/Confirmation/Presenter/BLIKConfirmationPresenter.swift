@@ -30,6 +30,9 @@ final class BLIKConfirmationPresenter {
     private var acceptBLIKTransactionUseCase: AcceptBLIKTransactionProtocol {
         dependenciesResolver.resolve()
     }
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
 
     init(dependenciesResolver: DependenciesResolver, viewModel: BLIKTransactionViewModel?) {
         self.dependenciesResolver = dependenciesResolver
@@ -89,7 +92,7 @@ private extension BLIKConfirmationPresenter {
                  input: .init(trnId: viewModel.trnId,
                               trnDate: viewModel.transactionDate,
                               cancelType: type))
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 self?.view?.hideLoader() {
                     self?.coordinator.cancelTransfer(type: type)
@@ -110,7 +113,7 @@ private extension BLIKConfirmationPresenter {
         Scenario(useCase: acceptBLIKTransactionUseCase,
                  input: .init(trnId: viewModel.trnId,
                               trnDate: viewModel.transactionDate))
-            .execute(on: DispatchQueue.global())
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 self?.view?.hideLoader() {
                     self?.coordinator.goToSummary()

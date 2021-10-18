@@ -27,6 +27,7 @@ public final class ChequesPinFactory: ChequesPinProducing {
         didSetPin: @escaping () -> Void
     ) -> UIViewController {
         let presenter = ChequePinPresenter(
+            dependenciesResolver: dependenciesResolver,
             confirmationVisibility: .hidden,
             coordinator: coordinator,
             saveChequePinUseCase: SaveChequePinUseCase(

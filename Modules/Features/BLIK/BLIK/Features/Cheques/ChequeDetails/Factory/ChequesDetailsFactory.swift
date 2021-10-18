@@ -22,6 +22,7 @@ public final class ChequesDetailsFactory: ChequesDetailsProducing {
     
     public func create(coordinator: ChequesCoordinator, cheque: BlikCheque) -> UIViewController {
         let presenter = ChequeDetailsPresenter(
+            dependenciesResolver: dependenciesResolver,
             coordinator: coordinator,
             cheque: cheque,
             removeUserCase: RemoveChequeUseCase(
