@@ -4,6 +4,7 @@
 
 import Foundation
 
+/// Note: Please add also extension method (at the bottom) that returns fatal error when adding new Manager
 public protocol PLManagersProviderProtocol {
     func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol
     func getLoginManager() -> PLLoginManagerProtocol
@@ -129,5 +130,68 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     
     public func getTransferManager() -> PLTransfersManagerProtocol {
         self.transferManger
+    }
+}
+
+public extension PLManagersProviderProtocol {
+
+    func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getLoginManager() -> PLLoginManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getBLIKManager() -> PLBLIKManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getTrustedDeviceManager() -> PLTrustedDeviceManager {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getAccountsManager() -> PLAccountManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getCardsManager() -> PLCardsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getLoansManager() -> PLLoanManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getCustomerManager() -> PLCustomerManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getNotificationManager() -> PLNotificationManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getTransferManager() -> PLTransfersManagerProtocol {
+        fatalError("Missing manager implementation")
     }
 }

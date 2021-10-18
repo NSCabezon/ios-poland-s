@@ -137,60 +137,12 @@ final class FakePLManagersProvider: PLManagersProviderProtocol {
     private let clientProfileProvider: HelpCenterClientProfileProvider
     private let mockData: PLHelpCenterMockData
     
-    func getAccountsManager() -> PLAccountManagerProtocol {
-        fatalError()
-    }
-    
-    func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol {
-        fatalError()
-    }
-    
-    func getCustomerManager() -> PLCustomerManagerProtocol {
-        fatalError()
-    }
-    
     func getLoginManager() -> PLLoginManagerProtocol {
         FakePLLoginManager(clientProfileProvider: clientProfileProvider)
     }
     
-    func getBLIKManager() -> PLBLIKManagerProtocol {
-        fatalError()
-    }
-    
-    func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol {
-        fatalError()
-    }
-    
     func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
         FakePLHelpCenterManager(mockData: mockData)
-    }
-    
-    func getTrustedDeviceManager() -> PLTrustedDeviceManager {
-        fatalError()
-    }
-    
-    func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol {
-        fatalError()
-    }
-    
-    func getCardsManager() -> PLCardsManagerProtocol {
-        fatalError()
-    }
-    
-    func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol {
-        fatalError()
-    }
-    
-    func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol {
-        fatalError()
-    }
-    
-    func getNotificationManager() -> PLNotificationManagerProtocol {
-        fatalError()
-    }
-    
-    func getTransferManager() -> PLTransfersManagerProtocol {
-        fatalError()
     }
 }
 
