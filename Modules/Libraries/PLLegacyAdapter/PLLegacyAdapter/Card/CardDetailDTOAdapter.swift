@@ -21,6 +21,15 @@ final class CardDetailDTOAdapter {
         cardDataDTO.expirationDate = DateFormats.toDate(string: plCard.cardExpirationDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
         cardDataDTO.currency = plCard.relatedAccountData?.availableFunds?.currencyCode
         cardDataDTO.creditCardAccountNumber = plCard.relatedAccountData?.accountNo
+        cardDataDTO.interestRate = PercentAdapter.adaptValueToPercentPresentation(Double(plCard.creditCardAccountDetails?.interestRate ?? 0))
+        cardDataDTO.withholdings = AmountAdapter.adaptBalanceToAmount(plCard.relatedAccountData?.withholdingBalance)
+        cardDataDTO.previousPeriodInterest = AmountAdapter.adaptBalanceToAmount(plCard.creditCardAccountDetails?.interestForPreviousPeriod)
+        cardDataDTO.minimumOutstandingDue = AmountAdapter.adaptBalanceToAmount(plCard.creditCardAccountDetails?.outstandingMinimumDueAmount)
+        cardDataDTO.currentMinimumDue = AmountAdapter.adaptBalanceToAmount(plCard.creditCardAccountDetails?.currentMinimumDueAmount)
+        cardDataDTO.totalMinimumRepaymentAmount = AmountAdapter.adaptBalanceToAmount(plCard.creditCardAccountDetails?.minimumRepaymentAmount)
+        cardDataDTO.lastStatementDate = DateFormats.toDate(string: plCard.creditCardAccountDetails?.lastStatementDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
+        cardDataDTO.nextStatementDate = DateFormats.toDate(string: plCard.creditCardAccountDetails?.nextStatementDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
+        cardDataDTO.actualPaymentDate = DateFormats.toDate(string: plCard.creditCardAccountDetails?.paymentDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
         return cardDataDTO
     }
 

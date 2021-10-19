@@ -17,6 +17,7 @@ final class CardDTOAdapter {
         cardDTO.ownershipTypeDesc = OwnershipTypeDesc(plCard.role ?? "")
         cardDTO.ownershipType = OwnershipType.holder.type
         cardDTO.allowsDirectMoney = plCard.type?.lowercased() == "credit"
+        cardDTO.statusDescription = plCard.generalStatus
         switch plCard.generalStatus?.lowercased() {
         case "active":
             cardDTO.cardContractStatusType = .active
