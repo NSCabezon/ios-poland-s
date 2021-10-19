@@ -13,6 +13,7 @@ import Models
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
+    var enabledBiometrics: Bool { get set }
     func viewDidLoad()
     func viewDidAppear()
     func doLogin(with pin: String)
@@ -27,6 +28,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
 final class PLRememberedLoginPinPresenter {
     internal let dependenciesResolver: DependenciesResolver
     weak var view: PLRememberedLoginPinViewControllerProtocol?
+    public var enabledBiometrics: Bool = false
     private let localAuth: LocalAuthenticationPermissionsManagerProtocol
     private var allowLoginBlockedUsers = true
 
@@ -73,6 +75,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     }
     
     func getBiometryTypeAvailable() -> BiometryTypeEntity {
+        guard enabledBiometrics else { return .none }
         #if targetEnvironment(simulator)
         return .faceId
         #else

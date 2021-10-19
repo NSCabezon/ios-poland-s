@@ -58,14 +58,15 @@ private extension PLBeforeLoginPresenter {
     func validateVersionAndUser() {
         view?.loadStart()
         Scenario(useCase: validateVersionUseCase).execute(on: self.dependenciesResolver.resolve())
-//      Add everything again when Remembered Login is ready
+//        Add everything again when Remembered Login is ready
 //        .then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
 //            guard let self = self else { return nil }
 //            return Scenario(useCase: self.beforeLoginUseCase)
 //        })
         .onSuccess({ [weak self] result in
-//            self?.navigate(isTrustedDevice: result.isTrustedDevice)
-            self?.navigate(isTrustedDevice: false)
+//            self?.navigate(isTrustedDevice: result.isTrustedDevice,
+//                           withBiometrics: result.isBiometricsAvailable)
+            self?.navigate(isTrustedDevice: false, withBiometrics: false)
         })
         .onError({[weak self] error in
             self?.handleError(error)
@@ -84,10 +85,10 @@ extension PLBeforeLoginPresenter: PLBeforeLoginPresenterProtocol {
         loadData()
     }
     
-    func navigate(isTrustedDevice: Bool) {
+    func navigate(isTrustedDevice: Bool, withBiometrics: Bool) {
         self.view?.loadDidFinish()
         if isTrustedDevice {
-            self.coordinator.loadRememberedLogin()
+            self.coordinator.loadRememberedLogin(withBiometrics: withBiometrics)
         } else {
             self.coordinator.loadUnrememberedLogin()
         }

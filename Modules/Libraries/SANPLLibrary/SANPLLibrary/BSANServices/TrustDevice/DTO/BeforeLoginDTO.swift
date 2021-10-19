@@ -15,6 +15,10 @@ public struct BeforeLoginDTO: Codable {
     public let pinMobileDefault, pinMobileDisabled, awaitingBlikConfirmation: Bool
     public let integrator: IntegratorDTO?
     public let softwareTokenHeaders:[SoftwareTokenHeaderDTO]
+    
+    public func containsBiometrics() -> Bool {
+        return softwareTokenHeaders.first { token in return token.type == "BIOMETRICS" } != nil
+    }
 }
 
 public struct IntegratorDTO: Codable {

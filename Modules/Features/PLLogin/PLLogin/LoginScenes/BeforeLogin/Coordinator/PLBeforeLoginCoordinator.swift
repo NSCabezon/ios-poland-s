@@ -11,7 +11,7 @@ import Commons
 
 protocol PLBeforeLoginCoordinatorProtocol {
     func loadUnrememberedLogin()
-    func loadRememberedLogin()
+    func loadRememberedLogin(withBiometrics: Bool)
 }
 
 final class PLBeforeLoginCoordinator: ModuleCoordinator {
@@ -74,8 +74,8 @@ extension PLBeforeLoginCoordinator : PLBeforeLoginCoordinatorProtocol {
         loginModuleCoordinator.loadUnrememberedLogin()
     }
     
-    func loadRememberedLogin() {
+    func loadRememberedLogin(withBiometrics: Bool) {
         let loginModuleCoordinator = self.dependenciesEngine.resolve(for: PLLoginModuleCoordinatorProtocol.self)
-        loginModuleCoordinator.loadRememberedLogin()
+        loginModuleCoordinator.loadRememberedLogin(withBiometrics: withBiometrics)
     }
 }

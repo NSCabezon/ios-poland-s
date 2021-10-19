@@ -20,12 +20,12 @@ protocol PLRememberedLoginPinCoordinatorProtocol {
 
 final class PLRememberedLoginPinCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
+    public var enabledBiometrics: Bool = false
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-
         self.setupDependencies()
     }
     
@@ -62,6 +62,7 @@ private extension PLRememberedLoginPinCoordinator {
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
+            presenter.enabledBiometrics = self.enabledBiometrics
             presenter.view = viewController
             return viewController
         }

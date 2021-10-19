@@ -4,7 +4,7 @@ import LoginCommon
 
 public protocol PLLoginModuleCoordinatorProtocol: AnyObject {
     func loadUnrememberedLogin()
-    func loadRememberedLogin()
+    func loadRememberedLogin(withBiometrics: Bool)
 }
 
 public class PLLoginModuleCoordinator: ModuleSectionedCoordinator {
@@ -57,7 +57,8 @@ extension PLLoginModuleCoordinator : PLLoginModuleCoordinatorProtocol {
         self.unrememberedLoginOnboardingCoordinator.start()
     }
     
-    public func loadRememberedLogin() {
+    public func loadRememberedLogin(withBiometrics: Bool) {
+        self.rememberedLoginPinCoordinator.enabledBiometrics = withBiometrics
         self.rememberedLoginPinCoordinator.start()
     }
 }
