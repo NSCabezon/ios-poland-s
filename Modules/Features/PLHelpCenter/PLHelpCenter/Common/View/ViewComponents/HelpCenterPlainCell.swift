@@ -8,6 +8,7 @@
 import Commons
 import PLUI
 import UI
+import Kingfisher
 
 private enum Constants {
     static let titleTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
