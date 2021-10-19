@@ -33,9 +33,7 @@ extension CreditCardRepaymentDetailsView {
         private var topLabel: UILabel = {
             let label = UILabel()
             label.numberOfLines = 1
-            // TODO: Move color to the separate module
-            let labelColor = UIColor(red: 110.0 / 255.0, green: 110.0 / 255.0, blue: 110.0 / 255.0, alpha: 1.0)
-            let labelStylist = LabelStylist(textColor: labelColor,
+            let labelStylist = LabelStylist(textColor: .brownishGray,
                                             font: .santander(family: .micro, type: .bold, size: 11.0),
                                             textAlignment: .left)
             label.applyStyle(labelStylist)
@@ -46,9 +44,7 @@ extension CreditCardRepaymentDetailsView {
             let label = UILabel()
             label.numberOfLines = 1
             label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-            // TODO: Move color to the separate module
-            let labelColor = UIColor(red: 110.0 / 255.0, green: 110.0 / 255.0, blue: 110.0 / 255.0, alpha: 1.0)
-            let labelStylist = LabelStylist(textColor: labelColor,
+            let labelStylist = LabelStylist(textColor: .brownishGray,
                                             font: .santander(family: .micro, type: .bold, size: 14.0),
                                             textAlignment: .left)
             label.applyStyle(labelStylist)
@@ -57,8 +53,7 @@ extension CreditCardRepaymentDetailsView {
         
         private lazy var separatorView: UIView = {
             let view = UIView()
-            // TODO: Move color to the separate module
-            view.backgroundColor = UIColor(red: 231.0 / 255.0, green: 232.0 / 255.0, blue: 236.0 / 255.0, alpha: 1.0)
+            view.backgroundColor = .brownishGray
             return view
         }()
         
@@ -117,9 +112,7 @@ extension CreditCardRepaymentDetailsView {
         }
         
         private func setUpEditButtonStyles() {
-            // TODO: Move color to the separate module
-            let btnColor = UIColor(red: 103.0 / 255.0, green: 157.0 / 255.0, blue: 165.0 / 255.0, alpha: 1.0)
-            editButton.setTitleColor(btnColor, for: .normal)
+            editButton.setTitleColor(.greyBlue, for: .normal)
             editButton.titleLabel?.font =  .santander(family: .micro, type: .bold, size: 9.0)
             editButton.setTitle(localized("generic_button_change"), for: .normal)
             editButton.setImage(Images.penEdit, for: .normal)

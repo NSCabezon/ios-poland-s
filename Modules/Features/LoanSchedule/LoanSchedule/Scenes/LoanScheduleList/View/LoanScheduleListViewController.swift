@@ -9,10 +9,6 @@ protocol LoanScheduleListViewProtocol: GenericErrorDialogPresentationCapable, Lo
     func showError(closeAction: (() -> Void)?)
 }
 
-private enum Constants {
-    static let backgroundColor = UIColor.white
-}
-
 final class LoanScheduleListViewController: UIViewController {
     private let presenter: LoanScheduleListPresenterProtocol
     private lazy var listView = LoanScheduleListView()
@@ -30,7 +26,7 @@ final class LoanScheduleListViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Constants.backgroundColor
+        view.backgroundColor = .white
         presenter.viewDidLoad()
     }
     

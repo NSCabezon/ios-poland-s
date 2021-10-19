@@ -5,7 +5,6 @@ import UI
 typealias SeparatorLine = LoanScheduleDetailsViewModel.SeparatorLine
 
 private enum Constants {
-    static let separatorLineColor = UIColor.lightSanGray
     static let separatorLineMargin: CGFloat = 17
     static func height(for separatorLine: SeparatorLine) -> CGFloat {
         switch separatorLine {
@@ -59,7 +58,7 @@ final class LoanScheduleDetailSeparatorView: UIView {
     }
     
     private func setUpStyle() {
-        innerSeparatorLineView.backgroundColor = Constants.separatorLineColor
+        innerSeparatorLineView.backgroundColor = .lightSanGray
     }
     
     func setUp(separatorLine: SeparatorLine) {

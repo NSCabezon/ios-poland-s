@@ -4,7 +4,7 @@ import SANPLLibrary
 typealias HelpCenterClientProfileProvider = () -> HelpCenterClientProfile
 
 final class FakePLLoginManager: PLLoginManagerProtocol {
- 
+    
     private let clientProfileProvider: HelpCenterClientProfileProvider
     
     init(clientProfileProvider: @escaping HelpCenterClientProfileProvider) {
@@ -47,17 +47,5 @@ final class FakePLLoginManager: PLLoginManagerProtocol {
             accessTokenCredentials = AccessTokenCredentials(type: "authenticate.type", accessToken: "someAccessTokenOfCompanyUser", expires: nil)
         }
         return AuthCredentials.init(login: nil, userId: nil, userCif: nil, companyContext: nil, accessTokenCredentials: accessTokenCredentials, trustedDeviceTokenCredentials: nil)
-    }
-    
-    func getAppInfo() -> AppInfo? {
-        fatalError()
-    }
-    
-    func setAppInfo(_ appInfo: AppInfo) {
-        
-    }
-    
-    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError> {
-        fatalError()
     }
 }

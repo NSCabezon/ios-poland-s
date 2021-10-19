@@ -3,9 +3,6 @@ import PLUI
 import UI
 
 private enum Constants {
-    static let backgroundColor = UIColor.white
-    
-    static let headerTitleTextColor = UIColor.lisboaGray
     static let headerTitleTextFont = UIFont.santander(family: .micro, type: .bold, size: 24)
 }
 
@@ -29,7 +26,7 @@ final class LoanScheduleListView: UIView {
     }
     
     private func setUp() {
-        backgroundColor = Constants.backgroundColor
+        backgroundColor = .white
         
         setUpSubviews()
         setUpLayout()
@@ -60,7 +57,7 @@ final class LoanScheduleListView: UIView {
     }
     
     private func setUpTitleLabel() {
-        headerTitleLabel.textColor = Constants.headerTitleTextColor
+        headerTitleLabel.textColor = .lisboaGray
         headerTitleLabel.font = Constants.headerTitleTextFont
     }
     
@@ -69,7 +66,7 @@ final class LoanScheduleListView: UIView {
         tableView.separatorColor = .clear
         tableView.sectionFooterHeight = 0
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: CGFloat.leastNormalMagnitude))
-        tableView.backgroundColor = Constants.backgroundColor
+        tableView.backgroundColor = .white
     }
     
     private func registerHeaderFooter() {

@@ -1,15 +1,11 @@
 //
 //  NotificationsInboxListView.swift
-//  mCommerce
+//  NotificationsInbox
 //
 
 import UI
 import PLUI
 import Commons
-
-private enum Constants {
-    static let backgroundColor = UIColor.white
-}
 
 final class NotificationsInboxListView: UIView {
     
@@ -24,7 +20,7 @@ final class NotificationsInboxListView: UIView {
     }
     
     private func setUp() {
-        backgroundColor = Constants.backgroundColor
+        backgroundColor = .white
         
         setUpSubviews()
         setUpLayout()

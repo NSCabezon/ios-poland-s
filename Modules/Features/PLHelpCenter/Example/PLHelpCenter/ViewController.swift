@@ -128,7 +128,7 @@ final class FakeAppConfigRepository: AppConfigRepositoryProtocol {
 }
 
 final class FakePLManagersProvider: PLManagersProviderProtocol {
- 
+
     init(mockData: PLHelpCenterMockData, clientProfileProvider: @escaping HelpCenterClientProfileProvider) {
         self.mockData = mockData
         self.clientProfileProvider = clientProfileProvider

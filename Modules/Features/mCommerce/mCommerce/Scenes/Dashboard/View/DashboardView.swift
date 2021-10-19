@@ -1,16 +1,6 @@
-//
-//  DashboardView.swift
-//  mCommerce
-//
-
 import UI
 import PLUI
 import Commons
-
-private enum Constants {
-    // TODO: Move colors to the separate module
-    static let backgroundColor = UIColor.white
-}
 
 final class DashboardView: UIView {
     
@@ -18,9 +8,7 @@ final class DashboardView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.text = "mCommerce"
-        // TODO: Move color to the separate module
-        let labelColor = UIColor(red: 110.0 / 255.0, green: 110.0 / 255.0, blue: 110.0 / 255.0, alpha: 1.0)
-        let labelStylist = LabelStylist(textColor: labelColor,
+        let labelStylist = LabelStylist(textColor: .greyBlue,
                                         font: .santander(family: .micro, type: .bold, size: 11.0),
                                         textAlignment: .left)
         label.applyStyle(labelStylist)
@@ -38,7 +26,7 @@ final class DashboardView: UIView {
     }
     
     private func setUp() {
-        backgroundColor = Constants.backgroundColor
+        backgroundColor = .white
         
         setUpSubviews()
         setUpLayout()

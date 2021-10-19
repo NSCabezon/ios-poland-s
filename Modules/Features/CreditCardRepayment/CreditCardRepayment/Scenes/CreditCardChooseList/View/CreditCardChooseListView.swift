@@ -62,9 +62,7 @@ final class CreditCardChooseListView: UIView {
     private func setupStyle() {
         backgroundColor = .white
         
-        // TODO: Move color to the separate module
-        let labelColor = UIColor(red: 65.0 / 255.0, green: 65.0 / 255.0, blue: 65.0 / 255.0, alpha: 1.0)
-        headerLabel.applyStyle(LabelStylist(textColor: labelColor,
+        headerLabel.applyStyle(LabelStylist(textColor: .greyishBrown,
                                       font: UIFont.santander(family: .micro, type: .regular, size: 14.0),
                                       textAlignment: .left))
         

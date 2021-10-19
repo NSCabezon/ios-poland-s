@@ -9,8 +9,6 @@ private enum Constants {
     static let valueFontBig = UIFont.santander(family: .headline, type: .bold, size: 32)
     static let valueFontMedium = UIFont.santander(family: .headline, type: .bold, size: 24)
     static let valueFontSmall = UIFont.santander(family: .headline, type: .bold, size: 18)
-    static let titleColor = UIColor.brownishGray
-    static let valueColor = UIColor.lisboaGray
 }
 
 final class LoanScheduleDetailValueView: UIView {
@@ -50,14 +48,14 @@ final class LoanScheduleDetailValueView: UIView {
             valueLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 1),
             valueLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 34),
             valueLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14),
-            valueLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            valueLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
     private func setUpStyle() {
-        titleLabel.textColor = Constants.titleColor
+        titleLabel.textColor = .brownishGray
         titleLabel.font = Constants.titleFont
-        valueLabel.textColor = Constants.valueColor
+        valueLabel.textColor = .lisboaGray
     }
     
     func setUp(title: String, value: String, fontStyle: ValueFontStyle) {

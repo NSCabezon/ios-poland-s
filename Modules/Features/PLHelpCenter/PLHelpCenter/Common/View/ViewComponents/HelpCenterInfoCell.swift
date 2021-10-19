@@ -3,13 +3,7 @@ import PLUI
 import UI
 
 private enum Constants {
-    static let backgroundColor: UIColor = .clear
-    static let containerColor: UIColor = UIColor(red: 233.0 / 255.0, green: 243.0 / 255.0, blue: 247 / 255.0, alpha: 1.0)
-    // TODO: Move colors to the separate module
-    
-    static let titleTextColor = UIColor(red: 109.0 / 255.0, green: 114.0 / 255.0, blue: 120.0 / 255.0, alpha: 1.0)
     static let titleTextFont = UIFont.santander(family: .text, type: .regular, size: 14.0)
-    
     static let roundCornerRadius: CGFloat = 4.0
 }
 
@@ -54,8 +48,8 @@ final class HelpCenterInfoCell: UITableViewCell {
         containerView.addSubview(titleLabel)
         containerView.addSubview(cellImageView)
         
-        backgroundColor = Constants.backgroundColor
-        containerView.backgroundColor = Constants.containerColor
+        backgroundColor = .clear
+        containerView.backgroundColor = .pattensBlue
         
         containerView.drawBorder(cornerRadius: Constants.roundCornerRadius, color: .clear, width: 0)
     }
@@ -90,7 +84,7 @@ final class HelpCenterInfoCell: UITableViewCell {
     
     private func setUpTitleLabel() {
         titleLabel.numberOfLines = 0
-        titleLabel.applyStyle(LabelStylist(textColor: Constants.titleTextColor, font: Constants.titleTextFont, textAlignment: .left))
+        titleLabel.applyStyle(LabelStylist(textColor: .raven, font: Constants.titleTextFont, textAlignment: .left))
     }
     
     private func setCellUpImageView() {

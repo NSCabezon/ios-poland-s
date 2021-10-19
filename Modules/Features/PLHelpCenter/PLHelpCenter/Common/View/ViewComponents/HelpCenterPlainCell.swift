@@ -8,14 +8,8 @@
 import Commons
 import PLUI
 import UI
-import Kingfisher
 
 private enum Constants {
-    static let backgroundColor: UIColor = .white
-    // TODO: Move colors to the separate module
-    static let borderColor = UIColor(red: 206.8 / 255.0, green: 222.0 / 255.0, blue: 231.0 / 255.0, alpha: 1.0)
-    
-    static let titleTextColor = UIColor(red: 68.0 / 255.0, green: 68.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
     static let titleTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
     
     static let placeholderIcon = UIImage(named: "iconPlaceholder", in: .module, compatibleWith: nil)
@@ -73,7 +67,7 @@ final class HelpCenterPlainCell: UITableViewCell {
         accesoryImageView.isHidden = isHidden
         accesoryBorderLayer.isHidden = isHidden
         if isHidden {
-            containterView.drawBorder(cornerRadius: 4, color: Constants.borderColor, width: 1)
+            containterView.drawBorder(cornerRadius: 4, color: .mediumSky, width: 1)
         }
     }
     
@@ -93,8 +87,8 @@ final class HelpCenterPlainCell: UITableViewCell {
         addBorder()
         updatePath()
 
-        backgroundColor = Constants.backgroundColor
-        containterView.backgroundColor = Constants.backgroundColor
+        backgroundColor = .white
+        containterView.backgroundColor = .white
     }
     
     private func setUpSubviews() {
@@ -134,7 +128,7 @@ final class HelpCenterPlainCell: UITableViewCell {
     
     private func setUpTitleLabel() {
         titleLabel.numberOfLines = 1
-        titleLabel.applyStyle(LabelStylist(textColor: Constants.titleTextColor, font: Constants.titleTextFont, textAlignment: .left))
+        titleLabel.applyStyle(LabelStylist(textColor: .lisboaGray, font: Constants.titleTextFont, textAlignment: .left))
     }
     
     private func setCellUpImageView() {
@@ -151,7 +145,7 @@ final class HelpCenterPlainCell: UITableViewCell {
     }
     
     private func addBorder() {
-        accesoryBorderLayer.strokeColor = Constants.borderColor.cgColor
+        accesoryBorderLayer.strokeColor = UIColor.mediumSky.cgColor
         accesoryBorderLayer.fillColor = UIColor.clear.cgColor
         accesoryBorderLayer.lineWidth = 1
         containterView.layer.addSublayer(accesoryBorderLayer)

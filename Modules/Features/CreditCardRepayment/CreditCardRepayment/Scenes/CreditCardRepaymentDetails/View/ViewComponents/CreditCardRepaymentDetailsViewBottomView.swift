@@ -9,11 +9,7 @@ import UI
 import Commons
 
 private enum Constants {
-    // TODO: Move colors to the separate module
-    static let backgroundColor: UIColor = .white
-
     // Separator
-    static let separatorBackgroundColor = UIColor(red: 233.0 / 255.0, green: 223.0 / 255.0, blue: 236.0 / 255.0, alpha: 1.0)
     static let separatorHeight: CGFloat = 1
 
     // Next button
@@ -52,7 +48,7 @@ extension CreditCardRepaymentDetailsView {
         }
 
         private func setupView() {
-            backgroundColor = Constants.backgroundColor
+            backgroundColor = .white
             addSubview(separatorView)
             addSubview(nextButton)
         }
@@ -68,7 +64,7 @@ extension CreditCardRepaymentDetailsView {
         }
 
         private func setupSeparatorView() {
-            separatorView.backgroundColor = Constants.separatorBackgroundColor
+            separatorView.backgroundColor = .paleGrayTwo
         }
 
         private func setupNextButtonView() {

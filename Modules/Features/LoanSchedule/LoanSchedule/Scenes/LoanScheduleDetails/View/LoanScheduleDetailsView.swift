@@ -3,7 +3,6 @@ import PLUI
 import UI
 
 private enum Constants {
-    static let backgroundColor = UIColor.white
     static let scrollViewContentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
 }
 
@@ -22,7 +21,7 @@ final class LoanScheduleDetailsView: UIView {
     }
     
     private func setUp() {
-        backgroundColor = Constants.backgroundColor
+        backgroundColor = .white
         setUpSubviews()
         setUpLayout()
         contentView.contentInset = Constants.scrollViewContentInset

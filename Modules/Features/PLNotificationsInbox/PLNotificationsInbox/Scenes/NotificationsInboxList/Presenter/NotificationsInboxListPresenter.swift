@@ -1,6 +1,6 @@
 //
 //  NotificationsInboxListPresenter.swift
-//  mCommerce
+//  NotificationsInbox
 //
 //  Created by 186484 on 10/09/2021.
 //

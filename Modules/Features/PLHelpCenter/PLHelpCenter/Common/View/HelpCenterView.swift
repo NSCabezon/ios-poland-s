@@ -9,11 +9,6 @@ import Commons
 import PLUI
 import UI
 
-private enum Constants {
-    // TODO: Move colors to the separate module
-    static let backgroundColor = UIColor.white
-}
-
 final class HelpCenterView: UIView {
     let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -54,7 +49,7 @@ final class HelpCenterView: UIView {
         tableView.separatorColor = .clear
         tableView.sectionFooterHeight = 0
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: CGFloat.leastNormalMagnitude))
-        tableView.backgroundColor = Constants.backgroundColor
+        tableView.backgroundColor = .white
     }
     
     private func registerHeaderFooter() {

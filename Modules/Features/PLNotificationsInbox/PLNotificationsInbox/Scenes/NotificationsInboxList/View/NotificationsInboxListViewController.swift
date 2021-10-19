@@ -1,7 +1,6 @@
 //
 //  NotificationsInboxListViewController.swift
-//  mCommerce
-//
+//  NotificationsInbox
 //
 
 import UI

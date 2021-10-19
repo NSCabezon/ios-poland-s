@@ -8,20 +8,11 @@ import UI
 import Commons
 
 private enum Constants {
-    static let backgroundColor: UIColor = .white
-    // TODO: Move colors to the separate module
-    
-    static let titleTextColor = UIColor(red: 37.0 / 255.0, green: 127.0 / 255.0, blue: 164.0 / 255.0, alpha: 1.0)
     static let titleTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
-    
-    static let descriptionTextColor = UIColor(red: 68.0 / 255.0, green: 68.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
     static let descriptionTextFont = UIFont.santander(family: .micro, type: .regular, size: 12.0)
-    
-    static let linkTextColor = UIColor(red: 19.0 / 255.0, green: 126.0 / 255.0, blue: 132.0 / 255.0, alpha: 1.0)
     static let linkTextFont = UIFont.santander(family: .micro, type: .bold, size: 12.0)
     
     // Separator
-    static let separatorBackgroundColor = UIColor(red: 222.0 / 255.0, green: 237.0 / 255.0, blue: 242.0 / 255.0, alpha: 1.0)
     static let separatorHeight: CGFloat = 1
 }
 
@@ -78,7 +69,7 @@ final class HelpCenterExpandableHintCell: UITableViewCell {
         setUpTitleLabel()
         setUpAccesoryImageView()
         setUpDescriptionTextView()
-        separatorView.backgroundColor = Constants.separatorBackgroundColor
+        separatorView.backgroundColor = .sky
     }
     
     private func setUpLayouts() {
@@ -117,7 +108,7 @@ final class HelpCenterExpandableHintCell: UITableViewCell {
     
     private func setUpTitleLabel() {
         titleLabel.numberOfLines = 0
-        titleLabel.applyStyle(LabelStylist(textColor: Constants.titleTextColor,
+        titleLabel.applyStyle(LabelStylist(textColor: .accessibleDarkSky,
                                            font: Constants.titleTextFont,
                                            textAlignment: .left))
     }
@@ -129,7 +120,7 @@ final class HelpCenterExpandableHintCell: UITableViewCell {
         descriptionTextView.textContainerInset = UIEdgeInsets.zero
         descriptionTextView.textContainer.lineFragmentPadding = 0
         descriptionTextView.linkTextAttributes = [NSAttributedString.Key.font: Constants.linkTextFont,
-                                                  NSAttributedString.Key.foregroundColor: Constants.linkTextColor,
+                                                  NSAttributedString.Key.foregroundColor: UIColor.darkTorquoise,
                                                   NSAttributedString.Key.underlineStyle: 0,
                                                   NSAttributedString.Key.underlineColor: UIColor.clear]
     }
@@ -231,7 +222,7 @@ private extension NSAttributedString {
             paragraphStyle.lineBreakMode = .byWordWrapping
             
             attr.addAttributes([ NSAttributedString.Key.paragraphStyle: paragraphStyle ], range: range)
-            attr.addAttributes([ NSAttributedString.Key.foregroundColor: Constants.descriptionTextColor ], range: range)
+            attr.addAttributes([ NSAttributedString.Key.foregroundColor: UIColor.lisboaGray ], range: range)
         }
         
         self.init(attributedString: attr)

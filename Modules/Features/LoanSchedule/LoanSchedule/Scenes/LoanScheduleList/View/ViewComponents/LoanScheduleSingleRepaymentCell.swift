@@ -3,18 +3,9 @@ import PLUI
 import UI
 
 private enum Constants {
-    static let backgroundColor: UIColor = .white
-    
-    static let repaymentValueTextColor = UIColor.lisboaGray
     static let repaymentValueTextFont = UIFont.santander(family: .headline, type: .bold, size: 24.0)
-    
-    static let repaymentDateTextColor = UIColor.lisboaGray
     static let repaymentDateTextFont = UIFont.santander(family: .micro, type: .regular, size: 12.0)
-
-    static let descriptionTextColor = UIColor.brownishGray
     static let descriptionTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
-    
-    static let loanTotalTextColor = UIColor.lisboaGray
     static let loanTotalTextFont = UIFont.santander(family: .micro, type: .bold, size: 14)
 }
 
@@ -23,7 +14,7 @@ class LoanScheduleSingleRepaymentCell: UITableViewCell {
     
     private lazy var shadowView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.backgroundColor
+        view.backgroundColor = .white
         view.drawRoundedBorderAndShadow(with: ShadowConfiguration(color: .lightSanGray,
                                                                   opacity: 0.5,
                                                                   radius: 2.0,
@@ -41,7 +32,7 @@ class LoanScheduleSingleRepaymentCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
         label.textAlignment = .left
-        label.textColor = Constants.repaymentValueTextColor
+        label.textColor = .lisboaGray
         label.font = Constants.repaymentValueTextFont
         shadowView.addSubview(label)
         return label
@@ -60,7 +51,7 @@ class LoanScheduleSingleRepaymentCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
         label.textAlignment = .left
-        label.textColor = Constants.repaymentDateTextColor
+        label.textColor = .lisboaGray
         label.font = Constants.repaymentDateTextFont
         shadowView.addSubview(label)
         return label
@@ -77,7 +68,7 @@ class LoanScheduleSingleRepaymentCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byCharWrapping
         label.textAlignment = .left
-        label.textColor = Constants.descriptionTextColor
+        label.textColor = .brownishGray
         label.font = Constants.descriptionTextFont
         shadowView.addSubview(label)
         return label
@@ -88,7 +79,7 @@ class LoanScheduleSingleRepaymentCell: UITableViewCell {
         label.numberOfLines = 1
         label.lineBreakMode = .byCharWrapping
         label.textAlignment = .right
-        label.textColor = Constants.loanTotalTextColor
+        label.textColor = .lisboaGray
         label.font = Constants.loanTotalTextFont
         shadowView.addSubview(label)
         return label

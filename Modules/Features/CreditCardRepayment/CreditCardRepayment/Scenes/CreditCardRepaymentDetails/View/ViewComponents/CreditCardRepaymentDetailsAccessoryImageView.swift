@@ -9,9 +9,6 @@ import Foundation
 import UIKit
 
 private enum Constants {
-    // TODO: Move colors to the separate module
-    static let backgroundColor: UIColor = .clear
-
     // Image
     static let imageLeftMargin: CGFloat = 8
     static let imageHeight: CGFloat = 24
@@ -47,7 +44,7 @@ extension CreditCardRepaymentDetailsView {
         }
 
         private func setupView() {
-            backgroundColor = Constants.backgroundColor
+            backgroundColor = .clear
             addSubview(imageView)
         }
 

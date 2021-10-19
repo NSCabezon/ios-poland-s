@@ -8,11 +8,7 @@
 import UI
 
 private enum Constants {
-    // TODO: Move colors to the separate module
-    static let backgroundColor: UIColor = .clear
-
     // Label
-    static let labelTextColor = UIColor(red: 114.0 / 255.0, green: 114.0 / 255.0, blue: 114.0 / 255.0, alpha: 1.0)
     static let labelFont = UIFont.santander(family: .text, type: .regular, size: 14)
     static let labelLeftMargin: CGFloat = 8
 }
@@ -43,12 +39,12 @@ extension CreditCardRepaymentDetailsView {
         }
 
         private func setupView() {
-            backgroundColor = Constants.backgroundColor
+            backgroundColor = .clear
             addSubview(label)
         }
 
         private func setupSubviews() {
-            label.applyStyle(LabelStylist(textColor: Constants.labelTextColor,
+            label.applyStyle(LabelStylist(textColor: .brownishGray,
                                           font: Constants.labelFont,
                                           textAlignment: .left))
         }

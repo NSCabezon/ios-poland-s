@@ -7,6 +7,7 @@
 
 import UIKit
 import UI
+import PLUI
 
 private extension CreditCardTableViewCell {
     
@@ -37,8 +38,7 @@ final class CreditCardTableViewCell: UITableViewCell {
     private lazy var creditCardNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = .zero
-        // TODO: Move color to the separate module
-        let labelStylist = LabelStylist(textColor: UIColor(white: 65.0 / 255.0, alpha: 1.0),
+        let labelStylist = LabelStylist(textColor: .greyishBrown,
                                         font: .santander(family: .micro, type: .bold, size: 16.0),
                                         textAlignment: .left)
         label.applyStyle(labelStylist)
@@ -47,8 +47,7 @@ final class CreditCardTableViewCell: UITableViewCell {
     
     private lazy var creditCardLastDigitsLabel: UILabel = {
         let label = UILabel()
-        // TODO: Move color to the separate module
-        let labelStylist = LabelStylist(textColor: UIColor(white: 139.0 / 255.0, alpha: 1.0),
+        let labelStylist = LabelStylist(textColor: .suvaGrey,
                                         font: .santander(family: .micro, type: .regular, size: 14.0),
                                         textAlignment: .left)
         label.applyStyle(labelStylist)

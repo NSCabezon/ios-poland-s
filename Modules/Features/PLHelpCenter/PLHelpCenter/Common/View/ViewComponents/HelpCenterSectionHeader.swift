@@ -9,8 +9,6 @@ import UI
 import Commons
 
 private enum Constants {
-    // TODO: Move colors to the separate module
-    static let textColor = UIColor(red: 114.0 / 255.0, green: 114.0 / 255.0, blue: 114.0 / 255.0, alpha: 1.0)
     static let textFont = UIFont.santander(family: .headline, type: .bold, size: 18.0)
     static let topMargin: CGFloat = 20
     static let leftMargin: CGFloat = 16
@@ -60,7 +58,7 @@ final class HelpCenterSectionHeader: UITableViewHeaderFooterView {
     
     private func setupTitleLabel() {
         titleLabel.numberOfLines = 1
-        titleLabel.applyStyle(LabelStylist(textColor: Constants.textColor, font: Constants.textFont, textAlignment: .left))
+        titleLabel.applyStyle(LabelStylist(textColor: .brownishGray, font: Constants.textFont, textAlignment: .left))
     }
 
 }

@@ -6,15 +6,12 @@
 //
 
 import UI
+import PLUI
 
 private enum Constants {
-    // TODO: Move colors/fonts to the separate module
-    static let backgroundColor: UIColor = .white
-        static let titleEdgeInsets = UIEdgeInsets(top: 13, left: 15, bottom: 14, right: 15)
+    static let titleEdgeInsets = UIEdgeInsets(top: 13, left: 15, bottom: 14, right: 15)
     static let titleFont = UIFont.santander(family: .micro, type: .bold, size: 16.0)
-    static let titleColor = UIColor(white: 65.0 / 255.0, alpha: 1.0)
     static let descriptionFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
-    static let descriptionColor = UIColor(white: 139.0 / 255.0, alpha: 1.0)
 
     // Shadow
     static let shadowWidthOffset: CGFloat = 4.0
@@ -46,7 +43,7 @@ extension CreditCardRepaymentDetailsView {
         }
 
         private func setupView() {
-            backgroundColor = Constants.backgroundColor
+            backgroundColor = .white
             contentHorizontalAlignment = .left
 
             titleLabel?.numberOfLines = 2
@@ -65,14 +62,14 @@ extension CreditCardRepaymentDetailsView {
         func setTitle(_ title: String, description: String?, for state: UIControl.State = []) {
             let attributedTitle = NSMutableAttributedString(string: title,
                                                             attributes: [.font: Constants.titleFont,
-                                                                         .foregroundColor: Constants.titleColor])
+                                                                         .foregroundColor: UIColor.greyishBrown])
 
             if let description = description {
                 attributedTitle.append(NSAttributedString(string: "\n"))
 
                 let attributedDescription = NSMutableAttributedString(string: description,
                                                                       attributes: [.font: Constants.descriptionFont,
-                                                                                   .foregroundColor: Constants.descriptionColor])
+                                                                                   .foregroundColor: UIColor.suvaGrey])
                 attributedTitle.append(attributedDescription)
             }
 

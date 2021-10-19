@@ -3,12 +3,7 @@ import PLUI
 import UI
 
 private enum Constants {
-    static let backgroundColor: UIColor = .white
-    
-    static let messageTextColor = UIColor.lisboaGray
     static let messageTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
-
-    static let backgroundMessageColor = UIColor.paleYellow
 }
 
 final class LoanScheduleInformationHeaderView: UITableViewHeaderFooterView {
@@ -71,12 +66,12 @@ final class LoanScheduleInformationHeaderView: UITableViewHeaderFooterView {
     
     private func setUpMessageLabel() {
         messageLabel.font = Constants.messageTextFont
-        messageLabel.textColor = Constants.messageTextColor
+        messageLabel.textColor = .lisboaGray
         messageLabel.numberOfLines = 0
         messageLabel.text = localized("pl_loanSchedule_label_loanScheduleInfo")
     }
     
     private func setUpContainerView() {
-        containerView.backgroundColor = Constants.backgroundMessageColor
+        containerView.backgroundColor = .paleYellow
     }
 }
