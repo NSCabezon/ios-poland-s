@@ -3,7 +3,7 @@ import PLUI
 import UI
 
 private enum Constants {
-    static let headerTitleTextFont = UIFont.santander(family: .micro, type: .bold, size: 24)
+    static let headerTitleTextFont = UIFont.santander(family: .micro, type: .bold, size: 20)
 }
 
 final class LoanScheduleListView: UIView {
@@ -30,6 +30,7 @@ final class LoanScheduleListView: UIView {
         
         setUpSubviews()
         setUpLayout()
+        setUpTitleLabel()
         setUpTableView()
         registerHeaderFooter()
         registerCells()
