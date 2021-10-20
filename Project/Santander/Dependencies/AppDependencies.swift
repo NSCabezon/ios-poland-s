@@ -24,6 +24,7 @@ import Cards
 import PLNotifications
 import iOSPublicFiles
 import CoreDomain
+import CommonUseCase
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -244,6 +245,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: ContactsSortedHandlerProtocol.self) { _ in
             return ContactsSortedHandler()
+        }
+        self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
+            PLOpinatorInfoOption()
         }
     }
 }
