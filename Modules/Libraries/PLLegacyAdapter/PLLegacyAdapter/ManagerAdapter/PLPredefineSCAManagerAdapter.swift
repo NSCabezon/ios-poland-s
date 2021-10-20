@@ -25,4 +25,7 @@ extension PLPredefineSCAManagerAdapter: BSANPredefineSCAManager {
     func getCVVQueryPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
         return BSANErrorResponse(nil)
     }
+    func getCardOnOffPredefinedSCA() -> BSANResponse<PredefinedSCARepresentable> {
+        return BSANErrorResponse(nil)
+    }
 }

@@ -28,6 +28,10 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
 
+    func onOffCard(cardDTO: SANLegacyLibrary.CardDTO, option: CardBlockType) throws -> BSANResponse<Void> {
+        return BSANErrorResponse(nil)
+    }
+
     func getFractionablePurchaseDetail(input: FractionablePurchaseDetailParameters) throws -> BSANResponse<FinanceableMovementDetailDTO> {
         return BSANErrorResponse(nil)
     }
