@@ -21,7 +21,7 @@ class GetPLAccountOtherOperativesWebConfigurationUseCase: UseCase<GetPLAccountOt
     
     override func executeUseCase(requestValues: GetPLAccountOtherOperativesWebConfigurationUseCaseInput) throws -> UseCaseResponse<GetPLAccountOtherOperativesWebConfigurationUseCaseOkOutput, StringErrorOutput> {
 
-        let closingUrl = "www.bancosantander.es"
+        let closingUrl = "www.bancosantander.com"
         var initialURL = requestValues.type.link ?? ""
         if let parameter = requestValues.type.parameter {
             let url = initialURL.replacingOccurrences(of: StringPlaceholder.Placeholder.number.rawValue, with: parameter)

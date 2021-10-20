@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import Commons
 
-struct PLAccountOtherOperativesData: Codable {
+struct PLAccountOtherOperativesData {
     var identifier: String?
     var link: String?
     var isAvailable: Bool?
+    var httpMethod: HTTPMethodType?
     var parameter: String?
 }

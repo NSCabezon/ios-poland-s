@@ -1,64 +1,90 @@
 {
-  "accounts_options": [
-    {
-      "id": "ADD_BANKS",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/ps-aggregator",
-      "isAvailable": true
-    },
-    {
-      "id": "CHANGE_ACCOUNT",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/contact-form",
-      "isAvailable": false
-    },
-    {
-      "id": "EDIT_GOAL",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/goal/{{NUMBER}}",
-      "isAvailable": true
-    },
-    {
-      "id": "ALERTS_NOTIFICATION",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl//centrum24-web/native/notification-settings",
-      "isAvailable": true
-    },
-    {
-      "id": "GENERATE_QR",
-      "url": null,
-      "isAvailable": false
-    },
-    {
-      "id": "CREDIT_CARD_REPAYMENT",
-      "url": null,
-      "isAvailable": false
-    },
-    {
-      "id": "HISTORY",
-      "url": null,
-      "isAvailable": false
-    },
-    {
-      "id": "ACCOUNT_STATEMENT",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox",
-      "isAvailable": true
-    },
-    {
-      "id": "CUSTOMER_SERVICE",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
-      "isAvailable": true
-    },
-    {
-      "id": "OPEN_DEPOSIT",
-      "url": null,
-      "isAvailable": false
-    },
-    {
-      "id": "FX_EXCHANGE",
-      "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/kantor",
-      "isAvailable": true
-    },
-    {
-      "id": "MEMBER_GET_MEMBER",
-      "url": null,
-      "isAvailable": false
-    }
-  ]
+    "accounts_options":[
+        {
+            "id": "ADD_BANKS",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/ps-aggregator",
+            "isAvailable": true,
+            "method": "GET"
+        },
+        {
+            "id": "CHANGE_ACCOUNT",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/contact-form",
+            "isAvailable": true,
+            "method": "GET"
+        },
+        {
+            "id": "EDIT_GOAL",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/goal/{{NUMBER}}",
+            "isAvailable": true,
+            "method": "GET"
+        },
+        {
+            "id":"ALERTS_NOTIFICATION",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
+            "isAvailable": true,
+            "method": "GET"
+        },
+        {
+            "id":"GENERATE_QR",
+            "url": null,
+            "isAvailable": false,
+            "method": "GET"
+        },
+        {
+            "id":"CREDIT_CARD_REPAYMENT",
+            "url": null,
+            "isAvailable": false,
+            "method": "GET"
+        },
+        {
+            "id": "HISTORY",
+            "url": null,
+            "isAvailable": false,
+            "method": "GET"
+        },
+        {
+            "id": "ACCOUNT_STATEMENT",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox",
+            "isAvailable": true,
+            "method": "GET"
+        },
+        {
+            "id": "CUSTOMER_SERVICE",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
+            "isAvailable": true,
+            "method": "GET"
+        },
+        {
+            "id": "OPEN_DEPOSIT",
+            "url": null,
+            "isAvailable": false,
+            "method": "GET"
+        },
+        {
+            "id": "FX_EXCHANGE",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/kantor",
+            "isAvailable": true,
+            "method": "POST"
+        },
+        {
+            "id": "MEMBER_GET_MEMBER",
+            "url": null,
+            "isAvailable": false,
+            "method": "GET"
+        }
+    ],
+    "cards_options" : [
+        {
+            "id": "MULTICURRENCY",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST"
+        },
+        {
+            "id": "CANCEL_CARD",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST"
+        }
+    ]
 }
