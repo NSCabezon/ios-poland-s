@@ -17,6 +17,7 @@
 		0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D38C7E526DE3CB70062C02C /* PLTurnOffOperative.swift */; };
 		0D42455F26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42455E26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift */; };
 		0D4D558D26A6DEEC0032466B /* PLLoanModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */; };
+		0D59D63827201813007BF898 /* PLOpinatorInfoOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D59D63727201813007BF898 /* PLOpinatorInfoOption.swift */; };
 		0D603D6626C679A60035C671 /* GetPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */; };
 		0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */; };
 		0D6E289B26BAAC8700F50A18 /* GetGPCardOperativeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6E289A26BAAC8700F50A18 /* GetGPCardOperativeModifier.swift */; };
@@ -166,6 +167,7 @@
 		0D38C7E526DE3CB70062C02C /* PLTurnOffOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTurnOffOperative.swift; sourceTree = "<group>"; };
 		0D42455E26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetail.swift; sourceTree = "<group>"; };
 		0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanModifier.swift; sourceTree = "<group>"; };
+		0D59D63727201813007BF898 /* PLOpinatorInfoOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLOpinatorInfoOption.swift; sourceTree = "<group>"; };
 		0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLDepositModifier.swift; sourceTree = "<group>"; };
 		0D6E289A26BAAC8700F50A18 /* GetGPCardOperativeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGPCardOperativeModifier.swift; sourceTree = "<group>"; };
@@ -338,6 +340,14 @@
 				0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */,
 			);
 			path = Loans;
+			sourceTree = "<group>";
+		};
+		0D59D636272017EC007BF898 /* Opinator */ = {
+			isa = PBXGroup;
+			children = (
+				0D59D63727201813007BF898 /* PLOpinatorInfoOption.swift */,
+			);
+			path = Opinator;
 			sourceTree = "<group>";
 		};
 		0D6E289826BAAC3600F50A18 /* OperativeShortcuts */ = {
@@ -575,13 +585,14 @@
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
 				0DCED399268B0B16001D38CC /* Accounts */,
 				447D7D2D268F002700F9A70D /* Cards */,
+				B01155F92715933300A4C175 /* DeepLinks */,
 				446E0C1D265FE42400847FCA /* GlobalPosition */,
 				0D7CA2CB26B8077D007E0C10 /* Inbox */,
 				0D4D558B26A6DE6D0032466B /* Loans */,
 				9E92903B26F9EABA00A0178A /* Menu */,
 				BBB8E70A26A990B400E54B2F /* Notification */,
-				B01155F92715933300A4C175 /* DeepLinks */,
 				0D8746C826E616170041C9FA /* Onboarding */,
+				0D59D636272017EC007BF898 /* Opinator */,
 				BB29664E26CFB38B0012599D /* PersonalArea */,
 				1C8B3EE8270DEF1F00868449 /* TransferOperatives */,
 			);
@@ -1176,6 +1187,7 @@
 				0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */,
 				4446D0CC2701B789008B45A0 /* PLAccountHomePresenterModifier.swift in Sources */,
 				D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */,
+				0D59D63827201813007BF898 /* PLOpinatorInfoOption.swift in Sources */,
 				BB1D29F326EA336D00684846 /* AppModifiers.swift in Sources */,
 				7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */,
 				669A37CF270F564800C0F272 /* PLAccountOtherOperativesIdentifier.swift in Sources */,

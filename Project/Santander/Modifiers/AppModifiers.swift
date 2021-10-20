@@ -24,11 +24,11 @@ import TransferOperatives
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
-        let depositModifier = DepositModifier(dependenciesResolver: self.dependencieEngine)
+        let depositModifier = PLDepositModifier(dependenciesResolver: self.dependencieEngine)
         return depositModifier
     }()
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
-        let fundModifier = FundModifier(dependenciesResolver: self.dependencieEngine)
+        let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
     }()
     private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
@@ -107,7 +107,10 @@ private extension AppModifiers {
             return self.cardDetailModifier
         }
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
-        return MonthlyBalanceUseCase(dependenciesResolver: resolver)
+            return MonthlyBalanceUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: LoansModifierProtocol.self) { resolver in
+            return self.loansModifier
         }
         self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { resolver in
             return self.loanDetailModifier
@@ -177,6 +180,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
             return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
+            return PLOpinatorInfoOption()
         }
     }
 }
