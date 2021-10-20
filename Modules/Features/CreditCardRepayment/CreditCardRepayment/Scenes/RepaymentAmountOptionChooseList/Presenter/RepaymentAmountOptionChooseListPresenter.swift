@@ -89,7 +89,7 @@ extension RepaymentAmountOptionChooseListPresenter: RepaymentAmountOptionChooseL
     private func reloadData() {
         self.repayments = repaymentsOptions.map {
             let repaymentValue: String?
-            if let amount = $0.amount?.displayValueAndCurrency {
+            if let amount = $0.amount?.getFormattedDisplayValueAndCurrency(with: NumberFormatter.PLAmountNumberFormatterWithoutCurrency) {
                 repaymentValue = amount
             } else if $0.type == .other {
                 repaymentValue = localized("pl_creditCard_text_repTypeOtherVal")
