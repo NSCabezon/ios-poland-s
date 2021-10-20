@@ -38,12 +38,12 @@ class AccountChooseListPresenterTests: XCTestCase {
             let firstAccount = accounts[safe: 0]
             XCTAssertNotNil(firstAccount)
             XCTAssertEqual(firstAccount?.accountName, "Konto Private Banking")
-            XCTAssertEqual(firstAccount?.accountAmount, "109.1 PLN")
+            XCTAssertEqual(firstAccount?.accountAmount, "109,10 PLN")
 
             let secondAccount = accounts[safe: 1]
             XCTAssertNotNil(secondAccount)
             XCTAssertEqual(secondAccount?.accountName, "Konto Jakie Chcę")
-            XCTAssertEqual(secondAccount?.accountAmount, "109391.64 PLN")
+            XCTAssertEqual(secondAccount?.accountAmount, "109 391,64 PLN")
 
             expectation.fulfill()
         }

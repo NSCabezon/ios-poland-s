@@ -84,7 +84,7 @@ extension AccountChooseListPresenter: AccountChooseListPresenterProtocol {
         let accounts = accountEntities.map {
             AccountChooseListViewModel(
                 accountName: $0.alias,
-                accountAmount: $0.availableAmount.displayValueAndCurrency,
+                accountAmount: $0.availableAmount.getFormattedDisplayValueAndCurrency(with: NumberFormatter.PLAmountNumberFormatterWithoutCurrency),
                 isSelected: self.formManager.form.account == $0
             )
         }
