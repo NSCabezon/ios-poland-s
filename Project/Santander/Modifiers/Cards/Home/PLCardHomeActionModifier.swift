@@ -295,7 +295,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private func showWebView(identifier: String, entity: CardEntity, cardData: PLAccountOtherOperativesData) {
         let input: GetPLCardsOtherOperativesWebConfigurationUseCaseInput
-        input = GetPLCardsOtherOperativesWebConfigurationUseCaseInput(type: getType(identifier: identifier), cardEntity: entity)
+        input = GetPLCardsOtherOperativesWebConfigurationUseCaseInput(type: getType(identifier: identifier), cardEntity: entity, cardData: cardData)
         let useCase = self.dependenciesResolver.resolve(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self)
         Scenario(useCase: useCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
