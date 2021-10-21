@@ -20,6 +20,8 @@ public struct ErrorDTO: Codable {
         case insufficientFunds = 725
         case noTrnToConf = 728
         case p2pAliasNotExsist = 764
+        case internalBranchAccountNoExist = 103
+        case externalBranchBranchNoExist = 105
         
         public var errorKey: String {
             switch self {

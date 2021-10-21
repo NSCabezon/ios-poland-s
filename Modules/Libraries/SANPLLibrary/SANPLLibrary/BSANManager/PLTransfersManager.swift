@@ -9,6 +9,9 @@ import CoreDomain
 
 public protocol PLTransfersManagerProtocol {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
+    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError>
+    func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -31,6 +34,38 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         switch result {
         case .success(let accountForDebitDTO):
             return .success(accountForDebitDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
+        let result = try self.transferDataSource.getPayees(parameters)
+        switch result {
+        case .success(let payeeDTOList):
+            return .success(payeeDTOList)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getRecentRecipients()
+        switch result {
+        case .success(let recentRecipientsDTO):
+            guard let transfersList = recentRecipientsDTO.recentRecipientsData else { return .failure(NetworkProviderError.other)}
+            return .success(transfersList)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError> {
+        let result = try self.transferDataSource.doIBANValidation(parameters)
+        switch result {
+        case .success(let ibanValidationDTO):
+            let validateAccountDTO: ValidateAccountTransferDTO = ValidateAccountTransferDTO(transferNationalDTO: ibanValidationDTO, errorCode: nil)
+            return .success(validateAccountDTO)
         case .failure(let error):
             return .failure(error)
         }

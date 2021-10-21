@@ -27,7 +27,26 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: GenericTransferInputRepresentable) throws -> Result<ValidateAccountTransferRepresentable, Error> {
-        return .failure(ServiceError.unknown)
+        guard let iban = nationalTransferInput.ibanRepresentable  else { return .failure(ServiceError.unknown) }
+        let codBban = iban.checkDigits + iban.codBban.replacingOccurrences(of: " ", with: "")
+        if codBban.count > 0 {
+            let start = codBban.index(codBban.startIndex, offsetBy: 2)
+            let end = codBban.index(codBban.startIndex, offsetBy: 10)
+            let range = start..<end
+            let branchId = String(codBban[range])
+            let inputParams = IBANValidationParameters(accountNumber: codBban,
+                                                       branchId: branchId)
+            let response = try bsanTransferManager.doIBANValidation(inputParams)
+            switch response {
+            case .success(let validateAccount):
+                return.success(validateAccount)
+            case .failure(let error):
+                guard let errorDTO: ErrorDTO = error.getErrorBody() else { return .failure(NetworkProviderError.other)}
+                return .failure(NetworkProviderError.error(NetworkProviderResponseError(code: errorDTO.errorCode2.rawValue, data: nil, headerFields: nil, error: error)))
+            }
+        } else {
+            return .failure(ServiceError.unknown)
+        }
     }
     
     func validateDeferredTransfer(originAcount: AccountRepresentable, scheduledTransferInput: ScheduledTransferInputRepresentable) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
@@ -63,6 +82,12 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func getAllTransfers(accounts: [AccountRepresentable]?) throws -> Result<[TransferRepresentable], Error> {
-        return .failure(ServiceError.unknown)
+        let response = try bsanTransferManager.getRecentRecipients()
+        switch response {
+        case .success(let transfers):
+            return.success(transfers)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
 }

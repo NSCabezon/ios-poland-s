@@ -44,16 +44,6 @@ struct CreditCardAccountDetailsDTO: Codable {
 struct TransactionMaskDTO: Codable {
     let debit: String?
     let credit: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case debit, credit
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.debit = try container.decodeIfPresent(String.self, forKey: .debit)
-        self.credit = try container.decodeIfPresent(String.self, forKey: .credit)
-    }
 }
 
 extension AccountForDebitDTO: AccountRepresentable {

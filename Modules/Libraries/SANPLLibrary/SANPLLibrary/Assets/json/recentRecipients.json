@@ -1,0 +1,25 @@
+{
+    "12345678Z": {
+        "0":
+        {
+            "recentRecipientsData": [
+                {
+                    "accountNo": "21124038421111000030819544",
+                    "accountName": "Jan Nowak",
+                    "amount": 123.45,
+                    "currency": "PLN",
+                    "title": "Payment",
+                    "postingDate": "2021-06-10"
+                },
+                {
+                    "accountNo": "35109000047438000000003527",
+                    "accountName": "Jan Kowalski",
+                    "amount": -987.65,
+                    "currency": "EUR",
+                    "title": "Invoice No. 444555",
+                    "postingDate": "2021-08-15"
+                }
+            ]
+        }
+    }
+}

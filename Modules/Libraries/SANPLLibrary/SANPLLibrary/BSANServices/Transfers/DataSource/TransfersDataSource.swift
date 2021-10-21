@@ -8,6 +8,9 @@ import SANLegacyLibrary
 
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
+    func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
+    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -19,6 +22,9 @@ private extension TransfersDataSource {
 final class TransfersDataSource {
     private enum TransferServiceType: String {
         case accountForDebit = "/accounts/for-debit"
+        case payees = "/payees/account"
+        case recentRecipients = "/transactions/recent-recipients"
+        case ibanValidation = "/accounts/"
     }
 
     private let networkProvider: NetworkProvider
@@ -47,6 +53,57 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                 queryParams: nil,
                                                                                                                 contentType: .urlEncoded,
                                                                                                                 localServiceName: .accountsForDebit)
+        )
+        return result
+    }
+    
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let queryParameters = try? parameters.asDictionary() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName: TransferServiceType = .payees
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<[PayeeDTO], NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName.rawValue,
+                                                                                                           serviceUrl: absoluteUrl,
+                                                                                                           method: .get,
+                                                                                                           headers: self.headers,
+                                                                                                           queryParams: queryParameters,
+                                                                                                           contentType: .queryString,
+                                                                                                           localServiceName: .getPayees)
+        )
+        return result
+    }
+    
+    func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName: TransferServiceType = .recentRecipients
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<RecentRecipientsDTO, NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName.rawValue,
+                                                                                                           serviceUrl: absoluteUrl,
+                                                                                                           method: .get,
+                                                                                                           headers: self.headers,
+                                                                                                           contentType: .urlEncoded,
+                                                                                                           localServiceName: .recentRecipients)
+        )
+        return result
+    }
+    
+    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName: String = TransferServiceType.ibanValidation.rawValue + "\(parameters.accountNumber)" + "/branch/" + "\(parameters.branchId)"
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<IBANValidationDTO, NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
+                                                                                                           serviceUrl: absoluteUrl,
+                                                                                                           method: .get,
+                                                                                                           headers: self.headers,
+                                                                                                           queryParams: nil,
+                                                                                                           contentType: .queryString,
+                                                                                                           localServiceName: .ibanValidation)
         )
         return result
     }

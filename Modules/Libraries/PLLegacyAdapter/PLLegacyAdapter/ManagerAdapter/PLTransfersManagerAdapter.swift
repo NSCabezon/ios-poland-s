@@ -6,8 +6,15 @@
 //
 
 import SANLegacyLibrary
+import SANPLLibrary
 
-final class PLTransfersManagerAdapter {}
+final class PLTransfersManagerAdapter {
+    private let transferManager: PLTransfersManagerProtocol
+    
+    init(transferManager: PLTransfersManagerProtocol) {
+        self.transferManager = transferManager
+    }
+}
  
 extension PLTransfersManagerAdapter: BSANTransfersManager {
     
@@ -67,11 +74,11 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func validateUsualTransfer(originAccountDTO: AccountDTO, usualTransferInput: UsualTransferInput, transferDTO: TransferDTO) throws -> BSANResponse<ValidateAccountTransferDTO> {
+    func validateUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, transferDTO: TransferDTO) throws -> BSANResponse<ValidateAccountTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmUsualTransfer(originAccountDTO: AccountDTO, usualTransferInput: UsualTransferInput, transferDTO: TransferDTO, signatureDTO: SignatureDTO) throws -> BSANResponse<TransferConfirmAccountDTO> {
+    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, transferDTO: TransferDTO, signatureDTO: SignatureDTO) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -79,19 +86,19 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func loadScheduledTransfers(account: AccountDTO, amountFrom: AmountDTO?, amountTo: AmountDTO?, pagination: PaginationDTO?) throws -> BSANResponse<TransferScheduledListDTO> {
+    func loadScheduledTransfers(account: SANLegacyLibrary.AccountDTO, amountFrom: AmountDTO?, amountTo: AmountDTO?, pagination: PaginationDTO?) throws -> BSANResponse<TransferScheduledListDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func getScheduledTransferDetail(account: AccountDTO, transferScheduledDTO: TransferScheduledDTO) throws -> BSANResponse<TransferScheduledDetailDTO> {
+    func getScheduledTransferDetail(account: SANLegacyLibrary.AccountDTO, transferScheduledDTO: TransferScheduledDTO) throws -> BSANResponse<TransferScheduledDetailDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func loadScheduledTransferDetail(account: AccountDTO, transferScheduledDTO: TransferScheduledDTO) throws -> BSANResponse<Void> {
+    func loadScheduledTransferDetail(account: SANLegacyLibrary.AccountDTO, transferScheduledDTO: TransferScheduledDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
-    func removeScheduledTransfer(accountDTO: AccountDTO, orderIbanDTO: IBANDTO, transferScheduledDTO: TransferScheduledDTO, signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<Void> {
+    func removeScheduledTransfer(accountDTO: SANLegacyLibrary.AccountDTO, orderIbanDTO: IBANDTO, transferScheduledDTO: TransferScheduledDTO, signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
@@ -101,7 +108,7 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     
     func storeGetHistoricalTransferCompleted(_ completed: Bool) throws {}
     
-    func validateScheduledTransfer(originAcount: AccountDTO, scheduledTransferInput: ScheduledTransferInput) throws -> BSANResponse<ValidateScheduledTransferDTO> {
+    func validateScheduledTransfer(originAcount: SANLegacyLibrary.AccountDTO, scheduledTransferInput: ScheduledTransferInput) throws -> BSANResponse<ValidateScheduledTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -109,23 +116,23 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func confirmScheduledTransfer(originAccountDTO: AccountDTO, scheduledTransferInput: ScheduledTransferInput, otpValidationDTO: OTPValidationDTO, otpCode: String) throws -> BSANResponse<ValidateScheduledTransferDTO> {
+    func confirmScheduledTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, scheduledTransferInput: ScheduledTransferInput, otpValidationDTO: OTPValidationDTO, otpCode: String) throws -> BSANResponse<ValidateScheduledTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func modifyPeriodicTransferDetail(originAccountDTO: AccountDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<ModifyPeriodicTransferDTO> {
+    func modifyPeriodicTransferDetail(originAccountDTO: SANLegacyLibrary.AccountDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<ModifyPeriodicTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func validateModifyPeriodicTransfer(originAccountDTO: AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyPeriodicTransferDTO: ModifyPeriodicTransferDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<OTPValidationDTO> {
+    func validateModifyPeriodicTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyPeriodicTransferDTO: ModifyPeriodicTransferDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<OTPValidationDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmModifyPeriodicTransfer(originAccountDTO: AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyPeriodicTransferDTO: ModifyPeriodicTransferDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO, otpValidationDTO: OTPValidationDTO, otpCode: String, scheduledDayType: ScheduledDayDTO) throws -> BSANResponse<Void> {
+    func confirmModifyPeriodicTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyPeriodicTransferDTO: ModifyPeriodicTransferDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO, otpValidationDTO: OTPValidationDTO, otpCode: String, scheduledDayType: ScheduledDayDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
-    func validateDeferredTransfer(originAcount: AccountDTO, scheduledTransferInput: ScheduledTransferInput) throws -> BSANResponse<ValidateScheduledTransferDTO> {
+    func validateDeferredTransfer(originAcount: SANLegacyLibrary.AccountDTO, scheduledTransferInput: ScheduledTransferInput) throws -> BSANResponse<ValidateScheduledTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -133,19 +140,19 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func confirmDeferredTransfer(originAccountDTO: AccountDTO, scheduledTransferInput: ScheduledTransferInput, otpValidationDTO: OTPValidationDTO, otpCode: String, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<Void> {
+    func confirmDeferredTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, scheduledTransferInput: ScheduledTransferInput, otpValidationDTO: OTPValidationDTO, otpCode: String, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
-    func modifyDeferredTransferDetail(originAccountDTO: AccountDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<ModifyDeferredTransferDTO> {
+    func modifyDeferredTransferDetail(originAccountDTO: SANLegacyLibrary.AccountDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<ModifyDeferredTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func validateModifyDeferredTransfer(originAccountDTO: AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyDeferredTransferDTO: ModifyDeferredTransferDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<OTPValidationDTO> {
+    func validateModifyDeferredTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyDeferredTransferDTO: ModifyDeferredTransferDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO) throws -> BSANResponse<OTPValidationDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmModifyDeferredTransfer(originAccountDTO: AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyDeferredTransferDTO: ModifyDeferredTransferDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO, otpValidationDTO: OTPValidationDTO, otpCode: String, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<Void> {
+    func confirmModifyDeferredTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, modifyScheduledTransferInput: ModifyScheduledTransferInput, modifyDeferredTransferDTO: ModifyDeferredTransferDTO, transferScheduledDTO: TransferScheduledDTO, transferScheduledDetailDTO: TransferScheduledDetailDTO, otpValidationDTO: OTPValidationDTO, otpCode: String, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
@@ -153,7 +160,7 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func loadEmittedTransfers(account: AccountDTO, amountFrom: AmountDTO?, amountTo: AmountDTO?, dateFilter: DateFilter, pagination: PaginationDTO?) throws -> BSANResponse<TransferEmittedListDTO> {
+    func loadEmittedTransfers(account: SANLegacyLibrary.AccountDTO, amountFrom: AmountDTO?, amountTo: AmountDTO?, dateFilter: DateFilter, pagination: PaginationDTO?) throws -> BSANResponse<TransferEmittedListDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -165,11 +172,11 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func getAccountTransactions(forAccount account: AccountDTO, pagination: PaginationDTO?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
+    func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func transferType(originAccountDTO: AccountDTO, selectedCountry: String, selectedCurrerncy: String) throws -> BSANResponse<TransfersType> {
+    func transferType(originAccountDTO: SANLegacyLibrary.AccountDTO, selectedCountry: String, selectedCurrerncy: String) throws -> BSANResponse<TransfersType> {
         return BSANErrorResponse(nil)
     }
     
@@ -193,31 +200,31 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func validateGenericTransfer(originAccountDTO: AccountDTO, nationalTransferInput: GenericTransferInputDTO) throws -> BSANResponse<ValidateAccountTransferDTO> {
+    func validateGenericTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, nationalTransferInput: GenericTransferInputDTO) throws -> BSANResponse<ValidateAccountTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func validateGenericTransferOTP(originAccountDTO: AccountDTO, nationalTransferInput: NationalTransferInput, signatureDTO: SignatureDTO) throws -> BSANResponse<OTPValidationDTO> {
+    func validateGenericTransferOTP(originAccountDTO: SANLegacyLibrary.AccountDTO, nationalTransferInput: NationalTransferInput, signatureDTO: SignatureDTO) throws -> BSANResponse<OTPValidationDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmGenericTransfer(originAccountDTO: AccountDTO, nationalTransferInput: GenericTransferInputDTO, otpValidationDTO: OTPValidationDTO?, otpCode: String?) throws -> BSANResponse<TransferConfirmAccountDTO> {
+    func confirmGenericTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, nationalTransferInput: GenericTransferInputDTO, otpValidationDTO: OTPValidationDTO?, otpCode: String?) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmGenericTransfer(originAccountDTO: AccountDTO, nationalTransferInput: GenericTransferInputDTO, otpValidationDTO: OTPValidationDTO?, otpCode: String?, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<TransferConfirmAccountDTO> {
+    func confirmGenericTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, nationalTransferInput: GenericTransferInputDTO, otpValidationDTO: OTPValidationDTO?, otpCode: String?, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func validateAccountTransfer(originAccountDTO: AccountDTO, destinationAccountDTO: AccountDTO, accountTransferInput: AccountTransferInput) throws -> BSANResponse<TransferAccountDTO> {
+    func validateAccountTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, destinationAccountDTO: SANLegacyLibrary.AccountDTO, accountTransferInput: AccountTransferInput) throws -> BSANResponse<TransferAccountDTO> {
         return BSANOkResponse(nil)
     }
     
-    func confirmAccountTransfer(originAccountDTO: AccountDTO, destinationAccountDTO: AccountDTO, accountTransferInput: AccountTransferInput, signatureDTO: SignatureDTO) throws -> BSANResponse<Void> {
+    func confirmAccountTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, destinationAccountDTO: SANLegacyLibrary.AccountDTO, accountTransferInput: AccountTransferInput, signatureDTO: SignatureDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmAccountTransfer(originAccountDTO: AccountDTO, destinationAccountDTO: AccountDTO, accountTransferInput: AccountTransferInput, signatureDTO: SignatureDTO, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<Void> {
+    func confirmAccountTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, destinationAccountDTO: SANLegacyLibrary.AccountDTO, accountTransferInput: AccountTransferInput, signatureDTO: SignatureDTO, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
     
@@ -230,7 +237,18 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     }
     
     func loadAllUsualTransfers() throws -> BSANResponse<[SANLegacyLibrary.TransferDTO]> {
-        return BSANErrorResponse(nil)
+        let parameters = GetPayeesParameters(recCunt: nil)
+        let result = try self.transferManager.getPayees(parameters)
+        switch result {
+        case .success(let response):
+            let payees =  response.map {
+                TransferDTOAdapter.adaptPayeeDTOtoTransferDTO(payeeDTO: $0)
+            }
+            return BSANOkResponse(payees)
+            
+        case .failure:
+            return BSANErrorResponse(nil)
+        }
     }
     
     func noSepaPayeeDetail(of alias: String, recipientType: String) throws -> BSANResponse<NoSepaPayeeDetailDTO> {
@@ -261,7 +279,7 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func loadTransferSubTypeCommissions(originAccount: AccountDTO, destinationAccount: IBANDTO, amount: AmountDTO, beneficiary: String, concept: String) throws -> BSANResponse<TransferSubTypeCommissionDTO> {
+    func loadTransferSubTypeCommissions(originAccount: SANLegacyLibrary.AccountDTO, destinationAccount: IBANDTO, amount: AmountDTO, beneficiary: String, concept: String) throws -> BSANResponse<TransferSubTypeCommissionDTO> {
         return BSANErrorResponse(nil)
     }
     

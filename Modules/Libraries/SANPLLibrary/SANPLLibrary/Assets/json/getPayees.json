@@ -1,0 +1,171 @@
+{
+    "12345678Z": {
+        "0": [
+            {
+                "payeeId": {
+                    "contractType": "account",
+                    "id": "1000"
+                },
+                "alias": "SRPV",
+                "account": {
+                    "accountType": {
+                        "code": 90,
+                        "name": "Rachunek dowolny"
+                    },
+                    "currencyCode": "PLN",
+                    "accountNo": "91103018853861105823286224",
+                    "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                    "branchInfo": {
+                        "branchCode": "88980003",
+                        "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                    },
+                    "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                    "taxFormType": "0",
+                    "validFrom": "2021-08-22",
+                    "transferType": "SWIFT",
+                    "status": "ACTIVE",
+                    "swiftData": {
+                        "isActive": true,
+                        "id": "121958",
+                        "bic": "KBTGCH22XXX",
+                        "branchInfo": {
+                            "branchCode": "00784",
+                            "branchName": "(HEAD OFFICE)"
+                        },
+                        "bankName": "THURGAUER KANTONALBANK",
+                        "town": "WEINFELDEN",
+                        "country": "SWITZERLAND",
+                        "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                        "type": "NORMAL",
+                        "mode": "NORMAL",
+                        "priority": "LOW",
+                        "cost": "SHA",
+                        "customerEmail": "adam.smith@gmail.com",
+                        "payment": {
+                            "accountNo": "91103018853861105823286224",
+                            "currencyCode": "PLN"
+                        },
+                        "instructions": "some instructions"
+                    }
+                }
+            },
+            {
+                "payeeId": {
+                    "contractType": "account",
+                    "id": "1001"
+                },
+                "alias": "EE_ZAUF",
+                "account": {
+                    "accountType": {
+                        "code": 90,
+                        "name": "Rachunek dowolny"
+                    },
+                    "currencyCode": "PLN",
+                    "accountNo": "91103018853861105823286335",
+                    "payeeName": "VIKSIM POLSKO ROSYJSKA SP. Z O.O",
+                    "branchInfo": {
+                        "branchCode": "10100071",
+                        "branchName": "ING BANK POLSKI S.A."
+                    },
+                    "address": "KOZIOŁKA MATOŁKA 1, PACANOWO",
+                    "taxFormType": "0",
+                    "validFrom": "2018-03-14",
+                    "validTo": "2023-12-31",
+                    "transferType": "ELIXIR",
+                    "status": "ACTIVE"
+                }
+            }
+        ],
+        "1": [
+            {
+                "payeeId": {
+                    "contractType": "account",
+                    "id": "1000"
+                },
+                "alias": "SRPVV",
+                "account": {
+                    "accountType": {
+                        "code": 90,
+                        "name": "Rachunek dowolny",
+                        "details": {
+                            "accountTypeOptions": 512,
+                            "transactionMask": {
+                                "debit": "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "credit": "01000000000000010000000000000100100000000000000000000010000000000000000000000000"
+                            }
+                        }
+                    },
+                    "currencyCode": "PLN",
+                    "accountNo": "91103018853861105823286224",
+                    "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                    "branchInfo": {
+                        "branchCode": "88980003",
+                        "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                    },
+                    "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                    "taxFormType": "0",
+                    "validFrom": "2021-08-21",
+                    "transferType": "SWIFT",
+                    "status": "ACTIVE",
+                    "swiftData": {
+                        "isActive": true,
+                        "id": "121958",
+                        "bic": "KBTGCH22XXX",
+                        "branchInfo": {
+                            "branchCode": "00784",
+                            "branchName": "(HEAD OFFICE)"
+                        },
+                        "bankName": "THURGAUER KANTONALBANK",
+                        "town": "WEINFELDEN",
+                        "country": "SWITZERLAND",
+                        "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                        "type": "NORMAL",
+                        "mode": "NORMAL",
+                        "priority": "LOW",
+                        "cost": "SHA",
+                        "customerEmail": "adam.smith@gmail.com",
+                        "payment": {
+                            "accountNo": "91103018853861105823286224",
+                            "currencyCode": "PLN"
+                        },
+                        "instructions": "some instructions"
+                    }
+                }
+            },
+            {
+                "payeeId": {
+                    "contractType": "account",
+                    "id": "1001"
+                },
+                "alias": "EE_ZAUF",
+                "account": {
+                    "accountType": {
+                        "code": 90,
+                        "name": "Rachunek dowolny",
+                        "details": {
+                            "accountTypeOptions": 512,
+                            "transactionMask": {
+                                "debit": "00000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                                "credit": "01000000000000010000000000000100100000000000000000000010000000000000000000000000"
+                            }
+                        }
+                    },
+                    "currencyCode": "PLN",
+                    "accountNo": "91103018853861105823286335",
+                    "payeeName": "VIKSIM POLSKO ROSYJSKA SP. Z O.O",
+                    "branchInfo": {
+                        "branchCode": "10100071",
+                        "branchName": "ING BANK POLSKI S.A."
+                    },
+                    "address": "KOZIOŁKA MATOŁKA 1, PACANOWO",
+                    "taxFormType": "0",
+                    "validFrom": "2018-03-14",
+                    "validTo": "2023-12-31",
+                    "transferType": "ELIXIR",
+                    "status": "ACTIVE"
+                }
+            }
+        ],
+        "2": []
+    }
+}
