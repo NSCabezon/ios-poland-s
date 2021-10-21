@@ -16,6 +16,7 @@ public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
     public var pdfSource: PdfSource?
     public var isCachePdfEnabled: Bool
     public var isFullScreenEnabled: Bool?
+    public var bodyParameters: [String: String]?
 
     public init(initialURL: String,
                 bodyParameters: [String: String]?,
@@ -28,5 +29,6 @@ public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
         self.engine = .custom(engine: "uiwebview")
         self.isCachePdfEnabled = false
         self.reloadSessionOnClose = false
+        self.bodyParameters = bodyParameters
     }
 }

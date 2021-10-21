@@ -62,7 +62,7 @@ extension GetPLCardsOtherOperativesWebConfigurationUseCase {
             ownerId = context.ownerId
             parameters["mlang"] = getLanguage()
             parameters["oneApp"] = "true"
-            if isSMECustomer(profileId: context.profileId) {
+            if isOwnerIdNeeded(type: type, profileId: context.profileId) {
                 parameters["ownerId"] = ownerId
             }
         default:
@@ -89,6 +89,13 @@ extension GetPLCardsOtherOperativesWebConfigurationUseCase {
 
     func getBaseUrl() -> String? {
         return try? self.dataProvider.getEnvironment().urlBase
+    }
+    
+    private func isOwnerIdNeeded(type: PLCardWebViewType, profileId: String) -> Bool {
+        if isSMECustomer(profileId: profileId) || type == .multicurrency {
+            return true
+        }
+        return false
     }
 
     private func isSMECustomer(profileId: String) -> Bool {

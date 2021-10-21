@@ -219,7 +219,7 @@ private extension AppDependencies {
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
-            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver)
+            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
             let networkProvider = PLNetworkProvider(dataProvider: self.bsanDataProvider, demoInterpreter: self.demoInterpreter, isTrustInvalidCertificateEnabled: false)

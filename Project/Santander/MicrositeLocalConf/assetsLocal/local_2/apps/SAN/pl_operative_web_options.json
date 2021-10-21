@@ -71,6 +71,12 @@
             "url": null,
             "isAvailable": false,
             "method": "GET"
+        },
+        {
+            "id": "SAVING_GOALS",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/start-saving",
+            "isAvailable": true,
+            "method": "POST"
         }
     ],
     "cards_options" : [

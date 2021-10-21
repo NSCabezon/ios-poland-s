@@ -21,4 +21,5 @@ public enum PLAccountOtherOperativesIdentifier: String, Codable {
     case openDeposit = "OPEN_DEPOSIT"
     case fxExchange = "FX_EXCHANGE"
     case memberGetMember = "MEMBER_GET_MEMBER"
+    case saving_goals = "SAVING_GOALS"
 }

@@ -163,8 +163,8 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: GetAccountOtherOperativesActionUseCaseProtocol.self) { resolver in
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
-            return PLAccountHomeActionModifier()
+        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { resolver in
+            return PLAccountHomeActionModifier(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
             return PLAccountTransactionDetailShareableInfo()
