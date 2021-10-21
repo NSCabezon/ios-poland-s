@@ -249,6 +249,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
             PLOpinatorInfoOption()
         }
+        self.dependencieEngine.register(for: BankingUtilsProtocol.self) { resolver in
+            BankingUtils(dependencies: resolver)
+        }
     }
 }
 

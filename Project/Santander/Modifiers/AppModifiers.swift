@@ -184,5 +184,8 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
             return PLOpinatorInfoOption()
         }
+        self.dependencieEngine.register(for: SendMoneyModifierProtocol.self) { _ in
+            return SendMoneyModifier()
+        }
     }
 }

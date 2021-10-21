@@ -16,4 +16,5 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     var isDescriptionRequired: Bool {
         return true
     }
+    let shouldShowSaveAsFavourite: Bool = false
 }
