@@ -32,4 +32,4 @@ HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/Santander/Trusteer/tas/include
 TAS_ROOT = "$(SRCROOT)/Santander/Trusteer/tas"
 APP_GROUPS_IDENTIFIER = group.es.bancosantander.mobility.ios.retail
 SHARED_KEYCHAIN_IDENTIFIER = JFX6PVNK48.es.santander.sso
-CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Debug.entitlements
+CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Dev.entitlements

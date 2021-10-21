@@ -14,7 +14,7 @@ import Models
 
 struct Compilation: PLCompilationProtocol {
     let service: String = ""
-    let sharedTokenAccessGroup: String = ""
+    let sharedTokenAccessGroup: String = XCConfig["SHARED_KEYCHAIN_IDENTIFIER"] ?? ""
     var isEnvironmentsAvailable: Bool {
         return XCConfig["ENVIRONMENTS_AVAILABLE"] ?? false
     }
@@ -44,8 +44,8 @@ struct Compilation: PLCompilationProtocol {
 
 struct CompilationKeychain: CompilationKeychainProtocol {
     let account: CompilationAccountProtocol = CompilationAccount()
-    let service: String = ""
-    let sharedTokenAccessGroup: String = ""
+    let service: String = XCConfig["KEYCHAIN_SERVICE"] ?? ""
+    let sharedTokenAccessGroup: String = XCConfig["SHARED_KEYCHAIN_IDENTIFIER"] ?? ""
 }
 
 struct CompilationAccount: CompilationAccountProtocol {

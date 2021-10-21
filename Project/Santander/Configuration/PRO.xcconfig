@@ -31,4 +31,4 @@ HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/Santander/Trusteer/tas/include
 TAS_ROOT = "$(SRCROOT)/Santander/Trusteer/tas"
 APP_GROUPS_IDENTIFIER = group.es.santander.sso
 SHARED_KEYCHAIN_IDENTIFIER = 6YVLU6LV9S.es.santander.sso
-CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Debug.entitlements
+CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Release.entitlements
