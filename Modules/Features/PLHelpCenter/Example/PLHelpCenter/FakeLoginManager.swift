@@ -5,6 +5,18 @@ typealias HelpCenterClientProfileProvider = () -> HelpCenterClientProfile
 
 final class FakePLLoginManager: PLLoginManagerProtocol {
     
+    func getAppInfo() -> AppInfo? {
+        fatalError()
+    }
+    
+    func setAppInfo(_ appInfo: AppInfo) {
+        fatalError()
+    }
+    
+    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
     private let clientProfileProvider: HelpCenterClientProfileProvider
     
     init(clientProfileProvider: @escaping HelpCenterClientProfileProvider) {

@@ -155,6 +155,7 @@ final class FakePLHelpCenterManager: PLHelpCenterManagerProtocol {
     private let mockData: PLHelpCenterMockData
     
     func getOnlineAdvisorConfig() throws -> Result<OnlineAdvisorDTO, NetworkProviderError> {
+        guard !mockData.forceOnlineAdvisorError else { return .failure(.other) }
         if let onlineAdvisorDTO = mockData.onlineAdvisorDTO {
             return .success(onlineAdvisorDTO)
         } else {
@@ -163,6 +164,7 @@ final class FakePLHelpCenterManager: PLHelpCenterManagerProtocol {
     }
     
     func getHelpQuestionsConfig() throws -> Result<HelpQuestionsDTO, NetworkProviderError> {
+        guard !mockData.forceHelpQuestionsError else { return .failure(.other) }
         if let helpQuestionsDTO = mockData.helpQuestionsDTO {
             return .success(helpQuestionsDTO)
         } else {
@@ -171,6 +173,7 @@ final class FakePLHelpCenterManager: PLHelpCenterManagerProtocol {
     }
     
     func getUserContextForOnlineAdvisor(_ parameters: OnlineAdvisorUserContextParameters) throws -> Result<OnlineAdvisorUserContextDTO, NetworkProviderError> {
+        guard !mockData.forceOnlineAdvisorUserContextError else { return .failure(.other) }
         if let onlineAdvisorUserContextDTO = mockData.onlineAdvisorUserContextDTO {
             return .success(onlineAdvisorUserContextDTO)
         } else {
@@ -179,6 +182,7 @@ final class FakePLHelpCenterManager: PLHelpCenterManagerProtocol {
     }
     
     func getUserContextForOnlineAdvisorBeforeLogin(_ parameters: OnlineAdvisorUserContextParameters) throws -> Result<OnlineAdvisorUserContextDTO, NetworkProviderError> {
+        guard !mockData.forceOnlineAdvisorUserContextError else { return .failure(.other) }
         if let onlineAdvisorUserContextDTO = mockData.onlineAdvisorUserContextDTO {
             return .success(onlineAdvisorUserContextDTO)
         } else {

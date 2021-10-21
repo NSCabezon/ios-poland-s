@@ -32,6 +32,7 @@ final class GetUserContextForOnlineAdvisorUseCase: UseCase<GetUserContextForOnli
             return try getUserContextForOnlineAdvisor(parameters)
         }
     }
+    
     private func getUserContextForOnlineAdvisorBeforeLogin(_ parameters: OnlineAdvisorUserContextParameters) throws -> UseCaseResponse<GetUserContextForOnlineAdvisorUseCaseOkOutput, StringErrorOutput> {
         try handleResult(helpCenterManager.getUserContextForOnlineAdvisorBeforeLogin(parameters))
     }

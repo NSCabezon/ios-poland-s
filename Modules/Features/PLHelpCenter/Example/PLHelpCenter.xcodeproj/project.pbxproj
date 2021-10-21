@@ -15,6 +15,7 @@
 		00D88A9526CA855C00072757 /* FakeLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D88A9426CA855B00072757 /* FakeLoginManager.swift */; };
 		00D88A9726CA856900072757 /* FakeStringLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D88A9626CA856900072757 /* FakeStringLoader.swift */; };
 		3602051026EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3602050F26EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift */; };
+		36B57AEF2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B57AEE2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		00D88A9626CA856900072757 /* FakeStringLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStringLoader.swift; sourceTree = "<group>"; };
 		32C2D1A34A1871C2A023688C /* Pods_PLHelpCenter_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PLHelpCenter_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3602050F26EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpCenterSceneTypeUseCaseTests.swift; sourceTree = "<group>"; };
+		36B57AEE2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift; sourceTree = "<group>"; };
 		4C217DD59EF7C05E1E62DD58 /* Pods-PLHelpCenter_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLHelpCenter_Tests.debug.xcconfig"; path = "Target Support Files/Pods-PLHelpCenter_Tests/Pods-PLHelpCenter_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PLHelpCenter_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLHelpCenter_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				00B66AD526EB5D37003D2351 /* GetHelpCenterConfigUseCaseTests.swift */,
 				3602050F26EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift */,
+				36B57AEE2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				00B66AEC26EB71F5003D2351 /* ViewController.swift in Sources */,
 				00B66ADC26EB5D38003D2351 /* Constants.swift in Sources */,
 				3602051026EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift in Sources */,
+				36B57AEF2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
