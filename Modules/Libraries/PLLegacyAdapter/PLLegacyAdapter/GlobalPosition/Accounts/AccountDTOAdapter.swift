@@ -19,7 +19,7 @@ public final class AccountDTOAdapter {
         accountDTO.availableNoAutAmount = AmountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
         accountDTO.countervalueAvailableNoAutAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plAccount.availableFunds)
 
-        accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.accountId?.id)
+        accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.number)
         accountDTO.isMainAccount = plAccount.defaultForPayments
 
         return accountDTO
