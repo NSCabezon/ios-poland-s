@@ -8,7 +8,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         return viewModel
     }
     var freqOneInputSelectViewModel: OneInputSelectViewModel? {
-        return OneInputSelectViewModel(status: .activated, infoLabelText: "sendMoney_label_periodicity", pickerData: ["periodicContribution_label_monthly", "periodicContribution_label_quarterly", "periodicContribution_label_biannual"], selectedInput: 0)
+        return OneInputSelectViewModel(status: .activated, infoLabelKey: "sendMoney_label_periodicity", pickerData: ["periodicContribution_label_monthly", "periodicContribution_label_quarterly", "periodicContribution_label_biannual"], selectedInput: 0)
     }
     var bussinessOneInputSelectViewModel: OneInputSelectViewModel? {
         return OneInputSelectViewModel(status: .activated, pickerData: ["sendMoney_label_previousWorkingDay", "sendMoney_label_previousWorkingDay"], selectedInput: 0)
