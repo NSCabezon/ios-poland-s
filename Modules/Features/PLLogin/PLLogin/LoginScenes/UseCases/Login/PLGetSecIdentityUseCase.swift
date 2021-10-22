@@ -10,16 +10,12 @@ import DomainCommon
 import PLCommons
 import SelfSignedCertificate
 
-final class PLGetSecIdentityUseCase: UseCase<PLGetSecIdentityUseCaseInput, PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<SelfSignedCertificateSecIdentityError>> {
+final class PLGetSecIdentityUseCase: UseCase<PLGetSecIdentityUseCaseInput, PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
-    public override func executeUseCase(requestValues: PLGetSecIdentityUseCaseInput) throws -> UseCaseResponse<PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<SelfSignedCertificateSecIdentityError>> {
+    public override func executeUseCase(requestValues: PLGetSecIdentityUseCaseInput) throws -> UseCaseResponse<PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let secIdentity = try SecIdentity.getSecIdentity(label: requestValues.label)
-        let secCertificate = try SecIdentity.getSecCertificateFromSecIdentity(secIdentity: secIdentity)
-        let encodedCertificsate = try SecIdentity.encodeCertificate(secCertificate: secCertificate)
-        let privateKey = try SecIdentity.getPrivateKeyFromSecIdentity(secIdentity: secIdentity)
-        let publicKey = try SecIdentity.getPublicKeyFromSecIdentity(secIdentity: secIdentity)
 
-        return UseCaseResponse.ok(PLGetSecIdentityUseCaseOkOutput(secIdentity: secIdentity, secCertificate: secCertificate, encodedCertificate: encodedCertificsate, privateKey: privateKey, publicKey: publicKey))
+        return UseCaseResponse.ok(PLGetSecIdentityUseCaseOkOutput(secIdentity: secIdentity))
     }
 }
 
@@ -30,8 +26,4 @@ struct PLGetSecIdentityUseCaseInput {
 
 public struct PLGetSecIdentityUseCaseOkOutput {
     let secIdentity: SecIdentity?
-    let secCertificate: SecCertificate?
-    let encodedCertificate: String?
-    let privateKey: SecKey?
-    let publicKey: SecKey?
 }

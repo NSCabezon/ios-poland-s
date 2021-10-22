@@ -53,6 +53,10 @@ final class PLDeviceDataPresenter {
         self.dependenciesResolver.resolve(for: PLDeviceDataCertificateCreationUseCase.self)
     }
 
+    private var storeCertificatCreationUseCase: PLStoreSecIdentityUseCase {
+        self.dependenciesResolver.resolve(for: PLStoreSecIdentityUseCase.self)
+    }
+
     private var registerDeviceUseCase: PLDeviceDataRegisterDeviceUseCase {
         self.dependenciesResolver.resolve(for: PLDeviceDataRegisterDeviceUseCase.self)
     }
@@ -117,28 +121,22 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
         let certificateCreationUseCaseInput = PLDeviceDataCertificateCreationUseCaseInput()
         let certificateScenario = Scenario(useCase: self.certificatCreationUseCase, input: certificateCreationUseCaseInput)
-
-        let values: (transportKeyEncryption: String?, parametersEncryption: String?, certificate: String?, privateKey: SecKey?) = (nil, nil, nil, nil)
+        
+        let values: (transportKeyEncryption: String?, parametersEncryption: String?, identity: SecIdentity?) = (nil, nil, nil)
         MultiScenario(handledOn: self.dependenciesResolver.resolve(), initialValue: values)
             .addScenario(trasportKeyScenario) { (updatedValues, output, _) in
                 updatedValues.transportKeyEncryption = output.encryptedTransportKey
             }.addScenario(parametersScenario) { (updatedValues, output, _) in
                 updatedValues.parametersEncryption = output.encryptedParameters
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
-                updatedValues.certificate = output.certificate
-                updatedValues.privateKey = output.privateKey
-            }.then(scenario: { (transportKeyEncryption, parametersEncryption, certificate, key) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
+                updatedValues.identity = output.identity
+            }.then(scenario: { (transportKeyEncryption, parametersEncryption, identity) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
                                                                                         deviceTime: deviceData.deviceTime,
-                                                                                        certificate: certificate ?? "",
+                                                                                        certificate: identity?.PEMFormattedCertificate() ?? "",
                                                                                         appId: deviceData.appId)
-
-                // TODO: Save certificate and pair of keys
-                let softwareToken = TrustedDeviceConfiguration.SoftwareToken(privateKey: key,
-                                                                             certificatePEM: certificate)
-                self.deviceConfiguration.softwareToken = softwareToken
-
+                self.deviceConfiguration.softwareToken = TrustedDeviceConfiguration.SoftwareToken(identity: identity)
                 return Scenario(useCase: self.registerDeviceUseCase, input: registerDeviceUseCaseInput)
             })
             .onSuccess { [weak self] registerSoftwareTokenOutput in
@@ -150,8 +148,17 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                                                                                  ivrInputCode: registerSoftwareTokenOutput.ivrInputCode)
                 self.deviceConfiguration.trustedDevice = trustedDeviceInfo
                 self.goToTrustedDevicePIN()
-            }.onError { [weak self] error in
+            }
+            .onError { [weak self] error in
                 self?.handleError(error)
+            }
+            .finally { [weak self] in
+                guard let self = self,
+                      let identity = self.deviceConfiguration.softwareToken?.identity else { return }
+
+                let useCaseInput = PLStoreSecIdentityUseCaseInput(label: PLLoginConstants.certificateIdentityLabel, identity: identity)
+                Scenario(useCase: self.storeCertificatCreationUseCase, input: useCaseInput)
+                    .execute(on: self.dependenciesResolver.resolve())
             }
     }
 

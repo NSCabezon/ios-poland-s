@@ -63,7 +63,7 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
     
     func registerConfirm(code: String) {
         guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
-              let pinToken = tokens.first(where: { $0.type == "PIN" }) else {
+              let pinToken = tokens.first(where: { $0.typeMapped == .PIN }) else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput(errorDescription: "Required parameter not found")))
             return
         }

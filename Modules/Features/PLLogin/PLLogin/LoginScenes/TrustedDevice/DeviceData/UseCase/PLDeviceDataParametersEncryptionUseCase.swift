@@ -52,7 +52,7 @@ private extension PLDeviceDataParametersEncryptionUseCase {
             throw PLDeviceDataEncryptionError.parametersEncryptionError
         }
 
-        return encryptedParametersBytes.toBase64() ?? ""
+        return encryptedParametersBytes.toBase64()
     }
 }
 

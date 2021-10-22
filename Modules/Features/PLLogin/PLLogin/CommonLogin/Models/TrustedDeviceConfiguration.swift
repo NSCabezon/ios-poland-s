@@ -28,8 +28,7 @@ public class TrustedDeviceConfiguration {
     }
 
     struct SoftwareToken {
-        let privateKey: SecKey?
-        let certificatePEM: String?
+        let identity: SecIdentity?
     }
 
     struct DeviceHeaders {

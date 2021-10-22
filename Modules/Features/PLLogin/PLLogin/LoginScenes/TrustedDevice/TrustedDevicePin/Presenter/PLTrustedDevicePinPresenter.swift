@@ -10,7 +10,7 @@ import os
 protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDevicePinViewProtocol? { get set }
     func viewDidLoad()
-    func registerSoftwareToken(with createBiometricToken: Bool)
+    func registerSoftwareToken(with createBiometricToken: Bool, and PIN: String)
     func goToDeviceTrustDeviceData()
     func shouldShowBiometry() -> Bool
 }
@@ -33,15 +33,24 @@ private extension PLTrustedDevicePinPresenter {
     var deviceConfiguration: TrustedDeviceConfiguration {
         return self.dependenciesResolver.resolve(for: TrustedDeviceConfiguration.self)
     }
+    private var userKeyReEncryptionUseCase: PLTrustedDeviceUserKeyReEncryptionUseCase {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceUserKeyReEncryptionUseCase.self)
+    }
+    private var storeEncryptedUserKeyUseCase: PLTrustedDeviceStoreEncryptedUserKeyUseCase {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceStoreEncryptedUserKeyUseCase.self)
+    }
+    private var getSecIdentityUseCase: PLGetSecIdentityUseCase {
+        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase.self)
+    }
 }
 
 extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     func viewDidLoad() {
     }
 
-    func registerSoftwareToken(with createBiometricToken: Bool) {
-        guard let key = self.deviceConfiguration.softwareToken?.privateKey,
-              let deviceData = self.deviceConfiguration.deviceData else {
+    func registerSoftwareToken(with createBiometricToken: Bool, and PIN: String) {
+        guard let key = self.deviceConfiguration.softwareToken?.identity?.privateKey,
+            let deviceData = self.deviceConfiguration.deviceData else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
             return
         }
@@ -51,6 +60,7 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
                                completion: nil)
 
         var deviceHeaders: TrustedDeviceConfiguration.DeviceHeaders?
+        var tokens: [TrustedDeviceSoftwareToken]?
 
         let softwareTokenEncryptionUseCase = PLSoftwareTokenParametersEncryptionUseCase(dependenciesResolver: self.dependenciesResolver)
         let softwareTokenEncryptionUseCaseInput = PLSoftwareTokenParametersEncryptionUseCaseInput(parameters: deviceData.parameters,
@@ -71,9 +81,25 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
                                                                                                 deviceTime: deviceData.deviceTime)
                 return Scenario(useCase: softwareTokenRegistrationUseCase, input: softwareTokenRegistrationUseCaseInput)
             })
+            .then(scenario: {  [weak self] (output) -> Scenario<PLTrustedDeviceUserKeyReEncryptionUseCaseInput, PLTrustedDeviceUserKeyReEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { return nil }
+                tokens = output.tokens
+                guard let tokens = tokens else { return nil }
+                let useCaseInput = PLTrustedDeviceUserKeyReEncryptionUseCaseInput(appId: deviceData.appId,
+                                                                                  pin: PIN,
+                                                                                  privateKey: key,
+                                                                                  tokens: tokens)
+                return Scenario(useCase: self.userKeyReEncryptionUseCase, input: useCaseInput)
+            })
+            .then(scenario: {  [weak self] (output) -> Scenario<PLTrustedDeviceStoreEncryptedUserKeyUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { return nil }
+                let useCaseInput = PLTrustedDeviceStoreEncryptedUserKeyUseCaseInput(encryptedUserKeyPIN: output.reEncryptedUserKeyPIN,
+                                                                                    encryptedUserKeyBiometrics: output.reEncryptedUserKeyBiometrics)
+                return Scenario(useCase: self.storeEncryptedUserKeyUseCase, input: useCaseInput)
+            })
             .onSuccess({ [weak self] output in
                 guard let self = self else { return }
-                self.deviceConfiguration.tokens = output.tokens
+                self.deviceConfiguration.tokens = tokens
                 self.deviceConfiguration.deviceHeaders = deviceHeaders
                 self.goToVoiceBotScreen()
             })

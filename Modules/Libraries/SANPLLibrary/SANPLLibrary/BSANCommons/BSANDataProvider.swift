@@ -70,6 +70,23 @@ public class BSANDataProvider {
         return trustedDeviceHeaders
     }
 
+    public func storeEncryptedUserKeys(_ encryptedKeys: EncryptedUserKeys) {
+        objc_sync_enter(self.dataRepository)
+        self.dataRepository.store(encryptedKeys, DataRepositoryPolicy.createPersistentPolicy())
+        objc_sync_exit(self.dataRepository)
+    }
+
+    public func deleteEncryptedUserKeys() {
+        self.dataRepository.remove(TrustedDeviceHeaders.self, .createPersistentPolicy())
+    }
+
+    public func getEncryptedUserKeys() -> EncryptedUserKeys? {
+        guard let encryptedKeys = self.dataRepository.get(EncryptedUserKeys.self, DataRepositoryPolicy.createPersistentPolicy()) else {
+            return nil
+        }
+        return encryptedKeys
+    }
+
     public func setDemoMode(_ isDemo: Bool, _ demoUser: String?) {
         if isDemo, let demoUser = demoUser {
             objc_sync_enter(dataRepository)

@@ -188,7 +188,7 @@ private extension PLTrustedDevicePinViewController {
             self.showNotEqualPinDialog()
         }
         else {
-            self.presenter.registerSoftwareToken(with: self.shouldCreateBiometricToken)
+            self.presenter.registerSoftwareToken(with: self.shouldCreateBiometricToken, and: pinInputText)
         }
     }
 

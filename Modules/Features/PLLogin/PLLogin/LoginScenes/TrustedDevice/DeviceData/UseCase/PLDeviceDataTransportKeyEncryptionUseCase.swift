@@ -54,8 +54,7 @@ private extension PLDeviceDataTransportKeyEncryptionUseCase {
             throw PLDeviceDataEncryptionError.transportKeyEncryptionError
         }
 
-        let encryptedTransportKeyBase64 = encryptedTransportKey.toBase64()
-        return encryptedTransportKeyBase64 ?? ""
+        return encryptedTransportKey.toBase64()
     }
 }
 

@@ -77,4 +77,16 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
     public func storeTrustedDeviceHeaders(_ headers: TrustedDeviceHeaders) {
         self.bsanDataProvider.storeTrustedDeviceHeaders(headers)
     }
+
+    public func getEncryptedUserKeys() -> EncryptedUserKeys? {
+        return self.bsanDataProvider.getEncryptedUserKeys()
+    }
+
+    public func deleteEncryptedUserKeys() {
+        return self.bsanDataProvider.deleteEncryptedUserKeys()
+    }
+
+    public func storeEncryptedUserKeys(_ keys: EncryptedUserKeys) {
+        self.bsanDataProvider.storeEncryptedUserKeys(keys)
+    }
 }
