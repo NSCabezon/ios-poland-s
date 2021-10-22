@@ -212,7 +212,7 @@ platform :ios do
        "pl.bancosantander.oneapp.intern.#{options[:version]}",
        "pl.bancosantander.oneapp.pre.#{options[:version]}"],
       type: 'development',
-      readonly: false
+      readonly: true
     )
   end
 
