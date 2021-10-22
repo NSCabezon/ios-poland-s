@@ -107,43 +107,37 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         
         var chequesResult: Result<[BlikCheque], Swift.Error>?
         var walletParamsResult: Result<WalletParams, Swift.Error>?
-        let dispatchGroup = DispatchGroup()
         
-        dispatchGroup.enter()
-        Scenario(useCase: loadChequesUseCase, input: listType)
-            .execute(on: useCaseHandler)
-            .onSuccess { cheques in
-                chequesResult = .success(cheques)
-                dispatchGroup.leave()
-            }
-            .onError { error in
-                chequesResult = .failure(error)
-                dispatchGroup.leave()
-            }
+        let input = LoadChequesUseCaseInput(chequeListType: listType)
+        let loadChequesScenario = Scenario(useCase: loadChequesUseCase, input: input)
+        let loadWalletScenario = Scenario(useCase: loadWalletParamsUseCase)
         
-        dispatchGroup.enter()
-        Scenario(useCase: loadWalletParamsUseCase)
-            .execute(on: useCaseHandler)
-            .onSuccess { params in
-                walletParamsResult = .success(params)
-                dispatchGroup.leave()
+        MultiScenario(handledOn: useCaseHandler)
+            .addScenario(loadChequesScenario) { updatedValues, output, _ in
+                chequesResult = .success(output.chequeList)
             }
-            .onError { error in
-                walletParamsResult = .failure(error)
-                dispatchGroup.leave()
+            .addScenario(loadWalletScenario) { updatedValues, output, _ in
+                walletParamsResult = .success(output.walletParams)
             }
-        
-        
-        dispatchGroup.notify(queue: .main) {
-            guard let result = chequesResult else {
-                self.showChequeListErrorMessage()
-                return
+            .onSuccess { [weak self] _ in
+                self?.walletParams = try? walletParamsResult?.get()
             }
-            self.handleLoadChequesResult(result)
-            self.walletParams = try? walletParamsResult?.get()
-            self.view?.dismissLoading()
-            self.view?.enableCreateChequeButton()
+            .onError { [weak self] _ in
+                self?.walletParams = try? walletParamsResult?.get()
+            }
+            .finally { [weak self] in
+                self?.updateView(with: chequesResult)
+            }
+    }
+    
+    private func updateView(with chequesResult: Result<[BlikCheque], Swift.Error>?) {
+        guard let result = chequesResult else {
+            self.showChequeListErrorMessage()
+            return
         }
+        self.handleLoadChequesResult(result)
+        self.view?.dismissLoading()
+        self.view?.enableCreateChequeButton()
     }
     
     private func silentlyRefreshData(completion: (() -> Void)?) {
@@ -152,7 +146,10 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
                 releaseBlock()
                 return
             }
-            Scenario(useCase: strongSelf.loadChequesUseCase, input: strongSelf.listType)
+            let input = LoadChequesUseCaseInput(
+                chequeListType: strongSelf.listType
+            )
+            Scenario(useCase: strongSelf.loadChequesUseCase, input: input)
                 .execute(on: strongSelf.useCaseHandler)
                 .onSuccess { cheques in
                     guard let strongSelf = self else {
@@ -160,7 +157,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
                         return
                     }
                     releaseBlock()
-                    strongSelf.handleLoadChequesResult(.success(cheques))
+                    strongSelf.handleLoadChequesResult(.success(cheques.chequeList))
                     completion?()
                 }
                 .onError { error in

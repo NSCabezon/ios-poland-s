@@ -34,6 +34,7 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accountSelectionHandler = accountSelectionHandler
         self.screenLocationConfiguration = screenLocationConfiguration
+        self.setupDependencies()
     }
     
     public func start() {
@@ -41,7 +42,7 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
             dependenciesResolver: dependenciesEngine,
             coordinator: self,
             loadAccountsUseCase: LoadCustomerAccountsUseCase(
-                managersProvider: dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
+                dependenciesResolver: dependenciesEngine
             ),
             viewModelMapper: SelectableAccountViewModelMapper(
                 amountFormatter: .PLAmountNumberFormatter
@@ -64,5 +65,13 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
     
     func close() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension AccountSelectorCoordinator {
+    func setupDependencies() {
+        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
+            return AccountForDebitMapper()
+        }
     }
 }

@@ -37,8 +37,8 @@ final class AccountSelectorPresenter: AccountSelectorPresenterProtocol {
         view?.showLoader()
         Scenario(useCase: loadAccountsUseCase)
             .execute(on: useCaseHandler)
-            .onSuccess { [weak self] accounts in
-                self?.fetchedAccounts = accounts
+            .onSuccess { [weak self] output in
+                self?.fetchedAccounts = output.accountsForDebit
                 self?.view?.hideLoader(completion: {
                     self?.displayFetchedAccounts()
                 })

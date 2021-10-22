@@ -3,10 +3,10 @@ import Contacts
 import DomainCommon
 import SANPLLibrary
 
-protocol GetContactsUseCaseProtocol: UseCase<Void, [Contact], StringErrorOutput> {}
+protocol GetContactsUseCaseProtocol: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {}
 
 
-final class GetContactsUseCase: UseCase<Void, [Contact], StringErrorOutput> {
+final class GetContactsUseCase: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {
     private let contactStore: CNContactStore
     private let contactMapper: ContactMapping
 
@@ -15,7 +15,7 @@ final class GetContactsUseCase: UseCase<Void, [Contact], StringErrorOutput> {
         self.contactMapper = contactMapper
     }
     
-    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<[Contact], StringErrorOutput> {
+    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<GetContactsUseCaseOutput, StringErrorOutput> {
         var contacts = [CNContact]()
         let keys = [
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
@@ -33,8 +33,14 @@ final class GetContactsUseCase: UseCase<Void, [Contact], StringErrorOutput> {
         
         let mappedContacts = contactMapper.map(contacts: contacts)
         
-        return .ok(mappedContacts)
+        return .ok(
+            GetContactsUseCaseOutput(contacts: mappedContacts)
+        )
     }
 }
 
 extension GetContactsUseCase: GetContactsUseCaseProtocol {}
+
+struct GetContactsUseCaseOutput {
+    let contacts: [Contact]
+}

@@ -83,7 +83,7 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
             initialViewModel: viewModel,
             viewModelMapper: viewModelMapper,
             registerPhoneNumberUseCase: RegisterPhoneNumberUseCase(
-                managersProvider: dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
+                dependenciesResolver: dependenciesEngine
             )
         )
         let viewController = PhoneTransferRegistrationFormViewController(presenter: presenter)
@@ -113,7 +113,7 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
             dependenciesResolver: dependenciesEngine,
             coordinator: self,
             registerPhoneNumberUseCase: RegisterPhoneNumberUseCase(
-                managersProvider: dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
+               dependenciesResolver: dependenciesEngine
             ),
             selectedAccountNumber: selectedAccountNumber
         )

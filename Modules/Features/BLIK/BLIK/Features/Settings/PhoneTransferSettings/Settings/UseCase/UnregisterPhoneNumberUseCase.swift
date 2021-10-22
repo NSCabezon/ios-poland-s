@@ -13,13 +13,16 @@ import SANPLLibrary
 protocol UnregisterPhoneNumberUseCaseProtocol: UseCase<Void, Void, StringErrorOutput> {}
 
 final class UnregisterPhoneNumberUseCase: UseCase<Void, Void, StringErrorOutput> {
-    private let managersProvider: PLManagersProviderProtocol
+    private let dependenciesResolver: DependenciesResolver
     
-    init(managersProvider: PLManagersProviderProtocol) {
-        self.managersProvider = managersProvider
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
     override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<Void, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
+        )
         let result = try managersProvider.getBLIKManager().unregisterPhoneNumber()
         switch result {
         case .success:

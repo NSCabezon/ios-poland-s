@@ -39,9 +39,7 @@ public final class ChequeFormFactory: ChequeFormProducing {
             ),
             coordinator: coordinator,
             createChequeUseCase: CreateChequeUseCase(
-                managersProvider: dependenciesResolver.resolve(
-                    for: PLManagersProviderProtocol.self
-                )
+                dependenciesResolver: dependenciesResolver
             ),
             amountLimit: amountLimitWithCurrency,
             currency: currency

@@ -10,24 +10,29 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 
-protocol LoadWalletParamsUseCaseProtocol: UseCase<Void, WalletParams, StringErrorOutput> {}
+protocol LoadWalletParamsUseCaseProtocol: UseCase<Void, LoadWalletParamsUseCaseOutput, StringErrorOutput> {}
 
-final class LoadWalletParamsUseCase: UseCase<Void, WalletParams, StringErrorOutput> {
-    private let managersProvider: PLManagersProviderProtocol
+final class LoadWalletParamsUseCase: UseCase<Void, LoadWalletParamsUseCaseOutput, StringErrorOutput> {
+    private let dependenciesResolver: DependenciesResolver
     
-    init(managersProvider: PLManagersProviderProtocol) {
-        self.managersProvider = managersProvider
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<WalletParams, StringErrorOutput> {
+    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<LoadWalletParamsUseCaseOutput, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
+        )
         let result = try managersProvider.getBLIKManager().getWalletParams()
         
         switch result {
         case let .success(dto):
             return .ok(
-                WalletParams(
-                    activeChequesLimit: dto.maxActiveCheques,
-                    maxChequeAmount: Decimal(dto.maxChequeAmount)
+                LoadWalletParamsUseCaseOutput(
+                    walletParams: WalletParams(
+                        activeChequesLimit: dto.maxActiveCheques,
+                        maxChequeAmount: Decimal(dto.maxChequeAmount)
+                    )
                 )
             )
         case .failure(let error):
@@ -47,4 +52,8 @@ extension LoadWalletParamsUseCase: LoadWalletParamsUseCaseProtocol {
             }
         }
     }
+}
+
+struct LoadWalletParamsUseCaseOutput {
+    let walletParams: WalletParams
 }

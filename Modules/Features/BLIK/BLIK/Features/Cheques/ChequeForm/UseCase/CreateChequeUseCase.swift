@@ -11,24 +11,25 @@ import DomainCommon
 import SANPLLibrary
 
 
-protocol CreateChequeUseCaseProtocol: UseCase<CreateChequeRequest, Void, StringErrorOutput> {}
+protocol CreateChequeUseCaseProtocol: UseCase<CreateChequeUseCaseInput, Void, StringErrorOutput> {}
 
-final class CreateChequeUseCase: UseCase<CreateChequeRequest, Void, StringErrorOutput> {
+final class CreateChequeUseCase: UseCase<CreateChequeUseCaseInput, Void, StringErrorOutput> {
+    private let dependenciesResolver: DependenciesResolver
     private let secondsInHour = 3600
-    private let managersProvider: PLManagersProviderProtocol
     
-    init(
-        managersProvider: PLManagersProviderProtocol
-    ) {
-        self.managersProvider = managersProvider
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: CreateChequeRequest) throws -> UseCaseResponse<Void, StringErrorOutput> {
+    override func executeUseCase(requestValues: CreateChequeUseCaseInput) throws -> UseCaseResponse<Void, StringErrorOutput> {
         let request = CreateChequeRequestDTO(
-            ticketTime: requestValues.ticketTime * secondsInHour,
-            ticketName: requestValues.ticketName,
-            ticketAmount: requestValues.ticketAmount,
-            ticketCurrency: requestValues.ticketCurrency
+            ticketTime: requestValues.chequeRequest.ticketTime * secondsInHour,
+            ticketName: requestValues.chequeRequest.ticketName,
+            ticketAmount: requestValues.chequeRequest.ticketAmount,
+            ticketCurrency: requestValues.chequeRequest.ticketCurrency
+        )
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
         )
         let result = try managersProvider.getBLIKManager().createCheque(request: request)
         switch result {
@@ -41,3 +42,7 @@ final class CreateChequeUseCase: UseCase<CreateChequeRequest, Void, StringErrorO
 }
 
 extension CreateChequeUseCase: CreateChequeUseCaseProtocol {}
+
+struct CreateChequeUseCaseInput {
+    let chequeRequest: CreateChequeRequest
+}

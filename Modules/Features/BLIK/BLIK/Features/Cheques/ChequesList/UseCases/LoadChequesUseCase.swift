@@ -10,23 +10,25 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 
-protocol LoadChequesUseCaseProtocol: UseCase<ChequeListType, [BlikCheque], StringErrorOutput> {}
+protocol LoadChequesUseCaseProtocol: UseCase<LoadChequesUseCaseInput, LoadChequesUseCaseOutput, StringErrorOutput> {}
 
-final class LoadChequesUseCase: UseCase<ChequeListType, [BlikCheque], StringErrorOutput> {
-    private let managersProvider: PLManagersProviderProtocol
-    private let modelMapper: ChequeModelMapping
+final class LoadChequesUseCase: UseCase<LoadChequesUseCaseInput, LoadChequesUseCaseOutput, StringErrorOutput> {
+    private let dependenciesResolver: DependenciesResolver
     
-    init(
-        managersProvider: PLManagersProviderProtocol,
-        modelMapper: ChequeModelMapping
-    ) {
-        self.managersProvider = managersProvider
-        self.modelMapper = modelMapper
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: ChequeListType) throws -> UseCaseResponse<[BlikCheque], StringErrorOutput> {
+    override func executeUseCase(requestValues: LoadChequesUseCaseInput) throws -> UseCaseResponse<LoadChequesUseCaseOutput, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
+        )
+        let modelMapper: ChequeModelMapping =
+            dependenciesResolver.resolve(
+                for: ChequeModelMapping.self
+            )
         let result: Result<[BlikChequeDTO], NetworkProviderError> = try {
-            switch requestValues {
+            switch requestValues.chequeListType {
             case .active:
                 return try managersProvider.getBLIKManager().getActiveCheques()
             case .archived:
@@ -38,7 +40,9 @@ final class LoadChequesUseCase: UseCase<ChequeListType, [BlikCheque], StringErro
         case let .success(dtos):
             do {
                 let models = try dtos.map { try modelMapper.map(dto: $0) }
-                return .ok(models)
+                return .ok(
+                    LoadChequesUseCaseOutput(chequeList: models)
+                )
             } catch {
                 return .error(.init(error.localizedDescription))
             }
@@ -49,3 +53,11 @@ final class LoadChequesUseCase: UseCase<ChequeListType, [BlikCheque], StringErro
 }
 
 extension LoadChequesUseCase: LoadChequesUseCaseProtocol {}
+
+struct LoadChequesUseCaseInput {
+    let chequeListType: ChequeListType
+}
+
+struct LoadChequesUseCaseOutput {
+    let chequeList: [BlikCheque]
+}

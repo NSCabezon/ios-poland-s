@@ -42,12 +42,13 @@ public final class ChequesFactory: ChequesProducing {
             dependenciesResolver: dependenciesResolver,
             coordinator: coordinator,
             listType: listType,
-            loadChequesUseCase: LoadChequesUseCase(
-                managersProvider: dependenciesResolver.resolve(for: PLManagersProviderProtocol.self),
-                modelMapper: ChequeModelMapper(dateFormatter: PLTimeFormat.YYYYMMDD_HHmmssSSS.createDateFormatter())
-            ),
+            loadChequesUseCase:
+                LoadChequesUseCase(
+                    dependenciesResolver: dependenciesResolver
+                )
+            ,
             loadWalletParamsUseCase: LoadWalletParamsUseCase(
-                managersProvider: dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+                dependenciesResolver: dependenciesResolver
             ),
             viewModelMapper: ChequeViewModelMapper(
                 amountFormatter: .PLAmountNumberFormatter

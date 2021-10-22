@@ -44,7 +44,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         case activeCheques = "/e-wallet/cheques/active"
         case archivedCheques = "/e-wallet/cheques/archived"
         case walletParams = "/e-wallet/params"
-        case cheques = "/e-wallet/cheques/"
+        case cheques = "/e-wallet/cheques"
         case chequesPin = "/e-wallet/cheques/pin"
         case publicKey = "/pub_key/KEY_BLIK_CHEQUE_PIN"
         case accounts = "/customer/accounts"

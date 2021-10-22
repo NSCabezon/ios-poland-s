@@ -31,7 +31,7 @@ public final class ChequesPinFactory: ChequesPinProducing {
             confirmationVisibility: .hidden,
             coordinator: coordinator,
             saveChequePinUseCase: SaveChequePinUseCase(
-                managersProvider: dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+                dependenciesResolver: dependenciesResolver
             ),
             encryptChequePinUseCase: EncryptChequePinUseCase(
                 managersProvider: dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)

@@ -12,14 +12,13 @@ protocol GetTrnToConfProtocol: UseCase<Void, GetTrnToConfUseCaseOkOutput, String
 
 final class GetTrnToConfUseCase: UseCase<Void, GetTrnToConfUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
-    private let managersProvider: PLManagersProviderProtocol
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
-        self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
     }
     
     override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<GetTrnToConfUseCaseOkOutput, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let result = try managersProvider.getBLIKManager().getTrnToConf()
         switch result {
         case .success(let transaction):

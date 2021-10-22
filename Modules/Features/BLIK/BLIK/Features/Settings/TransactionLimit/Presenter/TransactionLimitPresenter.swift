@@ -149,7 +149,10 @@ private extension TransactionLimitPresenter {
     
     func saveTransactionLimit(model: TransactionLimitModel) {
         view?.showLoader()
-        Scenario(useCase: setTransactionsLimitUseCase, input: model)
+        let input = SetTransactionsLimitUseCaseInput(
+            transactionLimit: model
+        )
+        Scenario(useCase: setTransactionsLimitUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
                 self?.view?.hideLoader(completion: {

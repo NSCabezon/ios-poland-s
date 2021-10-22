@@ -73,9 +73,7 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
                 amountFormatterWithoutCurrency: .PLAmountNumberFormatterWithoutCurrency
             ),
             setTransactionsLimitUseCase: SetTransactionsLimitUseCase(
-                managersProvider: dependenciesEngine.resolve(
-                    for: PLManagersProviderProtocol.self
-                )
+              dependenciesResolver: dependenciesEngine
             ),
             validator: TransactionsLimitValidator(),
             coordinator: self)

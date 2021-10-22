@@ -61,9 +61,12 @@ extension ChequeDetailsPresenter: ChequeDetailsPresenterProtocol {
     func didPressRemove() {
         coordinator.showRemoveChequeConfirmationAlert { [weak self] in
             guard let strongSelf = self else { return }
-            
+            let input = RemoveChequeUseCaseInput(
+                chequeId: strongSelf.cheque.id
+            )
             strongSelf.view?.showLoader()
-            Scenario(useCase: strongSelf.removeUserCase, input: strongSelf.cheque.id)
+            Scenario(
+                useCase: strongSelf.removeUserCase, input: input)
                 .execute(on: strongSelf.useCaseHandler)
                 .onSuccess { [weak self] in
                     self?.view?.hideLoader(completion: {

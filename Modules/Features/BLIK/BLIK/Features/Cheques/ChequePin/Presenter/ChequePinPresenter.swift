@@ -73,10 +73,11 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
     
     private func encryptAndSavePin(_ pin: ChequePin) {
         view?.showLoader()
-        Scenario(useCase: encryptChequePinUseCase, input: pin)
+        let input = EncryptChequePinUseCaseInput(chequePin: pin)
+        Scenario(useCase: encryptChequePinUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] params in
-                self?.save(enctiptedPin: params)
+                self?.save(encryptedPin: params)
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader(completion: {
@@ -85,8 +86,9 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
             }
     }
     
-    private func save(enctiptedPin: String) {
-        Scenario(useCase: saveChequePinUseCase, input: enctiptedPin)
+    private func save(encryptedPin: String) {
+        let input = SaveChequePinUseCaseInput(encryptedPin: encryptedPin)
+        Scenario(useCase: saveChequePinUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] params in
                 self?.view?.hideLoader(completion: {

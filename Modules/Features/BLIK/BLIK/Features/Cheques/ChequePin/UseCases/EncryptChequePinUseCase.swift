@@ -3,9 +3,9 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 
-protocol EncryptChequePinUseCaseProtocol: UseCase<ChequePin, String, StringErrorOutput> {}
+protocol EncryptChequePinUseCaseProtocol: UseCase<EncryptChequePinUseCaseInput, String, StringErrorOutput> {}
 
-final class EncryptChequePinUseCase: UseCase<ChequePin, String, StringErrorOutput> {
+final class EncryptChequePinUseCase: UseCase<EncryptChequePinUseCaseInput, String, StringErrorOutput> {
     enum Error: Swift.Error {
         case incorrectKeyData
         case messageTooLongForRsa
@@ -24,14 +24,17 @@ final class EncryptChequePinUseCase: UseCase<ChequePin, String, StringErrorOutpu
         self.modelMapper = modelMapper
     }
     
-    override func executeUseCase(requestValues: ChequePin) throws -> UseCaseResponse<String, StringErrorOutput> {
+    override func executeUseCase(requestValues: EncryptChequePinUseCaseInput) throws -> UseCaseResponse<String, StringErrorOutput> {
         let result = try managersProvider.getBLIKManager().getPinPublicKey()
         switch result {
         case .success(let pubKeyDto):
             let pubKey = modelMapper.map(dto: pubKeyDto)
             
             let secKey = try createSecKey(for: pubKey)
-            let encryptedPin = try encrypt(text: requestValues.pin, using: secKey)
+            let encryptedPin = try encrypt(
+                text: requestValues.chequePin.pin,
+                using: secKey
+            )
             return .ok(encryptedPin)
             
         case .failure(let error):
@@ -145,3 +148,7 @@ final class EncryptChequePinUseCase: UseCase<ChequePin, String, StringErrorOutpu
 }
 
 extension EncryptChequePinUseCase: EncryptChequePinUseCaseProtocol {}
+
+struct EncryptChequePinUseCaseInput {
+    let chequePin: ChequePin
+}

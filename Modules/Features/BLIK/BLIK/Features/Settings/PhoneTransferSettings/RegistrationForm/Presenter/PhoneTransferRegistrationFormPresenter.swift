@@ -49,14 +49,18 @@ final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFor
             accountNo: selectedAccountNumber,
             authCode: nil
         )
-        
         view?.showLoader()
-        Scenario(useCase: registerPhoneNumberUseCase, input: request)
+        let input = RegisterPhoneNumberUseCaseInput(
+            registerPhoneNumberRequest: request
+        )
+        Scenario(useCase: registerPhoneNumberUseCase, input: input)
             .execute(on: useCaseHandler)
-            .onSuccess { [weak self] response in
+            .onSuccess { [weak self] output in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {
-                    strongSelf.handleRegisterResponse(response)
+                    strongSelf.handleRegisterResponse(
+                        output.registerPhoneNumberResponse
+                    )
                 })
             }
             .onError { [weak self] error in

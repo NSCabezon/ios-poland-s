@@ -3,26 +3,27 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 
-protocol SetTransactionsLimitUseCaseProtocol: UseCase<TransactionLimitModel, Void, StringErrorOutput> {}
+protocol SetTransactionsLimitUseCaseProtocol: UseCase<SetTransactionsLimitUseCaseInput, Void, StringErrorOutput> {}
 
-final class SetTransactionsLimitUseCase: UseCase<TransactionLimitModel, Void, StringErrorOutput> {
-    private let managersProvider: PLManagersProviderProtocol
+final class SetTransactionsLimitUseCase: UseCase<SetTransactionsLimitUseCaseInput, Void, StringErrorOutput> {
+    private let dependenciesResolver: DependenciesResolver
     
-    init(
-        managersProvider: PLManagersProviderProtocol
-    ) {
-        self.managersProvider = managersProvider
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: TransactionLimitModel) throws -> UseCaseResponse<Void, StringErrorOutput> {
+    override func executeUseCase(requestValues: SetTransactionsLimitUseCaseInput) throws -> UseCaseResponse<Void, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
+        )
         let request = TransactionLimitRequestDTO(
             shopLimits: TransactionLimitRequestDTO.Limits(
-                trnLimit: requestValues.purchaseLimit,
-                cycleLimit: requestValues.purchaseLimit
+                trnLimit: requestValues.transactionLimit.purchaseLimit,
+                cycleLimit: requestValues.transactionLimit.purchaseLimit
             ),
             cashLimits: TransactionLimitRequestDTO.Limits(
-                trnLimit: requestValues.withdrawLimit,
-                cycleLimit: requestValues.withdrawLimit
+                trnLimit: requestValues.transactionLimit.withdrawLimit,
+                cycleLimit: requestValues.transactionLimit.withdrawLimit
             )
         )
         let result = try managersProvider.getBLIKManager().setTransactionLimits(request)
@@ -36,3 +37,7 @@ final class SetTransactionsLimitUseCase: UseCase<TransactionLimitModel, Void, St
 }
 
 extension SetTransactionsLimitUseCase: SetTransactionsLimitUseCaseProtocol {}
+
+struct SetTransactionsLimitUseCaseInput {
+    let transactionLimit: TransactionLimitModel
+}

@@ -79,7 +79,8 @@ final class ChequeFormPresenter: ChequeFormPresenterProtocol {
     
     private func createCheque(with request: CreateChequeRequest) {
         view?.showLoader()
-        Scenario(useCase: self.createChequeUseCase, input: request)
+        let input = CreateChequeUseCaseInput(chequeRequest: request)
+        Scenario(useCase: self.createChequeUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 guard let strongSelf = self else { return }

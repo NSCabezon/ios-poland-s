@@ -3,19 +3,24 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 
-protocol SaveOtherSettingsUseCaseProtocol: UseCase<String, Void, StringErrorOutput> {}
+protocol SaveOtherSettingsUseCaseProtocol: UseCase<SaveOtherSettingsUseCaseInput, Void, StringErrorOutput> {}
 
-final class SaveOtherSettingsUseCase: UseCase<String, Void, StringErrorOutput> {
-    private let managersProvider: PLManagersProviderProtocol
+final class SaveOtherSettingsUseCase: UseCase<SaveOtherSettingsUseCaseInput, Void, StringErrorOutput> {
+    private let dependenciesResolver: DependenciesResolver
     
-    init(
-        managersProvider: PLManagersProviderProtocol
-    ) {
-        self.managersProvider = managersProvider
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: String) throws -> UseCaseResponse<Void, StringErrorOutput> {
-        let result = try managersProvider.getBLIKManager().setChequePin(request: SetChequeBlikPinParameters(chequePin: requestValues))
+    override func executeUseCase(requestValues: SaveOtherSettingsUseCaseInput) throws -> UseCaseResponse<Void, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
+        )
+        let result = try managersProvider.getBLIKManager().setChequePin(
+            request: SetChequeBlikPinParameters(
+                chequePin: requestValues.chequePin
+            )
+        )
         switch result {
         case .success:
             return .ok()
@@ -26,3 +31,7 @@ final class SaveOtherSettingsUseCase: UseCase<String, Void, StringErrorOutput> {
 }
 
 extension SaveOtherSettingsUseCase: SaveOtherSettingsUseCaseProtocol {}
+
+struct SaveOtherSettingsUseCaseInput {
+    let chequePin: String
+}

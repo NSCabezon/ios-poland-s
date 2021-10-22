@@ -5,26 +5,32 @@ import SANPLLibrary
 import PLCommons
 import PLCommonOperatives
 
-protocol LoadCustomerAccountsUseCaseProtocol: UseCase<Void, [AccountForDebit], StringErrorOutput> {}
+protocol LoadCustomerAccountsUseCaseProtocol: UseCase<Void, LoadCustomerAccountsUseCaseOutput, StringErrorOutput> {}
 
-final class LoadCustomerAccountsUseCase: UseCase<Void, [AccountForDebit], StringErrorOutput> {
-    private let managersProvider: PLManagersProviderProtocol
-    private let mapper: AccountForDebitMapping
-    
-    init(
-        managersProvider: PLManagersProviderProtocol,
-        mapper: AccountForDebitMapping = AccountForDebitMapper()
-    ) {
-        self.managersProvider = managersProvider
-        self.mapper = mapper
+final class LoadCustomerAccountsUseCase: UseCase<Void, LoadCustomerAccountsUseCaseOutput, StringErrorOutput> {
+    private let dependenciesResolver: DependenciesResolver
+
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<[AccountForDebit], StringErrorOutput> {
+    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<LoadCustomerAccountsUseCaseOutput, StringErrorOutput> {
+        let managersProvider: PLManagersProviderProtocol = dependenciesResolver.resolve(
+            for: PLManagersProviderProtocol.self
+        )
+        let mapper: AccountForDebitMapping =
+            dependenciesResolver.resolve(
+                for: AccountForDebitMapping.self
+            )
         let result = try managersProvider.getBLIKManager().getAccounts()
         switch result {
         case .success(let data):
             let customerAccounts = try data.map { try mapper.map(dto: $0) }
-            return .ok(customerAccounts)
+            return .ok(
+                LoadCustomerAccountsUseCaseOutput(
+                    accountsForDebit: customerAccounts
+                )
+            )
         case .failure(let error):
             return .error(.init(error.localizedDescription))
         }
@@ -32,3 +38,7 @@ final class LoadCustomerAccountsUseCase: UseCase<Void, [AccountForDebit], String
 }
 
 extension LoadCustomerAccountsUseCase: LoadCustomerAccountsUseCaseProtocol {}
+
+struct LoadCustomerAccountsUseCaseOutput {
+    let accountsForDebit: [AccountForDebit]
+}

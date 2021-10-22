@@ -10,6 +10,7 @@ import Models
 import Commons
 import DataRepository
 import SANPLLibrary
+import PLCommons
 
 /**
     #Add method that must be handle by the BLIKHomeCoordinator like 
@@ -145,6 +146,12 @@ private extension BLIKHomeCoordinator {
         
         self.dependenciesEngine.register(for: GetTrnToConfProtocol.self) { resolver in
             return GetTrnToConfUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: ChequeModelMapping.self) { resolver in
+            return ChequeModelMapper(
+                dateFormatter: PLTimeFormat.YYYYMMDD_HHmmssSSS.createDateFormatter()
+            )
         }
     }
 }

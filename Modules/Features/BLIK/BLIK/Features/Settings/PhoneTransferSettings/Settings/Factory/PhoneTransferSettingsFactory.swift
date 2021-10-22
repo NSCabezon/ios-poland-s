@@ -30,9 +30,7 @@ final class PhoneTransferSettingsFactory: PhoneTransferSettingsProducing {
             dependenciesResolver: dependenciesResolver,
             coordinator: coordinator,
             unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCase(
-                managersProvider: dependenciesResolver.resolve(
-                    for: PLManagersProviderProtocol.self
-                )
+                dependenciesResolver: dependenciesResolver
             )
         )
         let controller = PhoneTransferSettingsViewController(

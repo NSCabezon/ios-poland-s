@@ -26,9 +26,7 @@ public final class ChequesDetailsFactory: ChequesDetailsProducing {
             coordinator: coordinator,
             cheque: cheque,
             removeUserCase: RemoveChequeUseCase(
-                managersProvider: dependenciesResolver.resolve(
-                    for: PLManagersProviderProtocol.self
-                )
+                dependenciesResolver: dependenciesResolver
             ),
             viewModelMapper: ChequeDetailsViewModelMapper(
                 amountFormatter: .PLAmountNumberFormatter

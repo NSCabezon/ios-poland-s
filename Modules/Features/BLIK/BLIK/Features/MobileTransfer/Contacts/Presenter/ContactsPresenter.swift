@@ -84,8 +84,8 @@ private extension ContactsPresenter {
 
         Scenario(useCase: getContactsUseCase)
             .execute(on: queue)
-            .onSuccess {[weak self] contacts in
-                self?.verifyContacts(contacts)
+            .onSuccess {[weak self] output in
+                self?.verifyContacts(output.contacts)
             }
             .onError {[weak self] _ in
                 self?.view?.hideLoader {
