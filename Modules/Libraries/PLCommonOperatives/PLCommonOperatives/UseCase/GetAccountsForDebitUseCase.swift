@@ -2,6 +2,7 @@ import Commons
 import Foundation
 import DomainCommon
 import SANPLLibrary
+import PLCommons
 
 public protocol GetAccountsForDebitProtocol: UseCase<Void, [AccountForDebit], StringErrorOutput> {}
 

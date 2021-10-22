@@ -2,6 +2,7 @@ import Models
 import Commons
 import PLUI
 import PLCommons
+import PLCommonOperatives
 
 protocol ContactsPresenterProtocol: MenuTextWrapperProtocol {
     var view: ContactsViewProtocol? { get set }

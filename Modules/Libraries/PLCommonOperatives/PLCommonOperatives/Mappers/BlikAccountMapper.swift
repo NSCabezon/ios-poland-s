@@ -2,6 +2,7 @@ import Commons
 import Foundation
 import DomainCommon
 import SANPLLibrary
+import PLCommons
 
 public protocol AccountForDebitMapping {
     func map(dto: DebitAccountDTO) throws -> AccountForDebit

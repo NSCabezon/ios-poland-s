@@ -3,7 +3,7 @@ import Models
 import Commons
 import Contacts
 import PLUI
-import PLCommons
+import PLCommonOperatives
 
 protocol ContactsCoordinatorProtocol {
     func showForm(with accounts: [SelectableAccountViewModel], contact: Contact?)

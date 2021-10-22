@@ -3,6 +3,7 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 import PLCommons
+import PLCommonOperatives
 
 protocol LoadCustomerAccountsUseCaseProtocol: UseCase<Void, [AccountForDebit], StringErrorOutput> {}
 
