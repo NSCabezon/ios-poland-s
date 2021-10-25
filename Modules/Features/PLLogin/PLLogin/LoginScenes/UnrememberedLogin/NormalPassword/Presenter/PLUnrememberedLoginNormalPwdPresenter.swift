@@ -34,6 +34,7 @@ final class PLUnrememberedLoginNormalPwdPresenter {
 extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPresenterProtocol {
 
     func login(password: String) {
+        self.trackEvent(.clickInitSession)
         self.loginConfiguration.password = password
         
         switch self.loginConfiguration.challenge.authorizationType {
@@ -47,6 +48,9 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
     }
 
     func viewDidLoad() {
+        let image: Bool = loginConfiguration.loginImageData != nil
+        self.trackerManager.trackScreen(screenId: PLUnrememberedLoginNormalPasswordPage().page, extraParameters: [PLLoginTrackConstants().trustedImage: String(image), PLLoginTrackConstants().referer : PLUnrememberedLoginPage().page])
+
         self.view?.setUserIdentifier(loginConfiguration.displayUserIdentifier)
 
         if let imageString = loginConfiguration.loginImageData,
@@ -55,7 +59,7 @@ extension PLUnrememberedLoginNormalPwdPresenter: PLUnrememberedLoginNormalPwdPre
             self.view?.setUserImage(image: image)
         }
     }
-    
+
     func didSelectMenu() {
         self.coordinatorDelegate.didSelectMenu()
     }
@@ -80,5 +84,15 @@ private extension  PLUnrememberedLoginNormalPwdPresenter {
     
     var coordinatorDelegate: LoginCoordinatorDelegate {
         return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
+    }
+}
+
+extension PLUnrememberedLoginNormalPwdPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLUnrememberedLoginNormalPasswordPage {
+        return PLUnrememberedLoginNormalPasswordPage()
     }
 }

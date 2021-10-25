@@ -45,7 +45,7 @@ final class PLRememberedLoginPinPresenter {
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
     
     func loginSuccess(configuration: RememberedLoginConfiguration) {
-       
+        self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "PIN"])
         guard allowLoginBlockedUsers else {
             self.view?.dismissLoading(completion: { [weak self] in
                 self?.view?.showAccountTemporaryBlockedDialog(configuration)
@@ -62,6 +62,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
             } else if configuration.isFinal() {
                 self.view?.showInvalidSCADialog()
             } else if configuration.isBlocked() && time > now {
+                self.trackEvent(.userTemporarilyBlocked)
                 self.allowLoginBlockedUsers = false
                 self.view?.showAccountTemporaryBlockedDialog(configuration)
             } else {
@@ -75,6 +76,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     }
     
     func getBiometryTypeAvailable() -> BiometryTypeEntity {
+        self.trackEvent(.clickBiometric)
         guard enabledBiometrics else { return .none }
         #if targetEnvironment(simulator)
         return .faceId
@@ -88,7 +90,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     }
     
     func didSelectBlik() {
-        
+        self.trackEvent(.clickBlik)
     }
 
     func doLogin(with pin: String) {
@@ -96,7 +98,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     }
     
     func viewDidLoad() {
-        
+        self.trackScreen()
     }
     
     func viewDidAppear() {
@@ -125,6 +127,7 @@ extension PLRememberedLoginPinPresenter: PLLoginPresenterErrorHandlerProtocol {
             switch description {
             case "TEMPORARY_LOCKED":
                 self.view?.dismissLoading(completion: { [weak self] in
+                    self?.trackEvent(.userPermanentlyBlocked)
                     self?.view?.showAccountPermanentlyBlockedDialog()
                 })
                 return
@@ -137,5 +140,15 @@ extension PLRememberedLoginPinPresenter: PLLoginPresenterErrorHandlerProtocol {
         self.associatedErrorView?.presentError(error, completion: { [weak self] in
             self?.genericErrorPresentedWith(error: error)
         })
+    }
+}
+
+extension PLRememberedLoginPinPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLRememberedLoginPinPage {
+        return PLRememberedLoginPinPage()
     }
 }

@@ -38,7 +38,8 @@ final class PLUnrememberedLoginOnboardingViewController: UIViewController {
         fatalError()
     }
     
-    override func viewDidLoad() {        
+    override func viewDidLoad() {
+        self.presenter.viewDidLoad()
         self.setupViews()
     }
     

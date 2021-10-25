@@ -12,6 +12,7 @@ import SANPLLibrary
 
 public protocol PLLoginPresenterErrorHandlerProtocol: PLGenericErrorPresenterLayerProtocol {
     func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>)
+    func getHttpErrorCode(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> String?
 }
 
 extension PLLoginPresenterErrorHandlerProtocol {
@@ -42,6 +43,18 @@ extension PLLoginPresenterErrorHandlerProtocol {
             self.handle(error: .noConnection)
         default:
             self.handle(error: .applicationNotWorking)
+        }
+    }
+
+    func getHttpErrorCode(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> String? {
+        switch error {
+            case .error(let err):
+                guard let httpErrorCoden = err?.httpErrorCode else { return ""}
+                return String(httpErrorCoden)
+            case .networkUnavailable:
+                return ""
+            default:
+                return ""
         }
     }
 }

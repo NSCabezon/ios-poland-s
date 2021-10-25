@@ -35,6 +35,8 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
 
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
+        let image: Bool = loginConfiguration.loginImageData != nil
+        self.trackerManager.trackScreen(screenId: PLUnrememberedLoginMaskedPasswordPage().page, extraParameters: [PLLoginTrackConstants().trustedImage: String(image), PLLoginTrackConstants().referer : PLUnrememberedLoginPage().page])
         self.view?.setUserIdentifier(loginConfiguration.displayUserIdentifier)
 
         if let imageString = loginConfiguration.loginImageData,
@@ -45,6 +47,7 @@ extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPre
     }
     
     func login(password: String) {
+        self.trackEvent(.clickInitSession)
         self.loginConfiguration.password = password
         switch self.loginConfiguration.challenge.authorizationType {
         case .sms:
@@ -99,5 +102,15 @@ private extension  PLUnrememberedLoginMaskedPwdPresenter {
     
     var coordinatorDelegate: LoginCoordinatorDelegate {
         return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
+    }
+}
+
+extension PLUnrememberedLoginMaskedPwdPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLUnrememberedLoginMaskedPasswordPage {
+        return PLUnrememberedLoginMaskedPasswordPage()
     }
 }
