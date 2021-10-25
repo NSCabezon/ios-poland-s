@@ -25,7 +25,7 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
     
     init(
         dependenciesResolver: DependenciesResolver,
-        wallet: GetWalletUseCaseOkOutput.Wallet,
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>,
         viewModelMapper: TransactionLimitViewModelMapping,
         setTransactionsLimitUseCase: SetTransactionsLimitUseCaseProtocol,
         validator: TransactionsLimitValidation,
@@ -33,7 +33,7 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
         confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     ) {
         self.dependenciesResolver = dependenciesResolver
-        self.initialViewModel = viewModelMapper.map(wallet)
+        self.initialViewModel = viewModelMapper.map(wallet.getValue())
         self.setTransactionsLimitUseCase = setTransactionsLimitUseCase
         self.validator = validator
         self.coordinator = coordinator

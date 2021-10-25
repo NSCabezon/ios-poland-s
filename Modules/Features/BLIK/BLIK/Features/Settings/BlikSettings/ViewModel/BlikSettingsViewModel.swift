@@ -8,15 +8,15 @@
 typealias BlikSettingsMenuView = MenuView<BlikSettingsViewModel>
 
 enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
-    case codelessPayment
+    case aliasPayment
     case phoneTransfer
     case transferLimits
     case otherSettings
     
     var image: UIImage {
         switch self {
-        case .codelessPayment:
-            return Images.Settings.codelessPayment
+        case .aliasPayment:
+            return Images.Settings.aliasPayment
         case .phoneTransfer:
             return Images.Settings.phoneTransfer
         case .transferLimits:
@@ -28,7 +28,7 @@ enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
     
     var title: String {
         switch self {
-        case .codelessPayment:
+        case .aliasPayment:
             return "#Zakupy bez kodu"
         case .phoneTransfer:
             return "#Przelew na telefon BLIK"
@@ -41,7 +41,7 @@ enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
     
     var description: String {
         switch self {
-        case .codelessPayment:
+        case .aliasPayment:
             return "#Płać  szybciej i wygodniej w internecie."
         case .phoneTransfer:
             return "#Pieniądze  błyskawicznie na koncie odbiorcy."

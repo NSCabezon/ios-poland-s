@@ -29,7 +29,7 @@ protocol PhoneTransferSettingsCoordinatorProtocol: ModuleCoordinator {
 final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let wallet: GetWalletUseCaseOkOutput.Wallet
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     private let viewModelMapper: PhoneTransferSettingsViewModelMapping
     private let phoneTransferSettingsFactory: PhoneTransferSettingsProducing
     private let unregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumberConfirmationProducing
@@ -39,7 +39,7 @@ final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
-        wallet: GetWalletUseCaseOkOutput.Wallet,
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>,
         viewModelMapper: PhoneTransferSettingsViewModelMapping = PhoneTransferSettingsViewModelMapper(),
         phoneTransferSettingsFactory: PhoneTransferSettingsProducing,
         unregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumberConfirmationProducing = UnregisterPhoneNumberConfirmationFactory()
@@ -53,7 +53,7 @@ final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
     }
     
     public func start() {
-        let viewModel = viewModelMapper.map(wallet: wallet)
+        let viewModel = viewModelMapper.map(wallet: wallet.getValue())
         let controller = phoneTransferSettingsFactory.create(
             viewModel: viewModel,
             coordinator: self
@@ -69,14 +69,14 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
         let confirmationAlert = unregisterPhoneNumberConfirmationFactory.create(
             confirmAction: onConfirm,
             declineAction: {},
-            accountToUnregisterNumber: wallet.sourceAccount.number
+            accountToUnregisterNumber: wallet.getValue().sourceAccount.number
         )
         confirmationAlert.showIn(navigationController)
     }
     
     func showPhoneNumberRegistrationForm() {
         let viewModelMapper = PhoneTransferRegistrationFormViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-        let viewModel = viewModelMapper.map(wallet.sourceAccount)
+        let viewModel = viewModelMapper.map(wallet.getValue().sourceAccount)
         let presenter = PhoneTransferRegistrationFormPresenter(
             dependenciesResolver: dependenciesEngine,
             coordinator: self,

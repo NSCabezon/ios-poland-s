@@ -10,6 +10,6 @@ import Foundation
 enum BLIKMenuItem: CaseIterable {
     case mobileTransfer
     case cheque
-    case codelessPayment
+    case aliasPayment
     case settings
 }

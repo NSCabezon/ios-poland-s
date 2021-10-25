@@ -19,8 +19,8 @@ struct BLIKMenuViewModel: MenuViewModel {
             return Images.Menu.mobileTransfer
         case .cheque:
             return Images.Menu.cheque
-        case .codelessPayment:
-            return Images.Menu.codeless
+        case .aliasPayment:
+            return Images.Menu.alias
         case .settings:
             return Images.Menu.settings
         }
@@ -32,7 +32,7 @@ struct BLIKMenuViewModel: MenuViewModel {
             return localized("pl_blik_text_payMobile")
         case .cheque:
             return localized("pl_blik_text_cheque")
-        case .codelessPayment:
+        case .aliasPayment:
             return localized("pl_blik_text_withoutCode")
         case .settings:
             return localized("pl_blik_text_blikSettings")
@@ -45,7 +45,7 @@ struct BLIKMenuViewModel: MenuViewModel {
             return localized("pl_blik_label_payMobileDesc")
         case .cheque:
             return localized("pl_blik_label_chequeDesc")
-        case .codelessPayment:
+        case .aliasPayment:
             return localized("pl_blik_label_withoutCodeDesc")
         case .settings:
             return localized("pl_blik_label_blikSettingsDesc")

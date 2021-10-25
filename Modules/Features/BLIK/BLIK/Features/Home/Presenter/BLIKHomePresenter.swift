@@ -21,7 +21,7 @@ final class BLIKHomePresenter {
     weak var view: BLIKHomeViewProtocol?
     let dependenciesResolver: DependenciesResolver
     
-    private var wallet: GetWalletUseCaseOkOutput.Wallet?
+    private var wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>?
     private let timer = TimerHandler()
     private let contactsPermission: ContactPermissionAuthorizatorProtocol
 
@@ -74,8 +74,8 @@ extension BLIKHomePresenter: BLIKHomePresenterProtocol {
             tryToShowSettings()
         case .mobileTransfer:
             tryToShowContacts()
-        default:
-            break
+        case .aliasPayment:
+            coordinator.showAliasPayment()
         }
     }
     
@@ -91,9 +91,7 @@ extension BLIKHomePresenter: BLIKHomePresenterProtocol {
             return
         }
 
-        coordinator.showCheques(
-            shouldConfigurePin: wallet.shouldSetChequePin
-        )
+        coordinator.showCheques(with: wallet)
     }
     
     private func tryToShowSettings() {
@@ -147,7 +145,7 @@ private extension BLIKHomePresenter {
             .onSuccess { [weak self] output in
                 switch output.serviceStatus {
                 case let .available(wallet):
-                    self?.wallet = wallet
+                    self?.wallet = SharedValueBox(value: wallet)
                     self?.getInitialTransactionsToConfirm()
                 case .unavailable:
 

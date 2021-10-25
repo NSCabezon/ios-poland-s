@@ -12,6 +12,7 @@ import Commons
 
 protocol OtherBlikSettingsViewProtocol: LoaderPresentable, ErrorPresentable, SnackbarPresentable, DialogViewPresentationCapable {
     func setViewModel(viewModel: OtherBlikSettingsViewModel)
+    func setLabelValidationError(_ errorText: String?)
 }
 
 final class OtherBlikSettingsViewController: UIViewController, OtherBlikSettingsViewProtocol {
@@ -41,6 +42,12 @@ final class OtherBlikSettingsViewController: UIViewController, OtherBlikSettings
     func setViewModel(viewModel: OtherBlikSettingsViewModel) {
         DispatchQueue.main.async { [weak self] in
             self?.contentView.set(viewModel: viewModel)
+        }
+    }
+    
+    func setLabelValidationError(_ errorText: String?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.contentView.setLabelError(errorText)
         }
     }
     

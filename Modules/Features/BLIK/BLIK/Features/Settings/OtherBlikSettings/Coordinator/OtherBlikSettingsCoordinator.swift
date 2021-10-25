@@ -6,37 +6,37 @@
 //
 
 import UI
+import PLUI
 import Models
 import Commons
 import SANPLLibrary
+import PLCommons
 
 protocol OtherBlikSettingsCoordinatorProtocol: ModuleCoordinator {
-    func showHelp()
     func close()
+    func goBackToRoot()
 }
 
 final class OtherBlikSettingsCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let wallet: GetWalletUseCaseOkOutput.Wallet
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
 
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
-        wallet: GetWalletUseCaseOkOutput.Wallet
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.wallet = wallet
+        setUpDependencies()
     }
     
     public func start() {
         let presenter = OtherBlikSettingsPresenter(
-            viewModel: OtherBlikSettingsViewModel(
-                blikCustomerLabel: wallet.alias.label,
-                isTransactionVisible: wallet.noPinTrnVisible
-            ),
-            coordinator: self
+            wallet: wallet,
+            dependenciesResolver: dependenciesEngine
         )
         let viewController = OtherBlikSettingsViewController(
             presenter: presenter
@@ -47,17 +47,35 @@ final class OtherBlikSettingsCoordinator: ModuleCoordinator {
 }
 
 extension OtherBlikSettingsCoordinator: OtherBlikSettingsCoordinatorProtocol {
-    func showHelp() {
-        showEmptyController()
-    }
-    
     func close() {
         navigationController?.popViewController(animated: true)
     }
     
-    private func showEmptyController() {
-        let emptyController = UIViewController()
-        emptyController.view.backgroundColor = .white
-        navigationController?.pushViewController(emptyController, animated: true)
+    func goBackToRoot() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+private extension OtherBlikSettingsCoordinator {
+    func setUpDependencies() {
+        dependenciesEngine.register(for: OtherBlikSettingsCoordinatorProtocol.self) { resolver in
+            return self
+        }
+        
+        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { resolver in
+            return ConfirmationDialogFactory()
+        }
+        
+        dependenciesEngine.register(for: BlikCustomerLabelValidating.self) { resolver in
+            return BlikCustomerLabelValidator()
+        }
+        
+        dependenciesEngine.register(for: SaveBlikCustomerLabelUseCaseProtocol.self) { resolver in
+            return SaveBlikCustomerLabelUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: GetWalletsActiveUseCase.self) { resolver in
+            return GetWalletsActiveUseCase(dependenciesResolver: resolver)
+        }
     }
 }

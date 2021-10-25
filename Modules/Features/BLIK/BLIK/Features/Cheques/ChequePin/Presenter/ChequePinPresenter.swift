@@ -46,7 +46,6 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
     }
     
     func didPressSave() {
-        encryptAndSavePin()
         guard let view = view else { return }
         let pin = ChequePin(pin: view.pin, pinConfirmation: view.pinConfirmation)
         switch validator.validate(pin: pin) {
@@ -63,12 +62,6 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
     
     func close() {
         coordinator.pop()
-    }
-    
-    private func encryptAndSavePin() {
-        guard let view = view else { return }
-        
-        let pin = ChequePin(pin: view.pin, pinConfirmation: view.pinConfirmation)
     }
     
     private func encryptAndSavePin(_ pin: ChequePin) {

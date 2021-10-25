@@ -1,5 +1,5 @@
 //
-//  RegisterAliasParametersMapper.swift
+//  RegisterAliasInputMapper.swift
 //  BLIK
 //
 //  Created by Piotr Mielcarzewicz on 13/09/2021.

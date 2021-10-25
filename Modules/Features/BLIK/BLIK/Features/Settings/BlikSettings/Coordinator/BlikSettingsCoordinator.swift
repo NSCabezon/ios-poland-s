@@ -11,23 +11,24 @@ import Commons
 import SANPLLibrary
 
 protocol BlikSettingsCoordinatorProtocol: ModuleCoordinator {
-    func showCodelessPaymentSettings()
+    func showAliasPaymentSettings()
     func showPhoneTransferSettings()
     func showTransferLimitsSettings()
     func showOtherSettings()
     func close()
     func closeToGlobalPosition()
+    func showLimitUpdateSuccessAndClose()
 }
 
 final class BlikSettingsCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let wallet: GetWalletUseCaseOkOutput.Wallet
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
 
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
-        wallet: GetWalletUseCaseOkOutput.Wallet
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
@@ -44,7 +45,7 @@ final class BlikSettingsCoordinator: ModuleCoordinator {
 }
 
 extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
-    func showCodelessPaymentSettings() {
+    func showAliasPaymentSettings() {
         let coordinator = AliasListSettingsCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController
@@ -103,5 +104,14 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
     
     func closeToGlobalPosition() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func showLimitUpdateSuccessAndClose() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_text_limitChangedSuccess"),
+            alertType: .info,
+            position: .top
+        )
+        close()
     }
 }

@@ -15,15 +15,16 @@ public protocol PLBLIKManagerProtocol {
     func getAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
-    func setPSPAliasLabel(_ label: String) throws -> Result<Void, NetworkProviderError>
+    func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
     func unregisterPhoneNumber() throws -> Result<Void, NetworkProviderError>
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError>
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
     func getAliases() throws -> Result<[BlikAliasDTO], NetworkProviderError>
     func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
-    func registerAlias(_ request: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
+    func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
     func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
+    func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
 }
 
 public final class PLBLIKManager {
@@ -97,8 +98,8 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
         try dataSource.p2pAlias(msisdn: msisdn)
     }
 
-    public func setPSPAliasLabel(_ label: String) throws -> Result<Void, NetworkProviderError> {
-        try dataSource.setPSPAliasLabel(label)
+    public func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
+        try dataSource.setPSPAliasLabel(parameters)
     }
     
     public func unregisterPhoneNumber() throws -> Result<Void, NetworkProviderError> {
@@ -124,7 +125,11 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
         try dataSource.acceptTransfer(parameters)
     }
     
-    public func registerAlias(_ request: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError> {
-        try dataSource.registerAlias(request)
+    public func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError> {
+        try dataSource.registerAlias(parameters)
+    }
+    
+    public func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError> {
+        try dataSource.getTransactions()
     }
 }

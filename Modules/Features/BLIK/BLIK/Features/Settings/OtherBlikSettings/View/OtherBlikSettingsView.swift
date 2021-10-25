@@ -14,12 +14,12 @@ final class OtherBlikSettingsView: UIView {
     private let separatorView = UIView()
     private let detailsButton = UIButton()
     private let blikLabelTitle = UILabel()
-    private let blikLabelTextField = LisboaTextField()
+    private let blikLabelTextField = LisboaTextFieldWithErrorView()
     private let blikLabelInfoButton = UIButton()
     public weak var delegate: OtherBlikSettingsViewDelegate?
     
     public var blikCustomerLabel: String {
-        blikLabelTextField.text ?? ""
+        blikLabelTextField.textField.text ?? ""
     }
     
     public var isTransactionVisible: Bool {
@@ -40,8 +40,16 @@ final class OtherBlikSettingsView: UIView {
     }
 
     func set(viewModel: OtherBlikSettingsViewModel) {
-        blikLabelTextField.setText(viewModel.blikCustomerLabel)
+        blikLabelTextField.textField.setText(viewModel.blikCustomerLabel)
         detailsButton.isSelected = viewModel.isTransactionVisible
+    }
+    
+    func setLabelError(_ errorText: String?) {
+        if let error = errorText {
+            blikLabelTextField.showError(error)
+        } else {
+            blikLabelTextField.hideError()
+        }
     }
 }
 
@@ -50,7 +58,7 @@ private extension OtherBlikSettingsView {
         detailsLabelTitle.text = localized("pl_blik_text_transDetailsVisib")
         detailsLabel.text = localized("pl_blik_text_beforeLoginDetails")
         blikLabelTitle.text = localized("pl_blik_label_clientLabel")
-        blikLabelTextField.setPlaceholder(localized("pl_blik_text_nameField"))
+        blikLabelTextField.textField.setPlaceholder(localized("pl_blik_text_nameField"))
         blikLabelInfoButton.setImage(Images.info_blueGreen, for: .normal)
     }
     
@@ -110,15 +118,15 @@ private extension OtherBlikSettingsView {
         detailsLabelTitle.textColor = .lisboaGray
         detailsLabelTitle.font = .santander(
             family: .text,
-            type: .regular,
-            size: 14
-        )
-        
-        detailsLabel.textColor = .lisboaBrown
-        detailsLabel.font = .santander(
-            family: .micro,
             type: .bold,
             size: 16
+        )
+        
+        detailsLabel.textColor = .lisboaGray
+        detailsLabel.font = .santander(
+            family: .micro,
+            type: .regular,
+            size: 12
         )
         
         blikLabelTitle.textColor = .lisboaGray
@@ -130,24 +138,6 @@ private extension OtherBlikSettingsView {
         
         separatorView.backgroundColor = .mediumSkyGray
         
-        let formatter = UIFormattedCustomTextField()
-        formatter.setMaxLength(maxLength: 20)
-        formatter.setAllowOnlyCharacters(CharacterSet(charactersIn: OtherBlikSettingsAllowedCharacters.blikLabel.rawValue))
-        blikLabelTextField.setEditingStyle(
-            .writable(
-                configuration: .init(
-                    type: .floatingTitle,
-                    formatter: formatter,
-                    disabledActions: [],
-                    keyboardReturnAction: nil,
-                    textFieldDelegate: nil,
-                    textfieldCustomizationBlock: { components in
-                        components.textField.keyboardType = .alphabet
-                    }
-                )
-            )
-        )
-        
         detailsButton.setImage(Assets.image(named: "icnOnSwich"), for: .selected)
         detailsButton.setImage(Assets.image(named: "icnOffSwich"), for: .normal)
     }
@@ -158,18 +148,21 @@ private extension OtherBlikSettingsView {
     }
     
     func configureDelegates() {
-        blikLabelTextField.updatableDelegate = self
+        blikLabelTextField.textField.updatableDelegate = self
     }
 
     @objc func didTapDetailsButton() {
-        delegate?.didUpdateVisibility()
         detailsButton.isSelected.toggle()
+        delegate?.didUpdateVisibility()
     }
     
     @objc func didTapLabelInfoButton() {
-        let bubble = BubbleLabelView(associated: blikLabelInfoButton,
-                                     text: localized("pl_blik_tooltip_ClientLabelDesc"),
-                                     position: .bottom)
+        let bubble = BubbleLabelView(
+            associated: blikLabelInfoButton,
+            text: localized("pl_blik_tooltip_ClientLabelDesc"),
+            position: .bottom,
+            localizedStyleText: localized("pl_blik_tooltip_ClientLabelDesc")
+        )
         window?.addSubview(bubble)
         addCloseCourtain()
     }

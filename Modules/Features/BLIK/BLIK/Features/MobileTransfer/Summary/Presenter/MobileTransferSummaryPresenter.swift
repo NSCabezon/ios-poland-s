@@ -1,6 +1,7 @@
 import Models
 import Commons
 import Operative
+import DomainCommon
 
 protocol MobileTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToGlobalPosition()
@@ -16,6 +17,14 @@ final class MobileTransferSummaryPresenter {
     var isBackButtonEnabled: Bool = false
     var isBackable: Bool = false
     var isCancelButtonEnabled: Bool = true
+    
+    private var useCaseHandler: UseCaseHandler {
+        dependenciesResolver.resolve()
+    }
+    
+    private var getTransactionUseCase: GetTransactionUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
 
     private let dependenciesResolver: DependenciesResolver
     private let summary: MobileTransferSummary
@@ -34,16 +43,7 @@ private extension MobileTransferSummaryPresenter {
 
 extension MobileTransferSummaryPresenter: MobileTransferSummaryPresenterProtocol {
     func viewDidLoad() {
-        
-        let viewModel = prepareViewModel()
-     
-        view?.setupStandardHeader(with: viewModel.header)
-        view?.setupStandardBody(withItems: viewModel.bodyItems,
-                                actions: viewModel.bodyActionItems,
-                                collapsableSections: .defaultCollapsable(visibleSections: 3))
-        view?.setupStandardFooterWithTitle(localized("footerSummary_label_andNow"), items: viewModel.footerItems)
-        
-        view?.build()
+        getTransaction()
     }
     
     func goToGlobalPosition() {
@@ -56,13 +56,33 @@ extension MobileTransferSummaryPresenter: MobileTransferSummaryPresenterProtocol
 }
 
 private extension MobileTransferSummaryPresenter {
+    func getTransaction() {
+        Scenario(useCase: getTransactionUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] result in
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                let viewModel = strongSelf.prepareViewModel(result)
+                strongSelf.view?.setupStandardHeader(with: viewModel.header)
+                strongSelf.view?.setupStandardBody(withItems: viewModel.bodyItems,
+                                                   actions: viewModel.bodyActionItems,
+                                                   collapsableSections: .defaultCollapsable(visibleSections: 3))
+                strongSelf.view?.setupStandardFooterWithTitle(localized("footerSummary_label_andNow"), items: viewModel.footerItems)
+                strongSelf.view?.build()
+            }
+            .onError { [weak self] error in
+                self?.coordinator.goToBlikCode()
+            }
+    }
     
-    func prepareViewModel() -> OperativeSummaryStandardViewModel {
+    func prepareViewModel(_ viewModel: MobileTransferSummaryViewModel) -> OperativeSummaryStandardViewModel {
         let headerViewModel = OperativeSummaryStandardHeaderViewModel(image: "icnCheckOval1",
                                                                       title: localized("pl_blik_text_success"),
                                                                       description: localized("pl_blik_text_successExpl"))
         
-        let bodyItems: [OperativeSummaryStandardBodyItemViewModel] = [
+        var bodyItems: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(title: localized("summary_item_amount"),
                   subTitle: AmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32),
                   info: localized("pl_blik_label_transferTypeSumm")),
@@ -78,13 +98,39 @@ private extension MobileTransferSummaryPresenter {
                   subTitle: summary.dateString)
         ]
         
-        let action: OperativeSummaryStandardBodyActionViewModel = .init(
-            image: "icnShareBostonRedLight",
-            title: "pl_topup_button_shareConfirm",
-            action: { [weak self] in
-                self?.coordinator.shareSummary()
-            }
-        )
+        switch viewModel {
+        case .trustedDevice(let info):
+            bodyItems.append(.init(title: localized("pl_blik_text_withoutCode"), subTitle: info.label))
+        default:
+            break
+        }
+        
+        var actions: [OperativeSummaryStandardBodyActionViewModel] = [
+            .init(
+                image: "icnShareBostonRedLight",
+                title: "pl_topup_button_shareConfirm",
+                action: { [weak self] in
+                    self?.coordinator.shareSummary()
+                }
+            )
+        ]
+        
+        switch viewModel {
+        case .untrustedDevice(let info):
+            actions.append(
+                .init(
+                    image: "icnShareBostonRedLight",
+                    title: info.type == MobileTransferSummaryViewModel.UntrustedDeviceInfo.DeviceType.cookie.rawValue
+                        ? "#Dodaj przeglądarkę do zaufanych"
+                        : "#Dodaj sklep do zaufanych",
+                    action: { [weak self] in
+                        self?.coordinator.setDeviceAsTrusted()
+                    }
+                )
+            )
+        default:
+            break
+        }
         
         let footerItems: [OperativeSummaryStandardFooterItemViewModel] = [
             .init(imageKey: "icnEnviarDinero", title: localized("pl_blik_summAnothTransf"), action: { [weak self] in
@@ -100,7 +146,7 @@ private extension MobileTransferSummaryPresenter {
         ]
         return OperativeSummaryStandardViewModel(header: headerViewModel,
                                                  bodyItems: bodyItems,
-                                                 bodyActionItems: [action],
+                                                 bodyActionItems: actions,
                                                  footerItems: footerItems)
         
     }

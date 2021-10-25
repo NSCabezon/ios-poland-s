@@ -16,13 +16,14 @@ protocol BLIKDataSourceProtocol {
     func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
-    func setPSPAliasLabel(_ label: String) throws -> Result<Void, NetworkProviderError>
+    func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError>
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
     func getAliases() throws -> Result<[BlikAliasDTO], NetworkProviderError>
     func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
-    func registerAlias(_ request: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
+    func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
+    func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
 }
 
 private extension BLIKDataSource {
@@ -285,8 +286,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         )
     }
 
-    func setPSPAliasLabel(_ label: String) throws -> Result<Void, NetworkProviderError> {
-        guard let baseUrl = self.getBaseUrl(), let data = try? JSONSerialization.data(withJSONObject: ["label": label], options: .prettyPrinted) else {
+    func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(parameters) else {
             return .failure(NetworkProviderError.other)
         }
         let serviceUrl = baseUrl + blikPath
@@ -383,8 +384,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         )
     }
     
-    func registerAlias(_ request: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError> {
-        guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(request) else {
+    func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(parameters) else {
             return .failure(NetworkProviderError.other)
         }
         let serviceUrl = baseUrl + blikPath
@@ -394,6 +395,19 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .post,
                         request: data)
+        )
+    }
+    
+    func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + blikPath
+        let serviceName = BlikServiceType.aliases.rawValue
+        return networkProvider.request(
+            BlikRequest(serviceName: serviceName,
+                        serviceUrl: serviceUrl,
+                        method: .get)
         )
     }
 }

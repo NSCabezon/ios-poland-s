@@ -98,17 +98,7 @@ private extension ChequePinViewController {
         chequePinView.pinConfirmationInput.delegate = self
         chequePinView.footerView.disableButton()
         configureNavigationItem()
-        configureKeyboardDismiss()
-    }
-    
-    func configureKeyboardDismiss() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
+        configureKeyboardDismissGesture()
     }
 }
 

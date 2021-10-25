@@ -43,8 +43,8 @@ extension Images {
         static var cheque: UIImage {
             UIImage(fromModuleNamed: "cheque")
         }
-        static var codeless: UIImage {
-            UIImage(fromModuleNamed: "codeless")
+        static var alias: UIImage {
+            UIImage(fromModuleNamed: "alias")
         }
         static var settings: UIImage {
             UIImage(fromModuleNamed: "settings")
@@ -58,8 +58,8 @@ extension Images {
     }
     
     enum Settings {
-        static var codelessPayment: UIImage {
-            UIImage(fromModuleNamed: "codelessPayment")
+        static var aliasPayment: UIImage {
+            UIImage(fromModuleNamed: "aliasPayment")
         }
         static var phoneTransfer: UIImage {
             UIImage(fromModuleNamed: "phoneTransfer")

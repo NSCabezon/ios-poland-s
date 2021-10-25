@@ -103,8 +103,8 @@ private extension BlikSettingsViewController {
         menuView.onItemTapped = { [weak self] item in
             guard let strongSelf = self else { return }
             switch item {
-            case .codelessPayment:
-                strongSelf.coordinator.showCodelessPaymentSettings()
+            case .aliasPayment:
+                strongSelf.coordinator.showAliasPaymentSettings()
             case .phoneTransfer:
                 strongSelf.coordinator.showPhoneTransferSettings()
             case .transferLimits:

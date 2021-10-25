@@ -18,10 +18,11 @@ import PLCommons
 */
 protocol BLIKHomeCoordinatorProtocol {
     func pop()
-    func showCheques(shouldConfigurePin: Bool)
+    func showCheques(with wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>)
     func showBLIKConfirmation(viewModel: BLIKTransactionViewModel)
-    func showSettings(with wallet: GetWalletUseCaseOkOutput.Wallet)
+    func showSettings(with wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>)
     func showContacts()
+    func showAliasPayment()
 }
 
 public final class BLIKHomeCoordinator: ModuleCoordinator {
@@ -45,10 +46,10 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    func showCheques(shouldConfigurePin: Bool) {
+    func showCheques(with wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>) {
         let coordinator = ChequesCoordinator(
             navigationController: navigationController,
-            shouldCofigurePin: shouldConfigurePin,
+            shouldCofigurePin: wallet.getValue().shouldSetChequePin,
             chequesFactory: ChequesFactory(dependenciesResolver: dependenciesEngine),
             chequesPinFactory: ChequesPinFactory(dependenciesResolver: dependenciesEngine),
             chequeFormFactory: ChequeFormFactory(dependenciesResolver: dependenciesEngine),
@@ -65,7 +66,7 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
         coordinator.start()
     }
     
-    func showSettings(with wallet: GetWalletUseCaseOkOutput.Wallet) {
+    func showSettings(with wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>) {
         let coordinator = BlikSettingsCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
@@ -79,6 +80,10 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
                                                navigationController: navigationController)
         
         cooridinator.start()
+    }
+    
+    func showAliasPayment() {
+        //TODO: Implement feature
     }
 }
 
