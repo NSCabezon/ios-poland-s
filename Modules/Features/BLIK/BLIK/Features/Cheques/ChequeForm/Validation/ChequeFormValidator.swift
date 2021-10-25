@@ -78,10 +78,6 @@ final class ChequeFormValidator: ChequeFormValidating {
         if name.count == 0 {
             return nil
         }
-
-        if name.count > 30 {
-            return "#Nazwa może zawierać maksymalnie 30 znaków"
-        }
         
         do {
             if try checkForIllegalCharacters(in: name) {

@@ -19,6 +19,7 @@ final class ChequeFormView: UIView {
     private let amountLimit = UILabel()
     private let validityPeriodSelector = ChequeValidityPeriodSelectorView()
     private let name = LisboaTextFieldWithErrorView()
+    private let nameCharactersLimit = UILabel()
     private let currency = CurrencyLabel()
     private var selectedPeriod: ChequeValidityPeriod = .hours24
     private weak var delegate: ChequeFormViewDelegate?
@@ -84,10 +85,11 @@ final class ChequeFormView: UIView {
         applyStyling()
         configureDelegates()
         setIdentifiers()
+        setStaticTexts()
     }
     
     private func configureSubviews() {
-        [amount, amountLimit, validityPeriodSelector, name].forEach {
+        [amount, amountLimit, validityPeriodSelector, name, nameCharactersLimit].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -108,7 +110,12 @@ final class ChequeFormView: UIView {
             
             name.topAnchor.constraint(equalTo: validityPeriodSelector.bottomAnchor, constant: 16),
             name.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            name.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
+            name.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            
+            nameCharactersLimit.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 8),
+            nameCharactersLimit.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            nameCharactersLimit.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            
         ])
     }
     
@@ -127,15 +134,19 @@ final class ChequeFormView: UIView {
                 )
             )
         )
+        let nameFormatter = UIFormattedCustomTextField()
+        nameFormatter.setMaxLength(maxLength: 30)
         name.textField.setEditingStyle(
             .writable(
                 configuration: .init(
                     type: .floatingTitle,
-                    formatter: nil,
+                    formatter: nameFormatter,
                     disabledActions: [],
                     keyboardReturnAction: nil,
                     textFieldDelegate: nil,
-                    textfieldCustomizationBlock: { _ in }
+                    textfieldCustomizationBlock: { components in
+                        components.textField.keyboardType = .asciiCapable
+                    }
                 )
             )
         )
@@ -146,6 +157,13 @@ final class ChequeFormView: UIView {
             size: 14
         )
         amountLimit.numberOfLines = 1
+        nameCharactersLimit.textColor = .brownishGray
+        nameCharactersLimit.font = .santander(
+            family: .micro,
+            type: .regular,
+            size: 14
+        )
+        nameCharactersLimit.numberOfLines = 1
     }
     
     private func configureDelegates() {
@@ -157,6 +175,10 @@ final class ChequeFormView: UIView {
         amount.accessibilityIdentifier = AccessibilityCheques.ChequeFormView.amount.id
         amountLimit.accessibilityIdentifier = AccessibilityCheques.ChequeFormView.amountLimit.id
         name.accessibilityIdentifier = AccessibilityCheques.ChequeFormView.name.id
+    }
+    
+    private func setStaticTexts() {
+        nameCharactersLimit.text = localized("pl_blik_text_cheque_maxsign")
     }
 }
 
