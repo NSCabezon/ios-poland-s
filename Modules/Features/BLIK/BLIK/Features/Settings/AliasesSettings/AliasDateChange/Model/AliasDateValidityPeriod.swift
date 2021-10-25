@@ -10,7 +10,7 @@ import Commons
 
 enum AliasDateValidityPeriod: Int, CaseIterable {
     case month1 = 1
-    case month2 = 2
+    case month3 = 3
     case month6 = 6
     case month12 = 12
     
@@ -18,8 +18,8 @@ enum AliasDateValidityPeriod: Int, CaseIterable {
         switch self {
         case .month1:
             return localized("pl_blik_text_month_1")
-        case .month2:
-            return localized("pl_blik_text_month_2")
+        case .month3:
+            return localized("pl_blik_text_month_3")
         case .month6:
             return localized("pl_blik_text_month_6")
         case .month12:
