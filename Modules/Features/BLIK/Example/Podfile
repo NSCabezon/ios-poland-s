@@ -10,9 +10,6 @@ def example_app_common
   pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
-  #pod 'SantanderUIKitLib', :path => '../../../../santander-one/Modules/Libraries/SantanderUIKitLib'
-  #pod 'HapticResponseLib', :path => '../../../../santander-one/Modules/Libraries/HapticResponseLib'
-  #pod 'SensorsLib', :path => '../../../../santander-one/Modules/Libraries/SensorsLib'
   pod 'Kingfisher', '5.15.8'
 end
 
@@ -41,6 +38,7 @@ def pl_dependencies
   pod 'BLIK', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
 end
 
 target 'BLIK_Example' do
