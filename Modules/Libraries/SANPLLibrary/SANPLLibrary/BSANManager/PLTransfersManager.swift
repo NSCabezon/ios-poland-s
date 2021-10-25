@@ -63,8 +63,8 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError> {
         let result = try self.transferDataSource.doIBANValidation(parameters)
         switch result {
-        case .success(let ibanValidationDTO):
-            let validateAccountDTO: ValidateAccountTransferDTO = ValidateAccountTransferDTO(transferNationalDTO: ibanValidationDTO, errorCode: nil)
+        case .success(let transferNational):
+            let validateAccountDTO: ValidateAccountTransferDTO = ValidateAccountTransferDTO(transferNationalRepresentable: transferNational, errorCode: nil)
             return .success(validateAccountDTO)
         case .failure(let error):
             return .failure(error)

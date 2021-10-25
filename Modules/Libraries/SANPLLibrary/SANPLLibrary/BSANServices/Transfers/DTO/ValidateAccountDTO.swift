@@ -8,6 +8,6 @@
 import CoreDomain
 
 struct ValidateAccountTransferDTO: ValidateAccountTransferRepresentable {
-    var transferNationalDTO: TransferNationalRepresentable?
+    var transferNationalRepresentable: TransferNationalRepresentable?
     var errorCode: String?
 }
