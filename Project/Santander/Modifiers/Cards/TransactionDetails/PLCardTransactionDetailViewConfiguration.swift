@@ -20,7 +20,7 @@ struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfi
             .add(amount: formattedAmount(amount: from.amount))
             .add(operationDate: NSAttributedString(string: dateFrom(dateStr: from.dto.postedDate ?? "") ?? ""))
             .add(status: localized((from.dto.state ?? .none).title))
-            .add(bookingDate: dateFrom(dateStr: from.dto.sourceDate ?? ""))
+            //.add(bookingDate: dateFrom(dateStr: from.dto.sourceDate ?? ""))
             .add(recipient: from.dto.recipient)
             .add(accountNumber: accountNumber(str: from.dto.cardAccountNumber ?? ""))
             .add(operationType: from.dto.operationType?.capitalized)
@@ -60,7 +60,7 @@ struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfi
         viewConfigurations.append(row1)
         
         var row2 = CardTransactionDetailViewConfiguration()
-        let row2Date = dateFrom(dateStr: from.dto.sourceDate ?? "") ?? ""
+        let row2Date = "" // dateFrom(dateStr: from.dto.sourceDate ?? "") ?? ""
         row2.left = .init(title: localized("transaction_label_annotationDate"), value: row2Date)
         row2.right = .init(title: localized("transaction_label_recipient"), value: from.dto.recipient ?? "")
         viewConfigurations.append(row2)
