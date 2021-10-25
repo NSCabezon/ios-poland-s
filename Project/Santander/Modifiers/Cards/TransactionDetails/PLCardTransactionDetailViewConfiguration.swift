@@ -18,9 +18,9 @@ struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfi
         CardTransactionDetailStringBuilder()
             .add(description: from.dto.description)
             .add(amount: formattedAmount(amount: from.amount))
-            .add(operationDate: dateAndHour(dateStr: from.dto.postedDate ?? ""))
+            .add(operationDate: NSAttributedString(string: dateFrom(dateStr: from.dto.postedDate ?? "") ?? ""))
             .add(status: localized((from.dto.state ?? .none).title))
-            .add(bookingDate: dateToString(date: from.dto.operationDate, outputFormat: .dd_MMM_yyyy))
+            .add(bookingDate: dateFrom(dateStr: from.dto.sourceDate ?? ""))
             .add(recipient: from.dto.recipient)
             .add(accountNumber: accountNumber(str: from.dto.cardAccountNumber ?? ""))
             .add(operationType: from.dto.operationType?.capitalized)
@@ -34,12 +34,10 @@ struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfi
         return moneyDecorator.getFormatedCurrency()
     }
     
-    private func dateAndHour(dateStr: String) -> NSAttributedString? {
-        let date =  dateFromString(input: dateStr, inputFormat: .yyyy_MM_ddHHmmss)
-        let dateStr = dateToString(date: date, outputFormat: .dd_MMM_yyyy_point_HHmm) ?? ""
-        let attributtedString = NSMutableAttributedString(string: dateStr)
-        attributtedString.addAttributes([.font: UIFont.santanderTextRegular(size: 11)], range: NSRange(location: 14, length: 5))
-        return attributtedString
+    private func dateFrom(dateStr: String) -> String? {
+        let date =  dateFromString(input: dateStr, inputFormat: .yyyyMMdd)
+        let dateStr = dateToString(date: date, outputFormat: .dd_MMM_yyyy) ?? ""
+        return dateStr
     }
     
     private func accountNumber(str: String) -> String {
@@ -54,15 +52,15 @@ struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfi
         var viewConfigurations = [CardTransactionDetailViewConfiguration]()
         
         var row1 = CardTransactionDetailViewConfiguration()
-        let attributtedString = dateAndHour(dateStr: from.dto.postedDate ?? "") ?? .init()
-        row1.left = .init(title: localized("transaction_label_operationDate"), value: attributtedString)
+        let postedDate = dateFrom(dateStr: from.dto.postedDate ?? "") ?? ""
+        row1.left = .init(title: localized("transaction_label_operationDate"), value: postedDate)
         let status = from.dto.state ?? .none
         let hidden = status.hidden
         row1.right = hidden ? nil : .init(title: localized("transaction_label_statusDetail"), value: localized(status.title))
         viewConfigurations.append(row1)
         
         var row2 = CardTransactionDetailViewConfiguration()
-        let row2Date = dateToString(date: from.dto.operationDate, outputFormat: .dd_MMM_yyyy) ?? ""
+        let row2Date = dateFrom(dateStr: from.dto.sourceDate ?? "") ?? ""
         row2.left = .init(title: localized("transaction_label_annotationDate"), value: row2Date)
         row2.right = .init(title: localized("transaction_label_recipient"), value: from.dto.recipient ?? "")
         viewConfigurations.append(row2)
