@@ -74,9 +74,6 @@ final class AppModifiers {
     private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
     }()
-    private lazy var sendMoneyOperativeModifier: SendMoneyOperativeModifierProtocol = {
-        return SendMoneyOperativeModifier(dependenciesEngine: dependencieEngine)
-    }()
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
         self.registerDependencies()
@@ -175,12 +172,7 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountsHomePresenterModifier.self) { _ in
             return PLAccountsHomePresenterModifier()
         }
-        self.dependencieEngine.register(for: SendMoneyOperativeModifierProtocol.self) { resolver in
-            return self.sendMoneyOperativeModifier
-        }
-        self.dependencieEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
-            return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)
-        }
+        SendMoneyDependencies(dependenciesEngine: dependencieEngine).registerDependencies()
         self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
             return PLOpinatorInfoOption()
         }

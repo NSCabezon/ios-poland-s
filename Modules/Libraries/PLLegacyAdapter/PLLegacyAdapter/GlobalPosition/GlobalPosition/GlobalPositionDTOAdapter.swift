@@ -9,24 +9,12 @@ import SANLegacyLibrary
 final class GlobalPositionDTOAdapter {
     static func adaptPLGlobalPositionToGlobalPosition(_ plGlobalPosition: SANPLLibrary.GlobalPositionDTO, clientPersonCode: String) -> SANLegacyLibrary.GlobalPositionDTO {
         var globalPositionDTO = SANLegacyLibrary.GlobalPositionDTO()
-
         let rearrangedAccounts = self.rearrangeAccountsByFirstMainItem(plGlobalPosition.accounts)
-        let accounts: [SANLegacyLibrary.AccountDTO]? = rearrangedAccounts.compactMap({ account -> SANLegacyLibrary.AccountDTO? in
-            return AccountDTOAdapter.adaptPLAccountToAccount(account)
-        })
-        let cards = plGlobalPosition.cards?.compactMap({ card -> SANLegacyLibrary.CardDTO? in
-            return CardDTOAdapter.adaptPLCardToCard(card)
-        })
-        let funds = plGlobalPosition.investmentFunds?.compactMap({ investmentFund -> SANLegacyLibrary.FundDTO? in
-            return InvestmentFundsDTOAdapter.adaptPLInvestimentFundsToInvestimentFunds(investmentFund)
-        })
-        let loans = plGlobalPosition.loans?.compactMap({ loan -> SANLegacyLibrary.LoanDTO? in
-            return LoanDTOAdapter.adaptPLLoanToLoan(loan)
-        })
-        let deposits = plGlobalPosition.deposits?.compactMap({ deposit -> SANLegacyLibrary.DepositDTO? in
-            return DepositDTOAdapter.adaptPLDepositToDeposit(deposit)
-        })
-
+        let accounts: [SANLegacyLibrary.AccountDTO]? = rearrangedAccounts.compactMap(AccountDTOAdapter.adaptPLAccountToAccount)
+        let cards = plGlobalPosition.cards?.compactMap(CardDTOAdapter.adaptPLCardToCard)
+        let funds = plGlobalPosition.investmentFunds?.compactMap(InvestmentFundsDTOAdapter.adaptPLInvestimentFundsToInvestimentFunds)
+        let loans = plGlobalPosition.loans?.compactMap(LoanDTOAdapter.adaptPLLoanToLoan)
+        let deposits = plGlobalPosition.deposits?.compactMap(DepositDTOAdapter.adaptPLDepositToDeposit)
         globalPositionDTO.accounts = accounts
         globalPositionDTO.cards = cards
         globalPositionDTO.funds = funds
@@ -36,7 +24,6 @@ final class GlobalPositionDTOAdapter {
         userDataDTO.clientPersonType = ""
         userDataDTO.clientPersonCode = clientPersonCode
         globalPositionDTO.userDataDTO = userDataDTO
-
         return globalPositionDTO
     }
 }

@@ -46,13 +46,16 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         }
         let serviceName = TransferServiceType.accountForDebit.rawValue
         let absoluteUrl = baseUrl + self.basePath
-        let result: Result<[AccountForDebitDTO], NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .get,
-                                                                                                                headers: self.headers,
-                                                                                                                queryParams: nil,
-                                                                                                                contentType: .urlEncoded,
-                                                                                                                localServiceName: .accountsForDebit)
+        let result: Result<[AccountForDebitDTO], NetworkProviderError> = self.networkProvider.request(
+            AccountRequest(
+                serviceName: serviceName,
+                serviceUrl: absoluteUrl,
+                method: .get,
+                headers: self.headers,
+                queryParams: nil,
+                contentType: .urlEncoded,
+                localServiceName: .accountsForDebit
+            )
         )
         return result
     }

@@ -7,12 +7,16 @@ import Foundation
 import CoreDomain
 import SANLegacyLibrary
 
+public protocol PolandAccountRepresentable: AccountRepresentable {
+    var type: AccountForDebitTypeDTO? { get }
+}
+
 struct AccountForDebitDTO: Codable {
     let number: String?
     let id: String?
     let currencyCode: String?
     let name: AccountForDebitNameDTO?
-    let type: String?
+    let type: AccountForDebitTypeDTO?
     let balance: BalanceDTO?
     let availableFunds: BalanceDTO?
     let systemId: Int?
@@ -84,6 +88,8 @@ extension AccountForDebitDTO: AccountRepresentable {
         return CurrencyDTO(currencyName: currencyName, currencyType: currencyType)
     }
 }
+
+extension AccountForDebitDTO: PolandAccountRepresentable {}
 
 private extension AccountForDebitDTO {
     func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {

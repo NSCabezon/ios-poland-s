@@ -5,10 +5,10 @@
 //  Created by 186484 on 04/08/2021.
 //
 
+import Kingfisher
 import Commons
 import PLUI
 import UI
-import Kingfisher
 
 private enum Constants {
     static let titleTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)
