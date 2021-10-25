@@ -16,7 +16,21 @@ struct TransfersDataRepository: PLTransfersRepository {
         let response = try bsanTransferManager.getAccountsForDebit()
         switch response {
         case .success(let accounts):
-            return.success(accounts)
+            return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
+        return .failure(ServiceError.unknown)
+    }
+    
+    func getFinalFee(input: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], Error> {
+        let response = try bsanTransferManager.checkFinalFee(input)
+        switch response {
+        case .success(let finalFeeResponse):
+            return .success(finalFeeResponse)
         case .failure(let error):
             return .failure(error)
         }

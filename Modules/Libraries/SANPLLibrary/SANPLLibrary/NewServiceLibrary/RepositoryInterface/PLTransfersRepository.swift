@@ -9,5 +9,7 @@ import CoreDomain
 
 public protocol PLTransfersRepository: TransfersRepository {
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error>
+    func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error>
+    func getFinalFee(input: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], Error>
 }
 

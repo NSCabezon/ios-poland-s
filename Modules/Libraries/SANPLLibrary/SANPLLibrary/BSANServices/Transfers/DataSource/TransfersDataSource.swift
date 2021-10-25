@@ -11,6 +11,7 @@ protocol TransfersDataSourceProtocol {
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
+    func checkFinalFee(_ parameters: CheckFinalFeeParameters, destinationAccount: String) throws -> Result<CheckFinalFeeDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -25,8 +26,9 @@ final class TransfersDataSource {
         case payees = "/payees/account"
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
+        case checkFinalFee = "/transactions/domestic/final-fee/"
     }
-
+    
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
@@ -107,6 +109,24 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                            queryParams: nil,
                                                                                                            contentType: .queryString,
                                                                                                            localServiceName: .ibanValidation)
+        )
+        return result
+    }
+    
+    func checkFinalFee(_ parameters: CheckFinalFeeParameters, destinationAccount: String) throws -> Result<CheckFinalFeeDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let queryParameters = try? parameters.asDictionary() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName = TransferServiceType.checkFinalFee.rawValue + destinationAccount
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<CheckFinalFeeDTO, NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .get,
+                                                                                                                headers: self.headers,
+                                                                                                                queryParams: queryParameters,
+                                                                                                                contentType: .urlEncoded,
+                                                                                                                localServiceName: .checkFinalFee)
         )
         return result
     }

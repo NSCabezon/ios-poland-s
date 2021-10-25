@@ -4,6 +4,7 @@
 
 
 import XCTest
+import SANLegacyLibrary
 @testable import SANPLLibrary
 
 class PLTransferManagerTest: Tests {
@@ -109,4 +110,22 @@ class PLTransferManagerTest: Tests {
             XCTFail("Not validate IBAN")
         }
     }
+    
+    func test_checkFinalFee_shouldReturNonEmptyFeeList() {
+        self.setUpDemoUser()
+        let iban = IBANDTO(countryCode: "PL", checkDigits: "12", codBban: "109010430000000142742925")
+        let amount = AmountDTO(value: 12, currency: CurrencyDTO(currencyName: "PLN", currencyType: .złoty))
+        let inputParameters = CheckFinalFeeInput(originAccount: iban, amount: amount)
+        let result = try? transferManager.checkFinalFee(inputParameters)
+        switch result {
+        case .success(let response):
+            XCTAssert(!response.isEmpty)
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Not getting fee transfer - Failure")
+        default:
+            XCTFail("Not getting fee transfer")
+        }
+    }
+    
 }

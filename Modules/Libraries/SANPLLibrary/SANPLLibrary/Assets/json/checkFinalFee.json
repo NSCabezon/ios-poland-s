@@ -1,0 +1,99 @@
+{
+    "12345678Z": {
+        "0": {
+            "records": [{
+                    "accountNo": "56109010720000000136027256",
+                    "serviceId": "PRZ_ELIXIR",
+                    "channelId": 32023,
+                    "operationAmount": {
+                        "value": 6000.0,
+                        "currencyCode": "PLN"
+                    },
+                    "fee": {
+                        "description": "Opłata za przelew elektroniczny ELIXIR",
+                        "amount": {
+                            "value": 0.0,
+                            "currencyCode": "PLN"
+                        }
+                    },
+                    "calculationRate": {
+                        "value": 1.0,
+                        "description": "PLN/PLN",
+                        "date": "2021-08-25"
+                    },
+                    "calculationRateToLocal": {
+                        "value": 1.0,
+                        "description": "PLN/PLN",
+                        "date": "2021-08-25"
+                    },
+                    "totalAmount": {
+                        "value": 6000.0,
+                        "currencyCode": "PLN"
+                    }
+                },
+                {
+                    "accountNo": "56109010720000000136027256",
+                    "serviceId": "PRZ_EX_ELIXIR",
+                    "channelId": 32023,
+                    "operationAmount": {
+                        "value": 6000.0,
+                        "currencyCode": "PLN"
+                    },
+                    "fee": {
+                        "description": "Opłata za przelew Express ELIXIR",
+                        "amount": {
+                            "value": 10.0,
+                            "currencyCode": "PLN"
+                        }
+                    },
+                    "calculationRate": {
+                        "value": 1.0,
+                        "description": "PLN/PLN",
+                        "date": "2021-08-25"
+                    },
+                    "calculationRateToLocal": {
+                        "value": 1.0,
+                        "description": "PLN/PLN",
+                        "date": "2021-08-25"
+                    },
+                    "totalAmount": {
+                        "value": 6010.0,
+                        "currencyCode": "PLN"
+                    }
+                },
+                {
+                    "accountNo": "56109010720000000136027256",
+                    "serviceId": "PRZ_BLUE_CASH",
+                    "channelId": 32023,
+                    "operationAmount": {
+                        "value": 6000.0,
+                        "currencyCode": "PLN"
+                    },
+                    "fee": {
+                        "description": "Opłata za przelew BlueCash - online",
+                        "amount": {
+                            "value": 10.0,
+                            "currencyCode": "PLN"
+                        }
+                    },
+                    "calculationRate": {
+                        "value": 1.0,
+                        "description": "PLN/PLN",
+                        "date": "2021-08-25"
+                    },
+                    "calculationRateToLocal": {
+                        "value": 1.0,
+                        "description": "PLN/PLN",
+                        "date": "2021-08-25"
+                    },
+                    "totalAmount": {
+                        "value": 6010.0,
+                        "currencyCode": "PLN"
+                    }
+                }
+            ],
+            "correlationId": "APITRANS.210825105636860.1246"
+        }
+
+    }
+}

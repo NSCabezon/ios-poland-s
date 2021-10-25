@@ -12,6 +12,7 @@ public protocol PLTransfersManagerProtocol {
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
+    func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -19,6 +20,11 @@ final class PLTransfersManager {
     private let transferDataSource: TransfersDataSourceProtocol
     private let bsanDataProvider: BSANDataProvider
     private let demoInterpreter: DemoUserProtocol
+    
+    private enum Constants: String {
+        case channelId = "32023"
+        case servicesIds = "PRZ_ELIXIR,PRZ_BLUE_CASH,PRZ_EX_ELIXIR"
+    }
     
     public init(bsanDataProvider: BSANDataProvider, networkProvider: NetworkProvider, demoInterpreter: DemoUserProtocol) {
         self.transferDataSource = TransfersDataSource(networkProvider: networkProvider, dataProvider: bsanDataProvider)
@@ -66,6 +72,27 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         case .success(let transferNational):
             let validateAccountDTO: ValidateAccountTransferDTO = ValidateAccountTransferDTO(transferNationalRepresentable: transferNational, errorCode: nil)
             return .success(validateAccountDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError> {
+        guard let amountValue = parameters.amount.value, let currency = parameters.amount.currencyRepresentable?.getSymbol() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let inputParameters = CheckFinalFeeParameters(serviceIds: Constants.servicesIds.rawValue,
+                                                      channelId: Constants.channelId.rawValue,
+                                                      operationAmount: amountValue,
+                                                      operationCurrency: currency)
+        let destinationAccountNumber: String = parameters.originAccount.checkDigits + parameters.originAccount.codBban
+        let result = try self.transferDataSource.checkFinalFee(inputParameters, destinationAccount: destinationAccountNumber)
+        switch result {
+        case .success(let feeResponse):
+            guard let feeRecords = feeResponse.records else {
+                return .failure(NetworkProviderError.other)
+            }
+            return .success(feeRecords)
         case .failure(let error):
             return .failure(error)
         }
