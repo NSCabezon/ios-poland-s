@@ -34,7 +34,7 @@ extension PLLoanModifier: LoansModifierProtocol {
     }
     
     var hideFilterButton: Bool {
-        return true
+        return false
     }
     
     var enabledLoanTransactionDetail: Bool {

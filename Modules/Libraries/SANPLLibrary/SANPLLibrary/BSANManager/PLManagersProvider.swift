@@ -15,6 +15,7 @@ public protocol PLManagersProviderProtocol {
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
     func getAccountsManager() -> PLAccountManagerProtocol
     func getCardsManager() -> PLCardsManagerProtocol
+    func getLoansManager() -> PLLoanManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
     func getNotificationManager() -> PLNotificationManagerProtocol

@@ -36,11 +36,7 @@ extension PLLoanManager: PLLoanManagerProtocol {
     }
 
     func getTransactions(withAccountNumber accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError> {
-        if let cachedTransactions = self.getCachedTransactions(accountNumber) {
-            return .success(cachedTransactions)
-        }
         let result = try self.loanDataSource.getTransactions(accountNumber: accountNumber, parameters: parameters)
-        self.processTransactionResult(accountNumber, result: result)
         return result
     }
 

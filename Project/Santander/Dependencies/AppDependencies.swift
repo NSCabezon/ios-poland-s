@@ -23,6 +23,7 @@ import PersonalArea
 import Menu
 import Cards
 import PLNotifications
+import Loans
 import iOSPublicFiles
 import CoreDomain
 import CommonUseCase
@@ -210,6 +211,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
+        self.dependencieEngine.register(for: LoanTransactionModifier.self) { _ in
+            return PLLoanTransaction()
+        }
         self.dependencieEngine.register(for: FiltersAlertModifier.self) { _ in
             return PLFiltersAlertModifier()
         }
@@ -231,6 +235,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
+        }
+        self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
             PLCardTransactionDetailActionFactoryModifier()

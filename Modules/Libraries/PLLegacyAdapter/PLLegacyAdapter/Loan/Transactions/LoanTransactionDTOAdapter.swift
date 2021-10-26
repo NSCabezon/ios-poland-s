@@ -8,8 +8,8 @@ import SANPLLibrary
 import SANLegacyLibrary
 import Commons
 
-final class LoanTransactionDTOAdapter {
-    static func adaptPLLoanTransactionToLoanTransaction(_ plLoanTransaction: SANPLLibrary.LoanOperationDTO) -> SANLegacyLibrary.LoanTransactionDTO {
+public final class LoanTransactionDTOAdapter {
+    public static func adaptPLLoanTransactionToLoanTransaction(_ plLoanTransaction: SANPLLibrary.LoanOperationDTO) -> SANLegacyLibrary.LoanTransactionDTO {
         var loanTransactionDTO = SANLegacyLibrary.LoanTransactionDTO()
         loanTransactionDTO.description = plLoanTransaction.title
         let currencyDTO = CurrencyAdapter().adaptStringToCurrency(plLoanTransaction.extraData?.operationCurrency ?? "")
