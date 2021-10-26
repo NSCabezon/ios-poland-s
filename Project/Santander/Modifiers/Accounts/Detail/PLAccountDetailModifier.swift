@@ -10,6 +10,10 @@ import PLCommons
 import Account
 
 final class PLAccountDetailModifier: AccountDetailModifierProtocol {
+    var isEnabledMillionFormat: Bool {
+        return true
+    }
+    
     var isEnabledEditAlias: Bool {
         return false
     }
