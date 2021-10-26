@@ -26,12 +26,14 @@ class GetPLAccountOtherOperativesWebConfigurationUseCase: UseCase<GetPLAccountOt
         
         let closingUrl = "www.bancosantander.com"
         let initialURL = requestValues.type.link ?? ""
+        let httpMethod: HTTPMethodType = requestValues.type.httpMethod ?? .post
         let parameters = try generateParameters()
         let configuration = PLAccountOtherOperativesWebConfiguration(
             initialURL: initialURL,
             bodyParameters: parameters,
             closingURLs: [closingUrl],
             webToolbarTitleKey: " ",
+            httpMethod: httpMethod,
             pdfToolbarTitleKey: " ")
         return UseCaseResponse.ok(GetPLAccountOtherOperativesWebConfigurationUseCaseOkOutput(configuration: configuration))
     }
