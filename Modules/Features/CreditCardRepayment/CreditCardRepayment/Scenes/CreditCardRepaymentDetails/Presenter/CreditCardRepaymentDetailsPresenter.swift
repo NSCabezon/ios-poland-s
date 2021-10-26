@@ -124,6 +124,9 @@ extension CreditCardRepaymentDetailsPresenter: CreditCardRepaymentDetailsPresent
                 date: formManager.form.date,
                 didEndEditing: { [weak self] date in
                     guard let self = self else { return }
+                    // Fix for [TEET-154154]. We don't update the date if the dates are equal (both are on the same day).
+                    guard !Calendar.current.isDate(self.formManager.form.date, inSameDayAs: date) else { return }
+                    
                     self.formManager.setDate(date: date)
                 }
             )
