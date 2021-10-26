@@ -8,7 +8,7 @@
 import Foundation
 
 public struct PendingChallengeDTO: Codable {
-    public let authorizationId: Int
+    public let authorizationId: Int?
     public let description: String?
     public let challenge: String
     public let expirationTime: String

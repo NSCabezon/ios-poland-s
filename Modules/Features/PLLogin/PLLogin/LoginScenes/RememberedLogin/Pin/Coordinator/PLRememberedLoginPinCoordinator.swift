@@ -15,13 +15,15 @@ import Commons
 import DomainCommon
 
 protocol PLRememberedLoginPinCoordinatorProtocol {
-
 }
 
 final class PLRememberedLoginPinCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
-    public var enabledBiometrics: Bool = false
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    
+    public var loginConfiguration: RememberedLoginConfiguration {
+        self.dependenciesEngine.resolve(for: RememberedLoginConfiguration.self)
+    }
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -43,7 +45,12 @@ extension PLRememberedLoginPinCoordinator: PLRememberedLoginPinCoordinatorProtoc
 private extension PLRememberedLoginPinCoordinator {
     func setupDependencies() {
         let presenter = PLRememberedLoginPinPresenter(dependenciesResolver: self.dependenciesEngine)
+        let authProcessUseCase = PLRememberedLoginProcessUseCase(dependenciesEngine: self.dependenciesEngine)
 
+        self.dependenciesEngine.register(for: PLRememberedLoginProcessUseCase.self) { _ in
+            return authProcessUseCase
+        }
+        
         self.dependenciesEngine.register(for: PLRememberedLoginPinPresenterProtocol.self) { resolver in
             return presenter
         }
@@ -62,7 +69,7 @@ private extension PLRememberedLoginPinCoordinator {
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
-            presenter.enabledBiometrics = self.enabledBiometrics
+            presenter.enabledBiometrics = self.loginConfiguration.isBiometricsAvailable
             presenter.view = viewController
             return viewController
         }

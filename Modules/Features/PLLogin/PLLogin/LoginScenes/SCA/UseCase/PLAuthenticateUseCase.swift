@@ -22,7 +22,7 @@ final class PLAuthenticateUseCase: UseCase<PLAuthenticateUseCaseInput, PLAuthent
     public override func executeUseCase(requestValues: PLAuthenticateUseCaseInput) throws -> UseCaseResponse<PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        let parameters = AuthenticateParameters(encryptedPassword: requestValues.encryptedPassword, userId: requestValues.userId, secondFactorData: SecondFactorDataAuthenticate(response: Response(challenge: Challenge(authorizationType: requestValues.secondFactorData.challenge.authorizationType, value: requestValues.secondFactorData.challenge.value), value: requestValues.secondFactorData.value)))
+        let parameters = AuthenticateParameters(encryptedPassword: requestValues.encryptedPassword , userId: requestValues.userId, secondFactorData: SecondFactorDataAuthenticate(response: Response(challenge: Challenge(authorizationType: requestValues.secondFactorData.challenge.authorizationType, value: requestValues.secondFactorData.challenge.value), value: requestValues.secondFactorData.value)))
         let result = try managerProvider.getLoginManager().doAuthenticate(parameters)
         switch result {
         case .success(let authenticateData):
@@ -53,7 +53,8 @@ extension PLAuthenticateUseCase: Cancelable {
 
 // MARK: I/O types definition
 struct PLAuthenticateUseCaseInput {
-    let encryptedPassword, userId: String
+    let encryptedPassword: String?
+    let userId: String
     let secondFactorData: SecondFactorDataAuthenticationEntity
 }
 

@@ -69,6 +69,10 @@ private extension PLTrustedDevicePinCoordinator {
         self.dependenciesEngine.register(for: PLRegisterConfirmUseCase.self) { resolver in
            return PLRegisterConfirmUseCase(dependenciesResolver: resolver)
         }
+        
+        self.dependenciesEngine.register(for: PLTrustedDeviceInfoUseCase.self) { resolver in
+            return PLTrustedDeviceInfoUseCase(dependenciesResolver: resolver)
+        }
 
         self.dependenciesEngine.register(for: PLTrustedDeviceUserKeyReEncryptionUseCase.self) { resolver in
             return PLTrustedDeviceUserKeyReEncryptionUseCase(dependenciesResolver: resolver)

@@ -58,15 +58,20 @@ private extension PLBeforeLoginPresenter {
     func validateVersionAndUser() {
         view?.loadStart()
         Scenario(useCase: validateVersionUseCase).execute(on: self.dependenciesResolver.resolve())
-//        Add everything again when Remembered Login is ready
-//        .then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-//            guard let self = self else { return nil }
-//            return Scenario(useCase: self.beforeLoginUseCase)
-//        })
+        /*.then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            guard let self = self else { return nil }
+            return Scenario(useCase: self.beforeLoginUseCase)
+        })*/
         .onSuccess({ [weak self] result in
-//            self?.navigate(isTrustedDevice: result.isTrustedDevice,
-//                           withBiometrics: result.isBiometricsAvailable)
-            self?.navigate(isTrustedDevice: false, withBiometrics: false)
+
+          /*  let configuration = RememberedLoginConfiguration(userIdentifier: String(result.userId),
+                                                             isBiometricsAvailable: result.isBiometricsAvailable,
+                                                             isPinAvailable: result.isPinAvailable)
+            self?.navigate(configuration: configuration)*/
+            self?.navigate(configuration: RememberedLoginConfiguration(userIdentifier: "",
+                                                                       isBiometricsAvailable: false,
+                                                                       isPinAvailable: false,
+                                                                       isTrustedDevice: false))
         })
         .onError({[weak self] error in
             self?.handleError(error)
@@ -85,10 +90,10 @@ extension PLBeforeLoginPresenter: PLBeforeLoginPresenterProtocol {
         loadData()
     }
     
-    func navigate(isTrustedDevice: Bool, withBiometrics: Bool) {
+    func navigate(configuration: RememberedLoginConfiguration) {
         self.view?.loadDidFinish()
-        if isTrustedDevice {
-            self.coordinator.loadRememberedLogin(withBiometrics: withBiometrics)
+        if configuration.isPinAvailable {
+            self.coordinator.loadRememberedLogin(configuration: configuration)
         } else {
             self.coordinator.loadUnrememberedLogin()
         }

@@ -117,8 +117,7 @@ private extension  PLUnrememberedLoginIdPresenter {
             
             switch type {
             case .notPersisted(let info):
-                self?.loginProcessUseCase.executeNonPersistedLogin(type: type,
-                                                                   identification: info.identification) { [weak self] config in
+                self?.loginProcessUseCase.executeNonPersistedLogin(identification: info.identification) { [weak self] config in
                     guard let config = config else {
                         let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField))
                         self?.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localized("login_popupError_validateData")])

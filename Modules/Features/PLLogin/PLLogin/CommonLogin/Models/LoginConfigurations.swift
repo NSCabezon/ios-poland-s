@@ -37,22 +37,30 @@ public final class UnrememberedLoginConfiguration {
 public final class RememberedLoginConfiguration {
 
     public let userIdentifier: String
-    public let challenge: ChallengeEntity
-    public let secondFactorDataFinalState: String
-    public let unblockRemainingTimeInSecs: Double?
-
-    public init(userIdentifier: String, challenge: ChallengeEntity, secondFactorDataFinalState: String, unblockRemainingTimeInSecs: Double?) {
+    public let isTrustedDevice: Bool
+    public let isBiometricsAvailable: Bool
+    public let isPinAvailable: Bool
+    
+    public var unblockRemainingTimeInSecs: Double?
+    public var secondFactorDataFinalState: String?
+    public var challenge: ChallengeEntity?
+    public var pendingChallenge: PLRememberedLoginPendingChallenge?
+    
+    public init(userIdentifier: String,
+                isBiometricsAvailable: Bool,
+                isPinAvailable: Bool,
+                isTrustedDevice: Bool = true) {
         self.userIdentifier = userIdentifier
-        self.challenge = challenge
-        self.secondFactorDataFinalState = secondFactorDataFinalState
-        self.unblockRemainingTimeInSecs = unblockRemainingTimeInSecs
+        self.isBiometricsAvailable = isBiometricsAvailable
+        self.isPinAvailable = isPinAvailable
+        self.isTrustedDevice = isTrustedDevice
     }
     
     public func isFinal() -> Bool {
-        return secondFactorDataFinalState.elementsEqual("FINAL")
+        return secondFactorDataFinalState?.elementsEqual("FINAL") ?? false
     }
     
     public func isBlocked() -> Bool {
-        return secondFactorDataFinalState.elementsEqual("BLOCKED") && unblockRemainingTimeInSecs != nil
+        return (secondFactorDataFinalState?.elementsEqual("BLOCKED") ?? false) && unblockRemainingTimeInSecs != nil
     }
 }

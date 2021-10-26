@@ -35,6 +35,14 @@ final class PLRememberedLoginPinPresenter {
     var coordinatorDelegate: LoginCoordinatorDelegate {
         return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
+    
+    private var loginProcessUseCase: PLRememberedLoginProcessUseCase {
+        self.dependenciesResolver.resolve(for: PLRememberedLoginProcessUseCase.self)
+    }
+    
+    var coordinator: PLRememberedLoginPinCoordinator {
+        return self.dependenciesResolver.resolve(for: PLRememberedLoginPinCoordinator.self)
+    }
 
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
@@ -57,7 +65,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         
         self.view?.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
-            if configuration.challenge.authorizationType == .softwareToken {
+            if configuration.challenge?.authorizationType == .softwareToken {
                 self.view?.showDeviceConfigurationErrorDialog()
             } else if configuration.isFinal() {
                 self.view?.showInvalidSCADialog()
@@ -88,13 +96,20 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     func didSelectBalance() {
         
     }
-    
+
     func didSelectBlik() {
         self.trackEvent(.clickBlik)
     }
 
     func doLogin(with pin: String) {
         self.view?.showLoading()
+        let config = coordinator.loginConfiguration
+        self.loginProcessUseCase.executePersistedLogin(configuration: config) { [weak self] newConfiguration in
+            guard let self = self else { return }
+            self.coordinator.loginConfiguration.challenge = newConfiguration?.challenge
+        } onFailure: { [weak self]  error in
+            self?.handleError(error)
+        }
     }
     
     func viewDidLoad() {

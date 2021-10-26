@@ -26,7 +26,6 @@ final class PLTrustedDeviceStoreHeadersUseCase: UseCase<PLTrustedDeviceStoreHead
                                                        time: requestValues.time,
                                                        appId: requestValues.appId)
         trustedDeviceManager.storeTrustedDeviceHeaders(trustedDeviceHeders)
-
         return .ok()
     }
 }

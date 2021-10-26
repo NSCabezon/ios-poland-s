@@ -12,8 +12,6 @@ protocol LoginDataSourceProtocol {
     func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError>
-    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError>
-    func confirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -34,8 +32,6 @@ class LoginDataSource: LoginDataSourceProtocol {
         case pubKey = "/pub_key"
         case authenticateInit = "/authenticate/init"
         case authenticate = "/authenticate"
-        case pendingChallenge = "/pendingChallenge"
-        case confirmChallenge = "/confirmChallenge"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -109,40 +105,6 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                              jsonBody: parameters,
                                                                                                              headers: self.headers,
                                                                                                              localServiceName: .authenticate))
-        return result
-    }
-
-    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError> {
-        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
-            return .failure(NetworkProviderError.other)
-        }
-
-        let absoluteUrl = baseUrl + self.basePath
-        let serviceName =  LoginServiceType.pendingChallenge.rawValue
-        let result: Result<PendingChallengeDTO, NetworkProviderError> = self.networkProvider.request(PendingChallengeRequest(serviceName: serviceName,
-                                                                                                             serviceUrl: absoluteUrl,
-                                                                                                             method: .post,
-                                                                                                             body: body,
-                                                                                                             jsonBody: parameters,
-                                                                                                             headers: self.headers,
-                                                                                                             localServiceName: .pendingChallenge))
-        return result
-    }
-
-    func confirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
-        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
-            return .failure(NetworkProviderError.other)
-        }
-
-        let absoluteUrl = baseUrl + self.basePath
-        let serviceName =  LoginServiceType.confirmChallenge.rawValue
-        let result: Result<NetworkProviderResponseWithStatus, NetworkProviderError> = self.networkProvider.requestDataWithStatus(ConfirmChallengeRequest(serviceName: serviceName,
-                                                                                                             serviceUrl: absoluteUrl,
-                                                                                                             method: .post,
-                                                                                                             body: body,
-                                                                                                             jsonBody: parameters,
-                                                                                                             headers: self.headers,
-                                                                                                             localServiceName: .confirmChallenge))
         return result
     }
 }
@@ -273,78 +235,6 @@ private struct AuthenticateRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: AuthenticateParameters? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .body,
-         headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
-         localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
-        self.serviceName = serviceName
-        self.serviceUrl = serviceUrl
-        self.method = method
-        self.formData = body
-        self.jsonBody = jsonBody
-        self.bodyEncoding = bodyEncoding
-        self.headers = headers
-        self.contentType = contentType
-        self.localServiceName = localServiceName
-        self.authorization = authorization
-    }
-}
-
-private struct PendingChallengeRequest: NetworkProviderRequest {
-    let serviceName: String
-    let serviceUrl: String
-    let method: NetworkProviderMethod
-    let headers: [String: String]?
-    let queryParams: [String: Any]? = nil
-    let jsonBody: PendingChallengeParameters?
-    let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
-    let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
-
-    init(serviceName: String,
-         serviceUrl: String,
-         method: NetworkProviderMethod,
-         body: Data? = nil,
-         jsonBody: PendingChallengeParameters? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .body,
-         headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
-         localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
-        self.serviceName = serviceName
-        self.serviceUrl = serviceUrl
-        self.method = method
-        self.formData = body
-        self.jsonBody = jsonBody
-        self.bodyEncoding = bodyEncoding
-        self.headers = headers
-        self.contentType = contentType
-        self.localServiceName = localServiceName
-        self.authorization = authorization
-    }
-}
-
-private struct ConfirmChallengeRequest: NetworkProviderRequest {
-    let serviceName: String
-    let serviceUrl: String
-    let method: NetworkProviderMethod
-    let headers: [String: String]?
-    let queryParams: [String: Any]? = nil
-    let jsonBody: ConfirmChallengeParameters?
-    let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
-    let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
-
-    init(serviceName: String,
-         serviceUrl: String,
-         method: NetworkProviderMethod,
-         body: Data? = nil,
-         jsonBody: ConfirmChallengeParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
          contentType: NetworkProviderContentType = .json,

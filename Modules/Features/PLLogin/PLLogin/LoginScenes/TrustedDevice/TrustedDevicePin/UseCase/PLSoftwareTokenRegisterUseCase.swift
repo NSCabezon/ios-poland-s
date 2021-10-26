@@ -64,19 +64,15 @@ public struct TrustedDeviceSoftwareToken: Codable {
 }
 
 public extension TrustedDeviceSoftwareToken {
-    enum SoftwareTokenMappedType {
-        case PIN
-        case BIOMETRICS
-        case unknown
-    }
-    var typeMapped: SoftwareTokenMappedType {
+
+    var typeMapped: SoftwareTokenType {
         switch self.type.uppercased() {
         case "PIN":
             return .PIN
         case "BIOMETRICS":
             return .BIOMETRICS
         default:
-            return .unknown
+            return .UNKNOWN
         }
     }
 }

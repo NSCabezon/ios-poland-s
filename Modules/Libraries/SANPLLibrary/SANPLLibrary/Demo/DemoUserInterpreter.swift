@@ -70,5 +70,6 @@ public enum PLLocalServiceName: String {
     case getPayees
     case recentRecipients
     case ibanValidation = "ibanValidation"
+    case trustedDeviceInfo = "trustedDeviceInfo"
     case checkFinalFee = "checkFinalFee"
 }
