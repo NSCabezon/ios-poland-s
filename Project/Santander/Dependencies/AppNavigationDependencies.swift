@@ -12,6 +12,7 @@ import RetailLegacy
 import PersonalArea
 import BLIK
 import PLHelpCenter
+import PLCommons
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -38,6 +39,9 @@ final class AppNavigationDependencies {
         }
         
         dependenciesEngine.register(for: PLLoginWebViewCoordinatorDelegate.self) { _ in
+            return PLWebViewCoordinatorNavigator(dependenciesResolver: self.dependenciesEngine, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: PLWebViewCoordinatorDelegate.self) { _ in
             return PLWebViewCoordinatorNavigator(dependenciesResolver: self.dependenciesEngine, drawer: self.drawer)
         }
         

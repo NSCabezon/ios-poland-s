@@ -7,6 +7,7 @@ import Commons
 import UI
 import RetailLegacy
 import WebViews
+import PLCommons
 
 final class PLWebViewCoordinatorNavigator {
 
@@ -27,7 +28,7 @@ final class PLWebViewCoordinatorNavigator {
     }
 }
 
-extension PLWebViewCoordinatorNavigator: PLLoginWebViewCoordinatorDelegate {
+extension PLWebViewCoordinatorNavigator: PLLoginWebViewCoordinatorDelegate, PLWebViewCoordinatorDelegate {
     func showWebView(handler: WebViewLinkHandler) {
         self.baseWebViewNavigatableLauncher.goToWebView(configuration: handler.configuration, linkHandler: handler, didCloseClosure: nil)
     }
@@ -40,4 +41,3 @@ extension PLWebViewCoordinatorNavigator: PLLoginWebViewCoordinatorDelegate {
         }
     }
 }
-

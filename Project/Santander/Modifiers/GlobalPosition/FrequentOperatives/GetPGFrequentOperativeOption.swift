@@ -42,7 +42,7 @@ private extension GetPGFrequentOperativeOption {
                 PGFrequentOperativeOption.atm,
                 PGFrequentOperativeOption.personalArea,
                 AddBanksPGFrequentOperativeOption(),
-                CurrencyExchangePGFrequentOperativeOption(),
+                CurrencyExchangePGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
                 OpenGoalPGFrequentOperativeOption(),
                 OpenDepositPGFrequentOperativeOption(),
                 BuyInsurancePGFrequentOperativeOption(),

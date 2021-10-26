@@ -14,6 +14,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
+import PLCommonOperatives
 import Models
 import GlobalPosition
 import Account
@@ -217,6 +218,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: GetPLAccountOtherOperativesActionUseCase.self) { resolver in
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: GetBasePLWebConfigurationUseCaseProtocol.self) { resolver in
+            return GetBasePLWebConfigurationUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
             return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider)
