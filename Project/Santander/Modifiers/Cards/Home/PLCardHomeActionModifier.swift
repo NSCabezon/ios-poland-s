@@ -251,17 +251,25 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     }
 
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
-        switch action.trackName {
-        case PLCardHomeActionIdentifier.blockPL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
-            guard let trackName = action.trackName else { return }
-            let cardData = getCardData(identifier: getType(identifier: trackName))
-            if let isAvailable = cardData.isAvailable, !isAvailable {
-                Toast.show(localized("generic_alert_notAvailableOperation"))
-                return
-            }
-            showWebView(identifier: trackName, entity: entity, cardData: cardData)
+
+        switch action {
+        case .offCard:
+            goToCardBlock(entity)
+        case .onCard:
+            goToCardUnblock(entity)
         default:
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+            switch action.trackName {
+            case PLCardHomeActionIdentifier.blockPL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+                guard let trackName = action.trackName else { return }
+                let cardData = getCardData(identifier: getType(identifier: trackName))
+                if let isAvailable = cardData.isAvailable, !isAvailable {
+                    Toast.show(localized("generic_alert_notAvailableOperation"))
+                    return
+                }
+                showWebView(identifier: trackName, entity: entity, cardData: cardData)
+            default:
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+            }
         }
     }
     
@@ -313,5 +321,17 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
         default:
             return .cancel
         }
+    }
+}
+
+private extension PLCardHomeActionModifier {
+    func goToCardBlock(_ card: CardEntity) {
+        let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
+        coordinator.didSelectAction(.offCard, card)
+    }
+
+    func goToCardUnblock(_ card: CardEntity) {
+        let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
+        coordinator.didSelectAction(.onCard, card)
     }
 }
