@@ -9,6 +9,10 @@ import Foundation
 import CoreDomain
 import SANLegacyLibrary
 
+public struct PayeeListDTO: Codable {
+    public let payeeList: [PayeeDTO]?
+}
+
 public struct PayeeDTO: Codable {
     let payeeID: PayeeIdDTO?
     public let alias: String?
