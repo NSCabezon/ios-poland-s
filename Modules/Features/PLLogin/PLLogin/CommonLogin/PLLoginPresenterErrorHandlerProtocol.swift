@@ -48,13 +48,23 @@ extension PLLoginPresenterErrorHandlerProtocol {
 
     func getHttpErrorCode(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> String? {
         switch error {
-            case .error(let err):
-                guard let httpErrorCoden = err?.httpErrorCode else { return ""}
-                return String(httpErrorCoden)
-            case .networkUnavailable:
-                return ""
-            default:
-                return ""
+        case .error(let err):
+            guard let loginError = err?.error else {
+                return "500"
+            }
+            switch loginError {
+            case .unauthorized:
+                return "401"
+            case .emptyPass, .temporaryLocked, .versionBlocked: break
+            default: break
+            }
+            guard let httpErrorCode = err?.httpErrorCode else { return ""}
+            return String(httpErrorCode)
+
+        case .networkUnavailable:
+            return "500"
+        default:
+            return ""
         }
     }
 }

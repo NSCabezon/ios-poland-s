@@ -8,8 +8,7 @@
 import PLCommons
 
 protocol PhoneTransferRegistrationFormViewModelMapping {
-    func map(_ account: AccountForDebit) -> PhoneTransferRegistrationFormViewModel
-    func map(_ account: GetWalletUseCaseOkOutput.Wallet.Account) -> PhoneTransferRegistrationFormViewModel
+    func map(_ account: BlikCustomerAccount) -> PhoneTransferRegistrationFormViewModel
 }
 
 final class PhoneTransferRegistrationFormViewModelMapper: PhoneTransferRegistrationFormViewModelMapping {
@@ -19,7 +18,7 @@ final class PhoneTransferRegistrationFormViewModelMapper: PhoneTransferRegistrat
         self.amountFormatter = amountFormatter
     }
     
-    func map(_ account: AccountForDebit) -> PhoneTransferRegistrationFormViewModel {
+    func map(_ account: BlikCustomerAccount) -> PhoneTransferRegistrationFormViewModel {
         amountFormatter.currencySymbol = account.availableFunds.currency
         return getViewModel(
             accountNumber: account.number,
@@ -27,18 +26,6 @@ final class PhoneTransferRegistrationFormViewModelMapper: PhoneTransferRegistrat
             availableFunds: getAvailableFundsText(
                 forAmount: account.availableFunds.amount,
                 currency: account.availableFunds.currency
-            )
-        )
-    }
-    
-    func map(_ account: GetWalletUseCaseOkOutput.Wallet.Account) -> PhoneTransferRegistrationFormViewModel {
-        amountFormatter.currencySymbol = "PLN" // TODO:- Replace with currency from Wallet.Account model when backend will add missing field
-        return getViewModel(
-            accountNumber: account.number,
-            accountName: account.name,
-            availableFunds: getAvailableFundsText(
-                forAmount: 10000.00, // TODO:- Replace with amount from Wallet.Account model when backend will add missing field
-                currency: "PLN" // TODO:- Replace with currency from Wallet.Account model when backend will add missing field
             )
         )
     }

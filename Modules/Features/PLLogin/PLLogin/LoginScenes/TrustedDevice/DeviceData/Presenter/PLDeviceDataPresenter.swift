@@ -92,6 +92,7 @@ extension PLDeviceDataPresenter: PLLoginPresenterErrorHandlerProtocol {
 extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
     func viewDidLoad() {
+        self.trackScreen()
     }
 
     func viewWillAppear() {
@@ -99,7 +100,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
     }
 
     func registerDevice() {
-        
+        self.trackEvent(.clickContinue)
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
                                completion: nil)
@@ -148,8 +149,9 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                                                                                  ivrInputCode: registerSoftwareTokenOutput.ivrInputCode)
                 self.deviceConfiguration.trustedDevice = trustedDeviceInfo
                 self.goToTrustedDevicePIN()
-            }
-            .onError { [weak self] error in
+            }.onError { [weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
             .finally { [weak self] in
@@ -180,5 +182,15 @@ private extension PLDeviceDataPresenter {
             }.finally {
                 self.view?.addDeviceConfiguration(self.deviceConfiguration)
             }
+    }
+}
+
+extension PLDeviceDataPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceDeviceDataPage {
+        return PLLoginTrustedDeviceDeviceDataPage()
     }
 }

@@ -195,6 +195,7 @@ private extension PLTrustedDeviceHardwareTokenViewController {
     }
 
     @objc func closeButtonDidPressed() {
+        self.presenter.closeButtonDidPressed()
         PLLoginCommonDialogs.presentCloseDialog(on: self, onCancel: {
         }, onAccept: { [weak self] in
             self?.presenter.goToDeviceTrustDeviceData()

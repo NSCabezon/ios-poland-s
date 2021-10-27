@@ -12,7 +12,7 @@ protocol BLIKDataSourceProtocol {
     func createCheque(request: CreateChequeRequestDTO) throws -> Result<CreateChequeResponseDTO, NetworkProviderError>
     func cancelTransaction(request: CancelBLIKTransactionRequestDTO, trnId: Int) throws -> Result<Void, NetworkProviderError>
     func getPinPublicKey() throws -> Result<PubKeyDTO, NetworkProviderError>
-    func getAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError>
+    func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError>
     func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
@@ -241,7 +241,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         )
     }
     
-    func getAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError> {
+    func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }

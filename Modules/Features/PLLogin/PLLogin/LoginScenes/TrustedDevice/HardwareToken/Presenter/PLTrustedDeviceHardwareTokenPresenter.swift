@@ -16,6 +16,7 @@ protocol PLTrustedDeviceHardwareTokenPresenterProtocol: MenuTextWrapperProtocol 
     func viewDidLoad()
     func goToDeviceTrustDeviceData()
     func registerConfirm(code: String)
+    func closeButtonDidPressed()
 }
 
 final class PLTrustedDeviceHardwareTokenPresenter {
@@ -66,6 +67,7 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
     }
     
     func registerConfirm(code: String) {
+        self.trackEvent(.clickContinue)
         guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
               let pinToken = tokens.first(where: { $0.typeMapped == .PIN }) else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput(errorDescription: "Required parameter not found")))
@@ -114,9 +116,15 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
                     self.goToTrustedDeviceSuccess()
                 })
                 .onError { [weak self] error in
+                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
         })
+    }
+
+    func closeButtonDidPressed() {
+        self.trackEvent(.clickCancel)
     }
 }
 
@@ -136,6 +144,8 @@ private extension PLTrustedDeviceHardwareTokenPresenter {
                 self?.view?.showChallenge(challenge: challenge)
             })
             .onError({ [weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             })
     }
@@ -181,5 +191,15 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLLoginPresenterErrorHandlerPro
                 self?.goToDeviceTrustDeviceData()
             })
         }
+    }
+}
+
+extension PLTrustedDeviceHardwareTokenPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceHardwareTokenPage {
+        return PLLoginTrustedDeviceHardwareTokenPage()
     }
 }

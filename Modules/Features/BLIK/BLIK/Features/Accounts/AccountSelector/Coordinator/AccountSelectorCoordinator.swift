@@ -15,39 +15,36 @@ import PLCommons
 import PLCommonOperatives
 
 protocol AccountSelectorCoordinatorProtocol {
-    func selectAccount(_ account: AccountForDebit)
+    func selectAccount(_ account: BlikCustomerAccount)
     func close()
 }
 
 final class AccountSelectorCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let accountSelectionHandler: (AccountForDebit) -> ()
+    private let accountSelectionHandler: (BlikCustomerAccount) -> ()
     private let screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration
+    private let accounts: [BlikCustomerAccount]
 
     init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration,
-        accountSelectionHandler: @escaping (AccountForDebit) -> ()
+        accounts: [BlikCustomerAccount],
+        accountSelectionHandler: @escaping (BlikCustomerAccount) -> ()
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accountSelectionHandler = accountSelectionHandler
         self.screenLocationConfiguration = screenLocationConfiguration
+        self.accounts = accounts
         self.setupDependencies()
     }
     
     public func start() {
         let presenter = AccountSelectorPresenter(
             dependenciesResolver: dependenciesEngine,
-            coordinator: self,
-            loadAccountsUseCase: LoadCustomerAccountsUseCase(
-                dependenciesResolver: dependenciesEngine
-            ),
-            viewModelMapper: SelectableAccountViewModelMapper(
-                amountFormatter: .PLAmountNumberFormatter
-            )
+            accounts: accounts
         )
         let controller = AccountSelectorViewController(
             presenter: presenter,
@@ -59,7 +56,7 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
 }
 
 extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
-    func selectAccount(_ account: AccountForDebit) {
+    func selectAccount(_ account: BlikCustomerAccount) {
         accountSelectionHandler(account)
         close()
     }
@@ -71,8 +68,12 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
 
 extension AccountSelectorCoordinator {
     func setupDependencies() {
-        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
-            return AccountForDebitMapper()
+        dependenciesEngine.register(for: AccountSelectorCoordinatorProtocol.self) { _ in
+            return self
+        }
+        
+        dependenciesEngine.register(for: SelectableAccountViewModelMapping.self) { _ in
+            return SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
     }
 }

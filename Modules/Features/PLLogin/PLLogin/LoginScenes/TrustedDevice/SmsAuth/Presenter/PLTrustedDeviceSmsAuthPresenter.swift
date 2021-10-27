@@ -14,6 +14,7 @@ protocol PLTrustedDeviceSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     func viewDidLoad()
     func goBack()
     func registerConfirm(smsCode: String)
+    func closeButtonDidPressed()
 }
 
 final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProtocol {
@@ -54,6 +55,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     }
     
     func viewDidLoad() {
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceSMSAuthPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDeviceVoiceBotPage().page])
         requestSMSConfirmationCode()
     }
     
@@ -62,6 +64,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     }
     
     func registerConfirm(smsCode: String) {
+        self.trackEvent(.clickContinue)
         guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
               let pinToken = tokens.first(where: { $0.typeMapped == .PIN })
         else {
@@ -111,9 +114,26 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                     self.goToTrustedDeviceSuccess()
                 })
                 .onError { [weak self] error in
+                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
         })
+    }
+
+    func closeButtonDidPressed() {
+        self.trackEvent(.clickCancel)
+    }
+
+    func storeTrustedDeviceHeadersPersistenlty() {
+
+        guard let deviceHeaders = self.deviceConfiguration.deviceHeaders else { return }
+        let input = PLTrustedDeviceStoreHeadersInput(parameters: deviceHeaders.encryptedParameters,
+                                                     time: deviceHeaders.time,
+                                                     appId: deviceHeaders.appId)
+
+        Scenario(useCase: self.storeTrustedDeviceHeadersUseCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
     }
     
     func requestSMSConfirmationCode() {
@@ -138,6 +158,8 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                 //SMS sent
             })
             .onError { [weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
     }
@@ -194,5 +216,15 @@ extension PLTrustedDeviceSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol 
                 self?.goBack()
             })
         }
+    }
+}
+
+extension PLTrustedDeviceSmsAuthPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceSMSAuthPage {
+        return PLLoginTrustedDeviceSMSAuthPage()
     }
 }

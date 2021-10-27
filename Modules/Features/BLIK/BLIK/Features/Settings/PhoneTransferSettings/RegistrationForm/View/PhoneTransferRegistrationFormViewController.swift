@@ -42,6 +42,7 @@ final class PhoneTransferRegistrationFormViewController: UIViewController, Phone
     }
     
     func setViewModel(_ viewModel: PhoneTransferRegistrationFormViewModel) {
+        setSubviewsVisibility(shouldHide: false)
         infoLabel.text = viewModel.hintMessage
         statementTitleLabel.text = viewModel.statementViewModel.title
         statementLabel.text = viewModel.statementViewModel.description
@@ -60,6 +61,7 @@ private extension PhoneTransferRegistrationFormViewController {
         configureSubviews()
         configureStyling()
         configureTargets()
+        setSubviewsVisibility(shouldHide: true)
     }
     
     func configureSubviews() {
@@ -159,5 +161,11 @@ private extension PhoneTransferRegistrationFormViewController {
     
     @objc func close() {
         presenter.didPressClose()
+    }
+    
+    func setSubviewsVisibility(shouldHide: Bool) {
+        view.subviews.forEach {
+            $0.isHidden = shouldHide
+        }
     }
 }

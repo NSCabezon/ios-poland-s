@@ -12,7 +12,7 @@ public protocol PLBLIKManagerProtocol {
     func createCheque(request: CreateChequeRequestDTO) throws -> Result<CreateChequeResponseDTO, NetworkProviderError>
     func cancelTransaction(request: CancelBLIKTransactionRequestDTO, trnId: Int) throws -> Result<Void, NetworkProviderError>
     func getPinPublicKey() throws -> Result<PubKeyDTO, NetworkProviderError>
-    func getAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError>
+    func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError>
     func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
@@ -82,7 +82,7 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
         try dataSource.getPinPublicKey()
     }
     
-    public func getAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError> {
+    public func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError> {
         try dataSource.getAccounts()
     }
     
