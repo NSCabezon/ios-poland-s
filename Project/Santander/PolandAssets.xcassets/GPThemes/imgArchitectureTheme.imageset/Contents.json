@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgArchitecture@1x.png",
+      "filename" : "imgArchitectureSelect.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgArchitecture@2x.png",
+      "filename" : "imgArchitectureSelect@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgArchitecture@3x.png",
+      "filename" : "imgArchitectureSelect@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

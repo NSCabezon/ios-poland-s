@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgSports@1x.png",
+      "filename" : "imgSportsSelect.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgSports@2x.png",
+      "filename" : "imgSportsSelect@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgSports@3x.png",
+      "filename" : "imgSportsSelect@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
