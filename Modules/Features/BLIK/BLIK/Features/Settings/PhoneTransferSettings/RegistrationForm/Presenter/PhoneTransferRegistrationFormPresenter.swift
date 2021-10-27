@@ -10,38 +10,54 @@ protocol PhoneTransferRegistrationFormPresenterProtocol {
 }
 
 protocol PhoneTransferRegistrationFormDelegate: AnyObject {
-    func didSelectAccount(_ account: AccountForDebit)
+    func didSelectAccount(_ account: BlikCustomerAccount)
 }
 
-final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormPresenterProtocol, PhoneTransferRegistrationFormDelegate {
+final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormDelegate {
     private let dependenciesResolver: DependenciesResolver
-    private let coordinator: PhoneTransferSettingsCoordinatorProtocol
-    private let initialViewModel: PhoneTransferRegistrationFormViewModel
-    private let viewModelMapper: PhoneTransferRegistrationFormViewModelMapping
-    private let registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol
-    private var selectedAccountNumber: String
+    private var coordinator: PhoneTransferSettingsCoordinatorProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var viewModelMapper: PhoneTransferRegistrationFormViewModelMapping {
+        dependenciesResolver.resolve()
+    }
+    private var loadAccountsUseCase: LoadCustomerAccountsUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
+    
+    private var fetchedAccounts: [BlikCustomerAccount] = []
+    private var selectedAccountNumber: String = ""
+
     weak var view: PhoneTransferRegistrationFormViewController?
     
-    init(
-        dependenciesResolver: DependenciesResolver,
-        coordinator: PhoneTransferSettingsCoordinatorProtocol,
-        initialViewModel: PhoneTransferRegistrationFormViewModel,
-        viewModelMapper: PhoneTransferRegistrationFormViewModelMapping,
-        registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol
-    ) {
+    init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
-        self.coordinator = coordinator
-        self.initialViewModel = initialViewModel
-        self.viewModelMapper = viewModelMapper
-        self.registerPhoneNumberUseCase = registerPhoneNumberUseCase
-        self.selectedAccountNumber = initialViewModel.accountViewModel.accountNumber
     }
-    
+}
+
+extension PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormPresenterProtocol {
     func viewDidLoad() {
-        view?.setViewModel(initialViewModel)
+        view?.showLoader()
+        Scenario(useCase: loadAccountsUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    self?.handleFetchedAccounts(output.accounts)
+                })
+            }
+            .onError { [weak self] _ in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showServiceInaccessibleMessage(onConfirm: {
+                        self?.coordinator.close()
+                    })
+                })
+            }
     }
     
     func didPressRegister() {
@@ -63,7 +79,7 @@ final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFor
                     )
                 })
             }
-            .onError { [weak self] error in
+            .onError { [weak self] _ in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {
                     strongSelf.view?.showServiceInaccessibleMessage(onConfirm: nil)
@@ -72,25 +88,39 @@ final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFor
     }
     
     func didPressChangeAccount() {
-        coordinator.showAccountSelector()
+        coordinator.showAccountSelector(with: fetchedAccounts)
     }
             
     func didPressClose() {
         coordinator.close()
     }
     
-    func didSelectAccount(_ account: AccountForDebit) {
+    func didSelectAccount(_ account: BlikCustomerAccount) {
         let viewModel = viewModelMapper.map(account)
         selectedAccountNumber = account.number
         view?.setViewModel(viewModel)
     }
-    
-    private func handleRegisterResponse(_ response: RegisterPhoneNumberResponse) {
+}
+
+private extension PhoneTransferRegistrationFormPresenter {
+    func handleRegisterResponse(_ response: RegisterPhoneNumberResponse) {
         switch response {
         case .successfulyRegisteredPhoneNumber:
             coordinator.showTransferSettingsAfterPhoneRegistrationFromFormScreen()
         case .smsAuthorizationCodeSent:
             coordinator.showSmsConfirmationScreen(selectedAccountNumber: selectedAccountNumber)
         }
+    }
+    
+    func handleFetchedAccounts(_ accounts: [BlikCustomerAccount]) {
+        guard let selectedAccount = accounts.first(where: { $0.defaultForP2P == true }) else {
+            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                self?.coordinator.close()
+            })
+            return
+        }
+        fetchedAccounts = accounts
+        let viewModel = viewModelMapper.map(selectedAccount)
+        view?.setViewModel(viewModel)
     }
 }

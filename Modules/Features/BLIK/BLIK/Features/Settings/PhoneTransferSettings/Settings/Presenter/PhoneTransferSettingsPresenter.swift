@@ -48,11 +48,11 @@ final class PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtoc
     }
     
     func didPressUpdatePhoneNumber() {
-        coordinator.showPhoneNumberUpdateForm()
+        coordinator.showPhoneNumberRegistrationForm()
     }
     
     func didPressUpdateAccountNumber() {
-        coordinator.showAccountSelector()
+        coordinator.showPhoneNumberRegistrationForm()
     }
     
     func didPressClose() {

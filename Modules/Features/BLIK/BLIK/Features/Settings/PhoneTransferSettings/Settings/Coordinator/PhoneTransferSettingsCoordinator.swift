@@ -17,8 +17,7 @@ import PLCommons
 protocol PhoneTransferSettingsCoordinatorProtocol: ModuleCoordinator {
     func showPhoneNumberUnregisterConfirmation(onConfirm: @escaping () -> Void)
     func showPhoneNumberRegistrationForm()
-    func showPhoneNumberUpdateForm()
-    func showAccountSelector()
+    func showAccountSelector(with accounts: [BlikCustomerAccount])
     func showSmsConfirmationScreen(selectedAccountNumber: String)
     func goBackToBlikSettingsFromSmsScreen()
     func showTransferSettingsAfterPhoneRegistrationFromFormScreen()
@@ -50,6 +49,7 @@ final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
         self.viewModelMapper = viewModelMapper
         self.phoneTransferSettingsFactory = phoneTransferSettingsFactory
         self.unregisterPhoneNumberConfirmationFactory = unregisterPhoneNumberConfirmationFactory
+        setUpDependencies()
     }
     
     public func start() {
@@ -75,32 +75,19 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     }
     
     func showPhoneNumberRegistrationForm() {
-        let viewModelMapper = PhoneTransferRegistrationFormViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-        let viewModel = viewModelMapper.map(wallet.getValue().sourceAccount)
-        let presenter = PhoneTransferRegistrationFormPresenter(
-            dependenciesResolver: dependenciesEngine,
-            coordinator: self,
-            initialViewModel: viewModel,
-            viewModelMapper: viewModelMapper,
-            registerPhoneNumberUseCase: RegisterPhoneNumberUseCase(
-                dependenciesResolver: dependenciesEngine
-            )
-        )
+        let presenter = PhoneTransferRegistrationFormPresenter(dependenciesResolver: dependenciesEngine)
         let viewController = PhoneTransferRegistrationFormViewController(presenter: presenter)
         presenter.view = viewController
         registrationFormDelegate = presenter
         navigationController?.pushViewController(viewController, animated: true)
     }
-    
-    func showPhoneNumberUpdateForm() {
-        // TODO:- Handle action
-    }
-    
-    func showAccountSelector() {
+
+    func showAccountSelector(with accounts: [BlikCustomerAccount]) {
         let coordinator = AccountSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             screenLocationConfiguration: .mobileTransferSettings,
+            accounts: accounts,
             accountSelectionHandler: { [weak self] account in
                 self?.registrationFormDelegate?.didSelectAccount(account)
             }
@@ -141,5 +128,29 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     
     func close() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+private extension PhoneTransferSettingsCoordinator {
+    func setUpDependencies() {
+        dependenciesEngine.register(for: PhoneTransferSettingsCoordinatorProtocol.self) { _ in
+            return self
+        }
+        
+        dependenciesEngine.register(for: BlikCustomerAccountMapping.self) { _ in
+            return BlikCustomerAccountMapper()
+        }
+        
+        dependenciesEngine.register(for: PhoneTransferRegistrationFormViewModelMapping.self) { _ in
+            return PhoneTransferRegistrationFormViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+        }
+        
+        dependenciesEngine.register(for: RegisterPhoneNumberUseCaseProtocol.self) { resolver in
+            return RegisterPhoneNumberUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: LoadCustomerAccountsUseCaseProtocol.self) { resolver in
+            return LoadCustomerAccountsUseCase(dependenciesResolver: resolver)
+        }
     }
 }

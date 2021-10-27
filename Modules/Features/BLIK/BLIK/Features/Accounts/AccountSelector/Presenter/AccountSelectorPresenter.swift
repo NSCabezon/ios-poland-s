@@ -12,10 +12,13 @@ import PLCommons
 
 final class AccountSelectorPresenter: AccountSelectorPresenterProtocol {
     private let dependenciesResolver: DependenciesResolver
-    private let coordinator: AccountSelectorCoordinatorProtocol
-    private let loadAccountsUseCase: LoadCustomerAccountsUseCaseProtocol
-    private let viewModelMapper: SelectableAccountViewModelMapping
-    private var fetchedAccounts: [AccountForDebit] = []
+    private var coordinator: AccountSelectorCoordinatorProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var viewModelMapper: SelectableAccountViewModelMapping {
+        dependenciesResolver.resolve()
+    }
+    private var accounts: [BlikCustomerAccount]
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
@@ -23,54 +26,47 @@ final class AccountSelectorPresenter: AccountSelectorPresenterProtocol {
     
     init(
         dependenciesResolver: DependenciesResolver,
-        coordinator: AccountSelectorCoordinatorProtocol,
-        loadAccountsUseCase: LoadCustomerAccountsUseCaseProtocol,
-        viewModelMapper: SelectableAccountViewModelMapping
+        accounts: [BlikCustomerAccount]
     ) {
         self.dependenciesResolver = dependenciesResolver
-        self.coordinator = coordinator
-        self.loadAccountsUseCase = loadAccountsUseCase
-        self.viewModelMapper = viewModelMapper
+        self.accounts = accounts
     }
     
     func viewDidLoad() {
-        view?.showLoader()
-        Scenario(useCase: loadAccountsUseCase)
-            .execute(on: useCaseHandler)
-            .onSuccess { [weak self] output in
-                self?.fetchedAccounts = output.accountsForDebit
-                self?.view?.hideLoader(completion: {
-                    self?.displayFetchedAccounts()
-                })
-            }
-            .onError { [weak self] error in
-                self?.view?.hideLoader(completion: {
-                    self?.showErrorMessage()
-                })
-            }
+        displayAccounts()
     }
     
     func didSelectAccount(at index: Int) {
-        coordinator.selectAccount(fetchedAccounts[index])
+        coordinator.selectAccount(accounts[index])
     }
     
     func didPressClose() {
         coordinator.close()
     }
 
-    private func displayFetchedAccounts() {
+    private func displayAccounts() {
         do {
-            let viewModels = try fetchedAccounts.map {
-                try viewModelMapper.map($0)
+            let viewModels = try accounts.map { acc -> SelectableAccountViewModel in
+                let debitAcc = AccountForDebit(
+                    id: acc.id,
+                    name: acc.name,
+                    number: acc.number,
+                    availableFunds: acc.availableFunds,
+                    defaultForPayments: acc.defaultForPayments,
+                    type: .OTHER,
+                    accountSequenceNumber: -1,
+                    accountType: -1
+                )
+                // TODO:- Replace this mapper with a dedicated viewModel mapper that takes [BlikCustomerAccount] as an input
+                // Currently `SelectableAccountViewModel` depends on API model that have `type`, `accountSequenceNumber` and `accountType` parameters
+                // They shouldn't be included in this viewModel, because it makes `SelectableAccountView` dependent on specific API endpoint
+                return try viewModelMapper.map(debitAcc)
             }
             view?.setViewModels(viewModels)
         } catch {
-            showErrorMessage()
+            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                self?.coordinator.close()
+            })
         }
-    }
-    
-    private func showErrorMessage() {
-        let message = "#Nie udało się pobrać listy kont. Spróbuj pononownie później."
-        view?.showErrorMessage(message, onConfirm: nil)
     }
 }
