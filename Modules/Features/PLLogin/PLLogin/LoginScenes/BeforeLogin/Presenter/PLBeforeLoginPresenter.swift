@@ -42,6 +42,10 @@ final class PLBeforeLoginPresenter {
         self.dependenciesResolver.resolve(for: PLValidateVersionUseCase.self)
     }
     
+    private var getUserPreferencesUseCase: PLGetUserPreferencesUseCase {
+        self.dependenciesResolver.resolve(for: PLGetUserPreferencesUseCase.self)
+    }
+    
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
@@ -57,21 +61,29 @@ private extension PLBeforeLoginPresenter {
     
     func validateVersionAndUser() {
         view?.loadStart()
+        var configuration = RememberedLoginConfiguration(userIdentifier: "")
+
         Scenario(useCase: validateVersionUseCase).execute(on: self.dependenciesResolver.resolve())
         /*.then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
             guard let self = self else { return nil }
             return Scenario(useCase: self.beforeLoginUseCase)
+        })
+        .then(scenario: { [weak self] result -> Scenario<PLGetUserPrefEntityUseCaseInput, PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            guard let self = self else { return nil }
+            
+            configuration = RememberedLoginConfiguration(userIdentifier: String(result.userId),
+                                                         isBiometricsAvailable: result.isBiometricsAvailable,
+                                                         isPinAvailable: result.isPinAvailable)
+            let caseInput = PLGetUserPrefEntityUseCaseInput(userId: result.userId)
+            return Scenario(useCase: self.getUserPreferencesUseCase, input: caseInput)
         })*/
         .onSuccess({ [weak self] result in
-
-          /*  let configuration = RememberedLoginConfiguration(userIdentifier: String(result.userId),
-                                                             isBiometricsAvailable: result.isBiometricsAvailable,
-                                                             isPinAvailable: result.isPinAvailable)
-            self?.navigate(configuration: configuration)*/
-            self?.navigate(configuration: RememberedLoginConfiguration(userIdentifier: "",
-                                                                       isBiometricsAvailable: false,
-                                                                       isPinAvailable: false,
-                                                                       isTrustedDevice: false))
+           /* configuration.userPref = RememberedLoginUserPreferencesConfiguration(name: result.name,
+                                                                                 theme: result.theme,
+                                                                                 biometricsEnabled: result.biometricsEnabled)
+            
+            TimeImageAndGreetingViewModel.shared.theme = result.theme*/
+            self?.navigate(configuration: configuration)
         })
         .onError({[weak self] error in
             self?.handleError(error)

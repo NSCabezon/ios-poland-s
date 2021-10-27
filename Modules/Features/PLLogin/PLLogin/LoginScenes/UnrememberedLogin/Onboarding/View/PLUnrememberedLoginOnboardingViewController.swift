@@ -62,14 +62,13 @@ private extension PLUnrememberedLoginOnboardingViewController {
     }
     
     func setupViews() {
-        let timeImageAndGreeting = TimeImageAndGreetingViewModel()
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        backgroundImageView.image = timeImageAndGreeting.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
         
         titleLabel.font = .santander(family: .text, type: .light, size: 40)
         titleLabel.textColor = UIColor.Legacy.uiWhite
-        titleLabel.text = localized(timeImageAndGreeting.greetingTextKey.rawValue)
+        titleLabel.text = localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue)
 
         lostKeyLabel.font = .santander(family: .text, type: .regular, size: 14)
         lostKeyLabel.textColor = UIColor.Legacy.uiWhite

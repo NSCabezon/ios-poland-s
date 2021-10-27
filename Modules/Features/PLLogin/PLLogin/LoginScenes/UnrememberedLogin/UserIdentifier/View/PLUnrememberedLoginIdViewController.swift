@@ -165,7 +165,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
@@ -195,7 +195,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).text
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }
 
     func configureNavigationController() {

@@ -13,7 +13,7 @@ import Models
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
-    var enabledBiometrics: Bool { get set }
+    var loginConfiguration:RememberedLoginConfiguration { get set }
     func viewDidLoad()
     func viewDidAppear()
     func doLogin(with pin: String)
@@ -28,7 +28,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
 final class PLRememberedLoginPinPresenter {
     internal let dependenciesResolver: DependenciesResolver
     weak var view: PLRememberedLoginPinViewControllerProtocol?
-    public var enabledBiometrics: Bool = false
+    public var loginConfiguration:RememberedLoginConfiguration
     private let localAuth: LocalAuthenticationPermissionsManagerProtocol
     private var allowLoginBlockedUsers = true
 
@@ -44,9 +44,10 @@ final class PLRememberedLoginPinPresenter {
         return self.dependenciesResolver.resolve(for: PLRememberedLoginPinCoordinator.self)
     }
 
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, configuration: RememberedLoginConfiguration) {
         self.dependenciesResolver = dependenciesResolver
         self.localAuth = dependenciesResolver.resolve(for: LocalAuthenticationPermissionsManagerProtocol.self)
+        self.loginConfiguration = configuration
     }
 }
 
@@ -85,7 +86,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     
     func getBiometryTypeAvailable() -> BiometryTypeEntity {
         self.trackEvent(.clickBiometric)
-        guard enabledBiometrics else { return .none }
+        guard loginConfiguration.isBiometricsAvailable else { return .none }
         #if targetEnvironment(simulator)
         return .faceId
         #else
@@ -117,7 +118,8 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     }
     
     func viewDidAppear() {
-        
+        guard let aName = self.loginConfiguration.userPref?.name else { return }
+        view?.setUserName(aName)
     }
 }
 

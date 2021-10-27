@@ -138,7 +138,7 @@ private extension PLSmsAuthViewController {
     }
 
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
 
@@ -182,7 +182,7 @@ private extension PLSmsAuthViewController {
     }
 
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).text
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }
 
     func addKeyboardObserver() {

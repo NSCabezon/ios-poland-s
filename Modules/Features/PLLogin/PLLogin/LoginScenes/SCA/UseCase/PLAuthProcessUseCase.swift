@@ -8,6 +8,7 @@
 import Commons
 import DomainCommon
 import SANPLLibrary
+import SANLegacyLibrary
 import Repository
 import Models
 import PLCommons
@@ -15,6 +16,9 @@ import PLCommons
 final class PLAuthProcessUseCase {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector
     
+    private var onContinue: ((PLGetLoginNextSceneUseCaseOkOutput) -> Void)?
+    private var nextScene = PLGetLoginNextSceneUseCaseOkOutput(nextScene: .globalPositionScene)
+
     private var persistedPubKeyUseCase: PLGetPersistedPubKeyUseCase {
         self.dependenciesEngine.resolve(for: PLGetPersistedPubKeyUseCase.self)
     }
@@ -30,6 +34,20 @@ final class PLAuthProcessUseCase {
     private var getNextSceneUseCase: PLGetLoginNextSceneUseCase {
         return self.dependenciesEngine.resolve(for: PLGetLoginNextSceneUseCase.self)
     }
+    
+    private var appRepository:AppRepositoryProtocol {
+        self.dependenciesEngine.resolve(for: AppRepositoryProtocol.self)
+    }
+    
+    private var bsanManagersProvider:BSANManagersProvider  {
+        self.dependenciesEngine.resolve(for: BSANManagersProvider.self)
+    }
+    
+    private lazy var sessionProcessHelper: SessionProcessHelperProtocol = {
+        let sessionProcess = self.dependenciesEngine.resolve(for: SessionProcessHelperProtocol.self)
+        sessionProcess.setSessionProcessDelegate(self)
+        return sessionProcess
+    }()
 
     public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependenciesEngine = dependenciesEngine
@@ -61,7 +79,7 @@ final class PLAuthProcessUseCase {
         
         let secondFactorAuthentity = SecondFactorDataAuthenticationEntity(challenge: input.challenge,
                                                                           value: input.scaCode)
-        
+        self.onContinue = onSuccess
         Scenario(useCase: self.persistedPubKeyUseCase)
             .execute(on: self.dependenciesEngine.resolve())
             .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
@@ -84,12 +102,38 @@ final class PLAuthProcessUseCase {
                 guard let self = self else { return nil }
                 return Scenario(useCase: self.getNextSceneUseCase)
             })
-            .onSuccess({ nextSceneResult in
-                 onSuccess(nextSceneResult)
+            .onSuccess({ [weak self] nextSceneResult in
+                self?.nextScene = nextSceneResult
+                self?.storePersistedUser(input: input)
             })
             .onError { error in
                 onFailure(error)
             }
+    }
+    
+    private func storePersistedUser(input: PLAuthProcessInput) {
+        let bsanEnv: BSANEnvironmentDTO?
+        do {
+            bsanEnv = try self.bsanManagersProvider.getBsanEnvironmentsManager().getCurrentEnvironment().getResponseData()
+        } catch {
+            self.onContinue?(self.nextScene)
+            return
+        }
+        
+        let dto = PersistedUserDTO.createPersistedUser(loginType: .U, login: input.userId, environmentName: bsanEnv?.name ?? "")
+        _ = self.appRepository.setPersistedUserDTO(persistedUserDTO:dto)
+        sessionProcessHelper.loadSessionData()
+    }
+}
+
+extension PLAuthProcessUseCase: SessionProcessHelperDelegate {
+    func handle(event: SessionProcessEvent) {
+        switch event {
+        case .loadDataSuccess, .fail(_):
+            self.onContinue?(self.nextScene)
+        default:
+            break
+        }
     }
 }
 

@@ -44,7 +44,10 @@ extension PLRememberedLoginPinCoordinator: PLRememberedLoginPinCoordinatorProtoc
 // MARK: Register Scene depencencies.
 private extension PLRememberedLoginPinCoordinator {
     func setupDependencies() {
-        let presenter = PLRememberedLoginPinPresenter(dependenciesResolver: self.dependenciesEngine)
+        
+        let presenter = PLRememberedLoginPinPresenter(dependenciesResolver: self.dependenciesEngine,
+                                                      configuration: self.loginConfiguration)
+        
         let authProcessUseCase = PLRememberedLoginProcessUseCase(dependenciesEngine: self.dependenciesEngine)
 
         self.dependenciesEngine.register(for: PLRememberedLoginProcessUseCase.self) { _ in
@@ -69,7 +72,7 @@ private extension PLRememberedLoginPinCoordinator {
                 bundle: Bundle.module,
                 dependenciesResolver: resolver,
                 presenter: presenter)
-            presenter.enabledBiometrics = self.loginConfiguration.isBiometricsAvailable
+            presenter.loginConfiguration = self.loginConfiguration
             presenter.view = viewController
             return viewController
         }

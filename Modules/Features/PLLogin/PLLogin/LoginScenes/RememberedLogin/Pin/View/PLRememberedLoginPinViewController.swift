@@ -20,6 +20,7 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
     func showInvalidSCADialog()
     func showDeviceConfigurationErrorDialog()
+    func setUserName(_ name: String)
 }
 
 final class PLRememberedLoginPinViewController: UIViewController {
@@ -101,7 +102,7 @@ private extension PLRememberedLoginPinViewController {
     func setupViews() {
         numberPadView.delegate = self
         sanIconImageView?.image = Assets.image(named: "logoSanLogin")
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
@@ -112,12 +113,6 @@ private extension PLRememberedLoginPinViewController {
         titleLabel.numberOfLines = 2
         biometrySmallLabel.font = .santander(family: .text, type: .regular, size: 14)
         biometrySmallLabel.textColor = UIColor.Legacy.uiWhite
-        
-        /*
-        let stringLoader = dependenciesResolver.resolve(forOptionalType: StringLoader.self)
-        guard let titleText: LocalizedStylableText = stringLoader?.getString("pg_title_welcome", [StringPlaceholder(.name, "Paquito")]) else { return }
-        let textConfig = LocalizedStylableTextConfiguration(lineHeightMultiple: 0.70)
-        titleLabel.configureText(withLocalizedString: titleText, andConfiguration: textConfig)*/
     }
     
     func setupButtons() {
@@ -196,6 +191,13 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
 }
 
 extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewControllerProtocol {
+    func setUserName(_ name: String) {
+        
+        let stringLoader = dependenciesResolver.resolve(forOptionalType: StringLoader.self)
+        guard let titleText: LocalizedStylableText = stringLoader?.getString("onboarding_title_hello", [StringPlaceholder(.name, name)]) else { return }
+        let textConfig = LocalizedStylableTextConfiguration(lineHeightMultiple: 0.70)
+        titleLabel.configureText(withLocalizedString: titleText, andConfiguration: textConfig)
+    }
     
     func showAccountPermanentlyBlockedDialog() {
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")

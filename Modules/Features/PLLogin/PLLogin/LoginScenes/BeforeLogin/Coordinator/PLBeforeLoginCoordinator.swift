@@ -51,6 +51,10 @@ private extension PLBeforeLoginCoordinator {
             return PLBeforeLoginUseCase(dependenciesResolver: resolver)
         }
         
+        self.dependenciesEngine.register(for: PLGetUserPreferencesUseCase.self) { resolver in
+            return PLGetUserPreferencesUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PLValidateVersionUseCase.self) { resolver in
             return PLValidateVersionUseCase(dependenciesResolver: resolver)
         }

@@ -86,6 +86,7 @@ final class PLRememberedLoginProcessUseCase {
                 let caseInput = PLRememberedLoginPendingChallengeUseCaseInput(userId: identification)
                 return Scenario(useCase: self.pendingChallengeUseCase, input: caseInput)
             })
+
             .then(scenario: { [weak self] pendingChallenge ->Scenario<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
                 guard let type = configuration.challenge?.authorizationType else { return nil }

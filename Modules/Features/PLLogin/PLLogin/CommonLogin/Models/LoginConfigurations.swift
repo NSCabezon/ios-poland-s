@@ -2,6 +2,8 @@
 //  LoginConfigurations.swift
 //  PLLogin
 
+import Models
+
 /// This model will be inyected as dependency to pass information between login scenes
 public final class UnrememberedLoginConfiguration {
 
@@ -41,15 +43,16 @@ public final class RememberedLoginConfiguration {
     public let isBiometricsAvailable: Bool
     public let isPinAvailable: Bool
     
+    public var userPref: RememberedLoginUserPreferencesConfiguration?
     public var unblockRemainingTimeInSecs: Double?
     public var secondFactorDataFinalState: String?
     public var challenge: ChallengeEntity?
     public var pendingChallenge: PLRememberedLoginPendingChallenge?
     
     public init(userIdentifier: String,
-                isBiometricsAvailable: Bool,
-                isPinAvailable: Bool,
-                isTrustedDevice: Bool = true) {
+                isBiometricsAvailable: Bool = false,
+                isPinAvailable: Bool = false,
+                isTrustedDevice: Bool = false) {
         self.userIdentifier = userIdentifier
         self.isBiometricsAvailable = isBiometricsAvailable
         self.isPinAvailable = isPinAvailable
@@ -63,4 +66,10 @@ public final class RememberedLoginConfiguration {
     public func isBlocked() -> Bool {
         return (secondFactorDataFinalState?.elementsEqual("BLOCKED") ?? false) && unblockRemainingTimeInSecs != nil
     }
+}
+
+public struct RememberedLoginUserPreferencesConfiguration {
+    let name: String?
+    let theme: BackgroundImagesTheme
+    let biometricsEnabled: Bool
 }
