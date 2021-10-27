@@ -202,4 +202,8 @@ public extension PLManagersProviderProtocol {
     func getTransferManager() -> PLTransfersManagerProtocol {
         fatalError("Missing manager implementation")
     }
+    
+    func getCardOperativesManager() -> PLCardOperativesManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
 }

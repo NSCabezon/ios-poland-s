@@ -66,7 +66,7 @@ final class AppModifiers {
         return GetGPOtherOperativeModifier()
     }()
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
-        return OtherOperativesModifier()
+        return OtherOperativesModifier(dependenciesEngine: dependencieEngine)
     }()
     private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
         return PLCardTransactionsSearchModifier(dependenciesEngine: dependencieEngine)

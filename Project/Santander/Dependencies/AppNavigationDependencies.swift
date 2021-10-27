@@ -13,6 +13,7 @@ import PersonalArea
 import BLIK
 import PLHelpCenter
 import PLCommons
+import CreditCardRepayment
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -53,6 +54,9 @@ final class AppNavigationDependencies {
         }
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in
             return PLHelpCenterModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        dependenciesEngine.register(for: CreditCardRepaymentModuleCoordinator.self) { resolver in
+            return CreditCardRepaymentModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: OneAppInitCoordinatorProtocol.self) { [unowned self] resolver in // Temporary [DEBUG MENU] on GlobalPosition
             return OneAppInitCoordinator(dependenciesEngine: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
