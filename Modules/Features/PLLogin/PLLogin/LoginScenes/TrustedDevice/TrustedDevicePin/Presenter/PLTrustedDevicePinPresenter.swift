@@ -11,8 +11,11 @@ protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDevicePinViewProtocol? { get set }
     func viewDidLoad()
     func registerSoftwareToken(with createBiometricToken: Bool, and PIN: String)
+    func createBiometricToken(_ value: Bool)
+    func closeButtonDidPressed()
     func goToDeviceTrustDeviceData()
     func shouldShowBiometry() -> Bool
+    func trackInfoEvent(_ localizedKey: String)
 }
 
 final class PLTrustedDevicePinPresenter {
@@ -46,9 +49,11 @@ private extension PLTrustedDevicePinPresenter {
 
 extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     func viewDidLoad() {
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDevicePinPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDeviceDeviceDataPage().page])
     }
 
     func registerSoftwareToken(with createBiometricToken: Bool, and PIN: String) {
+    self.trackEvent(.clickContinue)
         guard let key = self.deviceConfiguration.softwareToken?.identity?.privateKey,
             let deviceData = self.deviceConfiguration.deviceData else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
@@ -105,8 +110,19 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
             })
             .onError { [weak self] error in
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
+    }
+
+    func createBiometricToken(_ value: Bool) {
+        guard value else { return }
+        self.trackEvent(.enableBiometry)
+    }
+
+    func closeButtonDidPressed() {
+        self.trackEvent(.clickCancel)
     }
 
     func goToDeviceTrustDeviceData() {
@@ -120,6 +136,10 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
         let biometryAvailable = self.localAuth.biometryTypeAvailable
         return biometryAvailable == .faceId || biometryAvailable == .touchId
         #endif
+    }
+
+    func trackInfoEvent(_ localizedKey: String) {
+        self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localizedKey])
     }
 }
 
@@ -143,5 +163,15 @@ private extension PLTrustedDevicePinPresenter {
             guard let self = self else { return }
             self.coordinator.goToVoiceBotScene()
         })
+    }
+}
+
+extension PLTrustedDevicePinPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDevicePinPage {
+        return PLLoginTrustedDevicePinPage()
     }
 }

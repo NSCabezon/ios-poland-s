@@ -15,6 +15,7 @@ protocol PLVoiceBotPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLVoiceBotViewProtocol? { get set }
     func viewDidLoad()
     func getDevices()
+    func closeButtonDidPressed()
     func setIvrOutputcode(code: Int)
     func requestIVRCall()
     func goBack()
@@ -53,11 +54,13 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     }
     
     func viewDidLoad() {
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceVoiceBotPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDevicePinPage().page])
         guard let ivrInputCode = deviceConfiguration.trustedDevice?.ivrInputCode else { return }
         self.view?.setIvrInputCode(ivrInputCode)
     }
     
     func getDevices() {
+        self.trackEvent(.clickContinue)
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
                                completion: nil)
@@ -80,8 +83,14 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
                     self.handle(error: .applicationNotWorking)
                 }
             }).onError({[weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             })
+    }
+
+    func closeButtonDidPressed() {
+        self.trackEvent(.clickCancel)
     }
     
     func requestIVRCall() {
@@ -99,6 +108,8 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
                         self?.view?.showIVCCallSendedDialog(code: code)
                     })
                 }).onError({ [weak self] error in
+                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 })
         })
@@ -149,5 +160,15 @@ private extension PLVoiceBotPresenter {
         default:
             return defaultAuthType
         }
+    }
+}
+
+extension PLVoiceBotPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceVoiceBotPage {
+        return PLLoginTrustedDeviceVoiceBotPage()
     }
 }

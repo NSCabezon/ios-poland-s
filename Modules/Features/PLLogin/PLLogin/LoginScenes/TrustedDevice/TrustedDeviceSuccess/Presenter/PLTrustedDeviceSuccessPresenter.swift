@@ -41,9 +41,11 @@ private extension PLTrustedDeviceSuccessPresenter {
 
 extension PLTrustedDeviceSuccessPresenter: PLTrustedDeviceSuccessPresenterProtocol {
     func viewDidLoad() {
+        self.trackScreen()
     }
 
     func continueButtonDidPressed() {
+        self.trackEvent(.clickContinue)
         self.view?.showLoading(completion: { [weak self] in
             self?.openSessionAndNavigateToGlobalPosition()
         })
@@ -71,5 +73,15 @@ private extension  PLTrustedDeviceSuccessPresenter {
 
     func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
         self.coordinator.goToGlobalPositionScene(option)
+    }
+}
+
+extension PLTrustedDeviceSuccessPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceSuccessPage {
+        return PLLoginTrustedDeviceSuccessPage()
     }
 }
