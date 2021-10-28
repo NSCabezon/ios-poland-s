@@ -55,8 +55,8 @@ final class OtherBlikSettingsView: UIView {
 
 private extension OtherBlikSettingsView {
     func configureContent() {
-        detailsLabelTitle.text = localized("pl_blik_text_transDetailsVisib")
-        detailsLabel.text = localized("pl_blik_text_beforeLoginDetails")
+        detailsLabelTitle.text = localized("pl_blik_title_detailsBeforeLogin")
+        detailsLabel.text = localized("pl_blik_text_detailsVisibInfo")
         blikLabelTitle.text = localized("pl_blik_label_clientLabel")
         blikLabelTextField.textField.setPlaceholder(localized("pl_blik_text_nameField"))
         blikLabelInfoButton.setImage(Images.info_blueGreen, for: .normal)
