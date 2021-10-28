@@ -18,25 +18,38 @@ protocol PhoneTransferSettingsPresenterProtocol {
     func didPressClose()
 }
 
-final class PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtocol {
+final class PhoneTransferSettingsPresenter {
     private let dependenciesResolver: DependenciesResolver
-    private let coordinator: PhoneTransferSettingsCoordinatorProtocol
-    private let unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCaseProtocol
+    
+    private var coordinator: PhoneTransferSettingsCoordinatorProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    private var unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    private var getWalletUseCase: GetWalletsActiveProtocol {
+        dependenciesResolver.resolve()
+    }
+    
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
+    
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     weak var view: PhoneTransferSettingsView?
     
     init(
         dependenciesResolver: DependenciesResolver,
-        coordinator: PhoneTransferSettingsCoordinatorProtocol,
-        unregisterPhoneNumberUseCase: UnregisterPhoneNumberUseCaseProtocol
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     ) {
         self.dependenciesResolver = dependenciesResolver
-        self.coordinator = coordinator
-        self.unregisterPhoneNumberUseCase = unregisterPhoneNumberUseCase
+        self.wallet = wallet
     }
-    
+}
+
+extension PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtocol {
     func didPressRemovePhoneNumber() {
         coordinator.showPhoneNumberUnregisterConfirmation(onConfirm: { [weak self] in
             self?.unregisterPhoneNumber()
@@ -58,15 +71,15 @@ final class PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtoc
     func didPressClose() {
         coordinator.close()
     }
-    
-    private func unregisterPhoneNumber() {
+}
+
+private extension PhoneTransferSettingsPresenter {
+    func unregisterPhoneNumber() {
         view?.showLoader()
         Scenario(useCase: unregisterPhoneNumberUseCase)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
-                self?.view?.hideLoader(completion: {
-                    self?.showUnregisteredPhoneNumberState()
-                })
+                self?.updateWalletAndViewState()
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader(completion: {
@@ -75,12 +88,34 @@ final class PhoneTransferSettingsPresenter: PhoneTransferSettingsPresenterProtoc
             }
     }
     
-    private func showUnregisteredPhoneNumberState() {
-        view?.setViewModel(.unregisteredPhoneNumber)
-        TopAlertController.setup(TopAlertView.self).showAlert(
-            localized("#Informacja\nNumer został wyrejestrowany z bazy powiązań BLIK"),
-            alertType: .info,
-            position: .top
-        )
+    func updateWalletAndViewState() {
+        view?.showLoader()
+        Scenario(useCase: getWalletUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] response in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.setViewModel(.unregisteredPhoneNumber)
+                    self?.coordinator.showUnregisteredNumberSuccessAlert()
+                    self?.handleFetchedWalletResponse(response)
+                })
+            }
+            .onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showServiceInaccessibleMessage(onConfirm: {
+                        self?.coordinator.goBackToGlobalPosition()
+                    })
+                })
+            }
+    }
+    
+    func handleFetchedWalletResponse(_ response: GetWalletUseCaseOkOutput) {
+        switch response.serviceStatus {
+        case let .available(wallet):
+            self.wallet.setValue(wallet)
+        case .unavailable:
+            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                self?.coordinator.goBackToGlobalPosition()
+            })
+        }
     }
 }

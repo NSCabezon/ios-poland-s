@@ -12,7 +12,7 @@ public struct BlikAliasDTO: Codable {
     public let alias: String
     public let acquirerId: Int?
     public let merchantId: String?
-    public let expirationDate: String?
+    public let expirationDate: String
     public let proposalDate: String?
     public let status: Int
     public let aliasUsage: String?

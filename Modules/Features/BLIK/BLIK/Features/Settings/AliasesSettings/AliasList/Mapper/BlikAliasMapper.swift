@@ -22,6 +22,10 @@ final class BlikAliasMapper: BlikAliasMapping {
     }
     
     func map(_ dto: BlikAliasDTO) throws -> BlikAlias {
+        let proposalDate: Date? = try {
+            guard let date = dto.proposalDate else { return nil }
+            return try parseDate(from: date)
+        }()
         return BlikAlias(
             walletId: dto.walletId,
             label: dto.aliasLabel,
@@ -30,16 +34,13 @@ final class BlikAliasMapper: BlikAliasMapping {
             acquirerId: dto.acquirerId,
             merchantId: dto.merchantId,
             expirationDate: try parseDate(from: dto.expirationDate),
-            proposalDate: try parseDate(from: dto.proposalDate),
+            proposalDate: proposalDate,
             status: dto.status,
             aliasUsage: dto.aliasUsage
         )
     }
     
-    private func parseDate(from dateString: String?) throws -> Date? {
-        guard let dateString = dateString else {
-            return nil
-        }
+    private func parseDate(from dateString: String) throws -> Date {
         guard let date = dateFormatter.date(from: dateString) else {
             throw Error.dateParsingFailure
         }

@@ -19,13 +19,10 @@ final class AliasSettingsViewModelMapper: AliasSettingsViewModelMapping {
     }
     
     func map(_ alias: BlikAlias) -> AliasSettingsViewModel {
-        let expirationDate: String? = {
-            guard let date = alias.expirationDate else {
-                return nil
-            }
-            
-            return localized("pl_blik_expirDateDevice", [StringPlaceholder(.value, dateFormatter.string(from: date))]).text
-        }()
+        let expirationDate = localized(
+            "pl_blik_expirDateDevice",
+            [StringPlaceholder(.value, dateFormatter.string(from: alias.expirationDate))]
+        ).text
         return AliasSettingsViewModel(
             aliasName: alias.label,
             expirationDate: expirationDate,

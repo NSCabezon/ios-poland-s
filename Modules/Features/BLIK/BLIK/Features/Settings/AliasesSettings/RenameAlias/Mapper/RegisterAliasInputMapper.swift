@@ -25,12 +25,10 @@ final class RegisterAliasParametersMapper: RegisterAliasParametersMapping {
             alias: alias.alias,
             acquirerId: alias.acquirerId,
             merchantId: alias.merchantId,
-            // TODO:- Expiration date taken form API model is optional while register endpoint requires non-nil date, pending refinement with a team
-            expirationDate: dateFormatter.string(from: alias.expirationDate ?? Date()),
-            // TODO:- Find out what do arguments below mean, pending refinement with a team
+            expirationDate: dateFormatter.string(from: alias.expirationDate),
             aliasURL: nil,
-            platform: nil,
-            registerInPSP: false
+            platform: "IOS",
+            registerInPSP: true
         )
     }
 }

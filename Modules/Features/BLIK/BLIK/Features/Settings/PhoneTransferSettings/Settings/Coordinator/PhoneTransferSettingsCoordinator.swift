@@ -23,6 +23,8 @@ protocol PhoneTransferSettingsCoordinatorProtocol: ModuleCoordinator {
     func showTransferSettingsAfterPhoneRegistrationFromFormScreen()
     func showTransferSettingsAfterPhoneRegistrationFromSmsScreen()
     func close()
+    func goBackToGlobalPosition()
+    func showUnregisteredNumberSuccessAlert()
 }
 
 final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
@@ -30,7 +32,6 @@ final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     private let viewModelMapper: PhoneTransferSettingsViewModelMapping
-    private let phoneTransferSettingsFactory: PhoneTransferSettingsProducing
     private let unregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumberConfirmationProducing
     private weak var phoneTransferSettingsView: PhoneTransferSettingsView?
     private weak var registrationFormDelegate: PhoneTransferRegistrationFormDelegate?
@@ -40,24 +41,26 @@ final class PhoneTransferSettingsCoordinator: ModuleCoordinator {
         navigationController: UINavigationController?,
         wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>,
         viewModelMapper: PhoneTransferSettingsViewModelMapping = PhoneTransferSettingsViewModelMapper(),
-        phoneTransferSettingsFactory: PhoneTransferSettingsProducing,
         unregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumberConfirmationProducing = UnregisterPhoneNumberConfirmationFactory()
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.wallet = wallet
         self.viewModelMapper = viewModelMapper
-        self.phoneTransferSettingsFactory = phoneTransferSettingsFactory
         self.unregisterPhoneNumberConfirmationFactory = unregisterPhoneNumberConfirmationFactory
         setUpDependencies()
     }
     
     public func start() {
-        let viewModel = viewModelMapper.map(wallet: wallet.getValue())
-        let controller = phoneTransferSettingsFactory.create(
-            viewModel: viewModel,
-            coordinator: self
+        let presenter = PhoneTransferSettingsPresenter(
+            dependenciesResolver: dependenciesEngine,
+            wallet: wallet
         )
+        let controller = PhoneTransferSettingsViewController(
+            initialViewModel: viewModelMapper.map(wallet: wallet.getValue()),
+            presenter: presenter
+        )
+        presenter.view = controller
         phoneTransferSettingsView = controller
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -75,7 +78,10 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     }
     
     func showPhoneNumberRegistrationForm() {
-        let presenter = PhoneTransferRegistrationFormPresenter(dependenciesResolver: dependenciesEngine)
+        let presenter = PhoneTransferRegistrationFormPresenter(
+            dependenciesResolver: dependenciesEngine,
+            wallet: wallet
+        )
         let viewController = PhoneTransferRegistrationFormViewController(presenter: presenter)
         presenter.view = viewController
         registrationFormDelegate = presenter
@@ -98,11 +104,8 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     func showSmsConfirmationScreen(selectedAccountNumber: String) {
         let presenter = SmsConfirmationPresenter(
             dependenciesResolver: dependenciesEngine,
-            coordinator: self,
-            registerPhoneNumberUseCase: RegisterPhoneNumberUseCase(
-               dependenciesResolver: dependenciesEngine
-            ),
-            selectedAccountNumber: selectedAccountNumber
+            selectedAccountNumber: selectedAccountNumber,
+            wallet: wallet
         )
         let viewController = SmsConfirmationViewController(presenter: presenter)
         presenter.view = viewController
@@ -129,6 +132,18 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     func close() {
         navigationController?.popViewController(animated: true)
     }
+    
+    func goBackToGlobalPosition() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func showUnregisteredNumberSuccessAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("#Informacja\nNumer został wyrejestrowany z bazy powiązań BLIK"),
+            alertType: .info,
+            position: .top
+        )
+    }
 }
 
 private extension PhoneTransferSettingsCoordinator {
@@ -151,6 +166,18 @@ private extension PhoneTransferSettingsCoordinator {
         
         dependenciesEngine.register(for: LoadCustomerAccountsUseCaseProtocol.self) { resolver in
             return LoadCustomerAccountsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: GetWalletsActiveProtocol.self) { resolver in
+            return GetWalletsActiveUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: RegisterPhoneNumberUseCaseProtocol.self) { resolver in
+            return RegisterPhoneNumberUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: UnregisterPhoneNumberUseCaseProtocol.self) { resolver in
+            return UnregisterPhoneNumberUseCase(dependenciesResolver: resolver)
         }
     }
 }

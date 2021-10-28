@@ -57,10 +57,7 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
         let coordinator = PhoneTransferSettingsCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            wallet: wallet,
-            phoneTransferSettingsFactory: PhoneTransferSettingsFactory(
-                dependenciesResolver: dependenciesEngine
-            )
+            wallet: wallet
         )
         coordinator.start()
     }

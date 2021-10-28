@@ -27,17 +27,25 @@ final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFor
     private var registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol {
         dependenciesResolver.resolve()
     }
+    private var loadWalletUseCase: GetWalletsActiveProtocol {
+        dependenciesResolver.resolve()
+    }
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
     
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     private var fetchedAccounts: [BlikCustomerAccount] = []
     private var selectedAccountNumber: String = ""
 
     weak var view: PhoneTransferRegistrationFormViewController?
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(
+        dependenciesResolver: DependenciesResolver,
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
+    ) {
         self.dependenciesResolver = dependenciesResolver
+        self.wallet = wallet
     }
 }
 
@@ -72,12 +80,7 @@ extension PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormP
         Scenario(useCase: registerPhoneNumberUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] output in
-                guard let strongSelf = self else { return }
-                strongSelf.view?.hideLoader(completion: {
-                    strongSelf.handleRegisterResponse(
-                        output.registerPhoneNumberResponse
-                    )
-                })
+                self?.handleRegisterResponse(output.registerPhoneNumberResponse)
             }
             .onError { [weak self] _ in
                 guard let strongSelf = self else { return }
@@ -106,9 +109,15 @@ private extension PhoneTransferRegistrationFormPresenter {
     func handleRegisterResponse(_ response: RegisterPhoneNumberResponse) {
         switch response {
         case .successfulyRegisteredPhoneNumber:
-            coordinator.showTransferSettingsAfterPhoneRegistrationFromFormScreen()
+            fetchWalletAndGoBackToSettings()
         case .smsAuthorizationCodeSent:
-            coordinator.showSmsConfirmationScreen(selectedAccountNumber: selectedAccountNumber)
+            view?.hideLoader(completion: { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.coordinator.showSmsConfirmationScreen(
+                    selectedAccountNumber: strongSelf.selectedAccountNumber
+                )
+            })
+            
         }
     }
     
@@ -122,5 +131,34 @@ private extension PhoneTransferRegistrationFormPresenter {
         fetchedAccounts = accounts
         let viewModel = viewModelMapper.map(selectedAccount)
         view?.setViewModel(viewModel)
+    }
+    
+    private func fetchWalletAndGoBackToSettings() {
+        Scenario(useCase: loadWalletUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] response in
+                self?.view?.hideLoader(completion: {
+                    self?.handleUpdatedWallet(with: response)
+                })
+            }
+            .onError { [weak self] _ in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                        self?.coordinator.goBackToGlobalPosition()
+                    })
+                })
+            }
+    }
+    
+    private func handleUpdatedWallet(with response: GetWalletUseCaseOkOutput) {
+        switch response.serviceStatus {
+        case let .available(wallet):
+            self.wallet.setValue(wallet)
+            coordinator.showTransferSettingsAfterPhoneRegistrationFromFormScreen()
+        case .unavailable:
+            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                self?.coordinator.goBackToGlobalPosition()
+            })
+        }
     }
 }

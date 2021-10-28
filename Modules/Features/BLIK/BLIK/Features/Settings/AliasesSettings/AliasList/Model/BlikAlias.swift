@@ -12,7 +12,7 @@ public struct BlikAlias {
     public let alias: String
     public let acquirerId: Int?
     public let merchantId: String?
-    public let expirationDate: Date?
+    public let expirationDate: Date
     public let proposalDate: Date?
     public let status: Int
     public let aliasUsage: String?

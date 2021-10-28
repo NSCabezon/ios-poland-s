@@ -7,28 +7,37 @@ protocol SmsConfirmationPresenterProtocol {
     func didPressClose()
 }
 
-final class SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
+final class SmsConfirmationPresenter {
     private let dependenciesResolver: DependenciesResolver
-    private let coordinator: PhoneTransferSettingsCoordinatorProtocol
-    private let registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol
-    private let selectedAccountNumber: String
-    private var useCaseHandler: UseCaseHandler {
-        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    private var coordinator: PhoneTransferSettingsCoordinatorProtocol {
+        dependenciesResolver.resolve()
     }
+    private var registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var loadWalletUseCase: GetWalletsActiveProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var useCaseHandler: UseCaseHandler {
+        dependenciesResolver.resolve()
+    }
+
+    private let selectedAccountNumber: String
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     public weak var view: SmsConfirmationView?
     
     init(
         dependenciesResolver: DependenciesResolver,
-        coordinator: PhoneTransferSettingsCoordinatorProtocol,
-        registerPhoneNumberUseCase: RegisterPhoneNumberUseCaseProtocol,
-        selectedAccountNumber: String
+        selectedAccountNumber: String,
+        wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     ) {
         self.dependenciesResolver = dependenciesResolver
-        self.coordinator = coordinator
-        self.registerPhoneNumberUseCase = registerPhoneNumberUseCase
         self.selectedAccountNumber = selectedAccountNumber
+        self.wallet = wallet
     }
+}
 
+extension SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
     func didPressSubmit(withCode authCode: String) {
         let request = RegisterPhoneNumberRequest(
             accountNo: selectedAccountNumber,
@@ -62,14 +71,47 @@ final class SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
     func didPressClose() {
         coordinator.close()
     }
-    
-    private func handleRegisterResponse(_ response: RegisterPhoneNumberResponse) {
+}
+
+private extension SmsConfirmationPresenter {
+    func handleRegisterResponse(_ response: RegisterPhoneNumberResponse) {
         switch response {
         case .successfulyRegisteredPhoneNumber:
-            coordinator.showTransferSettingsAfterPhoneRegistrationFromSmsScreen()
+            fetchWalletAndGoBackToSettings()
         case .smsAuthorizationCodeSent:
+            view?.hideLoader(completion: { [weak self] in
+                self?.view?.showServiceInaccessibleMessage(onConfirm: {
+                    self?.coordinator.goBackToBlikSettingsFromSmsScreen()
+                })
+            })
+        }
+    }
+    
+    func fetchWalletAndGoBackToSettings() {
+        Scenario(useCase: loadWalletUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] response in
+                self?.view?.hideLoader(completion: {
+                    self?.handleUpdatedWallet(with: response)
+                })
+            }
+            .onError { [weak self] _ in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                        self?.coordinator.goBackToGlobalPosition()
+                    })
+                })
+            }
+    }
+    
+    func handleUpdatedWallet(with response: GetWalletUseCaseOkOutput) {
+        switch response.serviceStatus {
+        case let .available(wallet):
+            self.wallet.setValue(wallet)
+            coordinator.showTransferSettingsAfterPhoneRegistrationFromSmsScreen()
+        case .unavailable:
             view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
-                self?.coordinator.goBackToBlikSettingsFromSmsScreen()
+                self?.coordinator.goBackToGlobalPosition()
             })
         }
     }
