@@ -36,6 +36,11 @@ public final class UnrememberedLoginConfiguration {
     }
 }
 
+public enum RememberedLoginType: Equatable {
+    case Pin (value: String)
+    case Biometrics
+}
+
 public final class RememberedLoginConfiguration {
 
     public let userIdentifier: String

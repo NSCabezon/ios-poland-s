@@ -13,8 +13,7 @@ import SelfSignedCertificate
 final class PLStoreSecIdentityUseCase: UseCase<PLStoreSecIdentityUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>> {
 
     public override func executeUseCase(requestValues: PLStoreSecIdentityUseCaseInput) throws -> UseCaseResponse<Void, PLUseCaseErrorOutput<LoginErrorType>> {
-        _ = try SecIdentity.updateSecIdentity(secIdentity: requestValues.identity, label: requestValues.label)
-
+        try SecIdentity.updateSecIdentity(secIdentity: requestValues.identity, label: requestValues.label)
         return UseCaseResponse.ok()
     }
 }

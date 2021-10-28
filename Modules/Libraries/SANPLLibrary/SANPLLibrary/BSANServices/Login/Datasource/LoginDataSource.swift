@@ -104,7 +104,8 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                              body: body,
                                                                                                              jsonBody: parameters,
                                                                                                              headers: self.headers,
-                                                                                                             localServiceName: .authenticate))
+                                                                                                             localServiceName: .authenticate,
+                                                                                                             authorization: .trustedDeviceOnly))
         return result
     }
 }

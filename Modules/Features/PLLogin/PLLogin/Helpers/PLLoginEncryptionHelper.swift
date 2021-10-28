@@ -34,7 +34,7 @@ public extension PLLoginEncryptionHelper {
         let hexUserKey = try Self.desaltFromPublicKeyEncryption(hexString: decryptedAndSaltedUserKeyAsHexString,
                                                                 privateKeyLength: privateKey.keyLenghtInBits,
                                                                 symmetricKeyLength: Constants.SOFTWARE_TOKEN_KEY_LENGTH)
-        let realTimeCreatedSymmetricKey = try Self.createSymmetricKeyForSoftwareTokenUserKeyUsage(trustedDeviceAppId: appId,
+        let realTimeCreatedSymmetricKey = try Self.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: appId,
                                                                                                   pin: pin)
         let string = String(data: Data(hexUserKey), encoding: .utf8)
         guard let hexUserKeyBytes = string?.hexaBytes else { throw PLLoginEncryptionError.invalidValue }
@@ -98,10 +98,10 @@ public extension PLLoginEncryptionHelper {
         return hexKey
     }
 
-    static func createSymmetricKeyForSoftwareTokenUserKeyUsage(trustedDeviceAppId: String,
+    static func createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: String,
                                                                pin: String?) throws -> [UInt8] {
         let nullablePin = pin ?? ""
-        let symmetricKeyInput = nullablePin + trustedDeviceAppId
+        let symmetricKeyInput = nullablePin + appId
         var paddedSymmetricKey = String()
         paddedSymmetricKey.append(symmetricKeyInput)
         while (paddedSymmetricKey.count < (Constants.SOFTWARE_TOKEN_KEY_LENGTH / 8)) {
@@ -126,17 +126,19 @@ public extension PLLoginEncryptionHelper {
 
     // MARK: -
     static func getRandomKeyFromSoftwareToken(appId: String,
-                                              pin: String,
-                                              encryptedUserKey: [UInt8],
-                                              randomKey: String) throws -> [UInt8] {
-        let realTimeGeneratedUserKey = try Self.createSymmetricKeyForSoftwareTokenUserKeyUsage(trustedDeviceAppId: appId,
+                                              pin: String?,
+                                              encryptedUserKey: String,
+                                              randomKey: String) throws -> String {
+        let realTimeGeneratedUserKey = try Self.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: appId,
                                                                                                pin: pin)
-        let userKey = try Self.decryptSoftwareTokenUserKeyStoredInTrustedDevice(encryptedUserKey: encryptedUserKey,
+
+        guard let encryptedUserKeyBytes = Data(base64Encoded: encryptedUserKey)?.bytes else { throw PLLoginEncryptionError.invalidValue }
+        let userKey = try Self.decryptSoftwareTokenUserKeyStoredInTrustedDevice(encryptedUserKey: encryptedUserKeyBytes,
                                                                                 symmetricKeyForSoftwareTokenUserKey: realTimeGeneratedUserKey)
         let decryptedKey = try Self.decryptRandomKey(trustedDeviceAppId: appId,
                                                      encodedRandomKey: randomKey,
                                                      userKey: userKey)
-        return decryptedKey
+        return decryptedKey.toBase64()
     }
 
     // MARK: -
@@ -199,9 +201,6 @@ public extension PLLoginEncryptionHelper {
     }
 
     // MARK:-
-//    static func calculateAuthorizationData(randomKey: [UInt8],
-//                                           challenge: String,
-//                                           privateKey: SecKey?) throws -> String {
     static func calculateAuthorizationData(randomKey: String,
                                            challenge: String,
                                            privateKey: SecKey?) throws -> String {

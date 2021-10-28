@@ -16,7 +16,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     var loginConfiguration:RememberedLoginConfiguration { get set }
     func viewDidLoad()
     func viewDidAppear()
-    func doLogin(with pin: String)
+    func doLogin(with rememberedLoginType: RememberedLoginType)
     func didSelectBalance()
     func didSelectBlik()
     func didSelectMenu()
@@ -38,6 +38,14 @@ final class PLRememberedLoginPinPresenter {
     
     private var loginProcessUseCase: PLRememberedLoginProcessUseCase {
         self.dependenciesResolver.resolve(for: PLRememberedLoginProcessUseCase.self)
+    }
+
+    private var sessionUseCase: PLSessionUseCase {
+        self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+    }
+
+    private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
     }
     
     var coordinator: PLRememberedLoginPinCoordinator {
@@ -102,12 +110,13 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         self.trackEvent(.clickBlik)
     }
 
-    func doLogin(with pin: String) {
+    func doLogin(with rememberedLoginType: RememberedLoginType) {
         self.view?.showLoading()
         let config = coordinator.loginConfiguration
-        self.loginProcessUseCase.executePersistedLogin(configuration: config) { [weak self] newConfiguration in
+        self.loginProcessUseCase.executePersistedLogin(configuration: config, rememberedLoginType: rememberedLoginType) { [weak self] newConfiguration in
             guard let self = self else { return }
             self.coordinator.loginConfiguration.challenge = newConfiguration?.challenge
+            self.openSessionAndNavigateToGlobalPosition()
         } onFailure: { [weak self]  error in
             self?.handleError(error)
         }
@@ -120,6 +129,23 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     func viewDidAppear() {
         guard let aName = self.loginConfiguration.userPref?.name else { return }
         view?.setUserName(aName)
+    }
+}
+
+private extension PLRememberedLoginPinPresenter {
+    func openSessionAndNavigateToGlobalPosition() {
+        Scenario(useCase: self.sessionUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .then(scenario: { [weak self] _ -> Scenario<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { return nil }
+                return Scenario(useCase: self.globalPositionOptionUseCase)
+            })
+            .onSuccess( { [weak self] output in
+                self?.coordinator.goToGlobalPositionScene(output.globalPositionOption)
+            })
+            .onError { [weak self] _ in
+                self?.coordinator.goToGlobalPositionScene(.classic)
+            }
     }
 }
 

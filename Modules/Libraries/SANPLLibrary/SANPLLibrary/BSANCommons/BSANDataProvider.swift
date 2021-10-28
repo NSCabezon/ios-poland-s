@@ -11,6 +11,7 @@ import SANLegacyLibrary
 public enum BSANDatabaseKey : String {
     case TrustedDeviceHeaders
     case TrustedDeviceInfo
+    case TrustedDeviceUserKeys
 }
 
 public class BSANDataProvider {
@@ -107,19 +108,23 @@ public class BSANDataProvider {
     // MARK: - Encrypted User Keys
     public func storeEncryptedUserKeys(_ encryptedKeys: EncryptedUserKeys) {
         objc_sync_enter(self.dataRepository)
-        self.dataRepository.store(encryptedKeys, DataRepositoryPolicy.createPersistentPolicy())
+        self.dataRepository.store(encryptedKeys,
+                                  BSANDatabaseKey.TrustedDeviceUserKeys.rawValue,
+                                  .createPersistentPolicy())
         objc_sync_exit(self.dataRepository)
     }
 
     public func deleteEncryptedUserKeys() {
-        self.dataRepository.remove(TrustedDeviceHeaders.self, .createPersistentPolicy())
+        self.dataRepository.remove(EncryptedUserKeys.self,
+                                   BSANDatabaseKey.TrustedDeviceUserKeys.rawValue,
+                                   .createPersistentPolicy())
     }
 
     public func getEncryptedUserKeys() -> EncryptedUserKeys? {
-        guard let encryptedKeys = self.dataRepository.get(EncryptedUserKeys.self, DataRepositoryPolicy.createPersistentPolicy()) else {
-            return nil
-        }
-        return encryptedKeys
+        let encryptedUserKeys = self.dataRepository.get(EncryptedUserKeys.self,
+                                                        BSANDatabaseKey.TrustedDeviceUserKeys.rawValue,
+                                                        .createPersistentPolicy())
+        return encryptedUserKeys
     }
 
     // MARK: - Demo User

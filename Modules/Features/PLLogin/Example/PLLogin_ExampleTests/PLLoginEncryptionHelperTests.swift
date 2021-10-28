@@ -61,7 +61,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.createSymmetricKeyForSoftwareTokenUserKeyUsage(trustedDeviceAppId: Constants.Input.appId,
+            let result = try PLLoginEncryptionHelper.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: Constants.Input.appId,
                                                                                                     pin: Constants.Input.pin)
             XCTAssertEqual(result, Constants.Output.symetricKey)
         } catch {
@@ -107,16 +107,17 @@ class PLLoginEncryptionHelperTests: XCTestCase {
     func testCalculateAuthorizationData() {
         enum Constants {
             enum Input {
-                static let randomKey = "Zu1nla86533zCVSmIw=="
-                static let challenge = "15712338"
+                static let randomKey = "4lvuJY6oaPGo5n58BIYZB8LeK5etU+wKvZcXORestGs="
+                static let challenge = "87658651"
                 static let privateKey: SecKey = {
-                    let privateKeyBase64 = "MIIEogIBAAKCAQEAs0UFMJEEtkFFAZzOcBQEE7DNtSQI5VECDV6FQNkwkTfvy8va+ERKBUk/EdbUPmOmaWZvpPmyjP50QuDMVTpo86+dwnl4Qym+ZW/hYN2LZEgnn/yfUNlpP5hkU77oDdcB+FsrsbU08dLEYyl9bi0I1DjPJbZgG4Gx5JDYR/5plIUR7xJH+IFI+EFXx014Snrc+MsFsnMUIjwoC3N7C9mCTGMHa5bm7XRy1FSLlyQNDPDy5wOaS/np+Gc5M5ICp9JrfWyMY+KGPGuGZCSlB66HJy4OuhcZW38UYabA6YIj0HGaZQj0HSah4DDvwjuL8QmYGaVK/BY4w+C3II3otCEwAQIDAQABAoIBAFZGPT0mTZI4zzD7eg5OU7f2OsmWUgGqfsZYWuDepZT9ypXVwcgBdW4d1hCLxxFPe+L1vX0z/k4El4coEK5jsea0+cOCGfKYwFyo/1pSxKa6YveH6FRMjW5htMbo9VzTwMr5dYnMn3JR8NmYOhkv6zPXMzn/DzmtrSNG4g+jzMQAh8wBggc6J1CsE2dmwQ4vlbbdir+7LHdZGJfUSZWGkohtqH6pY4Q34pEleFl3ziKcniWULUdLBHDyg3xTpn2nDoo/nXfAFQJ9OZM170ztiyfLYieteOiLV1xMJI5sBBlvw9dhnTeh1z+D5aelJigkWYElQdbENg7/bopT4xBTWdECgYEA5+oktJWYvy4+/4S6O+MIt9EqZEiFwPeqviavOH/XjEOA//U+ZwON2ypQ4xoTw+yCiGH0wIztmpkJ+ew4kiujJ0YFxz+GahqYL3mJH0o+gzXh7Xjafd7RDGxuBbnAmeZn7tKTeBwZKbNX0jtb1yDi3CFZuOSFJXoErcDmft9x9acCgYEAxeM3jQRU05hv+/YhiKknPsiaezCsMe6vzY8UcPWnLwWaLD6Vx3UO1BvXnwRRlFUaOUhLP3gCLr5nHRF2Lpl9UJuscimKudWj+FZeVbLQaIvJLQPxT/P+MTGMfQZCR/64XPolUbjrUtPU0fsEWLoeWDAEo5+3Ju/ydWiYVmn6shcCgYBEv+CJuB9D7Y23ab1bq34WH+eVOvqLrd/r5sPi1+MqLYi8WBNbrm4LHoxEBqL9XcuEaqWHvz9gqSWP9Tr/+fev2M41tts98QxUZo8Du5q0gvCq2TzMO5V1PV+QSvSRqv/8iGg3Hv1Go2fRZs9fAty9rRVP/k6KQZXJfHnX+p1p2QKBgAVVGBwer8J76xiZC1JJbJtOgIstRpaZ3fbmEiDxHa4wsnTawuJ7Dwk8LtVEIoaivHAquIxfSX/E9bZc0Bh1XmEbsMvqvqg/T4nTmfspNGB809D4uDn1UzY0JZsA3ixees1WmEbZes3ik2uNHhLeAQ9TS+y00xSjhp8PUHuTo4PFAoGAb48A/e71NUk3udpNj3LbIw989mZijVFrKzSf3+I6+7BVjWJte079R9AxTbGlzUDulkVC7ERIpqPbyvB65CrPRC3UJM+q1ub+Kf2FADZD9Htcmbbi82bOqgIMrCPwDMGVav4ubE0e4p+TmwxDen2oQJTXLh0JmxAPOttHqaaefto=" // 2048
+                    let privateKeyBase64 =
+                    "MIIEowIBAAKCAQEA0VYHiw9o7YB5guzcqzlHkNiJxCoNlOkPW8qs/ghO7dKPuB36cY1BPlzkf5apEkIAgCuHT1JdINn+a8KSRpKwFgIyfwmf2WwOW/acOQAOjzdSmZLNgWSyh043cB5kMm78P7RpuV3NYfs74V+DJ3lyr7L2qnpsU8lDV0Yy4XXOz1Diks7oPYXag3NI9p27Iuic9IBs1j0ia1I4hONtZVszX3/dW3mwloiDQUXUfGwEkfJ7tz6oeXkHyIKiZZPImZn4LamtI17KBa/i3/cMTMClh1jGC/1KEmmrhl9AiCV+PL5L6R0QhIbKqLFJGQYVn04xJWn+Yuik+Nn9DPy3aZ7vkQIDAQABAoIBAAj8NVSts6ZGFnEdM5eR3NWFxdwKpgyXOFaLS4OX3bNtj0eq2b4X/w3rNM+ZKuaiuJzHwYYRFfg8AySi9F5dG3vGWl6Djj3p2m/uFOSJcRaKnFwFJhcAuH0ASXbhhxF3HBKr7sHLGe6ztu1EiT+fgeGyv82vdYjfIanUVIjC4r6ZOVCZPzsopbGzgJGI29/+6n8G2ySU9BA0z8YqVFAHpj9FNjN4gyh+fppD2DygdAVS78PvEpOrvbMJFbtiGXj6h8H6Q7Oo8W6/FcrvlEVWOlEjnoNiPTi0bArvPdY0dh/Aj3rS/vt3623YzRmvrSC3XEgJYVGpSCoSis1tHArLJTECgYEA6kWoIzl9oqmOyszJf0E6MoEDnSxfIhGu7qJFGKGCAQC4e/LIKgNnOl+ti7WiVP8JnBtYqGdO/061RmUDM96rk+ngmXDsHPew5iDIzLkFVecBNY5o9Ld4XrSgHiw+9DyNWzCxEKC9Njq0Fe9p5QrP9i8+Yhnpwdq+9dEsIaunc00CgYEA5MBQX/ZNH4VUfyk+fd/KCXGip31yjjbLPfctKsdPY24GrYTXJRtOgYJFVQT5Ic6Fwn+ziVTXut4zlJC70mzZB3vAjTJvTOO43RMlOE3ieaNCkts/R1htRfYfh8pDhG4Qbhd62eXjtTaLoQ2xDA0IGsziaMWehxQH1l3Entn6w1UCgYAhmSHXA2zAQl8HOL2BMaKeEaCqDu4J3c1fzgfo02joqejLZfNNCzXnykcCbWc9l2IScF2TsVVECk63LM97xeiHixg6CVbjhKZrKrKBodthCYND4gutZQ6vTmpUSXYx4ulG9cG/J75bI6omJzLhtV5D6VyiByNeOPgAGyKgJZUbVQKBgQDRt874a6NBZseU3YdBd86O4fOxgr1nzKyA3wA13AzYp6LPqp5kkqhi68AMtkaBzAmty84Z9gLie5zmc9r+jHRc/AQIb1jDMXPmmwrgl+cuhZMfeIqHKnbkUUWPBMzpuM6vYC9tXepp1Nwmh5rt5XSsvXJFhAhW5vJYghclW8sfEQKBgC9NCTyOb5twCTQFbzEVh3Bw9I5KZGQAOByp6XzHrxQk78KUQ9O0l1bu1lxI+x7yITYvgExAG/gfc8f0oZr1Pj1RO6DZhCufTgR6XUbZ4zGWnSFo8jZvcgAe93ZwqipjlyZycSth6NqTofOobOsEZAYqEZ4KCNEv5N9dojHNBP6W"
                     return SecKey.secKey(with: privateKeyBase64, isPrivate: true)!
                 }()
             }
             enum Output {
                 static let expectedOutput =
-                    "lIE/pKEbnhKgWjEenRmxuzzsqPk+Nn5sDn2JBrh+eocSOEO0lMf5EGphn4l9Abpo8/3tgCmURRY3AN6gqS4/6OahB3oEqQ3sqk0JnkU8J8jxnWdx8SO4atc5SmfqNets0J1WkZj6RksmXVcPKNOYuHG7GOZycpJqvgk4fTMlNdJKU5JOAcey4lRmzcUGdIxADIlpedi71Kbg0thlsBaygXQsxtE7RSKGzDwtpeq1skq+8Lr78vSkpsj1TNlShoPKSkmN+e0rKwhGi/b6LSMC5lpspd2+LP9I7AyuFkXtw82ynXzoYyRrwHTHorGr4NPu0riUNN2zGksP2kUqXi8iITzBPaiMw60N8s4Hzn6PGT6e8O03m4XoUUwcOcZ38id9"
+                    "9eUmZnlC8vekUJcWnDK6ATK2iXCK8k+jlTOjxMwJtccgoLHbejtSA5K73Rja69DlVeV4ioVYlnq2eix2tWzp6pRVFc+rMVgx4VaFVAs3bQoH8BcoCek3vvNrqZAyH15VGB+jm4VTgEhJf9KywFEwSSrbIFLvcqsUHE39rt19jn0sgX69UIMWM2RpwuHuaJKBoZTc1RU9F8Ukd008sODGZUK3Mi4SquDFsa8co4WgTyg0P3qYv12PojYWsekh+TPI9ZW8gi4dz3A1v+tH5fWvQNS+7PtAjaXo4HAfI2w9SY/2jV4J225guVYsgvX+YW66eUdF+ORWtKyWg+9rQ4gWo+a8D9yrz/WB9STvXXjXwC1lTq9F71IG7HXtkBqKvgFg"
             }
         }
 
@@ -140,17 +141,16 @@ class PLLoginEncryptionHelperTests: XCTestCase {
                 static let encodedAndEncryptedUserKey = "CoKuEJbDEN0B8Txh32I25Zgb4QIVz21BRkZ5X3z3xiM="
             }
             enum Output {
-                static let expectedOriginalRandomKey = "E25BEE258EA868F1A8E67E7C04861907C2DE2B97AD53EC0ABD97173917ACB46B"
+                static let expectedOriginalRandomKey = "4lvuJY6oaPGo5n58BIYZB8LeK5etU+wKvZcXORestGs="
             }
         }
 
         do {
-            guard let encryptedUserKey = Data(base64Encoded: Constants.Input.encodedAndEncryptedUserKey)?.bytes else { throw NSError() }
             let result = try PLLoginEncryptionHelper.getRandomKeyFromSoftwareToken(appId: Constants.Input.appId,
                                                                                    pin: Constants.Input.pin,
-                                                                                   encryptedUserKey: encryptedUserKey,
+                                                                                   encryptedUserKey: Constants.Input.encodedAndEncryptedUserKey,
                                                                                    randomKey: Constants.Input.randomKey)
-            XCTAssertEqual(Constants.Output.expectedOriginalRandomKey, result.toHexString().uppercased())
+            XCTAssertEqual(Constants.Output.expectedOriginalRandomKey, result)
         } catch {
             XCTFail("testEncryptSoftwareTokenUserKeyForStoringItIntoTrustedDevice Error")
         }

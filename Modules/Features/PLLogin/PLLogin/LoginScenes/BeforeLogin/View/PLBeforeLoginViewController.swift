@@ -84,6 +84,7 @@ private extension PLBeforeLoginViewController {
 extension PLBeforeLoginViewController : PLBeforeLoginViewControllerProtocol {
     func loadDidFinish() {
         self.backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        self.dismissLoading()
     }
     
     func loadStart() {

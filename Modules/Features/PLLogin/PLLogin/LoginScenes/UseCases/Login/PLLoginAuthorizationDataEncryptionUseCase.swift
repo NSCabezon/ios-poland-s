@@ -20,7 +20,11 @@ final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAuthorizat
     public override func executeUseCase(requestValues: PLLoginAuthorizationDataEncryptionUseCaseInput) throws -> UseCaseResponse<PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
         do {
-            let encryptedData = try PLLoginEncryptionHelper.calculateAuthorizationData(randomKey: requestValues.randomKey,
+            let randomKeyDecryptedBase64 = try PLLoginEncryptionHelper.getRandomKeyFromSoftwareToken(appId: requestValues.appId,
+                                                                                                     pin: requestValues.pin,
+                                                                                                     encryptedUserKey: requestValues.encryptedUserKey,
+                                                                                                     randomKey: requestValues.randomKey)
+            let encryptedData = try PLLoginEncryptionHelper.calculateAuthorizationData(randomKey: randomKeyDecryptedBase64,
                                                                                        challenge: requestValues.challenge,
                                                                                        privateKey: requestValues.privateKey)
             return .ok(PLLoginAuthorizationDataEncryptionUseCaseOutput(encryptedAuthorizationData: encryptedData))
@@ -32,6 +36,9 @@ final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAuthorizat
 
 // MARK: I/O types definition
 struct PLLoginAuthorizationDataEncryptionUseCaseInput {
+    let appId: String
+    let pin: String?
+    let encryptedUserKey: String
     let randomKey: String
     let challenge: String
     let privateKey: SecKey

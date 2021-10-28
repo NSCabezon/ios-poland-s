@@ -36,6 +36,22 @@ final class PLRememberedLoginProcessUseCase {
         self.dependenciesEngine.resolve(for: PLAuthenticateUseCase.self)
     }
 
+    private var getCertificateUseCase: PLGetSecIdentityUseCase {
+        self.dependenciesEngine.resolve(for: PLGetSecIdentityUseCase.self)
+    }
+
+    private var getStoredUserKey: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase {
+        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase.self)
+    }
+
+    private var getStoredTrustedDeviceHeaders: PLTrustedDeviceGetHeadersUseCase {
+        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetHeadersUseCase.self)
+    }
+
+    private var authorizationDataEncryptionUseCase: PLLoginAuthorizationDataEncryptionUseCase {
+        self.dependenciesEngine.resolve(for: PLLoginAuthorizationDataEncryptionUseCase.self)
+    }
+
     public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependenciesEngine = dependenciesEngine
         
@@ -62,12 +78,13 @@ final class PLRememberedLoginProcessUseCase {
     }
     
     public func executePersistedLogin(configuration: RememberedLoginConfiguration,
-                        onSuccess: @escaping (RememberedLoginConfiguration?) -> Void,
-                        onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
-        
+                                      rememberedLoginType: RememberedLoginType,
+                                      onSuccess: @escaping (RememberedLoginConfiguration?) -> Void,
+                                      onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
+        var identity: SecIdentity?
+        var encryptedStoredUserKey: String?
         let identification = configuration.userIdentifier
         let demoUserInput = PLSetDemoUserUseCaseInput(userId: identification)
-
         Scenario(useCase: setDemoUserUseCase, input: demoUserInput)
             .execute(on: self.dependenciesEngine.resolve())
             .then(scenario: { (_) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
@@ -76,6 +93,7 @@ final class PLRememberedLoginProcessUseCase {
             })
             .then(scenario: { [weak self] output ->Scenario<PLAuthenticateInitUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
+
                 configuration.challenge = output.secondFactorData.defaultChallenge
                 let caseInput = PLAuthenticateInitUseCaseInput(userId: identification,
                                                                challenge: output.secondFactorData.defaultChallenge)
@@ -83,26 +101,69 @@ final class PLRememberedLoginProcessUseCase {
             })
             .then(scenario: { [weak self] output ->Scenario<PLRememberedLoginPendingChallengeUseCaseInput, PLRememberedLoginPendingChallenge, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
+
                 let caseInput = PLRememberedLoginPendingChallengeUseCaseInput(userId: identification)
                 return Scenario(useCase: self.pendingChallengeUseCase, input: caseInput)
             })
-
-            .then(scenario: { [weak self] pendingChallenge ->Scenario<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
+            .then(scenario: { [weak self] pendingChallenge ->Scenario<PLGetSecIdentityUseCaseInput, PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
-                guard let type = configuration.challenge?.authorizationType else { return nil }
 
                 configuration.pendingChallenge = pendingChallenge
-                let certificate = "certificate certificate certificate"
-                let authData = "authData authData authData authData"
+                let caseInput = PLGetSecIdentityUseCaseInput(label: PLLoginConstants.certificateIdentityLabel)
+                return Scenario(useCase: self.getCertificateUseCase, input: caseInput)
+            })
+            .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+
+                identity = output.secIdentity
+                return Scenario(useCase: self.getStoredUserKey)
+            })
+            .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+
+                switch rememberedLoginType {
+                case .Pin(value: _):
+                    encryptedStoredUserKey = output.encryptedUserKeyPIN
+                case .Biometrics:
+                    encryptedStoredUserKey = output.encryptedUserKeyBiometrics
+                }
+                return Scenario(useCase: self.getStoredTrustedDeviceHeaders)
+            })
+            .then(scenario: { [weak self] output ->Scenario<PLLoginAuthorizationDataEncryptionUseCaseInput, PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self,
+                      let challengeValue = configuration.challenge?.value,
+                      let privateKey = identity?.privateKey,
+                      let encryptedStoredUserKey = encryptedStoredUserKey,
+                      let appId = output.appId,
+                      let randomKey = Self.getSoftwareTokenKey(for: rememberedLoginType, with: configuration)?.randomKey
+                else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+
+                let pin = Self.getPinIfNecessary(from: rememberedLoginType)
+                let caseInput = PLLoginAuthorizationDataEncryptionUseCaseInput(appId: appId,
+                                                                               pin: pin,
+                                                                               encryptedUserKey: encryptedStoredUserKey,
+                                                                               randomKey: randomKey,
+                                                                               challenge: challengeValue,
+                                                                               privateKey: privateKey)
+                return Scenario(useCase: self.authorizationDataEncryptionUseCase, input: caseInput)
+            })
+            .then(scenario: { [weak self] output ->Scenario<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
+                guard let self = self,
+                      let softwareTokenType = Self.getSoftwareTokenKey(for: rememberedLoginType, with: configuration)?.softwareTokenType,
+                      let certificate = identity?.PEMFormattedCertificate() else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+
+                let authorizationId = String(describing: configuration.pendingChallenge?.authorizationId)
                 let caseInput = PLRememberedLoginConfirmChallengeUseCaseInput(userId: identification,
-                                                                              softwareTokenType: type.rawValue,
+                                                                              authorizationId: authorizationId,
+                                                                              softwareTokenType: softwareTokenType,
                                                                               trustedDeviceCertificate: certificate,
-                                                                              authorizationData: authData)
+                                                                              authorizationData: output.encryptedAuthorizationData)
                 return Scenario(useCase: self.confirmChallengeUseCase, input: caseInput)
             })
             .then(scenario: { [weak self] Void ->Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-                guard let self = self else { return nil }
-                guard let challenge = configuration.challenge else { return nil }
+                guard let self = self,
+                      let challenge = configuration.challenge else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+
                 let authEntity = SecondFactorDataAuthenticationEntity(challenge: challenge, value: "")
                 let caseInput = PLAuthenticateUseCaseInput(encryptedPassword: nil,
                                                            userId: identification,
@@ -115,5 +176,26 @@ final class PLRememberedLoginProcessUseCase {
             .onError { error in
                 onFailure(error)
             }
+    }
+}
+
+private extension PLRememberedLoginProcessUseCase {
+
+    static func getSoftwareTokenKey(for rememberedLoginType: RememberedLoginType, with configuration: RememberedLoginConfiguration) -> PLRememberedLoginSoftwareTokenKeys? {
+        switch rememberedLoginType {
+        case .Pin(_):
+            return configuration.pendingChallenge?.getSoftwareTokenKey(for: .PIN)
+        case .Biometrics:
+            return configuration.pendingChallenge?.getSoftwareTokenKey(for: .BIOMETRICS)
+        }
+    }
+
+    static func getPinIfNecessary(from rememberedLoginType: RememberedLoginType) -> String? {
+        switch rememberedLoginType {
+        case .Pin(let value):
+            return value
+        default:
+            return nil
+        }
     }
 }

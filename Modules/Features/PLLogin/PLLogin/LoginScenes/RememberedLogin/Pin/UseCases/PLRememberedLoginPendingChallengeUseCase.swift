@@ -55,15 +55,10 @@ public struct PLRememberedLoginPendingChallenge {
             return PLRememberedLoginSoftwareTokenKeys(dto: token)
         }
     }
-    
-    public func getPinRandomKey() -> String? {
+
+    public func getSoftwareTokenKey(for softwareTokenType: SoftwareTokenType) -> PLRememberedLoginSoftwareTokenKeys? {
         return self.softwareTokenKeys.first { token in
-            token.typeMapped == .PIN }?.randomKey
-    }
-    
-    public func getBiometricsRandomKey() -> String? {
-        return self.softwareTokenKeys.first { token in
-            token.typeMapped == .BIOMETRICS }?.randomKey
+            token.typeMapped == softwareTokenType }
     }
 }
 

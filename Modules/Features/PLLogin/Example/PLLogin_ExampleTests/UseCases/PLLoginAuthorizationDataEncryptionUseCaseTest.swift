@@ -28,25 +28,69 @@ class PLLoginAuthorizationDataEncryptionUseCaseTest: XCTestCase {
     func testDataAuthoritationEncryption() throws {
         enum Constants {
             enum Input {
-                static let randomKey = "Zu1nla86533zCVSmIw=="
-                static let challenge = "15712338"
+                static let randomKey = "150uzNDx9RHZFa2dl5XpNAc/glHqmtkasbsRb6FyzA4="
+                static let challenge = "08407364"
+                static let pin = "1357"
+                static let trustedDeviceAppId = "OneAppc23ec0d1c80611ef99"
+                static let storedEncryptedUserKey = "MkJm5Z0YBq/NS6X1QrxV7wyfsgD8ku0nndC7Fv3N4/c="
                 static let privateKey: SecKey = {
-                    let privateKeyBase64 = "MIIEogIBAAKCAQEAs0UFMJEEtkFFAZzOcBQEE7DNtSQI5VECDV6FQNkwkTfvy8va+ERKBUk/EdbUPmOmaWZvpPmyjP50QuDMVTpo86+dwnl4Qym+ZW/hYN2LZEgnn/yfUNlpP5hkU77oDdcB+FsrsbU08dLEYyl9bi0I1DjPJbZgG4Gx5JDYR/5plIUR7xJH+IFI+EFXx014Snrc+MsFsnMUIjwoC3N7C9mCTGMHa5bm7XRy1FSLlyQNDPDy5wOaS/np+Gc5M5ICp9JrfWyMY+KGPGuGZCSlB66HJy4OuhcZW38UYabA6YIj0HGaZQj0HSah4DDvwjuL8QmYGaVK/BY4w+C3II3otCEwAQIDAQABAoIBAFZGPT0mTZI4zzD7eg5OU7f2OsmWUgGqfsZYWuDepZT9ypXVwcgBdW4d1hCLxxFPe+L1vX0z/k4El4coEK5jsea0+cOCGfKYwFyo/1pSxKa6YveH6FRMjW5htMbo9VzTwMr5dYnMn3JR8NmYOhkv6zPXMzn/DzmtrSNG4g+jzMQAh8wBggc6J1CsE2dmwQ4vlbbdir+7LHdZGJfUSZWGkohtqH6pY4Q34pEleFl3ziKcniWULUdLBHDyg3xTpn2nDoo/nXfAFQJ9OZM170ztiyfLYieteOiLV1xMJI5sBBlvw9dhnTeh1z+D5aelJigkWYElQdbENg7/bopT4xBTWdECgYEA5+oktJWYvy4+/4S6O+MIt9EqZEiFwPeqviavOH/XjEOA//U+ZwON2ypQ4xoTw+yCiGH0wIztmpkJ+ew4kiujJ0YFxz+GahqYL3mJH0o+gzXh7Xjafd7RDGxuBbnAmeZn7tKTeBwZKbNX0jtb1yDi3CFZuOSFJXoErcDmft9x9acCgYEAxeM3jQRU05hv+/YhiKknPsiaezCsMe6vzY8UcPWnLwWaLD6Vx3UO1BvXnwRRlFUaOUhLP3gCLr5nHRF2Lpl9UJuscimKudWj+FZeVbLQaIvJLQPxT/P+MTGMfQZCR/64XPolUbjrUtPU0fsEWLoeWDAEo5+3Ju/ydWiYVmn6shcCgYBEv+CJuB9D7Y23ab1bq34WH+eVOvqLrd/r5sPi1+MqLYi8WBNbrm4LHoxEBqL9XcuEaqWHvz9gqSWP9Tr/+fev2M41tts98QxUZo8Du5q0gvCq2TzMO5V1PV+QSvSRqv/8iGg3Hv1Go2fRZs9fAty9rRVP/k6KQZXJfHnX+p1p2QKBgAVVGBwer8J76xiZC1JJbJtOgIstRpaZ3fbmEiDxHa4wsnTawuJ7Dwk8LtVEIoaivHAquIxfSX/E9bZc0Bh1XmEbsMvqvqg/T4nTmfspNGB809D4uDn1UzY0JZsA3ixees1WmEbZes3ik2uNHhLeAQ9TS+y00xSjhp8PUHuTo4PFAoGAb48A/e71NUk3udpNj3LbIw989mZijVFrKzSf3+I6+7BVjWJte079R9AxTbGlzUDulkVC7ERIpqPbyvB65CrPRC3UJM+q1ub+Kf2FADZD9Htcmbbi82bOqgIMrCPwDMGVav4ubE0e4p+TmwxDen2oQJTXLh0JmxAPOttHqaaefto=" // 2048
+                    let privateKeyBase64 = "MIIEogIBAAKCAQEAl9ZOJ7jZlTlEncfZizsZzVccndpNZK8Zwo2wYA3/6ikSIP4OYVRlbgd3YLl1rCxA/B8ivJEQ+Z4t376eujeuHd8OW8lhu0rvTETbe9I/KTD6W1yrPEhxdbU/xxC9eCZeNMQ8xkuvonxvxLC9ZyqIkoGmloWV497lhp9/gG/6rMih5TeigPoSdF/Pgi894PrJs4c/UhX3/RenynMBuzqUeX/dVuoNXvqv2rGFioKG87EYyYkai1lZcuQIsEwO/KPq2UmC7BwRVM20oTHuHwzS4ql1KYvpqcFzvq7BtI0ELR7Sy48kmA0wRJFgjKPblDTuiL68vpNDcx0ghlgFviOcVQIDAQABAoIBAAKtexXcvuuQhbsBl/7KVUdngp/vBl/g7aOec46SGKIExObTjCXfwuUomQyZ4K8fXasEkoyAQ2wfg8AXIL34dufcc+ie+cv/g45VBYjeuZHspPGhBf0LawLQJjaIv0qj5JPqJQc7NPb42lC97C0qVRu+URWE+BJ7bxFLdUhq0SEkZq1NrBRd2YEt3pdiGhUxe9v7mXosUK2c+l9eu7BdQPNFHoin90Prx+da6HPZFWj1HmwqPCMaXEbMSm8PROxdTtimXpFEB7wELpotUo8V2v0/D0B4Oc1XgwjODKt9UetYkN4Sin+n1b9CRf+MaBit4pf+RaATVEdr2HbVfUuhSdECgYEA0PrNeZAgbUEhXJhtf4WXq7dgpCb3l9ETxNHCDiv8fp2F8ZV+OrBu2hboMda8HwNLcUZMDHTK+ujFB9l32tUh+1fcvTCbUoZXETHYg0F0+xuLKHZfOEfNQCFRtoSp8llHegAxxOIdBudhEgJwR5nSkpCl40UpchL8uXx7rbSForECgYEAugAZjzXdDT51J7Z96peCjwNqAbftu9V7/7CDh9U/5gKAhr7RkJa5gMn5i8vMxbxWghJLG9tqdRj5dn1MJoCcTYrKeYGPCDlNBnoqBPCpRQK/Kk4szIBlaog/M7aP3FqEZxsgHPCeD8KFXJbZHjstalaY2dceUXVc8/v4xzRnVOUCgYAkqszgtnwqD1J2N7yGsn8BPySyyK+KsMGiOBeveuJLqQH2eH90dr6Mf5ZwIDhTzLUxA9+WE+wFiFAB55NTDzBuNGVjwKKQIUgnmTJfHV4ULSoGiHZ+noKR7Qa0WqSjBC05Z81TuUTUkEaE7W6b8Y5z7vNcZCc4f8JeHUxqFxGXkQKBgDTbUmggJnFdDm36rk28QJ3jmnxiiGyYfmRrBPXU5BO5Ik0obOVp781pmEDh6Y9Htk3AZRfFgrtEHaBOexV19vUSO/fLmZn8rqbokIhW28OAxFKBZLm4wxlDHrLTbo5wKrAiRT30IvbXkI5/T7QHnSBa+5TsTPFZKNEtCcWSXssBAoGAH4ZQb2wuPztJR5/pwk0V8UGENzsMQ5TF1xU0PZ36jTKcfdaduluUTxxMbVrtcbOcPvvp+SWxxZ/qZJAAWhukFy+8SY9wDrUp9KX9eXFTt+keC6L+oYRyO7wFETjFkBhU4YHB91WSNKij+JIFb9cYDGYG8ozh4GB5dWHm0oUpqGA="
                     return SecKey.secKey(with: privateKeyBase64, isPrivate: true)!
                 }()
             }
             enum Output {
                 static let expectedOutput =
-                    "lIE/pKEbnhKgWjEenRmxuzzsqPk+Nn5sDn2JBrh+eocSOEO0lMf5EGphn4l9Abpo8/3tgCmURRY3AN6gqS4/6OahB3oEqQ3sqk0JnkU8J8jxnWdx8SO4atc5SmfqNets0J1WkZj6RksmXVcPKNOYuHG7GOZycpJqvgk4fTMlNdJKU5JOAcey4lRmzcUGdIxADIlpedi71Kbg0thlsBaygXQsxtE7RSKGzDwtpeq1skq+8Lr78vSkpsj1TNlShoPKSkmN+e0rKwhGi/b6LSMC5lpspd2+LP9I7AyuFkXtw82ynXzoYyRrwHTHorGr4NPu0riUNN2zGksP2kUqXi8iITzBPaiMw60N8s4Hzn6PGT6e8O03m4XoUUwcOcZ38id9"
+                    "r3D/GvyZWU01ZNoYiz5/fNMCZ0ORYXpvrTRwIXM4g9VAt/6QZ0L1/Lfpe0m6ejk35AqqQ5P6okeb9qwrAboURMeWCwjKwaF0Hq2vfSzD9o962gNXYW5MKJU+G79GWP7ovK5h/4hy1yHGOBRYRNZM6QgDJBU3jodKiVvySUo5jQ6imxRvL57UMM22lSLP7TIRKAxe5DfGZ1Muy59C6RgX8G7Uk4kY/FAIDPsi24p8N3Kj3+2DICp66xacy0WFxHBFC1yvZflt6Gn4C/IJJIUqr1JYTN1qBIRN9uSIwiZL5k1PHLuYtcQNn+YFJuuj9SBNOEa5V3GritjrncnNZhFD+2E5DQVkxZ10gGY+/teIzl8Q1pXnzSqR6f8NsHnYJYHX"
             }
         }
 
         do {
 
             let useCase = PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: self.dependencies)
-            let input = PLLoginAuthorizationDataEncryptionUseCaseInput(randomKey: Constants.Input.randomKey,
-                                                                      challenge: Constants.Input.challenge,
-                                                                      privateKey: Constants.Input.privateKey)
+            let input = PLLoginAuthorizationDataEncryptionUseCaseInput(appId:  Constants.Input.trustedDeviceAppId,
+                                                                       pin: Constants.Input.pin,
+                                                                       encryptedUserKey: Constants.Input.storedEncryptedUserKey,
+                                                                       randomKey: Constants.Input.randomKey,
+                                                                       challenge: Constants.Input.challenge,
+                                                                       privateKey: Constants.Input.privateKey)
+            let response = try useCase.executeUseCase(requestValues: input)
+            let result = try response.getOkResult()
+
+            XCTAssertEqual(result.encryptedAuthorizationData, Constants.Output.expectedOutput)
+        } catch {
+            XCTFail("testReencryption Error")
+        }
+    }
+
+
+    func testDataAuthoritationEncryptionForPoland() throws {
+        enum Constants {
+            enum Input {
+                static let randomKey = "c8jkcy9xJBM3CMO/Ssiia5YDoLrlnS1a7CQ0enpjSY0="
+                static let challenge = "76049936"
+                static let pin = "1357"
+                static let appId = "OneApp74a48dacd3a7484424"
+                static let storedEncryptedUserKey = "TUCES38EOm6lI7EQunUETkltokeZvHNoEjE2lOmXLbw="
+                static let privateKey: SecKey = {
+                    let privateKeyBase64 =  "MIIEogIBAAKCAQEAl9ZOJ7jZlTlEncfZizsZzVccndpNZK8Zwo2wYA3/6ikSIP4OYVRlbgd3YLl1rCxA/B8ivJEQ+Z4t376eujeuHd8OW8lhu0rvTETbe9I/KTD6W1yrPEhxdbU/xxC9eCZeNMQ8xkuvonxvxLC9ZyqIkoGmloWV497lhp9/gG/6rMih5TeigPoSdF/Pgi894PrJs4c/UhX3/RenynMBuzqUeX/dVuoNXvqv2rGFioKG87EYyYkai1lZcuQIsEwO/KPq2UmC7BwRVM20oTHuHwzS4ql1KYvpqcFzvq7BtI0ELR7Sy48kmA0wRJFgjKPblDTuiL68vpNDcx0ghlgFviOcVQIDAQABAoIBAAKtexXcvuuQhbsBl/7KVUdngp/vBl/g7aOec46SGKIExObTjCXfwuUomQyZ4K8fXasEkoyAQ2wfg8AXIL34dufcc+ie+cv/g45VBYjeuZHspPGhBf0LawLQJjaIv0qj5JPqJQc7NPb42lC97C0qVRu+URWE+BJ7bxFLdUhq0SEkZq1NrBRd2YEt3pdiGhUxe9v7mXosUK2c+l9eu7BdQPNFHoin90Prx+da6HPZFWj1HmwqPCMaXEbMSm8PROxdTtimXpFEB7wELpotUo8V2v0/D0B4Oc1XgwjODKt9UetYkN4Sin+n1b9CRf+MaBit4pf+RaATVEdr2HbVfUuhSdECgYEA0PrNeZAgbUEhXJhtf4WXq7dgpCb3l9ETxNHCDiv8fp2F8ZV+OrBu2hboMda8HwNLcUZMDHTK+ujFB9l32tUh+1fcvTCbUoZXETHYg0F0+xuLKHZfOEfNQCFRtoSp8llHegAxxOIdBudhEgJwR5nSkpCl40UpchL8uXx7rbSForECgYEAugAZjzXdDT51J7Z96peCjwNqAbftu9V7/7CDh9U/5gKAhr7RkJa5gMn5i8vMxbxWghJLG9tqdRj5dn1MJoCcTYrKeYGPCDlNBnoqBPCpRQK/Kk4szIBlaog/M7aP3FqEZxsgHPCeD8KFXJbZHjstalaY2dceUXVc8/v4xzRnVOUCgYAkqszgtnwqD1J2N7yGsn8BPySyyK+KsMGiOBeveuJLqQH2eH90dr6Mf5ZwIDhTzLUxA9+WE+wFiFAB55NTDzBuNGVjwKKQIUgnmTJfHV4ULSoGiHZ+noKR7Qa0WqSjBC05Z81TuUTUkEaE7W6b8Y5z7vNcZCc4f8JeHUxqFxGXkQKBgDTbUmggJnFdDm36rk28QJ3jmnxiiGyYfmRrBPXU5BO5Ik0obOVp781pmEDh6Y9Htk3AZRfFgrtEHaBOexV19vUSO/fLmZn8rqbokIhW28OAxFKBZLm4wxlDHrLTbo5wKrAiRT30IvbXkI5/T7QHnSBa+5TsTPFZKNEtCcWSXssBAoGAH4ZQb2wuPztJR5/pwk0V8UGENzsMQ5TF1xU0PZ36jTKcfdaduluUTxxMbVrtcbOcPvvp+SWxxZ/qZJAAWhukFy+8SY9wDrUp9KX9eXFTt+keC6L+oYRyO7wFETjFkBhU4YHB91WSNKij+JIFb9cYDGYG8ozh4GB5dWHm0oUpqGA="
+                    return SecKey.secKey(with: privateKeyBase64, isPrivate: true)!
+                }()
+            }
+            enum Output {
+                static let expectedOutput =
+                    "40LypQV1Y4nyEHgbizFYpl2wFPrWRCVdq7obg/V96apGqJTD+Ryd4RZ3IXmaqopmPQd4aFrwMaQgA0wmIZiukjqTsG8riWfyJ0YuqNWcgT8faKXH/mbn+oG2Z1ImrpRr67wK8Pzyb5gWLknpqgC8UQl1J1oDRXy6L+KvmGNhm9QaL6YKA740NhEsH7w1fRbRHKi94e/UoHhcVsYP67MiaHdne71wJd8mcc+ocRk5Uk3fgh/1BfgPFekA4/rLHuV5Y3Wj1FxSrhaSoc9ZJu6NCcXWhvZOzRVDu8IMZnLllw1W/FdNSwHD8Uo+9rtOw945zImOIYGLOAzr8+DzrqaaOxFLemte8PbLkeuVhnZDRGI6DNDLMi5Bu9Zgv1hB3UoK"
+            }
+        }
+
+        do {
+
+            let useCase = PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: self.dependencies)
+            let input = PLLoginAuthorizationDataEncryptionUseCaseInput(appId:  Constants.Input.appId,
+                                                                       pin: Constants.Input.pin,
+                                                                       encryptedUserKey: Constants.Input.storedEncryptedUserKey,
+                                                                       randomKey: Constants.Input.randomKey,
+                                                                       challenge: Constants.Input.challenge,
+                                                                       privateKey: Constants.Input.privateKey)
             let response = try useCase.executeUseCase(requestValues: input)
             let result = try response.getOkResult()
 

@@ -14,7 +14,13 @@ import CommonUseCase
 import Commons
 import DomainCommon
 
-protocol PLRememberedLoginPinCoordinatorProtocol {
+
+protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {}
+
+extension PLRememberedLoginPinCoordinatorProtocol {
+    func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity) {
+        self.goToPrivate(option)
+    }
 }
 
 final class PLRememberedLoginPinCoordinator: ModuleCoordinator {
@@ -60,6 +66,30 @@ private extension PLRememberedLoginPinCoordinator {
         
         self.dependenciesEngine.register(for: PLRememberedLoginPinViewControllerProtocol.self) { dependenciesResolver in
             return dependenciesResolver.resolve(for: PLRememberedLoginPinViewController.self)
+        }
+
+        self.dependenciesEngine.register(for: PLGetSecIdentityUseCase.self) {_  in
+            return PLGetSecIdentityUseCase()
+        }
+
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase.self) { resolver in
+            return PLTrustedDeviceGetStoredEncryptedUserKeyUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetHeadersUseCase.self) { resolver in
+            return PLTrustedDeviceGetHeadersUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLLoginAuthorizationDataEncryptionUseCase.self) { resolver in
+            return PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLSessionUseCase.self) { resolver in
+            return PLSessionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
+            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
         }
 
         self.dependenciesEngine.register(for: PLRememberedLoginPinCoordinator.self) { _ in
