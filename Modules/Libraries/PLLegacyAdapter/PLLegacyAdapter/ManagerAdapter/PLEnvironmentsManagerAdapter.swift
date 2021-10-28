@@ -8,7 +8,7 @@
 import SANLegacyLibrary
 import SANPLLibrary
 
-final class PLEnvironmentsManagerAdapter {
+public final class PLEnvironmentsManagerAdapter {
     
     private let hostProvider: PLHostProviderProtocol
     private let dataProvider: BSANDataProvider
@@ -21,13 +21,13 @@ final class PLEnvironmentsManagerAdapter {
 }
 
 extension PLEnvironmentsManagerAdapter: BSANEnvironmentsManager {
-    func getEnvironments() -> BSANResponse<[BSANEnvironmentDTO]> {
+    public func getEnvironments() -> BSANResponse<[BSANEnvironmentDTO]> {
         let plEnvironments = hostProvider.getEnvironments()
         let coreEnvironments = getCoreEnvironments(from: plEnvironments)
         return BSANOkResponse(coreEnvironments)
     }
     
-    func getCurrentEnvironment() -> BSANResponse<BSANEnvironmentDTO> {
+    public func getCurrentEnvironment() -> BSANResponse<BSANEnvironmentDTO> {
         if let currentEnvironment = try? dataProvider.getEnvironment() {
             return BSANOkResponse(self.getCoreEnvironment(from: currentEnvironment))
         } else {
@@ -35,13 +35,13 @@ extension PLEnvironmentsManagerAdapter: BSANEnvironmentsManager {
         }
     }
     
-    func setEnvironment(bsanEnvironment: BSANEnvironmentDTO) -> BSANResponse<Void> {
+    public func setEnvironment(bsanEnvironment: BSANEnvironmentDTO) -> BSANResponse<Void> {
         guard let plEnvironment = try? getPLEnvironment(from: bsanEnvironment) else { return BSANErrorResponse(nil)}
         dataProvider.storeEnviroment(plEnvironment)
         return BSANOkResponse(nil)
     }
     
-    func setEnvironment(bsanEnvironmentName: String) -> BSANResponse<Void> {
+    public func setEnvironment(bsanEnvironmentName: String) -> BSANResponse<Void> {
         let environments = hostProvider.getEnvironments()
         guard let environment = (environments.first{ $0.name == bsanEnvironmentName }) else { return BSANErrorResponse(nil) }
         dataProvider.storeEnviroment(environment)

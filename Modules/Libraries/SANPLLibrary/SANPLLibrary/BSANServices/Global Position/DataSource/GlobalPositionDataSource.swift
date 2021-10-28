@@ -42,12 +42,12 @@ final class GlobalPositionDataSource {
         let serviceName = GlobalPositionServiceType.globalPosition.rawValue
         let absoluteUrl = baseUrl + self.basePath
         let result: Result<GlobalPositionDTO, NetworkProviderError> = self.networkProvider.request(GlobalPositionRequest(serviceName: serviceName,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .get,
-                                                                                                                headers: self.headers,
-                                                                                                                queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
-                                                                                                                localServiceName: .globalPosition)
+                                                                                                                         serviceUrl: absoluteUrl,
+                                                                                                                         method: .get,
+                                                                                                                         headers: self.headers,
+                                                                                                                         queryParams: self.queryParams,
+                                                                                                                         contentType: .urlEncoded,
+                                                                                                                         localServiceName: .globalPosition)
         )
         return result
     }

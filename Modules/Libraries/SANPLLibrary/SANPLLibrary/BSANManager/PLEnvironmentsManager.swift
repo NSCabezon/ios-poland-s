@@ -16,7 +16,7 @@ public enum EnvironmentsManagerError: Error {
     case environmentsNotFound
 }
 
-final class PLEnvironmentsManager {
+public final class PLEnvironmentsManager {
     private let hostProvider: PLHostProviderProtocol
     private let bsanDataProvider: BSANDataProvider
 
