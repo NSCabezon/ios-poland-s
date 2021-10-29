@@ -16,7 +16,7 @@ public struct PayeeListDTO: Codable {
 public struct PayeeDTO: Codable {
     let payeeID: PayeeIdDTO?
     public let alias: String?
-    public let account: Account?
+    public let account: AccountPayeeDTO?
 
     enum CodingKeys: String, CodingKey {
         case payeeID = "payeeId"
@@ -37,7 +37,7 @@ extension PayeeDTO: PayeeRepresentable {
     }
 }
 
-public struct Account: Codable {
+public struct AccountPayeeDTO: Codable {
     var accountType: AccountTypeDTO?
     var currencyCode: String?
     public var accountNo: String?

@@ -30,13 +30,17 @@ final class SendMoneyTransferTypeUseCase: UseCase<SendMoneyTransferTypeUseCaseIn
         else { return .error(StringErrorOutput(nil)) }
         guard transferType.toTransferType == .one
         else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(transfer: [transferType.toTransferType], fees: [:])) }
-        let fees = getFinalfees()
-        guard fees[.one] != nil
-        else { return .error(StringErrorOutput(nil)) }
-        guard transferType == .oneWithOptional
-        else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(transfer: [.one], fees: fees)) }
-        let availableTransferTypes = getAvailableTransferTypes()
-        return .ok(SendMoneyTransferTypeUseCaseOkOutput(transfer: availableTransferTypes, fees: fees))
+        do {
+            let fees = try getFinalfees(requestValues: requestValues)
+            guard fees[.one] != nil
+            else { return .error(StringErrorOutput(nil)) }
+            guard transferType == .oneWithOptional
+            else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(transfer: [.one], fees: fees)) }
+            let availableTransferTypes = try getAvailableTransferTypes(requestValues: requestValues, fees: fees)
+            return .ok(SendMoneyTransferTypeUseCaseOkOutput(transfer: availableTransferTypes, fees: fees))
+        } catch let error {
+            return .error(StringErrorOutput(error.localizedDescription))
+        }
     }
 }
 
@@ -57,18 +61,54 @@ private extension SendMoneyTransferTypeUseCase {
         return matrix.evaluate()
     }
     
-    func getFinalfees() -> [PolandTransferType: AmountRepresentable] {
-        //TODO: Call API2 to get final fees
-        return [
-            .one: AmountDTO(value: 0, currency: .create(.złoty)),
-            .eight: AmountDTO(value: 27, currency: .create(.złoty)),
-            .a: AmountDTO(value: 6, currency: .create(.złoty))
-        ]
+    func getFinalfees(requestValues: SendMoneyTransferTypeUseCaseInput) throws -> [PolandTransferType: AmountRepresentable] {
+        let feesResponse = try transfersRepository.getFinalFee(
+            input: CheckFinalFeeInput(
+                destinationAccount: requestValues.destinationIban,
+                amount: requestValues.amount
+            )
+        )
+        var fees: [PolandTransferType: AmountRepresentable] = [:]
+        switch feesResponse {
+        case .success(let feesDto):
+            fees = parseFees(feesDto)
+        case .failure(let error):
+            throw error
+        }
+        return fees
     }
     
-    func getAvailableTransferTypes() -> [PolandTransferType] {
-        //TODO: Call API1 to get availability of types A/8
-        return [.one, .eight, .a]
+    func getAvailableTransferTypes(requestValues: SendMoneyTransferTypeUseCaseInput, fees: [PolandTransferType: AmountRepresentable]) throws -> [PolandTransferType] {
+        let availableResponse = try transfersRepository.checkTransactionAvailability(
+            input: CheckTransactionAvailabilityInput(
+                destinationAccount: requestValues.destinationIban,
+                transactionAmount: requestValues.amount.value ?? 0
+            )
+        )
+        var availableTransferTypes: [PolandTransferType] = [.one]
+        switch availableResponse {
+        case .success(let dto):
+            if fees[.eight] != nil && dto.expressElixirStatusCode == 0 {
+                availableTransferTypes.append(.eight)
+            }
+            if fees[.a] != nil && dto.blueCashStatusCode == 0 {
+                availableTransferTypes.append(.a)
+            }
+        case .failure(let error):
+            throw error
+        }
+        return availableTransferTypes
+    }
+}
+
+private extension SendMoneyTransferTypeUseCase {
+    func parseFees(_ fees: [CheckFinalFeeRepresentable]) -> [PolandTransferType: AmountRepresentable] {
+        var doFees: [PolandTransferType: AmountRepresentable] = [:]
+        for fee in fees {
+            guard let serviceId = fee.serviceId, let amount = fee.feeAmount else { continue }
+            doFees[PolandTransferType(serviceId: serviceId)] = amount
+        }
+        return doFees
     }
 }
 
@@ -97,4 +137,15 @@ enum PolandTransferType {
     case four
     case eight
     case a
+    
+    init(serviceId: TransferFeeServiceIdDTO) {
+        switch serviceId {
+        case .elixir:
+            self = .one
+        case .expressElixir:
+            self = .eight
+        case .bluecash:
+            self = .a
+        }
+    }
 }

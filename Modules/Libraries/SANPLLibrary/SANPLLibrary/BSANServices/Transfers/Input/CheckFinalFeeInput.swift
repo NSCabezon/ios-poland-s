@@ -8,12 +8,11 @@
 import CoreDomain
 
 public struct CheckFinalFeeInput {
-    var originAccount: IBANRepresentable
+    var destinationAccount: IBANRepresentable
     var amount: AmountRepresentable
 
-    public init(originAccount: IBANRepresentable, amount: AmountRepresentable) {
-        self.originAccount = originAccount
+    public init(destinationAccount: IBANRepresentable, amount: AmountRepresentable) {
+        self.destinationAccount = destinationAccount
         self.amount = amount
     }
 }
-

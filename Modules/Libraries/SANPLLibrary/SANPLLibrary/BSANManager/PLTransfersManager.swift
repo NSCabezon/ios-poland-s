@@ -86,7 +86,7 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
                                                       channelId: Constants.channelId.rawValue,
                                                       operationAmount: amountValue,
                                                       operationCurrency: currency)
-        let destinationAccountNumber: String = parameters.originAccount.checkDigits + parameters.originAccount.codBban
+        let destinationAccountNumber: String = parameters.destinationAccount.checkDigits + parameters.destinationAccount.codBban
         let result = try self.transferDataSource.checkFinalFee(inputParameters, destinationAccount: destinationAccountNumber)
         switch result {
         case .success(let feeResponse):
