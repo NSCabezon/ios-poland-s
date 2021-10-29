@@ -85,5 +85,7 @@
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 </dict>
 </plist>

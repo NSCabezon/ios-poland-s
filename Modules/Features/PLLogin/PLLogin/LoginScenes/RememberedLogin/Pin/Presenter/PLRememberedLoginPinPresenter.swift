@@ -10,6 +10,7 @@ import Commons
 import LoginCommon
 import PLCommons
 import Models
+import LocalAuthentication
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
@@ -23,9 +24,10 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func getBiometryTypeAvailable() -> BiometryTypeEntity
     func setAllowLoginBlockedUsers()
     func loginSuccess(configuration: RememberedLoginConfiguration)
+    func startBiometricAuth()
 }
 
-final class PLRememberedLoginPinPresenter {
+final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
     internal let dependenciesResolver: DependenciesResolver
     weak var view: PLRememberedLoginPinViewControllerProtocol?
     public var loginConfiguration:RememberedLoginConfiguration
@@ -92,6 +94,28 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         self.allowLoginBlockedUsers = true
     }
     
+    func startBiometricAuth() {
+        safetyCurtainSafeguardEventWillBegin()
+        let type = getBiometryTypeAvailable()
+        guard type != .none else {
+            self.biometryFails()
+            return
+        }
+        let reasonKey = "pl_login_text_" + (type == .faceId ? "loginWithFaceID" : "loginWithTouchID")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            LAContext().evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                       localizedReason: localized(reasonKey)) { [weak self] success, error in
+                DispatchQueue.main.async {
+                    if success {
+                        self?.biometrySuccess()
+                    } else {
+                        self?.biometryFails(error: error)
+                    }
+                }
+            }
+        }
+    }
+    
     func getBiometryTypeAvailable() -> BiometryTypeEntity {
         self.trackEvent(.clickBiometric)
         guard loginConfiguration.isBiometricsAvailable else { return .none }
@@ -146,6 +170,24 @@ private extension PLRememberedLoginPinPresenter {
             .onError { [weak self] _ in
                 self?.coordinator.goToGlobalPositionScene(.classic)
             }
+    }
+    
+    func biometryFails(error: Error? = nil) {
+        safetyCurtainSafeguardEventDidFinish()
+        guard let laError = error as? LAError, laError.code == .userFallback else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.handle(error:.unauthorized)
+            }
+            return
+        }
+        self.view?.tryPinAuth()
+    }
+    
+    func biometrySuccess() {
+        safetyCurtainSafeguardEventDidFinish()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.doLogin(with: .Biometrics)
+        }
     }
 }
 
