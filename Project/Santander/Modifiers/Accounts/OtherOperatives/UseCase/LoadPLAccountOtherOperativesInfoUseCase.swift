@@ -28,7 +28,8 @@ class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOu
                 languageType = type
             } else {
                 let defaultLanguage = self.dependencies.resolve(for: LocalAppConfig.self).language
-                languageType = Language.createDefault(isPb: nil, defaultLanguage: defaultLanguage).languageType
+                let languageList = self.dependencies.resolve(for: LocalAppConfig.self).languageList
+                languageType = Language.createDefault(isPb: nil, defaultLanguage: defaultLanguage, availableLanguageList: languageList).languageType
             }
             self.plAccountOtherOperativesInfoRepository.load(baseUrl: urlBase, publicLanguage: languageType.getPublicLanguage)
         }
