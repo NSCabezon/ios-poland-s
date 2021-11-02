@@ -74,14 +74,36 @@ final class BSANHostProviderEmpty: BSANHostProviderProtocol {
 }
 
 struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
-    let publicFilesEnvironments: [PublicFilesEnvironmentDTO] = [
-        PublicFilesEnvironmentDTO("PRE", "https://micrositeoneapp9.santander.pl/filesFF/", false),
-        PublicFilesEnvironmentDTO("QA", "https://serverftp.ciber-es.com/one_app/pl/files_qa/", false),
-        PublicFilesEnvironmentDTO("DEV", "https://serverftp.ciber-es.com/one_app/pl/files_dev/", false),
-        PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false),
-        PublicFilesEnvironmentDTO("FILES_PL", "https://micrositeoneapp2.santanderbankpolska.pl/oneapp/", false),
-        PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
-        PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
-        PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true),
-    ]
+    var publicFilesEnvironments: [PublicFilesEnvironmentDTO] {
+        return getPublicFilesEnvironments()
+    }
+    
+    private func getPublicFilesEnvironments() ->  [PublicFilesEnvironmentDTO] {
+        var publicFilesEnvironments: [PublicFilesEnvironmentDTO] = []
+        
+        #if DEV
+        publicFilesEnvironments = [
+            PublicFilesEnvironmentDTO("PRE", "https://micrositeoneapp9.santander.pl/filesFF/", false),
+            PublicFilesEnvironmentDTO("QA", "https://serverftp.ciber-es.com/one_app/pl/files_qa/", false),
+            PublicFilesEnvironmentDTO("DEV", "https://serverftp.ciber-es.com/one_app/pl/files_dev/", false),
+            PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false),
+            PublicFilesEnvironmentDTO("FILES_PL_SCARLET", "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/", false),
+            PublicFilesEnvironmentDTO("FILES_PL_CANDY", "https://zt2.cdn.santanderbankpolska.pl/oneapp/candy/", false),
+            PublicFilesEnvironmentDTO("FILES_PL_ROSE", "https://zt2.cdn.santanderbankpolska.pl/oneapp/rose/", false),
+            PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
+            PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
+            PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true)
+        ]
+        #elseif UAT
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        #elseif REG
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt4.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        #elseif PREPROD
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        #elseif PROD
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        #endif
+        
+        return publicFilesEnvironments
+    }
 }

@@ -1,19 +1,19 @@
 //
-//  PRE.xcconfig
+//  Preprod.xcconfig
 //  Santander
 //
-//  Created by Jose C. Yebes on 03/05/2021.
+//  Created by 187831 on 28/10/2021.
 //
 
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_NAME = PL-PRE-$(MARKETING_VERSION)
-PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0
-WIDGET_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.widget
-SIRI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.siri.intents
-SIRI_UI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.pre.0.0.siri.intents.ui
-APP_NAME = Santander Pre
+PRODUCT_NAME = PL-PREPROD-$(MARKETING_VERSION)
+PRODUCT_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.preprod.0.0
+WIDGET_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.preprod.0.0.widget
+SIRI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.preprod.0.0.siri.intents
+SIRI_UI_BUNDLE_IDENTIFIER = pl.bancosantander.oneapp.preprod.0.0.siri.intents.ui
+APP_NAME = Santander Preprod
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
 EMMA_API_KEY = santanderpreHdgTYANJ0
 LOAD_PFM_ENABLED = YES
@@ -23,9 +23,9 @@ TEALIUM_TARGET = qa
 APP_CENTER_IDENTIFIER = ffcc0fdd-0d89-4ed9-9bed-e1c7d7c966b8 // TODO: PL right app center
 TRUST_INVALID_CERTIFICATE = YES
 ENVIRONMENTS_AVAILABLE = NO
-KEYCHAIN_SERVICE = PRE_Santander
+KEYCHAIN_SERVICE = PREPROD_Santander
 ENVIRONMENTS_FOLDER = $(SRCROOT)/Santander/Configuration/Legacy
-ENVIRONMENTS_TO_EXCLUDE = $(ENVIRONMENTS_FOLDER)/PRO/* $(ENVIRONMENTS_FOLDER)/PREPROD/* $(ENVIRONMENTS_FOLDER)/Regression/* $(ENVIRONMENTS_FOLDER)/UAT/* $(ENVIRONMENTS_FOLDER)/PREPROD/* $(ENVIRONMENTS_FOLDER)/DEV/* 
+ENVIRONMENTS_TO_EXCLUDE = $(ENVIRONMENTS_FOLDER)/INTERN/* $(ENVIRONMENTS_FOLDER)/PRO/* $(ENVIRONMENTS_FOLDER)/DEV/* $(ENVIRONMENTS_FOLDER)/UAT/* $(ENVIRONMENTS_FOLDER)/Regression/* $(ENVIRONMENTS_FOLDER)/PRE/*
 TRUSTEER_FILES_TO_EXCLUDE = $(SRCROOT)/Santander/Trusteer/Wrapper/PRO/SdkHandler.mm
 EXCLUDED_SOURCE_FILE_NAMES = $(ENVIRONMENTS_TO_EXCLUDE) $(TRUSTEER_FILES_TO_EXCLUDE)
 HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/Santander/Trusteer/tas/include
