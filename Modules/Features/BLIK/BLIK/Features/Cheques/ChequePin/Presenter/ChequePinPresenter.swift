@@ -85,10 +85,6 @@ final class ChequePinPresenter: ChequePinPresenterProtocol {
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] params in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showSnackbar(
-                        message: "#Gotowe! Ustawiono pin do czeków BLIK.",
-                        type: .success
-                    )
                     self?.didSetPin()
                 })
             }

@@ -149,7 +149,7 @@ private extension ChequePinView {
         let label = UILabel()
         label.textAlignment = .center
         label.text = localized("pl_blik_text_numbPass")
-        label.setSantanderTextFont(type: .light, size: 17, color: .darkGray)
+        label.setSantanderTextFont(type: .regular, size: 17, color: .darkGray)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
@@ -164,7 +164,7 @@ private extension ChequePinView {
         let label = UILabel()
         label.textAlignment = .center
         label.text = localized("pl_blik_text_repeatPass")
-        label.setSantanderTextFont(type: .light, size: 17, color: .darkGray)
+        label.setSantanderTextFont(type: .regular, size: 17, color: .darkGray)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }

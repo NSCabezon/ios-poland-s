@@ -66,6 +66,7 @@ extension ChequesCoordinator: ChequesCoordinatorProtocol {
         if shouldCofigurePin {
             showChequePIN(didSetPin: { [weak self] in
                 guard let strongSelf = self else { return }
+                strongSelf.showSetPinSuccessAlert()
                 strongSelf.navigationController?.popViewController(animated: false)
                 strongSelf.showChequeCreationForm(maxChequeAmount: maxChequeAmount)
             })
@@ -100,6 +101,14 @@ extension ChequesCoordinator: ChequesCoordinatorProtocol {
     
     public func pop() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func showSetPinSuccessAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_text_passSuccess"),
+            alertType: .info,
+            position: .top
+        )
     }
     
     private func showChequeCreationForm(maxChequeAmount: Decimal) {

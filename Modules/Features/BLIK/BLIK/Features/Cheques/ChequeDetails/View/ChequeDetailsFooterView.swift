@@ -42,7 +42,7 @@ private extension ChequeDetailsFooterView {
             separatorView.heightAnchor.constraint(equalToConstant: 2),
             
             sendButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            sendButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            sendButton.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             sendButton.heightAnchor.constraint(equalToConstant: 48),
             

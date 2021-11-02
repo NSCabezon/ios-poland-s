@@ -108,17 +108,24 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         var chequesResult: Result<[BlikCheque], Swift.Error>?
         var walletParamsResult: Result<WalletParams, Swift.Error>?
         
-        let input = LoadChequesUseCaseInput(chequeListType: listType)
-        let loadChequesScenario = Scenario(useCase: loadChequesUseCase, input: input)
-        let loadWalletScenario = Scenario(useCase: loadWalletParamsUseCase)
+        let loadChequesScenario = Scenario(
+            useCase: loadChequesUseCase,
+            input: LoadChequesUseCaseInput(chequeListType: listType)
+        )
         
-        MultiScenario(handledOn: useCaseHandler)
+        var scenario = MultiScenario(handledOn: useCaseHandler)
             .addScenario(loadChequesScenario) { updatedValues, output, _ in
                 chequesResult = .success(output.chequeList)
             }
-            .addScenario(loadWalletScenario) { updatedValues, output, _ in
+            
+        if listType == .active {
+            let loadWalletScenario = Scenario(useCase: loadWalletParamsUseCase)
+            scenario = scenario.addScenario(loadWalletScenario) { updatedValues, output, _ in
                 walletParamsResult = .success(output.walletParams)
             }
+        }
+            
+        scenario
             .onSuccess { [weak self] _ in
                 self?.walletParams = try? walletParamsResult?.get()
             }
@@ -205,9 +212,9 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
                     configuration: .regularMicro16CenteredStyle
                 )
             ],
-            image: "icnInfoRed",
+            image: "info_lisboaGray",
             action: Dialog.Action(title: localized("generic_link_ok"), style: .red, action: {}),
-            isCloseOptionAvailable: true
+            isCloseOptionAvailable: false
         )
     }
     
