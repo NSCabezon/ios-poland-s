@@ -64,7 +64,6 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
     
     func loginSuccess(configuration: RememberedLoginConfiguration) {
-        self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "PIN"])
         guard allowLoginBlockedUsers else {
             self.view?.dismissLoading(completion: { [weak self] in
                 self?.view?.showAccountTemporaryBlockedDialog(configuration)
@@ -76,7 +75,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         
         self.view?.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
-            if configuration.challenge?.authorizationType == .softwareToken {
+            if configuration.challenge?.authorizationType != .softwareToken {
                 self.view?.showDeviceConfigurationErrorDialog()
             } else if configuration.isFinal() {
                 self.view?.showInvalidSCADialog()
@@ -85,7 +84,8 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
                 self.allowLoginBlockedUsers = false
                 self.view?.showAccountTemporaryBlockedDialog(configuration)
             } else {
-                //TODO: Login Success
+                self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "PIN"])
+                self.openSessionAndNavigateToGlobalPosition()
             }
         })
     }
@@ -139,8 +139,11 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         let config = coordinator.loginConfiguration
         self.loginProcessUseCase.executePersistedLogin(configuration: config, rememberedLoginType: rememberedLoginType) { [weak self] newConfiguration in
             guard let self = self else { return }
-            self.coordinator.loginConfiguration.challenge = newConfiguration?.challenge
-            self.openSessionAndNavigateToGlobalPosition()
+            guard let newConfig = newConfiguration else {
+                self.view?.showUnauthorizedError()
+                return
+            }
+            self.loginSuccess(configuration: newConfig)
         } onFailure: { [weak self]  error in
             self?.handleError(error)
         }
@@ -176,7 +179,7 @@ private extension PLRememberedLoginPinPresenter {
         safetyCurtainSafeguardEventDidFinish()
         guard let laError = error as? LAError, laError.code == .userFallback else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.handle(error:.unauthorized)
+                self?.view?.showUnauthorizedError()
             }
             return
         }
@@ -222,9 +225,10 @@ extension PLRememberedLoginPinPresenter: PLLoginPresenterErrorHandlerProtocol {
         default:
             break
         }
-        self.associatedErrorView?.presentError(error, completion: { [weak self] in
-            self?.genericErrorPresentedWith(error: error)
+        self.view?.dismissLoading(completion: { [weak self] in
+            self?.view?.showUnauthorizedError()
         })
+
     }
 }
 
