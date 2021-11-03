@@ -263,6 +263,20 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: BankingUtilsProtocol.self) { resolver in
             BankingUtils(dependencies: resolver)
         }
+        self.dependencieEngine.register(for: PersonalDataModifier.self) { _ in
+            PLPersonalDataModifier()
+        }
+        self.dependencieEngine.register(for: SessionDataManager.self) { _ in
+            return self.defaultSessionDataManager
+        }
+        self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
+            let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
+            let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
+            return SessionConfiguration(timeToExpireSession: self.timeToExpireSession,
+                                        timeToRefreshToken: self.timeToRefreshToken,
+                                        sessionStartedActions: [loadPfm],
+                                        sessionFinishedActions: [stopPfm])
+        }
     }
 }
 

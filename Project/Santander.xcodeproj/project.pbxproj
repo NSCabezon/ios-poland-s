@@ -167,6 +167,7 @@
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
 		BD84D4C34BE2BEEC9F8F9518 /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC862D41365E312BF8D649EA /* Pods_Santander.framework */; };
 		D2F5C33626E62647002431DE /* PLCardTransactionsSearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */; };
+		D547C8FC272A9B2C0090DABF /* PLPersonalDataModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */; };
 		D54D2EE727201CC400781580 /* PLOpinatorInfoOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54D2EE627201CC400781580 /* PLOpinatorInfoOption.swift */; };
 		D5B9E49D2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9E49B2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift */; };
 		D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9E49C2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift */; };
@@ -352,6 +353,7 @@
 		CA6307F943BB018C17C9F69C /* Pods-Santander.preprod-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-release.xcconfig"; sourceTree = "<group>"; };
 		CF685EEC765FCA190A19EB12 /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
 		D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardTransactionsSearchModifier.swift; sourceTree = "<group>"; };
+		D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalDataModifier.swift; sourceTree = "<group>"; };
 		D3425F86777E26AF61F5757F /* Pods-Santander.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-release.xcconfig"; sourceTree = "<group>"; };
 		D54D2EE627201CC400781580 /* PLOpinatorInfoOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOpinatorInfoOption.swift; sourceTree = "<group>"; };
 		D5B9E49B2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardTransactionDetailViewConfiguration.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 			isa = PBXGroup;
 			children = (
 				BB29665026CFB5200012599D /* PLGetPersonalBasicInfoUseCase.swift */,
+				D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */,
 			);
 			path = PersonalInfo;
 			sourceTree = "<group>";
@@ -1263,6 +1266,7 @@
 				D5B9E49D2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift in Sources */,
 				446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */,
 				4488918B26EB8F0F00F5FA24 /* PLFiltersAlertModifier.swift in Sources */,
+				D547C8FC272A9B2C0090DABF /* PLPersonalDataModifier.swift in Sources */,
 				BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */,
 				B01156052715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift in Sources */,
 				B01155F1271581BD00A4C175 /* OneAppInitWelcomeCoordinator.swift in Sources */,
