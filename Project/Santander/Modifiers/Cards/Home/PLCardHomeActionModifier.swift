@@ -26,8 +26,9 @@ enum PLCardHomeActionIdentifier: String {
     case refundForPurchasesPL = "RefundForPurchasesPoland"
     case exploreProductsPL = "ExploreProductsPoland"
     case creditLimitIncreasePL = "CreditLimitIncreasePoland"
-    case multicurrencyPL = "MulticurrencyPoland"
+    case multicurrencyPL = "MULTICURRENCY"
     case atmPackagePL = "AtmPackagePoland"
+    case blockPL = "CANCEL_CARD"
     case cvvPL = "CvvPoland"
 }
 
@@ -209,7 +210,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     )
 
     private let multicurrencyPL: CardActionType = .custome(
-        CustomCardActionValues(identifier: PLCardHomeActionIdentifier.creditLimitIncreasePL.rawValue,
+        CustomCardActionValues(identifier: PLCardHomeActionIdentifier.multicurrencyPL.rawValue,
                                localizedKey: "pl_cardsOption_button_multicurrency",
                                icon: "icnMulticurrency",
                                section: "contract",
@@ -231,7 +232,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     )
 
     private let blockPL: CardActionType = .custome(
-        CustomCardActionValues(identifier: PLCardHomeActionIdentifier.atmPackagePL.rawValue,
+        CustomCardActionValues(identifier: PLCardHomeActionIdentifier.blockPL.rawValue,
                                localizedKey: "cardsOption_button_block",
                                icon: "icnBlockCard",
                                section: "security",
@@ -250,9 +251,87 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     }
 
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
+
         switch action {
+        case .offCard:
+            goToCardBlock(entity)
+        case .onCard:
+            goToCardUnblock(entity)
         default:
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+            switch action.trackName {
+            case PLCardHomeActionIdentifier.blockPL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+                guard let trackName = action.trackName else { return }
+                let cardData = getCardData(identifier: getType(identifier: trackName))
+                if let isAvailable = cardData.isAvailable, !isAvailable {
+                    Toast.show(localized("generic_alert_notAvailableOperation"))
+                    return
+                }
+                showWebView(identifier: trackName, entity: entity, cardData: cardData)
+            default:
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+            }
         }
+    }
+    
+    func getCardData(identifier: PLCardWebViewType) -> PLAccountOtherOperativesData {
+        let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        guard let list = repository.get()?.cards_options, let data = getCardOtherOperativesEntity(list: list, identifier: identifier) else { return PLAccountOtherOperativesData(identifier: nil, link: nil, isAvailable: nil, httpMethod: nil, parameter: nil) }
+        return data
+    }
+
+    func getCardOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: PLCardWebViewType) -> PLAccountOtherOperativesData? {
+        var entity: PLAccountOtherOperativesData?
+        for dto in list {
+            if dto.id == PLCardHomeActionIdentifier.blockPL.rawValue, identifier == .cancel {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.blockPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method))
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.multicurrencyPL.rawValue, identifier == .multicurrency {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.multicurrencyPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method))
+                break
+            }
+        }
+        return entity
+    }
+
+    private func getHttpMethod(method: String?) -> HTTPMethodType {
+        if method == "GET" {
+            return .get
+        } else {
+            return .post
+        }
+    }
+
+    private func showWebView(identifier: String, entity: CardEntity, cardData: PLAccountOtherOperativesData) {
+        let input: GetPLCardsOtherOperativesWebConfigurationUseCaseInput
+        input = GetPLCardsOtherOperativesWebConfigurationUseCaseInput(type: getType(identifier: identifier), cardEntity: entity, cardData: cardData)
+        let useCase = self.dependenciesResolver.resolve(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self)
+        Scenario(useCase: useCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { result in
+                self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
+            }
+    }
+    
+    private func getType(identifier: String) -> PLCardWebViewType {
+        switch identifier {
+        case PLCardHomeActionIdentifier.blockPL.rawValue:
+            return .cancel
+        case PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+            return .multicurrency
+        default:
+            return .cancel
+        }
+    }
+}
+
+private extension PLCardHomeActionModifier {
+    func goToCardBlock(_ card: CardEntity) {
+        let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
+        coordinator.didSelectAction(.offCard, card)
+    }
+
+    func goToCardUnblock(_ card: CardEntity) {
+        let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
+        coordinator.didSelectAction(.onCard, card)
     }
 }

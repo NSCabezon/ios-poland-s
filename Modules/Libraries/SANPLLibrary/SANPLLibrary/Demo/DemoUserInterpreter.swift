@@ -56,6 +56,7 @@ public enum PLLocalServiceName: String {
     case authenticateInit = "authenticate_init"
     case authenticate = "authenticate"
     case pendingChallenge = "pendingChallenge"
+    case confirmChallenge = "confirmChallenge"
     case registerDeviceTrustDevice = "registerDeviceTrustDevice"
     case registerSoftwareToken = "registerSoftwareToken"
     case registerIVR = "registerIVR"
@@ -69,4 +70,9 @@ public enum PLLocalServiceName: String {
     case getPayees
     case recentRecipients
     case ibanValidation = "ibanValidation"
+    case cardBlock
+    case cardUnblock
+    case cardDisable
+    case trustedDeviceInfo = "trustedDeviceInfo"
+    case checkFinalFee = "checkFinalFee"
 }

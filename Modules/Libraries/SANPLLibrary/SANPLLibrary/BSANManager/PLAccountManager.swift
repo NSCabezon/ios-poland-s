@@ -10,6 +10,7 @@ public protocol PLAccountManagerProtocol {
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError>
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
     func getWithholdingList(accountNumber: String) throws -> Result<SANPLLibrary.WithholdingListDTO, NetworkProviderError>
+    func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
 }
 
@@ -53,6 +54,10 @@ extension PLAccountManager: PLAccountManagerProtocol {
         let result = try self.accountDataSource.getWithholdingList(accountNumbers: accountNumbers)
         self.processWithholdingListResult(accountNumber, result: result)
         return result
+    }
+    
+    func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError> {
+        try accountDataSource.getAccountsForDebit(transactionType: transactionType)
     }
 
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {

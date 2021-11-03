@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyTransferTypeViewController" customModule="TransferOperatives" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyTransferTypeViewController" customModule="PL_DEV_0_0_92" customModuleProvider="target">
             <connections>
                 <outlet property="floatingButton" destination="6zF-9F-Uer" id="ITr-w1-3Wc"/>
-                <outlet property="floatingButtonConstraint" destination="QLD-Gs-fam" id="xYr-yO-EZE"/>
+                <outlet property="mainStackView" destination="S23-Cb-xpw" id="Pqd-5x-59Y"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,17 +27,30 @@
                         <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="S23-Cb-xpw">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
                         </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kW1-Ot-Wjg">
+                            <rect key="frame" x="0.0" y="128" width="414" height="112"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="112" id="icw-ig-Kcn"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="S23-Cb-xpw" secondAttribute="bottom" id="Vvb-9S-Y0L"/>
+                        <constraint firstItem="kW1-Ot-Wjg" firstAttribute="top" secondItem="S23-Cb-xpw" secondAttribute="bottom" id="THZ-Gg-TdT"/>
+                        <constraint firstItem="kW1-Ot-Wjg" firstAttribute="leading" secondItem="kiu-Zq-obJ" secondAttribute="leading" id="XEo-9E-Fib"/>
+                        <constraint firstAttribute="trailing" secondItem="kW1-Ot-Wjg" secondAttribute="trailing" id="axI-Xs-6Z0"/>
                         <constraint firstItem="S23-Cb-xpw" firstAttribute="width" secondItem="kiu-Zq-obJ" secondAttribute="width" id="g14-xm-k6W"/>
                         <constraint firstItem="S23-Cb-xpw" firstAttribute="top" secondItem="kiu-Zq-obJ" secondAttribute="top" id="hsj-YW-RpV"/>
                         <constraint firstItem="S23-Cb-xpw" firstAttribute="leading" secondItem="kiu-Zq-obJ" secondAttribute="leading" id="r1D-1O-lzK"/>
-                        <constraint firstAttribute="trailing" secondItem="S23-Cb-xpw" secondAttribute="trailing" id="xIX-Io-B7e"/>
+                        <constraint firstAttribute="trailing" secondItem="S23-Cb-xpw" secondAttribute="trailing" id="udk-yP-Dga"/>
+                        <constraint firstAttribute="bottom" secondItem="kW1-Ot-Wjg" secondAttribute="bottom" id="yWE-Jt-NRg"/>
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zF-9F-Uer" customClass="FloatingButton" customModule="UIOneComponents">
-                    <rect key="frame" x="352" y="808" width="46" height="30"/>
+                    <rect key="frame" x="352" y="774" width="46" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="Z52-Z6-xnz"/>
+                    </constraints>
                     <state key="normal" title="Button"/>
                 </button>
             </subviews>

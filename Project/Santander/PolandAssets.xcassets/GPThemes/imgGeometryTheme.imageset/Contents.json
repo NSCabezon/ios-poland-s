@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "imgGeometricForms@1x.png",
+      "filename" : "imgGeometricFormsSelect.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imgGeometricForms@2x.png",
+      "filename" : "imgGeometricFormsSelect@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "imgGeometricForms@3x.png",
+      "filename" : "imgGeometricFormsSelect@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

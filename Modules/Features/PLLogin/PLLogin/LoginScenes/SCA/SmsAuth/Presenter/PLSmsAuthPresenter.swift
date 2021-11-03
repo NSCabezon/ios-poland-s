@@ -71,6 +71,7 @@ extension PLSmsAuthPresenter: PLSmsAuthPresenterProtocol {
     }
 
     func viewDidLoad() {
+        self.trackScreen()
         self.doAuthenticateInit()
     }
 
@@ -107,14 +108,19 @@ private extension  PLSmsAuthPresenter {
         Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
             .execute(on: self.dependenciesResolver.resolve())
             .onError { [weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
     }
 
     func doAuthenticate(smscode: String) {
+        self.trackEvent(.clickInitSession)
         guard let password = loginConfiguration.password else {
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
-            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
+            let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass))
+            self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1010", PLLoginTrackConstants().errorDescription: localized("login_popup_passwordRequired")])
+            self.handleError(error)
             return
         }
         
@@ -128,6 +134,7 @@ private extension  PLSmsAuthPresenter {
                                                   challenge: loginConfiguration.challenge)
         authProcessUseCase.execute(input: authProcessInput) { [weak self]  nextSceneResult in
             guard let self = self else { return }
+            self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "OTP"])
             switch nextSceneResult.nextScene {
             case .trustedDeviceScene:
                 self.goToDeviceTrustDeviceData()
@@ -136,6 +143,8 @@ private extension  PLSmsAuthPresenter {
             }
             self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
         } onFailure: { [weak self]  error in
+            let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+            self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
             self?.handleError(error)
         }
     }
@@ -174,5 +183,15 @@ extension PLSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol {
     
     func genericErrorPresentedWith(error: PLGenericError) {
         self.goBack()
+    }
+}
+
+extension PLSmsAuthPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLUnrememberedLoginSMSAuthPage {
+        return PLUnrememberedLoginSMSAuthPage()
     }
 }

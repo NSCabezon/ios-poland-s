@@ -16,6 +16,7 @@ protocol PLTrustedDeviceHardwareTokenPresenterProtocol: MenuTextWrapperProtocol 
     func viewDidLoad()
     func goToDeviceTrustDeviceData()
     func registerConfirm(code: String)
+    func closeButtonDidPressed()
 }
 
 final class PLTrustedDeviceHardwareTokenPresenter {
@@ -43,6 +44,10 @@ private extension PLTrustedDeviceHardwareTokenPresenter {
         self.dependenciesResolver.resolve(for: PLRegisterConfirmUseCase.self)
     }
     
+    private var trustedDeviceInfoUseCase: PLTrustedDeviceInfoUseCase {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceInfoUseCase.self)
+    }
+    
     private var storeTrustedDeviceHeadersUseCase: PLTrustedDeviceStoreHeadersUseCase {
         self.dependenciesResolver.resolve(for: PLTrustedDeviceStoreHeadersUseCase.self)
     }
@@ -62,8 +67,9 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
     }
     
     func registerConfirm(code: String) {
+        self.trackEvent(.clickContinue)
         guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
-              let pinToken = tokens.first(where: { $0.type == "PIN" }) else {
+              let pinToken = tokens.first(where: { $0.typeMapped == .PIN }) else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput(errorDescription: "Required parameter not found")))
             return
         }
@@ -77,8 +83,8 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
             
             Scenario(useCase: self.registerConfirmUseCase, input: input)
                 .execute(on: self.dependenciesResolver.resolve())
-                .onSuccess({ [weak self] output in
-                    guard let self = self else { return }
+                .then(scenario: { [weak self] output -> Scenario<PLTrustedDeviceStoreHeadersInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
+                    guard let self = self else { return nil }
                     let rConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
                                                                             state: output.state,
                                                                             badTriesCount: output.badTriesCount,
@@ -94,13 +100,31 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
                                                                             dateOfLastProperUse: output.dateOfLastProperUse,
                                                                             dateOfLastBadUse: output.dateOfLastBadUse)
                     self.deviceConfiguration.registrationConfirm = rConfirm
-                    self.storeTrustedDeviceHeadersPersistenlty()
+                    guard let deviceHeaders = self.deviceConfiguration.deviceHeaders else { return nil }
+                    let input = PLTrustedDeviceStoreHeadersInput(parameters: deviceHeaders.encryptedParameters,
+                                                                 time: deviceHeaders.time,
+                                                                 appId: deviceHeaders.appId)
+                    return Scenario(useCase: self.storeTrustedDeviceHeadersUseCase, input: input)
+                })
+                .then(scenario: { [weak self] output -> Scenario<PLTrustedDeviceInfoInput, PLTrustedDeviceInfoOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                    guard let self = self else { return nil }
+                    let params = PLTrustedDeviceInfoInput(trustedDeviceAppId: self.deviceConfiguration.deviceData?.appId ?? "")
+                    return Scenario(useCase: self.trustedDeviceInfoUseCase, input: params)
+                })
+                .onSuccess({ [weak self] output in
+                    guard let self = self else { return }
                     self.goToTrustedDeviceSuccess()
                 })
                 .onError { [weak self] error in
+                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
         })
+    }
+
+    func closeButtonDidPressed() {
+        self.trackEvent(.clickCancel)
     }
 }
 
@@ -120,19 +144,10 @@ private extension PLTrustedDeviceHardwareTokenPresenter {
                 self?.view?.showChallenge(challenge: challenge)
             })
             .onError({ [weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             })
-    }
-    
-    func storeTrustedDeviceHeadersPersistenlty() {
-
-        guard let deviceHeaders = self.deviceConfiguration.deviceHeaders else { return }
-        let input = PLTrustedDeviceStoreHeadersInput(parameters: deviceHeaders.encryptedParameters,
-                                                     time: deviceHeaders.time,
-                                                     appId: deviceHeaders.appId)
-
-        Scenario(useCase: self.storeTrustedDeviceHeadersUseCase, input: input)
-            .execute(on: self.dependenciesResolver.resolve())
     }
     
     func goToTrustedDeviceSuccess() {
@@ -176,5 +191,15 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLLoginPresenterErrorHandlerPro
                 self?.goToDeviceTrustDeviceData()
             })
         }
+    }
+}
+
+extension PLTrustedDeviceHardwareTokenPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceHardwareTokenPage {
+        return PLLoginTrustedDeviceHardwareTokenPage()
     }
 }

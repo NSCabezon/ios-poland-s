@@ -55,10 +55,11 @@ final public class CardTransactionsDTOAdapter {
             cardTransaction.description = plCardTransaction.transTitle
             
             cardTransaction.state = .getState(plCardTransaction.state)
-            cardTransaction.postedDate = plCardTransaction.operTime
+            cardTransaction.postedDate = plCardTransaction.postedDate
             cardTransaction.recipient = plCardTransaction.acceptor
             cardTransaction.cardAccountNumber = plCardTransaction.accountNumber
             cardTransaction.operationType = plCardTransaction.debitFlag
+            cardTransaction.sourceDate = plCardTransaction.sourceDate
             
             cardTransactions.append(cardTransaction)
             
@@ -67,4 +68,3 @@ final public class CardTransactionsDTOAdapter {
         return cardTransactions
     }
 }
-

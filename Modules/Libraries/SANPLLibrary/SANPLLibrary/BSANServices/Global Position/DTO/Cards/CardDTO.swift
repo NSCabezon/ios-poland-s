@@ -27,3 +27,11 @@ public struct CardNameDTO: Codable {
     public let description: String?
     public let userDefined: String?
 }
+
+public enum CardRole: String {
+    case owner = "OWNER"
+    case coOwner = "CO_OWNER"
+    case warrantor = "WARRANTOR"
+    case plenipotentiary = "PLENIPOTENTIARY"
+    case notOwner = "NOT_OWNER"
+}

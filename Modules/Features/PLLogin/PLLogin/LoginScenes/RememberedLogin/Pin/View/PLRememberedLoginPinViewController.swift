@@ -6,13 +6,10 @@
 //
 
 import Foundation
-
-import Foundation
 import PLCommons
 import Commons
 import UI
 import SANLegacyLibrary
-import LocalAuthentication
 import PLUI
 
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable {
@@ -20,12 +17,19 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
     func showInvalidSCADialog()
     func showDeviceConfigurationErrorDialog()
+    func setUserName(_ name: String)
+    func tryPinAuth()
 }
 
 final class PLRememberedLoginPinViewController: UIViewController {
     
     let dependenciesResolver: DependenciesResolver
     private let presenter: PLRememberedLoginPinPresenterProtocol
+    private enum LoginType {
+        case PIN
+        case BIOMETRICS
+    }
+    private var currentLoginType: LoginType = .PIN
     
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
@@ -33,8 +37,11 @@ final class PLRememberedLoginPinViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var pinTextField: UITextField!
     @IBOutlet private weak var balanceButton: UIButton!
-    @IBOutlet private weak var biometrySmallButton: UIButton!
+    @IBOutlet private weak var changeLoginTypeButton: UIButton!
     @IBOutlet private weak var biometrySmallLabel: UILabel!
+    @IBOutlet private weak var biometryCover: UIView!
+    @IBOutlet private weak var biometryBigImage: UIImageView!
+    @IBOutlet private weak var biometryBigLabel: UILabel!
     @IBOutlet private weak var blikButton: UIButton!
 
     private enum Constants {
@@ -89,8 +96,15 @@ private extension PLRememberedLoginPinViewController {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
     
-    @objc func didSelectBiometryButton() {
-        self.showBiometryAlert()
+    @objc func didSelectChangeLoginTypeButton() {
+        switch currentLoginType {
+        case .PIN:
+            self.currentLoginType = .BIOMETRICS
+            self.presenter.startBiometricAuth()
+        case .BIOMETRICS:
+            self.currentLoginType = .PIN
+        }
+        self.configureViewForLoginType()
     }
     
     @objc func didSelectBlikButton() {
@@ -101,31 +115,28 @@ private extension PLRememberedLoginPinViewController {
     func setupViews() {
         numberPadView.delegate = self
         sanIconImageView?.image = Assets.image(named: "logoSanLogin")
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
     func setupLabels() {
-        
         titleLabel.font = .santander(family: .text, type: .light, size: 40)
         titleLabel.textColor = UIColor.Legacy.uiWhite
         titleLabel.numberOfLines = 2
         biometrySmallLabel.font = .santander(family: .text, type: .regular, size: 14)
         biometrySmallLabel.textColor = UIColor.Legacy.uiWhite
-        
-        /*
-        let stringLoader = dependenciesResolver.resolve(forOptionalType: StringLoader.self)
-        guard let titleText: LocalizedStylableText = stringLoader?.getString("pg_title_welcome", [StringPlaceholder(.name, "Paquito")]) else { return }
-        let textConfig = LocalizedStylableTextConfiguration(lineHeightMultiple: 0.70)
-        titleLabel.configureText(withLocalizedString: titleText, andConfiguration: textConfig)*/
+        biometryBigLabel.font = .santander(family: .text, type: .regular, size: 16)
+        biometryBigLabel.textColor = UIColor.Legacy.uiWhite
     }
     
     func setupButtons() {
         balanceButton.setImage(Assets.image(named: "icnBalance"), for: .normal)
         balanceButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(didSelectBalanceButton)))
-        biometrySmallButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                  action: #selector(didSelectBiometryButton)))
+        changeLoginTypeButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                                                  action: #selector(didSelectChangeLoginTypeButton)))
+        biometryBigImage.addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                                                     action: #selector(retryBiometricAuth)))
         
         blikButton.setTitle(localized("frequentOperative_label_BLIK"), for: .normal)
         blikButton.setImage(Assets.image(named: "icnBlik")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -138,24 +149,43 @@ private extension PLRememberedLoginPinViewController {
                                                                   action: #selector(didSelectBlikButton)))
     }
     
+    func configureViewForLoginType() {
+        switch currentLoginType {
+        case .PIN:
+            self.numberPadView.isHidden = false
+            self.biometryCover.isHidden = true
+            self.setupBiometry()
+        case .BIOMETRICS:
+            self.biometrySmallLabel.text = localized("pl_onboarding_text_enterPIN")
+            self.changeLoginTypeButton.setImage(Assets.image(named: "icnKeyboardLogin"), for: .normal)
+            self.numberPadView.isHidden = true
+            self.biometryCover.isHidden = false
+            self.pinTextField.text = ""
+            self.configureNumberPadButtons()
+        }
+    }
+    
     func setupBiometry() {
         switch presenter.getBiometryTypeAvailable() {
         case .touchId:
-            biometrySmallButton.setImage(Assets.image(named: "smallFingerprint"), for: .normal)
+            changeLoginTypeButton.setImage(Assets.image(named: "smallFingerprint"), for: .normal)
+            biometryBigImage.image = Assets.image(named: "icnFingerprintLogin")
             biometrySmallLabel.text = localized("loginTouchId_alert_title_touchId")
+            biometryBigLabel.text = localized("pl_login_text_loginWithTouchID")
         case .faceId:
-            biometrySmallButton.setImage(Assets.image(named: "smallFaceId"), for: .normal)
+            changeLoginTypeButton.setImage(Assets.image(named: "smallFaceId"), for: .normal)
+            biometryBigImage.image = Assets.image(named: "icnFaceIdLogin")
             biometrySmallLabel.text = localized("loginTouchId_alert_title_faceId")
+            biometryBigLabel.text = localized("pl_login_text_loginWithFaceID")
         case .error(_,_), .none:
-            biometrySmallButton.isHidden = true
+            changeLoginTypeButton.isHidden = true
             biometrySmallLabel.isHidden = true
             break
         }
     }
     
-    func showBiometryAlert() {
-       // let type = presenter.getBiometryTypeAvailable()
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+    @objc func retryBiometricAuth() {
+        self.presenter.startBiometricAuth()
     }
     
     func configureNumberPadButtons() {
@@ -191,11 +221,24 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
     
     func didTapOnOK() {
         guard let pin = pinTextField.text else { return }
-        presenter.doLogin(with: pin)
+        presenter.doLogin(with: .Pin(value: pin))
     }
 }
 
 extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewControllerProtocol {
+    
+    func tryPinAuth() {
+        self.currentLoginType = .PIN
+        self.configureViewForLoginType()
+    }
+    
+    func setUserName(_ name: String) {
+        let key = name != "" ? "onboarding_title_hello" : "pg_title_welcome"
+        let stringLoader = dependenciesResolver.resolve(forOptionalType: StringLoader.self)
+        guard let titleText: LocalizedStylableText = stringLoader?.getString(key, [StringPlaceholder(.name, name)]) else { return }
+        let textConfig = LocalizedStylableTextConfiguration(lineHeightMultiple: 0.70)
+        titleLabel.configureText(withLocalizedString: titleText, andConfiguration: textConfig)
+    }
     
     func showAccountPermanentlyBlockedDialog() {
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")

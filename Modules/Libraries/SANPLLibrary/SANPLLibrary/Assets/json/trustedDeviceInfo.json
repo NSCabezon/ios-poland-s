@@ -1,0 +1,22 @@
+{
+    "12345678Z": {
+        "0": {
+            "trustedDevice": {
+                "id": 4673532,
+                "name": "iPhone6,2",
+                "state": "AUTHORISED",
+                "certificateTime": "2021-04-29T09:26:28.000",
+                "platform": {
+                    "name": "IOS",
+                    "osVersion": "12.4.8"}
+                },
+            "applicationLanguage": "pl",
+            "timestamp": 640916189,
+            "softwareTokenHeaders": [{
+                "name": "06783937046561403484",
+                "state": "ACTIVE",
+                "awaitingSoftwareTokenConfirmation": false,
+                "type": "PIN"}]
+        }
+    }
+}

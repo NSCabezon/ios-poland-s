@@ -10,6 +10,7 @@ protocol AccountDataSourceProtocol {
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError>
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
     func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError>
+    func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
 }
 
@@ -25,6 +26,7 @@ final class AccountDataSource {
         case swiftBranches = "/swiftbranches"
         case cardwithholdings = "/history/cardwithholdings"
         case transactions = "/history/search"
+        case accountForDebit = "/accounts/for-debit/"
     }
 
     private let networkProvider: NetworkProvider
@@ -103,6 +105,20 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                 localServiceName: .cardWithHoldings)
         )
         return result
+    }
+    
+    func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let serviceName = AccountServiceType.accountForDebit.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        return networkProvider.request(
+            GetAccountsForDebitRequest(serviceName: serviceName,
+                                       serviceUrl: absoluteUrl
+            )
+        )
     }
 
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {

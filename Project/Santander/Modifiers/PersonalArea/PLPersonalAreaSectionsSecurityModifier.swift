@@ -39,4 +39,7 @@ extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityMo
     var isESignatureFunctionalityEnabled: Bool {
         return false
     }
+    var isBiometryFunctionalityEnabled: Bool {
+        return false
+    }
 }

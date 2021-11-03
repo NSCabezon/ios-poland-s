@@ -17,11 +17,11 @@ extension SecKey {
     }
 
     static func secKey(with base64: String, isPrivate: Bool) -> SecKey? {
-        guard let keyData = Data(base64Encoded: base64) else { return nil }
+        guard let keyData = Data(base64Encoded: base64),
         let key = SecKeyCreateWithData(keyData as NSData, [
             kSecAttrKeyType: kSecAttrKeyTypeRSA,
             kSecAttrKeyClass: isPrivate ? kSecAttrKeyClassPrivate : kSecAttrKeyClassPublic,
-        ] as NSDictionary, nil)!
+        ] as NSDictionary, nil) else { return nil }
         print(key)
         return key
     }

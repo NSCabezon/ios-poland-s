@@ -7,6 +7,9 @@
 
 import Foundation
 
+// *** NOTE: All changes except for addOauthAuthorization was copied from lates Spain repo ***
+// *** In case of future merge with their repo, all their chances should be taken ***
+
 public final class URLSessionNetworkProvider {
     private let dataProvider: BSANDataProvider
     private let urlSession: URLSession
@@ -58,6 +61,8 @@ private extension URLSessionNetworkProvider {
         urlRequest.addValue("application/\(request.contentType.rawValue)", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Santander PL ONE App", forHTTPHeaderField: "User-Agent")
         switch request.authorization {
+        case .trustedDeviceOnly:
+            self.addTrustedDeviceHeadersIfExist(&urlRequest)
         case .oauth:
             try self.addOauthAuthorization(&urlRequest)
             self.addTrustedDeviceHeadersIfExist(&urlRequest)
@@ -76,9 +81,9 @@ private extension URLSessionNetworkProvider {
 
     func addTrustedDeviceHeadersIfExist(_ urlRequest: inout URLRequest) {
         guard let trustedDeviceHeaders = self.dataProvider.getTrustedDeviceHeaders() else { return }
-        urlRequest.addValue(" \(trustedDeviceHeaders.parameters)", forHTTPHeaderField: "X-Trusted-Device-Parameters")
-        urlRequest.addValue(" \(trustedDeviceHeaders.time)", forHTTPHeaderField: "X-Trusted-Device-Time")
-        urlRequest.addValue(" \(trustedDeviceHeaders.appId)", forHTTPHeaderField: "X-Trusted-Device-App-Id")
+        urlRequest.addValue("\(trustedDeviceHeaders.parameters)", forHTTPHeaderField: "X-Trusted-Device-Parameters")
+        urlRequest.addValue("\(trustedDeviceHeaders.time)", forHTTPHeaderField: "X-Trusted-Device-Time")
+        urlRequest.addValue("\(trustedDeviceHeaders.appId)", forHTTPHeaderField: "X-Trusted-Device-App-Id")
     }
     
     func executeUrlRequest(_ urlRequest: URLRequest) -> Result<Data, NetworkProviderError> {

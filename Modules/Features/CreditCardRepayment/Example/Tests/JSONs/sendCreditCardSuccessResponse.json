@@ -1,0 +1,19 @@
+{
+    "title": "Some test title",
+    "type": "OWN_TRANSACTION",
+    "state": "ACCEPTED",
+    "debitAmountData": {
+        "currency": "PLN",
+        "amount": 1234
+    },
+    "debitAccountData": {
+        "accountType": 1,
+        "accountSequenceNumber": 101,
+        "accountNo": "45109014894000000121577326"
+    },
+    "creditAccountData": {
+        "accountType": 1,
+        "accountSequenceNumber": 101,
+        "accountNo": "63109014894000000121600961"
+    }
+}

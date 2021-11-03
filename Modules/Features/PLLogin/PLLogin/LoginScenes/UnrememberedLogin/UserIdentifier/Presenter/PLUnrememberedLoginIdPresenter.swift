@@ -65,6 +65,7 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
     }
     
     func viewDidLoad() {
+        self.trackScreen()
         self.loadData()
     }
     
@@ -73,6 +74,7 @@ extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol
     }
     
     func login(identification: String) {
+        trackEvent(.clickInitSession)
         self.publicFilesManager.cancelPublicFilesLoad(withStrategy: .initialLoad)
         self.doLogin(with: .notPersisted(info: LoginTypeInfo(identification: identification)))
     }
@@ -115,14 +117,17 @@ private extension  PLUnrememberedLoginIdPresenter {
             
             switch type {
             case .notPersisted(let info):
-                self?.loginProcessUseCase.executeNonPersistedLogin(type: type,
-                                                                   identification: info.identification) { [weak self] config in
+                self?.loginProcessUseCase.executeNonPersistedLogin(identification: info.identification) { [weak self] config in
                     guard let config = config else {
-                        self?.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField)))
+                        let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField))
+                        self?.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localized("login_popupError_validateData")])
+                        self?.handleError(error)
                         return
                     }
                     self?.loginSuccess(configuration: config)
                 } onFailure: { [weak self]  error in
+                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
             default:
@@ -159,12 +164,14 @@ private extension  PLUnrememberedLoginIdPresenter {
         self.view?.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
             if configuration.isFinal() {
+                self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localized("pl_login_alert_attemptLast")])
                 self.view?.showInvalidSCADialog {
                     self.goToPasswordScene(configuration)
                 }
             } else if self.allowLoginBlockedUsers {
                 self.goToPasswordScene(configuration)
             } else if configuration.isBlocked() && time > now {
+                self.trackEvent(.userTemporarilyBlocked)
                 self.view?.showAccountTemporaryBlockedDialog(configuration)
             } else {
                 self.goToPasswordScene(configuration)
@@ -194,6 +201,7 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterErrorHandlerProtocol {
         case .other(let description):
             switch description {
             case "TEMPORARY_LOCKED":
+                self.trackEvent(.userPermanentlyBlocked)
                 self.view?.dismissLoading(completion: { [weak self] in
                     self?.view?.showAccountPermanentlyBlockedDialog()
                 })
@@ -207,5 +215,15 @@ extension PLUnrememberedLoginIdPresenter: PLLoginPresenterErrorHandlerProtocol {
         self.associatedErrorView?.presentError(error, completion: { [weak self] in
             self?.genericErrorPresentedWith(error: error)
         })
+    }
+}
+
+extension PLUnrememberedLoginIdPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLUnrememberedLoginPage {
+        return PLUnrememberedLoginPage()
     }
 }

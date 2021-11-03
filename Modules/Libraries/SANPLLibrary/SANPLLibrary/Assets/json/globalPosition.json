@@ -268,7 +268,7 @@
                     "virtualPan": "438371I013523051",
                     "generalStatus": "ACTIVE",
                     "cardStatus": "00",
-                    "role": "NOT_OWNER",
+                    "role": "OWNER",
                     "type": "DEBIT",
                     "productCode": "HCEV",
                     "name": {

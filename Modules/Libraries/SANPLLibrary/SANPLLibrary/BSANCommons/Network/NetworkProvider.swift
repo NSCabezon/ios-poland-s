@@ -38,6 +38,7 @@ struct NetworkProviderRequestBodyEmpty: Encodable {}
 
 public enum NetworkProviderRequestAuthorization {
     case oauth
+    case trustedDeviceOnly
 }
 
 public enum NetworkProviderBodyEncoding {

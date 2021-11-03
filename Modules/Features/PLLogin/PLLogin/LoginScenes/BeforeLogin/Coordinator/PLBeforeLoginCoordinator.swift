@@ -11,7 +11,7 @@ import Commons
 
 protocol PLBeforeLoginCoordinatorProtocol {
     func loadUnrememberedLogin()
-    func loadRememberedLogin()
+    func loadRememberedLogin(configuration: RememberedLoginConfiguration)
 }
 
 final class PLBeforeLoginCoordinator: ModuleCoordinator {
@@ -51,6 +51,10 @@ private extension PLBeforeLoginCoordinator {
             return PLBeforeLoginUseCase(dependenciesResolver: resolver)
         }
         
+        self.dependenciesEngine.register(for: PLGetUserPreferencesUseCase.self) { resolver in
+            return PLGetUserPreferencesUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PLValidateVersionUseCase.self) { resolver in
             return PLValidateVersionUseCase(dependenciesResolver: resolver)
         }
@@ -74,8 +78,8 @@ extension PLBeforeLoginCoordinator : PLBeforeLoginCoordinatorProtocol {
         loginModuleCoordinator.loadUnrememberedLogin()
     }
     
-    func loadRememberedLogin() {
+    func loadRememberedLogin(configuration: RememberedLoginConfiguration) {
         let loginModuleCoordinator = self.dependenciesEngine.resolve(for: PLLoginModuleCoordinatorProtocol.self)
-        loginModuleCoordinator.loadRememberedLogin()
+        loginModuleCoordinator.loadRememberedLogin(configuration: configuration)
     }
 }

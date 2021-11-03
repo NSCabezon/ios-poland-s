@@ -1,0 +1,219 @@
+{
+    "check-interval": "2",
+    "messages": {
+        "en": "The service âOnline advisorâ is available only in Polish",
+        "uk": "ĐĐžŃĐťŃĐłĐ° âĐĐ˝ĐťĐ°ĐšĐ˝ ĐşĐžĐ˝ŃŃĐťŃŃĐ°Đ˝Ńâ Đ´ĐžŃŃŃĐżĐ˝Đ° ŃŃĐťŃĐşĐ¸ ĐżĐžĐťŃŃĐşĐžŃ ĐźĐžĐ˛ĐžŃ",
+        "ru": "ĐŁŃĐťŃĐłĐ° âĐĐ˝ĐťĐ°ĐšĐ˝ ĐşĐžĐ˝ŃŃĐťŃŃĐ°Đ˝Ńâ Đ´ĐžŃŃŃĐżĐ˝Đ° ŃĐžĐťŃĐşĐž Đ˝Đ° ĐżĐžĐťŃŃĐşĐžĐź ŃĐˇŃĐşĐľ"
+    },
+    "services-base-address": "https://doradca2.centrum24.pl/doradca-online/proxyserver/",
+    "icon-base-address": "https://micrositeoneapp2.santanderbankpolska.pl/oneapp/online-advisor/",
+    "channels": [
+        {
+            "profiles": [
+                "klient_indywidualny",
+                "klient_niezalogowany"
+            ],
+            "channel-name": "Wideo rozmowa przez aplikacjÄ",
+            "medium-type": "V",
+         "ico": "OnlineAdvisorVideoIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "produktymobile",
+                    "subject-id": "produkt",
+                    "required-logging-in": "true",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktĂłw",
+                    "entry-type": "zakupymobile",
+                    "subject-id": "zakup",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "bzwbk24mobile",
+                    "subject-id": "internet",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_indywidualny"
+            ],
+            "channel-name": "Czat tekstowy przez aplikacjÄ",
+            "medium-type": "C",
+            "ico": "OnlineAdvisorChatIco.png",
+         "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "produktymobile",
+                    "subject-id": "produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktĂłw",
+                    "entry-type": "zakupymobile",
+                    "subject-id": "zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "bzwbk24mobile",
+                    "subject-id": "internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_indywidualny",
+                "klient_niezalogowany"
+            ],
+            "channel-name": "Audio rozmowa przez aplikacjÄ",
+            "medium-type": "A",
+         "ico": "OnlineAdvisorAudioIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "produktymobile",
+                    "subject-id": "produkt",
+                    "required-logging-in": "true",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktĂłw",
+                    "entry-type": "zakupymobile",
+                    "subject-id": "zakup",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "bzwbk24mobile",
+                    "subject-id": "internet",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_firmowy"
+            ],
+            "channel-name": "Wideo rozmowa przez aplikacjÄ",
+            "medium-type": "V",
+         "ico": "OnlineAdvisorVideoIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktĂłw",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_firmowy"
+            ],
+            "channel-name": "Czat tekstowy przez aplikacjÄ",
+            "medium-type": "C",
+         "ico": "OnlineAdvisorChatIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktĂłw",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_firmowy"
+            ],
+            "channel-name": "Audio rozmowa przez aplikacjÄ",
+            "medium-type": "A",
+         "ico": "OnlineAdvisorAudioIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktĂłw",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_indywidualny",
+                "klient_niezalogowany",
+                "klient_firmowy"
+            ],
+            "channel-name": "ObsĹuga w jÄzyku migowym",
+            "medium-type": "V",
+         "ico": "OnlineAdvisorHelpDisabilityIco.png",
+            "subjects": [
+                {
+                    "name": "",
+                    "entry-type": "pjmmobile",
+                    "subject-id": "pjm",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorHelpDisabilityIco.png"
+                }
+            ]
+        }
+    ],
+    "order-product-online-advisor": {
+        "individual": {
+            "entry-type": "weryfikacja",
+            "subject-id": "konto_wideo",
+            "medium-type": "V"
+        },
+        "corporate": {
+            "entry-type": "weryfikacja_SME",
+            "subject-id": "konto_wideo_SME",
+            "medium-type": "V"
+        }
+    }
+}

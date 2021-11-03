@@ -15,8 +15,8 @@ import Models
 final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    var isChangeAliasEnabled: Bool = false
     var isCardHolderEnabled: Bool = true
-    var cardDetailElements: [CardDetailDataType] = [.pan, .alias, .holder, .linkedAccount, .paymentModality, .status, .currency, .creditCardAccountNumber, .insurance]
     var prepaidCardHeaderElements: [PrepaidCardHeaderElements] = [.availableBalance]
     var debitCardHeaderElements: [DebitCardHeaderElements] = []
     var creditCardHeaderElements: [CreditCardHeaderElements] = [.limitCredit, .availableCredit, .withdrawnCredit]
@@ -27,27 +27,7 @@ final class PLCardDetailModifier: CardDetailModifierProtocol {
     }
 
     func formatLinkedAccount(_ linkedAccount: String?) -> String? {
-        guard let linkedAccount = linkedAccount else {
-            return nil
-        }
-        let linkedAccountReplacing = linkedAccount.replacingOccurrences(of: " ", with: "")
-        let index1 = linkedAccountReplacing.index(linkedAccountReplacing.startIndex, offsetBy: 2)
-        let index2 = linkedAccountReplacing.index(linkedAccountReplacing.endIndex, offsetBy: -1)
-        var formattedLinkedAccount = ""
-        formattedLinkedAccount += "\(linkedAccountReplacing[..<index1]) "
-
-        let linkedAccountTrimmed = linkedAccountReplacing[index1...index2]
-        let numberOfGroups: Int = linkedAccountTrimmed.count / 4
-
-        for iterator in 0..<numberOfGroups {
-            let firstIndex = linkedAccountTrimmed.index(linkedAccountTrimmed.startIndex, offsetBy: 4*iterator)
-            let secondIndex = linkedAccountTrimmed.index(linkedAccountTrimmed.startIndex, offsetBy: 4*(iterator+1) - 1)
-            formattedLinkedAccount += "\(linkedAccountTrimmed[firstIndex...secondIndex]) "
-        }
-        if linkedAccountTrimmed.count > 4*numberOfGroups {
-            formattedLinkedAccount += "\(linkedAccountTrimmed.suffix(linkedAccountTrimmed.count - 4*numberOfGroups))"
-        }
-        return formattedLinkedAccount
+        return self.dependenciesEngine.resolve(for: AccountNumberFormatterProtocol.self).accountNumberFormat(linkedAccount)
     }
 
     func showCardPAN(card: CardEntity) {
@@ -61,5 +41,16 @@ final class PLCardDetailModifier: CardDetailModifierProtocol {
 
     func getCardPAN(cardId: String) -> String? {
         return managersProvider.getCardsManager().loadCardPAN(cardId: cardId)
+    }
+
+    func getCardDetailElements(for card: CardEntity) -> [CardDetailDataType] {
+        switch card.cardType {
+        case .debit:
+            return [.pan, .alias, .holder, .linkedAccount, .status, .currency, .insurance]
+        case .credit:
+            return [.pan, .alias, .status, .holder, .currency, .creditCardAccountNumber, .interestRate, .withholdings, .previousPeriodInterest, .minimumOutstandingDue, .currentMinimumDue, .totalMinimumRepaymentAmount, .lastStatementDate, .nextStatementDate, .actualPaymentDate]
+        case .prepaid:
+            return [.pan, .alias, .holder, .linkedAccount, .paymentModality, .status, .currency, .creditCardAccountNumber, .insurance]
+        }
     }
 }

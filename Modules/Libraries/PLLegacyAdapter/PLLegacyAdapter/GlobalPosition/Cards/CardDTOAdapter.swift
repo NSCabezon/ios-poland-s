@@ -14,9 +14,14 @@ final class CardDTOAdapter {
         var cardDTO = SANLegacyLibrary.CardDTO()
         cardDTO.PAN = plCard.maskedPan
         cardDTO.alias = plCard.name?.userDefined
-        cardDTO.ownershipTypeDesc = OwnershipTypeDesc(plCard.role ?? "")
-        cardDTO.ownershipType = OwnershipType.holder.type
+        cardDTO.ownershipType = plCard.role
+        if plCard.role == CardRole.owner.rawValue {
+            cardDTO.ownershipTypeDesc = .holder
+        } else {
+            cardDTO.ownershipTypeDesc = .none
+        }
         cardDTO.allowsDirectMoney = plCard.type?.lowercased() == "credit"
+        cardDTO.statusDescription = plCard.generalStatus
         switch plCard.generalStatus?.lowercased() {
         case "active":
             cardDTO.cardContractStatusType = .active

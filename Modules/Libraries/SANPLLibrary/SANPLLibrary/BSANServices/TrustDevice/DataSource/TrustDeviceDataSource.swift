@@ -15,6 +15,9 @@ protocol TrustDeviceDataSourceProtocol {
     func doRegisterConfirmationCode(_ parameters: RegisterConfirmationCodeParameters) throws -> Result<Void, NetworkProviderError>
     func getDevices() throws -> Result<DevicesDTO, NetworkProviderError>
     func doRegisterConfirm(_ parameters: RegisterConfirmParameters) throws -> Result<ConfirmRegistrationDTO, NetworkProviderError>
+    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError>
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func getTrustedDeviceInfo(_ parameters: TrustedDeviceInfoParameters) throws -> Result<TrustedDeviceInfoDTO, NetworkProviderError>
 }
 
 private extension TrustDeviceDataSource {
@@ -37,11 +40,30 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         case registerConfirmationCode = "/registration/send-confirmation-code"
         case registerConfirm = "/registration/confirm"
         case beforeLogin = "/trusted-devices/before-login"
+        case pendingChallenge = "/mobile-authorization/pending-challenge/before-login"
+        case confirmChallenge = "/mobile-authorization/confirm/before-login"
+        case info = "/trusted-devices/info"
     }
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
         self.dataProvider = dataProvider
+    }
+    
+    func getTrustedDeviceInfo(_ parameters: TrustedDeviceInfoParameters) throws -> Result<TrustedDeviceInfoDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName =  TrustDeviceServiceType.info.rawValue + "/" + parameters.trustedDeviceAppId
+        let networkRequest = TrustedDeviceInfoRequest(serviceName: serviceName,
+                                                      serviceUrl: absoluteUrl,
+                                                      method: .get,
+                                                      headers: self.headers,
+                                                      localServiceName: .trustedDeviceInfo,
+                                                      authorization: .oauth)
+        let result: Result<TrustedDeviceInfoDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
+        return result
     }
     
     func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError> {
@@ -61,6 +83,42 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         let result: Result<BeforeLoginDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
         return result
     }
+    
+    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError> {
+        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName = TrustDeviceServiceType.pendingChallenge.rawValue
+        let result: Result<PendingChallengeDTO, NetworkProviderError> = self.networkProvider.request(PendingChallengeRequest(serviceName: serviceName,
+                                                                                                             serviceUrl: absoluteUrl,
+                                                                                                             method: .post,
+                                                                                                             body: body,
+                                                                                                             jsonBody: parameters,
+                                                                                                             headers: self.headers,
+                                                                                                             localServiceName: .pendingChallenge,
+                                                                                                             authorization: .trustedDeviceOnly))
+        return result
+    }
+    
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName = TrustDeviceServiceType.confirmChallenge.rawValue
+        let result: Result<NetworkProviderResponseWithStatus, NetworkProviderError> = self.networkProvider.requestDataWithStatus(ConfirmChallengeRequest(serviceName: serviceName,
+                                                                                                                                                         serviceUrl: absoluteUrl,
+                                                                                                                                                         method: .post,
+                                                                                                                                                         body: body,
+                                                                                                                                                         jsonBody: parameters,
+                                                                                                                                                         headers: self.headers,
+                                                                                                                                                         localServiceName: .confirmChallenge,
+                                                                                                                                                         authorization: .trustedDeviceOnly))
+        return result
+    }
 
     func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError> {
         guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
@@ -70,13 +128,13 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
         let absoluteUrl = baseUrl + self.basePath
         let serviceName =  TrustDeviceServiceType.registerDevice.rawValue
         let result: Result<RegisterDeviceDTO, NetworkProviderError> = self.networkProvider.request(RegisterDeviceRequest(serviceName: serviceName,
-                                                                                                       serviceUrl: absoluteUrl,
-                                                                                                       method: .post,
-                                                                                                       body: body,
-                                                                                                       jsonBody: parameters,
-                                                                                                       headers: self.headers,
-                                                                                                       localServiceName: .registerDeviceTrustDevice,
-                                                                                                       authorization: .oauth))
+                                                                                                                         serviceUrl: absoluteUrl,
+                                                                                                                         method: .post,
+                                                                                                                         body: body,
+                                                                                                                         jsonBody: parameters,
+                                                                                                                         headers: self.headers,
+                                                                                                                         localServiceName: .registerDeviceTrustDevice,
+                                                                                                                         authorization: .oauth))
 
         return result
     }
@@ -167,6 +225,36 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
 }
 
 private struct BeforeLoginRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding? = nil
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
+    }
+}
+
+private struct TrustedDeviceInfoRequest: NetworkProviderRequest {
     let serviceName: String
     let serviceUrl: String
     let method: NetworkProviderMethod
@@ -387,5 +475,77 @@ private struct ConfirmRegistrationRequest: NetworkProviderRequest {
         self.localServiceName = localServiceName
         self.authorization = authorization
         self.jsonBody = jsonBody
+    }
+}
+
+private struct PendingChallengeRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: PendingChallengeParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: PendingChallengeParameters? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .body,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.jsonBody = jsonBody
+        self.bodyEncoding = bodyEncoding
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
+    }
+}
+
+private struct ConfirmChallengeRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: ConfirmChallengeParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization?
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: ConfirmChallengeParameters? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .body,
+         headers: [String: String]?,
+         contentType: NetworkProviderContentType = .json,
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = nil) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.jsonBody = jsonBody
+        self.bodyEncoding = bodyEncoding
+        self.headers = headers
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+        self.authorization = authorization
     }
 }

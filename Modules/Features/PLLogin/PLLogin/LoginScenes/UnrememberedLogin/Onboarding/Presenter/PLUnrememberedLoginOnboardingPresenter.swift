@@ -8,9 +8,11 @@
 import Foundation
 import Commons
 import LoginCommon
+import PLCommons
 
 protocol PLUnrememberedLoginOnboardingPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLUnrememberedLoginOnboardingProtocol? { get set }
+    func viewDidLoad()
     func didSelectLogin()
     func didSelectCreateAccount()
 }
@@ -35,16 +37,32 @@ private extension PLUnrememberedLoginOnboardingPresenter {
 }
 
 extension PLUnrememberedLoginOnboardingPresenter: PLUnrememberedLoginOnboardingPresenterProtocol {
-    
+
+    func viewDidLoad() {
+        self.trackScreen()
+    }
+
     func didSelectMenu() {
         coordinatorDelegate.didSelectMenu()
     }
     
     func didSelectLogin() {
+        self.trackEvent(.clickActivateApp)
         coordinator.didSelectLogin()
     }
     
     func didSelectCreateAccount() {
+        self.trackEvent(.clickOpenAccount)
         coordinator.didSelectCreateAccount()
+    }
+}
+
+extension PLUnrememberedLoginOnboardingPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLUnrememberedLoginOnboardingPage {
+        return PLUnrememberedLoginOnboardingPage()
     }
 }

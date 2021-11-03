@@ -4,22 +4,32 @@
 
 import Foundation
 
+/// Note: Please add also extension method (at the bottom) that returns fatal error when adding new Manager
 public protocol PLManagersProviderProtocol {
     func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol
     func getLoginManager() -> PLLoginManagerProtocol
+    func getBLIKManager() -> PLBLIKManagerProtocol
+    func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol
+    func getHelpCenterManager() -> PLHelpCenterManagerProtocol
     func getTrustedDeviceManager() -> PLTrustedDeviceManager
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
     func getAccountsManager() -> PLAccountManagerProtocol
     func getCardsManager() -> PLCardsManagerProtocol
+    func getLoansManager() -> PLLoanManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
     func getNotificationManager() -> PLNotificationManagerProtocol
+    func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol
     func getTransferManager() -> PLTransfersManagerProtocol
+    func getCardOperativesManager() -> PLCardOperativesManagerProtocol
 }
 
 public final class PLManagersProvider {
     private let environmentsManager: PLEnvironmentsManager
     private let loginManager: PLLoginManager
+    private let blikManager: PLBLIKManagerProtocol
+    private let creditCardRepaymentManager: PLCreditCardRepaymentManagerProtocol
+    private let helpCenterManager: PLHelpCenterManagerProtocol
     private let trustedDeviceManager: PLTrustedDeviceManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
     private let accountManager: PLAccountManager
@@ -28,7 +38,9 @@ public final class PLManagersProvider {
     private let loansManager: PLLoanManager
     private let customerManager: PLCustomerManager
     private let notificationManager: PLNotificationManager
-    private let transferManger: PLTransfersManager
+    private let transferManager: PLTransfersManager
+    private let cardOperativesManager: PLCardOperativesManager
+    private let loanScheduleManager: PLLoanScheduleManager
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -38,6 +50,9 @@ public final class PLManagersProvider {
         self.loginManager = PLLoginManager(bsanDataProvider: bsanDataProvider,
                                            networkProvider: networkProvider,
                                            demoInterpreter: demoInterpreter)
+        self.blikManager = PLBLIKManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.creditCardRepaymentManager = PLCreditCardRepaymentManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.helpCenterManager = PLHelpCenterManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.trustedDeviceManager = PLTrustedDeviceManager(bsanDataProvider: bsanDataProvider,
                                                            networkProvider: networkProvider,
                                                            demoInterpreter: demoInterpreter)
@@ -51,7 +66,9 @@ public final class PLManagersProvider {
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.customerManager = PLCustomerManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.notificationManager = PLNotificationManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
-        self.transferManger = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.transferManager = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.cardOperativesManager = PLCardOperativesManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
     }
 }
 
@@ -65,6 +82,18 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getLoginManager() -> PLLoginManagerProtocol {
         return self.loginManager
+    }
+
+    public func getBLIKManager() -> PLBLIKManagerProtocol {
+        return self.blikManager
+    }
+
+    public func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol {
+        return self.creditCardRepaymentManager
+    }
+    
+    public func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
+        return self.helpCenterManager
     }
 
     public func getTrustedDeviceManager() -> PLTrustedDeviceManager {
@@ -99,7 +128,82 @@ extension PLManagersProvider: PLManagersProviderProtocol {
         self.notificationManager
     }
     
+    public func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol {
+        self.loanScheduleManager
+    }
+    
     public func getTransferManager() -> PLTransfersManagerProtocol {
-        self.transferManger
+        self.transferManager
+    }
+
+    public func getCardOperativesManager() -> PLCardOperativesManagerProtocol {
+        self.cardOperativesManager
+    }
+}
+
+public extension PLManagersProviderProtocol {
+
+    func getEnvironmentsManager() -> PLEnvironmentsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getLoginManager() -> PLLoginManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getBLIKManager() -> PLBLIKManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getTrustedDeviceManager() -> PLTrustedDeviceManager {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getAccountsManager() -> PLAccountManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getCardsManager() -> PLCardsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getLoansManager() -> PLLoanManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getCustomerManager() -> PLCustomerManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+
+    func getNotificationManager() -> PLNotificationManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getTransferManager() -> PLTransfersManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getCardOperativesManager() -> PLCardOperativesManagerProtocol {
+        fatalError("Missing manager implementation")
     }
 }

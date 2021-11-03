@@ -14,12 +14,14 @@ final class PLCardsManagerAdapter {
     private let bsanDataProvider: BSANDataProvider
     private let globalPositionManager: PLGlobalPositionManagerProtocol
     private let cardTransactionsManager: PLCardTransactionsManagerProtocol
+    private let cardOperativesManager: PLCardOperativesManagerProtocol
 
-    public init(cardsManager: PLCardsManagerProtocol, bsanDataProvider: BSANDataProvider, globalPositionManager: PLGlobalPositionManagerProtocol, cardTransactionsManager: PLCardTransactionsManagerProtocol) {
+    public init(cardsManager: PLCardsManagerProtocol, bsanDataProvider: BSANDataProvider, globalPositionManager: PLGlobalPositionManagerProtocol, cardTransactionsManager: PLCardTransactionsManagerProtocol, cardOperativesManager: PLCardOperativesManagerProtocol) {
         self.cardsManager = cardsManager
         self.bsanDataProvider = bsanDataProvider
         self.globalPositionManager = globalPositionManager
         self.cardTransactionsManager = cardTransactionsManager
+        self.cardOperativesManager = cardOperativesManager
     }
 }
 
@@ -206,6 +208,29 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func blockCard(cardDTO: SANLegacyLibrary.CardDTO, blockText: String, cardBlockType: CardBlockType) throws -> BSANResponse<BlockCardDTO> {
+        return BSANErrorResponse(nil)
+    }
+
+    func onOffCard(cardDTO: SANLegacyLibrary.CardDTO, option: CardBlockType) throws -> BSANResponse<Void> {
+        guard let cards = self.bsanDataProvider.getGlobalPosition()?.cards,
+              let card = cards.first(where: { $0.virtualPan == cardDTO.contract?.contractNumber }),
+              let cardId = card.virtualPan else {
+            return BSANErrorResponse(nil)
+        }
+
+        switch option {
+        case .turnOn:
+            if case .success = try cardOperativesManager.unblockCard(cardId: cardId) {
+                return BSANOkResponse(nil)
+            }
+        case .turnOff:
+            if case .success = try cardOperativesManager.blockCard(cardId: cardId) {
+                return BSANOkResponse(nil)
+            }
+        default:
+            return BSANErrorResponse(nil)
+        }
+
         return BSANErrorResponse(nil)
     }
     

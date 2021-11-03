@@ -48,7 +48,7 @@ private extension PLSoftwareTokenParametersEncryptionUseCase {
 
         os_log("✅ [TRUSTED DEVICE][Software Token] Parameters to encrypt: %@", log: .default, type: .info, parameters)
         os_log("✅ [TRUSTED DEVICE][Software Token] Parameters partially hashed: %@", log: .default, type: .info, Data(bytesToEncrypt).base64EncodedString())
-        os_log("✅ [TRUSTED DEVICE][Software Token] Parameters signed with private key: %@", log: .default, type: .info, signedData.toBase64())
+        os_log("✅ [TRUSTED DEVICE][Software Token] Parameters signed with private key: %@", log: .default, type: .info, Data(signedData).base64EncodedString())
 
         return Data(signedData).base64EncodedString()
     }

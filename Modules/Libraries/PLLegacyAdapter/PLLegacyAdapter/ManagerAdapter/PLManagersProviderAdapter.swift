@@ -102,9 +102,9 @@ public final class PLManagersProviderAdapter {
         self.demoInterpreter = demoInterpreter
         self.portfoliosPBManagerAdapter = PLPortfoliosPBManagerAdapter()
         self.globalPositionManagerAdapter = PLGlobalPositionManagerAdapter(globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), bsanDataProvider: bsanDataProvider, customerManager: self.plManagersProvider.getCustomerManager())
-        self.transfersManager = PLTransfersManagerAdapter()
+        self.transfersManager = PLTransfersManagerAdapter(transferManager: self.plManagersProvider.getTransferManager())
         self.accountsManager = PLAccountsManagerAdapter(accountManager: self.plManagersProvider.getAccountsManager(), bsanDataProvider: bsanDataProvider)
-        self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager(), bsanDataProvider: bsanDataProvider, globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), cardTransactionsManager: self.plManagersProvider.getCardTransactionsManager())
+        self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager(), bsanDataProvider: bsanDataProvider, globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), cardTransactionsManager: self.plManagersProvider.getCardTransactionsManager(), cardOperativesManager: self.plManagersProvider.getCardOperativesManager())
         self.signatureAdapter = PLSignatureAdapter()
         self.depositsManagerApadater = PLDepositsManagerAdapter()
         self.loansManager = PLLoansManagerAdapter(loanManager: self.plManagersProvider.getLoansManager(), bsanDataProvider: bsanDataProvider)

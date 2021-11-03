@@ -15,6 +15,9 @@ public protocol PLTrustedDeviceManagerProtocol {
     func doRegisterConfirmationCode(_ parameters: RegisterConfirmationCodeParameters) throws -> Result<Void, NetworkProviderError>
     func getDevices() throws -> Result<DevicesDTO, NetworkProviderError>
     func doConfirmRegistration(_ parameters: RegisterConfirmParameters) throws -> Result<ConfirmRegistrationDTO, NetworkProviderError>
+    func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError>
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func getTrustedDeviceInfo(_ parameters: TrustedDeviceInfoParameters) throws -> Result<TrustedDeviceInfoDTO, NetworkProviderError>
 }
 
 public final class PLTrustedDeviceManager {
@@ -32,38 +35,45 @@ public final class PLTrustedDeviceManager {
 
 extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
     
-    public func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError> {
-        let result = try trustedDeviceDataSource.doBeforeLogin(parameters)
-        return result
+    public func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError> {
+        return try trustedDeviceDataSource.getPendingChallenge(parameters)
     }
+    
+    public func doConfirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        return try trustedDeviceDataSource.doConfirmChallenge(parameters)
+    }
+    
+    public func getTrustedDeviceInfo(_ parameters: TrustedDeviceInfoParameters) throws -> Result<TrustedDeviceInfoDTO, NetworkProviderError> {
+        return try trustedDeviceDataSource.getTrustedDeviceInfo(parameters)
+    }
+    
+    public func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError> {
+        return try trustedDeviceDataSource.doBeforeLogin(parameters)
+    }
+    
     public func doRegisterDevice(_ parameters: RegisterDeviceParameters) throws -> Result<RegisterDeviceDTO, NetworkProviderError> {
         let result = try trustedDeviceDataSource.doRegisterDevice(parameters)
         return result
     }
 
     public func doRegisterSoftwareToken(_ parameters: RegisterSoftwareTokenParameters) throws -> Result<RegisterSoftwareTokenDTO, NetworkProviderError> {
-        let result = try trustedDeviceDataSource.doRegisterSoftwareToken(parameters)
-        return result
+        return try trustedDeviceDataSource.doRegisterSoftwareToken(parameters)
     }
     
     public func doRegisterIvr(_ parameters: RegisterIvrParameters) throws -> Result<Data, NetworkProviderError> {
-        let result = try trustedDeviceDataSource.doRegisterIvr(parameters)
-        return result
+        return try trustedDeviceDataSource.doRegisterIvr(parameters)
     }
     
     public func doRegisterConfirmationCode(_ parameters: RegisterConfirmationCodeParameters) throws -> Result<Void, NetworkProviderError> {
-        let result = try trustedDeviceDataSource.doRegisterConfirmationCode(parameters)
-        return result
+        return try trustedDeviceDataSource.doRegisterConfirmationCode(parameters)
     }
     
     public func getDevices() throws -> Result<DevicesDTO, NetworkProviderError> {
-        let result = try trustedDeviceDataSource.getDevices()
-        return result
+        return try trustedDeviceDataSource.getDevices()
     }
 
     public func doConfirmRegistration(_ parameters: RegisterConfirmParameters) throws -> Result<ConfirmRegistrationDTO, NetworkProviderError> {
-        let result = try trustedDeviceDataSource.doRegisterConfirm(parameters)
-        return result
+        return try trustedDeviceDataSource.doRegisterConfirm(parameters)
     }
 
     public func getTrustedDeviceHeaders() -> TrustedDeviceHeaders? {
@@ -76,5 +86,25 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
 
     public func storeTrustedDeviceHeaders(_ headers: TrustedDeviceHeaders) {
         self.bsanDataProvider.storeTrustedDeviceHeaders(headers)
+    }
+    
+    public func storeTrustedDeviceInfo(_ info: TrustedDeviceInfo) {
+        self.bsanDataProvider.storeTrustedDeviceInfo(info)
+    }
+    
+    public func getStoredTrustedDeviceInfo() -> TrustedDeviceInfo? {
+        return self.bsanDataProvider.getTrustedDeviceInfo()
+    }
+
+    public func getEncryptedUserKeys() -> EncryptedUserKeys? {
+        return self.bsanDataProvider.getEncryptedUserKeys()
+    }
+
+    public func deleteEncryptedUserKeys() {
+        return self.bsanDataProvider.deleteEncryptedUserKeys()
+    }
+
+    public func storeEncryptedUserKeys(_ keys: EncryptedUserKeys) {
+        self.bsanDataProvider.storeEncryptedUserKeys(keys)
     }
 }

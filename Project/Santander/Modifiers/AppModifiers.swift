@@ -13,6 +13,7 @@ import GlobalPosition
 import Transfer
 import Cards
 import Account
+import PLCommons
 import Loans
 import PersonalArea
 import SANLegacyLibrary
@@ -65,16 +66,13 @@ final class AppModifiers {
         return GetGPOtherOperativeModifier()
     }()
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
-        return OtherOperativesModifier()
+        return OtherOperativesModifier(dependenciesEngine: dependencieEngine)
     }()
     private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
         return PLCardTransactionsSearchModifier(dependenciesEngine: dependencieEngine)
     }()
     private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
-    }()
-    private lazy var sendMoneyOperativeModifier: SendMoneyOperativeModifierProtocol = {
-        return SendMoneyOperativeModifier(dependenciesEngine: dependencieEngine)
     }()
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.dependencieEngine = dependenciesEngine
@@ -162,8 +160,8 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: GetAccountOtherOperativesActionUseCaseProtocol.self) { resolver in
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
-            return PLAccountHomeActionModifier()
+        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { resolver in
+            return PLAccountHomeActionModifier(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
             return PLAccountTransactionDetailShareableInfo()
@@ -174,11 +172,20 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountsHomePresenterModifier.self) { _ in
             return PLAccountsHomePresenterModifier()
         }
-        self.dependencieEngine.register(for: SendMoneyOperativeModifierProtocol.self) { resolver in
-            return self.sendMoneyOperativeModifier
+        SendMoneyDependencies(dependenciesEngine: dependencieEngine).registerDependencies()
+        self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
+            return PLOpinatorInfoOption()
         }
-        self.dependencieEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
-            return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)
+        self.dependencieEngine.register(for: SendMoneyModifierProtocol.self) { _ in
+            return SendMoneyModifier()
+        }
+        self.dependencieEngine.register(for: GetCardOnOffPredefinedSCAUseCaseProtocol.self) { resolver in
+            PLGetCardOnOffPredefinedSCAUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: ValidateCardOnOffUseCaseProtocol.self) { resolver in
+            PLValidateCardOnOffUseCase(dependenciesResolver: resolver)
         }
     }
 }
+
+

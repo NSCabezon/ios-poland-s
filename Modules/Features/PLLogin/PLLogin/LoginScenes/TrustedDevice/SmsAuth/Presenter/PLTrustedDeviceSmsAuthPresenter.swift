@@ -14,6 +14,7 @@ protocol PLTrustedDeviceSmsAuthPresenterProtocol: MenuTextWrapperProtocol {
     func viewDidLoad()
     func goBack()
     func registerConfirm(smsCode: String)
+    func closeButtonDidPressed()
 }
 
 final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProtocol {
@@ -40,6 +41,10 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     private var registerConfirmUseCase: PLRegisterConfirmUseCase {
         self.dependenciesResolver.resolve(for: PLRegisterConfirmUseCase.self)
     }
+    
+    private var trustedDeviceInfoUseCase: PLTrustedDeviceInfoUseCase {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceInfoUseCase.self)
+    }
 
     private var storeTrustedDeviceHeadersUseCase: PLTrustedDeviceStoreHeadersUseCase {
         self.dependenciesResolver.resolve(for: PLTrustedDeviceStoreHeadersUseCase.self)
@@ -50,6 +55,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     }
     
     func viewDidLoad() {
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceSMSAuthPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDeviceVoiceBotPage().page])
         requestSMSConfirmationCode()
     }
     
@@ -58,13 +64,14 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     }
     
     func registerConfirm(smsCode: String) {
+        self.trackEvent(.clickContinue)
         guard let tokens: [TrustedDeviceSoftwareToken] = self.deviceConfiguration.tokens,
-              let pinToken = tokens.first(where: { $0.type == "PIN" })
+              let pinToken = tokens.first(where: { $0.typeMapped == .PIN })
         else {
             self.handleError(UseCaseError.error(PLUseCaseErrorOutput(errorDescription: "Required parameter not found")))
             return
         }
-        
+                
         self.view?.showLoading(completion: { [weak self] in
             guard let self = self else { return }
             let input = PLRegisterConfirmUseCaseInput(pinSoftwareTokenId: pinToken.id,
@@ -74,8 +81,8 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
 
             Scenario(useCase: self.registerConfirmUseCase, input: input)
                 .execute(on: self.dependenciesResolver.resolve())
-                .onSuccess({ [weak self] output in
-                    guard let self = self else { return }
+                .then(scenario: { [weak self] output -> Scenario<PLTrustedDeviceStoreHeadersInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
+                    guard let self = self else { return nil }
                     let rConfirm = TrustedDeviceConfiguration.RegistrationConfirm(id: output.id,
                                                                             state: output.state,
                                                                             badTriesCount: output.badTriesCount,
@@ -91,13 +98,31 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                                                                             dateOfLastProperUse: output.dateOfLastProperUse,
                                                                             dateOfLastBadUse: output.dateOfLastBadUse)
                     self.deviceConfiguration.registrationConfirm = rConfirm
-                    self.storeTrustedDeviceHeadersPersistenlty()
+                    guard let deviceHeaders = self.deviceConfiguration.deviceHeaders else { return nil }
+                    let input = PLTrustedDeviceStoreHeadersInput(parameters: deviceHeaders.encryptedParameters,
+                                                                 time: deviceHeaders.time,
+                                                                 appId: deviceHeaders.appId)
+                    return Scenario(useCase: self.storeTrustedDeviceHeadersUseCase, input: input)
+                })
+                .then(scenario: { [weak self] output -> Scenario<PLTrustedDeviceInfoInput, PLTrustedDeviceInfoOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+                    guard let self = self else { return nil }
+                    let params = PLTrustedDeviceInfoInput(trustedDeviceAppId: self.deviceConfiguration.deviceData?.appId ?? "")
+                    return Scenario(useCase: self.trustedDeviceInfoUseCase, input: params)
+                })
+                .onSuccess({ [weak self] output in
+                    guard let self = self else { return }
                     self.goToTrustedDeviceSuccess()
                 })
                 .onError { [weak self] error in
+                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
         })
+    }
+
+    func closeButtonDidPressed() {
+        self.trackEvent(.clickCancel)
     }
 
     func storeTrustedDeviceHeadersPersistenlty() {
@@ -133,6 +158,8 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                 //SMS sent
             })
             .onError { [weak self] error in
+                let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
     }
@@ -189,5 +216,15 @@ extension PLTrustedDeviceSmsAuthPresenter: PLLoginPresenterErrorHandlerProtocol 
                 self?.goBack()
             })
         }
+    }
+}
+
+extension PLTrustedDeviceSmsAuthPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLLoginTrustedDeviceSMSAuthPage {
+        return PLLoginTrustedDeviceSMSAuthPage()
     }
 }

@@ -10,26 +10,35 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
     var shortcutsOperativesAvailable: [CardOperativeActionType] = []
 
     public func getCountryCardsOperativeActionType(cards: [CardEntity]) -> [CardOperativeActionType] {
-        self.shortcutsOperativesAvailable = [PLTurnOffOperative().getActionType(),
-                                             PLTurnOnOperative().getActionType(),
-                                             PLRepaymentOperative().getActionType(),
-                                             PLApplePayOperative().getActionType(),
-                                             PLSetUpAlertsOperative().getAtionType(),
-                                             PLPostponeBuyOperative().getAtionType(),
-                                             .changeAlias
-        ]
+        shortcutsOperativesAvailable = []
+        if checkOffCardIsEnabled(cards) {
+            self.shortcutsOperativesAvailable.append(.offCard)
+        }
+        if checkOnCardIsEnabled(cards) {
+            self.shortcutsOperativesAvailable.append(.onCard)
+        }
+        self.shortcutsOperativesAvailable.append(contentsOf:[PLRepaymentOperative().getActionType(),
+                                                             PLApplePayOperative().getActionType(),
+                                                             PLSetUpAlertsOperative().getAtionType(),
+                                                             PLPostponeBuyOperative().getAtionType(),
+                                                             .changeAlias])
         return self.shortcutsOperativesAvailable
     }
 
     public func getAllCardsOperativeActionType() -> [CardOperativeActionType] {
-        return [PLTurnOffOperative().getActionType(),
-                PLTurnOnOperative().getActionType(),
-                PLRepaymentOperative().getActionType(),
-                PLApplePayOperative().getActionType(),
-                PLSetUpAlertsOperative().getAtionType(),
-                PLPostponeBuyOperative().getAtionType(),
-                .changeAlias
-        ]
+        var actionTypes: [CardOperativeActionType] = []
+        if isOtherOperativeEnabled(.offCard) {
+            actionTypes.append(.offCard)
+        }
+        if isOtherOperativeEnabled(.onCard) {
+            actionTypes.append(.onCard)
+        }
+        actionTypes.append(contentsOf: [PLRepaymentOperative().getActionType(),
+                                        PLApplePayOperative().getActionType(),
+                                        PLSetUpAlertsOperative().getAtionType(),
+                                        PLPostponeBuyOperative().getAtionType(),
+                                        .changeAlias])
+        return actionTypes
     }
 
     public func isOtherOperativeEnabled(_ option: CardOperativeActionType) -> Bool {
@@ -40,5 +49,13 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
 private extension GetGPCardOperativeModifier {
     func checkIsEnabled(_ cards: [CardEntity]) -> Bool {
         return cards.filter { !$0.isTemporallyOff && !$0.isInactive && $0.isVisible }.isNotEmpty
+    }
+
+    func checkOffCardIsEnabled(_ cards: [CardEntity]) -> Bool {
+        return cards.filter { $0.isReadyForOff }.isNotEmpty
+    }
+
+    func checkOnCardIsEnabled(_ cards: [CardEntity]) -> Bool {
+        return cards.filter { $0.isReadyForOn }.isNotEmpty
     }
 }

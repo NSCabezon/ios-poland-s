@@ -1,0 +1,963 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		021C1FE826808A35009D96F7 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021C1FE726808A35009D96F7 /* Mocks.swift */; };
+		3016B6502664E6A2007BF532 /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3016B64F2664E6A2007BF532 /* pl.strings */; };
+		30CC5C1626CD2A56004664B8 /* CNContactStoreMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CC5C1526CD2A56004664B8 /* CNContactStoreMock.swift */; };
+		30CC5C1926CD322A004664B8 /* GetContactsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CC5C1826CD322A004664B8 /* GetContactsUseCaseTests.swift */; };
+		30CC5C1B26CD3829004664B8 /* PhoneVerificationUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CC5C1A26CD3829004664B8 /* PhoneVerificationUseCaseTests.swift */; };
+		30CC5C1E26CE20B8004664B8 /* ContactViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CC5C1D26CE20B8004664B8 /* ContactViewMock.swift */; };
+		30CC5C2026CE21B1004664B8 /* ContactsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CC5C1F26CE21B1004664B8 /* ContactsPresenterTests.swift */; };
+		30EB6AB726B0435000BFAFE7 /* CancelBLIKTransactionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6AB626B0435000BFAFE7 /* CancelBLIKTransactionUseCaseTests.swift */; };
+		30EB6ABA26B0460C00BFAFE7 /* ManagerProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6AB926B0460C00BFAFE7 /* ManagerProviderMock.swift */; };
+		30EB6ABC26B12A9800BFAFE7 /* MockBLIKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6ABB26B12A9800BFAFE7 /* MockBLIKManager.swift */; };
+		30EB6ABF26B12BB100BFAFE7 /* DecodeFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6ABE26B12BB100BFAFE7 /* DecodeFile.swift */; };
+		30EB6AC326B12DAD00BFAFE7 /* getTrnToConfResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 30EB6AC226B12DAD00BFAFE7 /* getTrnToConfResponse.json */; };
+		30EB6AC726B1442D00BFAFE7 /* GetTrnToConfUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6AC626B1442D00BFAFE7 /* GetTrnToConfUseCaseTests.swift */; };
+		30EB6ACE26B1559D00BFAFE7 /* BLIKConfirmationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6ACD26B1559D00BFAFE7 /* BLIKConfirmationPresenterTests.swift */; };
+		30EB6AD126B1579C00BFAFE7 /* BLIKConfirmationViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EB6AD026B1579C00BFAFE7 /* BLIKConfirmationViewMock.swift */; };
+		35E03B5C88B6F4E7F72110C6 /* Pods_BLIK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8133ECB6183979282FA301EF /* Pods_BLIK_Example.framework */; };
+		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
+		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
+		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
+		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		B044452826E0AA0300F66799 /* P2pAliasUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044452626E0A9E000F66799 /* P2pAliasUseCaseTests.swift */; };
+		B044452C26E0C75600F66799 /* MobileTransferFormPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044452A26E0C44400F66799 /* MobileTransferFormPresenterTests.swift */; };
+		B044453026E0D39600F66799 /* MobileTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044452E26E0CA8400F66799 /* MobileTransferFormViewMock.swift */; };
+		F64452DE44B3C24E0EDC0049 /* Pods_BLIK_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E36D73FFF7E82003F732F7A /* Pods_BLIK_Tests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = BLIK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		021C1FE726808A35009D96F7 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		3016B64F2664E6A2007BF532 /* pl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = pl.strings; sourceTree = "<group>"; };
+		30CC5C1526CD2A56004664B8 /* CNContactStoreMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNContactStoreMock.swift; sourceTree = "<group>"; };
+		30CC5C1826CD322A004664B8 /* GetContactsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactsUseCaseTests.swift; sourceTree = "<group>"; };
+		30CC5C1A26CD3829004664B8 /* PhoneVerificationUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerificationUseCaseTests.swift; sourceTree = "<group>"; };
+		30CC5C1D26CE20B8004664B8 /* ContactViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewMock.swift; sourceTree = "<group>"; };
+		30CC5C1F26CE21B1004664B8 /* ContactsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPresenterTests.swift; sourceTree = "<group>"; };
+		30EB6AB626B0435000BFAFE7 /* CancelBLIKTransactionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBLIKTransactionUseCaseTests.swift; sourceTree = "<group>"; };
+		30EB6AB926B0460C00BFAFE7 /* ManagerProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerProviderMock.swift; sourceTree = "<group>"; };
+		30EB6ABB26B12A9800BFAFE7 /* MockBLIKManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBLIKManager.swift; sourceTree = "<group>"; };
+		30EB6ABE26B12BB100BFAFE7 /* DecodeFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeFile.swift; sourceTree = "<group>"; };
+		30EB6AC226B12DAD00BFAFE7 /* getTrnToConfResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = getTrnToConfResponse.json; sourceTree = "<group>"; };
+		30EB6AC626B1442D00BFAFE7 /* GetTrnToConfUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTrnToConfUseCaseTests.swift; sourceTree = "<group>"; };
+		30EB6ACD26B1559D00BFAFE7 /* BLIKConfirmationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKConfirmationPresenterTests.swift; sourceTree = "<group>"; };
+		30EB6AD026B1579C00BFAFE7 /* BLIKConfirmationViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKConfirmationViewMock.swift; sourceTree = "<group>"; };
+		31994980555F5E3315821F34 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		342AD51DAF8E96137EF70881 /* BLIK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BLIK.podspec; path = ../BLIK.podspec; sourceTree = "<group>"; };
+		3FC2794CE2F6362DE7E2BF8B /* Pods-BLIK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLIK_Tests.release.xcconfig"; path = "Target Support Files/Pods-BLIK_Tests/Pods-BLIK_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* BLIK_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLIK_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		607FACE51AFB9204008FA782 /* BLIK_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLIK_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D88C946F9E2EDA328883BD4 /* Pods-BLIK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLIK_Tests.debug.xcconfig"; path = "Target Support Files/Pods-BLIK_Tests/Pods-BLIK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		6DD23CFB15FBBA7B13A549CD /* Pods-BLIK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLIK_Example.release.xcconfig"; path = "Target Support Files/Pods-BLIK_Example/Pods-BLIK_Example.release.xcconfig"; sourceTree = "<group>"; };
+		8133ECB6183979282FA301EF /* Pods_BLIK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLIK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E36D73FFF7E82003F732F7A /* Pods_BLIK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLIK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B044452626E0A9E000F66799 /* P2pAliasUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2pAliasUseCaseTests.swift; sourceTree = "<group>"; };
+		B044452A26E0C44400F66799 /* MobileTransferFormPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileTransferFormPresenterTests.swift; sourceTree = "<group>"; };
+		B044452E26E0CA8400F66799 /* MobileTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileTransferFormViewMock.swift; sourceTree = "<group>"; };
+		BEC4C48D3AA0D5BB7883F54E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		E232096D6E34ADFB72F43639 /* Pods-BLIK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLIK_Example.debug.xcconfig"; path = "Target Support Files/Pods-BLIK_Example/Pods-BLIK_Example.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35E03B5C88B6F4E7F72110C6 /* Pods_BLIK_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE21AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F64452DE44B3C24E0EDC0049 /* Pods_BLIK_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		30CC5C1326CD298C004664B8 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				30CC5C1C26CE1F57004664B8 /* Presenter */,
+				30CC5C1726CD31C6004664B8 /* UseCase */,
+				30CC5C1426CD2A27004664B8 /* Mocks */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		30CC5C1426CD2A27004664B8 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				30CC5C1526CD2A56004664B8 /* CNContactStoreMock.swift */,
+				30CC5C1D26CE20B8004664B8 /* ContactViewMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		30CC5C1726CD31C6004664B8 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				30CC5C1826CD322A004664B8 /* GetContactsUseCaseTests.swift */,
+				30CC5C1A26CD3829004664B8 /* PhoneVerificationUseCaseTests.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		30CC5C1C26CE1F57004664B8 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				30CC5C1F26CE21B1004664B8 /* ContactsPresenterTests.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		30EB6AAF26B040B600BFAFE7 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AB026B040B600BFAFE7 /* Transaction */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		30EB6AB026B040B600BFAFE7 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				B044452426E0A3BE00F66799 /* Form */,
+				30CC5C1326CD298C004664B8 /* Contacts */,
+				30EB6AC426B1440000BFAFE7 /* Confirmation */,
+				30EB6AB126B040B600BFAFE7 /* Cancel */,
+			);
+			path = Transaction;
+			sourceTree = "<group>";
+		};
+		30EB6AB126B040B600BFAFE7 /* Cancel */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AB526B0433400BFAFE7 /* UseCase */,
+			);
+			path = Cancel;
+			sourceTree = "<group>";
+		};
+		30EB6AB526B0433400BFAFE7 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AB626B0435000BFAFE7 /* CancelBLIKTransactionUseCaseTests.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		30EB6AB826B045F700BFAFE7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6ABD26B12B9C00BFAFE7 /* PropertyWrappers */,
+				30EB6AB926B0460C00BFAFE7 /* ManagerProviderMock.swift */,
+				30EB6ABB26B12A9800BFAFE7 /* MockBLIKManager.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		30EB6ABD26B12B9C00BFAFE7 /* PropertyWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6ABE26B12BB100BFAFE7 /* DecodeFile.swift */,
+			);
+			path = PropertyWrappers;
+			sourceTree = "<group>";
+		};
+		30EB6AC126B12D7C00BFAFE7 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AC226B12DAD00BFAFE7 /* getTrnToConfResponse.json */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		30EB6AC426B1440000BFAFE7 /* Confirmation */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6ACF26B1576A00BFAFE7 /* Mocks */,
+				30EB6ACC26B1557400BFAFE7 /* Presenter */,
+				30EB6AC526B1440E00BFAFE7 /* UseCase */,
+				30EB6AC126B12D7C00BFAFE7 /* JSON */,
+			);
+			path = Confirmation;
+			sourceTree = "<group>";
+		};
+		30EB6AC526B1440E00BFAFE7 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AC626B1442D00BFAFE7 /* GetTrnToConfUseCaseTests.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		30EB6ACC26B1557400BFAFE7 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6ACD26B1559D00BFAFE7 /* BLIKConfirmationPresenterTests.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		30EB6ACF26B1576A00BFAFE7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AD026B1579C00BFAFE7 /* BLIKConfirmationViewMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		54511E760C9099F83B72635B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8133ECB6183979282FA301EF /* Pods_BLIK_Example.framework */,
+				9E36D73FFF7E82003F732F7A /* Pods_BLIK_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		607FACC71AFB9204008FA782 = {
+			isa = PBXGroup;
+			children = (
+				607FACF51AFB993E008FA782 /* Podspec Metadata */,
+				607FACD21AFB9204008FA782 /* Example for BLIK */,
+				607FACE81AFB9204008FA782 /* Tests */,
+				607FACD11AFB9204008FA782 /* Products */,
+				BF5B9946390B1630AA96A738 /* Pods */,
+				54511E760C9099F83B72635B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		607FACD11AFB9204008FA782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD01AFB9204008FA782 /* BLIK_Example.app */,
+				607FACE51AFB9204008FA782 /* BLIK_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		607FACD21AFB9204008FA782 /* Example for BLIK */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				021C1FE726808A35009D96F7 /* Mocks.swift */,
+				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				607FACD31AFB9204008FA782 /* Supporting Files */,
+				3016B64F2664E6A2007BF532 /* pl.strings */,
+			);
+			name = "Example for BLIK";
+			path = BLIK;
+			sourceTree = "<group>";
+		};
+		607FACD31AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD41AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACE81AFB9204008FA782 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				30EB6AB826B045F700BFAFE7 /* Common */,
+				30EB6AAF26B040B600BFAFE7 /* Features */,
+				607FACE91AFB9204008FA782 /* Supporting Files */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		607FACE91AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACEA1AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				342AD51DAF8E96137EF70881 /* BLIK.podspec */,
+				BEC4C48D3AA0D5BB7883F54E /* README.md */,
+				31994980555F5E3315821F34 /* LICENSE */,
+			);
+			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		B044452426E0A3BE00F66799 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				B044452D26E0CA7200F66799 /* Mocks */,
+				B044452926E0BF4200F66799 /* Presenter */,
+				B044452526E0A9BB00F66799 /* UseCase */,
+			);
+			path = Form;
+			sourceTree = "<group>";
+		};
+		B044452526E0A9BB00F66799 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				B044452626E0A9E000F66799 /* P2pAliasUseCaseTests.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		B044452926E0BF4200F66799 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				B044452A26E0C44400F66799 /* MobileTransferFormPresenterTests.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		B044452D26E0CA7200F66799 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B044452E26E0CA8400F66799 /* MobileTransferFormViewMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		BF5B9946390B1630AA96A738 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E232096D6E34ADFB72F43639 /* Pods-BLIK_Example.debug.xcconfig */,
+				6DD23CFB15FBBA7B13A549CD /* Pods-BLIK_Example.release.xcconfig */,
+				6D88C946F9E2EDA328883BD4 /* Pods-BLIK_Tests.debug.xcconfig */,
+				3FC2794CE2F6362DE7E2BF8B /* Pods-BLIK_Tests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		607FACCF1AFB9204008FA782 /* BLIK_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BLIK_Example" */;
+			buildPhases = (
+				E8098758F13E189C0AB5B179 /* [CP] Check Pods Manifest.lock */,
+				607FACCC1AFB9204008FA782 /* Sources */,
+				607FACCD1AFB9204008FA782 /* Frameworks */,
+				607FACCE1AFB9204008FA782 /* Resources */,
+				DAA9121BE90431BBA6937E78 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BLIK_Example;
+			productName = BLIK;
+			productReference = 607FACD01AFB9204008FA782 /* BLIK_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		607FACE41AFB9204008FA782 /* BLIK_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BLIK_Tests" */;
+			buildPhases = (
+				43466E189ED0B26133AD84C5 /* [CP] Check Pods Manifest.lock */,
+				607FACE11AFB9204008FA782 /* Sources */,
+				607FACE21AFB9204008FA782 /* Frameworks */,
+				607FACE31AFB9204008FA782 /* Resources */,
+				312ACADB68A8DE22ADC931D4 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
+			);
+			name = BLIK_Tests;
+			productName = Tests;
+			productReference = 607FACE51AFB9204008FA782 /* BLIK_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		607FACC81AFB9204008FA782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = CocoaPods;
+				TargetAttributes = {
+					607FACCF1AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0900;
+					};
+					607FACE41AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 1250;
+						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+				};
+			};
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "BLIK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 607FACC71AFB9204008FA782;
+			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607FACCF1AFB9204008FA782 /* BLIK_Example */,
+				607FACE41AFB9204008FA782 /* BLIK_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		607FACCE1AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				3016B6502664E6A2007BF532 /* pl.strings in Resources */,
+				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE31AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30EB6AC326B12DAD00BFAFE7 /* getTrnToConfResponse.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		312ACADB68A8DE22ADC931D4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BLIK_Tests/Pods-BLIK_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
+				"${BUILT_PRODUCTS_DIR}/BLIK/BLIK.framework",
+				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
+				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
+				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPublicFiles/iOSPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPullOffers/iOSPullOffers.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLIK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPullOffers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BLIK_Tests/Pods-BLIK_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		43466E189ED0B26133AD84C5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BLIK_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DAA9121BE90431BBA6937E78 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BLIK_Example/Pods-BLIK_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
+				"${BUILT_PRODUCTS_DIR}/BLIK/BLIK.framework",
+				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
+				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
+				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPublicFiles/iOSPublicFiles.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSPullOffers/iOSPullOffers.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLIK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPublicFiles.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPullOffers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BLIK_Example/Pods-BLIK_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8098758F13E189C0AB5B179 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BLIK_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		607FACCC1AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				021C1FE826808A35009D96F7 /* Mocks.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE11AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30CC5C1926CD322A004664B8 /* GetContactsUseCaseTests.swift in Sources */,
+				30CC5C2026CE21B1004664B8 /* ContactsPresenterTests.swift in Sources */,
+				30EB6ABA26B0460C00BFAFE7 /* ManagerProviderMock.swift in Sources */,
+				30EB6AB726B0435000BFAFE7 /* CancelBLIKTransactionUseCaseTests.swift in Sources */,
+				B044452826E0AA0300F66799 /* P2pAliasUseCaseTests.swift in Sources */,
+				B044452C26E0C75600F66799 /* MobileTransferFormPresenterTests.swift in Sources */,
+				B044453026E0D39600F66799 /* MobileTransferFormViewMock.swift in Sources */,
+				30CC5C1E26CE20B8004664B8 /* ContactViewMock.swift in Sources */,
+				30CC5C1B26CD3829004664B8 /* PhoneVerificationUseCaseTests.swift in Sources */,
+				30EB6AD126B1579C00BFAFE7 /* BLIKConfirmationViewMock.swift in Sources */,
+				30EB6ABC26B12A9800BFAFE7 /* MockBLIKManager.swift in Sources */,
+				30EB6AC726B1442D00BFAFE7 /* GetTrnToConfUseCaseTests.swift in Sources */,
+				30EB6ABF26B12BB100BFAFE7 /* DecodeFile.swift in Sources */,
+				30EB6ACE26B1559D00BFAFE7 /* BLIKConfirmationPresenterTests.swift in Sources */,
+				30CC5C1626CD2A56004664B8 /* CNContactStoreMock.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* BLIK_Example */;
+			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDA1AFB9204008FA782 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDF1AFB9204008FA782 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		607FACED1AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = "";
+			};
+			name = Debug;
+		};
+		607FACEE1AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = "";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		607FACF01AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E232096D6E34ADFB72F43639 /* Pods-BLIK_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BLIK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		607FACF11AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DD23CFB15FBBA7B13A549CD /* Pods-BLIK_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BLIK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		607FACF31AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D88C946F9E2EDA328883BD4 /* Pods-BLIK_Tests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BLIK_Example.app/BLIK_Example";
+			};
+			name = Debug;
+		};
+		607FACF41AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FC2794CE2F6362DE7E2BF8B /* Pods-BLIK_Tests.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BLIK_Example.app/BLIK_Example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "BLIK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACED1AFB9204008FA782 /* Debug */,
+				607FACEE1AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BLIK_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF01AFB9204008FA782 /* Debug */,
+				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BLIK_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF31AFB9204008FA782 /* Debug */,
+				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
+}

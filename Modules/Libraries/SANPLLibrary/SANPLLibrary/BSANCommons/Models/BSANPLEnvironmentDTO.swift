@@ -10,11 +10,13 @@ import Foundation
 public class BSANPLEnvironmentDTO: Hashable, Codable {
     public let name: String
     public let urlBase: String
+    public let blikAuthBaseUrl: String
     public let clientId: String
 
-    public init(name: String, urlBase: String, clientId: String) {
+    public init(name: String, blikAuthBaseUrl: String, urlBase: String, clientId: String) {
         self.name = name
         self.urlBase = urlBase
+        self.blikAuthBaseUrl = blikAuthBaseUrl
         self.clientId = clientId
     }
 

@@ -8,6 +8,8 @@
 import Foundation
 import UI
 import Commons
+import PLCommons
+import Repository
 
 protocol PLUnrememberedLoginOnboardingCoordinatorProtocol {
     func didSelectLogin()
@@ -15,6 +17,11 @@ protocol PLUnrememberedLoginOnboardingCoordinatorProtocol {
 }
 
 final class PLUnrememberedLoginOnboardingCoordinator: ModuleCoordinator {
+    
+    private enum Config {
+        static let createAccountUrlKey = "openAccountUrl"
+    }
+        
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private lazy var unrememberdLoginIdCoordinator: PLUnrememberedLoginIdCoordinator = {
@@ -23,6 +30,19 @@ final class PLUnrememberedLoginOnboardingCoordinator: ModuleCoordinator {
     
     private lazy var isFirstLaunchUseCase: PLFirstLaunchUseCase = {
         return PLFirstLaunchUseCase(dependenciesResolver: dependenciesEngine)
+    }()
+    
+    private lazy var appConfig: AppConfigRepositoryProtocol = {
+        return self.dependenciesEngine.resolve(for: AppConfigRepositoryProtocol.self)
+    }()
+    
+    private var webViewCoordinator: PLLoginWebViewCoordinatorDelegate {
+        return self.dependenciesEngine.resolve(for: PLLoginWebViewCoordinatorDelegate.self)
+    }
+    
+    private lazy var linkHandler: PLWebviewCustomLinkHandler = {
+        let plLinkHandler = PLWebviewCustomLinkHandler(configuration: CreateAccountWebViewConfiguration(initialURL: ""))
+        return plLinkHandler
     }()
     
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
@@ -76,6 +96,9 @@ extension PLUnrememberedLoginOnboardingCoordinator : PLUnrememberedLoginOnboardi
     func didSelectCreateAccount() {
         Scenario(useCase: self.isFirstLaunchUseCase,
                  input: PLFirstLaunchUseCaseInput(shouldSetFirstLaunch: true)).execute(on: self.dependenciesEngine.resolve())
-        //TODO: Open create account webview here
+        
+        guard let urlString = self.appConfig.getString(Config.createAccountUrlKey) else { return }
+        linkHandler.configuration = CreateAccountWebViewConfiguration(initialURL: urlString)
+        self.webViewCoordinator.showWebView(handler: self.linkHandler)
     }
 }

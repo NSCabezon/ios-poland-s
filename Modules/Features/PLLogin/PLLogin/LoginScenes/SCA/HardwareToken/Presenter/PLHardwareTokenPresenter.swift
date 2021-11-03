@@ -54,6 +54,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     }
 
     func viewDidLoad() {
+        self.trackScreen()
     }
 
     func viewWillAppear() {
@@ -66,9 +67,12 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
     }
     
     func doAuthenticate(token: String) {
+        self.trackEvent(.clickInitSession)
         guard let password = loginConfiguration.password else {
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
-            self.handleError(UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass)))
+            let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass))
+            self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1020", PLLoginTrackConstants().errorDescription: localized("login_popup_passwordRequired")])
+            self.handleError(error)
             return
         }
         self.view?.showLoading()
@@ -79,6 +83,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
         
         authProcessUseCase.execute(input: authProcessInput) { [weak self]  nextSceneResult in
             guard let self = self else { return }
+            self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "hwToken"])
             switch nextSceneResult.nextScene {
             case .trustedDeviceScene:
                 self.goToDeviceTrustDeviceData()
@@ -87,6 +92,8 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             }
             self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
         } onFailure: { [weak self]  error in
+            let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
+            self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
             self?.handleError(error)
         }
     }
@@ -140,5 +147,15 @@ private extension  PLHardwareTokenPresenter {
         view?.dismissLoading(completion: { [weak self] in
             self?.coordinator.goToUnrememberedLogindScene()
         })
+    }
+}
+
+extension PLHardwareTokenPresenter: AutomaticScreenActionTrackable {
+    var trackerManager: TrackerManager {
+        return self.dependenciesResolver.resolve(for: TrackerManager.self)
+    }
+
+    var trackerPage: PLUnrememberedLoginHardwareTokenPage {
+        return PLUnrememberedLoginHardwareTokenPage()
     }
 }

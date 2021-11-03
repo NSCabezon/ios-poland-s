@@ -14,6 +14,13 @@ enum Greeting: String {
 }
 
 final class TimeImageAndGreetingViewModel {
+    
+    static let shared = TimeImageAndGreetingViewModel()
+    private let backgroundMinId: Int = 1
+    private let backgroundMaxId: Int = 10
+    var theme: BackgroundImagesTheme = .nature
+    lazy var imageId: Int = { Int.random(in: self.backgroundMinId...self.backgroundMaxId) }()
+    
     var greetingTextKey: Greeting {
         let now = Date()
         let calendar = Calendar(identifier: .gregorian)
@@ -29,8 +36,6 @@ final class TimeImageAndGreetingViewModel {
     }
     
     var backgroundImage: UIImage? {
-        let imageId: Int = 1
-        let theme: BackgroundImagesTheme = BackgroundImagesTheme.nature
         return UIImage(named: "\(theme.name)_\(imageId)", in: Bundle(for: Self.self), compatibleWith: nil)
     }
 }

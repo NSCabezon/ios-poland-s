@@ -70,15 +70,19 @@ private extension PLSmsAuthCoordinator {
             presenter.view = viewController
             return viewController
         }
+        
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
            return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
         }
+        
         self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
             return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
         }
+        
         self.dependenciesEngine.register(for: PLAuthProcessUseCase.self) { _ in
             return authProcessUseCase
         }
+        
         self.registerEnvironmentDependencies()
     }
 }

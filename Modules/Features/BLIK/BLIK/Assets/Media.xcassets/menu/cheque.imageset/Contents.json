@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "aFinanceCMoneyOperationsAc090TransferTransferWireTransferenciaSendEnviar.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "aFinanceCMoneyOperationsAc090TransferTransferWireTransferenciaSendEnviar@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "aFinanceCMoneyOperationsAc090TransferTransferWireTransferenciaSendEnviar@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -144,7 +144,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
@@ -195,7 +195,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).plainText
     }
     
     func addKeyboardObserver() {

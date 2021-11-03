@@ -45,7 +45,7 @@ final class PLLoginProcessUseCase {
         }
     }
     
-    public func executeNonPersistedLogin(type: LoginType, identification: String,
+    public func executeNonPersistedLogin(identification: String,
                         onSuccess: @escaping (UnrememberedLoginConfiguration?) -> Void,
                         onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
 

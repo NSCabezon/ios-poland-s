@@ -21,6 +21,7 @@ def core_dependencies
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
+  pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   
   # Microsite configuration
   pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
@@ -47,6 +48,8 @@ def core_dependencies
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives'
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
+  pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
 end
 
 def legacy_libraries
@@ -67,6 +70,13 @@ end
 # --------- Poland only dependencies
 def pl_features
   pod 'PLLogin', :path => '../Modules/Features/PLLogin'
+  pod 'BLIK', :path => '../Modules/Features/BLIK'
+  pod 'CreditCardRepayment', :path => '../Modules/Features/CreditCardRepayment'
+  pod 'PLHelpCenter', :path => '../Modules/Features/PLHelpCenter'
+  pod 'LoanSchedule', :path => '../Modules/Features/LoanSchedule'
+  pod 'mCommerce', :path => '../Modules/Features/mCommerce'
+  pod 'PLNotificationsInbox', :path => '../Modules/Features/PLNotificationsInbox'
+  pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
 end
 
 def pl_libraries
@@ -74,8 +84,9 @@ def pl_libraries
   pod 'PLLegacyAdapter', :path => '../Modules/Libraries/PLLegacyAdapter'
   pod 'PLCommons', :path => '../Modules/Libraries/PLCommons'
   pod 'PLUI', :path => '../Modules/Libraries/PLUI'
-  pod 'PLSelfSignedCertificate', :path => '../Modules/Libraries/PLSelfSignedCertificate'
+  pod 'DemoAuthenticator', :path => '../Modules/Libraries/DemoAuthenticator'
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
+  pod 'PLCommonOperatives', :path => '../Modules/Libraries/PLCommonOperatives'
 end
 
 def pl_thirdparty_dependencies
@@ -98,7 +109,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
 	target.build_configurations.each do |config|
-	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug"].include? config.name
+	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug", "Regression-Debug", "Uat-Debug", "Preprod-Debug"].include? config.name
 		config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
 		config.build_settings['GCC_OPTIMIZATION_LEVEL'] = '0'
 		config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'

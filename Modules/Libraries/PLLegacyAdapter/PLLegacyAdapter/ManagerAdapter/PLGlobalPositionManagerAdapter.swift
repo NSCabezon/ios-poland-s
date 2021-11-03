@@ -39,18 +39,28 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
 
         let clientPersonCode = String(authCredentials.userId ?? 0)
         var adaptedGlobalPosition = GlobalPositionDTOAdapter.adaptPLGlobalPositionToGlobalPosition(globalPosition, clientPersonCode: clientPersonCode)
-        let name = getName()
-        adaptedGlobalPosition.clientName = name
-        adaptedGlobalPosition.clientNameWithoutSurname = name
+        if let customer = getCustomer() {
+            let name = customer.firstName ?? ""
+            let secondName = customer.secondName ?? ""
+            let surname = customer.lastName ?? ""
+            adaptedGlobalPosition.clientName = name
+            adaptedGlobalPosition.clientNameWithoutSurname =  name
+            var secondNameDTO = SurNameDTO()
+            secondNameDTO.surname = secondName + " " + surname
+            adaptedGlobalPosition.clientFirstSurname = secondNameDTO
+            var surnameDTO = SurNameDTO()
+            surnameDTO.surname = ""
+            adaptedGlobalPosition.clientSecondSurname = surnameDTO
+        }
         return BSANOkResponse(adaptedGlobalPosition)
     }
 }
 
 private extension PLGlobalPositionManagerAdapter {
-    func getName() -> String? {
-        guard let customerPersonalsData = try? self.customerManager.getIndividual().get() else {
+    func getCustomer() -> CustomerDTO? {
+        guard let customerPersonalData = try? self.customerManager.getIndividual().get() else {
             return nil
         }
-        return customerPersonalsData.firstName?.components(separatedBy: " ").first
+        return customerPersonalData
     }
 }

@@ -14,6 +14,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
+import PLCommonOperatives
 import Models
 import GlobalPosition
 import Account
@@ -22,7 +23,10 @@ import PersonalArea
 import Menu
 import Cards
 import PLNotifications
+import Loans
 import iOSPublicFiles
+import CoreDomain
+import CommonUseCase
 
 final class AppDependencies {
     let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -85,6 +89,9 @@ final class AppDependencies {
         let netClient = NetClientImplementation()
         let fileClient = FileClient()
         return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var servicesLibrary: ServicesLibrary = {
+        return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
     }()
 
     // MARK: Features
@@ -204,6 +211,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
+        self.dependencieEngine.register(for: LoanTransactionModifier.self) { _ in
+            return PLLoanTransaction()
+        }
         self.dependencieEngine.register(for: FiltersAlertModifier.self) { _ in
             return PLFiltersAlertModifier()
         }
@@ -213,12 +223,21 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetPLAccountOtherOperativesActionUseCase.self) { resolver in
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
-        
+        self.dependencieEngine.register(for: GetBasePLWebConfigurationUseCaseProtocol.self) { resolver in
+            return GetBasePLWebConfigurationUseCase(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
-            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver)
+            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider)
+        }
+        self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
+            let networkProvider = PLNetworkProvider(dataProvider: self.bsanDataProvider, demoInterpreter: self.demoInterpreter, isTrustInvalidCertificateEnabled: false)
+            return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: networkProvider)
         }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
+        }
+        self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
             PLCardTransactionDetailActionFactoryModifier()
@@ -228,6 +247,21 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { resolver in
             PLEditBudgetHelperModifier()
+        }
+        self.dependencieEngine.register(for: TransfersRepository.self) { _ in
+            return self.servicesLibrary.transfersRepository
+        }
+        self.dependencieEngine.register(for: PLTransfersRepository.self) { _ in
+            return self.servicesLibrary.transfersRepository
+        }
+        self.dependencieEngine.register(for: ContactsSortedHandlerProtocol.self) { _ in
+            return ContactsSortedHandler()
+        }
+        self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
+            PLOpinatorInfoOption()
+        }
+        self.dependencieEngine.register(for: BankingUtilsProtocol.self) { resolver in
+            BankingUtils(dependencies: resolver)
         }
     }
 }

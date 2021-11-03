@@ -24,7 +24,9 @@ final class PLBeforeLoginViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var loadingImage: UIImageView!
+    @IBOutlet private weak var loadingView: UIView!
+    
+    var loadingInfo: LoadingInfo!
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLBeforeLoginPresenterProtocol) {
@@ -41,8 +43,6 @@ final class PLBeforeLoginViewController: UIViewController {
         super.viewDidLoad()
         self.setupViews()
         self.presenter.viewDidLoad()
-        self.loadingImage.setPointsLoader()
-        self.loadingImage.startAnimating()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +52,6 @@ final class PLBeforeLoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.loadingImage.isHidden = false
         presenter.viewDidAppear()
     }
 }
@@ -65,24 +64,31 @@ private extension PLBeforeLoginViewController {
     }
     
     func setupViews() {
-        let timeImageAndGreeting = TimeImageAndGreetingViewModel()
-        sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        backgroundImageView.image = timeImageAndGreeting.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
         
-        titleLabel.font = .santander(family: .text, type: .light, size: 40)
-        titleLabel.textColor = UIColor.Legacy.uiWhite
-        titleLabel.text = localized(timeImageAndGreeting.greetingTextKey.rawValue)
+        let inset = self.backgroundImageView.center.y 
+        self.loadingInfo = LoadingInfo(type: .onView(view: self.loadingView,
+                                                     frame: self.loadingView.bounds,
+                                                     position: .center,
+                                                     controller: self),
+                                       loadingText: LoadingText(title: LocalizedStylableText(text: "", styles: nil)),
+                                       placeholders: nil,
+                                       topInset: Double(inset),
+                                       background: .clear,
+                                       loadingImageType: .spin,
+                                       style: .onView)
     }
 }
 
 extension PLBeforeLoginViewController : PLBeforeLoginViewControllerProtocol {
     func loadDidFinish() {
-        self.loadingImage.isHidden = true
+        self.backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        self.dismissLoading()
     }
     
     func loadStart() {
-        self.loadingImage.isHidden = false
+        self.showLoadingWithLoading(info: self.loadingInfo)
     }
     
     func showDeprecatedVersionDialog() {

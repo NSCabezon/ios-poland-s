@@ -2,28 +2,120 @@
     "12345678Z": {
         "0": {
             "relatedAccountData": {
-                "accountNo": "06109010140000000003027389",
-                "creditLimit": {
-                    "value": 602.82,
-                    "currencyCode": "PLN"
-                },
+                "accountId": 34914327,
+                "accountNo": "60109014894000000121577250",
+                "accountDescription": "MasterCard Silver",
                 "balance": {
-                    "value": 602.82,
+                    "value": -1141.02,
                     "currencyCode": "PLN"
                 },
                 "availableFunds": {
-                    "value": 602.82,
+                    "value": 2858.98,
+                    "currencyCode": "PLN"
+                },
+                "creditLimit": {
+                    "value": 4000,
+                    "currencyCode": "PLN"
+                },
+                "withholdingBalance": {
+                    "value": 0,
                     "currencyCode": "PLN"
                 }
             },
-            "virtualPan": "421352I039028243",
-            "maskedPan": "421352_7566",
-            "emboss1": "ELŻBIETA BRZEZIŃSKA",
+            "virtualPan": "479080P004471180",
+            "emboss1": "PUCHCEA715704",
             "emboss2": "",
-            "generalStatus": "ACTIVE",
-            "alias": "Karta podstawowa",
-            "cardExpirationDate":"2022-05-31",
-            "insuranceFlag": true,
+            "cardStatus": "70",
+            "generalStatus": "INACTIVE",
+            "cardProductName": "Visa Silver Akcja Pajacyk",
+            "cifNumber": 612004037,
+            "cardLimitAmount": {
+                "value": 2500,
+                "currencyCode": "PLN"
+            },
+            "cardLimitPeriod": 1,
+            "limitType": 0,
+            "cardLimitRemaining": {
+                "value": 2500,
+                "currencyCode": "PLN"
+            },
+            "cardAgreementFlag": "U",
+            "cardLimitsFlag": 0,
+            "cardOwner": "NOT_OWNER",
+            "type": "CREDIT",
+            "bin": "4790803",
+            "icbsProductType": "-",
+            "productCode": "VSNP",
+            "isHCE": 0,
+            "psAvailability": "N",
+            "voAvailability": "W",
+            "walletAllowed": false,
+            "cardExpirationDate": "2023-03-31",
+            "linkedAccounts": [],
+            "insuranceFlag": false,
+            "productionDate": "2019-03-29",
+            "renewCount": 1,
+            "productType": "K",
+            "statusDetails": {
+                "statusDate": "2263-08-31",
+                "statusDescription": "Karta nowa nieaktywowana przez Klienta",
+                "statusTechnicalDescription": "INACTIVE,_NEW_CARD"
+            },
+            "creditCardAccountDetails": {
+                "currency": "PLN",
+                "creditCardAccountNo": "60109014894000000121577250",
+                "interestRate": 6,
+                "withholdingBalance": {
+                    "value": 0,
+                    "currencyCode": "PLN"
+                },
+                "lastStatementDate": "2021-01-21",
+                "nextStatementDate": "2022-02-21",
+                "paymentDate": "2021-02-15",
+                "totalPaymentAmount": {
+                    "value": -456.41,
+                    "currencyCode": "PLN"
+                },
+                "minimalPaymentAmount": {
+                    "value": -74.02,
+                    "currencyCode": "PLN"
+                },
+                "interestForPreviousPeriod": {
+                    "value": 0,
+                    "currencyCode": "PLN"
+                },
+                "outstandingMinimumDueAmount": {
+                    "value": -62.19,
+                    "currencyCode": "PLN"
+                },
+                "currentMinimumDueAmount": {
+                    "value": -11.83,
+                    "currencyCode": "PLN"
+                },
+                "minimumRepaymentAmount": {
+                    "value": 0,
+                    "currencyCode": "PLN"
+                },
+                "totalRepaymentAmount": {
+                    "value": -55.42,
+                    "currencyCode": "PLN"
+                },
+                "creditLimit": {
+                    "value": 4000,
+                    "currencyCode": "PLN"
+                }
+            },
+            "userCorrespondenceAddress": {
+                "firstName": "MARICEA715704",
+                "lastName": "PUCHCEA715704",
+                "streetHouseFlatNumber": "UL. WOJSŁAWSKA 350",
+                "postCode": "39-300",
+                "city": "MIELEC"
+            },
+            "options3DSecure": {
+                "phoneNumber": "111111111",
+                "enabled": false
+            }
         }
     }
 }

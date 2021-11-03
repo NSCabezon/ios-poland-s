@@ -8,6 +8,8 @@
 	<string>$(APP_GROUPS_IDENTIFIER)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -16,20 +18,20 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundleDisplayName</key>
-	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.83</string>
+	<string>0.0.95</string>
 	<key>CFBundleVersion</key>
-	<string>83</string>
+	<string>95</string>
 	<key>DEMO_AVAILABLE</key>
 	<string>$(DEMO_AVAILABLE)</string>
 	<key>DEFAULT_DEMO_USER</key>
 	<string>$(DEFAULT_DEMO_USER)</string>
 	<key>DEFAULT_MAGIC</key>
 	<string>$(DEFAULT_MAGIC)</string>
+	<key>DEMO_AVAILABLE</key>
+	<string>$(DEMO_AVAILABLE)</string>
 	<key>EMMA_API_KEY</key>
 	<string>$(EMMA_API_KEY)</string>
 	<key>ENVIRONMENTS_AVAILABLE</key>
@@ -42,6 +44,16 @@
 	<string>$(LOG_ENABLED)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich zdjęć?</string>
 	<key>PUBLIC_FILE_ENVIRONMENTS</key>
 	<string>$(PUBLIC_FILE_ENVIRONMENTS)</string>
 	<key>SHARED_KEYCHAIN_IDENTIFIER</key>
@@ -73,17 +85,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich zdjęć?</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 </dict>
 </plist>

@@ -8,10 +8,11 @@
 import Foundation
 
 public struct AuthenticateParameters: Encodable {
-    let encryptedPassword, userId: String?
+    let encryptedPassword: String?
+    let userId:String
     let secondFactorData: SecondFactorDataAuthenticate
 
-    public init(encryptedPassword: String, userId: String, secondFactorData: SecondFactorDataAuthenticate) {
+    public init(encryptedPassword: String?, userId: String, secondFactorData: SecondFactorDataAuthenticate) {
         self.encryptedPassword = encryptedPassword
         self.userId = userId
         self.secondFactorData = secondFactorData

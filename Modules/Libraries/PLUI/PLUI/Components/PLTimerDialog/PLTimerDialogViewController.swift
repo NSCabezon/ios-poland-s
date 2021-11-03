@@ -64,8 +64,9 @@ class PLTimerDialogViewController: UIViewController {
     // MARK: - Private
     
     @objc private func updateText() {
-        let date = Date(timeIntervalSince1970: self.dateTimeStamp)
-        if date > now {
+        if self.dateTimeStamp > 0 {
+            let date = Date(timeIntervalSince1970: self.dateTimeStamp)
+            guard date > now else { return }
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour, .minute, .second]
 

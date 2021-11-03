@@ -10,5 +10,6 @@ import Foundation
 struct PLAccountOtherOperativesDTO: Codable {
     let id: String?
     let url: String?
+    let method: String?
     let isAvailable: Bool?
 }

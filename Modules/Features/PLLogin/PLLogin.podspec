@@ -7,11 +7,11 @@ Pod::Spec.new do |spec|
   The PLLogin framework
                    DESC
 
-  spec.homepage     = "http://EXAMPLE/PLLogin"
+  spec.homepage     = "https://github.com/santander-group-europe"
   spec.license      = { :type => 'MIT', :file => 'LICENSE' }
   spec.author       = { 'Jose C. Yebes' => 'jose.yebes@ciberexperis.es' }
   spec.platform     = :ios, "11.0"
-  spec.source       = { :git => "http://gitlab/PLLogin.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/santander-group-europe/ios-poland.git", :tag => "#{spec.version}" }
   spec.source_files  = "PLLogin", "PLLogin/**/*.{swift}"
   spec.ios.deployment_target = '11.0'
   
@@ -32,6 +32,6 @@ Pod::Spec.new do |spec|
   spec.dependency "iOSPublicFiles"
   spec.dependency "SANPLLibrary"
   spec.dependency "PLLegacyAdapter"
-  spec.dependency 'PLSelfSignedCertificate'
+  spec.dependency 'SelfSignedCertificate'
   spec.dependency 'PLNotifications'
 end

@@ -62,3 +62,17 @@ public struct TrustedDeviceSoftwareToken: Codable {
     public let name, key, type, state: String
     public let id, timestamp: Int
 }
+
+public extension TrustedDeviceSoftwareToken {
+
+    var typeMapped: SoftwareTokenType {
+        switch self.type.uppercased() {
+        case "PIN":
+            return .PIN
+        case "BIOMETRICS":
+            return .BIOMETRICS
+        default:
+            return .UNKNOWN
+        }
+    }
+}

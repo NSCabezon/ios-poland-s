@@ -117,7 +117,7 @@ private extension PLHardwareTokenViewController {
     }
 
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
 
@@ -145,7 +145,7 @@ private extension PLHardwareTokenViewController {
     }
 
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).plainText
     }
     
     @objc func smsSendButtonDidPressed() {
@@ -208,10 +208,17 @@ extension PLHardwareTokenViewController: UITextFieldDelegate {
             guard let stringRange = Range(range, in: currentText) else { return false }
             let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
-            guard updatedText.count <= 8 else { return false }
+            guard updatedText.count <= 8 else {
+                return false
+            }
             passwordTextField.hiddenText = updatedText
             passwordTextField.updatePassword()
-            loginButton.isEnabled = updatedText.count == 8
+            if updatedText.count == 8 {
+                loginButton.isEnabled  = true
+                textField.resignFirstResponder()
+            } else {
+                loginButton.isEnabled = false
+            }
             return false
         }
         return false

@@ -52,6 +52,7 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     override func viewDidLoad() {
         self.presenter.viewDidLoad()
         self.setupViews()
+        self.configureDebugMenuButton() // Temporary [DEBUG WELCOME] on Login
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +110,31 @@ extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol
     func chooseEnvironment() {
         self.presenter.didSelectChooseEnvironment()
     }
+    
+    func configureDebugMenuButton() { // Temporary [DEBUG WELCOME] on Login
+        let button = UIButton()
+        button.setTitle("DEBUG MENU", for: .normal)
+        button.addTarget(self, action: #selector(didSelectDebugMenu(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemGray
+        button.contentEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        view.addSubview(button)
+        
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.topAnchor.constraint(equalTo: view.topAnchor, constant: 100)
+        ])
+    }
+    
+    @objc func didSelectDebugMenu(_ sender: Any) { // Temporary [DEBUG WELCOME] on Login
+        let launcherDelegate = dependenciesResolver.resolve(for: DebugMenuLauncherDelegate.self)
+        launcherDelegate.start()
+    }
+}
+
+public protocol DebugMenuLauncherDelegate { // Temporary [DEBUG WELCOME] on Login
+    func start()
 }
 
 private extension PLUnrememberedLoginIdViewController {
@@ -139,7 +165,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel().backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
@@ -169,7 +195,7 @@ private extension PLUnrememberedLoginIdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel().greetingTextKey.rawValue).text
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }
 
     func configureNavigationController() {

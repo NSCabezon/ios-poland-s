@@ -188,26 +188,30 @@ private extension PLTrustedDevicePinViewController {
             self.showNotEqualPinDialog()
         }
         else {
-            self.presenter.registerSoftwareToken(with: self.shouldCreateBiometricToken)
+            self.presenter.registerSoftwareToken(with: self.shouldCreateBiometricToken, and: pinInputText)
         }
     }
 
     private func showEqualDigitsDialog() {
+        self.presenter.trackInfoEvent(localized("pl_onboarding_alert_PIN3digits"))
         let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_PIN3digits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PIN3digits").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
     private func showConsecutiveDigitsDialog() {
+        self.presenter.trackInfoEvent(localized("pl_onboarding_alert_2consequitDigits"))
         let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_2consequitDigits"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_2consequitDigits").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
     private func showNotEqualPinDialog() {
+        self.presenter.trackInfoEvent(localized("pl_onboarding_alert_PINdiffer"))
         let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_PINdiffer"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_PINdiffer").count, attribute: .color(hex: "444444"))])
         TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
     }
 
     @objc func closeButtonDidPressed() {
+        self.presenter.closeButtonDidPressed()
         PLLoginCommonDialogs.presentCloseDialog(on: self, onCancel: {
         }, onAccept: { [weak self] in
             self?.presenter.goToDeviceTrustDeviceData()
@@ -258,5 +262,6 @@ extension  PLTrustedDevicePinViewController: PLUIInputCodeViewDelegate {
 extension PLTrustedDevicePinViewController: PLUIInteractiveInfoViewDelegate {
     func interactiveInfoView(_: PLUIInteractiveInfoView, didChangeSwitch value: Bool) {
         self.shouldCreateBiometricToken = value
+        self.presenter.createBiometricToken(value)
     }
 }

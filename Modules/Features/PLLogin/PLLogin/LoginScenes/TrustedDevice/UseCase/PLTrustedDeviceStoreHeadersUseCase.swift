@@ -9,7 +9,6 @@ import Repository
 import DomainCommon
 import Commons
 import PLCommons
-//import iOSCommonPublicFiles
 import SANLegacyLibrary
 import SANPLLibrary
 
@@ -27,7 +26,6 @@ final class PLTrustedDeviceStoreHeadersUseCase: UseCase<PLTrustedDeviceStoreHead
                                                        time: requestValues.time,
                                                        appId: requestValues.appId)
         trustedDeviceManager.storeTrustedDeviceHeaders(trustedDeviceHeders)
-
         return .ok()
     }
 }

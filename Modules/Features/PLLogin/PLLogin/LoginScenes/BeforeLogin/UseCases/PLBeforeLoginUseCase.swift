@@ -31,8 +31,13 @@ final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUs
                                                retrieveOptions: ["TRUSTED_DEVICE", "CERTIFICATE"])
         let result = try managerProvider.getTrustedDeviceManager().doBeforeLogin(parameters)
         switch result {
-        case .success(_):
-            return .ok(PLBeforeLoginUseCaseOutput(isTrustedDevice: true))
+        case .success(let response):
+            let response = PLBeforeLoginUseCaseOutput(isTrustedDevice: true,
+                                                      userId: response.userId,
+                                                      isBiometricsAvailable: response.containsBiometrics(),
+                                                      isPinAvailable: response.containsPin())
+                                                    
+            return .ok(response)
         case .failure(let error):
             switch error {
             case .unprocessableEntity:
@@ -56,5 +61,15 @@ final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUs
 }
 
 struct PLBeforeLoginUseCaseOutput {
+    let userId: Int
     let isTrustedDevice: Bool
+    let isBiometricsAvailable: Bool
+    let isPinAvailable: Bool
+    
+    init(isTrustedDevice: Bool, userId: Int = 0, isBiometricsAvailable: Bool = false, isPinAvailable: Bool = false) {
+        self.userId = userId
+        self.isTrustedDevice = isTrustedDevice
+        self.isBiometricsAvailable = isBiometricsAvailable
+        self.isPinAvailable = isPinAvailable
+    }
 }
