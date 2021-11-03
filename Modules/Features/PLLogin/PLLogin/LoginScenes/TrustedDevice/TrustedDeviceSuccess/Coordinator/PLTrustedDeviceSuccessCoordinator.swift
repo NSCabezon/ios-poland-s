@@ -40,12 +40,17 @@ extension PLTrustedDeviceSuccessCoordinator: PLTrustedDeviceSuccessCoordinatorPr
 */
 private extension PLTrustedDeviceSuccessCoordinator {
     func setupDependencies() {
+        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
         self.dependenciesEngine.register(for: PLTrustedDeviceSuccessCoordinatorProtocol.self) { _ in
             return self
         }
 
         self.dependenciesEngine.register(for: PLTrustedDeviceSuccessPresenterProtocol.self) { resolver in
             return PLTrustedDeviceSuccessPresenter(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
+            return notificationGetTokenAndRegisterUseCase
         }
 
         self.dependenciesEngine.register(for: PLTrustedDeviceSuccessViewController.self) { resolver in

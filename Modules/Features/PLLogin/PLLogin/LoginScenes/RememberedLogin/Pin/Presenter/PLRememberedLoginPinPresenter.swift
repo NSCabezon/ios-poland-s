@@ -49,6 +49,10 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
     private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
         return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
     }
+
+    private var notificationGetTokenAndRegisterUseCase: PLGetNotificationTokenAndRegisterUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetNotificationTokenAndRegisterUseCase.self)
+    }
     
     var coordinator: PLRememberedLoginPinCoordinator {
         return self.dependenciesResolver.resolve(for: PLRememberedLoginPinCoordinator.self)
@@ -86,6 +90,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
             } else {
                 self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "PIN"])
                 self.openSessionAndNavigateToGlobalPosition()
+                self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
             }
         })
     }
