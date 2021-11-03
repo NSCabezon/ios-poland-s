@@ -94,6 +94,19 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
             PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
             PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true)
         ]
+        #elseif INTERN
+        publicFilesEnvironments = [
+            PublicFilesEnvironmentDTO("PRE", "https://micrositeoneapp9.santander.pl/filesFF/", false),
+            PublicFilesEnvironmentDTO("QA", "https://serverftp.ciber-es.com/one_app/pl/files_qa/", false),
+            PublicFilesEnvironmentDTO("DEV", "https://serverftp.ciber-es.com/one_app/pl/files_dev/", false),
+            PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false),
+            PublicFilesEnvironmentDTO("FILES_PL_SCARLET", "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/", false),
+            PublicFilesEnvironmentDTO("FILES_PL_CANDY", "https://zt2.cdn.santanderbankpolska.pl/oneapp/candy/", false),
+            PublicFilesEnvironmentDTO("FILES_PL_ROSE", "https://zt2.cdn.santanderbankpolska.pl/oneapp/rose/", false),
+            PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
+            PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
+            PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true)
+        ]
         #elseif UAT
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
         #elseif REG
