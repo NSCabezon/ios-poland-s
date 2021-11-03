@@ -17,6 +17,7 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
     func showInvalidSCADialog()
     func showDeviceConfigurationErrorDialog()
+    func showUnauthorizedError()
     func setUserName(_ name: String)
     func tryPinAuth()
 }
@@ -250,6 +251,10 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
     
     func showInvalidSCADialog() {
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_attemptLast")
+    }
+    
+    func showUnauthorizedError() {
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_loginError")
     }
     
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration) {

@@ -95,6 +95,8 @@ final class PLRememberedLoginProcessUseCase {
                 guard let self = self else { return nil }
 
                 configuration.challenge = output.secondFactorData.defaultChallenge
+                configuration.secondFactorDataFinalState = output.secondFactorFinalState
+                configuration.unblockRemainingTimeInSecs = output.unblockRemainingTimeInSecs
                 let caseInput = PLAuthenticateInitUseCaseInput(userId: identification,
                                                                challenge: output.secondFactorData.defaultChallenge)
                 return Scenario(useCase: self.authenticateInitUseCase, input: caseInput)
@@ -168,13 +170,18 @@ final class PLRememberedLoginProcessUseCase {
                 let caseInput = PLAuthenticateUseCaseInput(encryptedPassword: nil,
                                                            userId: identification,
                                                            secondFactorData: authEntity)
+                configuration.challengeConfirmed = true
                 return Scenario(useCase: self.authenticateUseCase, input: caseInput)
             })
             .onSuccess { output in
                 onSuccess(configuration)
             }
             .onError { error in
-                onFailure(error)
+                if configuration.challengeConfirmed {
+                    onSuccess(configuration)
+                } else {
+                    onFailure(error)
+                }
             }
     }
 }

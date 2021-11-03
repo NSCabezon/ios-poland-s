@@ -52,6 +52,7 @@ public final class RememberedLoginConfiguration {
     public var unblockRemainingTimeInSecs: Double?
     public var secondFactorDataFinalState: String?
     public var challenge: ChallengeEntity?
+    public var challengeConfirmed: Bool = false
     public var pendingChallenge: PLRememberedLoginPendingChallenge?
     
     public init(userIdentifier: String,
