@@ -17,8 +17,8 @@ final class PLWebViewCoordinatorNavigator {
     private lazy var baseWebViewNavigatableLauncher: BaseWebViewNavigatableLauncher = {
         return self.dependencies.resolve()
     }()
-    private lazy var sessionController: SessionController = {
-        return self.dependencies.resolve(for: SessionController.self)
+    private lazy var sessionManager: CoreSessionManager = {
+        return self.dependencies.resolve(for: CoreSessionManager.self)
     }()
 
     init(dependenciesResolver: DependenciesResolver, drawer: BaseMenuController) {
@@ -34,7 +34,7 @@ extension PLWebViewCoordinatorNavigator: PLLoginWebViewCoordinatorDelegate, PLWe
     }
 
     func closedWebView(url: URL) {
-        self.sessionController.finishSession(.logOut)
+        self.sessionManager.finishWithReason(.logOut)
         self.navigationController?.popToRootViewController(animated: true)
         if UIApplication.shared.canOpen(url: url) {
             UIApplication.shared.open(url: url)

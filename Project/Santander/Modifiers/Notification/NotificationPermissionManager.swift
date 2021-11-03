@@ -15,7 +15,7 @@ final class NotificationPermissionsManager {
     private var lastSettings: UNNotificationSettings?
     
     private var isLoggedIn: Bool {
-        dependenciesResolver.resolve(for: SessionController.self).currentState == .loggedIn
+        dependenciesResolver.resolve(for: CoreSessionManager.self).isSessionActive
     }
     
     private let dependenciesResolver: DependenciesResolver

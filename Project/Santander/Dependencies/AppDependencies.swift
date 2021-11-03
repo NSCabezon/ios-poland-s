@@ -29,6 +29,13 @@ import CoreDomain
 import CommonUseCase
 
 final class AppDependencies {
+    #if DEBUG
+    private let timeToRefreshToken: TimeInterval = 10000000000000
+    private let timeToExpireSession: TimeInterval = 10000000000000
+    #else
+    private let timeToRefreshToken: TimeInterval = 60 * 8
+    private let timeToExpireSession: TimeInterval = 60 * 9
+    #endif
     let dependencieEngine: DependenciesResolver & DependenciesInjector
     private let localAppConfig: LocalAppConfig
     private let versionInfo: VersionInfoDTO
@@ -40,6 +47,9 @@ final class AppDependencies {
     // MARK: - Dependecies definitions
 
     // MARK: Data layer and country data adapters
+    private lazy var defaultSessionDataManager: SessionDataManager = {
+        return DefaultSessionDataManager(dependenciesResolver: dependencieEngine)
+    }()
     private lazy var dataRepository: DataRepository = {
         return DataRepositoryBuilder(dependenciesResolver: dependencieEngine).build()
     }()
@@ -262,6 +272,17 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: BankingUtilsProtocol.self) { resolver in
             BankingUtils(dependencies: resolver)
+        }
+        self.dependencieEngine.register(for: SessionDataManager.self) { _ in
+            return self.defaultSessionDataManager
+        }
+        self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
+            let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
+            let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
+            return SessionConfiguration(timeToExpireSession: self.timeToExpireSession,
+                                        timeToRefreshToken: self.timeToRefreshToken,
+                                        sessionStartedActions: [loadPfm],
+                                        sessionFinishedActions: [stopPfm])
         }
     }
 }

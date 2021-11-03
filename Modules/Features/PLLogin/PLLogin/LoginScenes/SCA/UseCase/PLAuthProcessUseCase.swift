@@ -43,10 +43,10 @@ final class PLAuthProcessUseCase {
         self.dependenciesEngine.resolve(for: BSANManagersProvider.self)
     }
     
-    private lazy var sessionProcessHelper: SessionProcessHelperProtocol = {
-        let sessionProcess = self.dependenciesEngine.resolve(for: SessionProcessHelperProtocol.self)
-        sessionProcess.setSessionProcessDelegate(self)
-        return sessionProcess
+    private lazy var sessionDataManager: SessionDataManager = {
+        let manager = self.dependenciesEngine.resolve(for: SessionDataManager.self)
+        manager.setDataManagerProcessDelegate(self)
+        return manager
     }()
 
     public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
@@ -122,12 +122,12 @@ final class PLAuthProcessUseCase {
         
         let dto = PersistedUserDTO.createPersistedUser(loginType: .U, login: input.userId, environmentName: bsanEnv?.name ?? "")
         _ = self.appRepository.setPersistedUserDTO(persistedUserDTO:dto)
-        sessionProcessHelper.loadSessionData()
+        sessionDataManager.load()
     }
 }
 
-extension PLAuthProcessUseCase: SessionProcessHelperDelegate {
-    func handle(event: SessionProcessEvent) {
+extension PLAuthProcessUseCase: SessionDataManagerProcessDelegate {
+    func handleProcessEvent(_ event: SessionManagerProcessEvent) {
         switch event {
         case .loadDataSuccess, .fail(_):
             self.onContinue?(self.nextScene)

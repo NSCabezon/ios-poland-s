@@ -131,7 +131,9 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 updatedValues.parametersEncryption = output.encryptedParameters
             }.addScenario(certificateScenario) { (updatedValues, output, _) in
                 updatedValues.identity = output.identity
-            }.then(scenario: { (transportKeyEncryption, parametersEncryption, identity) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
+            }
+            .asScenarioHandler()
+            .then(scenario: { (transportKeyEncryption, parametersEncryption, identity) -> Scenario<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let registerDeviceUseCaseInput = PLDeviceDataRegisterDeviceUseCaseInput(transportKey: transportKeyEncryption ?? "",
                                                                                         deviceParameters: parametersEncryption ?? "",
                                                                                         deviceTime: deviceData.deviceTime,

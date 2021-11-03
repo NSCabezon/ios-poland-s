@@ -126,6 +126,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         }
             
         scenario
+            .asScenarioHandler()
             .onSuccess { [weak self] _ in
                 self?.walletParams = try? walletParamsResult?.get()
             }
