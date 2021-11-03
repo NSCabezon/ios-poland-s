@@ -43,14 +43,14 @@ final class CardOperativesDataSource: CardOperativeDataSourceProtocol {
         let absoluteUrl = baseUrl + self.basePath
         let serviceName = CardOperativeServiceType.cardBlock.rawValue + "/" + parameters.virtualPan + "/block"
         let result: Result<Void, NetworkProviderError> = self.networkProvider.request(CardOperativeRequest(serviceName: serviceName,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .put,
-                                                                                                                jsonBody: ["reason": CardDisableReason.stolen],
-                                                                                                                bodyEncoding: .body,
-                                                                                                                headers: self.headers,
-                                                                                                                queryParams: self.queryParams,
-                                                                                                                contentType: .json,
-                                                                                                                localServiceName: .cardBlock)
+                                                                                                           serviceUrl: absoluteUrl,
+                                                                                                           method: .put,
+                                                                                                           jsonBody: CardOperativeReasonBodyParameters(reason: CardDisableReason.stolen.rawValue),
+                                                                                                           bodyEncoding: .body,
+                                                                                                           headers: self.headers,
+                                                                                                           queryParams: self.queryParams,
+                                                                                                           contentType: .json,
+                                                                                                           localServiceName: .cardBlock)
         )
         return result
     }
@@ -63,12 +63,12 @@ final class CardOperativesDataSource: CardOperativeDataSourceProtocol {
         let absoluteUrl = baseUrl + self.basePath
         let serviceName = CardOperativeServiceType.cardBlock.rawValue + "/" + parameters.virtualPan + "/unblock"
         let result: Result<Void, NetworkProviderError> = self.networkProvider.request(CardOperativeRequest(serviceName: serviceName,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .put,
-                                                                                                                headers: self.headers,
-                                                                                                                queryParams: self.queryParams,
-                                                                                                                contentType: .json,
-                                                                                                                localServiceName: .cardUnblock)
+                                                                                                           serviceUrl: absoluteUrl,
+                                                                                                           method: .put,
+                                                                                                           headers: self.headers,
+                                                                                                           queryParams: self.queryParams,
+                                                                                                           contentType: .json,
+                                                                                                           localServiceName: .cardUnblock)
         )
         return result
     }
@@ -81,14 +81,14 @@ final class CardOperativesDataSource: CardOperativeDataSourceProtocol {
         let absoluteUrl = baseUrl + self.basePath
         let serviceName = CardOperativeServiceType.cardBlock.rawValue + "/" + parameters.virtualPan + "/disable"
         let result: Result<Void, NetworkProviderError> = self.networkProvider.request(CardOperativeRequest(serviceName: serviceName,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .put,
-                                                                                                                jsonBody: ["reason": parameters.reason.rawValue],
-                                                                                                                bodyEncoding: .body,
-                                                                                                                headers: self.headers,
-                                                                                                                queryParams: self.queryParams,
-                                                                                                                contentType: .json,
-                                                                                                                localServiceName: .cardDisable)
+                                                                                                           serviceUrl: absoluteUrl,
+                                                                                                           method: .put,
+                                                                                                           jsonBody: CardOperativeReasonBodyParameters(reason: parameters.reason.rawValue),
+                                                                                                           bodyEncoding: .body,
+                                                                                                           headers: self.headers,
+                                                                                                           queryParams: self.queryParams,
+                                                                                                           contentType: .json,
+                                                                                                           localServiceName: .cardDisable)
         )
         return result
     }
@@ -100,7 +100,7 @@ private struct CardOperativeRequest: NetworkProviderRequest {
     let method: NetworkProviderMethod
     let headers: [String: String]?
     let queryParams: [String: Any]?
-    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    var jsonBody: CardOperativeReasonBodyParameters? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .body
     let contentType: NetworkProviderContentType
@@ -111,7 +111,7 @@ private struct CardOperativeRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
-         jsonBody: Encodable? = nil,
+         jsonBody: CardOperativeReasonBodyParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
@@ -120,6 +120,7 @@ private struct CardOperativeRequest: NetworkProviderRequest {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
+        self.jsonBody = jsonBody
         self.formData = body
         self.headers = headers
         self.queryParams = queryParams
