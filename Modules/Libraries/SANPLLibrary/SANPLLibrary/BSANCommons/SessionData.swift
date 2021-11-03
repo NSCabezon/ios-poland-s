@@ -15,6 +15,7 @@ public class SessionData: Codable {
     public var helpCenterInfo: HelpCenterInfo = HelpCenterInfo()
     public var helpQuestionsInfo: HelpQuestionsInfo = HelpQuestionsInfo()
     public var cardsTransactions: [String : CardTransactionListDTO] = [:]
+    public var cardTransactionsPagination: [String : TransactionsLinksDTO] = [:]
     public var customer: CustomerDTO?
 
     public init(_ userDTO: UserDTO) {

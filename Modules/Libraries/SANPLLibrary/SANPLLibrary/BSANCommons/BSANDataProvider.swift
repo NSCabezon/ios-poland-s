@@ -288,6 +288,15 @@ public class BSANDataProvider {
         objc_sync_exit(self.dataRepository)
     }
     
+    public func storeCardPagination(_ cardId: String, _ pagination: TransactionsLinksDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.cardTransactionsPagination[cardId] = pagination
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+    
     // MARK: - Customer
     public func storeCustomerIndivual(dto: CustomerDTO) {
         objc_sync_enter(self.dataRepository)

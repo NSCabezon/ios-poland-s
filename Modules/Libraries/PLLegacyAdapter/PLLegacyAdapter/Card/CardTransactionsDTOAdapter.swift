@@ -16,14 +16,44 @@ final public class CardTransactionsDTOAdapter {
     public func adaptPLCardTransactionsToCardTransactionsList(_ plCardTransactions: SANPLLibrary.CardTransactionListDTO) -> SANLegacyLibrary.CardTransactionsListDTO {
         var cardTransactionsListDTO = SANLegacyLibrary.CardTransactionsListDTO()
         cardTransactionsListDTO.pagination = PaginationDTO()
-
+        cardTransactionsListDTO.pagination.repositionXML = plCardTransactions.pagingLast ?? ""
+        cardTransactionsListDTO.pagination.accountAmountXML = plCardTransactions.pagingFirst ?? ""
+        cardTransactionsListDTO.pagination.endList = true
+        if let _ = plCardTransactions.pagingLast {
+            cardTransactionsListDTO.pagination.endList = false
+        }
+        
         if let cardTransactionsList = plCardTransactions.entries {
             cardTransactionsListDTO.transactionDTOs = self.adaptCardTransactionsListToTransactions(cardTransactionsList)
         }
         return cardTransactionsListDTO
     }
     
-    public func adaptCardTransactionsListToTransactions(_ plCardTransactionsList: [SANPLLibrary.CardTransactionDTO]) -> [SANLegacyLibrary.CardTransactionDTO] {
+    public func adaptPLCardTransactionsToCardPendingTransactionsList(_ plCardTransactions: SANPLLibrary.CardTransactionListDTO) -> SANLegacyLibrary.CardPendingTransactionsListDTO {
+        var cardPendingTransactionsListDTO = SANLegacyLibrary.CardPendingTransactionsListDTO()
+        cardPendingTransactionsListDTO.pagination = adaptPendingCardTransactionsToPaginationDTO(plCardTransactions)
+        
+        if let cardTransactionsList = plCardTransactions.entries {
+            cardPendingTransactionsListDTO.cardPendingTransactionDTOS = self.adaptCardTransactionsListToPendingTransactions(cardTransactionsList)
+        }
+        return cardPendingTransactionsListDTO
+    }
+    
+    private func adaptPendingCardTransactionsToPaginationDTO(_ plCardTransactions: SANPLLibrary.CardTransactionListDTO) -> SANLegacyLibrary.PaginationDTO {
+        
+        var paginationDTO = SANLegacyLibrary.PaginationDTO()
+        paginationDTO.endList = true
+        if let pagingLast = plCardTransactions.pagingLast, pagingLast != "" {
+            paginationDTO.repositionXML = pagingLast
+            paginationDTO.endList = false
+        }
+        if let pagingFirst = plCardTransactions.pagingFirst {
+            paginationDTO.accountAmountXML = pagingFirst
+        }
+        return paginationDTO
+    }
+    
+    private func adaptCardTransactionsListToTransactions(_ plCardTransactionsList: [SANPLLibrary.CardTransactionDTO]) -> [SANLegacyLibrary.CardTransactionDTO] {
         var cardTransactions: [SANLegacyLibrary.CardTransactionDTO] = []
         for plCardTransaction in plCardTransactionsList {
             var cardTransaction = SANLegacyLibrary.CardTransactionDTO()
@@ -66,5 +96,42 @@ final public class CardTransactionsDTOAdapter {
             
         }
         return cardTransactions
+    }
+    
+    private func adaptCardTransactionsListToPendingTransactions(_ plCardTransactionsList: [SANPLLibrary.CardTransactionDTO]) -> [SANLegacyLibrary.CardPendingTransactionDTO] {
+        var pendingCardTransactions: [SANLegacyLibrary.CardPendingTransactionDTO] = []
+        
+        for plCardTransaction in plCardTransactionsList {
+            var pendingCardTransaction = SANLegacyLibrary.CardPendingTransactionDTO()
+            pendingCardTransaction.cardNumber = plCardTransaction.sourceRef
+            pendingCardTransaction.annotationDate = DateFormats.toDate(string: plCardTransaction.sourceDate ?? "", output: .YYYYMMDD)
+
+            let currencyType: CurrencyType
+            if let currencyOth = plCardTransaction.currencyOth {
+                switch currencyOth {
+                case "EUR":
+                    currencyType = .eur
+                case "USD":
+                    currencyType = .dollar
+                case "GBP":
+                    currencyType = .pound
+                case "CHF":
+                    currencyType = .swissFranc
+                case "PLN":
+                    currencyType = .złoty
+                default:
+                    currencyType = .other
+                }
+            } else {
+                currencyType = .złoty
+            }
+            
+            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: currencyType)
+            pendingCardTransaction.amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
+            pendingCardTransaction.description = plCardTransaction.transTitle
+            pendingCardTransactions.append(pendingCardTransaction)
+        }
+        
+        return pendingCardTransactions
     }
 }
