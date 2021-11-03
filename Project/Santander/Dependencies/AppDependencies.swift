@@ -273,6 +273,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: BankingUtilsProtocol.self) { resolver in
             BankingUtils(dependencies: resolver)
         }
+        self.dependencieEngine.register(for: PersonalDataModifier.self) { _ in
+            PLPersonalDataModifier()
+        }
         self.dependencieEngine.register(for: SessionDataManager.self) { _ in
             return self.defaultSessionDataManager
         }
