@@ -53,6 +53,7 @@ private extension PLRememberedLoginPinCoordinator {
         
         let presenter = PLRememberedLoginPinPresenter(dependenciesResolver: self.dependenciesEngine,
                                                       configuration: self.loginConfiguration)
+        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
         
         let authProcessUseCase = PLRememberedLoginProcessUseCase(dependenciesEngine: self.dependenciesEngine)
 
@@ -90,6 +91,10 @@ private extension PLRememberedLoginPinCoordinator {
 
         self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
             return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
+            return notificationGetTokenAndRegisterUseCase
         }
 
         self.dependenciesEngine.register(for: PLRememberedLoginPinCoordinator.self) { _ in

@@ -140,8 +140,8 @@ private extension  PLSmsAuthPresenter {
                 self.goToDeviceTrustDeviceData()
             case .globalPositionScene:
                 self.openSessionAndNavigateToGlobalPosition()
+                self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
             }
-            self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
         } onFailure: { [weak self]  error in
             let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
             self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])

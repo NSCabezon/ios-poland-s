@@ -31,6 +31,10 @@ final class PLTrustedDeviceSuccessPresenter {
     private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
         return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
     }
+
+    private var notificationGetTokenAndRegisterUseCase: PLGetNotificationTokenAndRegisterUseCase {
+        return self.dependenciesResolver.resolve(for: PLGetNotificationTokenAndRegisterUseCase.self)
+    }
 }
 
 private extension PLTrustedDeviceSuccessPresenter {
@@ -49,6 +53,7 @@ extension PLTrustedDeviceSuccessPresenter: PLTrustedDeviceSuccessPresenterProtoc
         self.view?.showLoading(completion: { [weak self] in
             self?.openSessionAndNavigateToGlobalPosition()
         })
+        self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
     }
 }
 
