@@ -9,4 +9,6 @@ import Foundation
 
 public struct CardTransactionListDTO: Codable {
     public let entries: [CardTransactionDTO]?
+    public let pagingLast: String?
+    public let pagingFirst: String?
 }

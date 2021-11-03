@@ -40,11 +40,18 @@ private extension CardTransactionsDataSource {
 // MARK: - CardTransactionsDataSourceProtocol Extension
 extension CardTransactionsDataSource: CardTransactionsDataSourceProtocol {
     
-    func getCardTransactions(cardId: String, pagination: TransactionsLinksDTO?) -> CardTransactionListDTO? {
+    func getCachedCardTransactions(cardId: String) -> CardTransactionListDTO? {
         guard let sessionData = try? self.dataProvider.getSessionData() else {
             return nil
         }
         return sessionData.cardsTransactions[cardId]
+    }
+    
+    func getCachedCardPagination(cardId: String) -> TransactionsLinksDTO? {
+        guard let sessionData = try? self.dataProvider.getSessionData() else {
+            return nil
+        }
+        return sessionData.cardTransactionsPagination[cardId]
     }
     
     func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String? = nil, endDate: String? = nil, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil) -> Result<CardTransactionListDTO, NetworkProviderError> {
@@ -55,7 +62,7 @@ extension CardTransactionsDataSource: CardTransactionsDataSourceProtocol {
         // Their functionality is to filter between credit (incomes) and debit operations (expenses)
         // cardOperationType is hidden by default in Poland
         
-        let parameters = CardTransactionsParameters(cardNo: cardId, text: searchTerm, startDate: startDate, endDate: endDate, amountFrom: fromAmount, amountTo: toAmount, debitFlag: movementType)
+        let parameters = CardTransactionsParameters(cardNo: cardId, firstOper: "25", text: searchTerm, startDate: startDate, endDate: endDate, amountFrom: fromAmount, amountTo: toAmount, debitFlag: movementType, pagination: pagination)
         
         let request = CardTransationsRequest(serviceName: self.serviceName,
                                              serviceUrl: absoluteUrl,
