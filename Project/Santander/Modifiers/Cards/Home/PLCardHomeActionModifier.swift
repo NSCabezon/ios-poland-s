@@ -275,7 +275,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     
     func getCardData(identifier: PLCardWebViewType) -> PLAccountOtherOperativesData {
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-        guard let list = repository.get()?.cards_options, let data = getCardOtherOperativesEntity(list: list, identifier: identifier) else { return PLAccountOtherOperativesData(identifier: nil, link: nil, isAvailable: nil, httpMethod: nil, parameter: nil) }
+        guard let list = repository.get()?.cardsOptions, let data = getCardOtherOperativesEntity(list: list, identifier: identifier) else { return PLAccountOtherOperativesData(identifier: nil, link: nil, isAvailable: nil, httpMethod: nil, parameter: nil) }
         return data
     }
 

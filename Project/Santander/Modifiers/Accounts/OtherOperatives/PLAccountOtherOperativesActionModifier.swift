@@ -52,7 +52,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     private func showWebView(identifier: String, entity: AccountEntity) {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-        guard let list = repository.get()?.accounts_options, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
+        guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
         if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
         }
