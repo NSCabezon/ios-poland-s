@@ -14,7 +14,7 @@ final class GetPLAccountHomeActionUseCase: UseCase<GetAccountHomeActionUseCaseIn
                                                    icon: "icnBlik",
                                                    renderingMode: .alwaysOriginal)
     
-    private let savingsGoals: AccountActionType = .custome(identifier: PLAccountOtherOperativesIdentifier.saving_goals.rawValue,
+    private let savingsGoals: AccountActionType = .custome(identifier: PLAccountOtherOperativesIdentifier.savingGoals.rawValue,
                                                            accesibilityIdentifier: "savingsGoals",
                                                            trackName: "savingsGoals",
                                                            localizedKey: "accountOption_button_savingGoals",

@@ -21,7 +21,7 @@ final class AppNavigationDependencies {
     private lazy var sendMoneyCoordinator =
         SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
                              drawer: self.drawer)
-    private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as! UINavigationController)
+    private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
     
     init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector) {

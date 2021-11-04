@@ -118,7 +118,7 @@ final class AppDependencies {
         compilation = Compilation()
         versionInfo = VersionInfoDTO(
             bundleIdentifier: Bundle.main.bundleIdentifier ?? "",
-            versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+            versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? ""
         )
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()

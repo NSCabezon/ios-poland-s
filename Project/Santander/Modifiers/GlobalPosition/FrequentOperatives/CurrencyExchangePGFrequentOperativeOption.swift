@@ -30,7 +30,7 @@ extension CurrencyExchangePGFrequentOperativeOption: PGFrequentOperativeOptionPr
             guard let self = self else { return }
             let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
             
-            guard let options = repository.get()?.accounts_options,
+            guard let options = repository.get()?.accountsOptions,
                   let option = options.first(where: { $0.id == self.optionId })
             else { return }
             

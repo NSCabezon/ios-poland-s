@@ -8,5 +8,5 @@
 import Foundation
 
 struct PLAccountOtherOperativesDTOList: Codable {
-    var accounts_options, cards_options: [PLAccountOtherOperativesDTO]?
+    var accountsOptions, cardsOptions: [PLAccountOtherOperativesDTO]?
 }

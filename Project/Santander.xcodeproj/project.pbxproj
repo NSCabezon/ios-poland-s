@@ -112,6 +112,7 @@
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
 		7E1B7DDF27216100002CC226 /* PLValidateCardOnOffUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B7DDD27216100002CC226 /* PLValidateCardOnOffUseCase.swift */; };
 		7E1B7DE027216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B7DDE27216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift */; };
+		7E1C16B02733DAEA0001DF73 /* DeeplinkLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C16AF2733DAEA0001DF73 /* DeeplinkLauncher.swift */; };
 		7E29680B26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */; };
 		7E2CCA8226B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8126B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift */; };
 		7E2CCA8526B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */; };
@@ -155,7 +156,6 @@
 		B01155F7271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155F5271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift */; };
 		B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155F6271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift */; };
 		B01155FD2715935900A4C175 /* DeeplinkDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */; };
-		B01155FE2715935900A4C175 /* DeeplinkLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FB2715935900A4C175 /* DeeplinkLauncher.swift */; };
 		B01155FF2715935900A4C175 /* PolandDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FC2715935900A4C175 /* PolandDeepLink.swift */; };
 		B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */; };
 		B0115603271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */; };
@@ -298,6 +298,7 @@
 		7C596191E5CD796BA06A54F2 /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		7E1B7DDD27216100002CC226 /* PLValidateCardOnOffUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLValidateCardOnOffUseCase.swift; sourceTree = "<group>"; };
 		7E1B7DDE27216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetCardOnOffPredefinedSCAUseCase.swift; sourceTree = "<group>"; };
+		7E1C16AF2733DAEA0001DF73 /* DeeplinkLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkLauncher.swift; sourceTree = "<group>"; };
 		7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionsPDFGeneratorProtocol.swift; sourceTree = "<group>"; };
 		7E2CCA8126B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExchangePGFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -341,7 +342,6 @@
 		B01155F5271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeepLinkDebugLauncherMenuViewController.swift; path = Santander/OneAppInit/DeepLink/DeepLinkDebugLauncherMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		B01155F6271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeepLinkDebugLauncherMenuCoordinator.swift; path = Santander/OneAppInit/DeepLink/DeepLinkDebugLauncherMenuCoordinator.swift; sourceTree = SOURCE_ROOT; };
 		B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkDependencies.swift; sourceTree = "<group>"; };
-		B01155FB2715935900A4C175 /* DeeplinkLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkLauncher.swift; sourceTree = "<group>"; };
 		B01155FC2715935900A4C175 /* PolandDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolandDeepLink.swift; sourceTree = "<group>"; };
 		B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDebugMenuFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLHelpCenterFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -1015,8 +1015,8 @@
 		B01155F92715933300A4C175 /* DeepLinks */ = {
 			isa = PBXGroup;
 			children = (
+				7E1C16AF2733DAEA0001DF73 /* DeeplinkLauncher.swift */,
 				B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */,
-				B01155FB2715935900A4C175 /* DeeplinkLauncher.swift */,
 				B01155FC2715935900A4C175 /* PolandDeepLink.swift */,
 			);
 			path = DeepLinks;
@@ -1101,7 +1101,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66B3CFBA2639C6C8000AAD0F /* Build configuration list for PBXNativeTarget "Santander" */;
 			buildPhases = (
-				8AA645447D82B63F3A0851CA /* [CP] Check Pods Manifest.lock */,
+				E9A7C98763C56FB5DC07BCC4 /* [CP] Check Pods Manifest.lock */,
+				7E9483912726CB080088C7E4 /* SwiftLint */,
 				66B3CFA22639C6C5000AAD0F /* Sources */,
 				66B3CFA32639C6C5000AAD0F /* Frameworks */,
 				42CEB7BB26E8ED0B00349ACD /* Firebase GoogleServices */,
@@ -1201,7 +1202,42 @@
 			shellPath = /bin/sh;
 			shellScript = "RESOURCE_PATH=$SRCROOT/Santander/Configuration/GoogleServices\nDST=GoogleService-Info.plist\n \nDEV=GoogleService-Info-development.plist\nINTERN=GoogleService-Info-intern.plist\nPRE=GoogleService-Info-pre.plist\nPROD=GoogleService-Info-production.plist\n\necho $RESOURCE_PATH/$DST \n \nif [[ \"$CONFIGURATION\" == \"Dev-Debug\" ]]; then\n    cp $RESOURCE_PATH/$DEV $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Intern-Debug\" ]]; then\n    cp $RESOURCE_PATH/$INTERN $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Intern-Release\" ]]; then\n    cp $RESOURCE_PATH/$INTERN $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pre-Debug\" ]]; then\n    cp $RESOURCE_PATH/$PRE $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pre-Release\" ]]; then\n    cp $RESOURCE_PATH/$PRE $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pro-Debug\" ]]; then\n    cp $RESOURCE_PATH/$PROD $RESOURCE_PATH/$DST\nelif [[ \"$CONFIGURATION\" == \"Pro-Release\" ]]; then\n    cp $RESOURCE_PATH/$PROD $RESOURCE_PATH/$DST\nfi\n";
 		};
-		8AA645447D82B63F3A0851CA /* [CP] Check Pods Manifest.lock */ = {
+		7E9483912726CB080088C7E4 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --config ../.swiftlint.yml --quiet\n";
+		};
+		A74824E8722481936A5EF9FA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9A7C98763C56FB5DC07BCC4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1223,23 +1259,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A74824E8722481936A5EF9FA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1250,7 +1269,6 @@
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
 				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
-				B01155FE2715935900A4C175 /* DeeplinkLauncher.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
 				0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */,
@@ -1279,6 +1297,7 @@
 				0D38C7E726DE3CB70062C02C /* PLRepaymentOperative.swift in Sources */,
 				A9EF0DA4271D78B800A1604B /* PLContextDTO.swift in Sources */,
 				85E19B65270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift in Sources */,
+				7E1C16B02733DAEA0001DF73 /* DeeplinkLauncher.swift in Sources */,
 				B01155FF2715935900A4C175 /* PolandDeepLink.swift in Sources */,
 				0D42455F26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift in Sources */,
 				7E2CCA8D26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift in Sources */,
