@@ -71,7 +71,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
         guard let password = loginConfiguration.password else {
             os_log("❌ [LOGIN][Authenticate] Mandatory field password is empty", log: .default, type: .error)
             let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyPass))
-            self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1020", PLLoginTrackConstants().errorDescription: localized("login_popup_passwordRequired")])
+            self.trackEvent(.info, parameters: [PLLoginTrackConstants.errorCode: "1020", PLLoginTrackConstants.errorDescription: localized("login_popup_passwordRequired")])
             self.handleError(error)
             return
         }
@@ -83,7 +83,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
         
         authProcessUseCase.execute(input: authProcessInput) { [weak self]  nextSceneResult in
             guard let self = self else { return }
-            self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "hwToken"])
+            self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants.loginType : "hwToken"])
             switch nextSceneResult.nextScene {
             case .trustedDeviceScene:
                 self.goToDeviceTrustDeviceData()
@@ -93,7 +93,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             }
         } onFailure: { [weak self]  error in
             let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-            self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+            self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
             self?.handleError(error)
         }
     }

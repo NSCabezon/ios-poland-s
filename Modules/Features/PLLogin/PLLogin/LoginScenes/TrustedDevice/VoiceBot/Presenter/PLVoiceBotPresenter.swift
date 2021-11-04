@@ -54,7 +54,7 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     }
     
     func viewDidLoad() {
-        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceVoiceBotPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDevicePinPage().page])
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceVoiceBotPage().page, extraParameters: [PLLoginTrackConstants.referer : PLLoginTrustedDevicePinPage().page])
         guard let ivrInputCode = deviceConfiguration.trustedDevice?.ivrInputCode else { return }
         self.view?.setIvrInputCode(ivrInputCode)
     }
@@ -84,7 +84,7 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
                 }
             }).onError({[weak self] error in
                 let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             })
     }
@@ -109,7 +109,7 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
                     })
                 }).onError({ [weak self] error in
                     let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 })
         })
