@@ -14,8 +14,9 @@ import CommonUseCase
 import Commons
 import DomainCommon
 
-
-protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {}
+protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
+    func loadUnrememberedLogin()
+}
 
 extension PLRememberedLoginPinCoordinatorProtocol {
     func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity) {
@@ -44,7 +45,10 @@ final class PLRememberedLoginPinCoordinator: ModuleCoordinator {
 }
 
 extension PLRememberedLoginPinCoordinator: PLRememberedLoginPinCoordinatorProtocol {
-
+    func loadUnrememberedLogin() {
+        let loginModuleCoordinator = self.dependenciesEngine.resolve(for: PLLoginModuleCoordinatorProtocol.self)
+        loginModuleCoordinator.loadUnrememberedLogin()
+    }
 }
 
 // MARK: Register Scene depencencies.

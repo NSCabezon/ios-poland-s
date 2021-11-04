@@ -80,7 +80,9 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         self.view?.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
             if configuration.challenge?.authorizationType != .softwareToken {
-                self.view?.showDeviceConfigurationErrorDialog()
+                self.view?.showDeviceConfigurationErrorDialog(completion: { [weak self] in
+                    self?.coordinator.loadUnrememberedLogin()
+                })
             } else if configuration.isFinal() {
                 self.view?.showInvalidSCADialog()
             } else if configuration.isBlocked() && time > now {

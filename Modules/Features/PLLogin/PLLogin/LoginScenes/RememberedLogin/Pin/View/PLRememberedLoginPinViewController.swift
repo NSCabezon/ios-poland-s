@@ -16,7 +16,7 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func showAccountPermanentlyBlockedDialog()
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
     func showInvalidSCADialog()
-    func showDeviceConfigurationErrorDialog()
+    func showDeviceConfigurationErrorDialog(completion: @escaping (() -> Void))
     func showUnauthorizedError()
     func setUserName(_ name: String)
     func tryPinAuth()
@@ -245,8 +245,8 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
     }
     
-    func showDeviceConfigurationErrorDialog() {
-        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError")
+    func showDeviceConfigurationErrorDialog(completion: @escaping (() -> Void)) {
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
     }
     
     func showInvalidSCADialog() {
