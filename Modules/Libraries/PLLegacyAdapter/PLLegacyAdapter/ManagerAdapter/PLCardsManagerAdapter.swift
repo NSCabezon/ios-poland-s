@@ -50,6 +50,16 @@ extension PLCardsManagerAdapter: BSANCardsManager {
         return BSANErrorResponse(nil)
     }
     
+    func getAllCardTransactions(cardDTO: SANLegacyLibrary.CardDTO,
+                                searchTerm: String?,
+                                dateFilter: DateFilter?,
+                                fromAmount: Decimal?,
+                                toAmount: Decimal?,
+                                movementType: String?,
+                                cardOperationType: String?) throws -> BSANResponse<CardTransactionsListDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
     func getCardsDataMap() throws -> BSANResponse<[String : CardDataDTO]> {
         guard let cardsDTO = cardsManager.getCards() else  {
             return BSANOkResponse([:])

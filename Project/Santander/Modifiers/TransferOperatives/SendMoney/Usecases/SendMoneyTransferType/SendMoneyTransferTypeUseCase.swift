@@ -25,24 +25,26 @@ final class SendMoneyTransferTypeUseCase: UseCase<SendMoneyTransferTypeUseCaseIn
               let sourceAccount = requestValues.sourceAccount as? PolandAccountRepresentable
         else { return .error(StringErrorOutput(nil)) }
         guard sourceAccount.type != .creditCard
-        else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: [SendMoneyTransferTypeFee(type: PolandTransferType.creditCardAccount, fee: nil)])) }
-        guard let transferType = evaluateMatrix(sourceAccount: sourceAccount, requestValues: requestValues)
+        else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: [SendMoneyTransferTypeFee(type: PolandTransferType.creditCardAccount, fee: nil)], transactionType: nil)) }
+        let matrixEvaluation = evaluateMatrix(sourceAccount: sourceAccount, requestValues: requestValues)
+        guard let transferType = matrixEvaluation.0, let transactionType = matrixEvaluation.1
         else { return .error(StringErrorOutput(nil)) }
         guard transferType.toTransferType == .one
-        else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: [SendMoneyTransferTypeFee(type: transferType.toTransferType, fee: nil)])) }
+        else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: [SendMoneyTransferTypeFee(type: transferType.toTransferType, fee: nil)], transactionType: transactionType)) }
         do {
             let fees = try getFinalfees(requestValues: requestValues)
             guard fees[.one] != nil
             else { return .error(StringErrorOutput(nil)) }
             guard transferType == .oneWithOptional
-            else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: [SendMoneyTransferTypeFee(type: transferType.toTransferType, fee: fees[transferType.toTransferType])])) }
+            else { return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: [SendMoneyTransferTypeFee(type: transferType.toTransferType, fee: fees[transferType.toTransferType])], transactionType: transactionType)) }
             let availableTransferTypes = try getAvailableTransferTypes(requestValues: requestValues, fees: fees)
             return .ok(SendMoneyTransferTypeUseCaseOkOutput(fees: availableTransferTypes.map { type in
                 return SendMoneyTransferTypeFee(
                     type: type,
                     fee: fees[type]
                 )
-            }))
+            },
+            transactionType: transactionType))
         } catch let error {
             return .error(StringErrorOutput(error.localizedDescription))
         }
@@ -55,7 +57,7 @@ private extension SendMoneyTransferTypeUseCase {
         static let plCountryCode: String = "PL"
     }
     
-    func evaluateMatrix(sourceAccount: PolandAccountRepresentable, requestValues: SendMoneyTransferTypeUseCaseInput) -> TranferTypeMatrixEvaluator.MatrixTransferType? {
+    func evaluateMatrix(sourceAccount: PolandAccountRepresentable, requestValues: SendMoneyTransferTypeUseCaseInput) -> (TranferTypeMatrixEvaluator.MatrixTransferType?, PolandTransactionType?) {
         let matrix = TranferTypeMatrixEvaluator(
             isSourceCurrencyPLN: sourceAccount.currencyRepresentable?.currencyType == .złoty,
             isDestinationAccountInternal: requestValues.isDestinationAccountInternal,
@@ -63,7 +65,7 @@ private extension SendMoneyTransferTypeUseCase {
             isOwner: requestValues.isOwner,
             isCountryPLN: requestValues.country.code == Constants.plCountryCode
         )
-        return matrix.evaluate()
+        return (matrix.evaluateTransferType(), matrix.evaluateTransactionType())
     }
     
     func getFinalfees(requestValues: SendMoneyTransferTypeUseCaseInput) throws -> [PolandTransferType: AmountRepresentable] {
@@ -132,67 +134,5 @@ struct SendMoneyTransferTypeUseCaseOkOutput: SendMoneyTransferTypeUseCaseOkOutpu
         return fees.contains { ($0.type as? PolandTransferType) == .one }
     }
     let fees: [SendMoneyTransferTypeFee]
-}
-
-enum PolandTransferType: SendMoneyTransferTypeProtocol {
-    case creditCardAccount
-    case zero
-    case one
-    case four
-    case eight
-    case a
-    
-    init(serviceId: TransferFeeServiceIdDTO) {
-        switch serviceId {
-        case .elixir:
-            self = .one
-        case .expressElixir:
-            self = .eight
-        case .bluecash:
-            self = .a
-        }
-    }
-}
-
-extension PolandTransferType {
-    var title: String? {
-        switch self {
-        case .one:
-            return localized("sendMoney_label_standardSent")
-        case .eight:
-            return localized("sendMoney_label_immediateSend")
-        case .a:
-            return localized("sendMoney_label_expressDelivery")
-        case .creditCardAccount:
-            return localized("sendMoney_title_creditCardAccount")
-        default:
-            return nil
-        }
-    }
-    
-    var subtitle: String? {
-        switch self {
-        case .one:
-            return localized("sendType_text_standar")
-        case .eight:
-            return localized("sendType_text_inmediate")
-        case .a:
-            return localized("sendType_text_express")
-        case .creditCardAccount:
-            return localized("sendMoney_text_creditCardAccount")
-        default:
-            return nil
-        }
-    }
-    
-    var limitAmount: AmountRepresentable {
-        switch self {
-        case .eight:
-            return AmountDTO(value: Decimal(5000), currency: .create(.złoty))
-        case .a:
-            return AmountDTO(value: Decimal(20000), currency: .create(.złoty))
-        default:
-            return AmountDTO(value: .zero, currency: .create(.złoty))
-        }
-    }
+    let transactionType: PolandTransactionType?
 }
