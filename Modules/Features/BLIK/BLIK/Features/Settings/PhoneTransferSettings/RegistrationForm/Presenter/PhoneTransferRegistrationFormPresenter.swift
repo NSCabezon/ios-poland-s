@@ -91,7 +91,10 @@ extension PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormP
     }
     
     func didPressChangeAccount() {
-        coordinator.showAccountSelector(with: fetchedAccounts)
+        coordinator.showAccountSelector(
+            with: fetchedAccounts,
+            selectedAccountNumber: selectedAccountNumber
+        )
     }
             
     func didPressClose() {
@@ -129,6 +132,7 @@ private extension PhoneTransferRegistrationFormPresenter {
             return
         }
         fetchedAccounts = accounts
+        selectedAccountNumber = selectedAccount.number
         let viewModel = viewModelMapper.map(selectedAccount)
         view?.setViewModel(viewModel)
     }

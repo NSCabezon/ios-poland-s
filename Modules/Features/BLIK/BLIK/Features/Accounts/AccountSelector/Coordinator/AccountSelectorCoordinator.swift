@@ -25,12 +25,14 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
     private let accountSelectionHandler: (BlikCustomerAccount) -> ()
     private let screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration
     private let accounts: [BlikCustomerAccount]
+    private let selectedAccountNumber: String
 
     init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration,
         accounts: [BlikCustomerAccount],
+        selectedAccountNumber: String,
         accountSelectionHandler: @escaping (BlikCustomerAccount) -> ()
     ) {
         self.navigationController = navigationController
@@ -38,13 +40,15 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
         self.accountSelectionHandler = accountSelectionHandler
         self.screenLocationConfiguration = screenLocationConfiguration
         self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
         self.setupDependencies()
     }
     
     public func start() {
         let presenter = AccountSelectorPresenter(
             dependenciesResolver: dependenciesEngine,
-            accounts: accounts
+            accounts: accounts,
+            selectedAccountNumber: selectedAccountNumber
         )
         let controller = AccountSelectorViewController(
             presenter: presenter,
