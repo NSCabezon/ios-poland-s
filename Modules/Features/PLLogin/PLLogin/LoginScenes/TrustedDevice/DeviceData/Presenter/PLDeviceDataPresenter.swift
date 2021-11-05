@@ -153,7 +153,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 self.goToTrustedDevicePIN()
             }.onError { [weak self] error in
                 let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
             .finally { [weak self] in

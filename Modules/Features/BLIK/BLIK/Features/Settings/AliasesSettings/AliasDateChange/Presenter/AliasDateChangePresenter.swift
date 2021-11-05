@@ -23,7 +23,7 @@ final class AliasDateChangePresenter: AliasDateChangePresenterProtocol {
         dependenciesResolver.resolve()
     }
     
-    private var coordinator: AliasSettingsCoordinatorProtocol {
+    private var coordinator: AliasDateChangeCoordinator {
         dependenciesResolver.resolve()
     }
     
@@ -86,6 +86,6 @@ private extension AliasDateChangePresenter {
                 alertType: .info,
                 position: .top
             )
-        coordinator.goBack()
+        coordinator.goBackToAliasListAndRefreshIt()
     }
 }

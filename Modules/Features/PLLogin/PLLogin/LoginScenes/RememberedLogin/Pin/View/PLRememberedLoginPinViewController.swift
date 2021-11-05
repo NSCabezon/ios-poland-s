@@ -16,22 +16,24 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func showAccountPermanentlyBlockedDialog()
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
     func showInvalidSCADialog()
-    func showDeviceConfigurationErrorDialog()
+    func showDeviceConfigurationErrorDialog(completion: @escaping (() -> Void))
     func showUnauthorizedError()
     func setUserName(_ name: String)
     func tryPinAuth()
+    var currentLoginType: PLRememberedLoginType { get set }
+}
+
+public enum PLRememberedLoginType {
+    case PIN
+    case BIOMETRICS
 }
 
 final class PLRememberedLoginPinViewController: UIViewController {
     
     let dependenciesResolver: DependenciesResolver
     private let presenter: PLRememberedLoginPinPresenterProtocol
-    private enum LoginType {
-        case PIN
-        case BIOMETRICS
-    }
-    private var currentLoginType: LoginType = .PIN
-    
+    var currentLoginType: PLRememberedLoginType = .PIN
+
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var numberPadView: NumberPadView!
@@ -98,6 +100,7 @@ private extension PLRememberedLoginPinViewController {
     }
     
     @objc func didSelectChangeLoginTypeButton() {
+        self.presenter.trackChangeLoginTypeButton()
         switch currentLoginType {
         case .PIN:
             self.currentLoginType = .BIOMETRICS
@@ -109,7 +112,7 @@ private extension PLRememberedLoginPinViewController {
     }
     
     @objc func didSelectBlikButton() {
-        //self.presenter.didSelectBlik()
+        self.presenter.didSelectBlik()
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
     
@@ -164,6 +167,7 @@ private extension PLRememberedLoginPinViewController {
             self.pinTextField.text = ""
             self.configureNumberPadButtons()
         }
+        self.presenter.trackView()
     }
     
     func setupBiometry() {
@@ -245,8 +249,8 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
     }
     
-    func showDeviceConfigurationErrorDialog() {
-        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError")
+    func showDeviceConfigurationErrorDialog(completion: @escaping (() -> Void)) {
+        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
     }
     
     func showInvalidSCADialog() {

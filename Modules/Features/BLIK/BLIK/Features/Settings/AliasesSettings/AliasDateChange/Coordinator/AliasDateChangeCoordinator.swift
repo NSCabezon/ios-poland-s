@@ -14,6 +14,7 @@ import PLCommons
 
 protocol AliasDateChangeCoordinatorProtocol: ModuleCoordinator {
     func goBack()
+    func goBackToAliasListAndRefreshIt()
 }
 
 final class AliasDateChangeCoordinator: ModuleCoordinator {
@@ -43,6 +44,20 @@ final class AliasDateChangeCoordinator: ModuleCoordinator {
 extension AliasDateChangeCoordinator: AliasDateChangeCoordinatorProtocol {
     func goBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func goBackToAliasListAndRefreshIt() {
+        let aliasListController = navigationController?
+            .viewControllers
+            .first(where: { $0 is AliasListSettingsViewController })
+        
+        guard let controller = aliasListController as? AliasListSettingsViewController else {
+            navigationController?.popToRootViewController(animated: true)
+            return
+        }
+        
+        navigationController?.popToViewController(controller, animated: true)
+        controller.reloadView()
     }
 }
 

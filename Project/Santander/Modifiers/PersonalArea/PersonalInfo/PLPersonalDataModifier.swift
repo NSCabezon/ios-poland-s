@@ -11,9 +11,10 @@ import Commons
 class PLPersonalDataModifier: PersonalDataModifier {
     func buildPersonalData(with personalInfo: PersonalInfoWrapper?) -> PersonalDataInfo? {
         guard let personalInfo = personalInfo else { return nil }
+        let polandAddress = polandAddress(personalInfo.addressNodes)
         var personalDataInfo = PersonalDataInfo()
-        personalDataInfo.mainAddress = personalInfo.fullAddress
-        personalDataInfo.correspondenceAddress = personalInfo.fullAddress
+        personalDataInfo.mainAddress = polandAddress
+        personalDataInfo.correspondenceAddress = polandAddress
         personalDataInfo.phone = maskedPhone(personalInfo.phone)
         personalDataInfo.smsPhone = maskedPhone(personalInfo.phone)
         let email = (personalInfo.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : personalInfo.email
@@ -27,5 +28,10 @@ private extension PLPersonalDataModifier {
         guard let phone = phone, phone.count > 3 else { return nil }
         let asterisks = String(repeating: "*", count: phone.count - 3)
         return asterisks + String(phone.suffix(3))
+    }
+    
+    func polandAddress(_ nodes: [String]?) -> String? {
+        guard let nodes = nodes, nodes.count >= 5 else { return nil }
+        return "\(nodes[2]) \(nodes[3]) \(nodes[4]) \(nodes[1])"
     }
 }

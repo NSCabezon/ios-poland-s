@@ -120,14 +120,14 @@ private extension  PLUnrememberedLoginIdPresenter {
                 self?.loginProcessUseCase.executeNonPersistedLogin(identification: info.identification) { [weak self] config in
                     guard let config = config else {
                         let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField))
-                        self?.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localized("login_popupError_validateData")])
+                        self?.trackEvent(.info, parameters: [PLLoginTrackConstants.errorCode: "1000", PLLoginTrackConstants.errorDescription: localized("login_popupError_validateData")])
                         self?.handleError(error)
                         return
                     }
                     self?.loginSuccess(configuration: config)
                 } onFailure: { [weak self]  error in
                     let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
             default:
@@ -164,7 +164,7 @@ private extension  PLUnrememberedLoginIdPresenter {
         self.view?.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
             if configuration.isFinal() {
-                self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localized("pl_login_alert_attemptLast")])
+                self.trackEvent(.info, parameters: [PLLoginTrackConstants.errorCode: "1000", PLLoginTrackConstants.errorDescription: localized("pl_login_alert_attemptLast")])
                 self.view?.showInvalidSCADialog {
                     self.goToPasswordScene(configuration)
                 }

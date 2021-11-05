@@ -8,14 +8,15 @@
 import Foundation
 import Commons
 
-public struct PLLoginTrackConstants {
-    public let referer = "referer"
-    public let trustedImage = "trusted_image"
-    public let errorCode = "error_code"
-    public let errorDescription = "error_description"
-    public let loginType = "login_type"
-
-    public init() {}
+public enum PLLoginTrackConstants {
+    public static let referer = "referer"
+    public static let trustedImage = "trusted_image"
+    public static let errorCode = "error_code"
+    public static let errorDescription = "error_description"
+    public static let loginType = "login_type"
+    public static let pin = "PIN"
+    public static let touchID = "touchID"
+    public static let faceID = "faceID"
 }
 
 public struct PLUnrememberedLoginOnboardingPage: PageWithActionTrackable {
@@ -85,31 +86,24 @@ public struct PLUnrememberedLoginHardwareTokenPage: PageWithActionTrackable {
     public init() {}
 }
 
-public struct PLRememberedLoginPinPage: PageWithActionTrackable {
+public struct PLRememberedLoginPage: PageWithActionTrackable {
+    static public let pin = "/login/known_user/pin"
+    static public let biometric = "/login/known_user/biometric"
+
     public typealias ActionType = Action
-    public let page = "/login/known_user/pin"
+    public let page: String
     public enum Action: String {
         case clickBlik = "click_blik"
-        case clickRecoverPassword = "click_recover_password"
-        case clickBiometric = "click_biometric"
-        case clickActivateTouchID = "click_activate_touchID"
-        case userPermanentlyBlocked = "user_permanently_blocked"
-        case userTemporarilyBlocked = "user_temporarily_blocked"
-        case loginSuccess = "login_success"
-        case apiError = "api_error"
-    }
-    public init() {}
-}
-
-public struct PLRememberedLoginBiometricPage: PageWithActionTrackable {
-    public typealias ActionType = Action
-    public let page = "/login/known_user/biometric"
-    public enum Action: String {
         case clickPin = "click_pin"
+        case clickBiometric = "click_biometric"
         case userPermanentlyBlocked = "user_permanently_blocked"
         case userTemporarilyBlocked = "user_temporarily_blocked"
         case loginSuccess = "login_success"
+        case info = "info"
         case apiError = "api_error"
     }
-    public init() {}
+    
+    public init(_ page: String) {
+        self.page = page
+    }
 }

@@ -117,7 +117,7 @@ extension PLTrustedDeviceHardwareTokenPresenter: PLTrustedDeviceHardwareTokenPre
                 })
                 .onError { [weak self] error in
                     let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
         })
@@ -145,7 +145,7 @@ private extension PLTrustedDeviceHardwareTokenPresenter {
             })
             .onError({ [weak self] error in
                 let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             })
     }

@@ -8,6 +8,7 @@
 import Foundation
 import Commons
 import PLCommons
+import SANPLLibrary
 
 final class PLRememberedLoginProcessUseCase {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector
@@ -173,7 +174,12 @@ final class PLRememberedLoginProcessUseCase {
                 configuration.challengeConfirmed = true
                 return Scenario(useCase: self.authenticateUseCase, input: caseInput)
             })
-            .onSuccess { output in
+            .onSuccess { [weak self] output in
+                guard let self = self else { return }
+                if configuration.challenge?.authorizationType != .softwareToken {
+                    let manager: PLManagersProviderProtocol = self.dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
+                    manager.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
+                }
                 onSuccess(configuration)
             }
             .onError { error in
