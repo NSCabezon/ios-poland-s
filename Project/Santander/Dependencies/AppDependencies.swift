@@ -279,6 +279,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: SessionDataManager.self) { _ in
             return self.defaultSessionDataManager
         }
+        self.dependencieEngine.register(for: LoadGlobalPositionUseCase.self) { resolver in
+            return DefaultLoadGlobalPositionUseCase(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
             let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
             let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
