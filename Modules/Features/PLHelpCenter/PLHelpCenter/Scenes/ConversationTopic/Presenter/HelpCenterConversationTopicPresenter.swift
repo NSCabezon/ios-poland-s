@@ -8,6 +8,7 @@ protocol HelpCenterConversationTopicPresenterProtocol: MenuTextWrapperProtocol {
 
     func backButtonSelected()
     func setUp(with: HelpCenterConfig.AdvisorDetails)
+    func performActionFor(subjectDetails: HelpCenterConfig.SubjectDetails, mediumType: String, baseAddress: String)
 }
 
 final class HelpCenterConversationTopicPresenter {
@@ -50,7 +51,7 @@ extension HelpCenterConversationTopicPresenter: HelpCenterConversationTopicPrese
         self.view?.setup(with: [viewModel])
     }
     
-    private func performActionFor(subjectDetails: HelpCenterConfig.SubjectDetails, mediumType: String, baseAddress: String) {
+    func performActionFor(subjectDetails: HelpCenterConfig.SubjectDetails, mediumType: String, baseAddress: String) {
         if subjectDetails.loginActionRequired {
             // TODO: Implement the flow that requires user to log-in [MOBILE-7891]
             Toast.show(localized("generic_alert_notAvailableOperation"))

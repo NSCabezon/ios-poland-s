@@ -144,6 +144,10 @@ final class FakePLManagersProvider: PLManagersProviderProtocol {
     func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
         FakePLHelpCenterManager(mockData: mockData)
     }
+    
+    func getCardOperativesManager() -> PLCardOperativesManagerProtocol {
+        fatalError()
+    }
 }
 
 final class FakePLHelpCenterManager: PLHelpCenterManagerProtocol {
