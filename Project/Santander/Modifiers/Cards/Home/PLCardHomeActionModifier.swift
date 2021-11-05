@@ -9,6 +9,7 @@ import Cards
 import Models
 import UI
 import Commons
+import CreditCardRepayment
 
 enum PLCardHomeActionIdentifier: String {
     case sendMoneyPL = "SendMoneyPoland"
@@ -257,6 +258,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
             goToCardBlock(entity)
         case .onCard:
             goToCardUnblock(entity)
+        case cardRepaymentPL:
+            openCreditCardRepayment(creditCardEntity: entity)
         default:
             switch action.trackName {
             case PLCardHomeActionIdentifier.blockPL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
@@ -321,6 +324,11 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
         default:
             return .cancel
         }
+    }
+    
+    private func openCreditCardRepayment(creditCardEntity: CardEntity) {
+        let coordinator = self.dependenciesResolver.resolve(for: CreditCardRepaymentModuleCoordinator.self)
+        coordinator.start(with: creditCardEntity)
     }
 }
 

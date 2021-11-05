@@ -35,7 +35,7 @@ final class CreateCreditCardRepaymentFormUseCase: UseCase<CreateCreditCardRepaym
             return .error(.init(CreateCreditCardRepaymentFormError.noCards.rawValue))
         }
         
-        let card = makeCard(from: cardsDTOs, accountNumber: requestValues.accountNumber?.number)
+        let card = makeCard(from: cardsDTOs, creditCardEntity: requestValues.creditCardEntity)
         let steps = makeSteps(from: card)
         
         let accountsForRepayment = accountsDTOs
@@ -71,17 +71,19 @@ final class CreateCreditCardRepaymentFormUseCase: UseCase<CreateCreditCardRepaym
 }
 
 private extension CreateCreditCardRepaymentFormUseCase {
-    private func makeCard(from cardsDTOs: [CCRCardDTO], accountNumber: String?) -> CCRCardEntity? {
-        let cards = cardsDTOs.compactMap(CCRCardEntity.mapCardFromDTO(_:))
-        
-        switch (cards.count, accountNumber) {
-        case (_, .some(let number)):
-            return cards.first(where: {$0.relatedAccount.number == number})
+    private func makeCard(from cardsDTOs: [CCRCardDTO], creditCardEntity: CardEntity?) -> CCRCardEntity? {
+        let card: CCRCardDTO?
+        switch (cardsDTOs.count, creditCardEntity) {
+        case (_, .some(let cardEntity)):
+            card = cardsDTOs.first(where: {$0.isEqualTo(cardEntity.dto) })
         case (1, _):
-            return cards.first
+            card = cardsDTOs.first
         default:
-            return nil
+            card = nil
         }
+        
+        guard let card = card else { return nil }
+        return CCRCardEntity.mapCardFromDTO(card)
     }
     
     private func makeSteps(from card: CCRCardEntity?) -> [CreditCardRepaymentStep] {
@@ -96,7 +98,7 @@ private extension CreateCreditCardRepaymentFormUseCase {
 extension CreateCreditCardRepaymentFormUseCase: CreateCreditCardRepaymentFormUseCaseProtocol {}
 
 struct CreateCreditCardRepaymentFormUseCaseOkInput {
-    let accountNumber: CreditCardAccountNumber?
+    let creditCardEntity: CardEntity?
 }
 
 struct CreateCreditCardRepaymentFormUseCaseOkOutput {

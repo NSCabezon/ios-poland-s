@@ -8,11 +8,11 @@
 import LoginCommon
 import PLLogin
 import Commons
+import PLCommons
 import RetailLegacy
 import PersonalArea
 import BLIK
 import PLHelpCenter
-import PLCommons
 import CreditCardRepayment
 
 final class AppNavigationDependencies {

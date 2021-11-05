@@ -16,7 +16,6 @@ final class CreditCardRepaymentDataSource {
     private enum CreditCardRepaymentServiceType: String {
         case accountsForDebit = "/accounts/for-debit/1"
         case accountsForCredit = "/accounts/for-credit/1"
-        case globalPositionCards = "/gps"
         case send = "/transactions/domestic/create/accepted"
     }
     
@@ -50,7 +49,7 @@ extension CreditCardRepaymentDataSource: CreditCardRepaymentDataSourceProtocol {
                     headers: headers,
                     queryParams: queryParams,
                     contentType: .urlEncoded,
-                    localServiceName: .globalPosition,
+                    localServiceName: .accountsForCredit,
                     authorization: .oauth
                 )
             )
@@ -74,7 +73,7 @@ extension CreditCardRepaymentDataSource: CreditCardRepaymentDataSourceProtocol {
                     headers: headers,
                     queryParams: queryParams,
                     contentType: .urlEncoded,
-                    localServiceName: .globalPosition,
+                    localServiceName: .accountsForDebit,
                     authorization: .oauth
                 )
             )
@@ -101,7 +100,7 @@ extension CreditCardRepaymentDataSource: CreditCardRepaymentDataSourceProtocol {
                     headers: headers,
                     queryParams: queryParams,
                     contentType: .json,
-                    localServiceName: .globalPosition,
+                    localServiceName: .creditCardRepaymentSend,
                     authorization: .oauth
                 )
             )

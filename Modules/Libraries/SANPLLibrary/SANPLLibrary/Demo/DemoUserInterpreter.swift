@@ -67,6 +67,8 @@ public enum PLLocalServiceName: String {
     case notificationTokenRegister = "notificationTokenRegister"
     case cardDetail = "cardDetail"
     case accountsForDebit = "accountsForDebit"
+    case accountsForCredit = "accountsForCredit"
+    case creditCardRepaymentSend = "creditCardRepaymentSend"
     case getPayees
     case recentRecipients
     case ibanValidation = "ibanValidation"

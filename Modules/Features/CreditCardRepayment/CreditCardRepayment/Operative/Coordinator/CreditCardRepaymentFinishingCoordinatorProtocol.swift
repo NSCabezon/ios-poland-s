@@ -4,7 +4,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 
 protocol CreditCardRepaymentFinishingCoordinatorProtocol: OperativeFinishingCoordinator {
-    func goToGlobalPosition(_ coordinator: OperativeContainerCoordinatorProtocol)
+    func goToGlobalPosition()
     func goToMakeAnotherPayment(_ coordinator: OperativeContainerCoordinatorProtocol)
 }
 
@@ -19,7 +19,7 @@ extension CreditCardRepaymentFinishingCoordinatorProtocol {
         }
         switch finishingOption {
         case .globalPosition:
-            self.goToGlobalPosition(coordinator)
+            self.goToGlobalPosition()
         case .makeAnotherPayment:
             self.goToMakeAnotherPayment(coordinator)
         }

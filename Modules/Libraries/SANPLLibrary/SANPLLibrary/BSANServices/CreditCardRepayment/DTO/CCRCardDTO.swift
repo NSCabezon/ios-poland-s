@@ -35,3 +35,9 @@ public extension CCRCardDTO {
         )
     }
 }
+
+extension CCRCardDTO: CardDTOByPanComparable {
+    public var panIdentifier: String? {
+        self.virtualPan
+    }
+}

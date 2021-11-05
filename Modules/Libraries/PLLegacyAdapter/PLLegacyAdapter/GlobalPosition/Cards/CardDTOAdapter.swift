@@ -34,6 +34,8 @@ final class CardDTOAdapter {
         default:
             cardDTO.cardContractStatusType = .cancelled
         }
+        // NOTE: contractNumber (plCard.virtualPan) is used in CardDTOByPanComparable
+        // So remember to make proper change also there in case of changing it here.
         cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plCard.virtualPan)
         cardDTO.cardTypeDescription = plCard.type
         return cardDTO

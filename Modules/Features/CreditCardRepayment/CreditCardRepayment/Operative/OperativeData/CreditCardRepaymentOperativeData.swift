@@ -3,5 +3,5 @@ import Models
 
 struct CreditCardRepaymentOperativeData {
     let formManager: CreditCardRepaymentFormManager
-    var creditCardAccountNumber: CreditCardAccountNumber?
+    var creditCardEntity: CardEntity?
 }
