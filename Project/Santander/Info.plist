@@ -21,11 +21,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.95</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>95</string>
-	<key>DEMO_AVAILABLE</key>
-	<string>$(DEMO_AVAILABLE)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>DEFAULT_DEMO_USER</key>
 	<string>$(DEFAULT_DEMO_USER)</string>
 	<key>DEFAULT_MAGIC</key>
@@ -48,6 +46,8 @@
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -87,7 +87,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-    <key>NSFaceIDUsageDescription</key>
-    <string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 </dict>
 </plist>
