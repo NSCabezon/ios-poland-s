@@ -23,7 +23,16 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
-        return .failure(ServiceError.unknown)
+        let iban = input.destinationAccount
+        let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban
+        let parameters = CheckTransactionParameters(customerProfile: "CEKE_3", transactionAmount: input.transactionAmount, hasSplitPayment: false)
+        let response = try bsanTransferManager.checkTransaction(parameters: parameters, accountReceiver: ibanFormatted)
+        switch response {
+        case .success(let transactionAvailability):
+            return .success(transactionAvailability)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     func getFinalFee(input: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], Error> {

@@ -12,6 +12,7 @@ protocol TransfersDataSourceProtocol {
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
     func checkFinalFee(_ parameters: CheckFinalFeeParameters, destinationAccount: String) throws -> Result<CheckFinalFeeDTO, NetworkProviderError>
+    func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -27,6 +28,7 @@ final class TransfersDataSource {
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
         case checkFinalFee = "/transactions/domestic/final-fee/"
+        case checkTransactionAvailability = "/payhubpl-prodef/api/instant_payments/accounts/"
     }
     
     private let networkProvider: NetworkProvider
@@ -127,6 +129,24 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                 queryParams: queryParameters,
                                                                                                                 contentType: .urlEncoded,
                                                                                                                 localServiceName: .checkFinalFee)
+        )
+        return result
+    }
+    
+    func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let queryParameters = try? parameters.asDictionary() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName:String = TransferServiceType.checkTransactionAvailability.rawValue + accountReceiver + "/check_transaction_availability"
+        let absoluteUrl = baseUrl.replacingOccurrences(of: "/oneapp", with: "")
+        let result: Result<CheckTransactionDTO, NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
+                                                                                                                    serviceUrl: absoluteUrl,
+                                                                                                                    method: .get,
+                                                                                                                    headers: self.headers,
+                                                                                                                    queryParams: queryParameters,
+                                                                                                                    contentType: .queryString,
+                                                                                                                    localServiceName: .checkTransaction)
         )
         return result
     }

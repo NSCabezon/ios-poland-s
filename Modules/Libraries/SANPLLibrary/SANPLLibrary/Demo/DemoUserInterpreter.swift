@@ -77,4 +77,5 @@ public enum PLLocalServiceName: String {
     case cardDisable
     case trustedDeviceInfo = "trustedDeviceInfo"
     case checkFinalFee = "checkFinalFee"
+    case checkTransaction = "checkTransaction"
 }
