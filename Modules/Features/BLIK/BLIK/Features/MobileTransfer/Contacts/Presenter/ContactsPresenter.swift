@@ -1,5 +1,6 @@
 import Models
 import Commons
+import DomainCommon
 import PLUI
 import PLCommons
 import PLCommonOperatives
@@ -17,7 +18,6 @@ final class ContactsPresenter {
     let dependenciesResolver: DependenciesResolver
     private let viewModelMapper = ContactViewModelMapper()
     private let accountsViewModelMapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-    private let queue: DispatchQueue
     private var contact: Contact?
     weak var selectableContactDelegate: FormContactSelectable?
     
@@ -32,13 +32,15 @@ final class ContactsPresenter {
     private var getAccountsUseCase: GetAccountsForDebitProtocol {
         dependenciesResolver.resolve()
     }
+    
+    private var useCaseHandler: UseCaseHandler {
+        dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
 
     init(dependenciesResolver: DependenciesResolver,
-         queue: DispatchQueue = .global(),
          selectableContactDelegate: FormContactSelectable?) {
         self.dependenciesResolver = dependenciesResolver
         self.selectableContactDelegate = selectableContactDelegate
-        self.queue = queue
     }
 }
 
@@ -83,7 +85,7 @@ private extension ContactsPresenter {
         view?.showLoader()
 
         Scenario(useCase: getContactsUseCase)
-            .execute(on: queue)
+            .execute(on: useCaseHandler)
             .onSuccess {[weak self] output in
                 self?.verifyContacts(output.contacts)
             }
@@ -99,7 +101,7 @@ private extension ContactsPresenter {
         let phoneNumbers = contacts.map { $0.phoneNumber }
         
         Scenario(useCase: verifyContactsUseCase, input: .init(phoneNumbers: phoneNumbers))
-            .execute(on: queue)
+            .execute(on: useCaseHandler)
             .onSuccess {[weak self] numbers in
                 self?.view?.hideLoader {
                     let filteredContacts = contacts.filter { contact in
@@ -124,7 +126,7 @@ private extension ContactsPresenter {
         self.contact = contact
 
         Scenario(useCase: getAccountsUseCase)
-            .execute(on: queue)
+            .execute(on: useCaseHandler)
             .onSuccess {[weak self] accounts in
                 self?.view?.hideLoader {
                     self?.mapToViewModels(accounts)

@@ -2,11 +2,11 @@ import Foundation
 
 struct MobileTransferFormValidator {
     
-    func validateForm(form: MobileTransferForm) -> InvalidTransferFormMessages {
+    func validateForm(form: MobileTransferForm, validateNumber: Bool) -> InvalidTransferFormMessages {
         var toShortNumberMessage: String?
         var tooLowAmount: String?
         var tooMuchAmount: String?
-        if let phoneNumber = form.phoneNumber, phoneNumber.count < 9 {
+        if validateNumber, let phoneNumber = form.phoneNumber, phoneNumber.count < 9 {
             if phoneNumber.isEmpty {
                 toShortNumberMessage = "#Pole nie może być puste"
             } else {

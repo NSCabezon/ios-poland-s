@@ -155,6 +155,7 @@ extension MobileTransferFormViewController: MobileTransferFormViewControllerProt
         formView.showInvalidFormMessages(messages)
         if messages.shouldContinueButtonBeEnabled,
            currentForm.phoneNumber != nil,
+           !(currentForm.phoneNumber?.isEmpty ?? true),
            currentForm.amount != nil {
             bottomView.enableButton()
         } else {
@@ -166,14 +167,14 @@ extension MobileTransferFormViewController: MobileTransferFormViewControllerProt
         formView.fillWith(contact: contact)
         let form = formView.getCurrentForm()
         if contact != nil {
-            presenter.startValidation(for: form)
+            presenter.startValidation(for: form, validateNumber: true)
         }
     }
 }
 extension MobileTransferFormViewController: MobileTransferFormViewProtocol {
-    func didChangeForm() {
+    func didChangeForm(phoneNumberStartedEdited: Bool) {
         let form = formView.getCurrentForm()
-        presenter.startValidation(for: form)
+        presenter.startValidation(for: form, validateNumber: phoneNumberStartedEdited)
     }
     
     func showContacts() {
