@@ -142,6 +142,7 @@
 		A10AC765272A9FBC00050CF9 /* PREPROD.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A10AC764272A9FBC00050CF9 /* PREPROD.xcconfig */; };
 		A1192F75272805B600B83B42 /* UAT.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1192F74272805B600B83B42 /* UAT.xcconfig */; };
 		A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1B81B122726D3B300714A3E /* Regression.xcconfig */; };
+		A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
 		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
@@ -331,6 +332,7 @@
 		A10AC764272A9FBC00050CF9 /* PREPROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PREPROD.xcconfig; sourceTree = "<group>"; };
 		A1192F74272805B600B83B42 /* UAT.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UAT.xcconfig; sourceTree = "<group>"; };
 		A1B81B122726D3B300714A3E /* Regression.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Regression.xcconfig; sourceTree = "<group>"; };
+		A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = centrum24.pl.cer; sourceTree = "<group>"; };
 		A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
 		A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPLCardsOtherOperativesWebConfigurationUseCase.swift; sourceTree = "<group>"; };
 		A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardsOtherOperativesWebConfiguration.swift; sourceTree = "<group>"; };
@@ -868,6 +870,7 @@
 		66BC8A5A263FFCFB00654CC5 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				A11F154B27331F90008BC9EA /* Certificates */,
 				42CEB7BC26E8EDD600349ACD /* GoogleServices */,
 				66BC8A6D263FFFF000654CC5 /* PLAppConfig.swift */,
 				66BC8A5F263FFD7C00654CC5 /* XCConfig.swift */,
@@ -878,17 +881,9 @@
 				A1B81B122726D3B300714A3E /* Regression.xcconfig */,
 				A1192F74272805B600B83B42 /* UAT.xcconfig */,
 				A10AC764272A9FBC00050CF9 /* PREPROD.xcconfig */,
-				66BC8A62263FFDC500654CC5 /* Certificates */,
 				66BC8C8B26407C3400654CC5 /* Legacy */,
 			);
 			path = Configuration;
-			sourceTree = "<group>";
-		};
-		66BC8A62263FFDC500654CC5 /* Certificates */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Certificates;
 			sourceTree = "<group>";
 		};
 		66BC8C8B26407C3400654CC5 /* Legacy */ = {
@@ -995,6 +990,14 @@
 				9E92904126F9EB0800A0178A /* PLPublicMenuViewContainer.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		A11F154B27331F90008BC9EA /* Certificates */ = {
+			isa = PBXGroup;
+			children = (
+				A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */,
+			);
+			path = Certificates;
 			sourceTree = "<group>";
 		};
 		B01155E42715818200A4C175 /* OneAppInit */ = {
@@ -1177,6 +1180,7 @@
 				66BC8DFC2640A58D00654CC5 /* README.md in Resources */,
 				A10AC765272A9FBC00050CF9 /* PREPROD.xcconfig in Resources */,
 				66BC8A6A263FFE4C00654CC5 /* PRO.xcconfig in Resources */,
+				A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */,
 				A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */,
 				42A7628D26FD0578000C5D67 /* GoogleService-Info.plist in Resources */,
 				66BC8A6B263FFE4C00654CC5 /* DEV.xcconfig in Resources */,

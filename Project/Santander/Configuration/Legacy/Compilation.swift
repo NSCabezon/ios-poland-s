@@ -34,7 +34,7 @@ struct Compilation: PLCompilationProtocol {
     let appCenterIdentifier: String = "" // TODO: Add PL appCenter distribution identifier
     let isLoadPfmEnabled: Bool = false
     var isTrustInvalidCertificateEnabled: Bool {
-        return XCConfig["IS_TRUST_INVALID_CERTIFICATE_ENABLED"] ?? false
+        return XCConfig["TRUST_INVALID_CERTIFICATE"] ?? false
     }
     let managerWallProductionEnvironment: Bool = false
     let appGroupsIdentifier: String = ""

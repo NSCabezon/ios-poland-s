@@ -16,7 +16,7 @@ final class URLSessionPinningDelegate: NSObject, URLSessionDelegate {
     }
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        guard self.isTrustInvalidCertificateEnabled else {
+        guard !self.isTrustInvalidCertificateEnabled else {
             completionHandler(.useCredential, nil)
             return
         }
