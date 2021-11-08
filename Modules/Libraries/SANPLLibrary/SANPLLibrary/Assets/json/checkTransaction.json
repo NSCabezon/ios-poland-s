@@ -1,0 +1,16 @@
+{
+    "12345678Z": {
+        "0": {
+            "timestamp": "2021-08-26T10:20:33.718061",
+            "expressElixirStatus": {
+                "code": "4",
+                "description": "Transaction amount is greater than system allowed amount"
+            },
+            "blueCashStatus": {
+                "code": "0",
+                "description": "Available"
+            }
+        }
+
+    }
+}

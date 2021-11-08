@@ -61,7 +61,7 @@ extension CreditCardRepaymentOperative: OperativeSetupCapable {
     
     func performSetup(success: @escaping () -> Void, failed: @escaping (OperativeSetupError) -> Void) {
         let useCase = self.dependencies.resolve(for: CreateCreditCardRepaymentFormUseCaseProtocol.self)
-        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(accountNumber: operativeData.creditCardAccountNumber)
+        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(creditCardEntity: operativeData.creditCardEntity)
         Scenario(useCase: useCase, input: requestedValue)
             .execute(on: dependencies.resolve())
             .onSuccess { [weak self] output in

@@ -23,7 +23,16 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
-        return .failure(ServiceError.unknown)
+        let iban = input.destinationAccount
+        let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban
+        let parameters = CheckTransactionParameters(customerProfile: "CEKE_3", transactionAmount: input.transactionAmount, hasSplitPayment: false)
+        let response = try bsanTransferManager.checkTransaction(parameters: parameters, accountReceiver: ibanFormatted)
+        switch response {
+        case .success(let transactionAvailability):
+            return .success(transactionAvailability)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     func getFinalFee(input: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], Error> {
@@ -40,7 +49,7 @@ struct TransfersDataRepository: PLTransfersRepository {
         return .failure(ServiceError.unknown)
     }
     
-    func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: GenericTransferInputRepresentable) throws -> Result<ValidateAccountTransferRepresentable, Error> {
+    func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput) throws -> Result<ValidateAccountTransferRepresentable, Error> {
         guard let iban = nationalTransferInput.ibanRepresentable  else { return .failure(ServiceError.unknown) }
         let codBban = iban.checkDigits + iban.codBban.replacingOccurrences(of: " ", with: "")
         if codBban.count > 0 {
@@ -63,11 +72,11 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
-    func validateDeferredTransfer(originAcount: AccountRepresentable, scheduledTransferInput: ScheduledTransferInputRepresentable) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+    func validateDeferredTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
         return .failure(ServiceError.unknown)
     }
     
-    func validatePeriodicTransfer(originAcount: AccountRepresentable, scheduledTransferInput: ScheduledTransferInputRepresentable) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+    func validatePeriodicTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
         return .failure(ServiceError.unknown)
     }
     
@@ -83,15 +92,15 @@ struct TransfersDataRepository: PLTransfersRepository {
         return .failure(ServiceError.unknown)
     }
     
-    func confirmGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: GenericTransferInputRepresentable, otpValidation: OTPValidationRepresentable?, otpCode: String?) throws -> Result<TransferConfirmAccountRepresentable, Error> {
+    func confirmGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput, otpValidation: OTPValidationRepresentable?, otpCode: String?) throws -> Result<TransferConfirmAccountRepresentable, Error> {
         return .failure(ServiceError.unknown)
     }
     
-    func confirmDeferredTransfer(originAccount: AccountRepresentable, scheduledTransferInput: ScheduledTransferInputRepresentable, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<Void, Error> {
+    func confirmDeferredTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<Void, Error> {
         return .failure(ServiceError.unknown)
     }
     
-    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: ScheduledTransferInputRepresentable, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
         return .failure(ServiceError.unknown)
     }
     

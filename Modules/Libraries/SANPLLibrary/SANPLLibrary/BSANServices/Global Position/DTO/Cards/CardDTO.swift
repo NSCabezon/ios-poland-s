@@ -35,3 +35,9 @@ public enum CardRole: String {
     case plenipotentiary = "PLENIPOTENTIARY"
     case notOwner = "NOT_OWNER"
 }
+
+extension CardDTO: CardDTOByPanComparable {
+    public var panIdentifier: String? {
+        self.virtualPan
+    }
+}

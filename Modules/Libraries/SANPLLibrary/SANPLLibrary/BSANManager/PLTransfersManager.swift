@@ -13,6 +13,7 @@ public protocol PLTransfersManagerProtocol {
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
     func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError>
+    func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -94,6 +95,15 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
                 return .failure(NetworkProviderError.other)
             }
             return .success(feeRecords)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError> {
+        let result = try self.transferDataSource.checkTransaction(parameters: parameters, accountReceiver: accountReceiver)
+        switch result {
+        case .success(let availabilityResponse):
+            return .success(availabilityResponse)
         case .failure(let error):
             return .failure(error)
         }

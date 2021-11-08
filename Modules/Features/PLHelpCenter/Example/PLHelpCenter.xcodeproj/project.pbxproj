@@ -14,6 +14,8 @@
 		00B66AEC26EB71F5003D2351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		00D88A9526CA855C00072757 /* FakeLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D88A9426CA855B00072757 /* FakeLoginManager.swift */; };
 		00D88A9726CA856900072757 /* FakeStringLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D88A9626CA856900072757 /* FakeStringLoader.swift */; };
+		0E562B282728155200F38F70 /* HelpCenterConversationTopicPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E562B272728155200F38F70 /* HelpCenterConversationTopicPresenterTests.swift */; };
+		0E562B2B272817B000F38F70 /* HelpCenterConversationTopicViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E562B2A272817B000F38F70 /* HelpCenterConversationTopicViewMock.swift */; };
 		3602051026EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3602050F26EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift */; };
 		36B57AEF2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B57AEE2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -40,6 +42,8 @@
 		00B66AD526EB5D37003D2351 /* GetHelpCenterConfigUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetHelpCenterConfigUseCaseTests.swift; sourceTree = "<group>"; };
 		00D88A9426CA855B00072757 /* FakeLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLoginManager.swift; sourceTree = "<group>"; };
 		00D88A9626CA856900072757 /* FakeStringLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStringLoader.swift; sourceTree = "<group>"; };
+		0E562B272728155200F38F70 /* HelpCenterConversationTopicPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCenterConversationTopicPresenterTests.swift; sourceTree = "<group>"; };
+		0E562B2A272817B000F38F70 /* HelpCenterConversationTopicViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCenterConversationTopicViewMock.swift; sourceTree = "<group>"; };
 		32C2D1A34A1871C2A023688C /* Pods_PLHelpCenter_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PLHelpCenter_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3602050F26EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpCenterSceneTypeUseCaseTests.swift; sourceTree = "<group>"; };
 		36B57AEE2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift; sourceTree = "<group>"; };
@@ -106,6 +110,22 @@
 				36B57AEE2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		0E562B262728150800F38F70 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				0E562B272728155200F38F70 /* HelpCenterConversationTopicPresenterTests.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		0E562B292728174C00F38F70 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				0E562B2A272817B000F38F70 /* HelpCenterConversationTopicViewMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		1BCBDEB90305F216CBAB5949 /* Pods */ = {
@@ -176,8 +196,10 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				0E562B292728174C00F38F70 /* Mocks */,
 				00B66AC626EB5D37003D2351 /* Commons */,
 				00B66AD426EB5D37003D2351 /* UseCases */,
+				0E562B262728150800F38F70 /* Presenters */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -532,9 +554,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				00B66AEA26EB71EE003D2351 /* FakeLoginManager.swift in Sources */,
+				0E562B282728155200F38F70 /* HelpCenterConversationTopicPresenterTests.swift in Sources */,
 				00B66AE526EB5D38003D2351 /* GetHelpCenterConfigUseCaseTests.swift in Sources */,
 				00B66AEB26EB71F1003D2351 /* FakeStringLoader.swift in Sources */,
 				00B66AEC26EB71F5003D2351 /* ViewController.swift in Sources */,
+				0E562B2B272817B000F38F70 /* HelpCenterConversationTopicViewMock.swift in Sources */,
 				00B66ADC26EB5D38003D2351 /* Constants.swift in Sources */,
 				3602051026EF88AE004CCE6A /* GetHelpCenterSceneTypeUseCaseTests.swift in Sources */,
 				36B57AEF2720493A0038E093 /* GetHelpCenterUserContextForOnlineAdvisorUseCaseTests.swift in Sources */,

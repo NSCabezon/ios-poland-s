@@ -10,11 +10,13 @@ import Cards
 import Models
 
 class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionFactoryModifierProtocol {
-    
-    var addPDFDetail: Bool { true }
+    var addPDFDetail: Bool = true
     
     func customViewType() -> ActionButtonFillViewType {
         .none
     }
-    
+
+    func getCustomActions(for card: CardEntity) -> [CardActionType]? {
+        return [.pdfDetail, .share(nil)]
+    }
 }

@@ -58,7 +58,7 @@ public extension CCRAccountDTO {
     }
     
     struct AccountDetails: Codable {
-        public let accountType: Int
+        public let accountType: Int?
         public let sequenceNumber: Int
     }
 }

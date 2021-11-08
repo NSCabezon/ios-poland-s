@@ -81,9 +81,12 @@ private extension BLIKSummaryPresenter {
         
         let action: OperativeSummaryStandardBodyActionViewModel = .init(
             image: "logout",
-            title: "Wyloguj",
+            title: localized("pl_blik_text_summLogOut"),
             titleAccessibilityIdentifier: AccessibilityBLIK.SummaryOperativeSummary.actionLogout.id,
-            action: {}
+            action: {
+                let sessionManager = self.dependenciesResolver.resolve(for: CoreSessionManager.self)
+                sessionManager.finishWithReason(.logOut)
+            }
         )
         
         let footerItems: [OperativeSummaryStandardFooterItemViewModel] = [
