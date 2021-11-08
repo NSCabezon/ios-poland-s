@@ -16,6 +16,7 @@ struct IBANValidationDTO: Codable {
 struct BranchDTO: Codable {
     let id: Int?
     let name: String?
+    let external: Bool?
 }
 
 struct OwnerDTO: Codable {
@@ -24,28 +25,8 @@ struct OwnerDTO: Codable {
     let city: String?
 }
 
-extension IBANValidationDTO: PLTransferNationalRepresentable {
-    var accountNumber: String? {
-        self.number
-    }
-    
-    var issueDate: Date? {
-        nil
-    }
-    
-    var destinationAccountDescription: String? {
-        nil
-    }
-    
-    var originAccountDescription: String? {
-        nil
-    }
-    
-    var payerName: String? {
-        nil
-    }
-    
-    var scaRepresentable: SCARepresentable? {
-        nil
+extension IBANValidationDTO: CheckInternalAccountRepresentable {
+    var isExternal: Bool {
+        return self.branch?.external ?? false
     }
 }

@@ -44,14 +44,9 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
-    
-    func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
-        return .failure(ServiceError.unknown)
-    }
-    
-    func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput) throws -> Result<ValidateAccountTransferRepresentable, Error> {
-        guard let iban = nationalTransferInput.ibanRepresentable  else { return .failure(ServiceError.unknown) }
-        let codBban = iban.checkDigits + iban.codBban.replacingOccurrences(of: " ", with: "")
+        
+    func checkInternalAccount(input: CheckInternalAccountInput) throws -> Result<CheckInternalAccountRepresentable, Error> {
+        let codBban = input.destinationAccount.checkDigits + input.destinationAccount.codBban.replacingOccurrences(of: " ", with: "")
         if codBban.count > 0 {
             let start = codBban.index(codBban.startIndex, offsetBy: 2)
             let end = codBban.index(codBban.startIndex, offsetBy: 10)
@@ -70,6 +65,14 @@ struct TransfersDataRepository: PLTransfersRepository {
         } else {
             return .failure(ServiceError.unknown)
         }
+    }
+    
+    func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
+        return .failure(ServiceError.unknown)
+    }
+    
+    func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput) throws -> Result<ValidateAccountTransferRepresentable, Error> {
+        return .failure(ServiceError.unknown)
     }
     
     func validateDeferredTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {

@@ -1,18 +1,28 @@
 {
     "12345678Z": {
-        "0": {
+        "0":
+        {
             "number": "09109023980000000135424612",
             "owner": {
-              "customerName": "Pan JANUSZ M",
-              "street": "UL. PIOTROWICE 21",
-              "city": "TYCHY"
+                "customerName": "Pan JANUSZ M",
+                "street": "UL. PIOTROWICE 21",
+                "city": "TYCHY"
             },
             "branch": {
-              "id": 10902398,
-              "name": "Oddzial banku"
+                "id": 10902398,
+                "name": "Oddzial banku"
             },
             "currency": 999,
             "currencyCode": "PLN"
-          }
+        },
+        "1":
+        {
+            "number": "06105000997466000039417084",
+            "branch": {
+                "id": 10500099,
+                "name": "ING BANK LSKI S.A.",
+                "external": true
+            }
+        }
     }
 }
