@@ -78,7 +78,7 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
         return getPublicFilesEnvironments()
     }
     
-    private func getPublicFilesEnvironments() ->  [PublicFilesEnvironmentDTO] {
+    private func getPublicFilesEnvironments() -> [PublicFilesEnvironmentDTO] {
         var publicFilesEnvironments: [PublicFilesEnvironmentDTO] = []
         
         #if DEV
