@@ -28,7 +28,7 @@ final class TimeImageAndGreetingViewModel {
         switch parts.hour! {
         case 3..<12:
             return .goodMorning
-        case 12..<20:
+        case 12..<19:
             return .goodAfternoon
         default:
             return .goodNight

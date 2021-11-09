@@ -179,7 +179,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private let exploreProductsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.exploreProductsPL.rawValue,
-                               localizedKey: "menu_link_contract",
+                               localizedKey: "frequentOperative_button_contract",
                                icon: "icnExploreProducts",
                                section: "contract",
                                location: "",

@@ -53,8 +53,8 @@ extension PLLoanModifier: LoansModifierProtocol {
         return false
     }
 
-    var sortByMostRecent: Bool {
-        return false
+    var transactionsSortType: LoanTransactionsSortType {
+        return .byMostRecent
     }
 
     func getLoansOptions(for loan: LoanEntity?, with loanDetail: LoanDetailEntity?) -> [LoansHomeOption]? {

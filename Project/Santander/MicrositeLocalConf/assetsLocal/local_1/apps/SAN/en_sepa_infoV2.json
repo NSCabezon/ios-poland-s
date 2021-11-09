@@ -274,9 +274,7 @@
       },
       {
          "code":"CA",
-         "name":"Canada",
-         " "         "currency":"CAD",
-         " "         "sepa":true
+         "name":"Canada"
       },
       {
          "code":"CHF",

@@ -6,7 +6,7 @@ import SANLegacyLibrary
 import IQKeyboardManagerSwift
 
 protocol MobileTransferFormViewProtocol: AnyObject {
-    func didChangeForm()
+    func didChangeForm(phoneNumberStartedEdited: Bool)
     func showContacts()
 }
 
@@ -24,6 +24,7 @@ final class MobileTransferFormView: UIView {
     private let transferAmountAccessoryView = CurrencyAccessoryView()
     private let titleView = LisboaTextField()
     private let dateView = LisboaTextField()
+    private var phoneNumberDidStartedEdited = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -222,7 +223,10 @@ private extension MobileTransferFormView {
 
 extension MobileTransferFormView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        delegate?.didChangeForm()
+        if !phoneNumberDidStartedEdited {
+            phoneNumberDidStartedEdited = !(phoneNumberTextField.text?.isEmpty ?? true)
+        }
+        delegate?.didChangeForm(phoneNumberStartedEdited: phoneNumberDidStartedEdited)
     }
 }
 

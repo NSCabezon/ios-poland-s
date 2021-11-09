@@ -94,15 +94,14 @@ class PLTransferManagerTest: Tests {
         }
     }
     
-    func test_doIBANValidation_shouldReturnAccountOwnerData() {
+    func test_doIBANValidation_shouldReturnIsInternalAccount() {
         self.setUpDemoUser()
         let accountNumber = "09109023980000000135424612"
         let branchId = 10902398
         let result = try? transferManager.doIBANValidation(IBANValidationParameters(accountNumber: accountNumber, branchId: "\(branchId)"))
         switch result {
         case .success(let response):
-            let plResponse = response as? PLValidateAccountTransferRepresentable
-            XCTAssert(plResponse?.number == accountNumber)
+            XCTAssert(!response.isExternal)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not validate IBAN - Failure")

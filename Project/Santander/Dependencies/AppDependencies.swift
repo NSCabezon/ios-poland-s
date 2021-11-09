@@ -65,8 +65,9 @@ final class AppDependencies {
     private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
 
         let hostProvider = PLHostProvider()
-        // TODO: Check value isTrustInvalidCertificateEnabled
-        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
+        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider,
+                                                demoInterpreter: demoInterpreter,
+                                                isTrustInvalidCertificateEnabled: compilation.isTrustInvalidCertificateEnabled)
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,

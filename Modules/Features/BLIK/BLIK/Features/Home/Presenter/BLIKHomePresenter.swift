@@ -220,17 +220,24 @@ private extension BLIKHomePresenter {
                 }
             }
             .onError {[weak self] error in
-                guard let useCaseError = GetTrnToConfErrorResult(rawValue: error.getErrorDesc() ?? ""),
-                      useCaseError == .watchStatus else {
+                let useCaseError = GetTrnToConfErrorResult(rawValue: error.getErrorDesc() ?? "")
+                switch useCaseError {
+                case .watchStatus:
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+                        self?.getTransactionsToConfirm()
+                    }
+                case .noConnection:
+                    self?.view?.hideLoader() {
+                        self?.view?.showErrorMessage(localized("pl_blik_alert_text_unstableConnection"), onConfirm: {[weak self] in
+                            self?.coordinator.pop()
+                        })
+                    }
+                default:
                     self?.view?.hideLoader() {
                         self?.handleServiceInaccessible()
                     }
-                    return
                 }
-                
-                DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-                    self?.getTransactionsToConfirm()
-                }
+
             }
     }
     
