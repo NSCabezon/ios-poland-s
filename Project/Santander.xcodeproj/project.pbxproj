@@ -351,6 +351,9 @@
 		B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDebugMenuFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLHelpCenterFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSideMenuNavigationDependencies.swift; sourceTree = "<group>"; };
+		B0C54DCB2733E0DC000A63E4 /* Regression.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Regression.entitlements; sourceTree = "<group>"; };
+		B0C54DCC2733E0DC000A63E4 /* UAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UAT.entitlements; sourceTree = "<group>"; };
+		B0C54DCD2733E0DC000A63E4 /* Preprod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Preprod.entitlements; sourceTree = "<group>"; };
 		B5A65F333D237DE4A62189CD /* Pods-Santander.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-debug.xcconfig"; sourceTree = "<group>"; };
 		BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaSectionsSecurityModifier.swift; sourceTree = "<group>"; };
 		BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalAreaSectionsProvider.swift; sourceTree = "<group>"; };
@@ -809,6 +812,9 @@
 				669A37E2272167CB00C0F272 /* Intern.entitlements */,
 				669A37E12721628B00C0F272 /* Release.entitlements */,
 				42CEB7CA26E91D7400349ACD /* Dev.entitlements */,
+				B0C54DCD2733E0DC000A63E4 /* Preprod.entitlements */,
+				B0C54DCB2733E0DC000A63E4 /* Regression.entitlements */,
+				B0C54DCC2733E0DC000A63E4 /* UAT.entitlements */,
 			);
 			path = Entitlement;
 			sourceTree = "<group>";
@@ -2113,8 +2119,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Preprod.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -2125,9 +2131,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.97;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod;
+				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PREPROD";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2196,7 +2202,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Preprod.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 97;
@@ -2208,9 +2214,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.97;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod;
+				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2284,8 +2290,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/UAT.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -2296,9 +2302,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.97;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG UAT";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2367,8 +2373,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: CIBER SOLUTIONS SL (EXTINGUIDA)";
+				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/UAT.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -2379,9 +2385,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.97;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2449,8 +2455,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: CIBER SOLUTIONS SL (EXTINGUIDA)";
+				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Regression.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -2461,9 +2467,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.97;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.regression;
+				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2537,8 +2543,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Regression.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -2549,9 +2555,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.97;
-				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.regression;
+				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG REG";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2640,7 +2646,7 @@
 				MARKETING_VERSION = 0.0.97;
 				PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.dev;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.*";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.dev";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
