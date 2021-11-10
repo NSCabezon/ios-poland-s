@@ -5,6 +5,8 @@
 import Foundation
 import UIKit
 import Models
+import Repository
+import Commons
 import UI
 
 enum Greeting: String {
@@ -16,10 +18,14 @@ enum Greeting: String {
 final class TimeImageAndGreetingViewModel {
     
     static let shared = TimeImageAndGreetingViewModel()
+    
+    private var themeType: PLRememberedLoginBackgroundType?
     private let backgroundMinId: Int = 1
     private let backgroundMaxId: Int = 10
-    var theme: BackgroundImagesTheme = .nature
-    lazy var imageId: Int = { Int.random(in: self.backgroundMinId...self.backgroundMaxId) }()
+    private let defaultTheme: BackgroundImagesTheme = .nature
+    private lazy var randomId: Int = {
+        return Int.random(in: self.backgroundMinId...self.backgroundMaxId)
+    }()
     
     var greetingTextKey: Greeting {
         let now = Date()
@@ -34,8 +40,36 @@ final class TimeImageAndGreetingViewModel {
             return .goodNight
         }
     }
+
+    private var backgroundImage: UIImage? {
+        guard let type = themeType else { return nil }
+        switch type {
+        case .assets(let name):
+            return Assets.image(named: name)
+        case .documents(let data):
+            guard let data = data else { return nil }
+            return UIImage(data: data)
+        }
+    }
     
-    var backgroundImage: UIImage? {
-        return UIImage(named: "\(theme.name)_\(imageId)", in: Bundle(for: Self.self), compatibleWith: nil)
+    public func getBackground() -> UIImage {
+        return backgroundImage ?? Assets.image(named: "\(defaultTheme.name)_\(randomId)") ?? UIImage()
+    }
+    
+    public func setThemeType(_ theme: BackgroundImagesTheme?, resolver: DependenciesResolver) {
+        let theme = theme ?? defaultTheme
+        guard theme.isLocalTheme == false else {
+            self.themeType = .assets(name: "\(theme.name)_\(randomId)")
+            return
+        }
+        let _: BackgroundImageManagerProtocol = resolver.resolve()
+        let getBackgroundImageRepository: GetBackgroundImageRepositoryProtocol = resolver.resolve()
+        let images: [Data] = getBackgroundImageRepository.get(theme.name)
+        guard images.count > backgroundMaxId - backgroundMinId else {
+            self.themeType = .documents(data: nil)
+            return
+        }
+        let index: Int = randomId - backgroundMinId
+        self.themeType = .documents(data: images[index])
     }
 }

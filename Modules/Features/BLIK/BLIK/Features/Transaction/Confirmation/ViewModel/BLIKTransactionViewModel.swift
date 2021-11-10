@@ -67,4 +67,22 @@ struct BLIKTransactionViewModel {
     var transactionDate: String {
         DateFormats.toString(date: transaction.date ?? Date(), output: .YYYYMMDD)
     }
+    
+    var aliasLabelUsedInTransaction: String? {
+        switch transaction.aliasContext {
+        case let .transactionWasPerformedWithAlias(alias):
+            return alias.label
+        case .none, .receivedAliasProposal:
+            return nil
+        }
+    }
+    
+    var proposedAlias: Transaction.AliasProposal? {
+        switch transaction.aliasContext {
+        case let .receivedAliasProposal(proposal):
+            return proposal
+        case .none, .transactionWasPerformedWithAlias:
+            return nil
+        }
+    }
 }

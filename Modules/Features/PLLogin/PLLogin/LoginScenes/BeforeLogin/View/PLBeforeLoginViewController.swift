@@ -13,6 +13,7 @@ import UI
 protocol PLBeforeLoginViewControllerProtocol: PLGenericErrorPresentableCapable {
     func showDeprecatedVersionDialog()
     func loadDidFinish()
+    func imageReady()
     func loadStart()
 }
 
@@ -64,7 +65,7 @@ private extension PLBeforeLoginViewController {
     }
     
     func setupViews() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.backgroundColor = .black
         backgroundImageView.contentMode = .scaleAspectFill
         
         let inset = self.backgroundImageView.center.y 
@@ -82,8 +83,11 @@ private extension PLBeforeLoginViewController {
 }
 
 extension PLBeforeLoginViewController : PLBeforeLoginViewControllerProtocol {
+    func imageReady() {
+        self.backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
+    }
+    
     func loadDidFinish() {
-        self.backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
         self.dismissLoading()
     }
     

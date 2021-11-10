@@ -7,6 +7,7 @@
 
 import Menu
 import Commons
+import SANPLLibrary
 
 final class PLPublicMenuViewContainer {
     private let resolver: DependenciesResolver
@@ -22,21 +23,65 @@ final class PLPublicMenuViewContainer {
         self.viewComponent.dataComponent = data
         self.configureStackView()
         self.createFirstRow()
+        self.createATM()
+        self.createThirdRow()
+        if isTrustedDevice() {
+            self.createMobileAuthorizationView()
+        }
+        
         return self.mainStackView
     }
 }
 
 private extension PLPublicMenuViewContainer {
     func createFirstRow() {
+        let otherUserView = self.viewComponent.createOtherUserView()
+        let informationView = self.viewComponent.createInformationView()
+        let servicesView = self.viewComponent.createServicesView()
+        let stackViewCol = UIStackView()
+        stackViewCol.translatesAutoresizingMaskIntoConstraints = false
+        stackViewCol.axis = .vertical
+        stackViewCol.spacing = 8
+        stackViewCol.distribution = .fillEqually
+        if isTrustedDevice() {
+            stackViewCol.addArrangedSubview(otherUserView)
+        }
+        stackViewCol.addArrangedSubview(informationView)
+        let stackViewRow = UIStackView()
+        stackViewRow.translatesAutoresizingMaskIntoConstraints = false
+        stackViewRow.axis = .horizontal
+        stackViewRow.spacing = 8
+        stackViewRow.distribution = .fillEqually
+        stackViewRow.heightAnchor.constraint(equalToConstant: 128.0).isActive = true
+        stackViewRow.addArrangedSubview(stackViewCol)
+        stackViewRow.addArrangedSubview(servicesView)
+        self.mainStackView.addArrangedSubview(stackViewRow)
+    }
+    
+    func createATM() {
+        let view = self.viewComponent.createPLATMView()
+        view.heightAnchor.constraint(equalToConstant: 88.0).isActive = true
+        self.mainStackView.addArrangedSubview(view)
+    }
+    
+    func createThirdRow() {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.distribution = .fillEqually
         stackView.heightAnchor.constraint(equalToConstant: 128.0).isActive = true
-        let exampleView = self.viewComponent.setExampleView()
-        stackView.addArrangedSubview(exampleView)
+        let offerView = self.viewComponent.createOfferView()
+        let contactView = self.viewComponent.createContactView()
+        stackView.addArrangedSubview(offerView)
+        stackView.addArrangedSubview(contactView)
         self.mainStackView.addArrangedSubview(stackView)
+    }
+    
+    func createMobileAuthorizationView() {
+        let view = self.viewComponent.createMobileAuthorizationView()
+        view.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        self.mainStackView.addArrangedSubview(view)
     }
     
     func configureStackView() {
@@ -47,4 +92,14 @@ private extension PLPublicMenuViewContainer {
     }
 }
 
+private extension PLPublicMenuViewContainer {
+    func isTrustedDevice() -> Bool {
+        let managerProvider: PLManagersProviderProtocol = self.resolver.resolve(for: PLManagersProviderProtocol.self)
+        let trustedDeviceManager = managerProvider.getTrustedDeviceManager()
+        guard let _ = trustedDeviceManager.getTrustedDeviceHeaders() else {
+            return false
+        }
+        return true
+    }
+}
 extension PLPublicMenuViewContainer: PublicMenuViewContainerProtocol { }

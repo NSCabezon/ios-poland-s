@@ -83,7 +83,7 @@ final class PLSmsAuthViewController: UIViewController {
 
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-//            .setRightActions(.menu(action: #selector(didSelectMenu)))
+            .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
 
@@ -138,7 +138,7 @@ private extension PLSmsAuthViewController {
     }
 
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
     }
 

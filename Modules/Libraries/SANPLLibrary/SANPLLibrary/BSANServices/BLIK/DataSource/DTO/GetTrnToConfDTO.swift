@@ -9,6 +9,7 @@ public struct GetTrnToConfDTO: Decodable {
     public let transferType: TransferType
     public let merchant: Merchant?
     public let amount: Amount
+    public let aliases: AliasData
     
     public struct Merchant: Decodable {
         public let shortName: String?
@@ -29,5 +30,28 @@ public struct GetTrnToConfDTO: Decodable {
         case blikPosRefund = "BLIK_POS_REFUND"
         case blikWebRefund = "BLIK_WEB_REFUND"
         case blikAtmWithdrawalPsp = "BLIK_ATM_WITHDRAWAL_PSP"
+    }
+    
+    public struct AliasData: Decodable {
+        public let proposal: [AliasProposal]
+        public let auth: [AliasAuth]
+    }
+    
+    public struct AliasProposal: Decodable {
+        public let alias: String
+        public let type: AliasType
+        public let label: String
+    }
+    
+    public struct AliasAuth: Decodable {
+        public let type: AliasType
+        public let label: String
+    }
+    
+    public enum AliasType: String, Decodable {
+        case md = "MD"
+        case uid = "UID"
+        case cookie = "COOKIE"
+        case hce = "HCE"
     }
 }

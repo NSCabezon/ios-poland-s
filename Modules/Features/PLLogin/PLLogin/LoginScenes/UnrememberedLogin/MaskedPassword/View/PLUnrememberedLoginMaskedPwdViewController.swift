@@ -80,7 +80,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
     
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-//            .setRightActions(.menu(action: #selector(didSelectMenu)))
+            .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
     
@@ -95,9 +95,7 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
 
 extension PLUnrememberedLoginMaskedPwdViewController: PLUnrememberedLoginMaskedPwdViewProtocol {
     
-    func didUpdateEnvironments() {
-    }
-    
+
     func resetForm() {
         //TODO: Need to add a reset for PLUIInputCodeView
     }
@@ -144,7 +142,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
     }
     

@@ -62,14 +62,11 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
         case .success(let result):
             return .ok(.init(summary: mapper.map(summary: result, transferType: transferType)))
         case .failure(let error):
-            let errorBody: ErrorDTO? = error.getErrorBody()
-
-            guard errorBody?.errorCode1 == .customerTypeDisabled,
-                  let errorType = errorBody?.errorCode2 else {
+            let blikError = BlikError(with: error.getErrorBody())
+            guard blikError?.errorCode1 == .customerTypeDisabled else {
                 return .error(.init(nil))
             }
-
-            return .error(.init(errorType.errorKey))
+            return .error(.init(blikError?.errorKey))
         }
     }
 }
