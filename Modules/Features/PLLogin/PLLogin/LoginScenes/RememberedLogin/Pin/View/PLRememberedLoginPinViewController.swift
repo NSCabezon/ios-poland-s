@@ -86,7 +86,7 @@ private extension PLRememberedLoginPinViewController {
     
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-//            .setRightActions(.menu(action: #selector(didSelectMenu)))
+            .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
     
