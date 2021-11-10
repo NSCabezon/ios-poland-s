@@ -104,7 +104,9 @@ final class AppDependencies {
     private lazy var servicesLibrary: ServicesLibrary = {
         return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
     }()
-
+    private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
+        return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
+    }()
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
@@ -276,6 +278,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PersonalDataModifier.self) { _ in
             PLPersonalDataModifier()
+        }
+        self.dependencieEngine.register(for: SessionDataManagerModifier.self) { _ in
+            return self.sessionDataManagerModifier
         }
         self.dependencieEngine.register(for: SessionDataManager.self) { _ in
             return self.defaultSessionDataManager
