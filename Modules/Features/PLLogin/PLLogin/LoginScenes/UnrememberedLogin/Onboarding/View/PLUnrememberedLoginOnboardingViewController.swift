@@ -63,7 +63,7 @@ private extension PLUnrememberedLoginOnboardingViewController {
     
     func setupViews() {
         sanIconImageView?.image = Assets.image(named: "icnSanWhiteLisboa")
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
         
         titleLabel.font = .santander(family: .text, type: .light, size: 40)

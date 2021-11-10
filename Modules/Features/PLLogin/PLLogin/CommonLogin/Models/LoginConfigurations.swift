@@ -43,10 +43,10 @@ public enum RememberedLoginType: Equatable {
 
 public final class RememberedLoginConfiguration {
 
-    public let userIdentifier: String
+    public var userIdentifier: String
     public let isTrustedDevice: Bool
-    public let isBiometricsAvailable: Bool
-    public let isPinAvailable: Bool
+    public var isBiometricsAvailable: Bool
+    public var isPinAvailable: Bool
     
     public var userPref: RememberedLoginUserPreferencesConfiguration?
     public var unblockRemainingTimeInSecs: Double?

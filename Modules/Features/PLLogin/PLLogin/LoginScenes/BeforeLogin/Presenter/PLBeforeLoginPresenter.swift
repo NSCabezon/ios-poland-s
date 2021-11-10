@@ -10,6 +10,11 @@ import Commons
 import LoginCommon
 import PLCommons
 
+public enum PLRememberedLoginBackgroundType {
+    case assets(name: String)
+    case documents(data: Data?)
+}
+
 protocol PLBeforeLoginPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLBeforeLoginViewControllerProtocol? { get set }
     func viewDidLoad()
@@ -21,7 +26,7 @@ final class PLBeforeLoginPresenter {
     weak var view: PLBeforeLoginViewControllerProtocol?
     internal let dependenciesResolver: DependenciesResolver
     var isDeprecatedVersion:Bool = false
-    
+
     private var beforeLoginUseCase: PLBeforeLoginUseCase {
         self.dependenciesResolver.resolve(for: PLBeforeLoginUseCase.self)
     }
@@ -62,27 +67,33 @@ private extension PLBeforeLoginPresenter {
     func validateVersionAndUser() {
         view?.loadStart()
         var configuration = RememberedLoginConfiguration(userIdentifier: "")
-
+        
         Scenario(useCase: validateVersionUseCase).execute(on: self.dependenciesResolver.resolve())
-        .then(scenario: { [weak self] _ -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+        .then(scenario: { [weak self] _ -> Scenario<Void, PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
             guard let self = self else { return nil }
-            return Scenario(useCase: self.beforeLoginUseCase)
+            return Scenario(useCase: self.getUserPreferencesUseCase)
         })
-        .then(scenario: { [weak self] result -> Scenario<PLGetUserPrefEntityUseCaseInput, PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+        .then(scenario: { [weak self] result -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
             guard let self = self else { return nil }
-            
-            configuration = RememberedLoginConfiguration(userIdentifier: String(result.userId),
-                                                         isBiometricsAvailable: result.isBiometricsAvailable,
-                                                         isPinAvailable: result.isPinAvailable)
-            let caseInput = PLGetUserPrefEntityUseCaseInput(userId: result.userId)
-            return Scenario(useCase: self.getUserPreferencesUseCase, input: caseInput)
-        })
-        .onSuccess({ [weak self] result in
+                
+            if let userId = result.userId {
+                configuration = RememberedLoginConfiguration(userIdentifier: userId)
+            }
             configuration.userPref = RememberedLoginUserPreferencesConfiguration(name: result.name,
                                                                                  theme: result.theme,
                                                                                  biometricsEnabled: result.biometricsEnabled)
-            TimeImageAndGreetingViewModel.shared.theme = result.theme
-            self?.navigate(configuration: configuration)
+            TimeImageAndGreetingViewModel.shared.setThemeType(result.theme, resolver: self.dependenciesResolver)
+            self.view?.imageReady()
+            return Scenario(useCase: self.beforeLoginUseCase)
+        })
+        .onSuccess({ [weak self] result in
+            guard let self = self else { return }
+            if configuration.userIdentifier == "" {
+                configuration.userIdentifier = String(result.userId)
+            }
+            configuration.isBiometricsAvailable = result.isBiometricsAvailable
+            configuration.isPinAvailable = result.isPinAvailable
+            self.navigate(configuration: configuration)
         })
         .onError({[weak self] error in
             self?.handleError(error)

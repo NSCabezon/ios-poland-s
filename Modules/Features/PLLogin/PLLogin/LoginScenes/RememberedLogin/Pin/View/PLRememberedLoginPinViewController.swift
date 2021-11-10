@@ -119,7 +119,7 @@ private extension PLRememberedLoginPinViewController {
     func setupViews() {
         numberPadView.delegate = self
         sanIconImageView?.image = Assets.image(named: "logoSanLogin")
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
     }
     

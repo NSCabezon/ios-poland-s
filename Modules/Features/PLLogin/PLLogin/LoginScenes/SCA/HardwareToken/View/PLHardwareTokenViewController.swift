@@ -117,7 +117,7 @@ private extension PLHardwareTokenViewController {
     }
 
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
     }
 
