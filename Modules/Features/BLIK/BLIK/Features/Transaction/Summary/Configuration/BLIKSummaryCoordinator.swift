@@ -6,6 +6,7 @@ import Operative
 protocol BLIKSummaryCoordinatorProtocol {
     func goToGlobalPosition()
     func goToMakeAnotherPayment()
+    func goToAliasRegistration(with proposedAlias: Transaction.AliasProposal)
 }
 
 final class BLIKSummaryCoordinator: ModuleCoordinator {
@@ -40,6 +41,10 @@ extension BLIKSummaryCoordinator: BLIKSummaryCoordinatorProtocol {
             return
         }
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func goToAliasRegistration(with proposedAlias: Transaction.AliasProposal) {
+        // TODO:- Present alias registration form
     }
 }
 

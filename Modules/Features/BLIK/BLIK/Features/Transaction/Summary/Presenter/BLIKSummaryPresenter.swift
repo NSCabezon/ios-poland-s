@@ -79,15 +79,46 @@ private extension BLIKSummaryPresenter {
                                subTitle: viewModel.dateString,
                                accessibilityIdentifier: AccessibilityBLIK.SummaryOperativeSummary.itemDate.id))
         
-        let action: OperativeSummaryStandardBodyActionViewModel = .init(
-            image: "logout",
-            title: localized("pl_blik_text_summLogOut"),
-            titleAccessibilityIdentifier: AccessibilityBLIK.SummaryOperativeSummary.actionLogout.id,
-            action: {
-                let sessionManager = self.dependenciesResolver.resolve(for: CoreSessionManager.self)
-                sessionManager.finishWithReason(.logOut)
-            }
-        )
+        if let aliasLabel = viewModel.aliasLabelUsedInTransaction {
+            bodyItems.append(
+                .init(
+                    title: localized("pl_blik_text_withoutCode"),
+                    subTitle: aliasLabel
+                )
+            )
+        }
+        
+        var actions: [OperativeSummaryStandardBodyActionViewModel] = [
+            .init(
+                image: "logout",
+                title: localized("pl_blik_text_summLogOut"),
+                titleAccessibilityIdentifier: AccessibilityBLIK.SummaryOperativeSummary.actionLogout.id,
+                action: {
+                    let sessionManager = self.dependenciesResolver.resolve(for: CoreSessionManager.self)
+                    sessionManager.finishWithReason(.logOut)
+                }
+            )
+        ]
+        
+        if let aliasProposal = viewModel.proposedAlias {
+            let title: String = {
+                switch aliasProposal.type {
+                case .cookie:
+                    return "#Zaufaj przeglądarkę"
+                case .uid:
+                    return "#Zaufaj sklep"
+                }
+            }()
+            actions.append(
+                .init(
+                    image: "icnShareBostonRedLight",
+                    title: title,
+                    action: { [weak self] in
+                        self?.coordinator.goToAliasRegistration(with: aliasProposal)
+                    }
+                )
+            )
+        }
         
         let footerItems: [OperativeSummaryStandardFooterItemViewModel] = [
             .init(imageKey: "icnEnviarDinero",
@@ -112,7 +143,7 @@ private extension BLIKSummaryPresenter {
         ]
         return OperativeSummaryStandardViewModel(header: headerViewModel,
                                                  bodyItems: bodyItems,
-                                                 bodyActionItems: [action],
+                                                 bodyActionItems: actions,
                                                  footerItems: footerItems)
         
     }
