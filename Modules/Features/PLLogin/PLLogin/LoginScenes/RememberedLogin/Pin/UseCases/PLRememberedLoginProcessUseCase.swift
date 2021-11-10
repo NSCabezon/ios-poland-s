@@ -80,8 +80,8 @@ final class PLRememberedLoginProcessUseCase {
     
     public func executePersistedLogin(configuration: RememberedLoginConfiguration,
                                       rememberedLoginType: RememberedLoginType,
-                                      onSuccess: @escaping (RememberedLoginConfiguration?) -> Void,
-                                      onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
+                                      onSuccess: @escaping (RememberedLoginConfiguration) -> Void,
+                                      onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>, RememberedLoginConfiguration) -> Void) {
         var identity: SecIdentity?
         var encryptedStoredUserKey: String?
         let identification = configuration.userIdentifier
@@ -116,13 +116,13 @@ final class PLRememberedLoginProcessUseCase {
                 return Scenario(useCase: self.getCertificateUseCase, input: caseInput)
             })
             .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-                guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+                guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
                 identity = output.secIdentity
                 return Scenario(useCase: self.getStoredUserKey)
             })
             .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-                guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+                guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
                 switch rememberedLoginType {
                 case .Pin(value: _):
@@ -139,7 +139,7 @@ final class PLRememberedLoginProcessUseCase {
                       let encryptedStoredUserKey = encryptedStoredUserKey,
                       let appId = output.appId,
                       let randomKey = Self.getSoftwareTokenKey(for: rememberedLoginType, with: configuration)?.randomKey
-                else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+                else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
                 let pin = Self.getPinIfNecessary(from: rememberedLoginType)
                 let caseInput = PLLoginAuthorizationDataEncryptionUseCaseInput(appId: appId,
@@ -153,7 +153,7 @@ final class PLRememberedLoginProcessUseCase {
             .then(scenario: { [weak self] output ->Scenario<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self,
                       let softwareTokenType = Self.getSoftwareTokenKey(for: rememberedLoginType, with: configuration)?.softwareTokenType,
-                      let certificate = identity?.PEMFormattedCertificate() else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+                      let certificate = identity?.PEMFormattedCertificate() else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
                 let authorizationId = String(describing: configuration.pendingChallenge?.authorizationId)
                 let caseInput = PLRememberedLoginConfirmChallengeUseCaseInput(userId: identification,
@@ -165,28 +165,25 @@ final class PLRememberedLoginProcessUseCase {
             })
             .then(scenario: { [weak self] Void ->Scenario<PLAuthenticateUseCaseInput, PLAuthenticateUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self,
-                      let challenge = configuration.challenge else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value"))); return nil }
+                      let challenge = configuration.challenge else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
                 let authEntity = SecondFactorDataAuthenticationEntity(challenge: challenge, value: "")
                 let caseInput = PLAuthenticateUseCaseInput(encryptedPassword: nil,
                                                            userId: identification,
                                                            secondFactorData: authEntity)
-                configuration.challengeConfirmed = true
                 return Scenario(useCase: self.authenticateUseCase, input: caseInput)
             })
-            .onSuccess { [weak self] output in
-                guard let self = self else { return }
-                if configuration.challenge?.authorizationType != .softwareToken {
-                    let manager: PLManagersProviderProtocol = self.dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
-                    manager.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
-                }
+            .onSuccess { output in
                 onSuccess(configuration)
             }
             .onError { error in
-                if configuration.challengeConfirmed {
-                    onSuccess(configuration)
-                } else {
-                    onFailure(error)
+                onFailure(error, configuration)
+            }
+            .finally { [weak self] in
+                guard let self = self else { return }
+                if let authType = configuration.challenge?.authorizationType, authType != .softwareToken {
+                    let manager: PLManagersProviderProtocol = self.dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
+                    manager.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
                 }
             }
     }

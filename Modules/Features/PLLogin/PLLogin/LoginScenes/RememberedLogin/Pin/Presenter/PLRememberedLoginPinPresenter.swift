@@ -23,7 +23,6 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func didSelectMenu()
     func getBiometryTypeAvailable() -> BiometryTypeEntity
     func setAllowLoginBlockedUsers()
-    func loginSuccess(configuration: RememberedLoginConfiguration)
     func startBiometricAuth()
     func trackView()
     func trackChangeLoginTypeButton()
@@ -82,39 +81,41 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         }
     }
 
-    func loginSuccess(configuration: RememberedLoginConfiguration) {
+    func evaluateLoginResult(configuration: RememberedLoginConfiguration,
+                             error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>?) {
         guard allowLoginBlockedUsers else {
-            self.view?.dismissLoading(completion: { [weak self] in
-                self?.view?.showAccountTemporaryBlockedDialog(configuration)
-            })
+            self.view?.showAccountTemporaryBlockedDialog(configuration)
             return
         }
-        let time = Date(timeIntervalSince1970: configuration.unblockRemainingTimeInSecs ?? 0)
-        let now = Date()
         
-        self.view?.dismissLoading(completion: { [weak self] in
-            guard let self = self else { return }
-            if configuration.challenge?.authorizationType != .softwareToken {
-                self.view?.showDeviceConfigurationErrorDialog(completion: { [weak self] in
-                    self?.coordinator.loadUnrememberedLogin()
-                })
-            } else if configuration.isFinal() {
-                self.view?.showInvalidSCADialog()
-            } else if configuration.isBlocked() && time > now {
-                self.trackEvent(.userTemporarilyBlocked)
-                self.allowLoginBlockedUsers = false
-                self.view?.showAccountTemporaryBlockedDialog(configuration)
-            } else {
-                if self.view?.currentLoginType == PLRememberedLoginType.PIN {
-                    self.trackLoginSuccessWithPin()
-                }
-                else {
-                    self.trackLoginSuccessWithBiometryType()
-                }
-                self.openSessionAndNavigateToGlobalPosition()
-                self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
-            }
-        })
+        let time = Date(timeIntervalSince1970: configuration.unblockRemainingTimeInSecs ?? 0)
+        if let authType = configuration.challenge?.authorizationType, authType != .softwareToken {
+            self.view?.showDeviceConfigurationErrorDialog(completion: { [weak self] in
+                self?.coordinator.loadUnrememberedLogin()
+            })
+        } else if configuration.isFinal() {
+            self.view?.showInvalidSCADialog()
+        } else if configuration.isBlocked() && time > Date() {
+            self.trackEvent(.userTemporarilyBlocked)
+            self.allowLoginBlockedUsers = false
+            self.view?.showAccountTemporaryBlockedDialog(configuration)
+        } else if let err = error {
+            let httpErrorCode = self.getHttpErrorCode(err) ?? ""
+            self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : err.getErrorDesc() ?? ""])
+            self.handleError(err)
+        } else {
+            self.loginSuccess()
+        }
+    }
+    
+    func loginSuccess() {
+        if self.view?.currentLoginType == PLRememberedLoginType.PIN {
+            self.trackLoginSuccessWithPin()
+        } else {
+            self.trackLoginSuccessWithBiometryType()
+        }
+        self.openSessionAndNavigateToGlobalPosition()
+        self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
     }
 
     func trackLoginSuccessWithPin() {
@@ -177,17 +178,14 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     func doLogin(with rememberedLoginType: RememberedLoginType) {
         self.view?.showLoading()
         let config = coordinator.loginConfiguration
-        self.loginProcessUseCase.executePersistedLogin(configuration: config, rememberedLoginType: rememberedLoginType) { [weak self] newConfiguration in
-            guard let self = self else { return }
-            guard let newConfig = newConfiguration else {
-                self.view?.showUnauthorizedError()
-                return
-            }
-            self.loginSuccess(configuration: newConfig)
-        } onFailure: { [weak self]  error in
-            let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-            self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
-            self?.handleError(error)
+        self.loginProcessUseCase.executePersistedLogin(configuration: config, rememberedLoginType: rememberedLoginType) { [weak self] config in
+            self?.view?.dismissLoading(completion: { [weak self] in
+                self?.evaluateLoginResult(configuration: config, error: nil)
+            })
+        } onFailure: { [weak self]  error, config in
+            self?.view?.dismissLoading(completion: { [weak self] in
+                self?.evaluateLoginResult(configuration: config, error: error)
+            })
         }
     }
     
