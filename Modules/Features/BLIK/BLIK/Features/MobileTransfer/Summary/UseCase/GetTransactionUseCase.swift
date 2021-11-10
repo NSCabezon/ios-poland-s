@@ -25,14 +25,12 @@ final class GetTransactionUseCase: UseCase<Void, MobileTransferSummaryViewModel,
         case .success(let result):
             return .ok(mapper.map(transaction: result))
         case .failure(let error):
-            let errorBody: ErrorDTO? = error.getErrorBody()
-
-            guard errorBody?.errorCode1 == .customerTypeDisabled,
-                  let errorType = errorBody?.errorCode2 else {
-                return .error(.init(nil))
+            let blikError = BlikError(with: error.getErrorBody())
+            guard let blikError = blikError,
+                  blikError.errorCode1 == .customerTypeDisabled else {
+                return .error(.init(error.localizedDescription))
             }
-
-            return .error(.init(errorType.errorKey))
+            return .error(.init(blikError.errorKey))
         }
     }
 }

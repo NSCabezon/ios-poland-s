@@ -23,14 +23,12 @@ final class AcceptBLIKTransactionUseCase: UseCase<AcceptBLIKTransactionUseCaseIn
         case .success:
             return .ok()
         case .failure(let error):
-            let errorBody: ErrorDTO? = error.getErrorBody()
-            
-            guard errorBody?.errorCode1 == .customerTypeDisabled,
-                  let errorType = errorBody?.errorCode2 else {
+            let blikError = BlikError(with: error.getErrorBody())
+            guard let blikError = blikError,
+                  blikError.errorCode1 == .customerTypeDisabled else {
                 return .error(.init(error.localizedDescription))
             }
-
-            return .error(.init(errorType.errorKey))
+            return .error(.init(blikError.errorKey))
         }
     }
 }

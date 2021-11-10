@@ -59,8 +59,17 @@ struct TransfersDataRepository: PLTransfersRepository {
             case .success(let validateAccount):
                 return.success(validateAccount)
             case .failure(let error):
-                guard let errorDTO: ErrorDTO = error.getErrorBody() else { return .failure(NetworkProviderError.other)}
-                return .failure(NetworkProviderError.error(NetworkProviderResponseError(code: errorDTO.errorCode2.rawValue, data: nil, headerFields: nil, error: error)))
+                guard let errorDTO: PLErrorDTO = error.getErrorBody() else { return .failure(NetworkProviderError.other)}
+                return .failure(
+                    NetworkProviderError.error(
+                        NetworkProviderResponseError(
+                            code: errorDTO.errorCode2,
+                            data: nil,
+                            headerFields: nil,
+                            error: error
+                        )
+                    )
+                )
             }
         } else {
             return .failure(ServiceError.unknown)
