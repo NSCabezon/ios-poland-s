@@ -60,7 +60,7 @@ private extension SendMoneyTransferTypeUseCase {
     func evaluateMatrix(sourceAccount: PolandAccountRepresentable, requestValues: SendMoneyTransferTypeUseCaseInput) -> (TranferTypeMatrixEvaluator.MatrixTransferType?, PolandTransactionType?) {
         let matrix = TranferTypeMatrixEvaluator(
             isSourceCurrencyPLN: sourceAccount.currencyRepresentable?.currencyType == .złoty,
-            isDestinationAccountInternal: requestValues.isDestinationAccountInternal,
+            isDestinationAccountInternal: !requestValues.checkInternalAccountRepresentable.isExternal,
             isDestinationAccountCurrencyPLN: requestValues.destinationAccountCurrency.code == Constants.plnCurrencyCode,
             isOwner: requestValues.isOwner,
             isCountryPLN: requestValues.country.code == Constants.plCountryCode
@@ -123,10 +123,10 @@ struct SendMoneyTransferTypeUseCaseInput: SendMoneyTransferTypeUseCaseInputProto
     public let sourceAccount: AccountRepresentable
     public let destinationIban: IBANRepresentable
     public let destinationAccountCurrency: CurrencyInfoRepresentable
-    public let isDestinationAccountInternal: Bool
     public let isOwner: Bool
     public let amount: AmountRepresentable
     public let country: CountryInfoRepresentable
+    public let checkInternalAccountRepresentable: CheckInternalAccountRepresentable
 }
 
 struct SendMoneyTransferTypeUseCaseOkOutput: SendMoneyTransferTypeUseCaseOkOutputProtocol {
