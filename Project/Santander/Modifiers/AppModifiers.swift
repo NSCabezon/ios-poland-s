@@ -178,12 +178,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountsHomePresenterModifier.self) { _ in
             return PLAccountsHomePresenterModifier()
         }
-        SendMoneyDependencies(dependenciesEngine: dependencieEngine).registerDependencies()
+        SendMoneyDependencies(dependenciesEngine: self.dependencieEngine).registerDependencies()
         self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
             return PLOpinatorInfoOption()
-        }
-        self.dependencieEngine.register(for: SendMoneyModifierProtocol.self) { _ in
-            return SendMoneyModifier()
         }
         self.dependencieEngine.register(for: GetCardOnOffPredefinedSCAUseCaseProtocol.self) { resolver in
             PLGetCardOnOffPredefinedSCAUseCase(dependenciesResolver: resolver)

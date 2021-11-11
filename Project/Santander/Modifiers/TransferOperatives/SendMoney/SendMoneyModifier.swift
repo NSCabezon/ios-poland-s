@@ -1,7 +1,15 @@
 import TransferOperatives
 import Models
+import Operative
+import Commons
 
 final class SendMoneyModifier: SendMoneyModifierProtocol {
+    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
+
+    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
+        self.dependenciesEngine = dependenciesEngine
+    }
+    
     var selectionDateOneFilterViewModel: SelectionDateOneFilterViewModel? {
         let labelViewModel = OneLabelViewModel(type: .normal, mainTextKey: "transfer_label_periodicity")
         let viewModel = SelectionDateOneFilterViewModel(oneLabelViewModel: labelViewModel, options: ["sendMoney_tab_today", "sendMoney_tab_chooseDay"])
@@ -17,4 +25,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         return true
     }
     let shouldShowSaveAsFavourite: Bool = false
+    var transferTypeStep: OperativeStep? {
+        return SendMoneyTransferTypeStep(dependencies: dependenciesEngine)
+    }
 }

@@ -5,8 +5,8 @@ struct SendMoneyDependencies {
     let dependenciesEngine: DependenciesResolver & DependenciesInjector
 
     func registerDependencies() {
-        self.dependenciesEngine.register(for: SendMoneyOperativeModifierProtocol.self) { _ in
-            return SendMoneyOperativeModifier(dependenciesEngine: self.dependenciesEngine)
+        self.dependenciesEngine.register(for: SendMoneyModifierProtocol.self) { _ in
+            return SendMoneyModifier(dependenciesEngine: self.dependenciesEngine)
         }
         self.dependenciesEngine.register(for: PreSetupSendMoneyUseCaseProtocol.self) { resolver in
             return PreSetupSendMoneyUseCase(dependenciesResolver: resolver)

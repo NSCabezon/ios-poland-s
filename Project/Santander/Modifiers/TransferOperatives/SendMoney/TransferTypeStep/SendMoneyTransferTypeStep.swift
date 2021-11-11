@@ -1,5 +1,5 @@
 //
-//  SendMoneyOperativeModifier.swift
+//  SendMoneyTransferTypeStep.swift
 //  Santander
 //
 //  Created by José Norberto Hidalgo Romero on 6/10/21.
@@ -8,20 +8,6 @@
 import Commons
 import Operative
 import TransferOperatives
-
-final class SendMoneyOperativeModifier {
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.dependenciesEngine = dependenciesEngine
-    }
-}
-
-extension SendMoneyOperativeModifier: SendMoneyOperativeModifierProtocol {
-    var transferTypeStep: OperativeStep? {
-        return SendMoneyTransferTypeStep(dependencies: dependenciesEngine)
-    }
-}
 
 final class SendMoneyTransferTypeStep: OperativeStep {
     let dependencies: DependenciesResolver & DependenciesInjector
