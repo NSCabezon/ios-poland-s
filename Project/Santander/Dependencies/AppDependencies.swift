@@ -296,6 +296,12 @@ private extension AppDependencies {
                                         sessionStartedActions: [loadPfm],
                                         sessionFinishedActions: [stopPfm])
         }
+        self.dependencieEngine.register(for: OneAuthorizationProcessorRepository.self) { _ in
+            return self.servicesLibrary.oneAuthorizationProcessorRepository
+        }
+        self.dependencieEngine.register(for: PLOneAuthorizationProcessorRepository.self) { _ in
+            return self.servicesLibrary.oneAuthorizationProcessorRepository
+        }
     }
 }
 

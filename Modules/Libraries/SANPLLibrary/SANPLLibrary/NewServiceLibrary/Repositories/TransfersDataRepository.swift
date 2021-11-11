@@ -139,4 +139,14 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
+    
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {
+        let response = try bsanTransferManager.getChallenge(parameters: parameters)
+        switch response {
+        case .success(let transfers):
+            return.success(transfers)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }

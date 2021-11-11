@@ -113,9 +113,10 @@
 		66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */; };
 		66E57606264A6C32006804BD /* assetsLocal in Resources */ = {isa = PBXBuildFile; fileRef = 66E57605264A6C32006804BD /* assetsLocal */; };
 		66E57608264A6C3A006804BD /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 66E57607264A6C3A006804BD /* assets */; };
+		78A4071327344CBF002DEBF0 /* DeeplinkLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A4071227344CBF002DEBF0 /* DeeplinkLauncher.swift */; };
+		78ABD87C273D213900431F7F /* PLSessionDataManagerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABD87B273D213900431F7F /* PLSessionDataManagerModifier.swift */; };
 		7E1B7DDF27216100002CC226 /* PLValidateCardOnOffUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B7DDD27216100002CC226 /* PLValidateCardOnOffUseCase.swift */; };
 		7E1B7DE027216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B7DDE27216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift */; };
-		7E1C16B02733DAEA0001DF73 /* DeeplinkLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C16AF2733DAEA0001DF73 /* DeeplinkLauncher.swift */; };
 		7E29680B26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */; };
 		7E2CCA8226B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8126B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift */; };
 		7E2CCA8526B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */; };
@@ -300,12 +301,13 @@
 		66BC90662641283800654CC5 /* EmptyEmmaTrackEventList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyEmmaTrackEventList.swift; sourceTree = "<group>"; };
 		66E57605264A6C32006804BD /* assetsLocal */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assetsLocal; sourceTree = "<group>"; };
 		66E57607264A6C3A006804BD /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		78A4071227344CBF002DEBF0 /* DeeplinkLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkLauncher.swift; sourceTree = "<group>"; };
+		78ABD87B273D213900431F7F /* PLSessionDataManagerModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSessionDataManagerModifier.swift; sourceTree = "<group>"; };
 		7AE51B88BE7D301450222024 /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
 		7B4BB280463AE2C5065641C0 /* Pods-Santander.regression-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-debug.xcconfig"; sourceTree = "<group>"; };
 		7C596191E5CD796BA06A54F2 /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		7E1B7DDD27216100002CC226 /* PLValidateCardOnOffUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLValidateCardOnOffUseCase.swift; sourceTree = "<group>"; };
 		7E1B7DDE27216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetCardOnOffPredefinedSCAUseCase.swift; sourceTree = "<group>"; };
-		7E1C16AF2733DAEA0001DF73 /* DeeplinkLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkLauncher.swift; sourceTree = "<group>"; };
 		7E29680A26F33A9C002CA57A /* PLAccountTransactionsPDFGeneratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionsPDFGeneratorProtocol.swift; sourceTree = "<group>"; };
 		7E2CCA8126B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExchangePGFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -770,7 +772,7 @@
 		5FBDB730273BB47D00FB6DAF /* Session */ = {
 			isa = PBXGroup;
 			children = (
-				34521687273BC26000246CF7 /* PLSessionDataManagerModifier.swift */,
+				78ABD87B273D213900431F7F /* PLSessionDataManagerModifier.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -1043,7 +1045,7 @@
 		B01155F92715933300A4C175 /* DeepLinks */ = {
 			isa = PBXGroup;
 			children = (
-				7E1C16AF2733DAEA0001DF73 /* DeeplinkLauncher.swift */,
+				78A4071227344CBF002DEBF0 /* DeeplinkLauncher.swift */,
 				B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */,
 				B01155FC2715935900A4C175 /* PolandDeepLink.swift */,
 			);
@@ -1327,7 +1329,6 @@
 				A9EF0DA4271D78B800A1604B /* PLContextDTO.swift in Sources */,
 				0D9ACF2D27352416001D6D51 /* GetGPLoanOperativeModifier.swift in Sources */,
 				85E19B65270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift in Sources */,
-				7E1C16B02733DAEA0001DF73 /* DeeplinkLauncher.swift in Sources */,
 				B01155FF2715935900A4C175 /* PolandDeepLink.swift in Sources */,
 				0D42455F26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift in Sources */,
 				7E2CCA8D26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift in Sources */,
@@ -1383,6 +1384,7 @@
 				5F02263D27328E0C005161B6 /* LoadPfmSessionStartedAction.swift in Sources */,
 				A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */,
+				78A4071327344CBF002DEBF0 /* DeeplinkLauncher.swift in Sources */,
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
 				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
 				B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */,
@@ -1440,7 +1442,7 @@
 				BB29665126CFB5210012599D /* PLGetPersonalBasicInfoUseCase.swift in Sources */,
 				7E8AD11D26F0C13B00FC54D0 /* PLApplePayOperative.swift in Sources */,
 				0D603D6626C679A60035C671 /* GetPGFrequentOperativeOption.swift in Sources */,
-				34521688273BC26000246CF7 /* PLSessionDataManagerModifier.swift in Sources */,
+				78ABD87C273D213900431F7F /* PLSessionDataManagerModifier.swift in Sources */,
 				669A37D3270F566600C0F272 /* PLAccountOtherOperativesDTOList.swift in Sources */,
 				9C0BFBE526F8C5B0000F2C8E /* SendMoneyCoordinator.swift in Sources */,
 				0D13A93326E91CFB00359D5B /* PLSwitchBetweenAccountOperative.swift in Sources */,

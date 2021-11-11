@@ -37,6 +37,7 @@ struct AccountForDebitNameDTO: Codable {
 struct AccountDetailsAccountForDebitDTO: Codable {
     let interestRateIndicator: String?
     let sequenceNumber: Int?
+    let accountType: Int?
 }
 
 struct CreditCardAccountDetailsDTO: Codable {
@@ -52,7 +53,7 @@ struct TransactionMaskDTO: Codable {
 
 extension AccountForDebitDTO: AccountRepresentable {
     var currencyName: String? {
-        self.adaptBalanceToAmount(self.balance)?.currency?.currencyName
+        self.currencyCode
     }
     
     var alias: String? {

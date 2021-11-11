@@ -12,7 +12,9 @@ public protocol PLTransfersManagerProtocol {
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError>
     func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError>
+    func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
 }
 
@@ -78,6 +80,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         }
     }
     
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
+        let result = try self.transferDataSource.getChallenge(parameters)
+        switch result {
+        case .success(let challengeDTO):
+            return .success(challengeDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError> {
         guard let amountValue = parameters.amount.value, let currency = parameters.amount.currencyRepresentable?.getSymbol() else {
             return .failure(NetworkProviderError.other)
@@ -94,6 +106,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
                 return .failure(NetworkProviderError.other)
             }
             return .success(feeRecords)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError> {
+        let result = try self.transferDataSource.sendConfirmation(parameters)
+        switch result {
+        case .success(let confirmTransactinDTO):
+            return .success(confirmTransactinDTO)
         case .failure(let error):
             return .failure(error)
         }

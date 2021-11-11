@@ -5,6 +5,7 @@
 
 import XCTest
 import SANLegacyLibrary
+import CoreDomain
 @testable import SANPLLibrary
 
 class PLTransferManagerTest: Tests {
@@ -127,6 +128,21 @@ class PLTransferManagerTest: Tests {
         }
     }
     
+    func test_confirmTransfer_shouldReturOkResonse() {
+        self.setUpDemoUser()
+        let parameters: GenericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: nil, debitAmountData: nil, creditAmountData: nil, debitAccountData: nil, creditAccountData: nil, signData: nil, title: nil, type: nil, transferType: nil)
+        let result = try? transferManager.sendConfirmation(parameters)
+        switch result {
+        case .success(let response):
+            XCTAssert(response.state == "ACCEPTED")
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Error confirming transfer - Failure")
+        default:
+            XCTFail("Error confirming transfer")
+        }
+    }
+    
     func test_checkTransactionAvailability_shouldReturNonEmptyFeeList() {
         self.setUpDemoUser()
         let iban = "PL12109010430000000142742925"
@@ -143,6 +159,4 @@ class PLTransferManagerTest: Tests {
             XCTFail("Not getting fee transfer")
         }
     }
-
-    
 }
