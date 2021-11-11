@@ -9,6 +9,8 @@ import Operative
 import Models
 import Commons
 import TransferOperatives
+import CoreDomain
+import SANLegacyLibrary
 
 protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol {
     var view: SendMoneyTransferTypeView? { get set }
@@ -92,8 +94,8 @@ private extension SendMoneyTransferTypePresenter {
     func mapToSendMoneyTransferTypeRadioButtonViewModel(from transferType: SendMoneyTransferTypeFee) -> SendMoneyTransferTypeRadioButtonViewModel? {
         guard let type = transferType.type as? PolandTransferType else { return nil }
         let oneRadioButtonViewModel = OneRadioButtonViewModel(status: .inactive,
-                                                              titleKey: type.title ?? "",
-                                                              subtitleKey: type.subtitle ?? "")
+                                                              titleKey: localized(type.title ?? "") ?? "",
+                                                              subtitleKey: localized(type.subtitle ?? ""))
         let feeViewModel = SendMoneyTransferTypeFeeViewModel(amount: transferType.fee,
                                                              status: .inactive)
         return SendMoneyTransferTypeRadioButtonViewModel(oneRadioButtonViewModel: oneRadioButtonViewModel,
@@ -110,5 +112,48 @@ private extension SendMoneyTransferTypePresenter {
                   let fee = transferTypeFee.fee?.value else { return false }
             return type == selectedType && fee == selectedFee
         }) ?? .zero
+    }
+}
+
+extension PolandTransferType {
+    var title: String? {
+        switch self {
+        case .zero, .one:
+            return "sendMoney_label_standardSent"
+        case .eight:
+            return "sendMoney_label_immediateSend"
+        case .a:
+            return "sendMoney_label_expressDelivery"
+        case .creditCardAccount:
+            return "sendMoney_title_creditCardAccount"
+        case .four:
+            return nil
+        }
+    }
+    
+    var subtitle: String? {
+        switch self {
+        case .zero, .one:
+            return "sendType_text_standar"
+        case .eight:
+            return "sendType_text_inmediate"
+        case .a:
+            return "sendType_text_express"
+        case .creditCardAccount:
+            return "sendMoney_text_creditCardAccount"
+        case .four:
+            return nil
+        }
+    }
+    
+    var limitAmount: AmountRepresentable {
+        switch self {
+        case .eight:
+            return AmountDTO(value: Decimal(5000), currency: .create(.złoty))
+        case .a:
+            return AmountDTO(value: Decimal(20000), currency: .create(.złoty))
+        case .creditCardAccount, .zero, .one, .four:
+            return AmountDTO(value: .zero, currency: .create(.złoty))
+        }
     }
 }

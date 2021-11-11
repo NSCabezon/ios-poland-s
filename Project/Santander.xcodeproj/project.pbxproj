@@ -1351,6 +1351,7 @@
 				BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */,
 				EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */,
 				5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */,
+				EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */,
 				7E2CCA8B26B80CF500CBDB11 /* BuyInsurancePGFrequentOperativeOption.swift in Sources */,
 				4497E816270CB23200D6EE05 /* PLLoanTransaction.swift in Sources */,
 				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
