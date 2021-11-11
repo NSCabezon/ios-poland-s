@@ -129,7 +129,7 @@
 		7E8AD12126F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD12026F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift */; };
 		7E9939C326B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C226B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift */; };
 		7E9939C526B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */; };
-		7E9939C726B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C626B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift */; };
+		7E9939C726B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */; };
 		7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */; };
 		85E19B61270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B5B270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift */; };
 		85E19B62270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E19B5C270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib */; };
@@ -269,7 +269,6 @@
 		51FC72F7ACD733E5324EB06F /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
 		5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPfmSessionStartedAction.swift; sourceTree = "<group>"; };
 		5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPfmSessionFinishedAction.swift; sourceTree = "<group>"; };
-		5FBDB731273BB4A500FB6DAF /* PLSessionDataManagerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSessionDataManagerModifier.swift; sourceTree = "<group>"; };
 		669A37CC270F564800C0F272 /* PLAccountOtherOperativesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesData.swift; sourceTree = "<group>"; };
 		669A37CD270F564800C0F272 /* PLAccountOtherOperativesIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesIdentifier.swift; sourceTree = "<group>"; };
 		669A37D1270F566600C0F272 /* PLAccountOtherOperativesDTOList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesDTOList.swift; sourceTree = "<group>"; };
@@ -320,7 +319,7 @@
 		7E8AD12026F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPLAccountHomeActionUseCase.swift; sourceTree = "<group>"; };
 		7E9939C226B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBanksPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialAgendaPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
-		7E9939C626B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreProductsPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurOfferPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountDetailModifier.swift; sourceTree = "<group>"; };
 		85E19B5B270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeViewController.swift; sourceTree = "<group>"; };
 		85E19B5C270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendMoneyTransferTypeViewController.xib; sourceTree = "<group>"; };
@@ -483,7 +482,7 @@
 				446E0C20265FE42400847FCA /* ContractPGFrequentOperativeOption.swift */,
 				7E2CCA8426B80CCF00CBDB11 /* CurrencyExchangePGFrequentOperativeOption.swift */,
 				7E2CCA8C26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift */,
-				7E9939C626B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift */,
+				7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */,
 				7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */,
 				0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */,
 				7E2CCA8826B80CE700CBDB11 /* OpenDepositPGFrequentOperativeOption.swift */,
@@ -1387,7 +1386,7 @@
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
 				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
 				B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */,
-				7E9939C726B9589C00F1040D /* ExploreProductsPGFrequentOperativeOption.swift in Sources */,
+				7E9939C726B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift in Sources */,
 				0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */,
 				0DAA4D5B26C3ECC0005A921C /* PLPayTaxOperative.swift in Sources */,
 				B01155F7271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift in Sources */,

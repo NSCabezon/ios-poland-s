@@ -27,20 +27,21 @@ final class CurrencyExchangePGFrequentOperativeOption {
 extension CurrencyExchangePGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
         return .custom { [weak self] in
-            guard let self = self else { return }
-            let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-            
-            guard let options = repository.get()?.accountsOptions,
-                  let option = options.first(where: { $0.id == self.optionId })
-            else { return }
-            
-            if let isAvailable = option.isAvailable, !isAvailable {
+            guard let self = self else {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
                 return
             }
-            
-            guard let url = option.url else { return }
-            
+            let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+
+            guard let options = repository.get()?.accountsOptions,
+                  let option = options.first(where: { $0.id == self.optionId }),
+                  option.isAvailable ?? true,
+                  let url = option.url
+            else {
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+                return
+            }
+
             let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url)
             let webViewCoordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
             let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)

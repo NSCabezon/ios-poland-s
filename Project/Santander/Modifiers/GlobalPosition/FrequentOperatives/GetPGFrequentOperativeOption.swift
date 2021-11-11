@@ -34,7 +34,7 @@ private extension GetPGFrequentOperativeOption {
                 BLIKPGFrequentOperativeOption(dependencyResolver: dependenciesResolver),
                 PLHelpCenterFrequentOperativeOption(dependencyResolver: dependenciesResolver),
                 PLDebugMenuFrequentOperativeOption(dependencyResolver: dependenciesResolver), // Temporary [DEBUG MENU] on GlobalPosition
-                ExploreProductsPGFrequentOperativeOption(),
+                OurOfferPGFrequentOperativeOption(),
                 PGFrequentOperativeOption.analysisArea,
                 FinancialAgendaPGFrequentOperativeOption(),
                 PGFrequentOperativeOption.customerCare,

@@ -1,5 +1,5 @@
 //
-//  ExploreProductsPGFrequentOperativeOption.swift
+//  OurOfferPGFrequentOperativeOption.swift
 //  Santander
 //
 //  Created by Ernesto Fernandez Calles on 3/8/21.
@@ -9,13 +9,13 @@ import Models
 import UI
 import Commons
 
-final class ExploreProductsPGFrequentOperativeOption {
-    let trackName: String? = "exploreProducts"
-    let rawValue: String = "exploreProductsPoland"
+final class OurOfferPGFrequentOperativeOption {
+    let trackName: String? = "ourOffer"
+    let rawValue: String = "ourOfferPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.exploreProducts.rawValue
 }
 
-extension ExploreProductsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
+extension OurOfferPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
         return .custom {
             Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -24,7 +24,7 @@ extension ExploreProductsPGFrequentOperativeOption: PGFrequentOperativeOptionPro
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
         let imageKey: String = "icnExploreProducts"
-        let titleKey: String = "menu_link_contract"
+        let titleKey: String = "frequentOperative_button_contract"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,
