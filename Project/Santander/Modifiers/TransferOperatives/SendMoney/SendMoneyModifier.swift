@@ -28,4 +28,8 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     var transferTypeStep: OperativeStep? {
         return SendMoneyTransferTypeStep(dependencies: dependenciesEngine)
     }
+    
+    func goToSendMoney() {
+        self.dependenciesEngine.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+    }
 }
