@@ -14,6 +14,7 @@ final class TransferDTOAdapter {
         var transferDTO = SANLegacyLibrary.TransferDTO()
         transferDTO.beneficiaryBAOName = payeeDTO.alias ?? ""
         transferDTO.iban = IBANDTO(ibanString: payeeDTO.account?.accountNo ?? "")
+        transferDTO.addressPayee = payeeDTO.account?.address ?? ""
         return transferDTO
     }
 }

@@ -9,6 +9,8 @@ import SANLegacyLibrary
 
 public protocol PolandAccountRepresentable: AccountRepresentable {
     var type: AccountForDebitTypeDTO? { get }
+    var sequencerNo: Int? { get }
+    var accountType: Int? { get }
 }
 
 struct AccountForDebitDTO: Codable {
@@ -90,7 +92,15 @@ extension AccountForDebitDTO: AccountRepresentable {
     }
 }
 
-extension AccountForDebitDTO: PolandAccountRepresentable {}
+extension AccountForDebitDTO: PolandAccountRepresentable {
+    var sequencerNo: Int? {
+        self.accountDetails?.sequenceNumber
+    }
+    
+    var accountType: Int? {
+        self.accountDetails?.accountType
+    }
+}
 
 private extension AccountForDebitDTO {
     func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {

@@ -35,6 +35,10 @@ extension PayeeDTO: PayeeRepresentable {
         }
         return IBANDTO(ibanString: displayNumber)
     }
+    
+    public var payeeAddress: String? {
+        self.account?.address
+    }
 }
 
 public struct AccountPayeeDTO: Codable {
@@ -43,7 +47,7 @@ public struct AccountPayeeDTO: Codable {
     public var accountNo: String?
     var payeeName: String?
     var branchInfo: BranchInfoDTO?
-    var address: String?
+    public var address: String?
     var taxFormType: String?
     var validFrom: String?
     var transferType: String?
