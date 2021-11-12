@@ -16,6 +16,7 @@ protocol TransfersDataSourceProtocol {
     func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
     func getChallenge(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError>
+    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -34,6 +35,7 @@ final class TransfersDataSource {
         case confirmationTransfer = "/transactions/domestic/create/accepted"
         case challenge = "transactions/domestic/prepare"
         case checkTransactionAvailability = "/payhubpl-prodef/api/instant_payments/accounts/"
+        case notifyDevice = "/auth/devices/mobile-authorization/notify-device"
     }
     
     private let networkProvider: NetworkProvider
@@ -189,6 +191,24 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         )
         return result
     }
+    
+    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName = TransferServiceType.notifyDevice.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<AuthorizationIdDTO, NetworkProviderError> = self.networkProvider.request(NotifiyDeviceRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .post,
+                                                                                                                jsonBody: parameters,
+                                                                                                                headers: self.headers,
+                                                                                                                bodyEncoding: .body,
+                                                                                                                contentType: .json,
+                                                                                                                localServiceName: .notifiyDevice)
+        )
+        return result
+    }
 }
 
 private struct TransferRequest: NetworkProviderRequest {
@@ -245,6 +265,41 @@ private struct ChallengeRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: GenericSendMoneyConfirmationInput? = nil,
+         headers: [String: String]?,
+         queryParams: [String: Any]? = nil,
+         bodyEncoding: NetworkProviderBodyEncoding? = .none,
+         contentType: NetworkProviderContentType,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.jsonBody = jsonBody
+        self.method = method
+        self.formData = body
+        self.headers = headers
+        self.queryParams = queryParams
+        self.bodyEncoding = bodyEncoding
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+
+private struct NotifiyDeviceRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]?
+    let jsonBody: NotifyDeviceParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: NotifyDeviceParameters? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,

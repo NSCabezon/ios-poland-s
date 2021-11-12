@@ -16,6 +16,7 @@ public protocol PLTransfersManagerProtocol {
     func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError>
     func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
+    func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -125,6 +126,29 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         switch result {
         case .success(let availabilityResponse):
             return .success(availabilityResponse)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
+        guard let debitAmount = parameters.amount.value,
+              let debitAmountCurrency = parameters.amount.currencyRepresentable?.currencyName,
+              let userId = try self.bsanDataProvider.getAuthCredentials().userId else {
+            return .failure(NetworkProviderError.other)
+        }
+        let language = try self.bsanDataProvider.getLanguageISO()
+        let iban = parameters.iban.iban
+        let inputParameters = NotifyDeviceParameters(userId: "\(userId)",
+                                                     language: language,
+                                                     notificationSchemaId: "165",
+                                                     variables: ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias],
+                                                     challenge: parameters.challenge,
+                                                     softwareTokenType: parameters.softwareTokenType)
+        let result = try self.transferDataSource.notifyDevice(inputParameters)
+        switch result {
+        case .success(let authorizationId):
+            return .success(authorizationId)
         case .failure(let error):
             return .failure(error)
         }

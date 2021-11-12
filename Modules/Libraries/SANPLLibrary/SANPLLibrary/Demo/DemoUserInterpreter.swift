@@ -80,4 +80,5 @@ public enum PLLocalServiceName: String {
     case confirmationTransfer = "confirmationTransfer"
     case challenge = "challenge"
     case checkTransaction = "checkTransaction"
+    case notifiyDevice = "notifyDevice"
 }

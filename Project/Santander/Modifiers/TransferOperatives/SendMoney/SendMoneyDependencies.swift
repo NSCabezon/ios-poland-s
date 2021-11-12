@@ -20,5 +20,8 @@ struct SendMoneyDependencies {
         self.dependenciesEngine.register(for: IbanValidationSendMoneyUseCaseProtocol.self) { resolver in
             return IbanValidationSendMoneyUseCase(dependenciesResolver: resolver)
         }
+        self.dependenciesEngine.register(for: ValidateGenericSendMoneyUseCaseProtocol.self) { resolver in
+            return PLValidateGenericSendMoneyUseCase(dependenciesResolver: resolver)
+        }
     }
 }

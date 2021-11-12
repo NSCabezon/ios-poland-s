@@ -149,4 +149,14 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
+    
+    func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
+        let response = try self.bsanTransferManager.notifyDevice(parameters)
+        switch response {
+        case .success(let authorization):
+            return .success(authorization)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
 }

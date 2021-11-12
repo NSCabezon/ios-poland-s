@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>289572221212-64lr9ghp1arca0gb9uku2adc2n0oohvi.apps.googleusercontent.com</string>
+	<string>173896653452-i2k2qppbtli756gk4np9o9g3ov1k4vu4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.289572221212-64lr9ghp1arca0gb9uku2adc2n0oohvi</string>
+	<string>com.googleusercontent.apps.173896653452-i2k2qppbtli756gk4np9o9g3ov1k4vu4</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDAGpblSFlwWl1kUMG1kJRmPWU_5EFB0u4</string>
+	<string>AIzaSyBEuWNjWtC8bDIZ7JCAE5mn42gRTRKfkYc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>289572221212</string>
+	<string>173896653452</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.santander.one.pl.dev</string>
+	<string>pl.bancosantander.oneapp.intern.0.0</string>
 	<key>PROJECT_ID</key>
-	<string>one-app---development-app</string>
+	<string>one-app-pl-experis-development</string>
 	<key>STORAGE_BUCKET</key>
-	<string>one-app---development-app.appspot.com</string>
+	<string>one-app-pl-experis-development.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:289572221212:ios:bc4c8dbb8376672beb8ad9</string>
+	<string>1:173896653452:ios:fdfae50880dfb70c5239a9</string>
 </dict>
 </plist>
