@@ -129,10 +129,13 @@ struct SendMoneyTransferTypeUseCaseInput: SendMoneyTransferTypeUseCaseInputProto
     public let checkInternalAccountRepresentable: CheckInternalAccountRepresentable
 }
 
-struct SendMoneyTransferTypeUseCaseOkOutput: SendMoneyTransferTypeUseCaseOkOutputProtocol {
+struct SendMoneyTransferTypeUseCaseOkOutput: SendMoneyTransferTypeUseCaseOkOutputProtocol {    
     var shouldShowSpecialPrices: Bool {
         return fees.contains { ($0.type as? PolandTransferType) == .one }
     }
     let fees: [SendMoneyTransferTypeFee]
     let transactionType: PolandTransactionType?
+    var transactionTypeString: String? {
+        return transactionType?.asDto.rawValue
+    }
 }
