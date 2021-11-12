@@ -293,6 +293,9 @@ private extension AppDependencies {
                                         sessionStartedActions: [loadPfm],
                                         sessionFinishedActions: [stopPfm])
         }
+        self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
+            return self
+        }
         self.dependencieEngine.register(for: OneAuthorizationProcessorRepository.self) { _ in
             return self.servicesLibrary.oneAuthorizationProcessorRepository
         }
@@ -304,5 +307,11 @@ private extension AppDependencies {
 
 extension AppDependencies: SharedDependenciesDelegate {
     func publicFilesFinished(_ appConfigRepository: AppConfigRepositoryProtocol) {
+    }
+}
+
+extension AppDependencies: ChallengesHandlerDelegate {
+    func handle(_ challenge: ChallengeRepresentable, authorizationId: String, completion: @escaping (ChallengeResult) -> Void) {
+        print(challenge)
     }
 }

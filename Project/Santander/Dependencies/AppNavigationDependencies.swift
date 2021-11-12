@@ -14,6 +14,7 @@ import PersonalArea
 import BLIK
 import PLHelpCenter
 import CreditCardRepayment
+import OneAuthorizationProcessor
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -21,8 +22,9 @@ final class AppNavigationDependencies {
     private lazy var sendMoneyCoordinator =
         SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
                              drawer: self.drawer)
-    private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+    private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: (self.drawer.currentRootViewController as? UINavigationController)!)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
+    private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
     
     init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.drawer = drawer
@@ -63,6 +65,9 @@ final class AppNavigationDependencies {
         }
         dependenciesEngine.register(for: DebugMenuLauncherDelegate.self) { [unowned self] resolver in // Temporary [DEBUG WELCOME] on Login
             return OneAppInitWelcomeCoordinator(dependenciesEngine: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        self.dependenciesEngine.register(for: ChallengesHandlerDelegate.self) { _ in
+            return self.authorizationCoordinator
         }
         
         appSideMenuNavigationDependencies.registerDependencies()

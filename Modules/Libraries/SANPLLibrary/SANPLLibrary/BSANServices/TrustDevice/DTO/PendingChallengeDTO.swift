@@ -23,6 +23,16 @@ public struct SoftwareTokenKeysDataDTO: Codable {
     public let softwareTokenType: String
 }
 
+extension PendingChallengeDTO: PINChallengeRepresentable {
+    var randomKey: String {
+        return softwareTokenKeys.first?.randomKey ?? ""
+    }
+    
+    var softwareTokenType: String {
+        return softwareTokenKeys.first?.softwareTokenType ?? ""
+    }
+}
+
 extension PendingChallengeDTO: ChallengeRepresentable {
     public var identifier: String {
         return softwareTokenKeys.map{ $0.softwareTokenType }.joined(separator: "+")

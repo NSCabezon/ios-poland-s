@@ -13,7 +13,7 @@ import Commons
 import PLCommons
 import SANPLLibrary
 
-final class PLTrustedDeviceGetHeadersUseCase: UseCase<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+public final class PLTrustedDeviceGetHeadersUseCase: UseCase<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     private let dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -28,8 +28,14 @@ final class PLTrustedDeviceGetHeadersUseCase: UseCase<Void, PLTrustedDeviceGetHe
     }
 }
 
-struct PLTrustedDeviceGetHeadersUseCaseOutput {
-    let parameters: String?
-    let time: String?
-    let appId: String?
+public struct PLTrustedDeviceGetHeadersUseCaseOutput {
+    public let parameters: String?
+    public let time: String?
+    public let appId: String?
+    
+    public init(parameters: String?, time: String?, appId: String?) {
+        self.parameters = parameters
+        self.time = time
+        self.appId = appId
+    }
 }

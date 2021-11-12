@@ -11,7 +11,7 @@ import DomainCommon
 import CryptoSwift
 import SANPLLibrary
 
-final class PLTrustedDeviceGetStoredEncryptedUserKeyUseCase: UseCase<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+public final class PLTrustedDeviceGetStoredEncryptedUserKeyUseCase: UseCase<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -30,7 +30,12 @@ final class PLTrustedDeviceGetStoredEncryptedUserKeyUseCase: UseCase<Void, PLTru
 }
 
 // MARK: I/O types definition
-struct PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput {
-    let encryptedUserKeyPIN: String
-    let encryptedUserKeyBiometrics: String?
+public struct PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput {
+    public let encryptedUserKeyPIN: String
+    public let encryptedUserKeyBiometrics: String?
+    
+    public init(encryptedUserKeyPIN: String, encryptedUserKeyBiometrics: String?) {
+        self.encryptedUserKeyPIN = encryptedUserKeyPIN
+        self.encryptedUserKeyBiometrics = encryptedUserKeyBiometrics
+    }
 }

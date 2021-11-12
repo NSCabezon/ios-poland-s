@@ -253,6 +253,12 @@ extension PLSmsAuthViewController: RememberMeViewDelegate {
 }
 
 extension PLSmsAuthViewController: PLUIInputCodeViewDelegate {
+    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
+    }
+    
+    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
+    }
+    
     func codeView(_ view: PLUIInputCodeView, didChange string: String, for position: NSInteger) {
         if let first = view.firstEmptyRequested(), first > Constants.minimumPositionsFulfilled {
             self.loginButton.isEnabled = true
@@ -269,11 +275,5 @@ extension PLSmsAuthViewController: PLUIInputCodeViewDelegate {
             return false
         }
         return true
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
-    }
-
-    func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
     }
 }

@@ -21,6 +21,12 @@ public class PLUIInputCodeBoxView: UIView {
         static let positionLabelFontColor = UIColor.white
         static let positionLabelFont = UIFont.systemFont(ofSize: 14.0)
     }
+    
+    public enum PositionBox: Int {
+        case first
+        case middle
+        case last
+    }
 
     private lazy var codeTextField: PLUIInputCodeTextField = {
         return PLUIInputCodeTextField(delegate: self,
@@ -29,6 +35,7 @@ public class PLUIInputCodeBoxView: UIView {
                                       cursorTintColor: self.cursorTintColor,
                                       textColor: self.textColor)
     }()
+    private let elementsNumber: NSInteger
     let position: NSInteger
     let showPosition: Bool
     let requested: Bool
@@ -63,6 +70,7 @@ public class PLUIInputCodeBoxView: UIView {
      */
     init(position: NSInteger,
          showPosition: Bool = false,
+         elementsNumber: NSInteger,
          delegate: PLUIInputCodeBoxViewDelegate? = nil,
          requested: Bool,
          isSecureEntry: Bool = true,
@@ -73,6 +81,7 @@ public class PLUIInputCodeBoxView: UIView {
          borderColor: UIColor,
          borderWidth: CGFloat) {
         self.showPosition = showPosition
+        self.elementsNumber = elementsNumber
         self.position = position
         self.requested = requested
         self.isSecureEntry = isSecureEntry
@@ -133,6 +142,14 @@ public class PLUIInputCodeBoxView: UIView {
         self.roundCorners = corners
         self.clipsToBounds = true
         setNeedsDisplay()
+    }
+    
+    public func getPosition() -> PositionBox {
+        switch self.position {
+        case 1: return .first
+        case self.elementsNumber: return .last
+        default: return .middle
+        }
     }
 }
 
@@ -205,12 +222,10 @@ extension PLUIInputCodeBoxView: PLUIInputCodeTextFieldDelegate {
     }
 
     public func textFieldDidBeginEditing(_ textField: UITextField) {
-
         self.delegate?.codeBoxViewDidBeginEditing(self)
     }
 
     public func textFieldDidEndEditing(_ textField: UITextField) {
-
         self.delegate?.codeBoxViewDidEndEditing(self)
     }
 

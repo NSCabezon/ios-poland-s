@@ -10,7 +10,7 @@ import PLCommons
 import DomainCommon
 import CryptoSwift
 
-final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAuthorizationDataEncryptionUseCaseInput, PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+public final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAuthorizationDataEncryptionUseCaseInput, PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -35,15 +35,28 @@ final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAuthorizat
 }
 
 // MARK: I/O types definition
-struct PLLoginAuthorizationDataEncryptionUseCaseInput {
-    let appId: String
-    let pin: String?
-    let encryptedUserKey: String
-    let randomKey: String
-    let challenge: String
-    let privateKey: SecKey
+public struct PLLoginAuthorizationDataEncryptionUseCaseInput {
+    public let appId: String
+    public let pin: String?
+    public let encryptedUserKey: String
+    public let randomKey: String
+    public let challenge: String
+    public let privateKey: SecKey
+    
+    public init(appId: String, pin: String?, encryptedUserKey: String, randomKey: String, challenge: String, privateKey: SecKey) {
+        self.appId = appId
+        self.pin = pin
+        self.encryptedUserKey = encryptedUserKey
+        self.randomKey = randomKey
+        self.challenge = challenge
+        self.privateKey = privateKey
+    }
 }
 
-struct PLLoginAuthorizationDataEncryptionUseCaseOutput {
-    let encryptedAuthorizationData: String
+public struct PLLoginAuthorizationDataEncryptionUseCaseOutput {
+    public let encryptedAuthorizationData: String
+    
+    public init (encryptedAuthorizationData: String) {
+        self.encryptedAuthorizationData = encryptedAuthorizationData
+    }
 }

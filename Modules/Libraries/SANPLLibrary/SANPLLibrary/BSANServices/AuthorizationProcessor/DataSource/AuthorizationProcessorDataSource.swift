@@ -7,6 +7,13 @@
 
 import Foundation
 import SANLegacyLibrary
+import CoreDomain
+
+protocol PINChallengeRepresentable: ChallengeRepresentable {
+    var randomKey: String { get }
+    var challenge: String { get }
+    var softwareTokenType: String { get }
+}
 
 protocol AuthorizationProcessorDataSourceProtocol {
     func doAuthorizeOperation(authorizationId: String, scope: String) -> AuthorizeOperationDTO

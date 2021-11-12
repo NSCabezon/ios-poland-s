@@ -11,11 +11,11 @@ public final class PLUIInputCodePinFacade {
 
     private enum Constants {
         static let elementsNumber = 4
-        static let elementWidth: CGFloat = 55.0
-        static let elementHeight: CGFloat = 56.0
-        static let spacingBetweenColumns: CGFloat = 2.0
-        static let font = UIFont.systemFont(ofSize: 30)
-        static let cursorTintColor = UIColor.Legacy.sanRed
+        static var elementWidth: CGFloat = 55.0
+        static var elementHeight: CGFloat = 56.0
+        static var spacingBetweenColumns: CGFloat = 2.0
+        static var font = UIFont.systemFont(ofSize: 30)
+        static var cursorTintColor = UIColor.Legacy.sanRed
         static let textTintColor = UIColor.init(red: 19/255, green: 126/255, blue: 132/255, alpha: 1.0)
     }
 
@@ -72,6 +72,14 @@ extension PLUIInputCodePinFacade: PLUIInputCodeFacadeProtocol {
         let spaceLength = Constants.spacingBetweenColumns * CGFloat(Constants.elementsNumber - 1)
         let controlLength = boxesLength + spaceLength
         return CGFloat(controlLength)
+    }
+    
+    public func setConstants(elementWidth: CGFloat, elementHeight: CGFloat, spacingBetweenColumns: CGFloat, font: UIFont, cursorTintColor: UIColor ) {
+        Constants.elementWidth = elementWidth
+        Constants.elementHeight = elementHeight
+        Constants.spacingBetweenColumns = spacingBetweenColumns
+        Constants.font = font
+        Constants.cursorTintColor = cursorTintColor
     }
 }
 
