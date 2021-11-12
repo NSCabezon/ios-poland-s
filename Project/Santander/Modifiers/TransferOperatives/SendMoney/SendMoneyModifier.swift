@@ -33,6 +33,8 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         self.dependenciesEngine.resolve(for: SendMoneyCoordinatorProtocol.self).start()
     }
     
+    var doubleValidationRequired = false
+    
     func transferTypeFor(onePayType: OnePayTransferType, subtype: String) -> String {
         return subtype
     }

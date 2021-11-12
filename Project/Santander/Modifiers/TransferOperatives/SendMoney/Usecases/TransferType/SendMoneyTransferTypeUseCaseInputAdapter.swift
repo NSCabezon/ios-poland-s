@@ -4,7 +4,7 @@ import SANPLLibrary
 struct SendMoneyTransferTypeUseCaseInputAdapter: SendMoneyTransferTypeUseCaseInputAdapterProtocol {
     func toUseCaseInput(operativeData: SendMoneyOperativeData) -> SendMoneyTransferTypeUseCaseInputProtocol? {
         guard let selectedAccount = operativeData.selectedAccount,
-              let destinationIban = selectedAccount.ibanRepresentable,
+              let destinationIban = operativeData.destinationIBANRepresentable,
               let destinationAccountCurrency = operativeData.destinationAccountCurrency,
               let amount = operativeData.amount,
               let country = operativeData.country,
