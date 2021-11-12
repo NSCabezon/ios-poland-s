@@ -154,6 +154,7 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
     
     func didSelectContinue() {
         self.confirmPin(rememberedLoginType: .Pin(value: self.pin ?? ""))
+        self.coordinator.dismiss()
     }
     
     func didTimerEnd() {

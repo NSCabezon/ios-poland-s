@@ -80,6 +80,7 @@ final class PLAuthorizationViewController: UIViewController {
     @IBAction func didTapOnCancel(_ sender: Any) {
         guard self.cancelFloatingButton.isEnabled else { return }
         view.endEditing(true)
+        self.presenter.didSelectBack()
     }
 }
 
