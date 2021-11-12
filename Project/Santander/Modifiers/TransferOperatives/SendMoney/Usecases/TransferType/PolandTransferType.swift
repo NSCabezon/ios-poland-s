@@ -42,10 +42,6 @@ enum PolandTransferType: SendMoneyTransferTypeProtocol {
     }
     
     var serviceString: String {
-        switch self {
-        case .eight: return TransferFeeServiceIdDTO.expressElixir.rawValue
-        case .a: return TransferFeeServiceIdDTO.bluecash.rawValue
-        default: return TransferFeeServiceIdDTO.elixir.rawValue
-        }
+        self.asDto?.rawValue ?? ""
     }
 }

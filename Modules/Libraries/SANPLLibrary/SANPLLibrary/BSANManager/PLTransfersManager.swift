@@ -148,7 +148,7 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         let result = try self.transferDataSource.notifyDevice(inputParameters)
         switch result {
         case .success(let authorizationId):
-            return .success(authorizationId)
+            return .success(AuthorizationIdDTO(authorizationId: authorizationId.first))
         case .failure(let error):
             return .failure(error)
         }

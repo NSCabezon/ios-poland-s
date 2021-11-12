@@ -23,6 +23,14 @@ public struct GenericSendMoneyConfirmationInput: Codable {
 }
 
 public struct CustomerAddressDataParameters: Codable {
+    public init(customerName: String?, city: String?, street: String?, zipCode: String?, baseAddress: String?) {
+        self.customerName = customerName
+        self.city = city
+        self.street = street
+        self.zipCode = zipCode
+        self.baseAddress = baseAddress
+    }
+    
     let customerName: String?
     let city: String?
     let street: String?
@@ -32,14 +40,28 @@ public struct CustomerAddressDataParameters: Codable {
 
 // MARK: - ItAccountData
 public struct ItAccountDataParameters: Codable {
+    public init(accountNo: String?, accountName: String?, sequenceNumber: Int? = nil, accountSequenceNumber: Int? = nil, accountType: Int?) {
+        self.accountNo = accountNo
+        self.accountName = accountName
+        self.sequenceNumber = sequenceNumber
+        self.accountType = accountType
+        self.accountSequenceNumber = accountSequenceNumber
+    }
+    
     let accountNo: String?
     let accountName: String?
     let sequenceNumber: Int?
     let accountType: Int?
+    let accountSequenceNumber: Int?
 }
 
 // MARK: - ItAmountData
 public struct ItAmountDataParameters: Codable {
+    public init(currency: String?, amount: Decimal?) {
+        self.currency = currency
+        self.amount = amount
+    }
+    
     let currency: String?
     let amount: Decimal?
 
@@ -47,5 +69,9 @@ public struct ItAmountDataParameters: Codable {
 
 // MARK: - SignData
 public struct SignDataParameters: Codable {
+    public init(securityLevel: Int?) {
+        self.securityLevel = securityLevel
+    }
+    
     let securityLevel: Int?
 }

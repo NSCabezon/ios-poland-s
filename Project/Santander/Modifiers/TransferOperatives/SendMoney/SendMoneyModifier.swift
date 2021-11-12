@@ -32,4 +32,11 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     func goToSendMoney() {
         self.dependenciesEngine.resolve(for: SendMoneyCoordinatorProtocol.self).start()
     }
+    
+    func transferTypeFor(onePayType: OnePayTransferType, subtype: String) -> String {
+        return subtype
+    }
+    
+    var isEditConfirmationEnabled: Bool = false
+    var isConfirmationEmailEnabled: Bool = false
 }

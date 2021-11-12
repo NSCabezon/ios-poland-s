@@ -16,7 +16,7 @@ protocol TransfersDataSourceProtocol {
     func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
     func getChallenge(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError>
-    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError>
+    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<[String], NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -33,7 +33,7 @@ final class TransfersDataSource {
         case ibanValidation = "/accounts/"
         case checkFinalFee = "/transactions/domestic/final-fee/"
         case confirmationTransfer = "/transactions/domestic/create/accepted"
-        case challenge = "transactions/domestic/prepare"
+        case challenge = "/transactions/domestic/prepare"
         case checkTransactionAvailability = "/payhubpl-prodef/api/instant_payments/accounts/"
         case notifyDevice = "/auth/devices/mobile-authorization/notify-device"
     }
@@ -65,6 +65,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                       localServiceName: .challenge))
         return result
     }
+
     
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
@@ -192,13 +193,13 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         return result
     }
     
-    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError> {
+    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<[String], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         let serviceName = TransferServiceType.notifyDevice.rawValue
         let absoluteUrl = baseUrl + self.basePath
-        let result: Result<AuthorizationIdDTO, NetworkProviderError> = self.networkProvider.request(NotifiyDeviceRequest(serviceName: serviceName,
+        let result: Result<[String], NetworkProviderError> = self.networkProvider.request(NotifiyDeviceRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .post,
                                                                                                                 jsonBody: parameters,
