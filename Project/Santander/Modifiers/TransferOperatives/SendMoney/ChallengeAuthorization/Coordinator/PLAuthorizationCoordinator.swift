@@ -73,10 +73,10 @@ extension PLAuthorizationCoordinator: ChallengesHandlerDelegate {
     func handle(_ challenge: ChallengeRepresentable, authorizationId: String, completion: @escaping (ChallengeResult) -> Void) {
 //        guard let challenge = challenge as? PINChallengeRepresentable else { return completion(.notHandled) }
 //        self.dependenciesEngine.register(for: AuthorizationConfiguration.self) { resolver in
-//            return AuthorizationConfiguration(authorizationId: authorizationId, randomKey: challenge.randomKey, challenge: challenge.challenge, softwareTokenType: challenge.softwareTokenType, completion: completion)
+//            return AuthorizationConfiguration(authorizationId: authorizationId, challenge: challenge.challenge, softwareTokenKeys: challenge.softwareTokenKeys, completion: completion)
 //        }
         self.dependenciesEngine.register(for: AuthorizationConfiguration.self) { resolver in
-            return AuthorizationConfiguration(authorizationId: authorizationId, randomKey: "challenge.randomKey", challenge: "challenge.challenge", softwareTokenType: "challenge.softwareTokenType", completion: completion)
+            return AuthorizationConfiguration(authorizationId: authorizationId, challenge: "challenge.challenge", softwareTokenKeys: [], completion: completion)
         }
         self.start()
     }
@@ -84,8 +84,7 @@ extension PLAuthorizationCoordinator: ChallengesHandlerDelegate {
 
 struct AuthorizationConfiguration {
     let authorizationId: String
-    let randomKey: String
     let challenge: String
-    let softwareTokenType: String
+    let softwareTokenKeys: [SoftwareTokenKeysDataDTO]
     let completion: (ChallengeResult) -> Void
 }
