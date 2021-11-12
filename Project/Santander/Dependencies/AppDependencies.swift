@@ -233,9 +233,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
             return self.personalAreaSections
         }
-        self.dependencieEngine.register(for: GetPLAccountOtherOperativesActionUseCase.self) { resolver in
-            return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
-        }
         self.dependencieEngine.register(for: GetBasePLWebConfigurationUseCaseProtocol.self) { resolver in
             return GetBasePLWebConfigurationUseCase(dependenciesResolver: resolver)
         }
@@ -252,13 +249,13 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
             return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
             PLCardTransactionDetailActionFactoryModifier()
         }
-        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { resolver in
+        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }
-        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { resolver in
+        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
         }
         self.dependencieEngine.register(for: TransfersRepository.self) { _ in

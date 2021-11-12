@@ -9,4 +9,9 @@ import Foundation
 
 struct PLAccountOtherOperativesDTOList: Codable {
     var accountsOptions, cardsOptions: [PLAccountOtherOperativesDTO]?
+
+    enum CodingKeys: String, CodingKey {
+        case accountsOptions = "accounts_options"
+        case cardsOptions = "cards_options"
+    }
 }
