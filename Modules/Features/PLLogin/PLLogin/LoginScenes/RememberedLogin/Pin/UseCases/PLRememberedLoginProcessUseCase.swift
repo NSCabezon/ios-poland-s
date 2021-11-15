@@ -17,10 +17,6 @@ final class PLRememberedLoginProcessUseCase {
         self.dependenciesEngine.resolve(for: PLLoginUseCase.self)
     }
     
-    private var setDemoUserUseCase: PLSetDemoUserUseCase {
-        return PLSetDemoUserUseCase(dependenciesResolver: self.dependenciesEngine)
-    }
-    
     private var authenticateInitUseCase: PLAuthenticateInitUseCase {
         self.dependenciesEngine.resolve(for: PLAuthenticateInitUseCase.self)
     }
@@ -75,7 +71,6 @@ final class PLRememberedLoginProcessUseCase {
         self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
            return PLAuthenticateUseCase(dependenciesResolver: resolver)
         }
-        
     }
     
     public func executePersistedLogin(configuration: RememberedLoginConfiguration,
@@ -85,16 +80,11 @@ final class PLRememberedLoginProcessUseCase {
         var identity: SecIdentity?
         var encryptedStoredUserKey: String?
         let identification = configuration.userIdentifier
-        let demoUserInput = PLSetDemoUserUseCaseInput(userId: identification)
-        Scenario(useCase: setDemoUserUseCase, input: demoUserInput)
+        let caseInput = PLLoginUseCaseInput(userId: identification, userAlias: nil)
+        Scenario(useCase: loginUseCase, input: caseInput)
             .execute(on: self.dependenciesEngine.resolve())
-            .then(scenario: { (_) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
-                let caseInput = PLLoginUseCaseInput(userId: identification, userAlias: nil)
-                return Scenario(useCase: self.loginUseCase, input: caseInput)
-            })
             .then(scenario: { [weak self] output ->Scenario<PLAuthenticateInitUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
-
                 configuration.challenge = output.secondFactorData.defaultChallenge
                 configuration.secondFactorDataFinalState = output.secondFactorFinalState
                 configuration.unblockRemainingTimeInSecs = output.unblockRemainingTimeInSecs
@@ -147,7 +137,8 @@ final class PLRememberedLoginProcessUseCase {
                                                                                encryptedUserKey: encryptedStoredUserKey,
                                                                                randomKey: randomKey,
                                                                                challenge: challengeValue,
-                                                                               privateKey: privateKey)
+                                                                               privateKey: privateKey,
+                                                                               isDemoUser: configuration.isDemoUser)
                 return Scenario(useCase: self.authorizationDataEncryptionUseCase, input: caseInput)
             })
             .then(scenario: { [weak self] output ->Scenario<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
@@ -181,6 +172,7 @@ final class PLRememberedLoginProcessUseCase {
             }
             .finally { [weak self] in
                 guard let self = self else { return }
+                guard configuration.isDemoUser == false else { return }
                 if let authType = configuration.challenge?.authorizationType, authType != .softwareToken {
                     let manager: PLManagersProviderProtocol = self.dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
                     manager.getTrustedDeviceManager().deleteTrustedDeviceHeaders()

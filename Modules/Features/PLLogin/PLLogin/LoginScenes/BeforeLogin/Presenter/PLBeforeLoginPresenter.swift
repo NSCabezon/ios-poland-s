@@ -51,6 +51,10 @@ final class PLBeforeLoginPresenter {
         self.dependenciesResolver.resolve(for: PLGetUserPreferencesUseCase.self)
     }
     
+    private var setDemoUserUseCase: PLSetDemoUserUseCase {
+        return PLSetDemoUserUseCase(dependenciesResolver: self.dependenciesResolver)
+    }
+    
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
@@ -73,7 +77,7 @@ private extension PLBeforeLoginPresenter {
             guard let self = self else { return nil }
             return Scenario(useCase: self.getUserPreferencesUseCase)
         })
-        .then(scenario: { [weak self] result -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+        .then(scenario: { [weak self] result -> Scenario<PLSetDemoUserUseCaseInput, PLSetDemoUserUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
             guard let self = self else { return nil }
                 
             if let userId = result.userId {
@@ -84,6 +88,15 @@ private extension PLBeforeLoginPresenter {
                                                                                  biometricsEnabled: result.biometricsEnabled)
             TimeImageAndGreetingViewModel.shared.setThemeType(result.theme, resolver: self.dependenciesResolver)
             self.view?.imageReady()
+            let caseInput = PLSetDemoUserUseCaseInput(userId: result.login ?? "")
+            return Scenario(useCase: self.setDemoUserUseCase, input: caseInput)
+        })
+        .then(scenario: { [weak self] output -> Scenario<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            guard let self = self else { return nil }
+            if output.isDemoUser {
+                configuration.userIdentifier = output.userId
+                configuration.isDemoUser = true
+            }
             return Scenario(useCase: self.beforeLoginUseCase)
         })
         .onSuccess({ [weak self] result in

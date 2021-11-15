@@ -18,6 +18,10 @@ public final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAut
     }
 
     public override func executeUseCase(requestValues: PLLoginAuthorizationDataEncryptionUseCaseInput) throws -> UseCaseResponse<PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+        
+        guard requestValues.isDemoUser == false else {
+            return .ok(PLLoginAuthorizationDataEncryptionUseCaseOutput(encryptedAuthorizationData: "demoUser"))
+        }
 
         do {
             let randomKeyDecryptedBase64 = try PLLoginEncryptionHelper.getRandomKeyFromSoftwareToken(appId: requestValues.appId,
@@ -36,6 +40,7 @@ public final class PLLoginAuthorizationDataEncryptionUseCase: UseCase<PLLoginAut
 
 // MARK: I/O types definition
 public struct PLLoginAuthorizationDataEncryptionUseCaseInput {
+    public let isDemoUser: Bool
     public let appId: String
     public let pin: String?
     public let encryptedUserKey: String
@@ -43,13 +48,14 @@ public struct PLLoginAuthorizationDataEncryptionUseCaseInput {
     public let challenge: String
     public let privateKey: SecKey
     
-    public init(appId: String, pin: String?, encryptedUserKey: String, randomKey: String, challenge: String, privateKey: SecKey) {
+    public init(appId: String, pin: String?, encryptedUserKey: String, randomKey: String, challenge: String, privateKey: SecKey, isDemoUser: Bool = false) {
         self.appId = appId
         self.pin = pin
         self.encryptedUserKey = encryptedUserKey
         self.randomKey = randomKey
         self.challenge = challenge
         self.privateKey = privateKey
+        self.isDemoUser = isDemoUser
     }
 }
 

@@ -53,10 +53,11 @@ final class PLLoginProcessUseCase {
         var configuration: UnrememberedLoginConfiguration? = nil
         var challengeUseCaseOutput:PLLoginUseCaseOkOutput? = nil
         let demoUserInput = PLSetDemoUserUseCaseInput(userId: identification)
+        var isDemoUser: Bool = false
 
         Scenario(useCase: setDemoUserUseCase, input: demoUserInput)
             .execute(on: self.dependenciesEngine.resolve())
-            .then(scenario: { (_) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
+            .then(scenario: { (output) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let caseInput: PLLoginUseCaseInput
                 switch identifierType {
                 case .nik:
@@ -64,6 +65,7 @@ final class PLLoginProcessUseCase {
                 case .alias:
                     caseInput = PLLoginUseCaseInput(userId: nil, userAlias: identification)
                 }
+                isDemoUser = output.isDemoUser
                 return Scenario(useCase: self.loginUseCase, input: caseInput)
             })
             .then(scenario: { [weak self] output ->Scenario<PLLoginChallengeSelectionUseCaseInput, PLLoginChallengeSelectionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
@@ -80,8 +82,9 @@ final class PLLoginProcessUseCase {
                 if challengeUseCaseOutput.passwordMaskEnabled == true, let mask = challengeUseCaseOutput.passwordMask {
                     passwordType = PasswordType.masked(mask: mask)
                 }
+                let userId = isDemoUser ? identification : String(challengeUseCaseOutput.userId)
                 configuration = UnrememberedLoginConfiguration(displayUserIdentifier: identification,
-                                                               userIdentifier: String(challengeUseCaseOutput.userId),
+                                                               userIdentifier: userId,
                                                                passwordType: passwordType,
                                                                challenge: output.challengeEntity,
                                                                loginImageData: challengeUseCaseOutput.loginImage,

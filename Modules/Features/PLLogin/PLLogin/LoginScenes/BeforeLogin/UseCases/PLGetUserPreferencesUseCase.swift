@@ -30,7 +30,8 @@ final class PLGetUserPreferencesUseCase: UseCase<Void, PLGetUserPrefEntityUseCas
             let output = PLGetUserPrefEntityUseCaseOutput(name: "",
                                                           theme: self.defaultTheme,
                                                           biometricsEnabled: false,
-                                                          userId: nil)
+                                                          userId: nil,
+                                                          login: nil)
             return .ok(output)
         }
         let userPrefEntity = appRepository.getUserPreferences(userId: userId)
@@ -41,7 +42,8 @@ final class PLGetUserPreferencesUseCase: UseCase<Void, PLGetUserPrefEntityUseCas
         let output = PLGetUserPrefEntityUseCaseOutput(name: name,
                                                       theme: theme,
                                                       biometricsEnabled: biometrics,
-                                                      userId: userId)
+                                                      userId: userId,
+                                                      login: persistedUser?.login)
         return UseCaseResponse.ok(output)
     }
 }
@@ -66,4 +68,5 @@ struct PLGetUserPrefEntityUseCaseOutput {
     let theme: BackgroundImagesTheme
     let biometricsEnabled: Bool
     let userId: String?
+    let login: String?
 }

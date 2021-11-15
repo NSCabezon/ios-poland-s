@@ -83,6 +83,12 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
 
     func evaluateLoginResult(configuration: RememberedLoginConfiguration,
                              error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>?) {
+    
+        guard configuration.isDemoUser == false else {
+            self.loginSuccess()
+            return
+        }
+        
         guard allowLoginBlockedUsers else {
             self.view?.showAccountTemporaryBlockedDialog(configuration)
             return
