@@ -18,7 +18,7 @@ final class LoanDetailsDTOAdapter {
         loanDetailDTO.nextInstallmentDate = DateFormats.toDate(string: plLoanDetails.loanAccountDetails?.nextInstallmentDate ?? "", output: .YYYYMMDD)
         loanDetailDTO.currentDueDate = DateFormats.toDate(string: plLoanDetails.loanAccountDetails?.finalRepaymentDate ?? "", output: .YYYYMMDD)
         if let currentInterestAmount = plLoanDetails.loanAccountDetails?.interest?.previousTotalAmount?.value {
-            let currentInterestAmountSt = "\(currentInterestAmount)"
+            let currentInterestAmountSt = "\(currentInterestAmount)" + " " + (plLoanDetails.loanAccountDetails?.grantedCreditLimit?.currencyCode ?? "")
             loanDetailDTO.currentInterestAmount = currentInterestAmountSt.replacingOccurrences(of: ".", with: ",", options: .literal, range: nil)
         }
 
