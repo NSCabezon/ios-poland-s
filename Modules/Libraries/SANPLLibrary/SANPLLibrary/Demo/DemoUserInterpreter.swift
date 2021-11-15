@@ -55,6 +55,7 @@ public enum PLLocalServiceName: String {
     case pubKey = "pub_key"
     case authenticateInit = "authenticate_init"
     case authenticate = "authenticate"
+    case logout = "logout"
     case pendingChallenge = "pendingChallenge"
     case confirmChallenge = "confirmChallenge"
     case registerDeviceTrustDevice = "registerDeviceTrustDevice"

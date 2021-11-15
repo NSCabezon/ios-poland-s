@@ -18,6 +18,7 @@ public protocol PLLoginManagerProtocol {
     func getAuthCredentials() throws -> AuthCredentials
     func getAppInfo() -> AppInfo?
     func setAppInfo(_ appInfo: AppInfo)
+    func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
 }
 
 public final class PLLoginManager {
@@ -84,6 +85,11 @@ extension PLLoginManager: PLLoginManagerProtocol {
             self.demoInterpreter.isDemoUser(userName: user) else { return false }
         self.bsanDataProvider.setDemoMode(true, user)
         return true
+    }
+
+    public func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        let result = try loginDataSource.doLogout()
+        return result
     }
 }
 

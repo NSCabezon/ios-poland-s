@@ -10,9 +10,11 @@ import SANPLLibrary
 
 final class PLSessionManagerAdapter {
     private let bsanDataProvider: BSANDataProvider
+    private let loginManagerProtocol: PLLoginManagerProtocol
 
-    public init(bsanDataProvider: BSANDataProvider) {
+    public init(bsanDataProvider: BSANDataProvider, loginManagerProtocol: PLLoginManagerProtocol) {
         self.bsanDataProvider = bsanDataProvider
+        self.loginManagerProtocol = loginManagerProtocol
     }
 }
  
@@ -26,6 +28,7 @@ extension PLSessionManagerAdapter: BSANSessionManager {
     }
     
     func logout() -> BSANResponse<Void> {
+        _ = try? self.loginManagerProtocol.doLogout()
         self.bsanDataProvider.closeSession()
         return BSANOkEmptyResponse()
     }
