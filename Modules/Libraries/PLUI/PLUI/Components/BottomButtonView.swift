@@ -74,7 +74,7 @@ public final class BottomButtonView: UIView {
             button.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 12),
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            button.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 12),
+            button.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -12),
             button.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
