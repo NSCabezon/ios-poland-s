@@ -2,8 +2,15 @@ import UI
 import Commons
 
 public protocol ErrorPresentable {
-    func showErrorMessage(_ message: String, onConfirm: (() -> Void)?)
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?)
+    func showErrorMessage(_ message: String, onConfirm: (() -> Void)?)
+    func showErrorMessage(
+        title: String,
+        message: String,
+        actionButtonTitle: String,
+        closeButton: Dialog.CloseButton,
+        onConfirm: (() -> Void)?
+    )
 }
 
 extension ErrorPresentable where Self: UIViewController {
@@ -11,6 +18,7 @@ extension ErrorPresentable where Self: UIViewController {
         title: String,
         message: String,
         actionButtonTitle: String,
+        closeButton: Dialog.CloseButton,
         onConfirm: (() -> Void)?
     ) {
         let dialog = Dialog(
@@ -30,7 +38,7 @@ extension ErrorPresentable where Self: UIViewController {
             ],
             image: "icnAlert",
             actionButton: .init(title: actionButtonTitle, style: .red, action: onConfirm ?? {}),
-            closeButton: .available
+            closeButton: closeButton
         )
         dialog.show(in: self)
     }

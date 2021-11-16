@@ -61,7 +61,7 @@ extension SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
             .onError { [weak self] error in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {
-                    strongSelf.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                    strongSelf.showError(onConfirm: { [weak self] in
                         self?.coordinator.goBackToBlikSettingsFromSmsScreen()
                     })
                 })
@@ -70,6 +70,14 @@ extension SmsConfirmationPresenter: SmsConfirmationPresenterProtocol {
     
     func didPressClose() {
         coordinator.close()
+    }
+    
+    private func showError(onConfirm: (() -> Void)?) {
+        view?.showErrorMessage(title: "",
+                               message: localized("pl_blik_text_wrongSmsCode"),
+                               actionButtonTitle: localized("generic_link_ok"),
+                               closeButton: .none,
+                               onConfirm: onConfirm)
     }
 }
 

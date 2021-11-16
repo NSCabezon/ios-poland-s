@@ -33,6 +33,10 @@ enum Images {
     static var info_blueGreen: UIImage {
         UIImage(fromModuleNamed: "info_blueGreen")
     }
+    
+    static var security_sms_lock: UIImage {
+        UIImage(fromModuleNamed: "security_sms_lock")
+    }
 }
 
 extension Images {

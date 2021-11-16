@@ -129,6 +129,7 @@ private extension TransactionLimitPresenter {
                     title: localized("pl_blik_title_limitNoAllowed"),
                     message: localized("pl_blik_text_limitNoAllowedInfo"),
                     actionButtonTitle: localized("generic_link_ok"),
+                    closeButton: .available,
                     onConfirm: nil
                 )
             }
