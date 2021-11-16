@@ -64,9 +64,9 @@ extension PLVoiceBotViewController: PLVoiceBotViewProtocol {
         self.continueButton.backgroundColor = .santanderRed
         self.continueButton.isEnabled = true
         // -------
-            
-        let textStyle: LocalizedStylableText = LocalizedStylableText(text: localized("pl_onboarding_alert_IVRcall"), styles: [.init(start: 0, length: localized("pl_onboarding_alert_IVRcall").count, attribute: .color(hex: "444444"))])
-        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .info, duration: 5.0)
+        
+        TopAlertController.setup(TopAlertView.self).showAlert(localized("pl_onboarding_alert_IVRcall"),
+                                                              alertType: .info, duration: 5.0)
     }
 }
 
