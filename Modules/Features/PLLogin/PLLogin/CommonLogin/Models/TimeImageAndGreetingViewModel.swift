@@ -45,7 +45,7 @@ final class TimeImageAndGreetingViewModel {
         guard let type = themeType else { return nil }
         switch type {
         case .assets(let name):
-            return Assets.image(named: name)
+            return UIImage(named: name, in: Bundle(for: TimeImageAndGreetingViewModel.self), compatibleWith: nil)
         case .documents(let data):
             guard let data = data else { return nil }
             return UIImage(data: data)
@@ -53,7 +53,7 @@ final class TimeImageAndGreetingViewModel {
     }
     
     public func getBackground() -> UIImage {
-        return backgroundImage ?? Assets.image(named: "\(defaultTheme.name)_\(randomId)") ?? UIImage()
+        return backgroundImage ?? UIImage(named: "\(defaultTheme.name)_\(randomId)", in: Bundle(for: TimeImageAndGreetingViewModel.self), compatibleWith: nil) ?? UIImage()
     }
     
     public func setThemeType(_ theme: BackgroundImagesTheme?, resolver: DependenciesResolver) {
