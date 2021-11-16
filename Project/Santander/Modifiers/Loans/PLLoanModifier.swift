@@ -61,7 +61,7 @@ extension PLLoanModifier: LoansModifierProtocol {
         return [self.loanScheduleButton, self.customerServiceButton, .loanDetail]
     }
 
-    func didSelectLoanOption(_ option: LoansHomeOption) {
+    func didSelectLoanOption(_ option: LoansHomeOption, loan: LoanEntity?) {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
 
