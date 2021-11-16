@@ -12,6 +12,7 @@ import PLUI
 import Commons
 import PLCommons
 import PLCommonOperatives
+import DomainCommon
 
 final class OneAppInitViewController: UIViewController, ErrorPresentable {
     
@@ -21,6 +22,10 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
     
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
+    
+    private var useCaseHandler: UseCaseHandler {
+        dependencyResolver.resolve(for: UseCaseHandler.self)
+    }
     
     init(dependencyResolver: DependenciesResolver, modules: [OneAppInitModule], delegate: OneAppInitCoordinatorDelegate?) {
         self.modules = modules
@@ -65,7 +70,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
                 if module == .charityTransfer {
                     guard let self = self else { return }
                     Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .charityTransfer, dependenciesResolver: self.dependencyResolver))
-                        .execute(on: DispatchQueue.global())
+                        .execute(on: self.useCaseHandler)
                         .onSuccess { accounts in
                             if accounts.isEmpty {
                                 self.showServiceInaccessibleMessage(onConfirm: nil)

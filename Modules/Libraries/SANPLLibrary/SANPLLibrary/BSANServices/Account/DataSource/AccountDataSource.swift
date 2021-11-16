@@ -26,7 +26,7 @@ final class AccountDataSource {
         case swiftBranches = "/swiftbranches"
         case cardwithholdings = "/history/cardwithholdings"
         case transactions = "/history/search"
-        case accountForDebit = "/accounts/for-debit/"
+        case accountForDebit = "/accounts/for-debit"
     }
 
     private let networkProvider: NetworkProvider
@@ -112,7 +112,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
-        let serviceName = AccountServiceType.accountForDebit.rawValue
+        let serviceName = AccountServiceType.accountForDebit.rawValue + "/\(transactionType)"
         let absoluteUrl = baseUrl + self.basePath
         return networkProvider.request(
             GetAccountsForDebitRequest(serviceName: serviceName,
