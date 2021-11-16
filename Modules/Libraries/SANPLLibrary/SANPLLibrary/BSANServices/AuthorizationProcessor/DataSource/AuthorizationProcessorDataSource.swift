@@ -9,10 +9,9 @@ import Foundation
 import SANLegacyLibrary
 import CoreDomain
 
-protocol PINChallengeRepresentable: ChallengeRepresentable {
-    var randomKey: String { get }
+public protocol PINChallengeRepresentable: ChallengeRepresentable {
     var challenge: String { get }
-    var softwareTokenType: String { get }
+    var softwareTokenKeys: [SoftwareTokenKeysDataDTO] { get }
 }
 
 protocol AuthorizationProcessorDataSourceProtocol {

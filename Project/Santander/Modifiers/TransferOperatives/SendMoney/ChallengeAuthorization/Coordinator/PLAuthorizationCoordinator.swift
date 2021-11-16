@@ -66,17 +66,17 @@ private extension PLAuthorizationCoordinator {
         self.dependenciesEngine.register(for: PLLoginAuthorizationDataEncryptionUseCase.self) { resolver in
             return PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: resolver)
         }
+        self.dependenciesEngine.register(for: ConfirmPinUseCase.self) { resolver in
+            return ConfirmPinUseCase(dependenciesResolver: resolver)
+        }
     }
 }
 
 extension PLAuthorizationCoordinator: ChallengesHandlerDelegate {
     func handle(_ challenge: ChallengeRepresentable, authorizationId: String, completion: @escaping (ChallengeResult) -> Void) {
-//        guard let challenge = challenge as? PINChallengeRepresentable else { return completion(.notHandled) }
-//        self.dependenciesEngine.register(for: AuthorizationConfiguration.self) { resolver in
-//            return AuthorizationConfiguration(authorizationId: authorizationId, challenge: challenge.challenge, softwareTokenKeys: challenge.softwareTokenKeys, completion: completion)
-//        }
-        self.dependenciesEngine.register(for: AuthorizationConfiguration.self) { resolver in
-            return AuthorizationConfiguration(authorizationId: authorizationId, challenge: "challenge.challenge", softwareTokenKeys: [], completion: completion)
+        guard let challenge = challenge as? PINChallengeRepresentable else { return completion(.notHandled) }
+        self.dependenciesEngine.register(for: AuthorizationConfiguration.self) { _ in
+            return AuthorizationConfiguration(authorizationId: authorizationId, challenge: challenge.challenge, softwareTokenKeys: challenge.softwareTokenKeys, completion: completion)
         }
         self.start()
     }

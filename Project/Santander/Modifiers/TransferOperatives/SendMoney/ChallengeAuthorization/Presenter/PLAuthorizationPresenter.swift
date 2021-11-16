@@ -202,7 +202,6 @@ private extension PLAuthorizationPresenter {
             .execute(on: self.dependenciesResolver.resolve())
             .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
-
                 identity = output.secIdentity
                 return Scenario(useCase: self.getStoredUserKey)
             })
