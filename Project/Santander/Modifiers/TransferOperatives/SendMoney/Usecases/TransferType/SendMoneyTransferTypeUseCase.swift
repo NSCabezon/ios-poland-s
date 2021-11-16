@@ -69,9 +69,10 @@ private extension SendMoneyTransferTypeUseCase {
     }
     
     func getFinalfees(requestValues: SendMoneyTransferTypeUseCaseInput) throws -> [PolandTransferType: AmountRepresentable] {
+        guard let originIban = requestValues.sourceAccount.ibanRepresentable else { fatalError() }
         let feesResponse = try transfersRepository.getFinalFee(
             input: CheckFinalFeeInput(
-                destinationAccount: requestValues.destinationIban,
+                originAccount: originIban,
                 amount: requestValues.amount
             )
         )

@@ -59,10 +59,14 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
 }
 
 private extension PLValidateGenericSendMoneyUseCase {
+    enum Constants {
+        public static let notificationSchemaId = "195"
+    }
+    
     func executeNotifyDevice(_ challenge: String, alias: String, destinationAccountNumber: IBANRepresentable, amount: AmountRepresentable) throws -> UseCaseResponse<ValidateSendMoneyUseCaseOkOutput, ValidateTransferUseCaseErrorOutput> {
         let input = NotifyDeviceInput(challenge: challenge,
                                       softwareTokenType: nil,
-                                      notificationSchemaId: "195",
+                                      notificationSchemaId: Constants.notificationSchemaId,
                                       alias: alias,
                                       iban: destinationAccountNumber,
                                       amount: amount)
@@ -72,7 +76,7 @@ private extension PLValidateGenericSendMoneyUseCase {
             guard let authorizationIdString = authorizationId.authorizationId else {
                 return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil)))
             }
-            return .ok(ValidateSendMoneyUseCaseOkOutput(beneficiaryMail: nil, sca: ValidateSendMoneySCA(authorizationId: authorizationIdString)))
+            return .ok(ValidateSendMoneyUseCaseOkOutput(beneficiaryMail: nil, sca: ValidateSendMoneySCA(authorizationId: "\(authorizationIdString)")))
         case .failure(let error):
             return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
         }

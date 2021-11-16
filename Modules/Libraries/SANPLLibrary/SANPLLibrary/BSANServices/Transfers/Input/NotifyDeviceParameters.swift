@@ -8,7 +8,6 @@
 import Foundation
 
 struct NotifyDeviceParameters: Encodable {
-    let userId: String
     let language: String
     let notificationSchemaId: String
     let variables: [String]

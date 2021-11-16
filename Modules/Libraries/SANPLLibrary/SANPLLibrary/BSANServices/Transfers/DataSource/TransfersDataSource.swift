@@ -16,7 +16,7 @@ protocol TransfersDataSourceProtocol {
     func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
     func getChallenge(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError>
-    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<[String], NetworkProviderError>
+    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -193,13 +193,13 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         return result
     }
     
-    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<[String], NetworkProviderError> {
+    func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         let serviceName = TransferServiceType.notifyDevice.rawValue
         let absoluteUrl = baseUrl + self.basePath
-        let result: Result<[String], NetworkProviderError> = self.networkProvider.request(NotifiyDeviceRequest(serviceName: serviceName,
+        let result: Result<AuthorizationIdDTO, NetworkProviderError> = self.networkProvider.request(NotifiyDeviceRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .post,
                                                                                                                 jsonBody: parameters,

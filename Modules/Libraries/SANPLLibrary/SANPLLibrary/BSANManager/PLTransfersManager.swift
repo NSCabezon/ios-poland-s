@@ -99,7 +99,7 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
                                                       channelId: Constants.channelId.rawValue,
                                                       operationAmount: amountValue,
                                                       operationCurrency: currency)
-        let destinationAccountNumber: String = parameters.destinationAccount.checkDigits + parameters.destinationAccount.codBban
+        let destinationAccountNumber: String = parameters.originAccount.checkDigits + parameters.originAccount.codBban
         let result = try self.transferDataSource.checkFinalFee(inputParameters, destinationAccount: destinationAccountNumber)
         switch result {
         case .success(let feeResponse):
@@ -138,17 +138,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
             return .failure(NetworkProviderError.other)
         }
         let language = try self.bsanDataProvider.getLanguageISO()
-        let iban = parameters.iban.iban
-        let inputParameters = NotifyDeviceParameters(userId: "\(userId)",
-                                                     language: language,
-                                                     notificationSchemaId: "165",
+        let iban = parameters.iban.checkDigits + parameters.iban.codBban
+        let inputParameters = NotifyDeviceParameters(language: language,
+                                                     notificationSchemaId: parameters.notificationSchemaId,
                                                      variables: ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias],
                                                      challenge: parameters.challenge,
-                                                     softwareTokenType: parameters.softwareTokenType)
+                                                     softwareTokenType: nil)
         let result = try self.transferDataSource.notifyDevice(inputParameters)
         switch result {
-        case .success(let authorizationId):
-            return .success(AuthorizationIdDTO(authorizationId: authorizationId.first))
+        case .success(let authorizationDTO):
+            return .success(authorizationDTO)
         case .failure(let error):
             return .failure(error)
         }

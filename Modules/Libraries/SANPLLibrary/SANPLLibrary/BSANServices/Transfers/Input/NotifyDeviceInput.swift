@@ -9,7 +9,7 @@ import Foundation
 import CoreDomain
 
 public struct NotifyDeviceInput {
-    public init(challenge: String, softwareTokenType: String?, notificationSchemaId: String?, alias: String, iban: IBANRepresentable, amount: AmountRepresentable) {
+    public init(challenge: String, softwareTokenType: String?, notificationSchemaId: String, alias: String, iban: IBANRepresentable, amount: AmountRepresentable) {
         self.challenge = challenge
         self.softwareTokenType = softwareTokenType
         self.notificationSchemaId = notificationSchemaId
@@ -20,7 +20,7 @@ public struct NotifyDeviceInput {
     
     let challenge: String
     let softwareTokenType: String?
-    let notificationSchemaId: String?
+    let notificationSchemaId: String
     let alias: String
     let iban: IBANRepresentable
     let amount: AmountRepresentable

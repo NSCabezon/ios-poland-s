@@ -8,7 +8,8 @@
 import CoreDomain
 
 struct AuthorizationIdDTO: Codable {
-    let authorizationId: String?
+    let authorizationId: Int?
+    let expirationTime: String?
 }
 
 extension AuthorizationIdDTO: AuthorizationIdRepresentable {}

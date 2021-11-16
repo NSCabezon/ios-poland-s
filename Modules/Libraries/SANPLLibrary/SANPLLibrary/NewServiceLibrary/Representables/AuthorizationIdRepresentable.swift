@@ -8,5 +8,5 @@
 import CoreDomain
 
 public protocol AuthorizationIdRepresentable {
-    var authorizationId: String? { get }
+    var authorizationId: Int? { get }
 }
