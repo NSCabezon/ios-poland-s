@@ -120,17 +120,21 @@ class GetHelpCenterConfigUseCaseTests: XCTestCase {
             onSuccess: { result in
                 // Assert
                 let sections = result.helpCenterConfig.sections
-                XCTAssertEqual(sections.count, 3)
+                XCTAssertEqual(sections.count, 4)
                 
                 let hintsSection = sections[0]
                 XCTAssertTrue(hintsSection.section.isHints)
                 XCTAssertGreaterThanOrEqual(hintsSection.elements.count(off: { $0.isExpandableHint }), 1)
                 
-                let callSection = sections[1]
+                let yourCasesSection = sections[1]
+                XCTAssertTrue(yourCasesSection.section.isInAppActions)
+                XCTAssertEqual(yourCasesSection.elements.count(off: { $0.isYourCases }), 1)
+                
+                let callSection = sections[2]
                 XCTAssertTrue(callSection.section.isCall)
                 XCTAssertEqual(callSection.elements.count(off: { $0.isCall }), 1)
                 
-                let advisorSection = sections[2]
+                let advisorSection = sections[3]
                 XCTAssertTrue(advisorSection.section.isOnlineAdvisor)
                 XCTAssertGreaterThanOrEqual(advisorSection.elements.count(off: { $0.isAdvisor }), 1)
                 
@@ -156,17 +160,21 @@ class GetHelpCenterConfigUseCaseTests: XCTestCase {
             onSuccess: { result in
                 // Assert
                 let sections = result.helpCenterConfig.sections
-                XCTAssertEqual(sections.count, 3)
+                XCTAssertEqual(sections.count, 4)
                 
                 let hintsSection = sections[0]
                 XCTAssertTrue(hintsSection.section.isHints)
                 XCTAssertGreaterThanOrEqual(hintsSection.elements.count(off: { $0.isExpandableHint }), 1)
                 
-                let callSection = sections[1]
+                let yourCasesSection = sections[1]
+                XCTAssertTrue(yourCasesSection.section.isInAppActions)
+                XCTAssertEqual(yourCasesSection.elements.count(off: { $0.isYourCases }), 1)
+                
+                let callSection = sections[2]
                 XCTAssertTrue(callSection.section.isCall)
                 XCTAssertEqual(callSection.elements.count(off: { $0.isCall }), 1)
                 
-                let advisorSection = sections[2]
+                let advisorSection = sections[3]
                 XCTAssertTrue(advisorSection.section.isOnlineAdvisor)
                 XCTAssertEqual(advisorSection.elements.count(off: { $0.isInfo }), 1)
                 XCTAssertGreaterThanOrEqual(advisorSection.elements.count(off: { $0.isAdvisor }), 1)
@@ -193,9 +201,13 @@ class GetHelpCenterConfigUseCaseTests: XCTestCase {
             onSuccess: { result in
                 // Assert
                 let sections = result.helpCenterConfig.sections
-                XCTAssertEqual(sections.count, 1)
+                XCTAssertEqual(sections.count, 2)
                 
-                let callSection = sections[0]
+                let yourCasesSection = sections[0]
+                XCTAssertTrue(yourCasesSection.section.isInAppActions)
+                XCTAssertEqual(yourCasesSection.elements.count(off: { $0.isYourCases }), 1)
+                
+                let callSection = sections[1]
                 XCTAssertTrue(callSection.section.isCall)
                 XCTAssertEqual(callSection.elements.count(off: { $0.isCall }), 1)
                 
@@ -221,14 +233,17 @@ class GetHelpCenterConfigUseCaseTests: XCTestCase {
             onSuccess: { result in
                 // Assert
                 let sections = result.helpCenterConfig.sections
-                XCTAssertEqual(sections.count, 2)
+                XCTAssertEqual(sections.count, 3)
                 
                 let hintsSection = sections[0]
                 XCTAssertTrue(hintsSection.section.isHints)
                 XCTAssertGreaterThanOrEqual(hintsSection.elements.count(off: { $0.isExpandableHint }), 1)
                 
+                let yourCasesSection = sections[1]
+                XCTAssertTrue(yourCasesSection.section.isInAppActions)
+                XCTAssertEqual(yourCasesSection.elements.count(off: { $0.isYourCases }), 1)
                 
-                let callSection = sections[1]
+                let callSection = sections[2]
                 XCTAssertTrue(callSection.section.isCall)
                 XCTAssertEqual(callSection.elements.count(off: { $0.isCall }), 1)
                 
@@ -254,13 +269,17 @@ class GetHelpCenterConfigUseCaseTests: XCTestCase {
             onSuccess: { result in
                 // Assert
                 let sections = result.helpCenterConfig.sections
-                XCTAssertEqual(sections.count, 2)
+                XCTAssertEqual(sections.count, 3)
                 
-                let callSection = sections[0]
+                let yourCasesSection = sections[0]
+                XCTAssertTrue(yourCasesSection.section.isInAppActions)
+                XCTAssertEqual(yourCasesSection.elements.count(off: { $0.isYourCases }), 1)
+                
+                let callSection = sections[1]
                 XCTAssertTrue(callSection.section.isCall)
                 XCTAssertEqual(callSection.elements.count(off: { $0.isCall }), 1)
                 
-                let advisorSection = sections[1]
+                let advisorSection = sections[2]
                 XCTAssertTrue(advisorSection.section.isOnlineAdvisor)
                 XCTAssertGreaterThanOrEqual(advisorSection.elements.count(off: { $0.isAdvisor }), 1)
                 
@@ -307,6 +326,10 @@ private extension GetHelpCenterConfigUseCaseTests {
 }
 
 private extension HelpCenterConfig.SectionType {
+    var isInAppActions: Bool {
+        if case .inAppActions = self { return true } else { return false }
+    }
+    
     var isCall: Bool {
         if case .call = self { return true } else { return false }
     }
@@ -325,6 +348,9 @@ private extension HelpCenterConfig.SectionType {
 }
 
 private extension HelpCenterConfig.Element {
+    var isYourCases: Bool {
+        if case .yourCases = self { return true } else { return false }
+    }
     
     var isCall: Bool {
         if case .call = self { return true } else { return false }

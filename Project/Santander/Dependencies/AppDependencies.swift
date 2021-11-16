@@ -181,6 +181,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
             return self.plAccountOtherOperativesInfoRepository
         }
+        self.dependencieEngine.register(for: PLWebViewLinkRepositoryProtocol.self) { resolver in
+            return PLWebViewLinkRepository(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
         }

@@ -10,6 +10,7 @@ import UIKit
 import UI
 import PLHelpCenter
 import Commons
+import PLCommons
 import DomainCommon
 import Repository
 import SANPLLibrary
@@ -75,6 +76,10 @@ class ViewController: UIViewController {
             return UseCaseHandler(maxConcurrentOperationCount: 8, qualityOfService: .userInitiated)
         }
         
+        defaultResolver.register(for: PLWebViewLinkRepositoryProtocol.self) { _ in
+            return FakePLWebViewLinkRepository()
+        }
+        
         defaultResolver.register(for: AppConfigRepositoryProtocol.self) { _ in
             return FakeAppConfigRepository()
         }
@@ -98,6 +103,15 @@ class ViewController: UIViewController {
 final class SideMenuCoordinatorNavigator: PLHelpCenterModuleCoordinatorDelegate {
     func didSelectMenu() {
         Toast.show("Side Menu is Not available in example App")
+    }
+}
+
+struct FakePLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {
+    func getWebViewLink(forIdentifier identifier: String) -> PLWebViewLink? {
+        return getWebViewLink(forIdentifier: identifier, fromGroups: [])
+    }
+    func getWebViewLink(forIdentifier identifier: String, fromGroups groups: [PLWebViewLinkRepositoryGroup]) -> PLWebViewLink? {
+        return PLWebViewLink(id: "", url: "", method: .get, isAvailable: false)
     }
 }
 

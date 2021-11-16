@@ -33,6 +33,7 @@ def pl_dependencies
   pod 'PLHelpCenter', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
   pod 'PLUI', :path => '../../../Libraries/PLUI'
 end
 

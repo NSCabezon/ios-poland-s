@@ -7,6 +7,8 @@
 
 import Models
 import Commons
+import PLCommons
+import PLCommonOperatives
 import DomainCommon
 import UI
 
@@ -117,6 +119,8 @@ extension HelpCenterDashboardPresenter: HelpCenterDashboardPresenterProtocol, Op
             performActionFor(advisorDetails: details)
         case .call(let phoneNumber):
             performActionFor(phoneNumber: phoneNumber)
+        case .yourCases:
+            openWebView(withIdentifier: element.webViewIdentifier)
         default:
             //TODO
             // Implement others actions
@@ -174,6 +178,27 @@ extension HelpCenterDashboardPresenter: HelpCenterDashboardPresenterProtocol, Op
                 self.view?.dismissLoading {
                     self.view?.showErrorDialog()
                 }
+            }
+    }
+    
+    private func openWebView(withIdentifier identifier: String?) {
+        guard let identifier = identifier else { return }
+        let repository = self.dependenciesResolver.resolve(for: PLWebViewLinkRepositoryProtocol.self)
+        guard let webViewLink = repository.getWebViewLink(forIdentifier: identifier) else { return }
+        guard webViewLink.isAvailable else {
+            return Toast.show(localized("generic_alert_notAvailableOperation"))
+        }
+        
+        let input = GetBasePLWebConfigurationUseCaseInput(webViewLink: webViewLink)
+        let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
+        
+        Scenario(useCase: useCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { [weak self] result in
+                self?.coordinator.openWebView(withConfiguration: result.configuration)
+            }
+            .onError { error in
+                Toast.show(error.getErrorDesc() ?? "")
             }
     }
 }
