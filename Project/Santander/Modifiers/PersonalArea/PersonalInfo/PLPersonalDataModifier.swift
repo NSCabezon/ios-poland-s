@@ -32,6 +32,16 @@ private extension PLPersonalDataModifier {
     
     func polandAddress(_ nodes: [String]?) -> String? {
         guard let nodes = nodes, nodes.count >= 5 else { return nil }
-        return "\(nodes[2]) \(nodes[3]) \(nodes[4]) \(nodes[1])"
+        return concat(strings: [nodes[2], nodes[3], nodes[4], nodes[1]])
+    }
+    
+    func concat(strings: [String?]) -> String {
+        var string = ""
+        strings.enumerated().forEach({
+            guard let str = $1, !str.isEmpty else { return }
+            if $0 > 0 { string += " " }
+            string += str
+        })
+        return string
     }
 }

@@ -43,13 +43,12 @@ extension PLGlobalPositionManagerAdapter: BSANPGManager {
             let name = customer.firstName ?? ""
             let secondName = customer.secondName ?? ""
             let surname = customer.lastName ?? ""
-            adaptedGlobalPosition.clientName = name
             adaptedGlobalPosition.clientNameWithoutSurname =  name
             var secondNameDTO = SurNameDTO()
-            secondNameDTO.surname = secondName + " " + surname
+            secondNameDTO.surname = secondName
             adaptedGlobalPosition.clientFirstSurname = secondNameDTO
             var surnameDTO = SurNameDTO()
-            surnameDTO.surname = ""
+            surnameDTO.surname = surname
             adaptedGlobalPosition.clientSecondSurname = surnameDTO
         }
         return BSANOkResponse(adaptedGlobalPosition)

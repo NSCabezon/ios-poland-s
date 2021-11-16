@@ -140,6 +140,7 @@
 		90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A952732AC5300691E91 /* RemainingTimeView.swift */; };
 		90CFA854273E7DAF006AD6CB /* PLSessionDataManagerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABD87B273D213900431F7F /* PLSessionDataManagerModifier.swift */; };
 		9C0BFBE526F8C5B0000F2C8E /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BFBE426F8C5B0000F2C8E /* SendMoneyCoordinator.swift */; };
+		9C3C2C345C4DCE9B12616306 /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F3532D182B076D7F2CD5D8 /* Pods_Santander.framework */; };
 		9CA9EEBC270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9EEBB270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift */; };
 		9CF5175626FB75A800332F8B /* CheckNewSendMoneyEnabledUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF5175526FB75A800332F8B /* CheckNewSendMoneyEnabledUseCase.swift */; };
 		9E92903E26F9EAF700A0178A /* PLPublicMenuViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E92903D26F9EAF700A0178A /* PLPublicMenuViewComponents.swift */; };
@@ -194,6 +195,8 @@
 		D54D2EE727201CC400781580 /* PLOpinatorInfoOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54D2EE627201CC400781580 /* PLOpinatorInfoOption.swift */; };
 		D5B9E49D2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9E49B2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift */; };
 		D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9E49C2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift */; };
+		D5C5A90B273BD483003963CA /* PLPrivateSideMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C5A90A273BD483003963CA /* PLPrivateSideMenuModifier.swift */; };
+		D5C5A90D273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C5A90C273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift */; };
 		EF430D5F271DD855001DC4B9 /* TranferTypeMatrixEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */; };
 		EF446B0C271DCA770074813A /* SendMoneyDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */; };
 		EF446B0E271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */; };
@@ -205,7 +208,7 @@
 /* Begin PBXFileReference section */
 		009046D2272AFD9300072AF8 /* PLWebViewURLRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLWebViewURLRepository.swift; sourceTree = "<group>"; };
 		04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLWebViewCoordinatorNavigator.swift; sourceTree = "<group>"; };
-		09F71BE53737076790A2269B /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
+		07CEA947B9EB23B3F40EFD48 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
 		0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailShareableInfo.swift; sourceTree = "<group>"; };
 		0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOperativesModifier.swift; sourceTree = "<group>"; };
 		0D13A93026E8A84200359D5B /* PLAccountTransactionDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailAction.swift; sourceTree = "<group>"; };
@@ -243,8 +246,9 @@
 		0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountHomeActionModifier.swift; sourceTree = "<group>"; };
 		0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountNumberFormatter.swift; sourceTree = "<group>"; };
 		0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareIbanFormatter.swift; sourceTree = "<group>"; };
-		0EC9AA0E969E78E8E908B1FD /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
-		17DF9C475AB69D50D52C8E83 /* Pods-Santander.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-release.xcconfig"; sourceTree = "<group>"; };
+		10F3532D182B076D7F2CD5D8 /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		121B07827B0FB4EFBB9B50A3 /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
+		1A224E4E076B26D46D5BA71B /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
 		1C8B3EEA270DEF1F00868449 /* SendMoneyCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyCoordinator.swift; sourceTree = "<group>"; };
 		1C8B3EEC270DEF3000868449 /* SendMoneyModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyModifier.swift; sourceTree = "<group>"; };
 		26328A8A27070CD500D1318D /* PLCardDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardDetailModifier.swift; sourceTree = "<group>"; };
@@ -285,7 +289,8 @@
 		4488918826EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetAccountTransactionsUseCase.swift; sourceTree = "<group>"; };
 		4488918A26EB8F0E00F5FA24 /* PLFiltersAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLFiltersAlertModifier.swift; sourceTree = "<group>"; };
 		4497E815270CB23200D6EE05 /* PLLoanTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanTransaction.swift; sourceTree = "<group>"; };
-		51FC72F7ACD733E5324EB06F /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
+		49E699CFE2834DE4BE0C281D /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
+		5243E3FFFBB6EFCACA6C344E /* Pods-Santander.regression-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-debug.xcconfig"; sourceTree = "<group>"; };
 		5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPfmSessionStartedAction.swift; sourceTree = "<group>"; };
 		5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPfmSessionFinishedAction.swift; sourceTree = "<group>"; };
 		5FBDB731273BB4A500FB6DAF /* PLSessionDataManagerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSessionDataManagerModifier.swift; sourceTree = "<group>"; };
@@ -354,15 +359,19 @@
 		9CF5175526FB75A800332F8B /* CheckNewSendMoneyEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckNewSendMoneyEnabledUseCase.swift; path = UseCases/CheckNewSendMoneyEnabledUseCase.swift; sourceTree = "<group>"; };
 		9E92903D26F9EAF700A0178A /* PLPublicMenuViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPublicMenuViewComponents.swift; sourceTree = "<group>"; };
 		9E92904126F9EB0800A0178A /* PLPublicMenuViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPublicMenuViewContainer.swift; sourceTree = "<group>"; };
+		9F9067FA1991FED67946A284 /* Pods-Santander.preprod-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-release.xcconfig"; sourceTree = "<group>"; };
 		A10AC764272A9FBC00050CF9 /* PREPROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PREPROD.xcconfig; sourceTree = "<group>"; };
 		A1192F74272805B600B83B42 /* UAT.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UAT.xcconfig; sourceTree = "<group>"; };
+		A1497B6B8D23D4E187D72F5F /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
 		A1B81B122726D3B300714A3E /* Regression.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Regression.xcconfig; sourceTree = "<group>"; };
 		A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = centrum24.pl.cer; sourceTree = "<group>"; };
+		A5778D991D8A658710BDF0CE /* Pods-Santander.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-release.xcconfig"; sourceTree = "<group>"; };
 		A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
 		A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPLCardsOtherOperativesWebConfigurationUseCase.swift; sourceTree = "<group>"; };
 		A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardsOtherOperativesWebConfiguration.swift; sourceTree = "<group>"; };
 		A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLLoanDetailModifier.swift; sourceTree = "<group>"; };
 		A9EF0DA3271D78B700A1604B /* PLContextDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLContextDTO.swift; sourceTree = "<group>"; };
+		AFD7FC892C76D01A2FD7869D /* Pods-Santander.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-debug.xcconfig"; sourceTree = "<group>"; };
 		B01155E6271581BD00A4C175 /* OneAppInitCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneAppInitCoordinator.swift; sourceTree = "<group>"; };
 		B01155E7271581BD00A4C175 /* OneAppInitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneAppInitViewController.swift; sourceTree = "<group>"; };
 		B01155E8271581BD00A4C175 /* FakeLoginTokenInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeLoginTokenInjector.swift; sourceTree = "<group>"; };
@@ -406,12 +415,14 @@
 		CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTimeViewModel.swift; sourceTree = "<group>"; };
 		CF685EEC765FCA190A19EB12 /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
 		D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardTransactionsSearchModifier.swift; sourceTree = "<group>"; };
-		D3425F86777E26AF61F5757F /* Pods-Santander.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-release.xcconfig"; sourceTree = "<group>"; };
+		D49B8F852B48B7AE9E08D3DD /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
 		D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalDataModifier.swift; sourceTree = "<group>"; };
 		D54D2EE627201CC400781580 /* PLOpinatorInfoOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOpinatorInfoOption.swift; sourceTree = "<group>"; };
 		D5B9E49B2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardTransactionDetailViewConfiguration.swift; sourceTree = "<group>"; };
 		D5B9E49C2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardTransactionDetailActionFactoryModifier.swift; sourceTree = "<group>"; };
-		EC862D41365E312BF8D649EA /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5C5A90A273BD483003963CA /* PLPrivateSideMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateSideMenuModifier.swift; sourceTree = "<group>"; };
+		D5C5A90C273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaMainModuleModifier.swift; sourceTree = "<group>"; };
+		DD5E0B8F2AC143E258A7696B /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
 		EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranferTypeMatrixEvaluator.swift; sourceTree = "<group>"; };
 		EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyDependencies.swift; sourceTree = "<group>"; };
 		EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeUseCaseInputAdapter.swift; sourceTree = "<group>"; };
@@ -425,7 +436,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD84D4C34BE2BEEC9F8F9518 /* Pods_Santander.framework in Frameworks */,
+				9C3C2C345C4DCE9B12616306 /* Pods_Santander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,6 +647,14 @@
 				85E19B5F270E295C00EFA1CC /* Usecases */,
 			);
 			path = SendMoney;
+			sourceTree = "<group>";
+		};
+		255380113673FA10B9A6718D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10F3532D182B076D7F2CD5D8 /* Pods_Santander.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		26328A8627070CA500D1318D /* Detail */ = {
@@ -878,7 +897,7 @@
 				66B3CFA72639C6C5000AAD0F /* Products */,
 				7B3C019BD872523CEA4DC1E6 /* Pods */,
 				661D89C226F46CD6001D8FB0 /* Recovered References */,
-				D180D43E9D23ED5A87E76F3A /* Frameworks */,
+				255380113673FA10B9A6718D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -976,20 +995,20 @@
 		7B3C019BD872523CEA4DC1E6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BC898FBDA7A6D47BB52E832D /* Pods-Santander.pro-debug.xcconfig */,
-				7C596191E5CD796BA06A54F2 /* Pods-Santander.pre-debug.xcconfig */,
-				B5A65F333D237DE4A62189CD /* Pods-Santander.preprod-debug.xcconfig */,
-				7B4BB280463AE2C5065641C0 /* Pods-Santander.regression-debug.xcconfig */,
-				C86C71B24CF32963E2CDE7D2 /* Pods-Santander.uat-debug.xcconfig */,
-				51FC72F7ACD733E5324EB06F /* Pods-Santander.dev-debug.xcconfig */,
-				0EC9AA0E969E78E8E908B1FD /* Pods-Santander.intern-debug.xcconfig */,
-				943646CB465C0F9AFDD453A1 /* Pods-Santander.pro-release.xcconfig */,
-				CF685EEC765FCA190A19EB12 /* Pods-Santander.intern-release.xcconfig */,
-				7AE51B88BE7D301450222024 /* Pods-Santander.pre-release.xcconfig */,
-				CA6307F943BB018C17C9F69C /* Pods-Santander.preprod-release.xcconfig */,
-				D3425F86777E26AF61F5757F /* Pods-Santander.uat-release.xcconfig */,
-				17DF9C475AB69D50D52C8E83 /* Pods-Santander.regression-release.xcconfig */,
-				09F71BE53737076790A2269B /* Pods-Santander.dev-release.xcconfig */,
+				D49B8F852B48B7AE9E08D3DD /* Pods-Santander.pro-debug.xcconfig */,
+				49E699CFE2834DE4BE0C281D /* Pods-Santander.pre-debug.xcconfig */,
+				AFD7FC892C76D01A2FD7869D /* Pods-Santander.preprod-debug.xcconfig */,
+				5243E3FFFBB6EFCACA6C344E /* Pods-Santander.regression-debug.xcconfig */,
+				851D8A3EF88BF8F610371908 /* Pods-Santander.uat-debug.xcconfig */,
+				1A224E4E076B26D46D5BA71B /* Pods-Santander.dev-debug.xcconfig */,
+				07CEA947B9EB23B3F40EFD48 /* Pods-Santander.dev-release.xcconfig */,
+				DD5E0B8F2AC143E258A7696B /* Pods-Santander.intern-debug.xcconfig */,
+				CAEDD8E5EE82E2B0F9C79F63 /* Pods-Santander.pro-release.xcconfig */,
+				121B07827B0FB4EFBB9B50A3 /* Pods-Santander.intern-release.xcconfig */,
+				A1497B6B8D23D4E187D72F5F /* Pods-Santander.pre-release.xcconfig */,
+				9F9067FA1991FED67946A284 /* Pods-Santander.preprod-release.xcconfig */,
+				A5778D991D8A658710BDF0CE /* Pods-Santander.uat-release.xcconfig */,
+				92BBAD08D0BFD8138E86975B /* Pods-Santander.regression-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1047,6 +1066,7 @@
 			isa = PBXGroup;
 			children = (
 				9E92903C26F9EADB00A0178A /* Components */,
+				D5C5A90A273BD483003963CA /* PLPrivateSideMenuModifier.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -1107,6 +1127,7 @@
 				BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */,
 				BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */,
 				BB29664F26CFB4E50012599D /* PersonalInfo */,
+				D5C5A90C273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift */,
 			);
 			path = PersonalArea;
 			sourceTree = "<group>";
@@ -1243,13 +1264,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66B3CFBA2639C6C8000AAD0F /* Build configuration list for PBXNativeTarget "Santander" */;
 			buildPhases = (
-				E9A7C98763C56FB5DC07BCC4 /* [CP] Check Pods Manifest.lock */,
+				AFF92CB524AB0C0FE0F1F5AA /* [CP] Check Pods Manifest.lock */,
 				7E9483912726CB080088C7E4 /* SwiftLint */,
 				66B3CFA22639C6C5000AAD0F /* Sources */,
 				66B3CFA32639C6C5000AAD0F /* Frameworks */,
 				42CEB7BB26E8ED0B00349ACD /* Firebase GoogleServices */,
 				66B3CFA42639C6C5000AAD0F /* Resources */,
-				A74824E8722481936A5EF9FA /* [CP] Embed Pods Frameworks */,
+				C021160ADAD35ACFAFFBECE2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1368,24 +1389,7 @@
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --config ../.swiftlint.yml --quiet\n";
 		};
-		A74824E8722481936A5EF9FA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E9A7C98763C56FB5DC07BCC4 /* [CP] Check Pods Manifest.lock */ = {
+		AFF92CB524AB0C0FE0F1F5AA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1407,6 +1411,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C021160ADAD35ACFAFFBECE2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1421,6 +1442,7 @@
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
 				0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */,
 				42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */,
+				D5C5A90B273BD483003963CA /* PLPrivateSideMenuModifier.swift in Sources */,
 				446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
 				BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */,
 				CCE45A9C2732AC5400691E91 /* PLAuthorizationViewController.swift in Sources */,
@@ -1464,6 +1486,7 @@
 				B01156052715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift in Sources */,
 				B01155F1271581BD00A4C175 /* OneAppInitWelcomeCoordinator.swift in Sources */,
 				446C4F8E26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift in Sources */,
+				D5C5A90D273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift in Sources */,
 				7E2CCA8726B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				669A37DB270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift in Sources */,
@@ -1716,7 +1739,7 @@
 		};
 		66B3CFBB2639C6C8000AAD0F /* Pro-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC898FBDA7A6D47BB52E832D /* Pods-Santander.pro-debug.xcconfig */;
+			baseConfigurationReference = D49B8F852B48B7AE9E08D3DD /* Pods-Santander.pro-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1742,7 +1765,7 @@
 		};
 		66B3CFBC2639C6C8000AAD0F /* Pro-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 943646CB465C0F9AFDD453A1 /* Pods-Santander.pro-release.xcconfig */;
+			baseConfigurationReference = CAEDD8E5EE82E2B0F9C79F63 /* Pods-Santander.pro-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1829,7 +1852,7 @@
 		};
 		66BC8ADD2640071700654CC5 /* Intern-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0EC9AA0E969E78E8E908B1FD /* Pods-Santander.intern-debug.xcconfig */;
+			baseConfigurationReference = DD5E0B8F2AC143E258A7696B /* Pods-Santander.intern-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1918,7 +1941,7 @@
 		};
 		66BC8ADF2640073300654CC5 /* Dev-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51FC72F7ACD733E5324EB06F /* Pods-Santander.dev-debug.xcconfig */;
+			baseConfigurationReference = 1A224E4E076B26D46D5BA71B /* Pods-Santander.dev-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2007,7 +2030,7 @@
 		};
 		66BC8AE12640074C00654CC5 /* Pre-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C596191E5CD796BA06A54F2 /* Pods-Santander.pre-debug.xcconfig */;
+			baseConfigurationReference = 49E699CFE2834DE4BE0C281D /* Pods-Santander.pre-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2090,7 +2113,7 @@
 		};
 		66BC8AE52640077A00654CC5 /* Pre-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AE51B88BE7D301450222024 /* Pods-Santander.pre-release.xcconfig */;
+			baseConfigurationReference = A1497B6B8D23D4E187D72F5F /* Pods-Santander.pre-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2173,7 +2196,7 @@
 		};
 		66BC8AE92640079800654CC5 /* Intern-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CF685EEC765FCA190A19EB12 /* Pods-Santander.intern-release.xcconfig */;
+			baseConfigurationReference = 121B07827B0FB4EFBB9B50A3 /* Pods-Santander.intern-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2262,7 +2285,7 @@
 		};
 		A10AC761272A9F9300050CF9 /* Preprod-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5A65F333D237DE4A62189CD /* Pods-Santander.preprod-debug.xcconfig */;
+			baseConfigurationReference = AFD7FC892C76D01A2FD7869D /* Pods-Santander.preprod-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2345,7 +2368,7 @@
 		};
 		A10AC763272A9FA200050CF9 /* Preprod-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA6307F943BB018C17C9F69C /* Pods-Santander.preprod-release.xcconfig */;
+			baseConfigurationReference = 9F9067FA1991FED67946A284 /* Pods-Santander.preprod-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2433,7 +2456,7 @@
 		};
 		A1192F77272805F500B83B42 /* Uat-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C86C71B24CF32963E2CDE7D2 /* Pods-Santander.uat-debug.xcconfig */;
+			baseConfigurationReference = 851D8A3EF88BF8F610371908 /* Pods-Santander.uat-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2516,7 +2539,7 @@
 		};
 		A1192F792728060600B83B42 /* Uat-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D3425F86777E26AF61F5757F /* Pods-Santander.uat-release.xcconfig */;
+			baseConfigurationReference = A5778D991D8A658710BDF0CE /* Pods-Santander.uat-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2598,7 +2621,7 @@
 		};
 		A1B81B152726D3F100714A3E /* Regression-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17DF9C475AB69D50D52C8E83 /* Pods-Santander.regression-release.xcconfig */;
+			baseConfigurationReference = 92BBAD08D0BFD8138E86975B /* Pods-Santander.regression-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2686,7 +2709,7 @@
 		};
 		A1B81B172726D40600714A3E /* Regression-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B4BB280463AE2C5065641C0 /* Pods-Santander.regression-debug.xcconfig */;
+			baseConfigurationReference = 5243E3FFFBB6EFCACA6C344E /* Pods-Santander.regression-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2775,7 +2798,7 @@
 		};
 		B0C54DC6272AC3AD000A63E4 /* Dev-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09F71BE53737076790A2269B /* Pods-Santander.dev-release.xcconfig */;
+			baseConfigurationReference = 07CEA947B9EB23B3F40EFD48 /* Pods-Santander.dev-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

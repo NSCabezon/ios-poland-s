@@ -296,6 +296,12 @@ private extension AppDependencies {
                                         sessionStartedActions: [loadPfm],
                                         sessionFinishedActions: [stopPfm])
         }
+        self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
+            PLPrivateSideMenuModifier()
+        }
+        self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
+            PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
         }
