@@ -8,7 +8,6 @@
 import Models
 import Commons
 import LocalAuthentication
-import PLLogin
 import PLCommons
 import SecurityExtensions
 import CoreDomain
@@ -52,20 +51,20 @@ final class PLAuthorizationPresenter {
         self.dependenciesResolver.resolve(for: AuthorizationConfiguration.self)
     }
     
-    private var getCertificateUseCase: PLGetSecIdentityUseCase {
-        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase.self)
+    private var getCertificateUseCase: PLGetSecIdentityUseCase<StringErrorOutput> {
+        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase<StringErrorOutput>.self)
     }
     
-    private var getStoredUserKey: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase {
-        self.dependenciesResolver.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase.self)
+    private var getStoredUserKey: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<StringErrorOutput> {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<StringErrorOutput>.self)
     }
     
-    private var getStoredTrustedDeviceHeaders: PLTrustedDeviceGetHeadersUseCase {
-        self.dependenciesResolver.resolve(for: PLTrustedDeviceGetHeadersUseCase.self)
+    private var getStoredTrustedDeviceHeaders: PLTrustedDeviceGetHeadersUseCase<StringErrorOutput> {
+        self.dependenciesResolver.resolve(for: PLTrustedDeviceGetHeadersUseCase<StringErrorOutput>.self)
     }
     
-    private var authorizationDataEncryptionUseCase: PLLoginAuthorizationDataEncryptionUseCase {
-        self.dependenciesResolver.resolve(for: PLLoginAuthorizationDataEncryptionUseCase.self)
+    private var authorizationDataEncryptionUseCase: PLAuthorizationDataEncryptionUseCase<StringErrorOutput> {
+        self.dependenciesResolver.resolve(for: PLAuthorizationDataEncryptionUseCase<StringErrorOutput>.self)
     }
 }
 
@@ -97,7 +96,7 @@ private extension PLAuthorizationPresenter {
     
     func onBiometrySuccess() {
         print("Biometry succeeded")
-        self.confirmPin(rememberedLoginType: .Biometrics)
+        self.confirmPin(accessType: .biometrics)
     }
     
     func onBiometryError(_ error: Error? = nil) {
@@ -155,7 +154,7 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
     }
     
     func didSelectContinue() {
-        self.confirmPin(rememberedLoginType: .Pin(value: self.pin ?? ""))
+        self.confirmPin(accessType: .pin(value: self.pin ?? ""))
     }
     
     func didTimerEnd() {
@@ -177,8 +176,8 @@ private extension PLAuthorizationPresenter {
         self.dependenciesResolver.resolve(for: PLAuthorizationCoordinatorProtocol.self)
     }
     
-    func getRandomKey(_ rememberedLoginType: RememberedLoginType?) {
-        guard let remembered = rememberedLoginType else {
+    func getRandomKey(_ accessType: AccessType?) {
+        guard let remembered = accessType else {
             self.randomKey = self.configuration.softwareTokenKeys.first?.randomKey
             self.softwareTokenType = self.configuration.softwareTokenKeys.first?.softwareTokenType
             return
@@ -191,35 +190,35 @@ private extension PLAuthorizationPresenter {
         self.softwareTokenType = softwareTokenType?.softwareTokenType
     }
     
-    func confirmPin(rememberedLoginType: RememberedLoginType?) {
+    func confirmPin(accessType: AccessType?) {
         var encryptedStoredUserKey: String?
         var identity: SecIdentity?
         let input = PLGetSecIdentityUseCaseInput(label: "PLCertificateIdentity")
-        self.getRandomKey(rememberedLoginType)
+        self.getRandomKey(accessType)
         Scenario(useCase: self.getCertificateUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<StringErrorOutput>>? in
                 guard let self = self else { return nil }
                 identity = output.secIdentity
                 return Scenario(useCase: self.getStoredUserKey)
             })
-            .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<StringErrorOutput>>? in
                 guard let self = self else { return nil }
-                switch rememberedLoginType {
-                case .Pin(value: _), .none:
+                switch accessType {
+                case .pin(value: _), .none:
                     encryptedStoredUserKey = output.encryptedUserKeyPIN
-                case .Biometrics:
+                case .biometrics:
                     encryptedStoredUserKey = output.encryptedUserKeyBiometrics
                 }
                 return Scenario(useCase: self.getStoredTrustedDeviceHeaders)
             })
-            .then(scenario: { [weak self] output ->Scenario<PLLoginAuthorizationDataEncryptionUseCaseInput, PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            .then(scenario: { [weak self] output ->Scenario<PLAuthorizationDataEncryptionUseCaseInput, PLAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<StringErrorOutput>>? in
                 guard let self = self,
                       let privateKey = identity?.privateKey,
                       let encryptedStoredUserKey = encryptedStoredUserKey,
                       let appId = output.appId
                 else { return nil }
-                let caseInput = PLLoginAuthorizationDataEncryptionUseCaseInput(appId: appId,
+                let caseInput = PLAuthorizationDataEncryptionUseCaseInput(appId: appId,
                                                                                pin: self.pin,
                                                                                encryptedUserKey: encryptedStoredUserKey,
                                                                                randomKey: self.randomKey ?? "",
@@ -228,7 +227,7 @@ private extension PLAuthorizationPresenter {
                 return Scenario(useCase: self.authorizationDataEncryptionUseCase, input: caseInput)
             })
             
-            .then(scenario: { [weak self] output ->Scenario<ConfirmPinUseCaseInput, ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            .then(scenario: { [weak self] output ->Scenario<ConfirmPinUseCaseInput, ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<StringErrorOutput>>? in
                 guard let self = self, let certificate = identity?.PEMFormattedCertificate() else { return nil }
                 let caseInput = ConfirmPinUseCaseInput(authorizationId: self.configuration.authorizationId,
                                                        softwareTokenType: self.softwareTokenType ?? "",

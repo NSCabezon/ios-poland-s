@@ -1,13 +1,16 @@
 //
 //  StringProtocol+Hexadecimal.swift
-//  PLUI
+//  PLCommons
 //
-//  Created by Marcos Álvarez Mesa on 30/6/21.
+//  Created by Cristobal Ramos Laina on 15/11/21.
 //
 
 import Foundation
+import CryptoSwift
+import Security
+import SANPLLibrary
 
-extension StringProtocol {
+public extension StringProtocol {
     var hexaData: Data { .init(hexa) }
     var hexaBytes: [UInt8] { .init(hexa) }
     var hexa: UnfoldSequence<UInt8, Index> {

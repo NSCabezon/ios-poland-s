@@ -42,8 +42,8 @@ private extension PLTrustedDevicePinPresenter {
     private var storeEncryptedUserKeyUseCase: PLTrustedDeviceStoreEncryptedUserKeyUseCase {
         self.dependenciesResolver.resolve(for: PLTrustedDeviceStoreEncryptedUserKeyUseCase.self)
     }
-    private var getSecIdentityUseCase: PLGetSecIdentityUseCase {
-        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase.self)
+    private var getSecIdentityUseCase: PLGetSecIdentityUseCase<LoginErrorType> {
+        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase<LoginErrorType>.self)
     }
 }
 

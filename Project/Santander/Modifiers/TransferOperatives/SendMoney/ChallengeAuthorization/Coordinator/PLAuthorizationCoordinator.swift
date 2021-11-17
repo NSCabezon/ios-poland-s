@@ -10,8 +10,9 @@ import Commons
 import TransferOperatives
 import OneAuthorizationProcessor
 import CoreDomain
-import PLLogin
 import SANPLLibrary
+import PLCommons
+import DomainCommon
 
 public protocol PLAuthorizationCoordinatorProtocol {
     func dismiss()
@@ -54,17 +55,17 @@ private extension PLAuthorizationCoordinator {
         self.dependenciesEngine.register(for: PLAuthorizationPresenterProtocol.self) { resolver in
             return PLAuthorizationPresenter(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: PLGetSecIdentityUseCase.self) { _ in
-            return PLGetSecIdentityUseCase()
+        self.dependenciesEngine.register(for: PLGetSecIdentityUseCase<StringErrorOutput>.self) { _ in
+            return PLGetSecIdentityUseCase<StringErrorOutput>()
         }
-        self.dependenciesEngine.register(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase.self) { resolver in
-            return PLTrustedDeviceGetStoredEncryptedUserKeyUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<StringErrorOutput>.self) { resolver in
+            return PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<StringErrorOutput>(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: PLTrustedDeviceGetHeadersUseCase.self) { resolver in
-            return PLTrustedDeviceGetHeadersUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetHeadersUseCase<StringErrorOutput>.self) { resolver in
+            return PLTrustedDeviceGetHeadersUseCase<StringErrorOutput>(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: PLLoginAuthorizationDataEncryptionUseCase.self) { resolver in
-            return PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLAuthorizationDataEncryptionUseCase<StringErrorOutput>.self) { resolver in
+            return PLAuthorizationDataEncryptionUseCase<StringErrorOutput>(dependenciesResolver: resolver)
         }
         self.dependenciesEngine.register(for: ConfirmPinUseCase.self) { resolver in
             return ConfirmPinUseCase(dependenciesResolver: resolver)

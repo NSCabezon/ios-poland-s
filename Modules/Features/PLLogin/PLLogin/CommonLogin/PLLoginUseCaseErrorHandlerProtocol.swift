@@ -7,8 +7,8 @@
 
 import Foundation
 import Commons
-import PLCommons
 import SANPLLibrary
+import PLCommons
 
 public protocol PLLoginUseCaseErrorHandlerProtocol {
     func handle(error: NetworkProviderError) -> PLUseCaseErrorOutput<LoginErrorType>

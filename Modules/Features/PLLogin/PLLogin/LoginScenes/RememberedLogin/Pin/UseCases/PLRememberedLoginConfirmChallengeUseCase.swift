@@ -10,7 +10,7 @@ import PLCommons
 import DomainCommon
 import SANPLLibrary
 
-public final class PLRememberedLoginConfirmChallengeUseCase: UseCase<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+final class PLRememberedLoginConfirmChallengeUseCase: UseCase<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -40,16 +40,8 @@ public final class PLRememberedLoginConfirmChallengeUseCase: UseCase<PLRemembere
     }
 }
 
-public struct PLRememberedLoginConfirmChallengeUseCaseInput {
-    public let userId: String
-    public let authorizationId: String?
-    public let softwareTokenType, trustedDeviceCertificate, authorizationData: String
-    
-    public init (userId: String, authorizationId: String?, softwareTokenType: String, trustedDeviceCertificate: String, authorizationData: String) {
-        self.userId = userId
-        self.authorizationId = authorizationId
-        self.softwareTokenType = softwareTokenType
-        self.trustedDeviceCertificate = trustedDeviceCertificate
-        self.authorizationData = authorizationData
-    }
+struct PLRememberedLoginConfirmChallengeUseCaseInput {
+    let userId: String
+    let authorizationId: String?
+    let softwareTokenType, trustedDeviceCertificate, authorizationData: String
 }

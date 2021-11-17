@@ -1,29 +1,29 @@
 //
-//  PLLoginEncryptionHelper.swift
-//  PLLogin
+//  PLEncryptionHelper.swift
+//  PLCommons
 //
 //  Created by Marcos Álvarez Mesa on 18/10/21.
 //
 
 import Commons
-import PLCommons
 import DomainCommon
 import CryptoSwift
+import SecurityExtensions
 
-public final class PLLoginEncryptionHelper {}
+public final class PLEncryptionHelper {}
 
-private extension PLLoginEncryptionHelper {
+private extension PLEncryptionHelper {
     enum Constants {
         static let initialVector: [UInt8] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         static let SOFTWARE_TOKEN_KEY_LENGTH = 256
     }
 
-    enum PLLoginEncryptionError: Error {
+    enum PLEncryptionError: Error {
         case invalidValue
     }
 }
 
-public extension PLLoginEncryptionHelper {
+public extension PLEncryptionHelper {
     static func reEncryptUserKey(_ appId: String,
                                  pin: String?,
                                  privateKey: SecKey,
@@ -37,7 +37,7 @@ public extension PLLoginEncryptionHelper {
         let realTimeCreatedSymmetricKey = try Self.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: appId,
                                                                                                   pin: pin)
         let string = String(data: Data(hexUserKey), encoding: .utf8)
-        guard let hexUserKeyBytes = string?.hexaBytes else { throw PLLoginEncryptionError.invalidValue }
+        guard let hexUserKeyBytes = string?.hexaBytes else { throw PLEncryptionError.invalidValue }
         let encryptedUserKey = try Self.encryptSoftwareTokenUserKeyForStoringItIntoTrustedDevice(softwareTokenKeyFromService: hexUserKeyBytes,
                                                                                                  symmetricKeyForSoftwareTokenUserKey: realTimeCreatedSymmetricKey)
         return encryptedUserKey.toBase64()
@@ -49,11 +49,11 @@ public extension PLLoginEncryptionHelper {
 
         guard let userKey = userKey,
               let encodedRandomKey = encodedRandomKey.base64WithAddedCharacter(),
-              let encodedRandomKeyData = Data(base64Encoded: encodedRandomKey) else { throw PLLoginEncryptionError.invalidValue }
+              let encodedRandomKeyData = Data(base64Encoded: encodedRandomKey) else { throw PLEncryptionError.invalidValue }
 
         let initialVector = try Self.createInitializationVectorByTrustedDeviceAppId(appId: trustedDeviceAppId)
         let aes = try AES(key: userKey, blockMode: CBC(iv: initialVector), padding: .noPadding)
-        guard let decryptedKey = try? aes.decrypt(encodedRandomKeyData.bytes) else { throw PLLoginEncryptionError.invalidValue }
+        guard let decryptedKey = try? aes.decrypt(encodedRandomKeyData.bytes) else { throw PLEncryptionError.invalidValue }
         return decryptedKey
     }
 
@@ -63,11 +63,11 @@ public extension PLLoginEncryptionHelper {
         let iterationCount = privateKeyLength / symmetricKeyLength
         let partLength = hexString.count / iterationCount
 
-        guard let subtring = hexString.substring(partLength * (iterationCount - 1)) else { throw PLLoginEncryptionError.invalidValue }
+        guard let subtring = hexString.substring(partLength * (iterationCount - 1)) else { throw PLEncryptionError.invalidValue }
         var hexKey = [UInt8](subtring.utf8)
         for i in (0...(iterationCount - 2)).reversed() {
 
-            guard let subtringSalt = hexString.substring(partLength * i, partLength * (i + 1)) else { throw PLLoginEncryptionError.invalidValue }
+            guard let subtringSalt = hexString.substring(partLength * i, partLength * (i + 1)) else { throw PLEncryptionError.invalidValue }
             let salt = [UInt8](subtringSalt.utf8)
 
             for j in 0...hexKey.count-1 {
@@ -132,7 +132,7 @@ public extension PLLoginEncryptionHelper {
         let realTimeGeneratedUserKey = try Self.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: appId,
                                                                                                pin: pin)
 
-        guard let encryptedUserKeyBytes = Data(base64Encoded: encryptedUserKey)?.bytes else { throw PLLoginEncryptionError.invalidValue }
+        guard let encryptedUserKeyBytes = Data(base64Encoded: encryptedUserKey)?.bytes else { throw PLEncryptionError.invalidValue }
         let userKey = try Self.decryptSoftwareTokenUserKeyStoredInTrustedDevice(encryptedUserKey: encryptedUserKeyBytes,
                                                                                 symmetricKeyForSoftwareTokenUserKey: realTimeGeneratedUserKey)
         let decryptedKey = try Self.decryptRandomKey(trustedDeviceAppId: appId,
@@ -155,7 +155,7 @@ public extension PLLoginEncryptionHelper {
             string += st
         }
         var vector = [UInt8](repeating: 0, count: 16)
-        guard let bytes = string.hexByteArray(), bytes.count < 16 else { throw PLLoginEncryptionError.invalidValue }
+        guard let bytes = string.hexByteArray(), bytes.count < 16 else { throw PLEncryptionError.invalidValue }
         vector.replaceSubrange(0...bytes.count-1, with: bytes)
         return vector
     }
@@ -204,14 +204,14 @@ public extension PLLoginEncryptionHelper {
     static func calculateAuthorizationData(randomKey: String,
                                            challenge: String,
                                            privateKey: SecKey?) throws -> String {
-        guard let randomKeyData = Data(base64Encoded: randomKey) else { throw PLLoginEncryptionError.invalidValue }
+        guard let randomKeyData = Data(base64Encoded: randomKey) else { throw PLEncryptionError.invalidValue }
         let hashedAndSaltedRandomKey = Self.calculateHash(randomKey: randomKeyData.bytes)
         var bytesChallenge = challenge.bytes
         for i in bytesChallenge.indices {
             bytesChallenge[i] = bytesChallenge[i] - 0x30
             bytesChallenge[i] = bytesChallenge[i] & 0xFF
         }
-        guard let encryptedChallenge = privateKey?.sign(Data(bytesChallenge), algorithm: .rsaSignatureRaw) else { throw PLLoginEncryptionError.invalidValue }
+        guard let encryptedChallenge = privateKey?.sign(Data(bytesChallenge), algorithm: .rsaSignatureRaw) else { throw PLEncryptionError.invalidValue }
         var dataToEncode = [UInt8](repeating: 0, count: (hashedAndSaltedRandomKey.count + encryptedChallenge.count))
         dataToEncode = hashedAndSaltedRandomKey + encryptedChallenge
         return dataToEncode.toBase64()
@@ -232,21 +232,21 @@ public extension PLLoginEncryptionHelper {
     static func encryptSoftwareTokenUserKeyForStoringItIntoTrustedDevice(softwareTokenKeyFromService: [UInt8],
                                                                          symmetricKeyForSoftwareTokenUserKey: [UInt8]) throws -> [UInt8] {
         let aes = try AES(key: symmetricKeyForSoftwareTokenUserKey, blockMode: CBC(iv: Constants.initialVector), padding: .noPadding)
-        guard let encryptedParametersBytes = try? aes.encrypt(softwareTokenKeyFromService) else { throw PLLoginEncryptionError.invalidValue }
+        guard let encryptedParametersBytes = try? aes.encrypt(softwareTokenKeyFromService) else { throw PLEncryptionError.invalidValue }
         return encryptedParametersBytes
     }
 
     static func decryptSoftwareTokenUserKeyStoredInTrustedDevice(encryptedUserKey: [UInt8],
                                                                  symmetricKeyForSoftwareTokenUserKey: [UInt8]) throws -> [UInt8] {
         let aes = try AES(key: symmetricKeyForSoftwareTokenUserKey, blockMode: CBC(iv: Constants.initialVector), padding: .noPadding)
-        guard let decryptedUserKey = try? aes.decrypt(encryptedUserKey) else { throw PLLoginEncryptionError.invalidValue }
+        guard let decryptedUserKey = try? aes.decrypt(encryptedUserKey) else { throw PLEncryptionError.invalidValue }
         return decryptedUserKey
     }
 
     static func decryptSoftTokenUserKeyUsingTrustedDevicePrivateKey(privateKey: SecKey,
                                                                     encodedSoftwareTokenKey: String ) throws -> [UInt8] {
-        guard let encodedSoftwareTokenKeyBytes = Data(base64Encoded: encodedSoftwareTokenKey)?.bytes else { throw PLLoginEncryptionError.invalidValue }
-        guard let userKey = privateKey.decrypt(bytes: encodedSoftwareTokenKeyBytes, algorithm: .rsaEncryptionRaw) else { throw PLLoginEncryptionError.invalidValue }
+        guard let encodedSoftwareTokenKeyBytes = Data(base64Encoded: encodedSoftwareTokenKey)?.bytes else { throw PLEncryptionError.invalidValue }
+        guard let userKey = privateKey.decrypt(bytes: encodedSoftwareTokenKeyBytes, algorithm: .rsaEncryptionRaw) else { throw PLEncryptionError.invalidValue }
         return userKey.bytes
     }
 }

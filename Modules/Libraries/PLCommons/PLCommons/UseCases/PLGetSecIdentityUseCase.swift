@@ -7,13 +7,12 @@
 
 import Commons
 import DomainCommon
-import PLCommons
 import SelfSignedCertificate
 
-public final class PLGetSecIdentityUseCase: UseCase<PLGetSecIdentityUseCaseInput, PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+public final class PLGetSecIdentityUseCase<Error>: UseCase<PLGetSecIdentityUseCaseInput, PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<Error>> {
 
-    public override func executeUseCase(requestValues: PLGetSecIdentityUseCaseInput) throws -> UseCaseResponse<PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
-        let secIdentity = try SecIdentity.getSecIdentity(label: requestValues.label)
+    public override func executeUseCase(requestValues: PLGetSecIdentityUseCaseInput) throws -> UseCaseResponse<PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<Error>> {
+        let secIdentity = SecIdentity.getSecIdentity(label: requestValues.label)
 
         return UseCaseResponse.ok(PLGetSecIdentityUseCaseOkOutput(secIdentity: secIdentity))
     }

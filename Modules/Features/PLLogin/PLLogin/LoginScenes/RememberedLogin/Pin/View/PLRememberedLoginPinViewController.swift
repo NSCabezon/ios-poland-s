@@ -226,7 +226,7 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
     
     func didTapOnOK() {
         guard let pin = pinTextField.text else { return }
-        presenter.doLogin(with: .Pin(value: pin))
+        presenter.doLogin(with: .pin(value: pin))
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 import Commons
 import PLCommons
 import SANPLLibrary
+import DomainCommon
 
 final class PLRememberedLoginProcessUseCase {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector
@@ -33,20 +34,20 @@ final class PLRememberedLoginProcessUseCase {
         self.dependenciesEngine.resolve(for: PLAuthenticateUseCase.self)
     }
 
-    private var getCertificateUseCase: PLGetSecIdentityUseCase {
-        self.dependenciesEngine.resolve(for: PLGetSecIdentityUseCase.self)
+    private var getCertificateUseCase: PLGetSecIdentityUseCase<LoginErrorType> {
+        self.dependenciesEngine.resolve(for: PLGetSecIdentityUseCase<LoginErrorType>.self)
     }
 
-    private var getStoredUserKey: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase {
-        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase.self)
+    private var getStoredUserKey: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType> {
+        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>.self)
     }
 
-    private var getStoredTrustedDeviceHeaders: PLTrustedDeviceGetHeadersUseCase {
-        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetHeadersUseCase.self)
+    private var getStoredTrustedDeviceHeaders: PLTrustedDeviceGetHeadersUseCase<LoginErrorType> {
+        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetHeadersUseCase<LoginErrorType>.self)
     }
 
-    private var authorizationDataEncryptionUseCase: PLLoginAuthorizationDataEncryptionUseCase {
-        self.dependenciesEngine.resolve(for: PLLoginAuthorizationDataEncryptionUseCase.self)
+    private var authorizationDataEncryptionUseCase: PLAuthorizationDataEncryptionUseCase<LoginErrorType> {
+        self.dependenciesEngine.resolve(for: PLAuthorizationDataEncryptionUseCase<LoginErrorType>.self)
     }
 
     public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
@@ -74,7 +75,7 @@ final class PLRememberedLoginProcessUseCase {
     }
     
     public func executePersistedLogin(configuration: RememberedLoginConfiguration,
-                                      rememberedLoginType: RememberedLoginType,
+                                      accessType: AccessType,
                                       onSuccess: @escaping (RememberedLoginConfiguration) -> Void,
                                       onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>, RememberedLoginConfiguration) -> Void) {
         var identity: SecIdentity?
@@ -114,25 +115,25 @@ final class PLRememberedLoginProcessUseCase {
             .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
-                switch rememberedLoginType {
-                case .Pin(value: _):
+                switch accessType {
+                case .pin(value: _):
                     encryptedStoredUserKey = output.encryptedUserKeyPIN
-                case .Biometrics:
+                case .biometrics:
                     encryptedStoredUserKey = output.encryptedUserKeyBiometrics
                 }
                 return Scenario(useCase: self.getStoredTrustedDeviceHeaders)
             })
-            .then(scenario: { [weak self] output ->Scenario<PLLoginAuthorizationDataEncryptionUseCaseInput, PLLoginAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
+            .then(scenario: { [weak self] output ->Scenario<PLAuthorizationDataEncryptionUseCaseInput, PLAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self,
                       let challengeValue = configuration.challenge?.value,
                       let privateKey = identity?.privateKey,
                       let encryptedStoredUserKey = encryptedStoredUserKey,
                       let appId = output.appId,
-                      let randomKey = Self.getSoftwareTokenKey(for: rememberedLoginType, with: configuration)?.randomKey
+                      let randomKey = Self.getSoftwareTokenKey(for: accessType, with: configuration)?.randomKey
                 else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
-                let pin = Self.getPinIfNecessary(from: rememberedLoginType)
-                let caseInput = PLLoginAuthorizationDataEncryptionUseCaseInput(appId: appId,
+                let pin = Self.getPinIfNecessary(from: accessType)
+                let caseInput = PLAuthorizationDataEncryptionUseCaseInput(appId: appId,
                                                                                pin: pin,
                                                                                encryptedUserKey: encryptedStoredUserKey,
                                                                                randomKey: randomKey,
@@ -143,7 +144,7 @@ final class PLRememberedLoginProcessUseCase {
             })
             .then(scenario: { [weak self] output ->Scenario<PLRememberedLoginConfirmChallengeUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self,
-                      let softwareTokenType = Self.getSoftwareTokenKey(for: rememberedLoginType, with: configuration)?.softwareTokenType,
+                      let softwareTokenType = Self.getSoftwareTokenKey(for: accessType, with: configuration)?.softwareTokenType,
                       let certificate = identity?.PEMFormattedCertificate() else { onFailure(.error(PLUseCaseErrorOutput(errorDescription: "Missing value")), configuration); return nil }
 
                 let authorizationId = String(describing: configuration.pendingChallenge?.authorizationId)
@@ -183,18 +184,18 @@ final class PLRememberedLoginProcessUseCase {
 
 private extension PLRememberedLoginProcessUseCase {
 
-    static func getSoftwareTokenKey(for rememberedLoginType: RememberedLoginType, with configuration: RememberedLoginConfiguration) -> PLRememberedLoginSoftwareTokenKeys? {
-        switch rememberedLoginType {
-        case .Pin(_):
+    static func getSoftwareTokenKey(for accessType: AccessType, with configuration: RememberedLoginConfiguration) -> PLRememberedLoginSoftwareTokenKeys? {
+        switch accessType {
+        case .pin(_):
             return configuration.pendingChallenge?.getSoftwareTokenKey(for: .PIN)
-        case .Biometrics:
+        case .biometrics:
             return configuration.pendingChallenge?.getSoftwareTokenKey(for: .BIOMETRICS)
         }
     }
 
-    static func getPinIfNecessary(from rememberedLoginType: RememberedLoginType) -> String? {
-        switch rememberedLoginType {
-        case .Pin(let value):
+    static func getPinIfNecessary(from accessType: AccessType) -> String? {
+        switch accessType {
+        case .pin(let value):
             return value
         default:
             return nil

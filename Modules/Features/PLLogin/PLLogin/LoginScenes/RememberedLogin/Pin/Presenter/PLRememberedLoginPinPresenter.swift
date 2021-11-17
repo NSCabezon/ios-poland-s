@@ -17,7 +17,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     var loginConfiguration:RememberedLoginConfiguration { get set }
     func viewDidLoad()
     func viewDidAppear()
-    func doLogin(with rememberedLoginType: RememberedLoginType)
+    func doLogin(with accessType: AccessType)
     func didSelectBalance()
     func didSelectBlik()
     func didSelectMenu()
@@ -181,10 +181,10 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         self.trackEvent(.clickBlik)
     }
 
-    func doLogin(with rememberedLoginType: RememberedLoginType) {
+    func doLogin(with accessType: AccessType) {
         self.view?.showLoading()
         let config = coordinator.loginConfiguration
-        self.loginProcessUseCase.executePersistedLogin(configuration: config, rememberedLoginType: rememberedLoginType) { [weak self] config in
+        self.loginProcessUseCase.executePersistedLogin(configuration: config, accessType: accessType) { [weak self] config in
             self?.view?.dismissLoading(completion: { [weak self] in
                 self?.evaluateLoginResult(configuration: config, error: nil)
             })
@@ -236,7 +236,7 @@ private extension PLRememberedLoginPinPresenter {
     func biometrySuccess() {
         safetyCurtainSafeguardEventDidFinish()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.doLogin(with: .Biometrics)
+            self?.doLogin(with: .biometrics)
         }
     }
 }

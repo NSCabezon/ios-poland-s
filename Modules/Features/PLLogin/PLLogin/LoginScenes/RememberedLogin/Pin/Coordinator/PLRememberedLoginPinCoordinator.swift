@@ -13,6 +13,7 @@ import LoginCommon
 import CommonUseCase
 import Commons
 import DomainCommon
+import PLCommons
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func loadUnrememberedLogin()
@@ -73,20 +74,20 @@ private extension PLRememberedLoginPinCoordinator {
             return dependenciesResolver.resolve(for: PLRememberedLoginPinViewController.self)
         }
 
-        self.dependenciesEngine.register(for: PLGetSecIdentityUseCase.self) {_  in
-            return PLGetSecIdentityUseCase()
+        self.dependenciesEngine.register(for: PLGetSecIdentityUseCase<LoginErrorType>.self) {_  in
+            return PLGetSecIdentityUseCase<LoginErrorType>()
         }
 
-        self.dependenciesEngine.register(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase.self) { resolver in
-            return PLTrustedDeviceGetStoredEncryptedUserKeyUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>.self) { resolver in
+            return PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>(dependenciesResolver: resolver)
         }
 
-        self.dependenciesEngine.register(for: PLTrustedDeviceGetHeadersUseCase.self) { resolver in
-            return PLTrustedDeviceGetHeadersUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetHeadersUseCase<LoginErrorType>.self) { resolver in
+            return PLTrustedDeviceGetHeadersUseCase<LoginErrorType>(dependenciesResolver: resolver)
         }
 
-        self.dependenciesEngine.register(for: PLLoginAuthorizationDataEncryptionUseCase.self) { resolver in
-            return PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PLAuthorizationDataEncryptionUseCase<LoginErrorType>.self) { resolver in
+            return PLAuthorizationDataEncryptionUseCase<LoginErrorType>(dependenciesResolver: resolver)
         }
 
         self.dependenciesEngine.register(for: PLSessionUseCase.self) { resolver in

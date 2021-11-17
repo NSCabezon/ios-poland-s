@@ -13,7 +13,7 @@ import SANPLLibrary
 import PLCommons
 import Repository
 
-final class ConfirmPinUseCase: UseCase<ConfirmPinUseCaseInput, ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+final class ConfirmPinUseCase: UseCase<ConfirmPinUseCaseInput, ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<StringErrorOutput>> {
     
     let dependenciesResolver: DependenciesResolver
 
@@ -21,7 +21,7 @@ final class ConfirmPinUseCase: UseCase<ConfirmPinUseCaseInput, ConfirmPinUseCase
         self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: ConfirmPinUseCaseInput) throws -> UseCaseResponse<ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
+    override func executeUseCase(requestValues: ConfirmPinUseCaseInput) throws -> UseCaseResponse<ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<StringErrorOutput>> {
         let repository = dependenciesResolver.resolve(for: PLOneAuthorizationProcessorRepository.self)
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let trustedDeviceId = managerProvider.getTrustedDeviceManager().getStoredTrustedDeviceInfo()?.trustedDeviceId

@@ -36,20 +36,6 @@ public final class UnrememberedLoginConfiguration {
     }
 }
 
-public enum RememberedLoginType: Equatable {
-    case Pin (value: String)
-    case Biometrics
-    
-    public func getString() -> String{
-        switch self {
-        case .Pin(value: _): return "PIN"
-        case .Biometrics: return "BIOMETRICS"
-        }
-    }
-}
-
-
-
 public final class RememberedLoginConfiguration {
 
     public var userIdentifier: String
