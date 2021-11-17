@@ -19,9 +19,11 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
     private weak var delegate: OneAppInitCoordinatorDelegate?
     private let modules: [OneAppInitModule]
     private let dependencyResolver: DependenciesResolver
-    
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
+    private var useCaseHandler: UseCaseHandler {
+        dependencyResolver.resolve(for: UseCaseHandler.self)
+    }
     
     private var useCaseHandler: UseCaseHandler {
         dependencyResolver.resolve(for: UseCaseHandler.self)

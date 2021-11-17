@@ -7,6 +7,7 @@ import PLCommons
 
 protocol CharityTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
+    func didChangeForm()
 }
 
 class CharityTransferFormView: UIView {
@@ -46,6 +47,12 @@ class CharityTransferFormView: UIView {
     
     func configure(with accountViewModel: [SelectableAccountViewModel]) {
         selectedAccountView.setViewModel(accountViewModel)
+    }
+    
+    func getCurrentFormViewModel() -> CharityTransferFormViewModel {
+        CharityTransferFormViewModel(
+            amount: Decimal(string: amountTextField.text ?? "")
+        )
     }
 }
 
@@ -113,6 +120,7 @@ private extension CharityTransferFormView {
         currencyAccessoryView.setText(CurrencyType.złoty.name)
         amountTextField.setRightAccessory(.view(currencyAccessoryView))
         amountTextField.setPlaceholder(localized("pl_foundtrans_text_transfAmount"))
+        amountTextField.updatableDelegate = self
     }
     
     func prepareStylesForTitleField() {
@@ -189,5 +197,11 @@ private extension CharityTransferFormView {
             dateFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             dateFieldName.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16),
         ])
+    }
+}
+
+extension CharityTransferFormView: UpdatableTextFieldDelegate {
+    func updatableTextFieldDidUpdate() {
+        delegate?.didChangeForm()
     }
 }

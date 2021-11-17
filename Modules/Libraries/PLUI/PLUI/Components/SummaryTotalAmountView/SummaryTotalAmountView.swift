@@ -3,14 +3,14 @@ import Commons
 import PLCommons
 import Models
 
-class SummaryTotalAmountView: UIView {
+public class SummaryTotalAmountView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .santander(family: .text, type: .semibold, size: 11)
         label.textColor = .brownishGray
-        label.text = localized("pl_blik_text_total")
         label.textAlignment = .center
+        label.text = localized("pl_blik_text_total")
         return label
     }()
     
@@ -24,7 +24,7 @@ class SummaryTotalAmountView: UIView {
     private let container = UIView()
     private lazy var stackView = UIStackView(arrangedSubviews: [titleLabel, totalLabel])
 
-    init() {
+    public init() {
         super.init(frame: .zero)
         setup()
     }
@@ -33,7 +33,11 @@ class SummaryTotalAmountView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(_ total: NSAttributedString) {
+    public func setTitle(_ title: String) {
+        titleLabel.text = title
+    }
+    
+    public func setAmount(_ total: NSAttributedString) {
         totalLabel.attributedText = total
     }
 }
