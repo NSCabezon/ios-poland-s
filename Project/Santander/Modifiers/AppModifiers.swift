@@ -188,6 +188,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: ValidateCardOnOffUseCaseProtocol.self) { resolver in
             PLValidateCardOnOffUseCase(dependenciesResolver: resolver)
         }
+        self.dependencieEngine.register(for: SendMoneyConfirmationStepUseCaseProtocol.self) { resolver in
+            PLSendMoneyConfirmationStepUseCase(dependenciesResolver: resolver)
+        }
     }
 }
 

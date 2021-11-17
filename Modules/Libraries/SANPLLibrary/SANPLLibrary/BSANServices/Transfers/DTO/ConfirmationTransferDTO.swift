@@ -27,7 +27,7 @@ public struct ConfirmationTransferDTO: Codable {
     let transferType: String?
     let key: KeyDTO?
     let signHistoryData: [SignHistoryDatumDTO]?
-    let state: String?
+    public let state: String?
     let sendError: Int?
     let postingId: Int?
     let acceptanceTime: String?
