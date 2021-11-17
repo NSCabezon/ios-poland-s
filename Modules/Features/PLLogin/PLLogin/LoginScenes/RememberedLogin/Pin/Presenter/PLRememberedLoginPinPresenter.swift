@@ -11,6 +11,7 @@ import LoginCommon
 import PLCommons
 import Models
 import LocalAuthentication
+import Dynatrace
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
@@ -200,6 +201,10 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         guard let aName = self.loginConfiguration.userPref?.name else { return }
         view?.setUserName(aName)
     }
+
+    func identifyUser(_ userId: String?) {
+        Dynatrace.identifyUser(userId)
+    }
 }
 
 private extension PLRememberedLoginPinPresenter {
@@ -211,6 +216,7 @@ private extension PLRememberedLoginPinPresenter {
                 return Scenario(useCase: self.globalPositionOptionUseCase)
             })
             .onSuccess( { [weak self] output in
+                self?.identifyUser(output.userId)
                 self?.coordinator.goToGlobalPositionScene(output.globalPositionOption)
             })
             .onError { [weak self] _ in

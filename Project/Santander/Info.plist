@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>DTXApplicationID</key>
+	<string>$(DYNATRACE_APP_ID)</string>
+	<key>DTXAutoActionTimeoutMilliseconds</key>
+	<string>$(DYNATRACE_AUTO_ACTION_TIMEOUT)</string>
+	<key>DTXBeaconURL</key>
+	<string>$(DYNATRACE_BEACON_URL)</string>
+	<key>DTXUserOptIn</key>
+	<false/>
 	<key>APP_CENTER_IDENTIFIER</key>
 	<string>$(APP_CENTER_IDENTIFIER)</string>
 	<key>APP_GROUPS_IDENTIFIER</key>

@@ -34,4 +34,5 @@ Pod::Spec.new do |spec|
   spec.dependency "PLLegacyAdapter"
   spec.dependency 'SelfSignedCertificate'
   spec.dependency 'PLNotifications'
+  spec.dependency 'Dynatrace'
 end

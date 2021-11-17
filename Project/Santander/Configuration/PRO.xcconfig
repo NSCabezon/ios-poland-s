@@ -32,3 +32,6 @@ TAS_ROOT = "$(SRCROOT)/Santander/Trusteer/tas"
 APP_GROUPS_IDENTIFIER = group.es.santander.sso
 SHARED_KEYCHAIN_IDENTIFIER = JFX6PVNK48.pl.santander.oneappparticulares
 CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Release.entitlements
+DYNATRACE_APP_ID = af58c80c-f4c7-4fc8-bbed-a8038770c738
+DYNATRACE_BEACON_URL = https:\/\/activegatetest.santanderbankpolska.pl:9999/mbeacon/7f01edd2-1060-487b-87d4-3acf42246e84
+DYNATRACE_AUTO_ACTION_TIMEOUT = 5000
