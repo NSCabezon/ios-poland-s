@@ -156,11 +156,9 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
     
     func didSelectContinue() {
         self.confirmPin(rememberedLoginType: .Pin(value: self.pin ?? ""))
-        self.coordinator.dismiss()
     }
     
     func didTimerEnd() {
-        print("timer ended")
         self.showGenericError()
     }
     
@@ -239,11 +237,11 @@ private extension PLAuthorizationPresenter {
                 return Scenario(useCase: self.confirmPinUseCase, input: caseInput)
             })
             .onSuccess { representable in
+                self.coordinator.dismiss()
                 self.configuration.completion(.handled(representable))
-                
             }
-            .onError { error in
-                self.configuration.completion(.failed(error))
+            .onError { _ in
+                self.showGenericError()
             }
     }
 }

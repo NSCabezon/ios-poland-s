@@ -6,6 +6,8 @@
 //
 
 public enum AccessibilityAuthorization {
+    public static let floatingBtnCancel = "generic_link_cancel"
+    public static let floatingBtnContinue = "generic_button_continue"
     public static let oneIcnEditTime = "oneIcnEditTime"
     public static let timerTitleLabel = "authorization_label_confirmTheOperation"
     public static let timerProgressView = "timerProgressView"

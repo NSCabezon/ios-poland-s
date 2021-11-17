@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLAuthorizationViewController" customModule="PL_DEV_0_0_99" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLAuthorizationViewController" customModule="PL_DEV_0_0_102" customModuleProvider="target">
             <connections>
                 <outlet property="cancelFloatingButton" destination="O2Q-J8-xzD" id="xEF-iK-0nR"/>
                 <outlet property="continueFloatingButton" destination="Woy-Ua-CS4" id="2no-1f-RtD"/>
@@ -25,10 +25,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8XW-WR-j4O">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6jm-0B-kQq">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="6jm-0B-kQq">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="999" id="Wq4-or-GU0"/>
+                            </constraints>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -66,7 +69,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="8XW-WR-j4O" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="4pn-bl-EqN"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="8XW-WR-j4O" secondAttribute="bottom" id="DW7-GU-CzA"/>
+                <constraint firstAttribute="bottom" secondItem="8XW-WR-j4O" secondAttribute="bottom" id="DW7-GU-CzA"/>
                 <constraint firstItem="EB3-dL-LZ7" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Joe-dB-gKK"/>
                 <constraint firstItem="8XW-WR-j4O" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="KIP-0f-BDy"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8XW-WR-j4O" secondAttribute="trailing" id="Qm1-EM-TFB"/>

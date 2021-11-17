@@ -10,6 +10,7 @@ import UI
 import UIOneComponents
 import Models
 import Commons
+import PLCommons
 
 protocol PLAuthorizationView: AnyObject {
     func addRemainingTimeView(_ viewModel: RemainingTimeViewModel)
@@ -42,7 +43,6 @@ final class PLAuthorizationViewController: UIViewController {
     private struct Constants {
         static let floattingButtonBottom: CGFloat = 24
         static let floattingButtonBottomKeyboard: CGFloat = -10
-        static let bottomSheetHeight = 274.0
     }
     
     init(presenter: PLAuthorizationPresenterProtocol) {
@@ -108,9 +108,7 @@ extension PLAuthorizationViewController: PLAuthorizationView {
     func showGenericError(_ viewModel: BottomSheetErrorViewModel) {
         let bottomSheet = BottomSheet()
         let view = self.setGenericErrorView(viewModel)
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-        let type: SizablePresentationType = .custom(height: view.frame.height)
+        let type: SizablePresentationType = .custom(isPan: false)
         bottomSheet.show(in: self, type: type, view: view)
     }
 }
@@ -179,8 +177,12 @@ private extension PLAuthorizationViewController {
         let view = BottomSheetErrorView()
         view.setViewModel(viewModel)
         view.delegate = self
-        view.frame = CGRect(x: 0, y: 0, width: 0, height: Constants.bottomSheetHeight)
         return view
+    }
+    
+    func setAccessibilityIdentifiers() {
+        self.cancelFloatingButton.accessibilityIdentifier = AccessibilityAuthorization.floatingBtnCancel
+        self.continueFloatingButton.accessibilityIdentifier = AccessibilityAuthorization.floatingBtnContinue
     }
 }
 
