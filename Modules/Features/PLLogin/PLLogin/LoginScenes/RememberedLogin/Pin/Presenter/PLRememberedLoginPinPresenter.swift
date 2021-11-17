@@ -166,11 +166,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     
     func getBiometryTypeAvailable() -> BiometryTypeEntity {
         guard loginConfiguration.isBiometricsAvailable else { return .none }
-        #if targetEnvironment(simulator)
-        return .faceId
-        #else
         return self.localAuth.biometryTypeAvailable
-        #endif
     }
     
     func didSelectBalance() {
@@ -197,6 +193,7 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     
     func viewDidLoad() {
         self.trackScreen()
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     func viewDidAppear() {
@@ -223,14 +220,24 @@ private extension PLRememberedLoginPinPresenter {
     
     func biometryFails(error: Error? = nil) {
         safetyCurtainSafeguardEventDidFinish()
-        guard let laError = error as? LAError, laError.code == .userFallback else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : "401", PLLoginTrackConstants.errorDescription : localized("pl_login_alert_loginError")])
-                self?.view?.showUnauthorizedError()
-            }
+        
+        self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : "401",
+                                                PLLoginTrackConstants.errorDescription : localized("pl_login_alert_loginError")])
+        guard let laError = error as? LAError else {
+            self.view?.showUnauthorizedError()
             return
         }
-        self.view?.tryPinAuth()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            switch laError.code {
+            case .userFallback:
+                self?.view?.tryPinAuth()
+            case .userCancel:
+                break
+            default:
+                self?.view?.showUnauthorizedError()
+            }
+        }
     }
     
     func biometrySuccess() {
@@ -238,6 +245,10 @@ private extension PLRememberedLoginPinPresenter {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.doLogin(with: .biometrics)
         }
+    }
+    
+    @objc func didBecomeActive() {
+        view?.applicationDidBecomeActive(for: self.getBiometryTypeAvailable())
     }
 }
 

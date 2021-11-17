@@ -11,6 +11,7 @@ import Commons
 import UI
 import SANLegacyLibrary
 import PLUI
+import Models
 
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable {
     func showAccountPermanentlyBlockedDialog()
@@ -21,6 +22,7 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func setUserName(_ name: String)
     func tryPinAuth()
     var currentLoginType: PLRememberedLoginType { get set }
+    func applicationDidBecomeActive(for biometryType: BiometryTypeEntity)
 }
 
 public enum PLRememberedLoginType {
@@ -177,11 +179,15 @@ private extension PLRememberedLoginPinViewController {
             biometryBigImage.image = Assets.image(named: "icnFingerprintLogin")
             biometrySmallLabel.text = localized("loginTouchId_alert_title_touchId")
             biometryBigLabel.text = localized("pl_login_text_loginWithTouchID")
+            changeLoginTypeButton.isHidden = false
+            biometrySmallLabel.isHidden = false
         case .faceId:
             changeLoginTypeButton.setImage(Assets.image(named: "smallFaceId"), for: .normal)
             biometryBigImage.image = Assets.image(named: "icnFaceIdLogin")
             biometrySmallLabel.text = localized("loginTouchId_alert_title_faceId")
             biometryBigLabel.text = localized("pl_login_text_loginWithFaceID")
+            changeLoginTypeButton.isHidden = false
+            biometrySmallLabel.isHidden = false
         case .error(_,_), .none:
             changeLoginTypeButton.isHidden = true
             biometrySmallLabel.isHidden = true
@@ -232,7 +238,20 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
 
 extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewControllerProtocol {
     
+    func applicationDidBecomeActive(for biometryType: BiometryTypeEntity) {
+        switch biometryType {
+        case .error(biometry: _, error: _), .none:
+            self.currentLoginType = .PIN
+        default:
+            break
+        }
+        self.setupBiometry()
+        self.configureViewForLoginType()
+    }
+    
     func tryPinAuth() {
+        let textStyle = LocalizedStylableText(text: localized("pl_login_alert_lastBiometricAttempt"), styles: nil)
+        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
         self.currentLoginType = .PIN
         self.configureViewForLoginType()
     }
