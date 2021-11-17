@@ -196,27 +196,16 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
     }
     
     private func showActiveChequesLimitPopup(limit: Int) {
-        let dialogText = "#\n#Posiadasz maksymalną liczbę aktywnych czeków BLIK (\(limit) czeków). Zmniejsz liczbę aktywnych czeków BLIK, by utworzyć nowy czek BLIK.\n"
-        showDialog(text: dialogText)
+        let text = ChequeLimitMessageBuilder()
+            .withLimit(limit)
+            .build()
+        
+        showDialog(text: text)
     }
     
-    private func showDialog(title: String = localized("pl_blik_alert_informTitle"), text: String) {
-        view?.showDialog(
-            title: nil,
-            items: [
-                .styledConfiguredText(
-                    .plain(text: title),
-                    configuration: .boldMicro28CenteredStyle
-                ),
-                .styledConfiguredText(
-                    .plain(text: text),
-                    configuration: .regularMicro16CenteredStyle
-                )
-            ],
-            image: "info_lisboaGray",
-            action: Dialog.Action(title: localized("generic_link_ok"), style: .red, action: {}),
-            isCloseOptionAvailable: false
-        )
+    private func showDialog(title: LocalizedStylableText = localized("pl_blik_alert_informTitle"),
+                            text: LocalizedStylableText) {
+        view?.showDialog(title: title, text: text)
     }
     
     private func showChequeListErrorMessage() {
