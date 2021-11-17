@@ -25,10 +25,6 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
         dependencyResolver.resolve(for: UseCaseHandler.self)
     }
     
-    private var useCaseHandler: UseCaseHandler {
-        dependencyResolver.resolve(for: UseCaseHandler.self)
-    }
-    
     init(dependencyResolver: DependenciesResolver, modules: [OneAppInitModule], delegate: OneAppInitCoordinatorDelegate?) {
         self.modules = modules
         self.delegate = delegate

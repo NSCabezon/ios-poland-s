@@ -77,9 +77,10 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
     
     func didPressCreateCheque() {
         guard let params = walletParams else {
+            // TODO: temporal fix to build the project. Please consider if you need to change the localization keys. showDialog parameters must be of type LocalizedStylableText
             showDialog(
-                title: "#Wystąpił błąd!",
-                text: "#Nie można utworzyć nowego czeku BLIK. Spróbuj ponownie później"
+                title: localized("#Wystąpił błąd!"),
+                text: localized("#Nie można utworzyć nowego czeku BLIK. Spróbuj ponownie później")
             )
             return
         }
