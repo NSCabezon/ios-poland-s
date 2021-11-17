@@ -19,6 +19,10 @@ class PLPersonalDataModifier: PersonalDataModifier {
         personalDataInfo.smsPhone = maskedPhone(personalInfo.phone)
         let email = (personalInfo.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : personalInfo.email
         personalDataInfo.email = email
+        
+        personalDataInfo.correspondenceAddressMode = .web
+        personalDataInfo.phoneMode = .web
+        personalDataInfo.emailMode = .web
         return personalDataInfo
     }
 }
