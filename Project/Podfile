@@ -1,6 +1,6 @@
 platform :ios, '12.3'
 
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 
 # --------- General Core dependencies
 def core_dependencies
