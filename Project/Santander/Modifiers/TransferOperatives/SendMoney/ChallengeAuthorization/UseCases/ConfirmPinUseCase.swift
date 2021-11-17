@@ -27,7 +27,7 @@ final class ConfirmPinUseCase: UseCase<ConfirmPinUseCaseInput, ConfirmPinUseCase
         let trustedDeviceId = managerProvider.getTrustedDeviceManager().getStoredTrustedDeviceInfo()?.trustedDeviceId
         let appRepository = self.dependenciesResolver.resolve(for: AppRepositoryProtocol.self)
         let userId = try appRepository.getPersistedUser().getResponseData()?.userId ?? ""
-        let parameters = ConfirmChallengeParameters(userId: userId,
+        let parameters = ConfirmChallengeParameters(userId: nil,
                                                     trustedDeviceId: trustedDeviceId ?? 0,
                                                     softwareTokenType: requestValues.softwareTokenType,
                                                     trustedDeviceCertificate: requestValues.trustedDeviceCertificate,

@@ -8,9 +8,9 @@
 import Foundation
 
 public struct PendingChallengeParameters: Encodable {
-    let userId: String
+    let userId: String?
 
-    public init(userId: String) {
+    public init(userId: String?) {
         self.userId = userId
     }
 }

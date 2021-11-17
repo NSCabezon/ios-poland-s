@@ -3,7 +3,7 @@ import CoreDomain
 public protocol PLAuthorizationProcessorManagerProtocol {
     func doAuthorizeOperation(authorizationId: String, scope: String) -> RedirectUriRepresentable
     func getPendingChallenge() throws -> Result<ChallengeRepresentable, NetworkProviderError>
-    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<Void, NetworkProviderError>
     func getIsChallengeConfirmed(authorizationID: String) throws -> Result<Void,NetworkProviderError>
 }
 
@@ -35,7 +35,7 @@ extension PLAuthorizationProcessorManager: PLAuthorizationProcessorManagerProtoc
         }
     }
     
-    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<Void, NetworkProviderError> {
         return try authorizationProcessorDataSource.doConfirmChallenge(parameters, authorizationId: authorizationId)
     }
     

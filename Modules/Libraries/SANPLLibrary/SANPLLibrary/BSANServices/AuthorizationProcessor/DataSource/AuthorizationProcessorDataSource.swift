@@ -17,7 +17,7 @@ public protocol PINChallengeRepresentable: ChallengeRepresentable {
 protocol AuthorizationProcessorDataSourceProtocol {
     func doAuthorizeOperation(authorizationId: String, scope: String) -> AuthorizeOperationDTO
     func getPendingChallenge() throws -> Result<PendingChallengeDTO, NetworkProviderError>
-    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<Void, NetworkProviderError>
     func getIsChallengeConfirmed(authorizationID: String) throws -> Result<Void, NetworkProviderError>
 }
 
@@ -54,7 +54,8 @@ extension AuthorizationProcessorDataSource: AuthorizationProcessorDataSourceProt
     }
     
     func getPendingChallenge() throws -> Result<PendingChallengeDTO, NetworkProviderError> {
-        guard let baseUrl = self.getBaseUrl() else {
+        let parameters: PendingChallengeParameters = PendingChallengeParameters(userId: nil)
+        guard let body = parameters.getJsonData(), let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         let serviceName: TransferServiceType = .pendingChallenge
@@ -62,20 +63,22 @@ extension AuthorizationProcessorDataSource: AuthorizationProcessorDataSourceProt
         let result: Result<PendingChallengeDTO, NetworkProviderError> = self.networkProvider.request(AuthPendingChallengeRequest(serviceName: serviceName.rawValue,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .post,
+                                                                                                                body: body,
+                                                                                                                jsonBody: parameters,
                                                                                                                 headers: self.headers,
                                                                                                                 contentType: .json,
                                                                                                                 localServiceName: .pendingChallenge))
         return result
     }
     
-    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+    func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<Void, NetworkProviderError> {
         guard let body = parameters.getURLFormData(), let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
 
         let absoluteUrl = baseUrl + self.basePath
         let serviceName: String = TransferServiceType.confirmChallenge.rawValue + authorizationId
-        let result: Result<NetworkProviderResponseWithStatus, NetworkProviderError> = self.networkProvider.requestDataWithStatus(ConfirmChallengeRequest(serviceName: serviceName,
+        let result: Result<Void, NetworkProviderError> = self.networkProvider.request(ConfirmChallengeRequest(serviceName: serviceName,
                                                                                                                                                          serviceUrl: absoluteUrl,
                                                                                                                                                          method: .post,
                                                                                                                                                          body: body,
@@ -94,7 +97,8 @@ extension AuthorizationProcessorDataSource: AuthorizationProcessorDataSourceProt
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
-                                                                                                                contentType: .json,
+                                                                                                                bodyEncoding: .none,
+                                                                                                                contentType: .queryString,
                                                                                                                 localServiceName: .confirmChallenge))
         return result
     }
@@ -120,7 +124,7 @@ private struct AuthPendingChallengeRequest: NetworkProviderRequest {
          jsonBody: PendingChallengeParameters? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         bodyEncoding: NetworkProviderBodyEncoding? = .none,
+         bodyEncoding: NetworkProviderBodyEncoding? = .body,
          contentType: NetworkProviderContentType,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
@@ -147,7 +151,7 @@ private struct ConfirmChallengeRequest: NetworkProviderRequest {
     let bodyEncoding: NetworkProviderBodyEncoding?
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization?
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
 
     init(serviceName: String,
          serviceUrl: String,
@@ -168,6 +172,5 @@ private struct ConfirmChallengeRequest: NetworkProviderRequest {
         self.headers = headers
         self.contentType = contentType
         self.localServiceName = localServiceName
-        self.authorization = authorization
     }
 }

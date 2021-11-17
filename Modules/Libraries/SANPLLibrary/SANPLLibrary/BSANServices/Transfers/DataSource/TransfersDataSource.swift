@@ -170,6 +170,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                 body: body,
                                                                                                                 jsonBody: parameters,
                                                                                                                 headers: self.headers,
+                                                                                                                bodyEncoding: .body,
                                                                                                                 contentType: .json,
                                                                                                                 localServiceName: .confirmationTransfer))
         return result
