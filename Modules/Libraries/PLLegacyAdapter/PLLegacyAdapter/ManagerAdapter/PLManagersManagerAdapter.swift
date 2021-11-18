@@ -15,7 +15,7 @@ extension PLManagersManagerAdapter: BSANManagersManager {
     }
     
     func loadManagers() throws -> BSANResponse<YourManagersListDTO> {
-        return BSANErrorResponse(nil)
+        return BSANOkResponse(YourManagersListDTO())
     }
     
     func loadClick2Call() throws -> BSANResponse<Click2CallDTO> {
