@@ -3,6 +3,7 @@ import Models
 import Commons
 import DataRepository
 import SANPLLibrary
+import PLCryptography
 
 struct MockHostProvider: PLHostProviderProtocol {
     var environmentDefault: BSANPLEnvironmentDTO {
@@ -350,8 +351,24 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     func unregisterPhoneNumber() throws -> Result<Void, NetworkProviderError> {
         fatalError()
     }
-
-    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
+    
+    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: TransactionParameters?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
         .failure(.noConnection)
+    }
+    
+    func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
+        .failure(.noConnection)
+    }
+    
+    func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: String?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
+        fatalError()
     }
 }

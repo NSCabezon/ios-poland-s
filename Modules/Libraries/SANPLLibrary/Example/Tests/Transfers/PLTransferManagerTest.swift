@@ -115,7 +115,7 @@ class PLTransferManagerTest: Tests {
         self.setUpDemoUser()
         let iban = IBANDTO(countryCode: "PL", checkDigits: "12", codBban: "109010430000000142742925")
         let amount = AmountDTO(value: 12, currency: CurrencyDTO(currencyName: "PLN", currencyType: .złoty))
-        let inputParameters = CheckFinalFeeInput(destinationAccount: iban, amount: amount)
+        let inputParameters = CheckFinalFeeInput(originAccount: iban, amount: amount)
         let result = try? transferManager.checkFinalFee(inputParameters)
         switch result {
         case .success(let response):

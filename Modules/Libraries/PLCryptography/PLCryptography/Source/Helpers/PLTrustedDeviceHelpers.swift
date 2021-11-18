@@ -7,14 +7,14 @@
 
 import Foundation
 
-class PLLoginTrustedDeviceHelpers {
+public class PLTrustedDeviceHelpers {
     
     /**
      Returns a length 16 string
      Characters are repeated to complete 16 characters string
      or first 16 characters of the string if string.count >= 16
      */
-    static func length16Password(_ password: String?) -> String? {
+    public static func length16Password(_ password: String?) -> String? {
         guard let password = password, password.count > 0 else { return nil }
         let constantLenght = 16
         let substring16:(String) -> (String?) = { password in
@@ -42,7 +42,7 @@ class PLLoginTrustedDeviceHelpers {
      - Parameter bytesNumber: Number of bytes that will be returned
      i.e: bytesNumber = 16 -> Will return an array of 16 bytes  (16 bytes * 8 bit/byte = 128 bits)
      */
-    static func secureRandom(bytesNumber: Int) -> [UInt8]? {
+    public static func secureRandom(bytesNumber: Int) -> [UInt8]? {
         var bytes = [UInt8](repeating: 0, count: bytesNumber)
         let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
 

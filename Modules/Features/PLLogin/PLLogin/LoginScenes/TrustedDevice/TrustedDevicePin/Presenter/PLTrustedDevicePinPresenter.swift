@@ -6,6 +6,7 @@ import Models
 import Commons
 import PLCommons
 import os
+import SANPLLibrary
 
 protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDevicePinViewProtocol? { get set }

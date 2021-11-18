@@ -1,5 +1,6 @@
 import Commons
 import PLUI
+import DomainCommon
 
 protocol MobileTransferConfirmationPresenterProtocol {
     var view: MobileTransferConfirmationViewControllerProtocol? { get set }
@@ -12,24 +13,23 @@ protocol MobileTransferConfirmationPresenterProtocol {
 final class MobileTransferConfirmationPresenter {
     var view: MobileTransferConfirmationViewControllerProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private var queue: DispatchQueue
     private let viewModel: MobileTransferViewModel?
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     private let isDstAccInternal: Bool
     private let dstAccNo: String
-
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     private var acceptTransactionUseCase: AcceptTransactionProtocol {
         dependenciesResolver.resolve()
     }
 
-
     init(dependenciesResolver: DependenciesResolver,
          viewModel: MobileTransferViewModel,
          isDstAccInternal: Bool,
-         dstAccNo: String,
-         queue: DispatchQueue = .global()) {
+         dstAccNo: String
+    ) {
         self.dependenciesResolver = dependenciesResolver
-        self.queue = queue
         self.viewModel = viewModel
         self.isDstAccInternal = isDstAccInternal
         self.dstAccNo = dstAccNo
@@ -56,7 +56,7 @@ extension MobileTransferConfirmationPresenter: MobileTransferConfirmationPresent
         self.view?.showLoader()
         Scenario(useCase: acceptTransactionUseCase,
                  input: .init(form: viewModel, isDstAccInternal: isDstAccInternal, dstAccNo: dstAccNo))
-            .execute(on: queue)
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] result in
                 self?.view?.hideLoader {
                     self?.coordinator.showSummary(with: result.summary)

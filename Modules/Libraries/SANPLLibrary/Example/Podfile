@@ -10,7 +10,9 @@ def core_dependencies
   pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
   pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
-
+  pod 'Commons', :path => '../../../../santander-one/Commons'
+  pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   # Microsite configuration
   pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'
   pod 'iOSCommonPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSCommonPublicFiles'

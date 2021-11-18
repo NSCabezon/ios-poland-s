@@ -1,7 +1,8 @@
 @testable import BLIK
+import UI
 
 class ContactsViewMock: ContactsViewProtocol {
-    
+
     var onSetupWithViewModel: (([ContactViewModel]) -> Void)?
     var showEmptyView = false
     var showLoaderCalled = false
@@ -26,5 +27,7 @@ class ContactsViewMock: ContactsViewProtocol {
     
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {}
     
+    func showErrorMessage(title: String, message: String, actionButtonTitle: String, closeButton: Dialog.CloseButton, onConfirm: (() -> Void)?) {
+    }
     
 }

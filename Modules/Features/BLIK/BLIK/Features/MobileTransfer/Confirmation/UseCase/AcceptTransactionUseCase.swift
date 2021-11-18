@@ -4,6 +4,7 @@ import Commons
 import DomainCommon
 import SANPLLibrary
 import SANLegacyLibrary
+import PLCommons
 
 protocol AcceptTransactionProtocol: UseCase<AcceptTransactionUseCaseInput, AcceptTransactionUseCaseOkOutput, StringErrorOutput> {}
 
@@ -11,9 +12,11 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
     
     private let managersProvider: PLManagersProviderProtocol
     private let mapper: MobileTransferSummaryMapping
+    private let transactionParametersProvider: PLTransactionParametersProviderProtocol
     
     init(dependenciesResolver: DependenciesResolver,
          mapper: MobileTransferSummaryMapping = MobileTransferSummaryMapper()) {
+        self.transactionParametersProvider = dependenciesResolver.resolve(for: PLTransactionParametersProviderProtocol.self)
         self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         self.mapper = mapper
     }
@@ -22,39 +25,61 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
   
         let form = requestValues.form
         let account = form.account
-
         let amountData: AcceptDomesticTransactionParameters.AmountData = .init(
             amount: form.amount,
             currency: CurrencyType.złoty.name
         )
-
+        let debitAccountFormated = IBANFormatter.formatIbanToNrb(
+            for: account.accountNumberUnformatted
+        )
         let accountData: AcceptDomesticTransactionParameters.DebitAccountData = .init(
             accountType: account.accountType,
             accountSequenceNumber: account.accountSequenceNumber,
-            accountNo: account.accountNumberUnformatted
+            accountNo: debitAccountFormated
         )
-        
-        let accountNo = String(requestValues.dstAccNo.dropFirst(2))
+        let creditAccountFormated = IBANFormatter.formatIbanToNrb(
+            for: requestValues.dstAccNo
+        )
         let creditAccountData: AcceptDomesticTransactionParameters.CreditAccountData = .init(
             accountType: 90,
             accountSequenceNumber: 0,
-            accountNo: accountNo,
+            accountNo: creditAccountFormated,
             accountName: form.recipientName
         )
 
         let date = form.date?.toString(format: TimeFormat.yyyyMMdd.rawValue) ?? ""
         let transferType: AcceptDomesticTransactionParameters.TransferType = requestValues.isDstAccInternal ? .INTERNAL : .BLIK_P2P
+  
+        guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
+            return .error(.init("userId not exists"))
+        }
+        
+        let transactionParametersInput = PLDomesticTransactionParametersInput(
+            debitAccountNumber: debitAccountFormated,
+            creditAccountNumber: creditAccountFormated,
+            debitAmount: form.amount,
+            userID: String(describing: userId)
+        )
+        
+        let transactionParameters = transactionParametersProvider.getTransactionParameters(
+            type: .blikP2P(transactionParametersInput)
+        )
         
         let result = try managersProvider
             .getBLIKManager()
-            .acceptTransfer(AcceptDomesticTransactionParameters(title: form.title,
-                                                                type: .BLIK_P2P_TRANSACTION,
-                                                                transferType: transferType,
-                                                                dstPhoneNo: form.trimmedPhoneNumber,
-                                                                valueDate: date,
-                                                                debitAmountData: amountData,
-                                                                debitAccountData: accountData,
-                                                                creditAccountData: creditAccountData)
+            .acceptTransfer(
+                AcceptDomesticTransactionParameters(
+                    title: form.title,
+                    type: .BLIK_P2P_TRANSACTION,
+                    transferType: transferType,
+                    dstPhoneNo: form.trimmedPhoneNumber,
+                    valueDate: date,
+                    debitAmountData: amountData,
+                    debitAccountData: accountData,
+                    creditAccountData: creditAccountData,
+                    creditAmountData: amountData
+                ),
+                transactionParameters: transactionParameters
             )
 
 

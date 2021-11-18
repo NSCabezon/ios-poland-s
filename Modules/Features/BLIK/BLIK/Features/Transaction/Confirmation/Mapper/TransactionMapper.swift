@@ -29,8 +29,8 @@ extension TransactionMapper {
                            placeName: dto.merchant?.shortName,
                            address: dto.merchant?.address,
                            city: dto.merchant?.city,
-                           amount: dto.amount.amount,
-                           aliasContext: getAliasContext(from: dto)
+                           aliasContext: getAliasContext(from: dto),
+                           amount: dto.amount.amount
         )
     }
     

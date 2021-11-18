@@ -1,4 +1,3 @@
-import Foundation
 
 public protocol PLBLIKManagerProtocol {
     func getPSPTicket() throws -> Result<GetPSPDTO, NetworkProviderError>
@@ -23,7 +22,10 @@ public protocol PLBLIKManagerProtocol {
     func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
-    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
+    func acceptTransfer(
+        _ parameters: AcceptDomesticTransactionParameters,
+        transactionParameters: TransactionParameters?
+    ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
     func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
 }
 
@@ -120,9 +122,12 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
     public func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError> {
         try dataSource.deleteAlias(request)
     }
-    
-    public func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
-        try dataSource.acceptTransfer(parameters)
+
+    public func acceptTransfer(
+        _ parameters: AcceptDomesticTransactionParameters,
+        transactionParameters: TransactionParameters?
+    ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
+        try dataSource.acceptTransfer(parameters, transactionParameters: transactionParameters)
     }
     
     public func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError> {

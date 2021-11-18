@@ -7,6 +7,7 @@
 
 import Commons
 import PLCommons
+import PLCryptography
 import DomainCommon
 import CryptoSwift
 
@@ -42,7 +43,7 @@ private extension PLDeviceDataParametersEncryptionUseCase {
         guard transportKeyBytes.count == 16 else { throw PLDeviceDataEncryptionError.transportKeyEncryptionError }
 
         // Number of characters must be multiple of 16 so we need to add spaces at the end of the parameters (It is necessary so we will encrypt it with .noPadding)
-        let parametersWithSpaces = PLLoginTrustedDeviceHelpers.stringMultipleOf16(parameters)
+        let parametersWithSpaces = PLTrustedDeviceHelpers.stringMultipleOf16(parameters)
         let parametersBytes = parametersWithSpaces.bytes
         guard parametersBytes.count%16 == 0 else { throw PLDeviceDataEncryptionError.transportKeyEncryptionError }
 

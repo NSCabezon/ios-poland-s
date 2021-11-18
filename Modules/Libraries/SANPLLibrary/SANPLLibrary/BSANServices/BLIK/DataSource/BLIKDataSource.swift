@@ -1,4 +1,3 @@
-import Foundation
 
 protocol BLIKDataSourceProtocol {
     func getPSPTicket() throws -> Result<GetPSPDTO, NetworkProviderError>
@@ -21,7 +20,10 @@ protocol BLIKDataSourceProtocol {
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
     func getAliases() throws -> Result<[BlikAliasDTO], NetworkProviderError>
     func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
-    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
+    func acceptTransfer(
+        _ parameters: AcceptDomesticTransactionParameters,
+        transactionParameters: TransactionParameters?
+    ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
     func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
 }
@@ -368,8 +370,11 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         request: data)
         )
     }
-    
-    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
+
+    func acceptTransfer(
+        _ parameters: AcceptDomesticTransactionParameters,
+        transactionParameters: TransactionParameters?
+    ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
@@ -379,7 +384,11 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             AcceptDomesticTransferRequest(serviceName: serviceName,
                                           serviceUrl: serviceUrl,
                                           method: .post,
-                                          jsonBody: parameters
+                                          jsonBody: parameters,
+                                          authorization: .twoFactorOperation(
+                                            transactionParameters: transactionParameters
+                                          )
+                                        
             )
         )
     }

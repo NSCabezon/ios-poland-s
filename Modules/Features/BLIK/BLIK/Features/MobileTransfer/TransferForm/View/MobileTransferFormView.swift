@@ -4,6 +4,7 @@ import Commons
 import PLCommons
 import SANLegacyLibrary
 import IQKeyboardManagerSwift
+import Models
 
 protocol MobileTransferFormViewProtocol: AnyObject {
     func didChangeForm(phoneNumberStartedEdited: Bool)
@@ -36,7 +37,10 @@ final class MobileTransferFormView: UIView {
     }
     
     func getCurrentForm() -> MobileTransferForm {
-        let amount = Decimal(string: transferAmountTextField.text ?? "")
+        var amount: Decimal?
+        if let amountText = transferAmountTextField.text, !amountText.isEmpty {
+            amount = Decimal(string: amountText)
+        }
         let phoneNumber = phoneNumberTextField.text?.replacingOccurrences(of: " ", with: "")
         return MobileTransferForm(recipent: recipientView.text,
                                   phoneNumber: phoneNumber,

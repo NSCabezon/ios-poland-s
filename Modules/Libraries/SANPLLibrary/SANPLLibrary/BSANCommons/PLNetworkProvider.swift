@@ -5,8 +5,6 @@
 //  Created by Ernesto Fernandez Calles on 11/5/21.
 //
 
-import Foundation
-
 public final class PLNetworkProvider {
     private let dataProvider: BSANDataProvider
     private let networkProvider: NetworkProvider
@@ -16,9 +14,18 @@ public final class PLNetworkProvider {
         return dataProvider.isDemo() && self.demoInterpreter.isDemoModeAvailable
     }
 
-    public init(dataProvider: BSANDataProvider, demoInterpreter: DemoUserProtocol, isTrustInvalidCertificateEnabled: Bool) {
+    public init(
+        dataProvider: BSANDataProvider,
+        demoInterpreter: DemoUserProtocol,
+        isTrustInvalidCertificateEnabled: Bool,
+        trustedHeadersProvider: PLTrustedHeadersGenerable
+    ) {
         self.dataProvider = dataProvider
-        self.networkProvider = URLSessionNetworkProvider(dataProvider: dataProvider, isTrustInvalidCertificateEnabled: isTrustInvalidCertificateEnabled)
+        self.networkProvider = URLSessionNetworkProvider(
+            dataProvider: dataProvider,
+            isTrustInvalidCertificateEnabled: isTrustInvalidCertificateEnabled,
+            trustedHeadersProvider: trustedHeadersProvider
+        )
         self.demoNetworkProvider = BSANLocalManager(demoInterpreter: demoInterpreter)
         self.demoInterpreter = demoInterpreter
     }

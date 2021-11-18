@@ -5,7 +5,8 @@
 import UI
 import Models
 import Commons
-
+import SANPLLibrary
+import PLCryptography
 
 protocol PLTrustedDevicePinCoordinatorProtocol {
     func goToVoiceBotScene()
@@ -80,6 +81,11 @@ private extension PLTrustedDevicePinCoordinator {
 
         self.dependenciesEngine.register(for: PLTrustedDeviceStoreEncryptedUserKeyUseCase.self) { resolver in
             return PLTrustedDeviceStoreEncryptedUserKeyUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
+            return PLTrustedHeadersProvider(
+                dependenciesResolver: resolver
+            )
         }
     }
 }

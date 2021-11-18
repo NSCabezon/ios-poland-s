@@ -4,6 +4,7 @@ import DomainCommon
 import PLUI
 import PLCommons
 import PLCommonOperatives
+import DomainCommon
 
 protocol ContactsPresenterProtocol: MenuTextWrapperProtocol {
     var view: ContactsViewProtocol? { get set }

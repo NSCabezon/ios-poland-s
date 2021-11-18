@@ -17,7 +17,7 @@ public extension AcceptDomesticTransferSummaryDTO {
     
     struct AmountData: Codable {
         public let currency: String?
-        public let amount: Double?
+        public let amount: Decimal?
     }
     
     struct DebitAccountData: Codable {

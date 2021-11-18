@@ -3,6 +3,7 @@ import Commons
 import DomainCommon
 import SANPLLibrary
 import PLUI
+import DomainCommon
 
 protocol MobileTransferFormPresenterProtocol {
     var view: MobileTransferFormViewControllerProtocol? { get set }
@@ -31,13 +32,11 @@ final class MobileTransferFormPresenter {
     private var formValidator: MobileTransferFormValidator
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     private let noBlikContactDialog = NoBlikContactDialog()
-    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     private var p2pAliasUseCase: P2pAliasProtocol {
         dependenciesResolver.resolve()
-    }
-    
-    private var useCaseHandler: UseCaseHandler {
-        dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
 
     init(dependenciesResolver: DependenciesResolver,

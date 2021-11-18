@@ -55,7 +55,11 @@ public struct MobileTransferViewModel {
     }
 
     func amountString(withAmountSize size: CGFloat) -> NSAttributedString {
-        AmountFormatter.amountString(amount: transfer.amount ?? 0, currency: .złoty, withAmountSize: size)
+        AmountFormatter.amountString(
+            amount: transfer.amount ?? 0,
+            currency: .złoty,
+            withAmountSize: size
+        )
     }
     
     var accountName: String {
@@ -71,7 +75,7 @@ public struct MobileTransferViewModel {
         transfer.account
     }
     
-    var amount: Double {
+    var amount: Decimal {
         transfer.amount ?? 0
     }
     

@@ -5,6 +5,14 @@ typealias HelpCenterClientProfileProvider = () -> HelpCenterClientProfile
 
 final class FakePLLoginManager: PLLoginManagerProtocol {
     
+    func isDemoUser(userId: String) -> Bool {
+        fatalError()
+    }
+    
+    func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        fatalError()
+    }
+    
     func getAppInfo() -> AppInfo? {
         fatalError()
     }

@@ -12,6 +12,7 @@ import Commons
 import PLCommons
 import SANLegacyLibrary
 import SANPLLibrary
+import PLCryptography
 
 final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     private let dependenciesResolver: DependenciesResolver
@@ -22,7 +23,6 @@ final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUs
 
     public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        
         guard let trustedDeviceAppId = managerProvider.getTrustedDeviceManager().getTrustedDeviceHeaders()?.appId else {
             return .ok(PLBeforeLoginUseCaseOutput(isTrustedDevice: false))
         }
@@ -42,6 +42,7 @@ final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUs
             switch error {
             case .unprocessableEntity:
                 managerProvider.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
+                managerProvider.getTrustedDeviceManager().deleteDeviceId()
                 return .ok(PLBeforeLoginUseCaseOutput(isTrustedDevice: false))
             default:
                 return .error(self.handle(error: error))

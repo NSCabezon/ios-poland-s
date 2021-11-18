@@ -41,6 +41,7 @@ def pl_dependencies
   pod 'PLLogin', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLCryptography', :path => '../../../Libraries/PLCryptography'
   pod 'PLUI', :path => '../../../Libraries/PLUI'
   pod 'PLLegacyAdapter', :path => '../../../Libraries/PLLegacyAdapter'
   pod 'PLNotifications', :path => '../../../Libraries/PLNotifications'

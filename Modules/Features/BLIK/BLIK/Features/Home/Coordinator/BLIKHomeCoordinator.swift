@@ -11,7 +11,7 @@ import Commons
 import DataRepository
 import SANPLLibrary
 import PLCommons
-
+import PLCryptography
 /**
     #Add method that must be handle by the BLIKHomeCoordinator like 
     navigation between the module scene and so on.
@@ -114,7 +114,10 @@ private extension BLIKHomeCoordinator {
                     dataRepository: resolver.resolve(for: DataRepository.self)
                 ),
                 demoInterpreter: resolver.resolve(for: DemoUserProtocol.self),
-                isTrustInvalidCertificateEnabled: false
+                isTrustInvalidCertificateEnabled: false,
+                trustedHeadersProvider: resolver.resolve(
+                    for: PLTrustedHeadersGenerable.self
+                )
             )
         }
         
@@ -157,6 +160,15 @@ private extension BLIKHomeCoordinator {
             return ChequeModelMapper(
                 dateFormatter: PLTimeFormat.YYYYMMDD_HHmmssSSS.createDateFormatter()
             )
+        }
+        dependenciesEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
+             PLTrustedHeadersProvider(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PLDomesticTransactionParametersGenerable.self) { _ in
+             PLDomesticTransactionParametersProvider()
+        }
+        dependenciesEngine.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
+             PLTransactionParametersProvider(dependenciesResolver: resolver)
         }
     }
 }

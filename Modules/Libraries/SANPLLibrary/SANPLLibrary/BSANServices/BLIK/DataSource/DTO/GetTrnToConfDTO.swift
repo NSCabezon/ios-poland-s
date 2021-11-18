@@ -18,7 +18,7 @@ public struct GetTrnToConfDTO: Decodable {
     }
     
     public struct Amount: Decodable {
-        public let amount: Double
+        public let amount: Decimal
     }
     
     public enum TransferType: String, Decodable {

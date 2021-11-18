@@ -11,7 +11,6 @@ protocol MobileTransferSummaryCoordinatorProtocol {
     func goToGlobalPosition()
     func goToBlikCode()
     func shareSummary()
-    func setDeviceAsTrusted()
 }
 
 final class MobileTransferSummaryCoordinator: ModuleCoordinator {
@@ -63,10 +62,6 @@ extension MobileTransferSummaryCoordinator: MobileTransferSummaryCoordinatorProt
     func shareSummary() {
         guard let navigation = navigationController else { return }
         informRecipientHandler.shareSummary(summary, in: navigation)
-    }
-    
-    func setDeviceAsTrusted() {
-        //TODO: Implement setDeviceAsTrusted under https://godzilla.centrala.bzwbk:9998/browse/TAP-1650
     }
 }
 

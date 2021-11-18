@@ -87,6 +87,7 @@ def pl_libraries
   pod 'DemoAuthenticator', :path => '../Modules/Libraries/DemoAuthenticator'
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
   pod 'PLCommonOperatives', :path => '../Modules/Libraries/PLCommonOperatives'
+  pod 'PLCryptography', :path => '../Modules/Libraries/PLCryptography'
 end
 
 def pl_thirdparty_dependencies

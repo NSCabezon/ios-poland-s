@@ -1,7 +1,8 @@
 import SANPLLibrary
+import PLCryptography
 
 struct MockBLIKManager: PLBLIKManagerProtocol {
-  
+
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError> {
         fatalError()
     }
@@ -96,7 +97,7 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
         fatalError()
     }
     
-    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
+    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: TransactionParameters?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
         fatalError()
     }
     
@@ -109,6 +110,22 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     }
     
     func getAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: String?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
         fatalError()
     }
 }

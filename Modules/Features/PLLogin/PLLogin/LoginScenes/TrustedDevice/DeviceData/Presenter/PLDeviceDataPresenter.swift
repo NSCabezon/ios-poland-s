@@ -7,6 +7,7 @@
 
 import DomainCommon
 import Commons
+import PLCryptography
 import PLCommons
 import LoginCommon
 import Models
@@ -74,7 +75,7 @@ final class PLDeviceDataPresenter {
     }()
 
     private lazy var transportKey: String = {
-        return PLLoginTrustedDeviceHelpers.secureRandom(bytesNumber: 16)?.toHexString() ?? ""
+        return PLTrustedDeviceHelpers.secureRandom(bytesNumber: 16)?.toHexString() ?? ""
     }()
 }
 
@@ -160,7 +161,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                 guard let self = self,
                       let identity = self.deviceConfiguration.softwareToken?.identity else { return }
 
-                let useCaseInput = PLStoreSecIdentityUseCaseInput(label: PLLoginConstants.certificateIdentityLabel, identity: identity)
+                let useCaseInput = PLStoreSecIdentityUseCaseInput(label: PLConstants.certificateIdentityLabel, identity: identity)
                 Scenario(useCase: self.storeCertificatCreationUseCase, input: useCaseInput)
                     .execute(on: self.dependenciesResolver.resolve())
             }
@@ -177,7 +178,8 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 private extension PLDeviceDataPresenter {
 
     func generateDeviceData() {
-        Scenario(useCase: self.generateDeviceDataUseCase)
+        let input = PLDeviceDataGenerateDataUseCaseInput(isTrustedDevice: false)
+        Scenario(useCase: self.generateDeviceDataUseCase, input: input)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess { output in
                 self.deviceConfiguration.deviceData = output.deviceData

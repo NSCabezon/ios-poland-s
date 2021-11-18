@@ -10,7 +10,7 @@ protocol MobileTransferMapping {
 final class MobileTransferMapper: MobileTransferMapping {
 
     func map(form: MobileTransferForm, account: SelectableAccountViewModel) -> MobileTransfer {
-        MobileTransfer(amount: form.amount?.doubleValue,
+        MobileTransfer(amount: form.amount,
                        title: form.title,
                        account: account,
                        recipientName: form.recipent,

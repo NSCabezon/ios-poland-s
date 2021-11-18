@@ -10,8 +10,8 @@ public struct Transaction {
     public let placeName: String?
     public let address: String?
     public let city: String?
-    public let amount: Double
     public let aliasContext: AliasContext
+    public let amount: Decimal
     
     public enum TransferType: String, Decodable {
         case blikPurchases = "BLIK_PURCHASES"

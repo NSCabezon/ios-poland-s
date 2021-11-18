@@ -8,6 +8,8 @@
 import XCTest
 @testable import PLLogin
 import CryptoSwift
+import SANPLLibrary
+import PLCryptography
 
 class PLLoginTrustedDeviceTests: XCTestCase {
 
@@ -54,7 +56,7 @@ class PLLoginTrustedDeviceTests: XCTestCase {
         // PassKey=“348x!z348x!z348x” -> Hexadencimal = 0x33 34 38 78 21 7A 33 34 38 78 21 7A 33 34 38 78
         let typedPasskey = "348x!z"
         // Lenght 16 password
-        let passKeyLength16 = PLLoginTrustedDeviceHelpers.length16Password(typedPasskey)
+        let passKeyLength16 = PLTrustedDeviceHelpers.length16Password(typedPasskey)
         // Length 16 password bytes
         let passKeyLength16Bytes = passKeyLength16?.bytes
         // Test passKeyLength16Bytes
@@ -134,7 +136,7 @@ extension PLLoginTrustedDeviceTests {
 
 
         // TKEY decryption with password
-        let passKeyLength16 = PLLoginTrustedDeviceHelpers.length16Password(Constants.Input.password)
+        let passKeyLength16 = PLTrustedDeviceHelpers.length16Password(Constants.Input.password)
         let passKeyLength16Bytes = passKeyLength16?.bytes
 
         let encryptedTKeyData = Data(base64Encoded: Constants.Input.encryptedTransportKeyBase64)

@@ -15,6 +15,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
 import PLCommonOperatives
+import PLLogin
 import Models
 import GlobalPosition
 import Account
@@ -27,6 +28,7 @@ import Loans
 import iOSPublicFiles
 import CoreDomain
 import CommonUseCase
+import PLCryptography
 
 final class AppDependencies {
     #if DEBUG
@@ -57,17 +59,21 @@ final class AppDependencies {
     private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
     }
+
     private var demoInterpreter: DemoUserProtocol {
         let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
         return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
                                    demoModeAvailable: demoModeAvailable)
     }
     private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
-
         let hostProvider = PLHostProvider()
         let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider,
                                                 demoInterpreter: demoInterpreter,
-                                                isTrustInvalidCertificateEnabled: compilation.isTrustInvalidCertificateEnabled)
+                                                isTrustInvalidCertificateEnabled: compilation.isTrustInvalidCertificateEnabled,
+                                                trustedHeadersProvider: self.dependencieEngine.resolve(
+                                                    for: PLTrustedHeadersGenerable.self
+                                                )
+        )
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
@@ -134,6 +140,9 @@ final class AppDependencies {
 private extension AppDependencies {
     // MARK: Dependencies registration
     func registerDependencies() {
+        self.dependencieEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
+            PLTrustedHeadersProvider(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: HostsModuleProtocol.self) { _ in
             return self.hostModule
         }
@@ -243,7 +252,12 @@ private extension AppDependencies {
             return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
-            let networkProvider = PLNetworkProvider(dataProvider: self.bsanDataProvider, demoInterpreter: self.demoInterpreter, isTrustInvalidCertificateEnabled: false)
+            let networkProvider = PLNetworkProvider(
+                dataProvider: self.bsanDataProvider,
+                demoInterpreter: self.demoInterpreter,
+                isTrustInvalidCertificateEnabled: false,
+                trustedHeadersProvider: self.dependencieEngine.resolve(for: PLTrustedHeadersGenerable.self)
+            )
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: networkProvider)
         }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in

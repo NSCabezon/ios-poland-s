@@ -9,6 +9,7 @@ import Foundation
 import Commons
 import PLCommons
 import SANPLLibrary
+import PLCryptography
 import DomainCommon
 
 final class PLRememberedLoginProcessUseCase {
@@ -103,7 +104,7 @@ final class PLRememberedLoginProcessUseCase {
                 guard let self = self else { return nil }
 
                 configuration.pendingChallenge = pendingChallenge
-                let caseInput = PLGetSecIdentityUseCaseInput(label: PLLoginConstants.certificateIdentityLabel)
+                let caseInput = PLGetSecIdentityUseCaseInput(label: PLConstants.certificateIdentityLabel)
                 return Scenario(useCase: self.getCertificateUseCase, input: caseInput)
             })
             .then(scenario: { [weak self] output ->Scenario<Void, PLTrustedDeviceGetStoredEncryptedUserKeyUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in

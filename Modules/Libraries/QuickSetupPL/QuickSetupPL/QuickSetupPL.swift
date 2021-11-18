@@ -28,6 +28,10 @@ public class QuickSetupForPLLibrary {
             versionName: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
     }()
     
+    private lazy var trustedHeadersProvider: PLTrustedHeadersProviding = {
+        return PLTrustedHeadersProvider(dependenciesResolver: dependenciesEngine)
+    }()
+    
     private lazy var dataRepository: DataRepository = {
         return DataRepositoryBuilder(appInfo: versionInfo).build()
     }()
@@ -41,12 +45,22 @@ public class QuickSetupForPLLibrary {
                                    demoModeAvailable: true)
     }
     private var plManagersProvider: PLManagersProvider {
-        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
+        let networkProvider = PLNetworkProvider(
+            dataProvider: bsanDataProvider,
+            demoInterpreter: demoInterpreter,
+            isTrustInvalidCertificateEnabled: false,
+            trustedHeadersProvider: trustedHeadersProvider
+        )
         return PLManagersProvider(bsanDataProvider: bsanDataProvider, hostProvider: hostProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
     }
     
     private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
-        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
+        let networkProvider = PLNetworkProvider(
+            dataProvider: bsanDataProvider,
+            demoInterpreter: demoInterpreter,
+            isTrustInvalidCertificateEnabled: false,
+            trustedHeadersProvider: trustedHeadersProvider
+        )
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
