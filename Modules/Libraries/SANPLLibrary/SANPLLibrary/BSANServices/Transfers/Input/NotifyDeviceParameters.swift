@@ -13,4 +13,10 @@ struct NotifyDeviceParameters: Encodable {
     let variables: [String]
     let challenge: String
     let softwareTokenType: String?
+    let amount: NotifyAmountParameters
+}
+
+struct NotifyAmountParameters: Encodable {
+    let value: Decimal
+    let currencyCode: String
 }

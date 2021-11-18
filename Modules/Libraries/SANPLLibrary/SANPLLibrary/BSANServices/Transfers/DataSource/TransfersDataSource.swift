@@ -35,7 +35,7 @@ final class TransfersDataSource {
         case confirmationTransfer = "/transactions/domestic/create/accepted"
         case challenge = "/transactions/domestic/prepare"
         case checkTransactionAvailability = "/payhubpl-prodef/api/instant_payments/accounts/"
-        case notifyDevice = "/auth/devices/mobile-authorization/notify-device"
+        case notifyDevice = "/auth/devices/mobile-authorization/notify-device/transactions"
     }
     
     private let networkProvider: NetworkProvider

@@ -29,8 +29,8 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
                                                                 zipCode: nil,
                                                                 baseAddress: nil)
         let signData = SignDataParameters(securityLevel: 2048)
-        let originIBAN: String = ibanRepresentable.checkDigits + ibanRepresentable.codBban
-        let destinationIBAN = requestValues.destinationIBAN.checkDigits + requestValues.destinationIBAN.codBban
+        let originIBAN: String = ibanRepresentable.countryCode + ibanRepresentable.checkDigits + ibanRepresentable.codBban
+        let destinationIBAN = requestValues.destinationIBAN.countryCode + requestValues.destinationIBAN.checkDigits + requestValues.destinationIBAN.codBban
         let debitAccounData = ItAccountDataParameters(accountNo: originIBAN,
                                                       accountName: nil,
                                                       accountSequenceNumber: originAccount.sequencerNo,

@@ -21,8 +21,8 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
         let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyName, amount: requestValues.amount.value)
         guard let originAccount = requestValues.originAccount as? PolandAccountRepresentable,
               let ibanRepresentable = requestValues.originAccount.ibanRepresentable else { return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil))) }
-        let originIBAN: String = ibanRepresentable.checkDigits + ibanRepresentable.codBban
-        let destinationIBAN = requestValues.destinationIBAN.checkDigits + requestValues.destinationIBAN.codBban
+        let originIBAN: String = ibanRepresentable.countryCode + ibanRepresentable.checkDigits + ibanRepresentable.codBban
+        let destinationIBAN = requestValues.destinationIBAN.countryCode + requestValues.destinationIBAN.checkDigits + requestValues.destinationIBAN.codBban
         let debitAccounData = ItAccountDataParameters(accountNo: originIBAN,
                                                       accountName: nil,
                                                       accountSequenceNumber: originAccount.sequencerNo,
