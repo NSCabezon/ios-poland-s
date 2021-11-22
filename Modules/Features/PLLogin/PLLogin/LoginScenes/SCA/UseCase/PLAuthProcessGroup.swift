@@ -41,12 +41,6 @@ final class PLAuthProcessGroup: ProcessGroup<PLAuthProcessGroupInput, PLAuthProc
         self.dependenciesResolver.resolve(for: BSANManagersProvider.self)
     }
 
-    private lazy var sessionDataManager: SessionDataManager = {
-        let manager = self.dependenciesResolver.resolve(for: SessionDataManager.self)
-        manager.setDataManagerProcessDelegate(self)
-        return manager
-    }()
-
     override func execute(input: PLAuthProcessGroupInput, completion: @escaping (Result<PLAuthProcessGroupOutput, PLAuthProcessGroupError>) -> Void) {
         let secondFactorAuthentity = SecondFactorDataAuthenticationEntity(challenge: input.challenge,
                                                                           value: input.scaCode)
@@ -94,20 +88,8 @@ final class PLAuthProcessGroup: ProcessGroup<PLAuthProcessGroupInput, PLAuthProc
 
         let dto = PersistedUserDTO.createPersistedUser(loginType: .U, login: input.userId, environmentName: bsanEnv?.name ?? "")
         _ = self.appRepository.setPersistedUserDTO(persistedUserDTO:dto)
-        sessionDataManager.load()
-    }
-}
-
-extension PLAuthProcessGroup: SessionDataManagerProcessDelegate {
-    func handleProcessEvent(_ event: SessionManagerProcessEvent) {
-        switch event {
-        case .loadDataSuccess, .fail(_):
-            self.onContinue?(.success(PLAuthProcessGroupOutput(nextScene: self.nextScene)))
-            self.onContinue = nil
-
-        default:
-            break
-        }
+        self.onContinue?(.success(PLAuthProcessGroupOutput(nextScene: self.nextScene)))
+        self.onContinue = nil
     }
 }
 
