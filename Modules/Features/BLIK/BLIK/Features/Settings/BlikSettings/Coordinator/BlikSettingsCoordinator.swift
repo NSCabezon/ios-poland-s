@@ -18,6 +18,7 @@ protocol BlikSettingsCoordinatorProtocol: ModuleCoordinator {
     func close()
     func closeToGlobalPosition()
     func showLimitUpdateSuccessAndClose()
+    func goBackToGlobalPosition()
 }
 
 final class BlikSettingsCoordinator: ModuleCoordinator {
@@ -33,6 +34,7 @@ final class BlikSettingsCoordinator: ModuleCoordinator {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.wallet = wallet
+        setUpDependencies()
     }
     
     public func start() {
@@ -110,5 +112,17 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
             position: .top
         )
         close()
+    }
+    
+    func goBackToGlobalPosition() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+private extension BlikSettingsCoordinator {
+    func setUpDependencies() {
+        dependenciesEngine.register(for: GetWalletsActiveProtocol.self) { resolver in
+            return GetWalletsActiveUseCase(dependenciesResolver: resolver)
+        }
     }
 }

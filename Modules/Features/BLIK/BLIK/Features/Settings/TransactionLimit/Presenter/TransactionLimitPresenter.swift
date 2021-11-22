@@ -18,8 +18,12 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
     private let validator: TransactionsLimitValidation
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let viewModelMapper: TransactionLimitViewModelMapping
+    private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     private var useCaseHandler: UseCaseHandler {
-        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+        return dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
+    private var loadWalletUseCase: GetWalletsActiveProtocol {
+        return dependenciesResolver.resolve()
     }
     weak var view: TransactionLimitViewController?
     
@@ -39,6 +43,7 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
         self.coordinator = coordinator
         self.confirmationDialogFactory = confirmationDialogFactory
         self.viewModelMapper = viewModelMapper
+        self.wallet = wallet
     }
     
     func viewDidLoad() {
@@ -157,7 +162,7 @@ private extension TransactionLimitPresenter {
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
                 self?.view?.hideLoader(completion: {
-                    self?.coordinator.close()
+                    self?.fetchWalletAndGoBackToSettings()
                 })
             }
             .onError { [weak self] error in
@@ -167,6 +172,35 @@ private extension TransactionLimitPresenter {
                     strongSelf.view?.showServiceInaccessibleMessage(onConfirm: nil)
                 })
             }
+    }
+    
+    func fetchWalletAndGoBackToSettings() {
+        Scenario(useCase: loadWalletUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] response in
+                self?.view?.hideLoader(completion: {
+                    self?.handleUpdatedWallet(with: response)
+                })
+            }
+            .onError { [weak self] _ in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                        self?.coordinator.goBackToGlobalPosition()
+                    })
+                })
+            }
+    }
+    
+    func handleUpdatedWallet(with response: GetWalletUseCaseOkOutput) {
+        switch response.serviceStatus {
+        case let .available(fetchedWallet):
+            self.wallet.setValue(fetchedWallet)
+            coordinator.showLimitUpdateSuccessAndClose()
+        case .unavailable:
+            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                self?.coordinator.goBackToGlobalPosition()
+            })
+        }
     }
 }
 
