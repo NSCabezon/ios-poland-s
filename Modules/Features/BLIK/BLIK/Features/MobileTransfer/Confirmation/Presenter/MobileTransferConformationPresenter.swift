@@ -23,6 +23,9 @@ final class MobileTransferConfirmationPresenter {
     private var acceptTransactionUseCase: AcceptTransactionProtocol {
         dependenciesResolver.resolve()
     }
+    private var getIndividualUseCase: GetIndividualProtocol {
+        dependenciesResolver.resolve()
+    }
 
     init(dependenciesResolver: DependenciesResolver,
          viewModel: MobileTransferViewModel,
@@ -58,20 +61,39 @@ extension MobileTransferConfirmationPresenter: MobileTransferConfirmationPresent
                  input: .init(form: viewModel, isDstAccInternal: isDstAccInternal, dstAccNo: dstAccNo))
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] result in
-                self?.view?.hideLoader {
-                    self?.coordinator.showSummary(with: result.summary)
+                if let storngSelf = self {
+                    Scenario(useCase: storngSelf.getIndividualUseCase)
+                        .execute(on: storngSelf.useCaseHandler)
+                        .onSuccess { [weak self] customer in
+                            let mapper = MobileTransferSummaryMapper()
+                            let summaryModel = mapper.map(summary: result.summary, transferType: result.transferType, customer: customer.customer)
+                            self?.view?.hideLoader {
+                                self?.coordinator.showSummary(with: summaryModel)
+                            }
+                        }
+                        .onError { [weak self] error in
+                            self?.view?.hideLoader {
+                                guard let errorKey = error.getErrorDesc() else {
+                                    self?.showServiceInaccessibleError()
+                                    return
+                                }
+                                self?.showError(with: errorKey)
+                            }
+                        }
+                } else {
+                    self?.view?.hideLoader {
+                        self?.showServiceInaccessibleError()
+                        return
+                    }
                 }
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
                     guard let errorKey = error.getErrorDesc() else {
                         self?.showServiceInaccessibleError()
-                        
                         return
                     }
-
                     self?.showError(with: errorKey)
-                    
                 }
             }
     }

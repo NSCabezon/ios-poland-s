@@ -6,13 +6,15 @@ import PLCommons
 
 protocol MobileTransferSummaryMapping {
     func map(summary: AcceptDomesticTransferSummaryDTO,
-             transferType: AcceptDomesticTransactionParameters.TransferType) -> MobileTransferSummary
+             transferType: AcceptDomesticTransactionParameters.TransferType,
+             customer: CustomerDTO) -> MobileTransferSummary
 }
 
 final class MobileTransferSummaryMapper: MobileTransferSummaryMapping {
 
     func map(summary: AcceptDomesticTransferSummaryDTO,
-             transferType: AcceptDomesticTransactionParameters.TransferType) -> MobileTransferSummary {
+             transferType: AcceptDomesticTransactionParameters.TransferType,
+             customer: CustomerDTO) -> MobileTransferSummary {
         
         let formatter = DateFormatter()
         formatter.dateFormat = TimeFormat.yyyyMMdd.rawValue
@@ -22,7 +24,7 @@ final class MobileTransferSummaryMapper: MobileTransferSummaryMapping {
         return .init(amount: abs(summary.debitAmountData.amount ?? 0),
                      currency: CurrencyType(rawValue: summary.debitAmountData.currency ?? CurrencyType.złoty.name) ?? CurrencyType.złoty,
                      title: summary.title,
-                     accountName: summary.debitAccountData.accountName ?? "",
+                     accountName: (customer.firstName ?? "") + " " + (customer.lastName ?? ""),
                      accountNumber: IBANFormatter.format(iban: summary.debitAccountData.accountNo),
                      recipientName: summary.creditAccountData.accountName ?? "",
                      recipientNumber: formattedPhoneNumber(summary.dstPhoneNo ?? ""),

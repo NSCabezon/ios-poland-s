@@ -11,14 +11,11 @@ protocol AcceptTransactionProtocol: UseCase<AcceptTransactionUseCaseInput, Accep
 final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, AcceptTransactionUseCaseOkOutput, StringErrorOutput> {
     
     private let managersProvider: PLManagersProviderProtocol
-    private let mapper: MobileTransferSummaryMapping
     private let transactionParametersProvider: PLTransactionParametersProviderProtocol
     
-    init(dependenciesResolver: DependenciesResolver,
-         mapper: MobileTransferSummaryMapping = MobileTransferSummaryMapper()) {
+    init(dependenciesResolver: DependenciesResolver) {
         self.transactionParametersProvider = dependenciesResolver.resolve(for: PLTransactionParametersProviderProtocol.self)
         self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        self.mapper = mapper
     }
     
     override func executeUseCase(requestValues: AcceptTransactionUseCaseInput) throws -> UseCaseResponse<AcceptTransactionUseCaseOkOutput, StringErrorOutput> {
@@ -85,7 +82,7 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
 
         switch result {
         case .success(let result):
-            return .ok(.init(summary: mapper.map(summary: result, transferType: transferType)))
+            return .ok(.init(summary: result, transferType: transferType))
         case .failure(let error):
             let blikError = BlikError(with: error.getErrorBody())
             guard blikError?.errorCode1 == .customerTypeDisabled else {
@@ -106,5 +103,6 @@ struct AcceptTransactionUseCaseInput {
 }
 
 struct AcceptTransactionUseCaseOkOutput {
-    let summary: MobileTransferSummary
+    let summary: AcceptDomesticTransferSummaryDTO
+    let transferType: AcceptDomesticTransactionParameters.TransferType
 }
