@@ -94,7 +94,9 @@ private extension MobileTransferSummaryPresenter {
                 self?.goToGlobalPosition()
             }),
             .init(imageKey: "icnHelpUsMenu", title: localized("generic_button_improve"), action: { [weak self] in
-                self?.coordinator.shareSummary()
+                let opinator = RegularOpinatorInfoEntity(path: "/APP-RET-blik-transfer-SUCCESS")
+                let coordinator = self?.dependenciesResolver.resolve(for: OperativeContainerCoordinatorDelegate.self)
+                coordinator?.handleOpinator(opinator)
             })
         ]
         let viewModel = OperativeSummaryStandardViewModel(header: headerViewModel,

@@ -137,8 +137,9 @@ private extension BLIKSummaryPresenter {
                   title: localized("generic_button_improve"),
                   accessibilityIdentifier: AccessibilityBLIK.SummaryOperativeSummary.footerImprove.id,
                   action: { [weak self] in
-                    // TODO: For now this action goes to BLIK main screen. In task TAP-1655 this should be change
-                    self?.coordinator.goToMakeAnotherPayment()
+                    let opinator = RegularOpinatorInfoEntity(path: "/APP-RET-blik-code-generation-SUCCESS")
+                    let coordinator = self?.dependenciesResolver.resolve(for: OperativeContainerCoordinatorDelegate.self)
+                    coordinator?.handleOpinator(opinator)
                   })
         ]
         return OperativeSummaryStandardViewModel(header: headerViewModel,
