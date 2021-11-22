@@ -134,7 +134,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         self.documentTextField.isUserInteractionEnabled = false
-        passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
+        passwordTextField?.setPlaceholder(localized("login_hint_password").text)
         passwordTextField?.delegate = self
         passwordTextField?.textField?.delegate = self
     }
@@ -172,7 +172,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }
 
     func configureKeyboard() {

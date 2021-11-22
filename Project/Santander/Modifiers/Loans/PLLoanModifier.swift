@@ -11,7 +11,6 @@ import Commons
 import Models
 import SANPLLibrary
 
-
 final class PLLoanModifier {
     private let managersProvider: PLManagersProviderProtocol
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
@@ -29,7 +28,7 @@ final class PLLoanModifier {
 extension PLLoanModifier: LoansModifierProtocol {
     
     func formatLoanId(_ loanId: String) -> String {
-        //Introduce loan id formatting if necessary
+        // Introduce loan id formatting if necessary
         return loanId
     }
     

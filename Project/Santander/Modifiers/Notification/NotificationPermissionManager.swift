@@ -27,9 +27,6 @@ final class NotificationPermissionsManager {
 
 extension NotificationPermissionsManager: PushNotificationPermissionsManagerProtocol {
    
-    
-   
-    
     func isNotificationsEnabled(completion: @escaping (Bool) -> Void) {
 
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
@@ -107,4 +104,3 @@ private extension NotificationPermissionsManager {
         checkAccess(completion)
     }
 }
-

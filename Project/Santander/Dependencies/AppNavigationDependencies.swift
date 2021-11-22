@@ -60,10 +60,10 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: CreditCardRepaymentModuleCoordinator.self) { resolver in
             return CreditCardRepaymentModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
-        dependenciesEngine.register(for: OneAppInitCoordinatorProtocol.self) { [unowned self] resolver in // Temporary [DEBUG MENU] on GlobalPosition
+        dependenciesEngine.register(for: OneAppInitCoordinatorProtocol.self) { [unowned self] _ in // Temporary [DEBUG MENU] on GlobalPosition
             return OneAppInitCoordinator(dependenciesEngine: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
-        dependenciesEngine.register(for: DebugMenuLauncherDelegate.self) { [unowned self] resolver in // Temporary [DEBUG WELCOME] on Login
+        dependenciesEngine.register(for: DebugMenuLauncherDelegate.self) { [unowned self] _ in // Temporary [DEBUG WELCOME] on Login
             return OneAppInitWelcomeCoordinator(dependenciesEngine: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         self.dependenciesEngine.register(for: ChallengesHandlerDelegate.self) { _ in

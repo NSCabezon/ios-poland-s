@@ -50,7 +50,7 @@ class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherO
 }
 
 extension GetPLCardsOtherOperativesWebConfigurationUseCase {
-    func generateParameters(with type: PLCardWebViewType, cardEntity: CardEntity) throws -> [String : String] {
+    func generateParameters(with type: PLCardWebViewType, cardEntity: CardEntity) throws -> [String: String] {
         var parameters = [String: String]()
         let result = try getContext()
         var ownerId = ""

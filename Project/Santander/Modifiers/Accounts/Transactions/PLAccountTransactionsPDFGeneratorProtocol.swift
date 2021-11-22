@@ -37,7 +37,7 @@ final class PLAccountTransactionsPDFGeneratorProtocol: AccountTransactionsPDFGen
     }()
     
     private let dependenciesResolver: DependenciesResolver
-    private var pagination: PaginationEntity? = nil
+    private var pagination: PaginationEntity?
     private var transactions: [AccountTransactionEntity] = []
     
     init(dependenciesResolver: DependenciesResolver) {

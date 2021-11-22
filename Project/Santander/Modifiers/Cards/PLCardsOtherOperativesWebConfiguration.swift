@@ -36,4 +36,3 @@ public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {
         self.reloadSessionOnClose = reloadSessionOnClose
     }
 }
-

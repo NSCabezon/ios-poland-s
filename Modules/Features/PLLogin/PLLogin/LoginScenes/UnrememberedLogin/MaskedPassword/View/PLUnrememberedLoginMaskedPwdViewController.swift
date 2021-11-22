@@ -193,7 +193,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }
     
     func addKeyboardObserver() {

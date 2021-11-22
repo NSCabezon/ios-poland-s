@@ -5,8 +5,6 @@
 //  Created by Piotr Mielcarzewicz on 24/06/2021.
 //
 
-import PLCommons
-
 public struct Money: Equatable {
     public let amount: Decimal
     public let currency: String

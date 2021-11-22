@@ -8,12 +8,10 @@
 import Commons
 import PersonalArea
 
-
 final class PersonalAreaSectionsProvider {
     
     private let dependenciesResolver: DependenciesResolver & DependenciesInjector
     private var reloadCompletion: ((Bool) -> Void)?
-    
     
     init(dependenciesResolver: DependenciesResolver & DependenciesInjector) {
         self.dependenciesResolver = dependenciesResolver
@@ -42,7 +40,6 @@ extension PersonalAreaSectionsProvider: PersonalAreaSectionsProtocol {
             completion(cells)
         }
 
-    
 }
 
 private extension PersonalAreaSectionsProvider {

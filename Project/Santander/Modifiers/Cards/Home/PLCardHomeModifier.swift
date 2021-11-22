@@ -70,7 +70,7 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
         return card.formattedPAN
     }
     
-    func validatePullOffersCandidates(values: CustomCardActionValues, offers: [PullOfferLocation : OfferEntity], entity: CardEntity, actionType: CardActionType, action: ((CardActionType, CardEntity) -> Void)?, candidateOffer: Bool) -> CardActionViewModel? {
+    func validatePullOffersCandidates(values: CustomCardActionValues, offers: [PullOfferLocation: OfferEntity], entity: CardEntity, actionType: CardActionType, action: ((CardActionType, CardEntity) -> Void)?, candidateOffer: Bool) -> CardActionViewModel? {
         return CardActionViewModel(entity: entity,
                                    type: actionType,
                                    action: action,
@@ -82,7 +82,7 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
         return values.isDisabled(entity)
     }
     
-    func loadOffers(dependenciesResolver: DependenciesResolver) -> [PullOfferLocation : OfferEntity] {
+    func loadOffers(dependenciesResolver: DependenciesResolver) -> [PullOfferLocation: OfferEntity] {
         // To be implemented
         return [:]
     }

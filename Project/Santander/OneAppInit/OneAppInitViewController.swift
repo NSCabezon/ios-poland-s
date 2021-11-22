@@ -54,7 +54,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
         
         stackView.axis = .vertical
         stackView.spacing = 20.0
-        stackView.layoutMargins = .init(top: 20, left: 20, bottom: 20, right: 20)
+        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         
         modules.forEach { module in
@@ -76,7 +76,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
                             }
                             self.delegate?.selectCharityTransfer(accounts: accounts)
                         }
-                        .onError { error in
+                        .onError { _ in
                             self.showServiceInaccessibleMessage(onConfirm: nil)
                         }
                 }

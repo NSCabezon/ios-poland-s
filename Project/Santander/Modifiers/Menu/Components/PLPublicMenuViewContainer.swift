@@ -96,10 +96,7 @@ private extension PLPublicMenuViewContainer {
     func isTrustedDevice() -> Bool {
         let managerProvider: PLManagersProviderProtocol = self.resolver.resolve(for: PLManagersProviderProtocol.self)
         let trustedDeviceManager = managerProvider.getTrustedDeviceManager()
-        guard let _ = trustedDeviceManager.getTrustedDeviceHeaders() else {
-            return false
-        }
-        return true
+        return trustedDeviceManager.getTrustedDeviceHeaders() != nil
     }
 }
 extension PLPublicMenuViewContainer: PublicMenuViewContainerProtocol { }

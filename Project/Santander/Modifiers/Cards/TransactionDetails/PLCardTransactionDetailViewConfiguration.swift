@@ -11,7 +11,7 @@ import Models
 import Commons
 import UI
 
-struct PLCardTransactionDetailViewConfiguration : CardTransactionDetailViewConfigurationProtocol {
+struct PLCardTransactionDetailViewConfiguration: CardTransactionDetailViewConfigurationProtocol {
     var showAmountBackground: Bool { false }
     
     func getShareable(from: CardTransactionEntity) -> String? {

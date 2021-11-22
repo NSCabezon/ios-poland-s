@@ -63,7 +63,7 @@ struct TranferTypeMatrixEvaluator: Hashable {
             TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: false, isAccountTrusted: false): .four,
             TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .zero,
             TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .zero,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .zero,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .zero
         ]
     }
     
@@ -86,11 +86,10 @@ struct TranferTypeMatrixEvaluator: Hashable {
             TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: false, isAccountTrusted: false): .twelve,
             TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen,
             TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen
         ]
     }
 
-    
     func evaluateTransferType() -> MatrixTransferType? {
         return transferTypes[self]
     }
