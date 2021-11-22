@@ -1,6 +1,7 @@
 import Foundation
 import SANPLLibrary
 import Commons
+import PLCommons
 import SANLegacyLibrary
 import Models
 
@@ -22,7 +23,7 @@ struct BLIKTransactionViewModel {
     
     var dateString: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         return dateFormatter.string(from: transaction.date ?? Date())
     }
     

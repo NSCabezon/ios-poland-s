@@ -152,7 +152,7 @@ private extension MobileTransferFormView {
     func setUpDateTextField() {
         dateView.setPlaceholder(localized("pl_blik_label_dateTransfer"))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         dateView.setText(dateFormatter.string(from: Date()))
         let formatter = UIFormattedCustomTextField()
         dateView.setEditingStyle(.writable(configuration: .init(type: .floatingTitle,

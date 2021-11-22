@@ -24,7 +24,7 @@ public struct MobileTransferViewModel {
     
     var dateString: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         return dateFormatter.string(from: transfer.date ?? Date())
     }
     

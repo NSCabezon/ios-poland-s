@@ -17,7 +17,7 @@ final class MobileTransferSummaryMapper: MobileTransferSummaryMapping {
         let formatter = DateFormatter()
         formatter.dateFormat = TimeFormat.yyyyMMdd.rawValue
         let date = formatter.date(from: summary.valueDate ?? "")
-        let formattedString = date?.toString(format: "dd.MM.yyyy")
+        let formattedString = date?.toString(format: PLTimeFormat.ddMMyyyyDotted.rawValue)
 
         return .init(amount: abs(summary.debitAmountData.amount ?? 0),
                      currency: CurrencyType(rawValue: summary.debitAmountData.currency ?? CurrencyType.złoty.name) ?? CurrencyType.złoty,
