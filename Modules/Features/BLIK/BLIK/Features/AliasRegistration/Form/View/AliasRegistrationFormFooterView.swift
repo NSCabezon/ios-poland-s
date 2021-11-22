@@ -1,7 +1,7 @@
 import UI
 import Commons
 
-final class AliasTransferFooterView: UIView {
+final class AliasRegistrationFormFooterView: UIView {
     private var onSaveButtonTap: (() -> Void)?
     private var onRejectButtonTap: (() -> Void)?
     
@@ -51,7 +51,7 @@ final class AliasTransferFooterView: UIView {
     }
 }
 
-private extension AliasTransferFooterView {
+private extension AliasRegistrationFormFooterView {
     func setUp() {
         addSubview(separatorView)
         addSubview(saveButton)

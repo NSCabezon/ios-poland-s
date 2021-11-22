@@ -10,6 +10,8 @@ public struct Transaction {
     public let placeName: String?
     public let address: String?
     public let city: String?
+    public let merchantId: String?
+    public let acquirerId: String?
     public let aliasContext: AliasContext
     public let amount: Decimal
     
@@ -23,7 +25,6 @@ public struct Transaction {
         case blikWebRefund = "BLIK_WEB_REFUND"
         case blikAtmWithdrawalPsp = "BLIK_ATM_WITHDRAWAL_PSP"
     }
-    
     
     public enum AliasContext {
         case none

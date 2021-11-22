@@ -15,6 +15,8 @@ public struct GetTrnToConfDTO: Decodable {
         public let shortName: String?
         public let address: String?
         public let city: String?
+        public let merchantId: String?
+        public let acquirerId: String?
     }
     
     public struct Amount: Decodable {

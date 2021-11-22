@@ -16,6 +16,14 @@ struct BLIKTransactionViewModel {
     var trnId: Int {
         transaction.transactionId
     }
+    
+    var merchantId: String? {
+        transaction.merchantId
+    }
+    
+    var acquirerId: String? {
+        transaction.acquirerId
+    }
 
     var title: String {
         transaction.title

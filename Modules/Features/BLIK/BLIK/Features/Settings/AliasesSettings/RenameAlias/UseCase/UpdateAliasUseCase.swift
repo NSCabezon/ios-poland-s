@@ -10,9 +10,9 @@ import Foundation
 import DomainCommon
 import SANPLLibrary
 
-protocol RegisterAliasUseCaseProtocol: UseCase<BlikAlias, Void, StringErrorOutput> {}
+protocol UpdateAliasUseCaseProtocol: UseCase<BlikAlias, Void, StringErrorOutput> {}
 
-final class RegisterAliasUseCase: UseCase<BlikAlias, Void, StringErrorOutput> {
+final class UpdateAliasUseCase: UseCase<BlikAlias, Void, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
     private var managersProvider: PLManagersProviderProtocol {
         dependenciesResolver.resolve()
@@ -38,5 +38,5 @@ final class RegisterAliasUseCase: UseCase<BlikAlias, Void, StringErrorOutput> {
     }
 }
 
-extension RegisterAliasUseCase: RegisterAliasUseCaseProtocol {}
+extension UpdateAliasUseCase: UpdateAliasUseCaseProtocol {}
 

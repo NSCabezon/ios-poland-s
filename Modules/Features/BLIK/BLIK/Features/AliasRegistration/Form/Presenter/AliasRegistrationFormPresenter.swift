@@ -6,58 +6,36 @@ import DomainCommon
 import SANPLLibrary
 import SANLegacyLibrary
 
-protocol AliasTransferPresenterProtocol {
+protocol AliasRegistrationFormPresenterProtocol {
     func viewDidLoad()
     func didPressSave()
     func didPressReject()
     func didPressClose()
 }
 
-final class AliasTransferPresenter: AliasTransferPresenterProtocol {
-    
+final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtocol {
+    private let registerAliasInput: RegisterAliasInput
     private let dependenciesResolver: DependenciesResolver
-    private var aliasType: AliasType
-    private let registerAliasInput: RegisterBlikAliasInput
-
-    
-    private var coordinator: AliasTransferCoordinatorProtocol {
-        dependenciesResolver.resolve()
-    }
-    
-    private var registerUseCase: AliasTransactionRegisterAliasUseCaseProtocol {
-        dependenciesResolver.resolve()
-    }
-    
-    private var registerAliasUseCase: AliasTransactionRegisterAliasUseCaseProtocol {
-        dependenciesResolver.resolve()
-    }
-    
-    private var useCaseHandler: UseCaseHandler {
-        dependenciesResolver.resolve()
-    }
-    
-    weak var view: AliasTransferViewController?
+    weak var view: AliasRegistrationFormViewController?
     
     init(
-        registerAliasInput: RegisterBlikAliasInput,
-        aliasType: AliasType,
+        registerAliasInput: RegisterAliasInput,
         dependenciesResolver: DependenciesResolver
     ) {
         self.registerAliasInput = registerAliasInput
-        self.aliasType = aliasType
         self.dependenciesResolver = dependenciesResolver
     }
     
     func viewDidLoad() {
         let aliasMessage: String = {
-            switch self.aliasType {
+            switch self.registerAliasInput.aliasProposal.type {
             case .cookie:
                 return "#Aplikacja zapamięta przeglądarkę, z której dokonałeś zakupu. Będziesz mógł robić zakupy bez podawania kodu BLIK we wszystkich sklepach internetowych na zapamiętanej przeglądarce."
             case .uid:
                 return "#Aplikacja zapamięta sklep, w którym kupowałeś. Jeśli będziesz zalogowany do sklepu, to zrobisz zakupy bez podawania kodu BLIK na każdym urządzeniu i przeglądarce."
             }
         }()
-        let viewModel = AliasTransferContentViewModel(text: aliasMessage)
+        let viewModel = AliasRegistrationFormContentViewModel(text: aliasMessage)
         view?.set(viewModel: viewModel)
     }
     
@@ -82,5 +60,19 @@ final class AliasTransferPresenter: AliasTransferPresenterProtocol {
 
     func didPressClose() {
         coordinator.close()
+    }
+}
+
+private extension AliasRegistrationFormPresenter {
+    var coordinator: AliasRegistrationFormCoordinatorProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var registerAliasUseCase: RegisterAliasUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var useCaseHandler: UseCaseHandler {
+        dependenciesResolver.resolve()
     }
 }

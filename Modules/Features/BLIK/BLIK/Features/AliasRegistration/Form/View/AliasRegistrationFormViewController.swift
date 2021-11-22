@@ -4,18 +4,18 @@ import Commons
 import UIKit
 import PLUI
 
-protocol AliasTransferViewProtocol: LoaderPresentable, ErrorPresentable {
-    func set(viewModel: AliasTransferContentViewModel)
+protocol AliasRegistrationFormViewProtocol: LoaderPresentable, ErrorPresentable {
+    func set(viewModel: AliasRegistrationFormContentViewModel)
 }
 
-final class AliasTransferViewController: UIViewController, AliasTransferViewProtocol {
-    private let presenter: AliasTransferPresenterProtocol
+final class AliasRegistrationFormViewController: UIViewController, AliasRegistrationFormViewProtocol {
+    private let presenter: AliasRegistrationFormPresenterProtocol
     
-    private let contentView = AliasTransferView()
-    private let footerView = AliasTransferFooterView()
+    private let contentView = AliasRegistrationFormView()
+    private let footerView = AliasRegistrationFormFooterView()
     
     init(
-        presenter: AliasTransferPresenterProtocol
+        presenter: AliasRegistrationFormPresenterProtocol
     ) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -32,12 +32,12 @@ final class AliasTransferViewController: UIViewController, AliasTransferViewProt
         setUp()
     }
     
-    func set(viewModel: AliasTransferContentViewModel) {
+    func set(viewModel: AliasRegistrationFormContentViewModel) {
         contentView.set(viewModel: viewModel)
     }
 }
 
-private extension AliasTransferViewController {
+private extension AliasRegistrationFormViewController {
     func setUp() {
         configureNavigationItem()
         configureSubviews()

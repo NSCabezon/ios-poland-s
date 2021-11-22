@@ -19,7 +19,7 @@ protocol AliasDateChangePresenterProtocol {
 
 final class AliasDateChangePresenter: AliasDateChangePresenterProtocol {
     private let dependenciesResolver: DependenciesResolver
-    private var registerAliasUseCase: RegisterAliasUseCaseProtocol {
+    private var updateAliasUseCase: UpdateAliasUseCaseProtocol {
         dependenciesResolver.resolve()
     }
     
@@ -62,7 +62,7 @@ final class AliasDateChangePresenter: AliasDateChangePresenterProtocol {
         
         view?.showLoader()
         let updatedAlias = blikAliasNewDateMapper.map(alias: alias, validityPeriod: validityPeriod)
-        Scenario(useCase: registerAliasUseCase, input: updatedAlias)
+        Scenario(useCase: updateAliasUseCase, input: updatedAlias)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {

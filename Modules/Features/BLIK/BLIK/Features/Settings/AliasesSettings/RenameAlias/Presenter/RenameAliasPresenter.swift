@@ -22,7 +22,7 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
     private var coordinator: RenameAliasCoordinatorProtocol {
         dependenciesResolver.resolve()
     }
-    private var registerAliasUseCase: RegisterAliasUseCaseProtocol {
+    private var updateAliasUseCase: UpdateAliasUseCaseProtocol {
         dependenciesResolver.resolve()
     }
     private var blikAliasNewLabelMapper: BlikAliasNewLabelMapping {
@@ -51,7 +51,7 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
     func didPressSave(with label: String) {
         view?.showLoader()
         let updatedAlias = blikAliasNewLabelMapper.map(alias: alias, withNewLabel: label)
-        Scenario(useCase: registerAliasUseCase, input: updatedAlias)
+        Scenario(useCase: updateAliasUseCase, input: updatedAlias)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {

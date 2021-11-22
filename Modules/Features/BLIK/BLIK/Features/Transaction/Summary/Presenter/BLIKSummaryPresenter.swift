@@ -114,7 +114,12 @@ private extension BLIKSummaryPresenter {
                     image: "icnShareBostonRedLight",
                     title: title,
                     action: { [weak self] in
-                        self?.coordinator.goToAliasRegistration(with: aliasProposal)
+                        let input = RegisterAliasInput(
+                            aliasProposal: aliasProposal,
+                            merchantId: self?.viewModel.merchantId,
+                            acquirerId: self?.viewModel.acquirerId
+                        )
+                        self?.coordinator.goToAliasRegistration(with: input)
                     }
                 )
             )

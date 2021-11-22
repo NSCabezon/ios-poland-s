@@ -3,11 +3,11 @@ import UI
 import PLUI
 import Commons
 
-struct AliasTransferContentViewModel {
+struct AliasRegistrationFormContentViewModel {
     let text: String
 }
 
-final class AliasTransferView: UIView {
+final class AliasRegistrationFormView: UIView {
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
     private let textLabel = UILabel()
@@ -23,12 +23,12 @@ final class AliasTransferView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func set(viewModel: AliasTransferContentViewModel) {
+    public func set(viewModel: AliasRegistrationFormContentViewModel) {
         textLabel.text = viewModel.text
     }
 }
 
-private extension AliasTransferView {
+private extension AliasRegistrationFormView {
     func configureContent() {
         titleLabel.text = "#Kupuj bez podawania kodu BLIK"
         imageView.image = Images.info_lisboaGray
