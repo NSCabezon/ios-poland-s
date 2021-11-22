@@ -6,6 +6,7 @@
 //
 
 import UI
+import Commons
 
 protocol BlikSettingsViewProtocol: DialogViewPresentationCapable {}
 
@@ -75,7 +76,7 @@ private extension BlikSettingsViewController {
     }
     
     func configureNavigationItem() {
-        NavigationBarBuilder(style: .white, title: .title(key: "#BLIK"))
+        NavigationBarBuilder(style: .white, title: .title(key: localized("pl_blik_title_blikSetting")))
             .setLeftAction(.back(action: #selector(close)))
             .setRightActions(.close(action: #selector(closeToGlobalPosition)))
             .build(on: self, with: nil)
