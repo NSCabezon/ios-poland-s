@@ -36,7 +36,7 @@ public struct GetTrnToConfDTO: Decodable {
     
     public struct AliasData: Decodable {
         public let proposal: [AliasProposal]
-        public let auth: [AliasAuth]
+        public let auth: AliasAuth?
     }
     
     public struct AliasProposal: Decodable {
@@ -46,8 +46,18 @@ public struct GetTrnToConfDTO: Decodable {
     }
     
     public struct AliasAuth: Decodable {
-        public let type: AliasType
-        public let label: String
+        public let type: AliasType?
+        public let label: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case type, label
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try? decoder.container(keyedBy: CodingKeys.self)
+            type = try? container?.decode(AliasType.self, forKey: .type)
+            label = try? container?.decode(String.self, forKey: .label)
+        }
     }
     
     public enum AliasType: String, Decodable {

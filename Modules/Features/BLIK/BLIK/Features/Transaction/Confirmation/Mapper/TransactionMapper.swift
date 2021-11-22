@@ -37,10 +37,10 @@ extension TransactionMapper {
     }
     
     private func getAliasContext(from dto: GetTrnToConfDTO) -> Transaction.AliasContext {
-        if let aliasUsedInTransaction = dto.aliases.auth.first {
+        if let aliasUsedInTransaction = dto.aliases.auth, let type = aliasUsedInTransaction.type, let label = aliasUsedInTransaction.label {
             let alias = Transaction.Alias(
-                type: getAliasType(from: aliasUsedInTransaction.type),
-                label: aliasUsedInTransaction.label
+                type: getAliasType(from: type),
+                label: label
             )
             return .transactionWasPerformedWithAlias(alias)
         }
