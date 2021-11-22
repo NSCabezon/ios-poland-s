@@ -35,7 +35,13 @@ final class GetAliasesUseCase: UseCase<Void, [BlikAlias], StringErrorOutput> {
                 return .error(.init(error.localizedDescription))
             }
         case .failure(let error):
-            return .error(.init(error.localizedDescription))
+            if let blikError = BlikError(with: error.getErrorBody()),
+               blikError.errorCode1 == .customerTypeDisabled,
+               blikError.errorCode2 == .p2pAliasNotExsist {
+                return .ok([])
+            } else {
+                return .error(.init(error.localizedDescription))
+            }
         }
     }
 }
