@@ -84,7 +84,7 @@ extension ChequesCoordinator: ChequesCoordinatorProtocol {
     }
     
     public func showShareSheet(cheque: BlikCheque) {
-        let text = localized("pl_blik_text_cheque_message", [StringPlaceholder(.value, "\(cheque.id)")])
+        let text = localized("pl_blik_text_cheque_message", [StringPlaceholder(.value, "\(cheque.ticketCode)")])
         let controller = shareSheetFactory.create(type: .text(text.text))
         navigationController?.present(controller, animated: true)
     }
