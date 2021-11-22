@@ -5,13 +5,16 @@ import Commons
 
 final class IbanValidationSendMoneyUseCase: UseCase<IbanValidationSendMoneyUseCaseInput, IbanValidationSendMoneyUseCaseOkOutput, DestinationAccountSendMoneyUseCaseErrorOutput>, IbanValidationSendMoneyUseCaseProtocol {
     private var transfersRepository: PLTransfersRepository
-    
+    private var bankingUtils: BankingUtilsProtocol
+
     public init(dependenciesResolver: DependenciesResolver) {
         self.transfersRepository = dependenciesResolver.resolve()
+        self.bankingUtils = dependenciesResolver.resolve()
     }
     
     override public func executeUseCase(requestValues: IbanValidationSendMoneyUseCaseInput) throws -> UseCaseResponse<IbanValidationSendMoneyUseCaseOkOutput, DestinationAccountSendMoneyUseCaseErrorOutput> {
-        guard let iban = requestValues.iban else {
+        guard let iban = requestValues.iban,
+              bankingUtils.isValidIban(ibanString: iban.ibanString) else {
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.ibanInvalid))
         }
         let response = try transfersRepository.checkInternalAccount(input: CheckInternalAccountInput(destinationAccount: iban))
@@ -19,8 +22,8 @@ final class IbanValidationSendMoneyUseCase: UseCase<IbanValidationSendMoneyUseCa
         switch response {
         case .success(let dto):
             checkInternalAccountDto = dto
-        case .failure:
-            return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.ibanInvalid))
+        case .failure(let error):
+            return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
         }
         
         guard let name = requestValues.name, name.trim().count > 0 else {
