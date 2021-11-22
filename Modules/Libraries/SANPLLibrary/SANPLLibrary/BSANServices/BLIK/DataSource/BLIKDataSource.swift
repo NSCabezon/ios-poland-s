@@ -298,7 +298,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .post,
-                        request: data)
+                        request: data,
+                        bodyEncoding: .form)
         )
     }
     
@@ -325,7 +326,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .post,
-                        request: data)
+                        request: data,
+                        bodyEncoding: .form)
         )
     }
     
@@ -404,7 +406,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .post,
-                        request: data)
+                        request: data,
+                        bodyEncoding: .form)
         )
     }
     
