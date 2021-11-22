@@ -14,15 +14,19 @@ import PLUI
 import Models
 
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable {
-    func showAccountPermanentlyBlockedDialog()
-    func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration)
-    func showInvalidSCADialog()
-    func showDeviceConfigurationErrorDialog(completion: @escaping (() -> Void))
-    func showUnauthorizedError()
+    func showDialog(_ type: PLRememberedLoginDialogType)
     func setUserName(_ name: String)
     func tryPinAuth()
     var currentLoginType: PLRememberedLoginType { get set }
     func applicationDidBecomeActive(for biometryType: BiometryTypeEntity)
+}
+
+public enum PLRememberedLoginDialogType {
+    case invalidSCA
+    case accountTemporarilyBlocked(RememberedLoginConfiguration)
+    case accountPermanentlyBlocked
+    case unauthorized
+    case configurationError(() -> Void)
 }
 
 public enum PLRememberedLoginType {
@@ -85,7 +89,6 @@ final class PLRememberedLoginPinViewController: UIViewController {
 }
 
 private extension PLRememberedLoginPinViewController {
-    
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
             .setRightActions(.menu(action: #selector(didSelectMenu)))
@@ -264,22 +267,6 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         titleLabel.configureText(withLocalizedString: titleText, andConfiguration: textConfig)
     }
     
-    func showAccountPermanentlyBlockedDialog() {
-        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
-    }
-    
-    func showDeviceConfigurationErrorDialog(completion: @escaping (() -> Void)) {
-        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
-    }
-    
-    func showInvalidSCADialog() {
-        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_attemptLast")
-    }
-    
-    func showUnauthorizedError() {
-        PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_loginError")
-    }
-    
     func showAccountTemporaryBlockedDialog(_ configuration: RememberedLoginConfiguration) {
         guard let unblockRemainingTimeInSecs = configuration.unblockRemainingTimeInSecs else { return }
         PLDialogTime(dateTimeStamp: unblockRemainingTimeInSecs) { [weak self] allowLogin in
@@ -287,5 +274,22 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
                 self?.presenter.setAllowLoginBlockedUsers()
             }
         }.show(in: self)
+    }
+
+    func showDialog(_ type: PLRememberedLoginDialogType) {
+        self.dismissLoading {
+            switch type {
+            case .accountPermanentlyBlocked:
+                PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_userBlocked")
+            case .accountTemporarilyBlocked(let configuration):
+                self.showAccountTemporaryBlockedDialog(configuration)
+            case .invalidSCA:
+                PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_attemptLast")
+            case .unauthorized:
+                PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_loginError")
+            case .configurationError(let completion):
+                PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
+            }
+        }
     }
 }

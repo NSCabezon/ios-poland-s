@@ -33,8 +33,8 @@ final class PLUnrememberedLoginIdPresenter {
         self.dependenciesResolver = dependenciesResolver
     }
     
-    private var loginProcessUseCase: PLLoginProcessUseCase {
-        self.dependenciesResolver.resolve(for: PLLoginProcessUseCase.self)
+    private var unrememberedLoginProcessGroup: PLUnrememberedLoginProcessGroup {
+        self.dependenciesResolver.resolve(for: PLUnrememberedLoginProcessGroup.self)
     }
     
     private var loginConfiguration: UnrememberedLoginConfiguration {
@@ -114,21 +114,20 @@ private extension  PLUnrememberedLoginIdPresenter {
         let loadingText = LoadingText(title: localized("login_popup_identifiedUser"),
                                       subtitle: localized("loading_label_moment"))
         self.view?.showLoadingWith(loadingText: loadingText, completion: { [weak self] in
+            guard let self = self else { return }
             
             switch type {
             case .notPersisted(let info):
-                self?.loginProcessUseCase.executeNonPersistedLogin(identification: info.identification) { [weak self] config in
-                    guard let config = config else {
-                        let error = UseCaseError.error(PLUseCaseErrorOutput<LoginErrorType>(error: .emptyField))
-                        self?.trackEvent(.info, parameters: [PLLoginTrackConstants.errorCode: "1000", PLLoginTrackConstants.errorDescription: localized("login_popupError_validateData")])
-                        self?.handleError(error)
-                        return
+                self.unrememberedLoginProcessGroup.execute(input: PLUnrememberedLoginProcessGroupInput(identification: info.identification)) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let output):
+                        self.loginSuccess(configuration: output.configuration)
+                    case .failure(let groupError):
+                        let httpErrorCode = self.getHttpErrorCode(groupError.error) ?? ""
+                        self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : groupError.error.getErrorDesc() ?? ""])
+                        self.handleError(groupError.error)
                     }
-                    self?.loginSuccess(configuration: config)
-                } onFailure: { [weak self]  error in
-                    let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
-                    self?.handleError(error)
                 }
             default:
                 break

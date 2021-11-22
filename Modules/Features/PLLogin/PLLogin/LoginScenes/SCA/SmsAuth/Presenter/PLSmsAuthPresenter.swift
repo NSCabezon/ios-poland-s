@@ -14,7 +14,6 @@ import SANPLLibrary
 import PLLegacyAdapter
 import Security
 import os
-//import PLNotifications
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
@@ -48,20 +47,16 @@ final class PLSmsAuthPresenter {
         self.dependenciesResolver.resolve(for: PLAuthenticateInitUseCase.self)
     }
 
-    private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
-        return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
-    }
-    
-    private var authProcessUseCase: PLAuthProcessUseCase {
-        self.dependenciesResolver.resolve(for: PLAuthProcessUseCase.self)
+    private var notificationTokenRegisterProcessGroup: PLNotificationTokenRegisterProcessGroup {
+        return self.dependenciesResolver.resolve(for: PLNotificationTokenRegisterProcessGroup.self)
     }
 
-    private var sessionUseCase: PLSessionUseCase {
-        self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+    private var authProcessGroup: PLAuthProcessGroup {
+        self.dependenciesResolver.resolve(for: PLAuthProcessGroup.self)
     }
 
-    private var notificationGetTokenAndRegisterUseCase: PLGetNotificationTokenAndRegisterUseCase {
-        return self.dependenciesResolver.resolve(for: PLGetNotificationTokenAndRegisterUseCase.self)
+    private var openSessionProcessGroup: PLOpenSessionProcessGroup {
+        self.dependenciesResolver.resolve(for: PLOpenSessionProcessGroup.self)
     }
 }
 
@@ -127,52 +122,46 @@ private extension  PLSmsAuthPresenter {
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
                                completion: nil)
-        
-        let authProcessInput = PLAuthProcessInput(scaCode: smscode,
-                                                  password: password,
-                                                  userId: loginConfiguration.userIdentifier,
-                                                  challenge: loginConfiguration.challenge)
-        authProcessUseCase.execute(input: authProcessInput) { [weak self]  nextSceneResult in
-            guard let self = self else { return }
-            self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants.loginType : "OTP"])
-            switch nextSceneResult.nextScene {
-            case .trustedDeviceScene:
-                self.goToDeviceTrustDeviceData()
-            case .globalPositionScene:
-                self.openSessionAndNavigateToGlobalPosition()
-                self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
+
+        let authProcessInput = PLAuthProcessGroupInput(scaCode: smscode,
+                                                       password: password,
+                                                       userId: loginConfiguration.userIdentifier,
+                                                       challenge: loginConfiguration.challenge)
+
+        authProcessGroup.execute(input: authProcessInput) { result in
+            switch result {
+            case .success(let output):
+                self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants.loginType : "OTP"])
+                switch output.nextScene {
+                case .trustedDeviceScene:
+                    self.goToDeviceTrustDeviceData()
+                case .globalPositionScene:
+                    self.openSessionAndNavigateToGlobalPosition()
+                    self.notificationTokenRegisterProcessGroup.execute { _ in }
+                }
+            case .failure(let error):
+                let httpErrorCode = self.getHttpErrorCode(error.useCaseError) ?? ""
+                self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.useCaseError.getErrorDesc() ?? ""])
+                self.handleError(error.useCaseError)
             }
-        } onFailure: { [weak self]  error in
-            let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-            self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
-            self?.handleError(error)
         }
     }
 
     func openSessionAndNavigateToGlobalPosition() {
-        Scenario(useCase: self.sessionUseCase)
-            .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: { [weak self] _ -> Scenario<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-                guard let self = self else { return nil }
-                return Scenario(useCase: self.globalPositionOptionUseCase)
-            })
-            .onSuccess( { [weak self] output in
-                self?.goToGlobalPosition(output.globalPositionOption)
-                
-            })
-            .onError { [weak self] _ in
-                self?.goToGlobalPosition(.classic)
+        openSessionProcessGroup.execute { [weak self] result in
+            switch result {
+            case .success(let output):
+                self?.coordinator.goToGlobalPositionScene(output.globalPositionOption)
+            case .failure(_):
+                self?.coordinator.goToGlobalPositionScene(.classic)
             }
+        }
     }
     
     func goBack() {
         view?.dismissLoading(completion: { [weak self] in
             self?.coordinator.goToUnrememberedLogindScene()
         })
-    }
-
-    func goToGlobalPosition(_ option: GlobalPositionOptionEntity) {
-        self.coordinator.goToGlobalPositionScene(option)
     }
 }
 

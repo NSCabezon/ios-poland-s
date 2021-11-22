@@ -37,8 +37,9 @@ final class PLHardwareTokenCoordinator: ModuleCoordinator, PLScaAuthCoordinatorP
 private extension PLHardwareTokenCoordinator {
     func setupDependencies() {
         let presenter = PLHardwareTokenPresenter(dependenciesResolver: self.dependenciesEngine)
-        let authProcessUseCase = PLAuthProcessUseCase(dependenciesEngine: self.dependenciesEngine)
-        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
+        let authProcessGroup = PLAuthProcessGroup(dependenciesResolver: self.dependenciesEngine)
+        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesResolver: self.dependenciesEngine)
+        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesResolver: self.dependenciesEngine)
         
         self.dependenciesEngine.register(for: PLScaAuthCoordinatorProtocol.self) { _ in
             return self
@@ -47,9 +48,29 @@ private extension PLHardwareTokenCoordinator {
         self.dependenciesEngine.register(for: PLHardwareTokenPresenterProtocol.self) { resolver in
             return presenter
         }
-           
-        self.dependenciesEngine.register(for: PLAuthProcessUseCase.self) { _ in
-            return authProcessUseCase
+
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+            return PLAuthenticateUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
+           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
+           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
+            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLSessionUseCase.self) { resolver in
+            return PLSessionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLAuthProcessGroup.self) { _ in
+            return authProcessGroup
         }
         
         self.dependenciesEngine.register(for: PLHardwareTokenViewProtocol.self) { dependenciesResolver in
@@ -64,8 +85,16 @@ private extension PLHardwareTokenCoordinator {
             return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
         }
 
-        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
-            return notificationGetTokenAndRegisterUseCase
+        self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
+            return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
+            return notificationTokenRegisterProcessGroup
+        }
+
+        self.dependenciesEngine.register(for: PLOpenSessionProcessGroup.self) { resolver in
+            return openSessionProcessGroup
         }
 
         self.dependenciesEngine.register(for: PLHardwareTokenViewController.self) { resolver in

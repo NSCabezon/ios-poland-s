@@ -58,13 +58,12 @@ private extension PLRememberedLoginPinCoordinator {
         
         let presenter = PLRememberedLoginPinPresenter(dependenciesResolver: self.dependenciesEngine,
                                                       configuration: self.loginConfiguration)
-        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
-        
-        let authProcessUseCase = PLRememberedLoginProcessUseCase(dependenciesEngine: self.dependenciesEngine)
 
-        self.dependenciesEngine.register(for: PLRememberedLoginProcessUseCase.self) { _ in
-            return authProcessUseCase
-        }
+        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesResolver: self.dependenciesEngine)
+
+        let rememeberedLoginProcessGroup = PLRememberedLoginProcessGroup(dependenciesResolver: self.dependenciesEngine)
+
+        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesResolver: self.dependenciesEngine)
         
         self.dependenciesEngine.register(for: PLRememberedLoginPinPresenterProtocol.self) { resolver in
             return presenter
@@ -98,12 +97,44 @@ private extension PLRememberedLoginPinCoordinator {
             return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
         }
 
-        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
-            return notificationGetTokenAndRegisterUseCase
+        self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
+            return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
+            return notificationTokenRegisterProcessGroup
         }
 
         self.dependenciesEngine.register(for: PLRememberedLoginPinCoordinator.self) { _ in
             return self
+        }
+
+        self.dependenciesEngine.register(for: PLOpenSessionProcessGroup.self) { resolver in
+            return openSessionProcessGroup
+        }
+
+        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
+            return PLLoginUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
+           return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLRememberedLoginPendingChallengeUseCase.self) { resolver in
+           return PLRememberedLoginPendingChallengeUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLRememberedLoginConfirmChallengeUseCase.self) { resolver in
+           return PLRememberedLoginConfirmChallengeUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+           return PLAuthenticateUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLRememberedLoginProcessGroup.self) { resolver in
+           return rememeberedLoginProcessGroup
         }
 
         self.dependenciesEngine.register(for: PLRememberedLoginPinViewController.self) { resolver in

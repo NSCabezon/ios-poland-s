@@ -13,75 +13,46 @@ import Repository
 import Models
 import PLCommons
 
-final class PLAuthProcessUseCase {
-    var dependenciesEngine: DependenciesResolver & DependenciesInjector
-    
-    private var onContinue: ((PLGetLoginNextSceneUseCaseOkOutput) -> Void)?
-    private var nextScene = PLGetLoginNextSceneUseCaseOkOutput(nextScene: .globalPositionScene)
+final class PLAuthProcessGroup: ProcessGroup<PLAuthProcessGroupInput, PLAuthProcessGroupOutput, PLAuthProcessGroupError> {
+    private var onContinue: ((Result<PLAuthProcessGroupOutput, PLAuthProcessGroupError>) -> Void)?
+    private var nextScene: PLUnrememberedLoginNextScene = .globalPositionScene
 
     private var persistedPubKeyUseCase: PLGetPersistedPubKeyUseCase {
-        self.dependenciesEngine.resolve(for: PLGetPersistedPubKeyUseCase.self)
+        self.dependenciesResolver.resolve(for: PLGetPersistedPubKeyUseCase.self)
     }
-    
+
     private var authenticateUseCase: PLAuthenticateUseCase {
-        self.dependenciesEngine.resolve(for: PLAuthenticateUseCase.self)
+        self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
     }
-    
+
     private var encryptPasswordUseCase: PLPasswordEncryptionUseCase {
-        self.dependenciesEngine.resolve(for: PLPasswordEncryptionUseCase.self)
+        self.dependenciesResolver.resolve(for: PLPasswordEncryptionUseCase.self)
     }
-    
+
     private var getNextSceneUseCase: PLGetLoginNextSceneUseCase {
-        return self.dependenciesEngine.resolve(for: PLGetLoginNextSceneUseCase.self)
+        return self.dependenciesResolver.resolve(for: PLGetLoginNextSceneUseCase.self)
     }
-    
+
     private var appRepository:AppRepositoryProtocol {
-        self.dependenciesEngine.resolve(for: AppRepositoryProtocol.self)
+        self.dependenciesResolver.resolve(for: AppRepositoryProtocol.self)
     }
-    
+
     private var bsanManagersProvider:BSANManagersProvider  {
-        self.dependenciesEngine.resolve(for: BSANManagersProvider.self)
+        self.dependenciesResolver.resolve(for: BSANManagersProvider.self)
     }
-    
+
     private lazy var sessionDataManager: SessionDataManager = {
-        let manager = self.dependenciesEngine.resolve(for: SessionDataManager.self)
+        let manager = self.dependenciesResolver.resolve(for: SessionDataManager.self)
         manager.setDataManagerProcessDelegate(self)
         return manager
     }()
 
-    public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.dependenciesEngine = dependenciesEngine
-        
-        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
-            return PLAuthenticateUseCase(dependenciesResolver: resolver)
-        }
-        
-        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
-           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
-        }
-        
-        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
-           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
-        }
-        
-        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
-            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
-        }
-        
-        self.dependenciesEngine.register(for: PLSessionUseCase.self) { resolver in
-            return PLSessionUseCase(dependenciesResolver: resolver)
-        }
-    }
-    
-    public func execute(input: PLAuthProcessInput,
-                        onSuccess: @escaping (PLGetLoginNextSceneUseCaseOkOutput) -> Void,
-                        onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
-        
+    override func execute(input: PLAuthProcessGroupInput, completion: @escaping (Result<PLAuthProcessGroupOutput, PLAuthProcessGroupError>) -> Void) {
         let secondFactorAuthentity = SecondFactorDataAuthenticationEntity(challenge: input.challenge,
                                                                           value: input.scaCode)
-        self.onContinue = onSuccess
+        self.onContinue = completion
         Scenario(useCase: self.persistedPubKeyUseCase)
-            .execute(on: self.dependenciesEngine.resolve())
+            .execute(on: self.dependenciesResolver.resolve())
             .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
                 let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)
@@ -95,7 +66,6 @@ final class PLAuthProcessUseCase {
                 let useCaseInput = PLAuthenticateUseCaseInput(encryptedPassword: encryptedPasswordOutput.encryptedPassword,
                                                               userId: input.userId,
                                                               secondFactorData: secondFactorAuthentity)
-                
                 return Scenario(useCase: self.authenticateUseCase, input: useCaseInput)
             })
             .then(scenario: { [weak self] _ -> Scenario<Void, PLGetLoginNextSceneUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
@@ -103,34 +73,38 @@ final class PLAuthProcessUseCase {
                 return Scenario(useCase: self.getNextSceneUseCase)
             })
             .onSuccess({ [weak self] nextSceneResult in
-                self?.nextScene = nextSceneResult
-                self?.storePersistedUser(input: input)
+                guard let self = self else { return }
+                self.nextScene = nextSceneResult.nextScene
+                self.storePersistedUser(input: input)
             })
             .onError { error in
-                onFailure(error)
+                completion(.failure(PLAuthProcessGroupError(useCaseError: error)))
             }
     }
-    
-    private func storePersistedUser(input: PLAuthProcessInput) {
+
+    private func storePersistedUser(input: PLAuthProcessGroupInput) {
         let bsanEnv: BSANEnvironmentDTO?
         do {
             bsanEnv = try self.bsanManagersProvider.getBsanEnvironmentsManager().getCurrentEnvironment().getResponseData()
         } catch {
-            self.onContinue?(self.nextScene)
+            self.onContinue?(.success(PLAuthProcessGroupOutput(nextScene: self.nextScene)))
+            self.onContinue = nil
             return
         }
-        
+
         let dto = PersistedUserDTO.createPersistedUser(loginType: .U, login: input.userId, environmentName: bsanEnv?.name ?? "")
         _ = self.appRepository.setPersistedUserDTO(persistedUserDTO:dto)
         sessionDataManager.load()
     }
 }
 
-extension PLAuthProcessUseCase: SessionDataManagerProcessDelegate {
+extension PLAuthProcessGroup: SessionDataManagerProcessDelegate {
     func handleProcessEvent(_ event: SessionManagerProcessEvent) {
         switch event {
         case .loadDataSuccess, .fail(_):
-            self.onContinue?(self.nextScene)
+            self.onContinue?(.success(PLAuthProcessGroupOutput(nextScene: self.nextScene)))
+            self.onContinue = nil
+
         default:
             break
         }
@@ -138,7 +112,16 @@ extension PLAuthProcessUseCase: SessionDataManagerProcessDelegate {
 }
 
 // MARK: I/O types definition
-struct PLAuthProcessInput {
+struct PLAuthProcessGroupInput {
     let scaCode, password, userId: String
     let challenge: ChallengeEntity
 }
+
+struct PLAuthProcessGroupOutput {
+    let nextScene: PLUnrememberedLoginNextScene
+}
+
+struct PLAuthProcessGroupError: Error {
+    let useCaseError: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>
+}
+

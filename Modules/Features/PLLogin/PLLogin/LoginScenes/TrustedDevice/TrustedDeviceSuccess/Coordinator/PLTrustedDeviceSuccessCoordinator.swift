@@ -40,7 +40,8 @@ extension PLTrustedDeviceSuccessCoordinator: PLTrustedDeviceSuccessCoordinatorPr
 */
 private extension PLTrustedDeviceSuccessCoordinator {
     func setupDependencies() {
-        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
+        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesResolver: self.dependenciesEngine)
+        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesResolver: self.dependenciesEngine)
         self.dependenciesEngine.register(for: PLTrustedDeviceSuccessCoordinatorProtocol.self) { _ in
             return self
         }
@@ -49,8 +50,20 @@ private extension PLTrustedDeviceSuccessCoordinator {
             return PLTrustedDeviceSuccessPresenter(dependenciesResolver: resolver)
         }
 
-        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
-            return notificationGetTokenAndRegisterUseCase
+        self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
+            return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
+            return notificationTokenRegisterProcessGroup
+        }
+
+        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
+            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLOpenSessionProcessGroup.self) { resolver in
+            return openSessionProcessGroup
         }
 
         self.dependenciesEngine.register(for: PLTrustedDeviceSuccessViewController.self) { resolver in

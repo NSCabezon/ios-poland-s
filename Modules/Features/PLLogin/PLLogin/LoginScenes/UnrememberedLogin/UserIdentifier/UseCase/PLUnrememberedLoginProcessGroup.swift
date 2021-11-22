@@ -9,54 +9,36 @@ import Foundation
 import Commons
 import PLCommons
 
-final class PLLoginProcessUseCase {
-    
-    var dependenciesEngine: DependenciesResolver & DependenciesInjector
-    
+final class PLUnrememberedLoginProcessGroup: ProcessGroup <PLUnrememberedLoginProcessGroupInput, PLUnrememberedLoginProcessGroupOutput, PLUnrememberedLoginProcessGroupError> {
+
     private var loginUseCase: PLLoginUseCase {
-        self.dependenciesEngine.resolve(for: PLLoginUseCase.self)
+        self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
     }
-    
+
     private var getPublicKeyUseCase: PLGetPublicKeyUseCase {
-        self.dependenciesEngine.resolve(for: PLGetPublicKeyUseCase.self)
+        self.dependenciesResolver.resolve(for: PLGetPublicKeyUseCase.self)
     }
 
     private var challengeSelectionUseCase: PLLoginChallengeSelectionUseCase {
-        self.dependenciesEngine.resolve(for: PLLoginChallengeSelectionUseCase.self)
+        self.dependenciesResolver.resolve(for: PLLoginChallengeSelectionUseCase.self)
     }
-    
+
     private var setDemoUserUseCase: PLSetDemoUserUseCase {
-        return PLSetDemoUserUseCase(dependenciesResolver: self.dependenciesEngine)
+        self.dependenciesResolver.resolve(for: PLSetDemoUserUseCase.self)
     }
-    
-    public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.dependenciesEngine = dependenciesEngine
-        
-        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
-            return PLLoginUseCase(dependenciesResolver: resolver)
-        }
-        
-        self.dependenciesEngine.register(for: PLGetPublicKeyUseCase.self) { resolver in
-            return PLGetPublicKeyUseCase(dependenciesResolver: resolver)
-        }
 
-        self.dependenciesEngine.register(for: PLLoginChallengeSelectionUseCase.self) { resolver in
-            return PLLoginChallengeSelectionUseCase(dependenciesResolver: resolver)
-        }
-    }
-    
-    public func executeNonPersistedLogin(identification: String,
-                        onSuccess: @escaping (UnrememberedLoginConfiguration?) -> Void,
-                        onFailure: @escaping (UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> Void) {
+    override func execute(input: PLUnrememberedLoginProcessGroupInput,
+                          completion: @escaping (Result<PLUnrememberedLoginProcessGroupOutput, PLUnrememberedLoginProcessGroupError>) -> Void) {
 
-        let identifierType = self.getIdentifierType(identification)
+        let identifierType = self.getIdentifierType(input.identification)
+        let identification = input.identification
         var configuration: UnrememberedLoginConfiguration? = nil
         var challengeUseCaseOutput:PLLoginUseCaseOkOutput? = nil
-        let demoUserInput = PLSetDemoUserUseCaseInput(userId: identification)
+        let demoUserInput = PLSetDemoUserUseCaseInput(userId: input.identification)
         var isDemoUser: Bool = false
 
         Scenario(useCase: setDemoUserUseCase, input: demoUserInput)
-            .execute(on: self.dependenciesEngine.resolve())
+            .execute(on: self.dependenciesResolver.resolve())
             .then(scenario: { (output) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let caseInput: PLLoginUseCaseInput
                 switch identifierType {
@@ -94,17 +76,23 @@ final class PLLoginProcessUseCase {
                 return Scenario(useCase: self.getPublicKeyUseCase)
             })
             .onSuccess { _ in
-                onSuccess(configuration)
+                guard let configuration = configuration else { return }
+                completion(.success(PLUnrememberedLoginProcessGroupOutput(configuration: configuration)))
             }
             .onError { error in
-                onFailure(error)
+                completion(.failure(PLUnrememberedLoginProcessGroupError(error: error)))
             }
         }
 }
 
-private extension PLLoginProcessUseCase {
-    
-    func getIdentifierType(_ identifier: String) -> UserIdentifierType {
+private extension PLUnrememberedLoginProcessGroup {
+
+    enum PLUserIdentifierType {
+        case nik
+        case alias
+    }
+
+    func getIdentifierType(_ identifier: String) -> PLUserIdentifierType {
         let characters = CharacterSet.decimalDigits.inverted
         if !identifier.isEmpty && identifier.rangeOfCharacter(from: characters) == nil && identifier.count == 8 {
             return .nik
@@ -114,7 +102,14 @@ private extension PLLoginProcessUseCase {
     }
 }
 
-public enum UserIdentifierType {
-    case nik
-    case alias
+public struct PLUnrememberedLoginProcessGroupInput {
+    let identification: String
+}
+
+public struct PLUnrememberedLoginProcessGroupOutput {
+    let configuration: UnrememberedLoginConfiguration
+}
+
+public struct PLUnrememberedLoginProcessGroupError: Error {
+    let error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>
 }
