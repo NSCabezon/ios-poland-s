@@ -23,7 +23,7 @@ final class AliasDateChangePresenter: AliasDateChangePresenterProtocol {
         dependenciesResolver.resolve()
     }
     
-    private var coordinator: AliasDateChangeCoordinator {
+    private var coordinator: AliasDateChangeCoordinatorProtocol {
         dependenciesResolver.resolve()
     }
     

@@ -94,4 +94,13 @@ struct BLIKTransactionViewModel {
             return nil
         }
     }
+    
+    var shouldShowAliasTransferInfoBanner: Bool {
+        switch transaction.aliasContext {
+        case .transactionWasPerformedWithAlias:
+            return true
+        case .none, .receivedAliasProposal:
+            return false
+        }
+    }
 }

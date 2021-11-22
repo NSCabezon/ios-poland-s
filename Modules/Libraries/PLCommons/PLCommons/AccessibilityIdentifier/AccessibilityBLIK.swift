@@ -37,6 +37,7 @@ public enum AccessibilityBLIK {
         case itemTransferType
         case itemAddress
         case itemDate
+        case aliasLabel
     }
     
     // MARK: - BLIK transaction - summary

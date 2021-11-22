@@ -83,7 +83,11 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
     }
     
     func showAliasPayment() {
-        //TODO: Implement feature
+        let coordinator = AliasListSettingsCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController
+        )
+        coordinator.start()
     }
 }
 
