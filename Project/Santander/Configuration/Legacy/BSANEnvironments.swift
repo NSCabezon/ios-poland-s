@@ -34,7 +34,7 @@ public struct BSANEnvironments {
         
         enum UAT {
             static let name = "UAT"
-            static let endpoint = "https://pluton2.centrum24.pl//omni/oneapp"
+            static let endpoint = "https://pluton2.centrum24.pl/omni/oneapp"
             static let blikAuthBaseUrl = "https://pluton2.centrum24.pl/centrum24-rest"
             static let restOauthClientId = ""
         }
