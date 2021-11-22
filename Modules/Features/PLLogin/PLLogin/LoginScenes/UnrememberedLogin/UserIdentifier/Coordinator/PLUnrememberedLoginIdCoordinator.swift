@@ -69,6 +69,10 @@ private extension PLUnrememberedLoginIdCoordinator {
             return self
         }
 
+        self.dependenciesEngine.register(for: PLLoginPullOfferLoader.self) { _ in
+            return PLLoginPullOfferLoader(dependenciesEngine: self.dependenciesEngine)
+        }
+
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdPresenterProtocol.self) { resolver in
             return presenter
         }
