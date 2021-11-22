@@ -81,29 +81,15 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput) throws -> Result<ValidateAccountTransferRepresentable, Error> {
-        // TODO: Ñapa-patch, waiting for refactor in next pr
-        let falseDto = ValidateAccountTransferDTO(
-            transferNationalDTO: TransferNationalDTO(
-                scaRepresentable: SignatureDTO()
-            )
-        )
-        return .success(falseDto)
+        return .failure(ServiceError.unknown)
     }
     
     func validateDeferredTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
-        // TODO: Ñapa-patch, waiting for refactor in next pr
-        let falseDto = ValidateScheduledTransferDTO(
-            scaRepresentable: SignatureDTO()
-        )
-        return .success(falseDto)
+        return .failure(ServiceError.unknown)
     }
     
     func validatePeriodicTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
-        // TODO: Ñapa-patch, waiting for refactor in next pr
-        let falseDto = ValidateScheduledTransferDTO(
-            scaRepresentable: SignatureDTO()
-        )
-        return .success(falseDto)
+        return .failure(ServiceError.unknown)
     }
     
     func validateGenericTransferOTP(originAccount: AccountRepresentable, nationalTransferInput: NationalTransferInputRepresentable, signature: SignatureRepresentable) throws -> Result<OTPValidationRepresentable, Error> {
