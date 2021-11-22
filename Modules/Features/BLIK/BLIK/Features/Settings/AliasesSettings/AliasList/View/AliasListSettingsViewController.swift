@@ -183,20 +183,8 @@ private extension AliasListSettingsViewController {
     
     func showTooltip(from sender: UIView) {
         let navigationToolTip = NavigationToolTip()
-        navigationToolTip.add(title: .plain(text: "#Zakupy bez kodu"))
-        navigationToolTip.add(description: .plain(text:
-        """
-        #Możesz płacić BLIKIEM bez wpisywania kodu, ponieważ zapamiętujemy dane, jakich używasz podczas płacenia.
-                                
-        Zapamiętanie przeglądarki pozwoli Ci płacić za zakupy w różnych sklepach internetowych bez wprowadzania kodu BLIK.
-
-        Zapamiętanie web-cookie przeglądarki pozwoli Ci płacić bez kodu w każdym sklepie, który odwiedzasz, korzystając z tej przeglądarki.
-
-        Zapamiętanie sprzedawcy oznacza, że gdy zalogujesz się do swojego konta w sklepie internetowym, będziesz płacić za zakupy w tym samym sklepie bez kodu, niezależnie od tego, z jakich przeglądarek i urządzeń korzystasz.
-
-        Zapamiętanie urządzenia oznacza, że będziesz płacić za zakupy w różnych aplikacjach sklepów internetowych zainstalowanych na twoim urządzeniu mobilnym.
-        """)
-        )
+        navigationToolTip.add(title: .plain(text: localized("pl_blik_title_withoutCode")))
+        navigationToolTip.add(description: .plain(text: localized("pl_blik_text_tooltipWithoutCode")))
         navigationToolTip.show(in: self, from: sender)
     }
 }
