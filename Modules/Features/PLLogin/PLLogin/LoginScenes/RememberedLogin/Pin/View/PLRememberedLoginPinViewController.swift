@@ -13,7 +13,7 @@ import SANLegacyLibrary
 import PLUI
 import Models
 
-protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable {
+protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func showDialog(_ type: PLRememberedLoginDialogType)
     func setUserName(_ name: String)
     func tryPinAuth()
@@ -52,6 +52,7 @@ final class PLRememberedLoginPinViewController: UIViewController {
     @IBOutlet private weak var biometryBigImage: UIImageView!
     @IBOutlet private weak var biometryBigLabel: UILabel!
     @IBOutlet private weak var blikButton: UIButton!
+    @IBOutlet weak var environmentButton: UIButton?
 
     private enum Constants {
         static let maxNumberOfDigits = 4
@@ -74,12 +75,14 @@ final class PLRememberedLoginPinViewController: UIViewController {
         self.setupLabels()
         self.setupButtons()
         self.setupBiometry()
+        self.setupEnvironmentButton()
         self.presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNavigationBar()
+        self.presenter.viewWillAppear()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -240,6 +243,17 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
 }
 
 extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewControllerProtocol {
+
+    func didUpdateEnvironments() {
+    }
+    
+    @IBAction func didSelectChooseEnvironment(_ sender: Any) {
+        self.chooseEnvironment()
+    }
+    
+    func chooseEnvironment() {
+        self.presenter.didSelectChooseEnvironment()
+    }
     
     func applicationDidBecomeActive(for biometryType: BiometryTypeEntity) {
         switch biometryType {

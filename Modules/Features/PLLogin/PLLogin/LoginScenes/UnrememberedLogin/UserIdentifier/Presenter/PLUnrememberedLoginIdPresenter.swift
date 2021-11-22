@@ -49,8 +49,8 @@ final class PLUnrememberedLoginIdPresenter {
         return self.dependenciesResolver.resolve(for: PublicFilesManagerProtocol.self)
     }
     
-    private lazy var loginPLPullOfferLayer: LoginPLPullOfferLayer = {
-        return self.dependenciesResolver.resolve(for: LoginPLPullOfferLayer.self)
+    private lazy var loginPullOfferLoader: PLLoginPullOfferLoader = {
+        return self.dependenciesResolver.resolve(for: PLLoginPullOfferLoader.self)
     }()
         
     deinit {
@@ -136,11 +136,9 @@ private extension  PLUnrememberedLoginIdPresenter {
     }
     
     func getCurrentEnvironments() {
-        MainThreadUseCaseWrapper(
-            with: self.getPLCurrentEnvironmentUseCase,
-            onSuccess: { [weak self] result in
-                self?.didLoadEnvironment(result.bsanEnvironment,
-                                         publicFilesEnvironment: result.publicFilesEnvironment)
+        Scenario(useCase: self.getPLCurrentEnvironmentUseCase).execute(on: self.dependenciesResolver.resolve())
+        .onSuccess( { [weak self] result in
+            self?.didLoadEnvironment(result.bsanEnvironment, publicFilesEnvironment: result.publicFilesEnvironment)
         })
     }
     
@@ -151,7 +149,7 @@ private extension  PLUnrememberedLoginIdPresenter {
     
     func loadData() {
         self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
-            self?.loginPLPullOfferLayer.loadPullOffers()
+            self?.loginPullOfferLoader.loadPullOffers()
         }
     }
     

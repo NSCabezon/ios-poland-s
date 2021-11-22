@@ -104,7 +104,11 @@ private extension PLRememberedLoginPinCoordinator {
         self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
             return notificationTokenRegisterProcessGroup
         }
-
+        
+        self.dependenciesEngine.register(for: PLLoginPullOfferLoader.self) { _ in
+            return PLLoginPullOfferLoader(dependenciesEngine: self.dependenciesEngine)
+        }
+        
         self.dependenciesEngine.register(for: PLRememberedLoginPinCoordinator.self) { _ in
             return self
         }

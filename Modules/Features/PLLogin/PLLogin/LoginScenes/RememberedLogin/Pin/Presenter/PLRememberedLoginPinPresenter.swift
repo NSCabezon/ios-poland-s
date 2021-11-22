@@ -17,6 +17,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
     var loginConfiguration:RememberedLoginConfiguration { get set }
     func viewDidLoad()
+    func viewWillAppear()
     func viewDidAppear()
     func doLogin(with accessType: AccessType)
     func didSelectBalance()
@@ -27,6 +28,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func startBiometricAuth()
     func trackView()
     func trackChangeLoginTypeButton()
+    func didSelectChooseEnvironment()
 }
 
 final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
@@ -52,6 +54,20 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
         return self.dependenciesResolver.resolve(for: PLNotificationTokenRegisterProcessGroup.self)
     }
     
+    private var publicFilesManager: PublicFilesManagerProtocol {
+        return self.dependenciesResolver.resolve(for: PublicFilesManagerProtocol.self)
+    }
+    
+    private var getPLCurrentEnvironmentUseCase: GetPLCurrentEnvironmentUseCase {
+        self.dependenciesResolver.resolve(for: GetPLCurrentEnvironmentUseCase.self)
+    }
+    
+    private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
+    
+    private lazy var loginPullOfferLoader: PLLoginPullOfferLoader = {
+        return self.dependenciesResolver.resolve(for: PLLoginPullOfferLoader.self)
+    }()
+    
     var coordinator: PLRememberedLoginPinCoordinator {
         return self.dependenciesResolver.resolve(for: PLRememberedLoginPinCoordinator.self)
     }
@@ -64,7 +80,12 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
 }
 
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
-
+    func didSelectChooseEnvironment() {
+        self.coordinatorDelegate.goToEnvironmentsSelector { [weak self] in
+            self?.chooseEnvironment()
+        }
+    }
+    
     func trackView() {
         self.trackScreen()
     }
@@ -192,7 +213,12 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     
     func viewDidLoad() {
         self.trackScreen()
+        self.loadData()
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    func viewWillAppear() {
+        self.getCurrentEnvironments()
     }
     
     func viewDidAppear() {
@@ -244,6 +270,31 @@ private extension PLRememberedLoginPinPresenter {
         safetyCurtainSafeguardEventDidFinish()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.doLogin(with: .biometrics)
+        }
+    }
+    
+    func chooseEnvironment() {
+        self.publicFilesManager.loadPublicFiles(withStrategy: .reload, timeout: 5)
+        self.getCurrentEnvironments()
+    }
+    
+    func getCurrentEnvironments() {
+        Scenario(useCase: self.getPLCurrentEnvironmentUseCase).execute(on: self.dependenciesResolver.resolve())
+        .onSuccess( { [weak self] result in
+            self?.didLoadEnvironment(result.bsanEnvironment, publicFilesEnvironment: result.publicFilesEnvironment)
+        })
+    }
+    
+    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
+        self.publicFilesEnvironment = publicFilesEnvironment
+        let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
+        let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
+        self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
+    }
+    
+    func loadData() {
+        self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
+            self?.loginPullOfferLoader.loadPullOffers()
         }
     }
     
