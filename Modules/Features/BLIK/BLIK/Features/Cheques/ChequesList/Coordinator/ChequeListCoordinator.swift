@@ -78,7 +78,10 @@ extension ChequesCoordinator: ChequesCoordinatorProtocol {
     public func showChequePIN(didSetPin: @escaping () -> Void) {
         let controller = chequesPinFactory.create(
             coordinator: self,
-            didSetPin: didSetPin
+            didSetPin: { [weak self] in
+                self?.showSetPinSuccessAlert()
+                didSetPin()
+            }
         )
         self.navigationController?.pushViewController(controller, animated: true)
     }
