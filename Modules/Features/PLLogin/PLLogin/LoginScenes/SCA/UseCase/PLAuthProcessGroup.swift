@@ -18,27 +18,45 @@ final class PLAuthProcessGroup: ProcessGroup<PLAuthProcessGroupInput, PLAuthProc
     private var nextScene: PLUnrememberedLoginNextScene = .globalPositionScene
 
     private var persistedPubKeyUseCase: PLGetPersistedPubKeyUseCase {
-        self.dependenciesResolver.resolve(for: PLGetPersistedPubKeyUseCase.self)
+        self.dependenciesEngine.resolve(for: PLGetPersistedPubKeyUseCase.self)
     }
 
     private var authenticateUseCase: PLAuthenticateUseCase {
-        self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
+        self.dependenciesEngine.resolve(for: PLAuthenticateUseCase.self)
     }
 
     private var encryptPasswordUseCase: PLPasswordEncryptionUseCase {
-        self.dependenciesResolver.resolve(for: PLPasswordEncryptionUseCase.self)
+        self.dependenciesEngine.resolve(for: PLPasswordEncryptionUseCase.self)
     }
 
     private var getNextSceneUseCase: PLGetLoginNextSceneUseCase {
-        return self.dependenciesResolver.resolve(for: PLGetLoginNextSceneUseCase.self)
+        return self.dependenciesEngine.resolve(for: PLGetLoginNextSceneUseCase.self)
     }
 
     private var appRepository:AppRepositoryProtocol {
-        self.dependenciesResolver.resolve(for: AppRepositoryProtocol.self)
+        self.dependenciesEngine.resolve(for: AppRepositoryProtocol.self)
     }
 
     private var bsanManagersProvider:BSANManagersProvider  {
-        self.dependenciesResolver.resolve(for: BSANManagersProvider.self)
+        self.dependenciesEngine.resolve(for: BSANManagersProvider.self)
+    }
+
+    override func registerDependencies() {
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+            return PLAuthenticateUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
+           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
+           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
+            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
+        }
     }
 
     override func execute(input: PLAuthProcessGroupInput, completion: @escaping (Result<PLAuthProcessGroupOutput, PLAuthProcessGroupError>) -> Void) {
@@ -46,7 +64,7 @@ final class PLAuthProcessGroup: ProcessGroup<PLAuthProcessGroupInput, PLAuthProc
                                                                           value: input.scaCode)
         self.onContinue = completion
         Scenario(useCase: self.persistedPubKeyUseCase)
-            .execute(on: self.dependenciesResolver.resolve())
+            .execute(on: self.dependenciesEngine.resolve())
             .then(scenario: {  [weak self] (pubKeyOutput) -> Scenario<PLPasswordEncryptionUseCaseInput, PLPasswordEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
                 let encrytionKey = EncryptionKeyEntity(modulus: pubKeyOutput.modulus, exponent: pubKeyOutput.exponent)

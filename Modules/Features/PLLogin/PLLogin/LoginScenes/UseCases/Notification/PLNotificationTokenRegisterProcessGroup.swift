@@ -19,11 +19,17 @@ final class PLNotificationTokenRegisterProcessGroup: ProcessGroup<Void, Void, PL
     }
 
     private var notificationsHandler: NotificationsHandlerProtocol {
-        return self.dependenciesResolver.resolve(for: NotificationsHandlerProtocol.self)
+        return self.dependenciesEngine.resolve(for: NotificationsHandlerProtocol.self)
     }
 
     private var notificationRegisterUseCase: PLNotificationRegisterUseCase {
-        return self.dependenciesResolver.resolve(for: PLNotificationRegisterUseCase.self)
+        return self.dependenciesEngine.resolve(for: PLNotificationRegisterUseCase.self)
+    }
+
+    override func registerDependencies() {
+        self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
+            return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
+        }
     }
 
     override func execute(completion: @escaping (Result<Void, PLNotificationTokenRegisterProcessGroupError>) -> Void) {
@@ -31,7 +37,7 @@ final class PLNotificationTokenRegisterProcessGroup: ProcessGroup<Void, Void, PL
             guard let token = token else { return }
             let input = PLNotificationRegisterUseCaseInput(notificationToken: token)
             Scenario(useCase: self.notificationRegisterUseCase, input: input)
-                .execute(on: self.dependenciesResolver.resolve())
+                .execute(on: self.dependenciesEngine.resolve())
                 .onSuccess { _ in
                     os_log("[LOGIN][Notification token registering] Registered Firebase token %@", log: .default, type: .info, token)
                 }.onError { _ in

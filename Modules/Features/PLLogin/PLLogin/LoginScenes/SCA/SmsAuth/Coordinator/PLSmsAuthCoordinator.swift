@@ -37,9 +37,9 @@ final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtoco
 private extension PLSmsAuthCoordinator {
     func setupDependencies() {
         let presenter = PLSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
-        let authProcessGroup = PLAuthProcessGroup(dependenciesResolver: self.dependenciesEngine)
-        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesResolver: self.dependenciesEngine)
-        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesResolver: self.dependenciesEngine)
+        let authProcessGroup = PLAuthProcessGroup(dependenciesEngine: self.dependenciesEngine)
+        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesEngine: self.dependenciesEngine)
+        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesEngine: self.dependenciesEngine)
 
         self.dependenciesEngine.register(for: PLScaAuthCoordinatorProtocol.self) { _ in
             return self
@@ -78,30 +78,6 @@ private extension PLSmsAuthCoordinator {
         
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
            return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
-        }
-        
-        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
-            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
-        }
-
-        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
-            return PLAuthenticateUseCase(dependenciesResolver: resolver)
-        }
-
-        self.dependenciesEngine.register(for: PLPasswordEncryptionUseCase.self) { resolver in
-           return PLPasswordEncryptionUseCase(dependenciesResolver: resolver)
-        }
-
-        self.dependenciesEngine.register(for: PLGetPersistedPubKeyUseCase.self) { resolver in
-           return PLGetPersistedPubKeyUseCase(dependenciesResolver: resolver)
-        }
-
-        self.dependenciesEngine.register(for: PLGetLoginNextSceneUseCase.self) { resolver in
-            return PLGetLoginNextSceneUseCase(dependenciesResolver: resolver)
-        }
-
-        self.dependenciesEngine.register(for: PLSessionUseCase.self) { resolver in
-            return PLSessionUseCase(dependenciesResolver: resolver)
         }
 
         self.dependenciesEngine.register(for: PLAuthProcessGroup.self) { resolver in

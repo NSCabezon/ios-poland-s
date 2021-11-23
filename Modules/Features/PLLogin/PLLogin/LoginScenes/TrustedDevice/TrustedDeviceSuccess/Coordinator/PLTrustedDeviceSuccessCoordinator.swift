@@ -40,8 +40,8 @@ extension PLTrustedDeviceSuccessCoordinator: PLTrustedDeviceSuccessCoordinatorPr
 */
 private extension PLTrustedDeviceSuccessCoordinator {
     func setupDependencies() {
-        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesResolver: self.dependenciesEngine)
-        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesResolver: self.dependenciesEngine)
+        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesEngine: self.dependenciesEngine)
+        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesEngine: self.dependenciesEngine)
         self.dependenciesEngine.register(for: PLTrustedDeviceSuccessCoordinatorProtocol.self) { _ in
             return self
         }
@@ -56,10 +56,6 @@ private extension PLTrustedDeviceSuccessCoordinator {
 
         self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
             return notificationTokenRegisterProcessGroup
-        }
-
-        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
-            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
         }
 
         self.dependenciesEngine.register(for: PLOpenSessionProcessGroup.self) { resolver in

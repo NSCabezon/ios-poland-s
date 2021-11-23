@@ -13,15 +13,24 @@ import Models
 final class PLOpenSessionProcessGroup: ProcessGroup<Void, PLOpenSessionProcessGroupOutput, PLOpenSessionProcessGroupError> {
 
     private var sessionUseCase: PLSessionUseCase {
-        self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+        self.dependenciesEngine.resolve(for: PLSessionUseCase.self)
     }
 
     private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
-        return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
+        return self.dependenciesEngine.resolve(for: PLGetGlobalPositionOptionUseCase.self)
+    }
+
+    override func registerDependencies() {
+        self.dependenciesEngine.register(for: PLSessionUseCase.self) { resolver in
+            return PLSessionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
+            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+        }
     }
 
     private lazy var sessionDataManager: SessionDataManager = {
-        let manager = self.dependenciesResolver.resolve(for: SessionDataManager.self)
+        let manager = self.dependenciesEngine.resolve(for: SessionDataManager.self)
         manager.setDataManagerProcessDelegate(self)
         return manager
     }()
@@ -33,7 +42,7 @@ final class PLOpenSessionProcessGroup: ProcessGroup<Void, PLOpenSessionProcessGr
     override func execute(completion: @escaping (Result<PLOpenSessionProcessGroupOutput, PLOpenSessionProcessGroupError>) -> Void) {
         self.onContinue = completion
         Scenario(useCase: self.sessionUseCase)
-            .execute(on: self.dependenciesResolver.resolve())
+            .execute(on: self.dependenciesEngine.resolve())
             .then(scenario: { [weak self] _ -> Scenario<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
                 return Scenario(useCase: self.globalPositionOptionUseCase)

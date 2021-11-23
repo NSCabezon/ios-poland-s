@@ -15,39 +15,69 @@ import DomainCommon
 final class PLRememberedLoginProcessGroup: ProcessGroup <PLRememberedLoginProcessGroupInput, PLRememberedLoginProcessGroupOutput, PLRememberedLoginProcessGroupError> {
 
     private var loginUseCase: PLLoginUseCase {
-        self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
+        self.dependenciesEngine.resolve(for: PLLoginUseCase.self)
     }
 
     private var authenticateInitUseCase: PLAuthenticateInitUseCase {
-        self.dependenciesResolver.resolve(for: PLAuthenticateInitUseCase.self)
+        self.dependenciesEngine.resolve(for: PLAuthenticateInitUseCase.self)
     }
 
     private var pendingChallengeUseCase: PLRememberedLoginPendingChallengeUseCase {
-        self.dependenciesResolver.resolve(for: PLRememberedLoginPendingChallengeUseCase.self)
+        self.dependenciesEngine.resolve(for: PLRememberedLoginPendingChallengeUseCase.self)
     }
 
     private var confirmChallengeUseCase: PLRememberedLoginConfirmChallengeUseCase {
-        self.dependenciesResolver.resolve(for: PLRememberedLoginConfirmChallengeUseCase.self)
+        self.dependenciesEngine.resolve(for: PLRememberedLoginConfirmChallengeUseCase.self)
     }
 
     private var authenticateUseCase: PLAuthenticateUseCase {
-        self.dependenciesResolver.resolve(for: PLAuthenticateUseCase.self)
+        self.dependenciesEngine.resolve(for: PLAuthenticateUseCase.self)
     }
 
     private var getCertificateUseCase: PLGetSecIdentityUseCase<LoginErrorType> {
-        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase<LoginErrorType>.self)
+        self.dependenciesEngine.resolve(for: PLGetSecIdentityUseCase<LoginErrorType>.self)
     }
 
     private var getStoredUserKey: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType> {
-        self.dependenciesResolver.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>.self)
+        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>.self)
     }
 
     private var getStoredTrustedDeviceHeaders: PLTrustedDeviceGetHeadersUseCase<LoginErrorType> {
-        self.dependenciesResolver.resolve(for: PLTrustedDeviceGetHeadersUseCase<LoginErrorType>.self)
+        self.dependenciesEngine.resolve(for: PLTrustedDeviceGetHeadersUseCase<LoginErrorType>.self)
     }
 
     private var authorizationDataEncryptionUseCase: PLAuthorizationDataEncryptionUseCase<LoginErrorType> {
-        self.dependenciesResolver.resolve(for: PLAuthorizationDataEncryptionUseCase<LoginErrorType>.self)
+        self.dependenciesEngine.resolve(for: PLAuthorizationDataEncryptionUseCase<LoginErrorType>.self)
+    }
+
+    override func registerDependencies() {
+        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
+            return PLLoginUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
+            return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLRememberedLoginPendingChallengeUseCase.self) { resolver in
+            return PLRememberedLoginPendingChallengeUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLRememberedLoginConfirmChallengeUseCase.self) { resolver in
+            return PLRememberedLoginConfirmChallengeUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLAuthenticateUseCase.self) { resolver in
+            return PLAuthenticateUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLGetSecIdentityUseCase<LoginErrorType>.self) {_  in
+            return PLGetSecIdentityUseCase<LoginErrorType>()
+        }
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>.self) { resolver in
+            return PLTrustedDeviceGetStoredEncryptedUserKeyUseCase<LoginErrorType>(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLTrustedDeviceGetHeadersUseCase<LoginErrorType>.self) { resolver in
+            return PLTrustedDeviceGetHeadersUseCase<LoginErrorType>(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLAuthorizationDataEncryptionUseCase<LoginErrorType>.self) { resolver in
+            return PLAuthorizationDataEncryptionUseCase<LoginErrorType>(dependenciesResolver: resolver)
+        }
     }
 
     override func execute(input: PLRememberedLoginProcessGroupInput,
@@ -57,7 +87,7 @@ final class PLRememberedLoginProcessGroup: ProcessGroup <PLRememberedLoginProces
         let identification = input.configuration.userIdentifier
         let caseInput = PLLoginUseCaseInput(userId: identification, userAlias: nil)
         Scenario(useCase: loginUseCase, input: caseInput)
-            .execute(on: self.dependenciesResolver.resolve())
+            .execute(on: self.dependenciesEngine.resolve())
             .then(scenario: { [weak self] output ->Scenario<PLAuthenticateInitUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>? in
                 guard let self = self else { return nil }
                 input.configuration.challenge = output.secondFactorData.defaultChallenge
@@ -166,7 +196,7 @@ final class PLRememberedLoginProcessGroup: ProcessGroup <PLRememberedLoginProces
                 guard let self = self else { return }
                 guard input.configuration.isDemoUser == false else { return }
                 if let authType = input.configuration.challenge?.authorizationType, authType != .softwareToken {
-                    let manager: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+                    let manager: PLManagersProviderProtocol = self.dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
                     manager.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
                 }
             }

@@ -20,13 +20,14 @@ public protocol ProcessGroupProtocol {
 
 open class ProcessGroup <ProcessGroupInput, ProcessGroupOutput, ProcessGroupError: Error>: ProcessGroupProtocol {
 
-    public let dependenciesResolver: DependenciesResolver
+    public let dependenciesEngine: DependenciesResolver & DependenciesInjector
 
-    public init(dependenciesResolver: DependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
+    public init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
+        self.dependenciesEngine = dependenciesEngine
+        self.registerDependencies()
     }
 
+    open func registerDependencies() { }
     open func execute(input: ProcessGroupInput, completion: @escaping (Result<ProcessGroupOutput, ProcessGroupError>) -> Void) { }
-
     open func execute(completion: @escaping (Result<ProcessGroupOutput, ProcessGroupError>) -> Void) { }
 }

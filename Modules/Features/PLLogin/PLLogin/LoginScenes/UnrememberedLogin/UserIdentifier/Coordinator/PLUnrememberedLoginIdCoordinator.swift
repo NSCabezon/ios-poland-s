@@ -63,7 +63,7 @@ extension PLUnrememberedLoginIdCoordinator: PLUnrememberedLoginIdCoordinatorProt
 private extension PLUnrememberedLoginIdCoordinator {
     func setupDependencies() {
         let presenter = PLUnrememberedLoginIdPresenter(dependenciesResolver: self.dependenciesEngine)
-        let unrememberedLoginProcessGroup = PLUnrememberedLoginProcessGroup(dependenciesResolver: self.dependenciesEngine)
+        let unrememberedLoginProcessGroup = PLUnrememberedLoginProcessGroup(dependenciesEngine: self.dependenciesEngine)
         
         self.dependenciesEngine.register(for: PLUnrememberedLoginIdCoordinatorProtocol.self) { _ in
             return self
@@ -116,18 +116,6 @@ private extension PLUnrememberedLoginIdCoordinator {
         }
         self.dependenciesEngine.register(for: CalculateLocationsUseCase.self) { resolver in
            return CalculateLocationsUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
-            return PLLoginUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: PLGetPublicKeyUseCase.self) { resolver in
-            return PLGetPublicKeyUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: PLLoginChallengeSelectionUseCase.self) { resolver in
-            return PLLoginChallengeSelectionUseCase(dependenciesResolver: resolver)
-        }
-        self.dependenciesEngine.register(for: PLSetDemoUserUseCase.self) { resolver in
-            return PLSetDemoUserUseCase(dependenciesResolver: resolver)
         }
         self.dependenciesEngine.register(for: PLUnrememberedLoginProcessGroup.self) { _ in
             return unrememberedLoginProcessGroup

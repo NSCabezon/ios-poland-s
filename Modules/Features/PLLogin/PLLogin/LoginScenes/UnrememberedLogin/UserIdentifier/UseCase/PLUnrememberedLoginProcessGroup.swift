@@ -12,19 +12,34 @@ import PLCommons
 final class PLUnrememberedLoginProcessGroup: ProcessGroup <PLUnrememberedLoginProcessGroupInput, PLUnrememberedLoginProcessGroupOutput, PLUnrememberedLoginProcessGroupError> {
 
     private var loginUseCase: PLLoginUseCase {
-        self.dependenciesResolver.resolve(for: PLLoginUseCase.self)
+        self.dependenciesEngine.resolve(for: PLLoginUseCase.self)
     }
 
     private var getPublicKeyUseCase: PLGetPublicKeyUseCase {
-        self.dependenciesResolver.resolve(for: PLGetPublicKeyUseCase.self)
+        self.dependenciesEngine.resolve(for: PLGetPublicKeyUseCase.self)
     }
 
     private var challengeSelectionUseCase: PLLoginChallengeSelectionUseCase {
-        self.dependenciesResolver.resolve(for: PLLoginChallengeSelectionUseCase.self)
+        self.dependenciesEngine.resolve(for: PLLoginChallengeSelectionUseCase.self)
     }
 
     private var setDemoUserUseCase: PLSetDemoUserUseCase {
-        self.dependenciesResolver.resolve(for: PLSetDemoUserUseCase.self)
+        self.dependenciesEngine.resolve(for: PLSetDemoUserUseCase.self)
+    }
+
+    override func registerDependencies() {
+        self.dependenciesEngine.register(for: PLLoginUseCase.self) { resolver in
+            return PLLoginUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLGetPublicKeyUseCase.self) { resolver in
+            return PLGetPublicKeyUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLLoginChallengeSelectionUseCase.self) { resolver in
+            return PLLoginChallengeSelectionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLSetDemoUserUseCase.self) { resolver in
+            return PLSetDemoUserUseCase(dependenciesResolver: resolver)
+        }
     }
 
     override func execute(input: PLUnrememberedLoginProcessGroupInput,
@@ -38,7 +53,7 @@ final class PLUnrememberedLoginProcessGroup: ProcessGroup <PLUnrememberedLoginPr
         var isDemoUser: Bool = false
 
         Scenario(useCase: setDemoUserUseCase, input: demoUserInput)
-            .execute(on: self.dependenciesResolver.resolve())
+            .execute(on: self.dependenciesEngine.resolve())
             .then(scenario: { (output) ->Scenario<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> in
                 let caseInput: PLLoginUseCaseInput
                 switch identifierType {
