@@ -26,18 +26,39 @@ public struct CardTransactionsParameters: Encodable {
         self.pagingLast = pagination?.next
         self.sortingOrder = "DESCENDING"
         
-        if startDate == nil || endDate == nil {
+        if startDate == nil && endDate == nil {
             self.from = nil
             self.to = nil
+            
+        } else if startDate == nil {
+            self.from = nil
+            self.to = endDate
+            self.sortingOrder = "ASCENDING"
+            
+        } else if endDate == nil {
+            self.from = startDate
+            self.to = nil
+            self.sortingOrder = "ASCENDING"
+            
         } else {
             self.from = startDate
             self.to = endDate
             self.sortingOrder = "ASCENDING"
         }
         
-        if amountFrom == nil || amountTo == nil {
+        if amountFrom == nil && amountTo == nil {
             self.amountFrom = nil
             self.amountTo = nil
+        } else if amountFrom == nil {
+            self.amountFrom = nil
+            self.amountTo = amountTo
+            self.sortingOrder = "ASCENDING"
+    
+        } else if amountTo == nil {
+            self.amountFrom = amountFrom
+            self.amountTo = nil
+            self.sortingOrder = "ASCENDING"
+            
         } else {
             self.amountFrom = amountFrom
             self.amountTo = amountTo
