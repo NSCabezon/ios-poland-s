@@ -81,7 +81,11 @@ final public class CardTransactionsDTOAdapter {
             }
             
             let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: currencyType)
-            cardTransaction.amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
+            var amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
+            if plCardTransaction.debitFlag?.lowercased() == "debit" {
+                amount.value?.negate()
+            }
+            cardTransaction.amount = amount
             cardTransaction.description = plCardTransaction.transTitle
             
             cardTransaction.state = .getState(plCardTransaction.state)

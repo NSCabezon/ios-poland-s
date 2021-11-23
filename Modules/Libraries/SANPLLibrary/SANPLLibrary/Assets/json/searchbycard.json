@@ -56,7 +56,7 @@
                     "transType": "",
                     "transSubtype": "",
                     "transTypeDesc": "WYP?ATA",
-                    "debitFlag": "DEBIT",
+                    "debitFlag": "CREDIT",
                     "sepaFlag": true,
                     "cardMasked": "545250******6529",
                     "cardNo": "545250P037909593",
