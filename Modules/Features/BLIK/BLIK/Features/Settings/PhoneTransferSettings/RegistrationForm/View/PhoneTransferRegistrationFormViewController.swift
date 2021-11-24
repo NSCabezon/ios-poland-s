@@ -153,7 +153,7 @@ private extension PhoneTransferRegistrationFormViewController {
     }
         
     func configureNavigationItem() {
-        NavigationBarBuilder(style: .white, title: .title(key: "#Przelew na telefon"))
+        NavigationBarBuilder(style: .white, title: .title(key: "pl_blik_title_payMobile"))
             .setLeftAction(.back(action: #selector(close)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()

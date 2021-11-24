@@ -1,4 +1,5 @@
 import UI
+import Commons
 
 final class PhoneTransferRegistrationFooterView: UIView {
     var registerButtonTap: (() -> Void)?
@@ -6,7 +7,7 @@ final class PhoneTransferRegistrationFooterView: UIView {
     private let registerButton: RedLisboaButton = {
         let button = RedLisboaButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("#Rejestruj numer", for: .normal)
+        button.setTitle(localized("pl_blik_button_registerNumb"), for: .normal)
         return button
     }()
     
