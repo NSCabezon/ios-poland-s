@@ -39,7 +39,7 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
         accesibilityIdentifier: "",
         trackName: "",
         localizedKey: "accountOption_button_changeAccount",
-        icon: "icnChangeAccount"
+        icon: "icnChangeAccountPL"
     )
 
     private let qrCode: AccountActionType = .custome(
