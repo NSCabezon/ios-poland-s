@@ -59,7 +59,7 @@ extension ErrorPresentable where Self: UIViewController {
                     )
                 )
             ],
-            image: "icnAlertError",
+            image: "icnAlert",
             actionButton: .init(title: localized("generic_link_ok"), style: .red, action: onConfirm ?? {}),
             closeButton: .none
         )
