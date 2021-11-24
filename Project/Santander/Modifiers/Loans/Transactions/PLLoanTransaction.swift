@@ -14,4 +14,5 @@ final class PLLoanTransaction: LoanTransactionModifier {
     let isEnabledOperationTypeFilter: Bool = false
     let isEnabledAmountRangeFilter: Bool = true
     let isEnabledDateFilter: Bool = true
+    let isDetailsCarouselEnabled: Bool = true
 }
