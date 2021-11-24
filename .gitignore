@@ -118,5 +118,5 @@ Project/Santander.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 
 # GoogleServices
 # This is used in build phase script (Firebase GoogleService)
-Project/Santander/Configuration/GoogleServices/GoogleService-Info.plist
+# Project/Santander/Configuration/GoogleServices/GoogleService-Info.plist
 
