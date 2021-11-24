@@ -16,7 +16,7 @@ import Models
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func showDialog(_ type: PLRememberedLoginDialogType)
     func setUserName(_ name: String)
-    func tryPinAuth()
+    func tryPinAuth(withError: Bool)
     var currentLoginType: PLRememberedLoginType { get set }
     func applicationDidBecomeActive(for biometryType: BiometryTypeEntity)
 }
@@ -266,9 +266,11 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         self.configureViewForLoginType()
     }
     
-    func tryPinAuth() {
-        let textStyle = LocalizedStylableText(text: localized("pl_login_alert_lastBiometricAttempt"), styles: nil)
-        TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
+    func tryPinAuth(withError: Bool) {
+        if withError {
+            let textStyle = LocalizedStylableText(text: localized("pl_login_alert_lastBiometricAttempt"), styles: nil)
+            TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
+        }
         self.currentLoginType = .PIN
         self.configureViewForLoginType()
     }
