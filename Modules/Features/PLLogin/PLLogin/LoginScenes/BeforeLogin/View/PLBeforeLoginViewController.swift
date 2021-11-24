@@ -13,6 +13,7 @@ import UI
 protocol PLBeforeLoginViewControllerProtocol: PLGenericErrorPresentableCapable {
     func showDeprecatedVersionDialog()
     func loadDidFinish()
+    func imageReady()
     func loadStart()
 }
 
@@ -24,9 +25,7 @@ final class PLBeforeLoginViewController: UIViewController {
     @IBOutlet private weak var backgroundImageView: UIImageView!
     @IBOutlet private weak var sanIconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var loadingView: UIView!
-    
-    var loadingInfo: LoadingInfo!
+    @IBOutlet private weak var loadingImageView: UIImageView!
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
          presenter: PLBeforeLoginPresenterProtocol) {
@@ -48,6 +47,7 @@ final class PLBeforeLoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNavigationBar()
+        self.loadStart()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,31 +64,25 @@ private extension PLBeforeLoginViewController {
     }
     
     func setupViews() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.backgroundColor = .black
         backgroundImageView.contentMode = .scaleAspectFill
-        
-        let inset = self.backgroundImageView.center.y 
-        self.loadingInfo = LoadingInfo(type: .onView(view: self.loadingView,
-                                                     frame: self.loadingView.bounds,
-                                                     position: .center,
-                                                     controller: self),
-                                       loadingText: LoadingText(title: LocalizedStylableText(text: "", styles: nil)),
-                                       placeholders: nil,
-                                       topInset: Double(inset),
-                                       background: .clear,
-                                       loadingImageType: .spin,
-                                       style: .onView)
+        loadingImageView.setAnimationImagesWith(prefixName: "BS_", range: 1...154, format: "%03d")
     }
 }
 
 extension PLBeforeLoginViewController : PLBeforeLoginViewControllerProtocol {
+    func imageReady() {
+        self.backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
+    }
+    
     func loadDidFinish() {
-        self.backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
-        self.dismissLoading()
+        self.loadingImageView.stopAnimating()
+        self.loadingImageView.isHidden = true
     }
     
     func loadStart() {
-        self.showLoadingWithLoading(info: self.loadingInfo)
+        self.loadingImageView.isHidden = false
+        self.loadingImageView.startAnimating()
     }
     
     func showDeprecatedVersionDialog() {

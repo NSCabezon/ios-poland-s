@@ -15,13 +15,8 @@ final class CreditCardRepaymentFinishingCoordinator {
 
 extension CreditCardRepaymentFinishingCoordinator: CreditCardRepaymentFinishingCoordinatorProtocol {
     
-    func goToGlobalPosition(_ coordinator: OperativeContainerCoordinatorProtocol) {
-        guard let controller = coordinator.sourceView else {
-            coordinator.navigationController?.popToRootViewController(animated: true)
-            return
-        }
-        // TODO: This implementation might be different when true GlobalPosition will be available
-        self.navigationController?.popToViewController(controller, animated: true)
+    func goToGlobalPosition() {
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func goToMakeAnotherPayment(_ coordinator: OperativeContainerCoordinatorProtocol) {

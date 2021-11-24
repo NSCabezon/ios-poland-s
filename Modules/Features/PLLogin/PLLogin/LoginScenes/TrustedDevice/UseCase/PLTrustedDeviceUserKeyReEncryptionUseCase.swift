@@ -9,6 +9,7 @@ import Commons
 import PLCommons
 import DomainCommon
 import CryptoSwift
+import PLCommons
 
 final class PLTrustedDeviceUserKeyReEncryptionUseCase: UseCase<PLTrustedDeviceUserKeyReEncryptionUseCaseInput, PLTrustedDeviceUserKeyReEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
@@ -24,12 +25,12 @@ final class PLTrustedDeviceUserKeyReEncryptionUseCase: UseCase<PLTrustedDeviceUs
         for token in requestValues.tokens {
             switch token.typeMapped {
             case .PIN:
-                reEncryptedUserKeyPIN = try PLLoginEncryptionHelper.reEncryptUserKey(requestValues.appId,
+                reEncryptedUserKeyPIN = try PLEncryptionHelper.reEncryptUserKey(requestValues.appId,
                                                                                      pin: requestValues.pin,
                                                                                      privateKey: requestValues.privateKey,
                                                                                      encryptedUserKey: token.key)
             case .BIOMETRICS:
-                reEncryptedUserKeyBiometrics = try PLLoginEncryptionHelper.reEncryptUserKey(requestValues.appId,
+                reEncryptedUserKeyBiometrics = try PLEncryptionHelper.reEncryptUserKey(requestValues.appId,
                                                                                             pin: nil,
                                                                                             privateKey: requestValues.privateKey,
                                                                                             encryptedUserKey: token.key)

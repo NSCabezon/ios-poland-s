@@ -201,11 +201,10 @@ private extension CreditCardRepaymentDetailsPresenter {
     }
     
     private func goBackWithValidation() {
-        guard formManager.hasFormChanged else {
+        guard formManager.hasFormChanged, !Calendar.current.isDate(formManager.form.date, inSameDayAs: Date()) else {
             goBack()
             return
         }
-        
         self.view?.showConfirmAbandonChangesDialog(
             onAccept: { [weak self] in
                 self?.subscriber?.remove()

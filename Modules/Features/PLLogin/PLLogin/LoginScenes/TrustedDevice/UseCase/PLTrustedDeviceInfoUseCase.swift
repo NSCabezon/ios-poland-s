@@ -11,6 +11,7 @@ import Commons
 import PLCommons
 import SANLegacyLibrary
 import SANPLLibrary
+import PLCryptography
 
 final class PLTrustedDeviceInfoUseCase: UseCase<PLTrustedDeviceInfoInput, PLTrustedDeviceInfoOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     private let dependenciesResolver: DependenciesResolver
@@ -22,7 +23,6 @@ final class PLTrustedDeviceInfoUseCase: UseCase<PLTrustedDeviceInfoInput, PLTrus
     public override func executeUseCase(requestValues: PLTrustedDeviceInfoInput) throws -> UseCaseResponse<PLTrustedDeviceInfoOutput, PLUseCaseErrorOutput<LoginErrorType>> {
 
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
-        
         let parameters = TrustedDeviceInfoParameters(trustedDeviceAppId: requestValues.trustedDeviceAppId)
         let result = try managerProvider.getTrustedDeviceManager().getTrustedDeviceInfo(parameters)
         
@@ -37,6 +37,7 @@ final class PLTrustedDeviceInfoUseCase: UseCase<PLTrustedDeviceInfoInput, PLTrus
             return .ok(result)
         case .failure(let error):
             managerProvider.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
+            managerProvider.getTrustedDeviceManager().deleteDeviceId()
             return .error(self.handle(error: error))
         }
     }

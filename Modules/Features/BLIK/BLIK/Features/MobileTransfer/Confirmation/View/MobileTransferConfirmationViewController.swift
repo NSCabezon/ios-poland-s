@@ -134,7 +134,7 @@ extension MobileTransferConfirmationViewController: MobileTransferConfirmationVi
         summaryView.setupWithItems(viewModelItems,
                                    actions: [],
                                    collapsableSections: .noCollapsable)
-        footer.set(viewModel.amountString(withAmountSize: 36))
+        footer.setAmount(viewModel.amountString(withAmountSize: 36))
     }
     
     func confirmTapped() {

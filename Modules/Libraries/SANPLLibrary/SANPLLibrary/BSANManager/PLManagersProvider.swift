@@ -22,6 +22,7 @@ public protocol PLManagersProviderProtocol {
     func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol
     func getTransferManager() -> PLTransfersManagerProtocol
     func getCardOperativesManager() -> PLCardOperativesManagerProtocol
+    func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -41,6 +42,7 @@ public final class PLManagersProvider {
     private let transferManager: PLTransfersManager
     private let cardOperativesManager: PLCardOperativesManager
     private let loanScheduleManager: PLLoanScheduleManager
+    private let authorizationProcessorManager: PLAuthorizationProcessorManager
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -69,6 +71,7 @@ public final class PLManagersProvider {
         self.transferManager = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.cardOperativesManager = PLCardOperativesManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.authorizationProcessorManager = PLAuthorizationProcessorManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
     }
 }
 
@@ -139,6 +142,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getCardOperativesManager() -> PLCardOperativesManagerProtocol {
         self.cardOperativesManager
     }
+    
+    public func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
+        self.authorizationProcessorManager
+    }
 }
 
 public extension PLManagersProviderProtocol {
@@ -204,6 +211,10 @@ public extension PLManagersProviderProtocol {
     }
     
     func getCardOperativesManager() -> PLCardOperativesManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
         fatalError("Missing manager implementation")
     }
 }

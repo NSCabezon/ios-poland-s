@@ -5,7 +5,6 @@
 //  Created by Ernesto Fernandez Calles on 10/5/21.
 //
 
-import Foundation
 
 // MARK: - NetworkProvider
 
@@ -39,6 +38,7 @@ struct NetworkProviderRequestBodyEmpty: Encodable {}
 public enum NetworkProviderRequestAuthorization {
     case oauth
     case trustedDeviceOnly
+    case twoFactorOperation(transactionParameters: TransactionParameters?)
 }
 
 public enum NetworkProviderBodyEncoding {
@@ -68,7 +68,7 @@ public enum NetworkProviderError: Error {
     case noConnection
     case unprocessableEntity
     
-    public func getErrorBody<ErrorDTO: Codable>() -> ErrorDTO? {
+    public func getErrorBody<T: Codable>() -> T? {
         guard let body = self.getErrorBody() else {
             return nil
         }
@@ -120,14 +120,12 @@ private extension NetworkProviderError {
         return body
     }
     
-    func createBodyError<ErrorDTO: Codable>(_ body: Data) ->  ErrorDTO? {
-        guard let decodedError: ErrorDTO? = self.decodeError(body),
-              let errorDTO = decodedError else { return nil }
-        return errorDTO
+    func createBodyError<T: Codable>(_ body: Data) -> T? {
+        return decodeError(body)
     }
     
-    func decodeError<ErrorDTO: Codable>(_ data: Data) -> ErrorDTO? {
-        return try? JSONDecoder().decode(ErrorDTO.self, from: data)
+    func decodeError<T: Codable>(_ data: Data) -> T? {
+        return try? JSONDecoder().decode(T.self, from: data)
     }
 }
 

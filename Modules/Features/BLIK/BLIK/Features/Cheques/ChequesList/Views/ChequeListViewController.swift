@@ -13,6 +13,7 @@ import PLCommons
 
 protocol ChequeListViewProtocol: LoadingViewPresentationCapable, DialogViewPresentationCapable {
     func setViewModel(_ viewModel: ChequeViewModelType)
+    func showDialog(title: LocalizedStylableText, text: LocalizedStylableText)
     func enableCreateChequeButton()
     func disableCreateChequeButton()
 }
@@ -48,6 +49,38 @@ final class ChequeListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter.viewDidAppear()
+    }
+    
+    func showDialog(title: LocalizedStylableText, text: LocalizedStylableText) {
+        let image = LisboaDialogImageViewItem(image: Images.info_lisboaGray, size: (50, 50))
+        let buttonTitle = LocalizedStylableText(text: localized("generic_link_ok"), styles: nil)
+        
+        let items: [LisboaDialogItem] = [
+            .margin(25),
+            .image(image),
+            .margin(12),
+            .styledText(LisboaDialogTextItem(text: title,
+                                             font: .santander(family: .micro, type: .bold, size: 28),
+                                             color: .black,
+                                             alignament: .center,
+                                             margins: (((0, 0))))),
+            .margin(12),
+            .styledText(LisboaDialogTextItem(text: text,
+                                             font: .santander(family: .micro, type: .regular, size: 16),
+                                             color: .lisboaGray,
+                                             alignament: .center,
+                                             margins: (24, 24))),
+            .margin(24),
+            .verticalAction(VerticalLisboaDialogAction(title: buttonTitle,
+                                                       type: .red,
+                                                       margins: (16, 16),
+                                                       action: {})),
+            .margin(16)
+        ]
+        
+        let dialog = LisboaDialog(items: items, closeButtonAvailable: false)
+
+        dialog.showIn(self)
     }
     
     private func setUp() {

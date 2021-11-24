@@ -34,10 +34,10 @@ final class P2pAliasUseCase: UseCase<P2pAliasUseCaseInput, P2pAliasUseCaseOutput
                              isDstAccInternal: response.isDstAccInternal))
             
         case .failure(let error):
-            let errorBody: ErrorDTO? = error.getErrorBody()
+            let blikError = BlikError(with: error.getErrorBody())
             let p2pAliasNotExistStatus = error.getErrorCode() == 510 &&
-                errorBody?.errorCode1 == .customerTypeDisabled &&
-                errorBody?.errorCode2 == .p2pAliasNotExsist
+                blikError?.errorCode1 == .customerTypeDisabled &&
+                blikError?.errorCode2 == .p2pAliasNotExsist
             let errorStatus: GetP2pAliasErrorResult = p2pAliasNotExistStatus ? .aliasNotExsist : .genericError
             return .error(.init(errorStatus.rawValue))
         }

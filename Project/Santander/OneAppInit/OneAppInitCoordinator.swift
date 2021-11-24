@@ -18,6 +18,8 @@ import UI
 import PLCommons
 import PLUI
 import CharityTransfer
+import Models
+import SANLegacyLibrary
 
 enum OneAppInitModule: String, CaseIterable {
     case deepLink = "Deep Link"
@@ -126,7 +128,9 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             mockInjector.injectMockForCreditCardRepayment(multipleChoices: true)
-            coordinator.start(with: CreditCardAccountNumber(number: "63109014894000000121600961"))
+            var cardDTO = SANLegacyLibrary.CardDTO()
+            cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: "545250P038230083")
+            coordinator.start(with: CardEntity(cardDTO))
         case .creditCardRepayment:
             let coordinator = CreditCardRepaymentModuleCoordinator(
                 dependenciesResolver: dependenciesEngine,

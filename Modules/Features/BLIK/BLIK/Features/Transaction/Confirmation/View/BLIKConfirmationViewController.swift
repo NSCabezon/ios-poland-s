@@ -17,10 +17,13 @@ final class BLIKConfirmationViewController: UIViewController {
     
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
+    private let aliasInfoBanner = BLIKConfirmationAliasInfoBannerView()
     private let bottomView = BottomButtonView()
     private let progressView = BLIKConfirmationProgressView()
     private let summaryView = OperativeSummaryStandardBodyView()
     private let footer = SummaryTotalAmountView()
+    
+    private lazy var aliasInfoBannerZeroHeightConstraint = aliasInfoBanner.heightAnchor.constraint(equalToConstant: 0)
 
     init(presenter: BLIKConfirmationPresenterProtocol) {
         self.presenter = presenter
@@ -74,9 +77,24 @@ extension BLIKConfirmationViewController: BLIKConfirmationViewProtocol {
         viewModelItems.append(.init(title: localized("pl_blik_label_date"),
                                     subTitle: viewModel.dateString,
                                     accessibilityIdentifier: AccessibilityBLIK.ConfirmationOperativeSummary.itemDate.id))
+        
+        if let aliasLabel = viewModel.aliasLabelUsedInTransaction {
+            viewModelItems.append(
+                .init(title: localized("pl_blik_text_withoutCode"),
+                      subTitle: aliasLabel,
+                      accessibilityIdentifier: AccessibilityBLIK.ConfirmationOperativeSummary.aliasLabel.id)
+            )
+        }
+        
         summaryView.setupWithItems(viewModelItems, actions: [], collapsableSections: .noCollapsable)
         
-        footer.set(viewModel.amountString(withAmountSize: 36))
+        footer.setAmount(viewModel.amountString(withAmountSize: 36))
+        
+        if viewModel.shouldShowAliasTransferInfoBanner {
+            aliasInfoBannerZeroHeightConstraint.isActive = false
+        } else {
+            aliasInfoBannerZeroHeightConstraint.isActive = true
+        }
     }
 }
 
@@ -110,6 +128,7 @@ private extension BLIKConfirmationViewController {
     func addSubviews() {
         view.addSubview(progressView)
         view.addSubview(scrollView)
+        view.addSubview(aliasInfoBanner)
         view.addSubview(bottomView)
         scrollView.addSubview(stackView)
         stackView.addArrangedSubview(summaryView)
@@ -133,6 +152,7 @@ private extension BLIKConfirmationViewController {
     func prepareLayout() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        aliasInfoBanner.translatesAutoresizingMaskIntoConstraints = false
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         footer.translatesAutoresizingMaskIntoConstraints = false
 
@@ -145,7 +165,11 @@ private extension BLIKConfirmationViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            bottomView.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            aliasInfoBanner.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            aliasInfoBanner.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            aliasInfoBanner.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            bottomView.topAnchor.constraint(equalTo: aliasInfoBanner.bottomAnchor),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

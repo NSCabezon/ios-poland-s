@@ -11,13 +11,17 @@ import Commons
 class PLPersonalDataModifier: PersonalDataModifier {
     func buildPersonalData(with personalInfo: PersonalInfoWrapper?) -> PersonalDataInfo? {
         guard let personalInfo = personalInfo else { return nil }
+        let address = polandAddress(personalInfo.addressNodes)
         var personalDataInfo = PersonalDataInfo()
-        personalDataInfo.mainAddress = personalInfo.fullAddress
-        personalDataInfo.correspondenceAddress = personalInfo.fullAddress
+        personalDataInfo.mainAddress = address
+        personalDataInfo.correspondenceAddress = polandAddress(personalInfo.correspondenceAddressNodes)
         personalDataInfo.phone = maskedPhone(personalInfo.phone)
         personalDataInfo.smsPhone = maskedPhone(personalInfo.phone)
         let email = (personalInfo.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : personalInfo.email
         personalDataInfo.email = email
+        personalDataInfo.correspondenceAddressMode = .web
+        personalDataInfo.phoneMode = .web
+        personalDataInfo.emailMode = .web
         return personalDataInfo
     }
 }
@@ -27,5 +31,20 @@ private extension PLPersonalDataModifier {
         guard let phone = phone, phone.count > 3 else { return nil }
         let asterisks = String(repeating: "*", count: phone.count - 3)
         return asterisks + String(phone.suffix(3))
+    }
+    
+    func polandAddress(_ nodes: [String]?) -> String? {
+        guard let nodes = nodes, nodes.count >= 5 else { return nil }
+        return concat(strings: [nodes[2], nodes[3], nodes[4], nodes[1]])
+    }
+    
+    func concat(strings: [String?]) -> String {
+        var string = ""
+        strings.enumerated().forEach({
+            guard let str = $1, !str.isEmpty else { return }
+            if $0 > 0 { string += " " }
+            string += str
+        })
+        return string
     }
 }

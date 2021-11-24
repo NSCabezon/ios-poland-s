@@ -1,5 +1,6 @@
 import Commons
 import PLUI
+import DomainCommon
 
 protocol MobileTransferConfirmationPresenterProtocol {
     var view: MobileTransferConfirmationViewControllerProtocol? { get set }
@@ -12,24 +13,26 @@ protocol MobileTransferConfirmationPresenterProtocol {
 final class MobileTransferConfirmationPresenter {
     var view: MobileTransferConfirmationViewControllerProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private var queue: DispatchQueue
     private let viewModel: MobileTransferViewModel?
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     private let isDstAccInternal: Bool
     private let dstAccNo: String
-
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     private var acceptTransactionUseCase: AcceptTransactionProtocol {
         dependenciesResolver.resolve()
     }
-
+    private var getIndividualUseCase: GetIndividualProtocol {
+        dependenciesResolver.resolve()
+    }
 
     init(dependenciesResolver: DependenciesResolver,
          viewModel: MobileTransferViewModel,
          isDstAccInternal: Bool,
-         dstAccNo: String,
-         queue: DispatchQueue = .global()) {
+         dstAccNo: String
+    ) {
         self.dependenciesResolver = dependenciesResolver
-        self.queue = queue
         self.viewModel = viewModel
         self.isDstAccInternal = isDstAccInternal
         self.dstAccNo = dstAccNo
@@ -56,22 +59,41 @@ extension MobileTransferConfirmationPresenter: MobileTransferConfirmationPresent
         self.view?.showLoader()
         Scenario(useCase: acceptTransactionUseCase,
                  input: .init(form: viewModel, isDstAccInternal: isDstAccInternal, dstAccNo: dstAccNo))
-            .execute(on: queue)
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] result in
-                self?.view?.hideLoader {
-                    self?.coordinator.showSummary(with: result.summary)
+                if let storngSelf = self {
+                    Scenario(useCase: storngSelf.getIndividualUseCase)
+                        .execute(on: storngSelf.useCaseHandler)
+                        .onSuccess { [weak self] customer in
+                            let mapper = MobileTransferSummaryMapper()
+                            let summaryModel = mapper.map(summary: result.summary, transferType: result.transferType, customer: customer.customer)
+                            self?.view?.hideLoader {
+                                self?.coordinator.showSummary(with: summaryModel)
+                            }
+                        }
+                        .onError { [weak self] error in
+                            self?.view?.hideLoader {
+                                guard let errorKey = error.getErrorDesc() else {
+                                    self?.showServiceInaccessibleError()
+                                    return
+                                }
+                                self?.showError(with: errorKey)
+                            }
+                        }
+                } else {
+                    self?.view?.hideLoader {
+                        self?.showServiceInaccessibleError()
+                        return
+                    }
                 }
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
                     guard let errorKey = error.getErrorDesc() else {
                         self?.showServiceInaccessibleError()
-                        
                         return
                     }
-
                     self?.showError(with: errorKey)
-                    
                 }
             }
     }

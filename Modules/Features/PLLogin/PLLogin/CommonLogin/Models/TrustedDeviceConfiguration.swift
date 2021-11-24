@@ -17,16 +17,6 @@ public class TrustedDeviceConfiguration {
     var trustedDevice: TrustedDevice?
     var registrationConfirm: RegistrationConfirm?
 
-    struct DeviceData {
-        let manufacturer: String
-        let model: String
-        let brand: String
-        let appId: String
-        let deviceId: String
-        let deviceTime: String
-        let parameters: String
-    }
-
     struct SoftwareToken {
         let identity: SecIdentity?
     }

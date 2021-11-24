@@ -8,6 +8,7 @@
 import UI
 import Models
 import Commons
+import PLCommons
 
 /**
     #Add method that must be handle by the PLHelpCenterCoordinator like
@@ -17,12 +18,17 @@ protocol HelpCenterDashboardCoordinatorProtocol: ModuleCoordinator {
     var onCloseConfirmed: (() -> Void)? { get set }
     func goBack()
     func goToConversationTopicScene(advisorDetails: HelpCenterConfig.AdvisorDetails)
+    func openWebView(withConfiguration configuration: WebViewConfiguration)
 }
 
 final class HelpCenterDashboardCoordinator: HelpCenterDashboardCoordinatorProtocol {
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     var onCloseConfirmed: (() -> Void)?
+    
+    private var webViewCoordinator: PLWebViewCoordinatorDelegate {
+        return self.dependenciesEngine.resolve(for: PLWebViewCoordinatorDelegate.self)
+    }
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -43,6 +49,11 @@ final class HelpCenterDashboardCoordinator: HelpCenterDashboardCoordinatorProtoc
         let coord = HelpCenterConversationTopicCoordinator(dependenciesResolver: dependenciesEngine,
                                                            navigationController: navigationController)
         coord.start(with: advisorDetails)
+    }
+    
+    func openWebView(withConfiguration configuration: WebViewConfiguration) {
+        let handler = PLWebviewCustomLinkHandler(configuration: configuration)
+        webViewCoordinator.showWebView(handler: handler)
     }
 }
 

@@ -99,7 +99,7 @@ final class PLLoginCommonDialogs {
             .margin(8.0),
             .image(LisboaDialogImageViewItem(image: PLAssets.image(named: "imgUpdateYourAppSan"), size: (326, 169))),
             .margin(24.0),
-            .verticalAction(VerticalLisboaDialogAction(title: localized("login_label_nowUpdate"), type: LisboaDialogActionType.red, margins: (left: 16, right: 16), action: onAccept)),
+            //.verticalAction(VerticalLisboaDialogAction(title: localized("login_label_nowUpdate"), type: LisboaDialogActionType.red, margins: (left: 16, right: 16), action: onAccept)),
             .margin(16.0)
         ]
         let builder = LisboaDialog(items: components, closeButtonAvailable: false)

@@ -29,7 +29,7 @@ final class SendCreditCardRepaymentUseCase: UseCase<SendCreditCardRepaymentUseCa
         }
         
         guard let amount = form.amount,
-              let amountValue = amount.dto.value?.doubleValue,
+              let amountValue = amount.dto.value,
               let currencyValue = amount.dto.currency?.currencyType.rawValue
         else {
             return .error(SendCreditCardRepaymentUseCaseErrorOutput("Amount not set"))
@@ -59,7 +59,8 @@ final class SendCreditCardRepaymentUseCase: UseCase<SendCreditCardRepaymentUseCa
             valueDate: form.date.toString(format: "yyyy-MM-dd"),
             debitAmountData: debitAmountData,
             debitAccountData: debitAccountData,
-            creditAccountData: creditAccountData
+            creditAccountData: creditAccountData,
+            creditAmountData: debitAmountData
         )
         
         let result = try manager.sendRepayment(repaymentParameters)

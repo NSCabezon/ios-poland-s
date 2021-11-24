@@ -6,6 +6,7 @@ import Repository
 import SANPLLibrary
 import SANLegacyLibrary
 import UI
+import Models
 
 final class ViewController: UIViewController {
     
@@ -42,7 +43,9 @@ final class ViewController: UIViewController {
     
     @IBAction func startWithPredefinedAccountNumberTapped(_ sender: Any) {
         mockData = CreditCardRepaymentManagerMockData(multipleChoices: true)
-        coordinator.start(with: CreditCardAccountNumber(number: "45109014894000000121577326"))
+        var cardDTO = SANLegacyLibrary.CardDTO()
+        cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: "545250P038230083")
+        coordinator.start(with: CardEntity(cardDTO))
     }
     
     internal lazy var dependenciesResolver: DependenciesResolver = {

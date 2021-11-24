@@ -15,6 +15,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
 import PLCommonOperatives
+import PLLogin
 import Models
 import GlobalPosition
 import Account
@@ -27,8 +28,16 @@ import Loans
 import iOSPublicFiles
 import CoreDomain
 import CommonUseCase
+import PLCryptography
 
 final class AppDependencies {
+    #if DEBUG
+    private let timeToRefreshToken: TimeInterval = 10000000000000
+    private let timeToExpireSession: TimeInterval = 10000000000000
+    #else
+    private let timeToRefreshToken: TimeInterval = 60 * 8
+    private let timeToExpireSession: TimeInterval = 60 * 9
+    #endif
     let dependencieEngine: DependenciesResolver & DependenciesInjector
     private let localAppConfig: LocalAppConfig
     private let versionInfo: VersionInfoDTO
@@ -40,6 +49,9 @@ final class AppDependencies {
     // MARK: - Dependecies definitions
 
     // MARK: Data layer and country data adapters
+    private lazy var defaultSessionDataManager: SessionDataManager = {
+        return DefaultSessionDataManager(dependenciesResolver: dependencieEngine)
+    }()
     private lazy var dataRepository: DataRepository = {
         return DataRepositoryBuilder(dependenciesResolver: dependencieEngine).build()
     }()
@@ -47,16 +59,21 @@ final class AppDependencies {
     private var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: dataRepository)
     }
+
     private var demoInterpreter: DemoUserProtocol {
         let demoModeAvailable: Bool = XCConfig["DEMO_AVAILABLE"] ?? false
         return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
                                    demoModeAvailable: demoModeAvailable)
     }
     private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
-
         let hostProvider = PLHostProvider()
-        // TODO: Check value isTrustInvalidCertificateEnabled
-        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider, demoInterpreter: demoInterpreter, isTrustInvalidCertificateEnabled: false)
+        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider,
+                                                demoInterpreter: demoInterpreter,
+                                                isTrustInvalidCertificateEnabled: compilation.isTrustInvalidCertificateEnabled,
+                                                trustedHeadersProvider: self.dependencieEngine.resolve(
+                                                    for: PLTrustedHeadersGenerable.self
+                                                )
+        )
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
@@ -93,7 +110,9 @@ final class AppDependencies {
     private lazy var servicesLibrary: ServicesLibrary = {
         return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
     }()
-
+    private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
+        return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
+    }()
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
 //        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
@@ -108,7 +127,7 @@ final class AppDependencies {
         compilation = Compilation()
         versionInfo = VersionInfoDTO(
             bundleIdentifier: Bundle.main.bundleIdentifier ?? "",
-            versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+            versionName: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? ""
         )
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
@@ -121,6 +140,9 @@ final class AppDependencies {
 private extension AppDependencies {
     // MARK: Dependencies registration
     func registerDependencies() {
+        self.dependencieEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
+            PLTrustedHeadersProvider(dependenciesResolver: resolver)
+        }
         self.dependencieEngine.register(for: HostsModuleProtocol.self) { _ in
             return self.hostModule
         }
@@ -167,6 +189,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
             return self.plAccountOtherOperativesInfoRepository
+        }
+        self.dependencieEngine.register(for: PLWebViewLinkRepositoryProtocol.self) { resolver in
+            return PLWebViewLinkRepository(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: SiriAssistantProtocol.self) { _ in
             return EmptySiriAssistant()
@@ -220,9 +245,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PersonalAreaSectionsProtocol.self) { _ in
             return self.personalAreaSections
         }
-        self.dependencieEngine.register(for: GetPLAccountOtherOperativesActionUseCase.self) { resolver in
-            return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
-        }
         self.dependencieEngine.register(for: GetBasePLWebConfigurationUseCaseProtocol.self) { resolver in
             return GetBasePLWebConfigurationUseCase(dependenciesResolver: resolver)
         }
@@ -230,7 +252,12 @@ private extension AppDependencies {
             return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
-            let networkProvider = PLNetworkProvider(dataProvider: self.bsanDataProvider, demoInterpreter: self.demoInterpreter, isTrustInvalidCertificateEnabled: false)
+            let networkProvider = PLNetworkProvider(
+                dataProvider: self.bsanDataProvider,
+                demoInterpreter: self.demoInterpreter,
+                isTrustInvalidCertificateEnabled: false,
+                trustedHeadersProvider: self.dependencieEngine.resolve(for: PLTrustedHeadersGenerable.self)
+            )
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: networkProvider)
         }
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
@@ -239,13 +266,13 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
             return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
             PLCardTransactionDetailActionFactoryModifier()
         }
-        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { resolver in
+        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }
-        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { resolver in
+        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
         }
         self.dependencieEngine.register(for: TransfersRepository.self) { _ in
@@ -266,10 +293,48 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PersonalDataModifier.self) { _ in
             PLPersonalDataModifier()
         }
+        self.dependencieEngine.register(for: SessionDataManagerModifier.self) { _ in
+            return self.sessionDataManagerModifier
+        }
+        self.dependencieEngine.register(for: SessionDataManager.self) { _ in
+            return self.defaultSessionDataManager
+        }
+        self.dependencieEngine.register(for: LoadGlobalPositionUseCase.self) { resolver in
+            return DefaultLoadGlobalPositionUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
+            let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
+            let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
+            return SessionConfiguration(timeToExpireSession: self.timeToExpireSession,
+                                        timeToRefreshToken: self.timeToRefreshToken,
+                                        sessionStartedActions: [loadPfm],
+                                        sessionFinishedActions: [stopPfm])
+        }
+        self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
+            PLPrivateSideMenuModifier()
+        }
+        self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
+            PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
+            return self
+        }
+        self.dependencieEngine.register(for: OneAuthorizationProcessorRepository.self) { _ in
+            return self.servicesLibrary.oneAuthorizationProcessorRepository
+        }
+        self.dependencieEngine.register(for: PLOneAuthorizationProcessorRepository.self) { _ in
+            return self.servicesLibrary.oneAuthorizationProcessorRepository
+        }
     }
 }
 
 extension AppDependencies: SharedDependenciesDelegate {
     func publicFilesFinished(_ appConfigRepository: AppConfigRepositoryProtocol) {
+    }
+}
+
+extension AppDependencies: ChallengesHandlerDelegate {
+    func handle(_ challenge: ChallengeRepresentable, authorizationId: String, completion: @escaping (ChallengeResult) -> Void) {
+        print(challenge)
     }
 }

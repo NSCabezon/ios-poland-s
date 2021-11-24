@@ -36,4 +36,6 @@ class BLIKConfirmationViewMock: BLIKConfirmationViewProtocol {
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {
     }
     
+    func showErrorMessage(title: String, message: String, actionButtonTitle: String, closeButton: Dialog.CloseButton, onConfirm: (() -> Void)?) {
+    }
 }

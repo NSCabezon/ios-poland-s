@@ -20,7 +20,15 @@ public class IBANFormatter {
         }
         return "\(countryCode) \(printedIban)"
     }
-
+    
+    public static func formatIbanToNrb(for iban: String?) -> String {
+        guard let iban = iban else { return "" }
+        if isExternalIban(iban) {
+            return String(iban.dropFirst(2))
+        }
+        return iban
+    }
+    
     private static func isExternalIban(_ iban: String) -> Bool {
         return Int(String(iban.substring(0, 2) ?? "")) == nil
     }

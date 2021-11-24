@@ -14,10 +14,11 @@ public struct CCRCardDTO: Codable {
     public let availableBalance: BalanceDTO?
     public let creditLimit: BalanceDTO?
     public let disposedAmount: BalanceDTO?
+    public let creditCardAccountDetails: CreditCardDetailsDTO?
 }
 
 public extension CCRCardDTO {
-    static func mapFromCardDTO(_ cardDTO: CardDTO, account: CCRAccountDTO?) -> CCRCardDTO {
+    static func mapFromCardDTO(_ cardDTO: CardDTO, account: CCRAccountDTO?, creditCardAccountDetails: CreditCardDetailsDTO?) -> CCRCardDTO {
         return CCRCardDTO(
             maskedPan: cardDTO.maskedPan,
             virtualPan: cardDTO.virtualPan,
@@ -31,7 +32,14 @@ public extension CCRCardDTO {
             expirationDate: cardDTO.expirationDate,
             availableBalance: cardDTO.availableBalance,
             creditLimit: cardDTO.creditLimit,
-            disposedAmount: cardDTO.disposedAmount
+            disposedAmount: cardDTO.disposedAmount,
+            creditCardAccountDetails: creditCardAccountDetails
         )
+    }
+}
+
+extension CCRCardDTO: CardDTOByPanComparable {
+    public var panIdentifier: String? {
+        self.virtualPan
     }
 }

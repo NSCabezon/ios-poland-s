@@ -11,48 +11,63 @@ import LoginCommon
 import PLCommons
 import Models
 import LocalAuthentication
+import Dynatrace
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
     var loginConfiguration:RememberedLoginConfiguration { get set }
+    var currentBiometryType: BiometryTypeEntity { get set }
     func viewDidLoad()
+    func viewWillAppear()
     func viewDidAppear()
-    func doLogin(with rememberedLoginType: RememberedLoginType)
+    func doLogin(with accessType: AccessType)
     func didSelectBalance()
     func didSelectBlik()
     func didSelectMenu()
-    func getBiometryTypeAvailable() -> BiometryTypeEntity
     func setAllowLoginBlockedUsers()
-    func loginSuccess(configuration: RememberedLoginConfiguration)
     func startBiometricAuth()
+    func trackView()
+    func trackChangeLoginTypeButton()
+    func didSelectChooseEnvironment()
 }
 
 final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
     internal let dependenciesResolver: DependenciesResolver
     weak var view: PLRememberedLoginPinViewControllerProtocol?
     public var loginConfiguration:RememberedLoginConfiguration
+    public var currentBiometryType: BiometryTypeEntity = .none
     private let localAuth: LocalAuthenticationPermissionsManagerProtocol
     private var allowLoginBlockedUsers = true
 
     var coordinatorDelegate: LoginCoordinatorDelegate {
         return self.dependenciesResolver.resolve(for: LoginCoordinatorDelegate.self)
     }
+
+    private var rememberedLoginProcessGroup: PLRememberedLoginProcessGroup {
+        self.dependenciesResolver.resolve(for: PLRememberedLoginProcessGroup.self)
+    }
+
+    private var openSessionProcessGroup: PLOpenSessionProcessGroup {
+        return self.dependenciesResolver.resolve(for: PLOpenSessionProcessGroup.self)
+    }
+
+    private var notificationTokenRegisterProcessGroup: PLNotificationTokenRegisterProcessGroup {
+        return self.dependenciesResolver.resolve(for: PLNotificationTokenRegisterProcessGroup.self)
+    }
     
-    private var loginProcessUseCase: PLRememberedLoginProcessUseCase {
-        self.dependenciesResolver.resolve(for: PLRememberedLoginProcessUseCase.self)
+    private var publicFilesManager: PublicFilesManagerProtocol {
+        return self.dependenciesResolver.resolve(for: PublicFilesManagerProtocol.self)
     }
-
-    private var sessionUseCase: PLSessionUseCase {
-        self.dependenciesResolver.resolve(for: PLSessionUseCase.self)
+    
+    private var getPLCurrentEnvironmentUseCase: GetPLCurrentEnvironmentUseCase {
+        self.dependenciesResolver.resolve(for: GetPLCurrentEnvironmentUseCase.self)
     }
-
-    private var globalPositionOptionUseCase: PLGetGlobalPositionOptionUseCase {
-        return self.dependenciesResolver.resolve(for: PLGetGlobalPositionOptionUseCase.self)
-    }
-
-    private var notificationGetTokenAndRegisterUseCase: PLGetNotificationTokenAndRegisterUseCase {
-        return self.dependenciesResolver.resolve(for: PLGetNotificationTokenAndRegisterUseCase.self)
-    }
+    
+    private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
+    
+    private lazy var loginPullOfferLoader: PLLoginPullOfferLoader = {
+        return self.dependenciesResolver.resolve(for: PLLoginPullOfferLoader.self)
+    }()
     
     var coordinator: PLRememberedLoginPinCoordinator {
         return self.dependenciesResolver.resolve(for: PLRememberedLoginPinCoordinator.self)
@@ -62,37 +77,85 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
         self.dependenciesResolver = dependenciesResolver
         self.localAuth = dependenciesResolver.resolve(for: LocalAuthenticationPermissionsManagerProtocol.self)
         self.loginConfiguration = configuration
+        self.currentBiometryType = self.getBiometryTypeAvailable()
     }
 }
 
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
+    func didSelectChooseEnvironment() {
+        self.coordinatorDelegate.goToEnvironmentsSelector { [weak self] in
+            self?.chooseEnvironment()
+        }
+    }
     
-    func loginSuccess(configuration: RememberedLoginConfiguration) {
-        guard allowLoginBlockedUsers else {
-            self.view?.dismissLoading(completion: { [weak self] in
-                self?.view?.showAccountTemporaryBlockedDialog(configuration)
-            })
+    func trackView() {
+        self.trackScreen()
+    }
+
+    func trackChangeLoginTypeButton() {
+        if self.view?.currentLoginType == PLRememberedLoginType.PIN {
+            self.trackEvent(.clickBiometric)
+        }
+        else {
+            self.trackEvent(.clickPin)
+        }
+    }
+
+    func evaluateLoginResult(configuration: RememberedLoginConfiguration,
+                             error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>?) {
+    
+        guard configuration.isDemoUser == false else {
+            self.loginSuccess()
             return
         }
-        let time = Date(timeIntervalSince1970: configuration.unblockRemainingTimeInSecs ?? 0)
-        let now = Date()
         
-        self.view?.dismissLoading(completion: { [weak self] in
-            guard let self = self else { return }
-            if configuration.challenge?.authorizationType != .softwareToken {
-                self.view?.showDeviceConfigurationErrorDialog()
-            } else if configuration.isFinal() {
-                self.view?.showInvalidSCADialog()
-            } else if configuration.isBlocked() && time > now {
-                self.trackEvent(.userTemporarilyBlocked)
-                self.allowLoginBlockedUsers = false
-                self.view?.showAccountTemporaryBlockedDialog(configuration)
-            } else {
-                self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants().loginType : "PIN"])
-                self.openSessionAndNavigateToGlobalPosition()
-                self.notificationGetTokenAndRegisterUseCase.executeUseCase {}
-            }
-        })
+        guard allowLoginBlockedUsers else {
+            self.view?.showDialog(.accountTemporarilyBlocked(configuration))
+            return
+        }
+        
+        let time = Date(timeIntervalSince1970: configuration.unblockRemainingTimeInSecs ?? 0)
+        if let authType = configuration.challenge?.authorizationType, authType != .softwareToken {
+            self.view?.showDialog(.configurationError({ [weak self] in
+                self?.coordinator.loadUnrememberedLogin()
+            }))
+        } else if configuration.isFinal() {
+            self.view?.showDialog(.invalidSCA)
+        } else if configuration.isBlocked() && time > Date() {
+            self.trackEvent(.userTemporarilyBlocked)
+            self.allowLoginBlockedUsers = false
+            self.view?.showDialog(.accountTemporarilyBlocked(configuration))
+        } else if let err = error {
+            let httpErrorCode = self.getHttpErrorCode(err) ?? ""
+            self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : err.getErrorDesc() ?? ""])
+            self.handleError(err)
+        } else {
+            self.loginSuccess()
+        }
+    }
+    
+    func loginSuccess() {
+        if self.view?.currentLoginType == PLRememberedLoginType.PIN {
+            self.trackLoginSuccessWithPin()
+        } else {
+            self.trackLoginSuccessWithBiometryType()
+        }
+        self.openSessionAndNavigateToGlobalPosition()
+        self.notificationTokenRegisterProcessGroup.execute { _ in }
+    }
+
+    func trackLoginSuccessWithPin() {
+        self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants.loginType : PLLoginTrackConstants.pin])
+    }
+
+    func trackLoginSuccessWithBiometryType() {
+        switch self.getBiometryTypeAvailable() {
+        case .touchId: self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants.loginType : PLLoginTrackConstants.touchID])
+        case .faceId: self.trackEvent(.loginSuccess, parameters: [PLLoginTrackConstants.loginType : PLLoginTrackConstants.faceID])
+        case .none: self.trackLoginSuccessWithPin()
+        case .error(biometry: _, error: let error):
+            self.trackEvent(.info, parameters: [PLLoginTrackConstants.errorCode: "1040", PLLoginTrackConstants.errorDescription: error.localizedDescription])
+        }
     }
    
     func setAllowLoginBlockedUsers() {
@@ -121,16 +184,6 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         }
     }
     
-    func getBiometryTypeAvailable() -> BiometryTypeEntity {
-        self.trackEvent(.clickBiometric)
-        guard loginConfiguration.isBiometricsAvailable else { return .none }
-        #if targetEnvironment(simulator)
-        return .faceId
-        #else
-        return self.localAuth.biometryTypeAvailable
-        #endif
-    }
-    
     func didSelectBalance() {
         
     }
@@ -139,63 +192,119 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         self.trackEvent(.clickBlik)
     }
 
-    func doLogin(with rememberedLoginType: RememberedLoginType) {
-        self.view?.showLoading()
-        let config = coordinator.loginConfiguration
-        self.loginProcessUseCase.executePersistedLogin(configuration: config, rememberedLoginType: rememberedLoginType) { [weak self] newConfiguration in
+    func doLogin(with accessType: AccessType) {
+        self.view?.showLoading(completion: { [weak self] in
             guard let self = self else { return }
-            guard let newConfig = newConfiguration else {
-                self.view?.showUnauthorizedError()
-                return
+            let config = self.coordinator.loginConfiguration
+            self.rememberedLoginProcessGroup.execute(input: PLRememberedLoginProcessGroupInput(configuration: config,
+                                                                                          accessType: accessType)) { result in
+                switch result {
+                case .success(let output):
+                    self.evaluateLoginResult(configuration: output.configuration, error: nil)
+                case .failure(let outputError):
+                    self.evaluateLoginResult(configuration: outputError.configuration, error: outputError.error)
+                }
             }
-            self.loginSuccess(configuration: newConfig)
-        } onFailure: { [weak self]  error in
-            self?.handleError(error)
-        }
+        })
     }
     
     func viewDidLoad() {
         self.trackScreen()
+        self.loadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    func viewWillAppear() {
+        self.getCurrentEnvironments()
     }
     
     func viewDidAppear() {
         guard let aName = self.loginConfiguration.userPref?.name else { return }
         view?.setUserName(aName)
     }
+
+    func identifyUser(_ userId: String?) {
+        Dynatrace.identifyUser(userId)
+    }
 }
 
 private extension PLRememberedLoginPinPresenter {
     func openSessionAndNavigateToGlobalPosition() {
-        Scenario(useCase: self.sessionUseCase)
-            .execute(on: self.dependenciesResolver.resolve())
-            .then(scenario: { [weak self] _ -> Scenario<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>? in
-                guard let self = self else { return nil }
-                return Scenario(useCase: self.globalPositionOptionUseCase)
-            })
-            .onSuccess( { [weak self] output in
+        openSessionProcessGroup.execute { [weak self] result in
+            switch result {
+            case .success(let output):
+                self?.identifyUser(output.userId)
                 self?.coordinator.goToGlobalPositionScene(output.globalPositionOption)
-            })
-            .onError { [weak self] _ in
+            case .failure(_):
                 self?.coordinator.goToGlobalPositionScene(.classic)
             }
+        }
+    }
+    
+    func getBiometryTypeAvailable() -> BiometryTypeEntity {
+        guard loginConfiguration.isBiometricsAvailable else { return .none }
+        return self.localAuth.biometryTypeAvailable
     }
     
     func biometryFails(error: Error? = nil) {
         safetyCurtainSafeguardEventDidFinish()
-        guard let laError = error as? LAError, laError.code == .userFallback else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.view?.showUnauthorizedError()
-            }
+        
+        self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : "401",
+                                                PLLoginTrackConstants.errorDescription : localized("pl_login_alert_loginError")])
+        guard let laError = error as? LAError else {
+            self.view?.showDialog(.unauthorized)
             return
         }
-        self.view?.tryPinAuth()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            switch laError.code {
+            case .userFallback, .authenticationFailed:
+                self?.view?.tryPinAuth(withError: laError.code == .authenticationFailed)
+            case .userCancel:
+                break
+            default:
+                self?.view?.showDialog(.unauthorized)
+            }
+        }
     }
     
     func biometrySuccess() {
         safetyCurtainSafeguardEventDidFinish()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.doLogin(with: .Biometrics)
+            self?.doLogin(with: .biometrics)
         }
+    }
+    
+    func chooseEnvironment() {
+        self.publicFilesManager.loadPublicFiles(withStrategy: .reload, timeout: 5)
+        self.getCurrentEnvironments()
+    }
+    
+    func getCurrentEnvironments() {
+        Scenario(useCase: self.getPLCurrentEnvironmentUseCase).execute(on: self.dependenciesResolver.resolve())
+        .onSuccess( { [weak self] result in
+            self?.didLoadEnvironment(result.bsanEnvironment, publicFilesEnvironment: result.publicFilesEnvironment)
+        })
+    }
+    
+    func didLoadEnvironment(_ environment: PLEnvironmentEntity, publicFilesEnvironment: PublicFilesEnvironmentEntity) {
+        self.publicFilesEnvironment = publicFilesEnvironment
+        let wsViewModel = EnvironmentViewModel(title: environment.name, url: environment.urlBase)
+        let publicFilesViewModel = EnvironmentViewModel(title: publicFilesEnvironment.name, url: publicFilesEnvironment.urlBase)
+        self.view?.updateEnvironmentsText([wsViewModel, publicFilesViewModel])
+    }
+    
+    func loadData() {
+        self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
+            self?.loginPullOfferLoader.loadPullOffers()
+        }
+    }
+    
+    @objc func didBecomeActive() {
+        let biometryType = self.getBiometryTypeAvailable()
+        guard currentBiometryType != biometryType else { return }
+        self.currentBiometryType = biometryType
+        view?.applicationDidBecomeActive()
     }
 }
 
@@ -219,10 +328,8 @@ extension PLRememberedLoginPinPresenter: PLLoginPresenterErrorHandlerProtocol {
         case .other(let description):
             switch description {
             case "TEMPORARY_LOCKED":
-                self.view?.dismissLoading(completion: { [weak self] in
-                    self?.trackEvent(.userPermanentlyBlocked)
-                    self?.view?.showAccountPermanentlyBlockedDialog()
-                })
+                self.trackEvent(.userPermanentlyBlocked)
+                self.view?.showDialog(.accountPermanentlyBlocked)
                 return
             default:
                 break
@@ -230,10 +337,7 @@ extension PLRememberedLoginPinPresenter: PLLoginPresenterErrorHandlerProtocol {
         default:
             break
         }
-        self.view?.dismissLoading(completion: { [weak self] in
-            self?.view?.showUnauthorizedError()
-        })
-
+        self.view?.showDialog(.unauthorized)
     }
 }
 
@@ -242,7 +346,12 @@ extension PLRememberedLoginPinPresenter: AutomaticScreenActionTrackable {
         return self.dependenciesResolver.resolve(for: TrackerManager.self)
     }
 
-    var trackerPage: PLRememberedLoginPinPage {
-        return PLRememberedLoginPinPage()
+    var trackerPage: PLRememberedLoginPage {
+        if self.view?.currentLoginType == PLRememberedLoginType.PIN {
+            return PLRememberedLoginPage(PLRememberedLoginPage.pin)
+        }
+        else {
+            return PLRememberedLoginPage(PLRememberedLoginPage.biometric)
+        }
     }
 }

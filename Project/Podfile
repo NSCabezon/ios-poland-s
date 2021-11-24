@@ -1,6 +1,6 @@
 platform :ios, '12.3'
 
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 
 # --------- General Core dependencies
 def core_dependencies
@@ -47,9 +47,7 @@ def core_dependencies
   pod 'Localization', :path => '../santander-one/Localization'
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives'
-  pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
-  pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
 end
 
 def legacy_libraries
@@ -87,10 +85,12 @@ def pl_libraries
   pod 'DemoAuthenticator', :path => '../Modules/Libraries/DemoAuthenticator'
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
   pod 'PLCommonOperatives', :path => '../Modules/Libraries/PLCommonOperatives'
+  pod 'PLCryptography', :path => '../Modules/Libraries/PLCryptography'
 end
 
 def pl_thirdparty_dependencies
   pod 'SwiftLint', '0.43.1'
+  pod 'Dynatrace', '~> 8.227'
 end
 
 # --------- Target configuration

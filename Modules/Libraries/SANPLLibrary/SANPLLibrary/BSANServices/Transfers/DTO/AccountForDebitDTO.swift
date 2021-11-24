@@ -9,6 +9,8 @@ import SANLegacyLibrary
 
 public protocol PolandAccountRepresentable: AccountRepresentable {
     var type: AccountForDebitTypeDTO? { get }
+    var sequencerNo: Int? { get }
+    var accountType: Int? { get }
 }
 
 struct AccountForDebitDTO: Codable {
@@ -37,6 +39,7 @@ struct AccountForDebitNameDTO: Codable {
 struct AccountDetailsAccountForDebitDTO: Codable {
     let interestRateIndicator: String?
     let sequenceNumber: Int?
+    let accountType: Int?
 }
 
 struct CreditCardAccountDetailsDTO: Codable {
@@ -52,7 +55,7 @@ struct TransactionMaskDTO: Codable {
 
 extension AccountForDebitDTO: AccountRepresentable {
     var currencyName: String? {
-        self.adaptBalanceToAmount(self.balance)?.currency?.currencyName
+        self.currencyCode
     }
     
     var alias: String? {
@@ -60,7 +63,7 @@ extension AccountForDebitDTO: AccountRepresentable {
     }
     
     var currentBalanceRepresentable: AmountRepresentable? {
-        self.adaptBalanceToAmount(self.balance)
+        self.adaptBalanceToAmount(self.availableFunds)
     }
     
     var ibanRepresentable: IBANRepresentable? {
@@ -89,7 +92,15 @@ extension AccountForDebitDTO: AccountRepresentable {
     }
 }
 
-extension AccountForDebitDTO: PolandAccountRepresentable {}
+extension AccountForDebitDTO: PolandAccountRepresentable {
+    var sequencerNo: Int? {
+        self.accountDetails?.sequenceNumber
+    }
+    
+    var accountType: Int? {
+        self.accountDetails?.accountType
+    }
+}
 
 private extension AccountForDebitDTO {
     func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {

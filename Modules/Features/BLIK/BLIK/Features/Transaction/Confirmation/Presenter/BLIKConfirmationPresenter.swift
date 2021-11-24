@@ -17,7 +17,7 @@ protocol BLIKConfirmationPresenterProtocol: MenuTextWrapperProtocol {
 
 final class BLIKConfirmationPresenter {
     weak var view: BLIKConfirmationViewProtocol?
-    private let viewModel: BLIKTransactionViewModel?
+    private var viewModel: BLIKTransactionViewModel?
     
     let dependenciesResolver: DependenciesResolver
     private let timer = TimerHandler()
@@ -26,26 +26,34 @@ final class BLIKConfirmationPresenter {
     private var cancelBLIKTransactionUseCase: CancelBLIKTransactionProtocol {
         dependenciesResolver.resolve()
     }
-    
     private var acceptBLIKTransactionUseCase: AcceptBLIKTransactionProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var viewModelProvider: BLIKTransactionViewModelProviding {
         dependenciesResolver.resolve()
     }
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
 
-    init(dependenciesResolver: DependenciesResolver, viewModel: BLIKTransactionViewModel?) {
+    init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
-        self.viewModel = viewModel
     }
 }
 
 extension BLIKConfirmationPresenter: BLIKConfirmationPresenterProtocol {
     func viewDidLoad() {
-        guard let viewModel = viewModel else { return }
-        let time = viewModel.remainingTime + (viewModel.transferType == .blikWebPurchases ? BLIK_WEB_PURCHASE_DURATION : BLIK_OTHER_DURATION)
-        startCountdown(totalDuration: time , remainingDuration: time)
-        view?.setViewModel(viewModel)
+        view?.showLoader()
+        viewModelProvider.getViewModel { [weak self] result in
+            self?.view?.hideLoader(completion: {
+                switch result {
+                case let .success(viewModel):
+                    self?.handleFetchedViewModel(viewModel)
+                case .failure:
+                    self?.showServiceInaccessibleError()
+                }
+            })
+        }
     }
     
     func didSelectClose() {
@@ -68,6 +76,13 @@ extension BLIKConfirmationPresenter: BLIKConfirmationPresenterProtocol {
 private extension BLIKConfirmationPresenter {
     var coordinator: BLIKConfirmationCoordinatorProtocol {
         return self.dependenciesResolver.resolve(for: BLIKConfirmationCoordinatorProtocol.self)
+    }
+    
+    func handleFetchedViewModel(_ viewModel: BLIKTransactionViewModel) {
+        self.viewModel = viewModel
+        let time = viewModel.remainingTime + (viewModel.transferType == .blikWebPurchases ? BLIK_WEB_PURCHASE_DURATION : BLIK_OTHER_DURATION)
+        startCountdown(totalDuration: time , remainingDuration: time)
+        view?.setViewModel(viewModel)
     }
     
     func startCountdown(totalDuration: TimeInterval, remainingDuration: TimeInterval) {
@@ -116,7 +131,7 @@ private extension BLIKConfirmationPresenter {
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 self?.view?.hideLoader() {
-                    self?.coordinator.goToSummary()
+                    self?.coordinator.goToSummary(with: viewModel)
                 }
             }
             .onError {[weak self] error in

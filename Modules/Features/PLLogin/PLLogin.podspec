@@ -32,6 +32,7 @@ Pod::Spec.new do |spec|
   spec.dependency "iOSPublicFiles"
   spec.dependency "SANPLLibrary"
   spec.dependency "PLLegacyAdapter"
-  spec.dependency 'SelfSignedCertificate'
+  spec.dependency 'PLCryptography'
   spec.dependency 'PLNotifications'
+  spec.dependency 'Dynatrace'
 end

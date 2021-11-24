@@ -112,6 +112,12 @@ extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
 }
 
 extension CharityTransferFormViewController: CharityTransferFormViewDelegate {
+    func didChangeForm() {
+        presenter.updateTransferFormViewModel(
+            with: formView.getCurrentFormViewModel()
+        )        
+    }
+    
     func changeAccountTapped() {
         presenter.showAccountSelector()
     }

@@ -5,16 +5,20 @@
 //  Created by Ernesto Fernandez Calles on 11/5/21.
 //
 
-import Foundation
-
 // *** NOTE: All changes except for addOauthAuthorization was copied from lates Spain repo ***
 // *** In case of future merge with their repo, all their chances should be taken ***
 
 public final class URLSessionNetworkProvider {
     private let dataProvider: BSANDataProvider
     private let urlSession: URLSession
+    private let trustedHeadersProvider: PLTrustedHeadersGenerable
     
-    public init(dataProvider: BSANDataProvider, isTrustInvalidCertificateEnabled: Bool) {
+    public init(
+        dataProvider: BSANDataProvider,
+        isTrustInvalidCertificateEnabled: Bool,
+        trustedHeadersProvider: PLTrustedHeadersGenerable
+    ) {
+        self.trustedHeadersProvider = trustedHeadersProvider
         self.dataProvider = dataProvider
         self.urlSession = URLSession(configuration: .default, delegate: URLSessionPinningDelegate(isTrustInvalidCertificateEnabled: isTrustInvalidCertificateEnabled), delegateQueue: nil)
     }
@@ -53,7 +57,6 @@ private extension URLSessionNetworkProvider {
         return urlRequest
     }
     
-
     func addHeaders<Request: NetworkProviderRequest>(_ urlRequest: inout URLRequest, request: Request) throws {
         request.headers?.forEach {
             urlRequest.addValue($0.value, forHTTPHeaderField: $0.key)
@@ -62,10 +65,13 @@ private extension URLSessionNetworkProvider {
         urlRequest.addValue("Santander PL ONE App", forHTTPHeaderField: "User-Agent")
         switch request.authorization {
         case .trustedDeviceOnly:
-            self.addTrustedDeviceHeadersIfExist(&urlRequest)
+            addTrustedDeviceHeadersIfExist(&urlRequest)
         case .oauth:
-            try self.addOauthAuthorization(&urlRequest)
-            self.addTrustedDeviceHeadersIfExist(&urlRequest)
+            try addOauthAuthorization(&urlRequest)
+            addTrustedDeviceHeadersIfExist(&urlRequest)
+        case .twoFactorOperation(let transactionParameters):
+            try addOauthAuthorization(&urlRequest)
+            addTrustedDeviceHeadersIfExist(&urlRequest,transactionParameters: transactionParameters)
         case .none:
             break
         }
@@ -79,8 +85,13 @@ private extension URLSessionNetworkProvider {
         urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
     }
 
-    func addTrustedDeviceHeadersIfExist(_ urlRequest: inout URLRequest) {
-        guard let trustedDeviceHeaders = self.dataProvider.getTrustedDeviceHeaders() else { return }
+    func addTrustedDeviceHeadersIfExist(_ urlRequest: inout URLRequest, transactionParameters: TransactionParameters? = nil) {
+        let isTrustedDevice = dataProvider.isTrustedDevice
+        guard isTrustedDevice,
+        let trustedDeviceHeaders = trustedHeadersProvider.getCurrentTrustedHeaders(
+                        with: transactionParameters,
+                        isTrustedDevice: isTrustedDevice
+                      ) else { return }
         urlRequest.addValue("\(trustedDeviceHeaders.parameters)", forHTTPHeaderField: "X-Trusted-Device-Parameters")
         urlRequest.addValue("\(trustedDeviceHeaders.time)", forHTTPHeaderField: "X-Trusted-Device-Time")
         urlRequest.addValue("\(trustedDeviceHeaders.appId)", forHTTPHeaderField: "X-Trusted-Device-App-Id")

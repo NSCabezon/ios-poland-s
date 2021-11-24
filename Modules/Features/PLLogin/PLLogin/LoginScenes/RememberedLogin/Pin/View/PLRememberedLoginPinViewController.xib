@@ -19,6 +19,7 @@
                 <outlet property="biometrySmallLabel" destination="Yq5-Hq-6H1" id="Zqk-kw-Scb"/>
                 <outlet property="blikButton" destination="peo-Od-Axf" id="Vfc-Se-iPS"/>
                 <outlet property="changeLoginTypeButton" destination="ogq-Hj-U3Q" id="fb4-ua-dEL"/>
+                <outlet property="environmentButton" destination="NjC-Co-O5c" id="ep3-Fc-Kaf"/>
                 <outlet property="numberPadView" destination="hnu-9W-w8w" id="DXC-fG-bfu"/>
                 <outlet property="pinTextField" destination="oAB-0d-3F3" id="ec3-Uc-qcZ"/>
                 <outlet property="sanIconImageView" destination="OTJ-lN-xZ3" id="v9K-V5-3zR"/>
@@ -120,6 +121,15 @@
                         <constraint firstAttribute="height" constant="65" id="apP-Fi-Plp"/>
                     </constraints>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NjC-Co-O5c">
+                    <rect key="frame" x="384" y="187" width="30" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="wzV-Qd-72K"/>
+                    </constraints>
+                    <connections>
+                        <action selector="didSelectChooseEnvironment:" destination="-1" eventType="touchUpInside" id="E0h-HZ-3YK"/>
+                    </connections>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="peo-Od-Axf" userLabel="BlikButton">
                     <rect key="frame" x="156.5" y="807" width="101" height="48"/>
                     <constraints>
@@ -139,6 +149,7 @@
                 <constraint firstItem="oAB-0d-3F3" firstAttribute="leading" secondItem="hnu-9W-w8w" secondAttribute="leading" id="74J-00-dxz"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hnu-9W-w8w" secondAttribute="trailing" constant="35" id="7GF-9h-qNO"/>
                 <constraint firstItem="oAB-0d-3F3" firstAttribute="trailing" secondItem="hnu-9W-w8w" secondAttribute="trailing" id="9FG-Kk-Th0"/>
+                <constraint firstItem="NjC-Co-O5c" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="AwZ-Ja-0T9"/>
                 <constraint firstItem="04H-MO-dch" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FY0-xr-CsG"/>
                 <constraint firstItem="dpu-gc-Miv" firstAttribute="top" secondItem="OTJ-lN-xZ3" secondAttribute="bottom" constant="8" id="FiD-9K-KkB"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="top" secondItem="OTJ-lN-xZ3" secondAttribute="top" constant="-10" id="HnX-st-9Zb"/>
@@ -147,6 +158,7 @@
                 <constraint firstItem="Yq5-Hq-6H1" firstAttribute="top" secondItem="ogq-Hj-U3Q" secondAttribute="top" id="M6q-lh-UzM"/>
                 <constraint firstAttribute="trailing" secondItem="AOh-U0-Lkp" secondAttribute="trailing" id="MUc-tB-dH2"/>
                 <constraint firstItem="Yq5-Hq-6H1" firstAttribute="bottom" secondItem="ogq-Hj-U3Q" secondAttribute="bottom" id="NAN-eh-K5M"/>
+                <constraint firstItem="NjC-Co-O5c" firstAttribute="top" secondItem="AOh-U0-Lkp" secondAttribute="bottom" constant="10" id="RVf-rR-tma"/>
                 <constraint firstItem="hnu-9W-w8w" firstAttribute="top" secondItem="dpu-gc-Miv" secondAttribute="bottom" constant="71" id="U0I-Gn-6Qf"/>
                 <constraint firstItem="04H-MO-dch" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="V5k-O0-OdO"/>
                 <constraint firstItem="cwV-RA-sXU" firstAttribute="bottom" secondItem="hnu-9W-w8w" secondAttribute="bottom" id="XSI-9p-WsC"/>

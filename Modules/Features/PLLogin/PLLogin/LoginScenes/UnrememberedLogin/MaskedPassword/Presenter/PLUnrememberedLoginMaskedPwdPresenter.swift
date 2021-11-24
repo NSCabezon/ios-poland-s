@@ -36,7 +36,7 @@ final class PLUnrememberedLoginMaskedPwdPresenter {
 extension PLUnrememberedLoginMaskedPwdPresenter: PLUnrememberedLoginMaskedPwdPresenterProtocol {
     func viewDidLoad() {
         let image: Bool = loginConfiguration.loginImageData != nil
-        self.trackerManager.trackScreen(screenId: PLUnrememberedLoginMaskedPasswordPage().page, extraParameters: [PLLoginTrackConstants().trustedImage: String(image), PLLoginTrackConstants().referer : PLUnrememberedLoginPage().page])
+        self.trackerManager.trackScreen(screenId: PLUnrememberedLoginMaskedPasswordPage().page, extraParameters: [PLLoginTrackConstants.trustedImage: String(image), PLLoginTrackConstants.referer : PLUnrememberedLoginPage().page])
         self.view?.setUserIdentifier(loginConfiguration.displayUserIdentifier)
 
         if let imageString = loginConfiguration.loginImageData,

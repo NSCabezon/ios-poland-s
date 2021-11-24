@@ -55,7 +55,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
     }
     
     func viewDidLoad() {
-        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceSMSAuthPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDeviceVoiceBotPage().page])
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDeviceSMSAuthPage().page, extraParameters: [PLLoginTrackConstants.referer : PLLoginTrustedDeviceVoiceBotPage().page])
         requestSMSConfirmationCode()
     }
     
@@ -115,7 +115,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
                 })
                 .onError { [weak self] error in
                     let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                    self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                     self?.handleError(error)
                 }
         })
@@ -159,7 +159,7 @@ final class PLTrustedDeviceSmsAuthPresenter: PLTrustedDeviceSmsAuthPresenterProt
             })
             .onError { [weak self] error in
                 let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
     }

@@ -99,6 +99,27 @@ public class PLUIInputCodeView: UIView {
         guard let first = self.inputCodeBoxArray.firstEmptyRequested() else { return false }
         return first.becomeFirstResponder()
     }
+    
+    public func setBoxView(position: NSInteger, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) {
+        let boxView = self.inputCodeBoxArray[position - 1]
+        boxView.layer.borderWidth = borderWidth
+        boxView.layer.borderColor = borderColor.cgColor
+        boxView.backgroundColor = backgroundColor
+        switch boxView.getPosition() {
+        case .first:
+            boxView.layer.cornerRadius = 6
+            boxView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        case .last:
+            boxView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            boxView.layer.cornerRadius = 6
+        default:
+            break
+        }
+    }
+    
+    public func getPin() -> String {
+        return self.inputCodeBoxArray.fulfilledText() ?? ""
+    }
 }
 
 // MARK: Private
@@ -112,6 +133,7 @@ private extension PLUIInputCodeView {
         for position in 1...facadeConfiguration.elementsNumber {
             self.inputCodeBoxArray.append(PLUIInputCodeBoxView(position: position,
                                                                showPosition: facadeConfiguration.showPositions,
+                                                               elementsNumber: facadeConfiguration.elementsNumber,
                                                                delegate: self,
                                                                requested: requestedPositions.isRequestedPosition(position: position),
                                                                isSecureEntry: facadeConfiguration.showSecureEntry,

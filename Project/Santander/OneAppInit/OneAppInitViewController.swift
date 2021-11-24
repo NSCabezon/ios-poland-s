@@ -12,15 +12,18 @@ import PLUI
 import Commons
 import PLCommons
 import PLCommonOperatives
+import DomainCommon
 
 final class OneAppInitViewController: UIViewController, ErrorPresentable {
     
     private weak var delegate: OneAppInitCoordinatorDelegate?
     private let modules: [OneAppInitModule]
     private let dependencyResolver: DependenciesResolver
-    
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
+    private var useCaseHandler: UseCaseHandler {
+        dependencyResolver.resolve(for: UseCaseHandler.self)
+    }
     
     init(dependencyResolver: DependenciesResolver, modules: [OneAppInitModule], delegate: OneAppInitCoordinatorDelegate?) {
         self.modules = modules
@@ -51,7 +54,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
         
         stackView.axis = .vertical
         stackView.spacing = 20.0
-        stackView.layoutMargins = .init(top: 20, left: 20, bottom: 20, right: 20)
+        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
         
         modules.forEach { module in
@@ -65,7 +68,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
                 if module == .charityTransfer {
                     guard let self = self else { return }
                     Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .charityTransfer, dependenciesResolver: self.dependencyResolver))
-                        .execute(on: DispatchQueue.global())
+                        .execute(on: self.useCaseHandler)
                         .onSuccess { accounts in
                             if accounts.isEmpty {
                                 self.showServiceInaccessibleMessage(onConfirm: nil)
@@ -73,7 +76,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
                             }
                             self.delegate?.selectCharityTransfer(accounts: accounts)
                         }
-                        .onError { error in
+                        .onError { _ in
                             self.showServiceInaccessibleMessage(onConfirm: nil)
                         }
                 }

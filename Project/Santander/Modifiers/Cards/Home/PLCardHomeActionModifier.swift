@@ -9,6 +9,7 @@ import Cards
 import Models
 import UI
 import Commons
+import CreditCardRepayment
 
 enum PLCardHomeActionIdentifier: String {
     case sendMoneyPL = "SendMoneyPoland"
@@ -178,7 +179,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private let exploreProductsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.exploreProductsPL.rawValue,
-                               localizedKey: "menu_link_contract",
+                               localizedKey: "frequentOperative_button_contract",
                                icon: "icnExploreProducts",
                                section: "contract",
                                location: "",
@@ -257,6 +258,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
             goToCardBlock(entity)
         case .onCard:
             goToCardUnblock(entity)
+        case cardRepaymentPL:
+            openCreditCardRepayment(creditCardEntity: entity)
         default:
             switch action.trackName {
             case PLCardHomeActionIdentifier.blockPL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
@@ -275,7 +278,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     
     func getCardData(identifier: PLCardWebViewType) -> PLAccountOtherOperativesData {
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-        guard let list = repository.get()?.cards_options, let data = getCardOtherOperativesEntity(list: list, identifier: identifier) else { return PLAccountOtherOperativesData(identifier: nil, link: nil, isAvailable: nil, httpMethod: nil, parameter: nil) }
+        guard let list = repository.get()?.cardsOptions, let data = getCardOtherOperativesEntity(list: list, identifier: identifier) else { return PLAccountOtherOperativesData(identifier: nil, link: nil, isAvailable: nil, httpMethod: nil, parameter: nil) }
         return data
     }
 
@@ -321,6 +324,11 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
         default:
             return .cancel
         }
+    }
+    
+    private func openCreditCardRepayment(creditCardEntity: CardEntity) {
+        let coordinator = self.dependenciesResolver.resolve(for: CreditCardRepaymentModuleCoordinator.self)
+        coordinator.start(with: creditCardEntity)
     }
 }
 

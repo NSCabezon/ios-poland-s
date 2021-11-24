@@ -36,3 +36,6 @@ APP_GROUPS_IDENTIFIER = group.es.bancosantander.mobility.ios.retail
 SHARED_KEYCHAIN_IDENTIFIER = JFX6PVNK48.pl.santander.oneappparticulares
 CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Intern.entitlements
 DEMO_AVAILABLE = YES
+DYNATRACE_APP_ID = af58c80c-f4c7-4fc8-bbed-a8038770c738
+DYNATRACE_AUTO_ACTION_TIMEOUT = 5000
+DYNATRACE_BEACON_URL = https:/$()/activegatetest.santanderbankpolska.pl:9999/mbeacon/7f01edd2-1060-487b-87d4-3acf42246e84

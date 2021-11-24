@@ -5,7 +5,6 @@
 //  Created by Marcos Álvarez Mesa on 23/6/21.
 //
 
-import Foundation
 
 public protocol PLTrustedDeviceManagerProtocol {
     func doBeforeLogin(_ parameters: BeforeLoginParameters) throws -> Result<BeforeLoginDTO, NetworkProviderError>
@@ -18,6 +17,9 @@ public protocol PLTrustedDeviceManagerProtocol {
     func getPendingChallenge(_ parameters: PendingChallengeParameters) throws -> Result<PendingChallengeDTO, NetworkProviderError>
     func doConfirmChallenge(_ parameters: ConfirmChallengeParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func getTrustedDeviceInfo(_ parameters: TrustedDeviceInfoParameters) throws -> Result<TrustedDeviceInfoDTO, NetworkProviderError>
+    func deleteDeviceId()
+    func storeDeviceId(_ deviceId: String)
+    func getDeviceId() -> String?
 }
 
 public final class PLTrustedDeviceManager {
@@ -106,5 +108,17 @@ extension PLTrustedDeviceManager: PLTrustedDeviceManagerProtocol {
 
     public func storeEncryptedUserKeys(_ keys: EncryptedUserKeys) {
         self.bsanDataProvider.storeEncryptedUserKeys(keys)
+    }
+    
+    public func deleteDeviceId() {
+        bsanDataProvider.deleteDeviceId()
+    }
+    
+    public func storeDeviceId(_ deviceId: String) {
+        bsanDataProvider.storeDeviceId(deviceId)
+    }
+    
+    public func getDeviceId() -> String? {
+        bsanDataProvider.getDeviceId()
     }
 }

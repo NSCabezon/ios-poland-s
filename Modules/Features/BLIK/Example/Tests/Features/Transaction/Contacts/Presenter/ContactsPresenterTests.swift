@@ -48,8 +48,8 @@ private extension ContactsPresenterTests {
     
     func setUpDependencies() {
     
-        dependencies.register(for: ContactsPresenterProtocol.self) {[queue] resolver in
-            ContactsPresenter(dependenciesResolver: resolver, queue: queue!, selectableContactDelegate: nil)
+        dependencies.register(for: ContactsPresenterProtocol.self) { resolver in
+            ContactsPresenter(dependenciesResolver: resolver, selectableContactDelegate: nil)
         }
 
         dependencies.register(for: GetContactsUseCaseProtocol.self) { resolver in

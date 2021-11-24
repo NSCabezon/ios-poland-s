@@ -78,13 +78,16 @@ extension ChequesCoordinator: ChequesCoordinatorProtocol {
     public func showChequePIN(didSetPin: @escaping () -> Void) {
         let controller = chequesPinFactory.create(
             coordinator: self,
-            didSetPin: didSetPin
+            didSetPin: { [weak self] in
+                self?.showSetPinSuccessAlert()
+                didSetPin()
+            }
         )
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
     public func showShareSheet(cheque: BlikCheque) {
-        let text = localized("pl_blik_text_cheque_message", [StringPlaceholder(.value, "\(cheque.id)")])
+        let text = localized("pl_blik_text_cheque_message", [StringPlaceholder(.value, "\(cheque.ticketCode)")])
         let controller = shareSheetFactory.create(type: .text(text.text))
         navigationController?.present(controller, animated: true)
     }

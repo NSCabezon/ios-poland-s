@@ -6,6 +6,7 @@ import Models
 import Commons
 import PLCommons
 import os
+import SANPLLibrary
 
 protocol PLTrustedDevicePinPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDevicePinViewProtocol? { get set }
@@ -42,14 +43,14 @@ private extension PLTrustedDevicePinPresenter {
     private var storeEncryptedUserKeyUseCase: PLTrustedDeviceStoreEncryptedUserKeyUseCase {
         self.dependenciesResolver.resolve(for: PLTrustedDeviceStoreEncryptedUserKeyUseCase.self)
     }
-    private var getSecIdentityUseCase: PLGetSecIdentityUseCase {
-        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase.self)
+    private var getSecIdentityUseCase: PLGetSecIdentityUseCase<LoginErrorType> {
+        self.dependenciesResolver.resolve(for: PLGetSecIdentityUseCase<LoginErrorType>.self)
     }
 }
 
 extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     func viewDidLoad() {
-        self.trackerManager.trackScreen(screenId: PLLoginTrustedDevicePinPage().page, extraParameters: [PLLoginTrackConstants().referer : PLLoginTrustedDeviceDeviceDataPage().page])
+        self.trackerManager.trackScreen(screenId: PLLoginTrustedDevicePinPage().page, extraParameters: [PLLoginTrackConstants.referer : PLLoginTrustedDeviceDeviceDataPage().page])
     }
 
     func registerSoftwareToken(with createBiometricToken: Bool, and PIN: String) {
@@ -111,7 +112,7 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
             .onError { [weak self] error in
                 os_log("❌ [TRUSTED-DEVICE][Register Software Token] Register did fail: %@", log: .default, type: .error, error.getErrorDesc() ?? "unknown error")
                 let httpErrorCode = self?.getHttpErrorCode(error) ?? ""
-                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants().errorCode : httpErrorCode, PLLoginTrackConstants().errorDescription : error.getErrorDesc() ?? ""])
+                self?.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.getErrorDesc() ?? ""])
                 self?.handleError(error)
             }
     }
@@ -139,7 +140,7 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
     }
 
     func trackInfoEvent(_ localizedKey: String) {
-        self.trackEvent(.info, parameters: [PLLoginTrackConstants().errorCode: "1000", PLLoginTrackConstants().errorDescription: localizedKey])
+        self.trackEvent(.info, parameters: [PLLoginTrackConstants.errorCode: "1000", PLLoginTrackConstants.errorDescription: localizedKey])
     }
 }
 

@@ -57,12 +57,12 @@ extension GetPLAccountOtherOperativesWebConfigurationUseCase {
         return clientId
     }
     
-    func generateParameters() throws -> [String : String] {
-        let access_token = getAccessToken()
+    func generateParameters() throws -> [String: String] {
+        let accessToken = getAccessToken()
         let clientId = getClientId()
         let language = getLanguage()
         let parameters = [
-            "access_token": access_token,
+            "access_token": accessToken,
             "clientId": clientId,
             "mlang": language,
             "oneApp": "true"

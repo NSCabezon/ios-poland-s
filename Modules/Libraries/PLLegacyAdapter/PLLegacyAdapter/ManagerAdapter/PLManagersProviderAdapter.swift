@@ -110,7 +110,7 @@ public final class PLManagersProviderAdapter {
         self.loansManager = PLLoansManagerAdapter(loanManager: self.plManagersProvider.getLoansManager(), bsanDataProvider: bsanDataProvider)
         self.pensionsManager = PLPensionsManagerAdapter()
         self.favouriteTransfersManager = PLFavouriteTransfersManagerAdapter()
-        self.sessionManagerApadater = PLSessionManagerAdapter(bsanDataProvider: bsanDataProvider)
+        self.sessionManagerApadater = PLSessionManagerAdapter(bsanDataProvider: bsanDataProvider, loginManagerProtocol: self.plManagersProvider.getLoginManager())
         self.authManager = PLAuthManagerAdapter()
         self.sendMoneyManagerAdapter = PLSendMoneyManagerAdapter()
         self.ecommerceManagerAdapter = PLEcommerceManagerAdapter()

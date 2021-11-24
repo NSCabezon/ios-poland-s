@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>DTXApplicationID</key>
+	<string>$(DYNATRACE_APP_ID)</string>
+	<key>DTXAutoActionTimeoutMilliseconds</key>
+	<string>$(DYNATRACE_AUTO_ACTION_TIMEOUT)</string>
+	<key>DTXBeaconURL</key>
+	<string>$(DYNATRACE_BEACON_URL)</string>
+	<key>DTXUserOptIn</key>
+	<false/>
 	<key>APP_CENTER_IDENTIFIER</key>
 	<string>$(APP_CENTER_IDENTIFIER)</string>
 	<key>APP_GROUPS_IDENTIFIER</key>
@@ -21,11 +29,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.96</string>
+	<string>0.0.108</string>
 	<key>CFBundleVersion</key>
-	<string>96</string>
-	<key>DEMO_AVAILABLE</key>
-	<string>$(DEMO_AVAILABLE)</string>
+	<string>108</string>
 	<key>DEFAULT_DEMO_USER</key>
 	<string>$(DEFAULT_DEMO_USER)</string>
 	<key>DEFAULT_MAGIC</key>
@@ -48,6 +54,8 @@
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kontaktów?</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -87,7 +95,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-    <key>NSFaceIDUsageDescription</key>
-    <string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 </dict>
 </plist>

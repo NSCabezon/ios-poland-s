@@ -12,9 +12,14 @@ public enum BSANDatabaseKey : String {
     case TrustedDeviceHeaders
     case TrustedDeviceInfo
     case TrustedDeviceUserKeys
+    case DeviceId
 }
 
 public class BSANDataProvider {
+    
+    public var isTrustedDevice: Bool {
+        return getTrustedDeviceHeaders() != nil
+    }
     
     private var dataRepository: DataRepository
 
@@ -419,6 +424,31 @@ public class BSANDataProvider {
         self.dataRepository.remove(AuthCredentials.self)
         self.dataRepository.remove(SessionData.self)
     }
+    
+    public func storeDeviceId(_ deviceId: String) {
+             dataRepository.store(
+                 deviceId,
+                 BSANDatabaseKey.DeviceId.rawValue,
+                 .createPersistentPolicy()
+             )
+             objc_sync_exit(dataRepository)
+         }
+
+         public func getDeviceId() -> String? {
+             dataRepository.get(
+                 String.self,
+                 BSANDatabaseKey.DeviceId.rawValue,
+                 .createPersistentPolicy()
+             )
+         }
+
+         public func deleteDeviceId() {
+             self.dataRepository.remove(
+                 String.self,
+                 BSANDatabaseKey.DeviceId.rawValue,
+                 .createPersistentPolicy()
+             )
+         }
 }
 
 //MARK: -

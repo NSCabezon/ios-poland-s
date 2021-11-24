@@ -1,7 +1,9 @@
 import Models
 import Commons
+import DomainCommon
 import SANPLLibrary
 import PLUI
+import DomainCommon
 
 protocol MobileTransferFormPresenterProtocol {
     var view: MobileTransferFormViewControllerProtocol? { get set }
@@ -11,7 +13,7 @@ protocol MobileTransferFormPresenterProtocol {
     func showAccountSelectorScreen()
     func showContacts()
     func hasUserOneAccount() -> Bool
-    func startValidation(for form: MobileTransferForm)
+    func startValidation(for form: MobileTransferForm, validateNumber: Bool)
     func verifyPhoneNumber(phoneNumber: String)
     func viewDidLoad()
 }
@@ -29,9 +31,10 @@ final class MobileTransferFormPresenter {
     private var currentForm: MobileTransferForm?
     private var formValidator: MobileTransferFormValidator
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
-    private let queue: DispatchQueue
     private let noBlikContactDialog = NoBlikContactDialog()
-    
+    private var useCaseHandler: UseCaseHandler {
+        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
     private var p2pAliasUseCase: P2pAliasProtocol {
         dependenciesResolver.resolve()
     }
@@ -39,20 +42,18 @@ final class MobileTransferFormPresenter {
     init(dependenciesResolver: DependenciesResolver,
          accounts: [SelectableAccountViewModel],
          contact: Contact?,
-         formValidator: MobileTransferFormValidator,
-         queue: DispatchQueue = .global()) {
+         formValidator: MobileTransferFormValidator) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.contact = contact
         self.formValidator = formValidator
-        self.queue = queue
     }
 }
 
 private extension MobileTransferFormPresenter {
-    @objc func validationAction() {
+    func validationAction(validateNumber: Bool) {
         guard let form = currentForm else { return }
-        let invalidMessages = formValidator.validateForm(form: form)
+        let invalidMessages = formValidator.validateForm(form: form, validateNumber: validateNumber)
         view?.showValidationMessages(messages: invalidMessages)
     }
     
@@ -105,10 +106,10 @@ extension MobileTransferFormPresenter: MobileTransferFormPresenterProtocol, Mobi
         accounts.count == 1
     }
     
-    func startValidation(for form: MobileTransferForm) {
+    func startValidation(for form: MobileTransferForm, validateNumber: Bool) {
         currentForm = form
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.validationAction()
+            self?.validationAction(validateNumber: validateNumber)
         }
     }
     
@@ -120,7 +121,7 @@ extension MobileTransferFormPresenter: MobileTransferFormPresenterProtocol, Mobi
         view?.showLoader()
         
         Scenario(useCase: p2pAliasUseCase, input: .init(msisdn: phoneNumber))
-            .execute(on: queue)
+            .execute(on: useCaseHandler)
             .onSuccess { [weak self] result in
                 self?.view?.hideLoader(completion: {
                     let mapper = MobileTransferMapper()

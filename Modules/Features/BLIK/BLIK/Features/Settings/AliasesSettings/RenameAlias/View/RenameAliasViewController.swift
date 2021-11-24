@@ -9,13 +9,16 @@ import Commons
 import UI
 import PLUI
 
-protocol RenameAliasView: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
+protocol RenameAliasViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
     func setAliasLabel(_ label: String)
     func setAliasLabelError(_ errorMessage: String?)
+    func showInvalidFormMessages(_ messages: InvalidAliasChangeNameMessages)
+    func clearValidationMessages()
 }
 
 final class RenameAliasViewController: UIViewController {
     private let aliasLabelTextField = LisboaTextFieldWithErrorView()
+    private let aliasCharactersLimit = UILabel()
     private let bottomButton = BottomButtonView()
     private let presenter: RenameAliasPresenterProtocol
     
@@ -35,10 +38,15 @@ final class RenameAliasViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         presenter.viewDidLoad()
+        configureDelegates()
+    }
+    
+    private func configureDelegates() {
+        aliasLabelTextField.textField.updatableDelegate = self
     }
 }
 
-extension RenameAliasViewController: RenameAliasView {
+extension RenameAliasViewController: RenameAliasViewProtocol {
     func setAliasLabel(_ label: String) {
         DispatchQueue.main.async {
             self.aliasLabelTextField.textField.setText(label)
@@ -54,6 +62,20 @@ extension RenameAliasViewController: RenameAliasView {
             }
         }
     }
+    
+    func showInvalidFormMessages(_ messages: InvalidAliasChangeNameMessages) {
+        if messages.invalidNameMessage == nil {
+            aliasLabelTextField.hideError()
+        } else {
+            aliasLabelTextField.showError(messages.invalidNameMessage)
+        }
+        bottomButton.disableButton()
+    }
+    
+    func clearValidationMessages() {
+        aliasLabelTextField.hideError()
+        bottomButton.enableButton()
+    }
 }
 
 private extension RenameAliasViewController {
@@ -62,6 +84,7 @@ private extension RenameAliasViewController {
         configureSubviews()
         configureStyling()
         configureTextField()
+        configureAliasCharactersLimit()
         configureBottomButton()
         configureKeyboardDismissGesture()
     }
@@ -78,7 +101,7 @@ private extension RenameAliasViewController {
     }
     
     func configureSubviews() {
-        [aliasLabelTextField, bottomButton].forEach {
+        [aliasLabelTextField, aliasCharactersLimit, bottomButton].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -88,7 +111,10 @@ private extension RenameAliasViewController {
             aliasLabelTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             aliasLabelTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
-            bottomButton.topAnchor.constraint(greaterThanOrEqualTo: aliasLabelTextField.bottomAnchor, constant: 0),
+            aliasCharactersLimit.topAnchor.constraint(equalTo: aliasLabelTextField.bottomAnchor, constant: 8),
+            aliasCharactersLimit.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            aliasCharactersLimit.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            
             bottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -101,6 +127,31 @@ private extension RenameAliasViewController {
     
     func configureTextField() {
         aliasLabelTextField.textField.placeholder = localized("pl_blik_label_newName")
+        
+        let nameFormatter = AliasNameTextFieldFormatter(maxLength: 20)
+        aliasLabelTextField.textField.setEditingStyle(
+            .writable(
+                configuration: .init(
+                    type: .floatingTitle,
+                    formatter: nameFormatter,
+                    disabledActions: [],
+                    keyboardReturnAction: nil,
+                    textFieldDelegate: nil,
+                    textfieldCustomizationBlock: nil
+                )
+            )
+        )
+    }
+    
+    func configureAliasCharactersLimit() {
+        aliasCharactersLimit.textColor = .brownishGray
+        aliasCharactersLimit.font = .santander(
+            family: .micro,
+            type: .regular,
+            size: 14
+        )
+        aliasCharactersLimit.numberOfLines = 1
+        aliasCharactersLimit.text = localized("pl_blik_text_aliasMaxSign")
     }
     
     func configureBottomButton() {
@@ -108,5 +159,11 @@ private extension RenameAliasViewController {
             let label = self?.aliasLabelTextField.textField.text ?? ""
             self?.presenter.didPressSave(with: label)
         }
+    }
+}
+
+extension RenameAliasViewController: UpdatableTextFieldDelegate{
+    func updatableTextFieldDidUpdate() {
+        presenter.didUpdateNameAlias(name: aliasLabelTextField.textField.text)
     }
 }

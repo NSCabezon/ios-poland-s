@@ -2,7 +2,7 @@
     "12345678Z": {
         "0": [
             {
-                "number": "45109014894000000121577326",
+                "number": "PL45109014894000000121577326",
                 "id": "3053765",
                 "currencyCode": "PLN",
                 "name": {
@@ -43,7 +43,7 @@
                 }
             },
             {
-                "number": "45109010430000000142215912",
+                "number": "PL45109010430000000142215912",
                 "id": "142215912",
                 "currencyCode": "PLN",
                 "name": {
@@ -74,7 +74,7 @@
                 }
             },
             {
-                "number": "82109025900000000142238836",
+                "number": "PL82109025900000000142238836",
                 "id": "142238836",
                 "currencyCode": "PLN",
                 "name": {
@@ -104,7 +104,7 @@
                 }
             },
             {
-                "number": "16109025900000000142353999",
+                "number": "PL16109025900000000142353999",
                 "id": "142353999",
                 "currencyCode": "PLN",
                 "name": {
@@ -135,7 +135,7 @@
                 }
             },
             {
-                "number": "59109025900000000142354001",
+                "number": "PL59109025900000000142354001",
                 "id": "142354001",
                 "currencyCode": "PLN",
                 "name": {
@@ -166,7 +166,7 @@
                 }
             },
             {
-                "number": "04109025900000000142686828",
+                "number": "PL04109025900000000142686828",
                 "id": "142686828",
                 "currencyCode": "PLN",
                 "name": {
@@ -193,6 +193,62 @@
                 "transactionMask": {
                     "debit": "11101001000111111101100011100110011010011000100001100000000000000000000000000000",
                     "credit": "10000100000010001000000000100000000000000000000000000000000000000000000000000000"
+                }
+            },
+            {
+                "number":"PL45109014894000000121577326",
+                "id":"142367733",
+                "currencyCode":"PLN",
+                "name":{
+                    "source":"Konto Private Banking",
+                    "description":"Konto Private Banking",
+                    "userDefined":""
+                },
+                "type":"PERSONAL",
+                "balance":{
+                    "value":109.10,
+                    "currencyCode":"PLN"
+                },
+                "availableFunds":{
+                    "value":109.10,
+                    "currencyCode":"PLN"
+                },
+                "lastUpdate":"2021-08-25",
+                "systemId":3,
+                "defaultForPayments":false,
+                "role":"OWNER",
+                "accountDetails":{
+                    "interestRateIndicator":"VALUE",
+                    "accountType":-101,
+                    "sequenceNumber":1
+                }
+            },
+            {
+                "number":"PL63109014894000000121600961",
+                "id":"142367779",
+                "currencyCode":"PLN",
+                "name":{
+                    "source":"Konto Jakie Chcę",
+                    "description":"Konto Jakie Chcę",
+                    "userDefined":""
+                },
+                "type":"PERSONAL",
+                "balance":{
+                    "value":109391.64,
+                    "currencyCode":"PLN"
+                },
+                "availableFunds":{
+                    "value":109391.64,
+                    "currencyCode":"PLN"
+                },
+                "lastUpdate":"2021-08-26",
+                "systemId":3,
+                "defaultForPayments":false,
+                "role":"OWNER",
+                "accountDetails":{
+                    "interestRateIndicator":"VALUE",
+                    "accountType":-101,
+                    "sequenceNumber":2
                 }
             }
         ]

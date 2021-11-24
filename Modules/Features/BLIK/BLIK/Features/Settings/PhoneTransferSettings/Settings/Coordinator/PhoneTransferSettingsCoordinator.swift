@@ -17,7 +17,7 @@ import PLCommons
 protocol PhoneTransferSettingsCoordinatorProtocol: ModuleCoordinator {
     func showPhoneNumberUnregisterConfirmation(onConfirm: @escaping () -> Void)
     func showPhoneNumberRegistrationForm()
-    func showAccountSelector(with accounts: [BlikCustomerAccount])
+    func showAccountSelector(with accounts: [BlikCustomerAccount], selectedAccountNumber: String)
     func showSmsConfirmationScreen(selectedAccountNumber: String)
     func goBackToBlikSettingsFromSmsScreen()
     func showTransferSettingsAfterPhoneRegistrationFromFormScreen()
@@ -88,12 +88,13 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    func showAccountSelector(with accounts: [BlikCustomerAccount]) {
+    func showAccountSelector(with accounts: [BlikCustomerAccount], selectedAccountNumber: String) {
         let coordinator = AccountSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             screenLocationConfiguration: .mobileTransferSettings,
             accounts: accounts,
+            selectedAccountNumber: selectedAccountNumber,
             accountSelectionHandler: { [weak self] account in
                 self?.registrationFormDelegate?.didSelectAccount(account)
             }

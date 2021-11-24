@@ -24,7 +24,7 @@ public struct MobileTransferViewModel {
     
     var dateString: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         return dateFormatter.string(from: transfer.date ?? Date())
     }
     
@@ -55,7 +55,11 @@ public struct MobileTransferViewModel {
     }
 
     func amountString(withAmountSize size: CGFloat) -> NSAttributedString {
-        AmountFormatter.amountString(amount: transfer.amount ?? 0, currency: .złoty, withAmountSize: size)
+        AmountFormatter.amountString(
+            amount: transfer.amount ?? 0,
+            currency: .złoty,
+            withAmountSize: size
+        )
     }
     
     var accountName: String {
@@ -71,7 +75,7 @@ public struct MobileTransferViewModel {
         transfer.account
     }
     
-    var amount: Double {
+    var amount: Decimal {
         transfer.amount ?? 0
     }
     

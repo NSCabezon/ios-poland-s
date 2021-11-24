@@ -5,6 +5,7 @@
 
 import XCTest
 import SANLegacyLibrary
+import CoreDomain
 @testable import SANPLLibrary
 
 class PLTransferManagerTest: Tests {
@@ -94,15 +95,14 @@ class PLTransferManagerTest: Tests {
         }
     }
     
-    func test_doIBANValidation_shouldReturnAccountOwnerData() {
+    func test_doIBANValidation_shouldReturnIsInternalAccount() {
         self.setUpDemoUser()
         let accountNumber = "09109023980000000135424612"
         let branchId = 10902398
         let result = try? transferManager.doIBANValidation(IBANValidationParameters(accountNumber: accountNumber, branchId: "\(branchId)"))
         switch result {
         case .success(let response):
-            let plResponse = response as? PLValidateAccountTransferRepresentable
-            XCTAssert(plResponse?.number == accountNumber)
+            XCTAssert(!response.isExternal)
         case .failure(let error):
             print("Error .\(error.localizedDescription)")
             XCTFail("Not validate IBAN - Failure")
@@ -128,4 +128,35 @@ class PLTransferManagerTest: Tests {
         }
     }
     
+    func test_confirmTransfer_shouldReturOkResonse() {
+        self.setUpDemoUser()
+        let parameters: GenericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: nil, debitAmountData: nil, creditAmountData: nil, debitAccountData: nil, creditAccountData: nil, signData: nil, title: nil, type: nil, transferType: nil)
+        let result = try? transferManager.sendConfirmation(parameters)
+        switch result {
+        case .success(let response):
+            XCTAssert(response.state == "ACCEPTED")
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Error confirming transfer - Failure")
+        default:
+            XCTFail("Error confirming transfer")
+        }
+    }
+    
+    func test_checkTransactionAvailability_shouldReturNonEmptyFeeList() {
+        self.setUpDemoUser()
+        let iban = "PL12109010430000000142742925"
+        let amount: Decimal = 200
+        let parameters = CheckTransactionParameters(customerProfile: "CEKE_3", transactionAmount: amount, hasSplitPayment: false)
+        let result = try? transferManager.checkTransaction(parameters: parameters, accountReceiver: iban)
+        switch result {
+        case .success(let response):
+            XCTAssert((response.blueCashStatusCode != nil) != false)
+        case .failure(let error):
+            print("Error .\(error.localizedDescription)")
+            XCTFail("Not getting fee transfer - Failure")
+        default:
+            XCTFail("Not getting fee transfer")
+        }
+    }
 }

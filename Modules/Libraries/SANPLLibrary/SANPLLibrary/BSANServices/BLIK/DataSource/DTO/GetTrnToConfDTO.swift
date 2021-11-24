@@ -9,15 +9,18 @@ public struct GetTrnToConfDTO: Decodable {
     public let transferType: TransferType
     public let merchant: Merchant?
     public let amount: Amount
+    public let aliases: AliasData
     
     public struct Merchant: Decodable {
         public let shortName: String?
         public let address: String?
         public let city: String?
+        public let merchantId: String?
+        public let acquirerId: String?
     }
     
     public struct Amount: Decodable {
-        public let amount: Double
+        public let amount: Decimal
     }
     
     public enum TransferType: String, Decodable {
@@ -29,5 +32,38 @@ public struct GetTrnToConfDTO: Decodable {
         case blikPosRefund = "BLIK_POS_REFUND"
         case blikWebRefund = "BLIK_WEB_REFUND"
         case blikAtmWithdrawalPsp = "BLIK_ATM_WITHDRAWAL_PSP"
+    }
+    
+    public struct AliasData: Decodable {
+        public let proposal: [AliasProposal]
+        public let auth: AliasAuth?
+    }
+    
+    public struct AliasProposal: Decodable {
+        public let alias: String
+        public let type: AliasType
+        public let label: String
+    }
+    
+    public struct AliasAuth: Decodable {
+        public let type: AliasType?
+        public let label: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case type, label
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try? decoder.container(keyedBy: CodingKeys.self)
+            type = try? container?.decode(AliasType.self, forKey: .type)
+            label = try? container?.decode(String.self, forKey: .label)
+        }
+    }
+    
+    public enum AliasType: String, Decodable {
+        case md = "MD"
+        case uid = "UID"
+        case cookie = "COOKIE"
+        case hce = "HCE"
     }
 }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "08_nat_414x896@1x.jpg",
+      "filename" : "8.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "08_nat_828x1792@2x.jpg",
+      "filename" : "8@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bg_nature_8.jpg",
+      "filename" : "8@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

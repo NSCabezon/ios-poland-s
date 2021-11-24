@@ -9,6 +9,7 @@ import Foundation
 
 public protocol PLLoginManagerProtocol {
     func setDemoModeIfNeeded(for user: String) -> Bool
+    func isDemoUser(userId: String) -> Bool
     func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError>
     func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func getPersistedPubKey() throws -> PubKeyDTO
@@ -17,6 +18,7 @@ public protocol PLLoginManagerProtocol {
     func getAuthCredentials() throws -> AuthCredentials
     func getAppInfo() -> AppInfo?
     func setAppInfo(_ appInfo: AppInfo)
+    func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
 }
 
 public final class PLLoginManager {
@@ -32,6 +34,10 @@ public final class PLLoginManager {
 }
 
 extension PLLoginManager: PLLoginManagerProtocol {
+    
+    public func isDemoUser(userId: String) -> Bool {
+        return self.demoInterpreter.isDemoUser(userName: userId)
+    }
     
     public func setAppInfo(_ appInfo: AppInfo) {
         self.bsanDataProvider.storeAppInfo(appInfo)
@@ -79,6 +85,11 @@ extension PLLoginManager: PLLoginManagerProtocol {
             self.demoInterpreter.isDemoUser(userName: user) else { return false }
         self.bsanDataProvider.setDemoMode(true, user)
         return true
+    }
+
+    public func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        let result = try loginDataSource.doLogout()
+        return result
     }
 }
 

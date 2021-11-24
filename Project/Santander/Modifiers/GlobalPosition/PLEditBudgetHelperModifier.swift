@@ -5,7 +5,7 @@
 
 import Commons
 
-final class PLEditBudgetHelperModifier : EditBudgetHelperModifier {
+final class PLEditBudgetHelperModifier: EditBudgetHelperModifier {
     let maxValue: Int? = 5000
     let minValue: Int? = 1000
 }

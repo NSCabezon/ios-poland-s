@@ -40,11 +40,10 @@ final class GetHelpCenterConfigUseCase: UseCase<Void, GetHelpCenterConfigUseCase
                let section = makeExpandableHintSection(from: helpQuestions, for: clientProfile) {
                 sections.append(section)
             }
-            // TODO: Uncomment or remove (including not needed models) this section when BO decides
-            //sections.append(HelpCenterConfig.Section(
-            //    section: .inAppActions,
-            //    elements: [.blockCard, .yourCases]
-            //))
+            sections.append(HelpCenterConfig.Section(
+                section: .inAppActions,
+                elements: [.yourCases]
+            ))
             sections.append(HelpCenterConfig.Section(
                 section: .call,
                 elements: callElements
@@ -55,11 +54,6 @@ final class GetHelpCenterConfigUseCase: UseCase<Void, GetHelpCenterConfigUseCase
                     elements: advisorElements
                 ))
             }
-            // TODO: Uncomment or remove (including not needed models) this section when BO decides
-            //sections.append(HelpCenterConfig.Section(
-            //    section: .mail,
-            //    elements: [.mailContact]
-            //))
         }
         
         let config = HelpCenterConfig(sections: sections)

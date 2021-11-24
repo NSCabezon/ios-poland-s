@@ -6,6 +6,7 @@ import Operative
 protocol BLIKSummaryCoordinatorProtocol {
     func goToGlobalPosition()
     func goToMakeAnotherPayment()
+    func goToAliasRegistration(with registerAliasInput: RegisterAliasInput)
 }
 
 final class BLIKSummaryCoordinator: ModuleCoordinator {
@@ -40,6 +41,15 @@ extension BLIKSummaryCoordinator: BLIKSummaryCoordinatorProtocol {
             return
         }
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func goToAliasRegistration(with registerAliasInput: RegisterAliasInput) {
+        let coordinator = AliasRegistrationFormCoordinator(
+            registerAliasInput: registerAliasInput,
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController
+        )
+        coordinator.start()
     }
 }
 

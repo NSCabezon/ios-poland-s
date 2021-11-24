@@ -41,7 +41,7 @@ final class PLRememberedLoginConfirmChallengeUseCase: UseCase<PLRememberedLoginC
 }
 
 struct PLRememberedLoginConfirmChallengeUseCaseInput {
-    public let userId: String
-    public let authorizationId: String?
-    public let softwareTokenType, trustedDeviceCertificate, authorizationData: String
+    let userId: String
+    let authorizationId: String?
+    let softwareTokenType, trustedDeviceCertificate, authorizationData: String
 }

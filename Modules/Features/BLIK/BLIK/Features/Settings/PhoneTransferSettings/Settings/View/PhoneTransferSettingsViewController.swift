@@ -74,7 +74,7 @@ private extension PhoneTransferSettingsViewController {
     }
     
     func configureNavigationItem() {
-        NavigationBarBuilder(style: .white, title: .title(key: "#Przelew na telefon"))
+        NavigationBarBuilder(style: .white, title: .title(key: "pl_blik_title_payMobile"))
             .setLeftAction(.back(action: #selector(close)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
@@ -145,17 +145,17 @@ private extension PhoneTransferSettingsViewController {
     
     private func configureUnregisteredPhoneNumberLayout() {
         activateSingleButtonLayout()
-        singleButtonView.configure(title: "#Rejestruj numer") { [weak self] in
+        singleButtonView.configure(title: localized("pl_blik_button_registerNumb")) { [weak self] in
             self?.presenter.didPressRegisterPhoneNumber()
         }
     }
     
     private func configureRegisteredPhoneNumberLayout() {
         activateDualButtonLayout()
-        let firstButtonViewModel = BottomButtonViewModel(title: "#Usuń numer") { [weak self] in
+        let firstButtonViewModel = BottomButtonViewModel(title: localized("pl_blik_button_deleteNumb")) { [weak self] in
             self?.presenter.didPressRemovePhoneNumber()
         }
-        let secondButtonViewModel = BottomButtonViewModel(title: "#Zmień rachunek") { [weak self] in
+        let secondButtonViewModel = BottomButtonViewModel(title: localized("pl_blik_button_changeAccount")) { [weak self] in
             self?.presenter.didPressUpdateAccountNumber()
         }
         dualButtonView.configure(
@@ -166,7 +166,7 @@ private extension PhoneTransferSettingsViewController {
     
     private func configureExpiredPhoneNumberLayout() {
         activateSingleButtonLayout()
-        singleButtonView.configure(title: "#Aktualizuj numer") { [weak self] in
+        singleButtonView.configure(title: localized("pl_blik_button_updateNumb")) { [weak self] in
             self?.presenter.didPressUpdatePhoneNumber()
         }
     }

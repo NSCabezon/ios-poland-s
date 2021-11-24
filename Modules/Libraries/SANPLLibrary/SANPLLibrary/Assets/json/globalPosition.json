@@ -635,7 +635,70 @@
                     },
                     "lastUpdate": "2021-01-01"
                 }
-            ]
+            ],
+            "deposits": [
+                    {
+                        "number": "36109010140000000142717713",
+                        "accountId": {
+                            "id": "142717713",
+                            "systemId": 3
+                        },
+                        "currencyCode": "PLN",
+                        "name": {
+                            "description": "Lokata Mobilna",
+                            "userDefined": "Lokata Mobilna"
+                        },
+                        "role": "OWNER",
+                        "type": "TERM",
+                        "currentBalance": {
+                            "value": 10025.78,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 10025.78
+                        },
+                        "lastUpdate": "2021-01-19"
+                    },
+                    {
+                        "number": "21109010140000000142729235",
+                        "accountId": {
+                            "id": "142729235",
+                            "systemId": 3
+                        },
+                        "currencyCode": "PLN",
+                        "name": {
+                            "description": "eLokata",
+                            "userDefined": "eLokata"
+                        },
+                        "role": "OWNER",
+                        "type": "TERM",
+                        "currentBalance": {
+                            "value": 1000.27,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 1000.27
+                        },
+                        "lastUpdate": "2021-04-03"
+                    }
+                ],
+                "investmentFunds": [
+                    {
+                        "number": "00060402-08-0010",
+                        "accountId": {
+                            "id": "108617477",
+                            "systemId": 5
+                        },
+                        "currencyCode": "PLN",
+                        "name": {
+                            "description": "SANTANDER AKCJI ŚRODKOWEJ I WSCHODNIEJ EUROPY - PRODUKT STANDARDOWY",
+                            "userDefined": "SANTANDER AKCJI ŚRODKOWEJ I WSCHODNIEJ EUROPY - PRODUKT STANDARDOWY"
+                        },
+                        "role": "OWNER",
+                        "type": "INVESTMENT",
+                        "currentValue": {
+                            "value": 15450.94,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 15450.94
+                        }
+                    }
+                ]
         }
     }
 }

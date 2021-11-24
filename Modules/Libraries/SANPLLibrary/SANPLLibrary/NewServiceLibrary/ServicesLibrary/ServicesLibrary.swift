@@ -19,4 +19,8 @@ public final class ServicesLibrary {
     public var transfersRepository: PLTransfersRepository {
         return TransfersDataRepository(bsanTransferManager: self.bsanManagersProvider.getTransferManager())
     }
+    
+    public var oneAuthorizationProcessorRepository: PLOneAuthorizationProcessorRepository {
+        return OneAuthorizationProcessorDataRepository(bsanAuthorizationProcessorManager: self.bsanManagersProvider.getAuthorizationProcessorManager())
+    }
 }

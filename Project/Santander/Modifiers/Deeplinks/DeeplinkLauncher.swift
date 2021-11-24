@@ -10,6 +10,7 @@ import RetailLegacy
 import Models
 
 import PLHelpCenter
+import BLIK
 
 struct DeeplinkLauncher {
     private let dependenciesResolver: DependenciesResolver
@@ -21,23 +22,25 @@ struct DeeplinkLauncher {
 
 extension DeeplinkLauncher: CustomDeeplinkLauncher {
     func launch(deeplink: String, with userInfo: [DeepLinkUserInfoKeys: String]) {
-        guard let PolandDeepLink = PolandDeepLink(deeplink, userInfo: userInfo) else { return }
-        self.launch(PolandDeepLink: PolandDeepLink)
+        guard let polandDeepLink = PolandDeepLink(deeplink, userInfo: userInfo) else { return }
+        self.launch(polandDeepLink: polandDeepLink)
     }
     
     func launch(deeplink: DeepLinkEnumerationCapable) {
-        guard let PolandDeepLink = deeplink as? PolandDeepLink else { return }
-        self.launch(PolandDeepLink: PolandDeepLink)
+        guard let polandDeepLink = deeplink as? PolandDeepLink else { return }
+        self.launch(polandDeepLink: polandDeepLink)
     }
 }
 
 private extension DeeplinkLauncher {
-    func launch(PolandDeepLink: PolandDeepLink) {
-        switch PolandDeepLink {
+    func launch(polandDeepLink: PolandDeepLink) {
+        switch polandDeepLink {
         case .helpCenter:
             dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
         case .contact:
             dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
+        case .blikTransaction:
+            dependenciesResolver.resolve(for: DeeplinkedBLIKConfirmationCoordinator.self).start()
         }
     }
 }

@@ -11,6 +11,8 @@ import Commons
 import DomainCommon
 import SANPLLibrary
 import XCTest
+import SANLegacyLibrary
+import Models
 
 class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
     private let dependencies: DependenciesResolver & DependenciesInjector = DependenciesDefault()
@@ -25,7 +27,7 @@ class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
         // Arrange
         setUpPLManagerSuccessMock()
         let suite = dependencies.resolve(for: CreateCreditCardRepaymentFormUseCase.self)
-        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(accountNumber: nil)
+        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(creditCardEntity: nil)
         let expectation = expectation(description: "Should return 3 steps and form without selected card")
         
         // Act
@@ -52,7 +54,7 @@ class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
         // Arrange
         setUpPLManagerSuccessMock(maxCardLimit: 1)
         let suite = dependencies.resolve(for: CreateCreditCardRepaymentFormUseCase.self)
-        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(accountNumber: nil)
+        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(creditCardEntity: nil)
         let expectation = expectation(description: "Should return 2 steps and form with selected card")
         
         // Act
@@ -79,8 +81,10 @@ class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
         // Arrange
         setUpPLManagerSuccessMock()
         let suite = dependencies.resolve(for: CreateCreditCardRepaymentFormUseCase.self)
+        var cardDTO = SANLegacyLibrary.CardDTO()
+        cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: "545250P038230083")
         let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(
-            accountNumber: CreditCardAccountNumber(number: "63109014894000000121600961")
+            creditCardEntity: CardEntity(cardDTO)
         )
         let expectation = expectation(description: "Should return 2 steps and form with selected card")
         
@@ -94,6 +98,7 @@ class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
                 XCTAssertEqual(output.currency.currencyType, .złoty)
                 XCTAssertNotNil(output.form.creditCard)
                 XCTAssertEqual(output.form.creditCard?.relatedAccount.number, "63109014894000000121600961")
+                XCTAssertEqual(output.form.creditCard?.pan, "545250P038230083")
                 XCTAssertNotNil(output.form.account)
                 XCTAssertNotNil(output.form.repaymentType)
                 XCTAssertNotNil(output.form.amount)
@@ -109,7 +114,7 @@ class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
         // Arrange
         setUpPLManagerFailureMock()
         let suite = dependencies.resolve(for: CreateCreditCardRepaymentFormUseCase.self)
-        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(accountNumber: nil)
+        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(creditCardEntity: nil)
         let expectation = expectation(description: "Should return fetchingTrouble error on error")
         
         // Act
@@ -127,7 +132,7 @@ class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
         // Arrange
         setUpPLManagerSuccessMock(maxCardLimit: 0)
         let suite = dependencies.resolve(for: CreateCreditCardRepaymentFormUseCase.self)
-        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(accountNumber: nil)
+        let requestedValue = CreateCreditCardRepaymentFormUseCaseOkInput(creditCardEntity: nil)
         let expectation = expectation(description: "Should return featchingTrouble error on error")
         
         // Act

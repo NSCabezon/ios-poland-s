@@ -1,5 +1,6 @@
 import Foundation
 import Commons
+import PLCommons
 import DomainCommon
 import Models
 import SANPLLibrary
@@ -38,6 +39,7 @@ public class GetBasePLWebConfigurationUseCase: UseCase<GetBasePLWebConfiguration
         
         let configuration = BasePLWebConfiguration(
             initialURL: requestValues.initialURL,
+            httpMethod: requestValues.method,
             bodyParameters: bodyParameters,
             closingURLs: ["app://close"],
             webToolbarTitleKey: requestValues.webToolbarTitleKey,
@@ -56,17 +58,33 @@ extension GetBasePLWebConfigurationUseCase: GetBasePLWebConfigurationUseCaseProt
 
 public struct GetBasePLWebConfigurationUseCaseInput {
     let initialURL: String
+    let method: HTTPMethodType
     let isFullScreenEnabled: Bool
     let webToolbarTitleKey: String
     let pdfToolbarTitleKey: String
     
     public init(
         initialURL: String,
+        method: HTTPMethodType = .get,
         isFullScreenEnabled: Bool = true,
         webToolbarTitleKey: String = " ",
         pdfToolbarTitleKey: String = " "
     ) {
         self.initialURL = initialURL
+        self.method = method
+        self.isFullScreenEnabled = isFullScreenEnabled
+        self.webToolbarTitleKey = webToolbarTitleKey
+        self.pdfToolbarTitleKey = pdfToolbarTitleKey
+    }
+    
+    public init(
+        webViewLink: PLWebViewLink,
+        isFullScreenEnabled: Bool = true,
+        webToolbarTitleKey: String = " ",
+        pdfToolbarTitleKey: String = " "
+    ) {
+        self.initialURL = webViewLink.url
+        self.method = webViewLink.method
         self.isFullScreenEnabled = isFullScreenEnabled
         self.webToolbarTitleKey = webToolbarTitleKey
         self.pdfToolbarTitleKey = pdfToolbarTitleKey

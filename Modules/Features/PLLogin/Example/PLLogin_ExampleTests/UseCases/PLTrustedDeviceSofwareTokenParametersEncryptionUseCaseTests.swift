@@ -9,18 +9,25 @@ import XCTest
 import Commons
 import DomainCommon
 import CryptoSwift
+import SANPLLibrary
+import PLCryptography
 @testable import PLLogin
 
 class PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests: XCTestCase {
 
-    private let dependencies = DependenciesDefault()
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    private var dependencies: DependenciesDefault!
+    
+    override func setUp() {
+        super.setUp()
+        dependencies = DependenciesDefault()
+        dependencies.register(for: PLTrustedHeadersGenerable.self) { resolver in
+            return PLTrustedHeadersProvider(dependenciesResolver: resolver)
+        }
     }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
+    
+    override func tearDown() {
+        super.tearDown()
+        dependencies = nil
     }
 
     private let privateKey: SecKey = {
@@ -52,18 +59,5 @@ class PLTrustedDeviceSofwareTokenParametersEncryptionUseCaseTests: XCTestCase {
         } catch {
             XCTFail("PLPasswordEncryptionUseCase: throw")
         }
-    }
-
-    // PRAGMA MARK: Test separate and encrypt parameters string
-    func testDeviceParametersSeparation() {
-        enum Input {
-            static let parameters = "<2021-04-18 22:01:11.238><<AppId><1234567890abcdef12345678><deviceId><8b3339657561287d><manufacturer><samsung><model><SM-A600FN>>"
-        }
-        enum Output {
-            static let result = "PDIwMjEtMDQtMTggMjI6MDE6MTEuMjM4Pjw8QXBwSWQ+PDEyMzQ1Njc4OTBhYmNkZWYxMjM0NTY3OD5MSGwer2CoMmP72bsKJR4jiiLL0iN3tXvHVmT/o8l75Q=="
-        }
-
-        let encryptedParameters = PLSoftwareTokenParametersEncryptionUseCase.separateAndParciallyHashParameters(parameters: Input.parameters)
-        XCTAssertEqual(encryptedParameters?.toBase64(), Output.result)
     }
 }

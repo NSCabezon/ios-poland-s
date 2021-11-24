@@ -10,9 +10,13 @@ import CoreDomain
 public protocol PLTransfersManagerProtocol {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
-    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError>
+    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError>
     func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError>
+    func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
+    func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
+    func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -67,12 +71,21 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         }
     }
     
-    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<ValidateAccountTransferRepresentable, NetworkProviderError> {
+    func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError> {
         let result = try self.transferDataSource.doIBANValidation(parameters)
         switch result {
         case .success(let transferNational):
-            let validateAccountDTO: ValidateAccountTransferDTO = ValidateAccountTransferDTO(transferNationalRepresentable: transferNational, errorCode: nil)
-            return .success(validateAccountDTO)
+            return .success(transferNational)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
+        let result = try self.transferDataSource.getChallenge(parameters)
+        switch result {
+        case .success(let challengeDTO):
+            return .success(challengeDTO)
         case .failure(let error):
             return .failure(error)
         }
@@ -86,7 +99,7 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
                                                       channelId: Constants.channelId.rawValue,
                                                       operationAmount: amountValue,
                                                       operationCurrency: currency)
-        let destinationAccountNumber: String = parameters.destinationAccount.checkDigits + parameters.destinationAccount.codBban
+        let destinationAccountNumber: String = parameters.originAccount.checkDigits + parameters.originAccount.codBban
         let result = try self.transferDataSource.checkFinalFee(inputParameters, destinationAccount: destinationAccountNumber)
         switch result {
         case .success(let feeResponse):
@@ -94,6 +107,48 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
                 return .failure(NetworkProviderError.other)
             }
             return .success(feeRecords)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError> {
+        let result = try self.transferDataSource.sendConfirmation(parameters)
+        switch result {
+        case .success(let confirmTransactinDTO):
+            return .success(confirmTransactinDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError> {
+        let result = try self.transferDataSource.checkTransaction(parameters: parameters, accountReceiver: accountReceiver)
+        switch result {
+        case .success(let availabilityResponse):
+            return .success(availabilityResponse)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
+        guard let debitAmount = parameters.amount.value,
+              let debitAmountCurrency = parameters.amount.currencyRepresentable?.currencyName else {
+            return .failure(NetworkProviderError.other)
+        }
+        let language = try self.bsanDataProvider.getLanguageISO()
+        let iban = parameters.iban.countryCode + parameters.iban.checkDigits + parameters.iban.codBban
+        let amountParameters = NotifyAmountParameters(value: debitAmount, currencyCode: debitAmountCurrency)
+        let inputParameters = NotifyDeviceParameters(language: language,
+                                                     notificationSchemaId: parameters.notificationSchemaId,
+                                                     variables: ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias],
+                                                     challenge: parameters.challenge,
+                                                     softwareTokenType: nil,
+                                                     amount: amountParameters)
+        let result = try self.transferDataSource.notifyDevice(inputParameters)
+        switch result {
+        case .success(let authorizationDTO):
+            return .success(authorizationDTO)
         case .failure(let error):
             return .failure(error)
         }

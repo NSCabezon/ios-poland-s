@@ -91,6 +91,7 @@ private extension CreditCardRepaymentDetailsViewController {
     }
     
     @objc private func didSelectBack() {
+        view.endEditing(true)
         presenter.backButtonSelected()
     }
 }

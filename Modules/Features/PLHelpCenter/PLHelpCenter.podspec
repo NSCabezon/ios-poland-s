@@ -28,6 +28,7 @@ Pod::Spec.new do |s|
 
   s.dependency "Commons"
   s.dependency "PLCommons"
+  s.dependency "PLCommonOperatives"
   s.dependency "Models"
   s.dependency "UI"
   s.dependency "PLUI"

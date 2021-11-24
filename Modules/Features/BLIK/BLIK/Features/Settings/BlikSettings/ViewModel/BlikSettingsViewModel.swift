@@ -5,6 +5,8 @@
 //  Created by Piotr Mielcarzewicz on 20/07/2021.
 //
 
+import Commons
+
 typealias BlikSettingsMenuView = MenuView<BlikSettingsViewModel>
 
 enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
@@ -29,26 +31,26 @@ enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
     var title: String {
         switch self {
         case .aliasPayment:
-            return "#Zakupy bez kodu"
+            return localized("pl_blik_label_withoutCodeDesc")
         case .phoneTransfer:
-            return "#Przelew na telefon BLIK"
+            return localized("pl_blik_text_payMobile")
         case .transferLimits:
-            return "#Limity Transakcji BLIK"
+            return localized("pl_blik_text_transLimits")
         case .otherSettings:
-            return "#Pozostałe ustawienia BLIK"
+            return localized("pl_blik_text_otherSetting")
         }
     }
     
     var description: String {
         switch self {
         case .aliasPayment:
-            return "#Płać  szybciej i wygodniej w internecie."
+            return localized("pl_blik_text_withoutCode")
         case .phoneTransfer:
-            return "#Pieniądze  błyskawicznie na koncie odbiorcy."
+            return localized("pl_blik_label_payMobileDesc")
         case .transferLimits:
-            return "#Dzienne limity transakcji i czeków."
+            return localized("pl_blik_label_transLimitsDesc")
         case .otherSettings:
-            return "#Widoczność szczegółów transakcji."
+            return localized("pl_blik_label_otherSettingDesc")
         }
     }
 }

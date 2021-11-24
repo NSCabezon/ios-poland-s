@@ -28,8 +28,8 @@ extension CCRCardEntity {
         guard let relatedAccount = cardDTO.relatedAccount,
               let pan = cardDTO.virtualPan,
               let displayPan = cardDTO.maskedPan,
-              let totalPaymentAmount = relatedAccount.creditCardAccountDetails?.totalPaymentAmount,
-              let minimalPaymentAmount = relatedAccount.creditCardAccountDetails?.minimalPaymentAmount,
+              let totalPaymentAmount = cardDTO.creditCardAccountDetails?.totalRepaymentAmount,
+              let minimalPaymentAmount = cardDTO.creditCardAccountDetails?.minimumRepaymentAmount,
               let accountType = relatedAccount.accountDetails?.accountType,
               let sequenceNumber = relatedAccount.accountDetails?.sequenceNumber,
               let ccrRelatedAccount = CCRAccountEntity.mapAccountFromDTO(relatedAccount)

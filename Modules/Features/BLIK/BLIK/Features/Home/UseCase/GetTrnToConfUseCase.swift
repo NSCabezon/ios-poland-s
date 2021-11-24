@@ -6,6 +6,7 @@ import SANPLLibrary
 enum GetTrnToConfErrorResult: String {
     case watchStatus
     case endProcess
+    case noConnection
 }
 
 protocol GetTrnToConfProtocol: UseCase<Void, GetTrnToConfUseCaseOkOutput, StringErrorOutput> {}
@@ -24,15 +25,18 @@ final class GetTrnToConfUseCase: UseCase<Void, GetTrnToConfUseCaseOkOutput, Stri
         case .success(let transaction):
             return .ok(GetTrnToConfUseCaseOkOutput(transaction: transaction))
         case .failure(let error):
-            let errorCode = error.getErrorCode()
-            let errorBody: ErrorDTO? = error.getErrorBody()
-            
-            let shouldWatchStatus = errorCode == 510
-                && errorBody?.errorCode1 == .customerTypeDisabled
-                && errorBody?.errorCode2 == .noTrnToConf
-            let errorStatus: GetTrnToConfErrorResult = shouldWatchStatus ? .watchStatus : .endProcess
-
-            return .error(.init(errorStatus.rawValue))
+            switch error {
+            case .noConnection:
+                return .error(.init(GetTrnToConfErrorResult.noConnection.rawValue))
+            default:
+                let errorCode = error.getErrorCode()
+                let blikError = BlikError(with: error.getErrorBody())
+                let shouldWatchStatus = errorCode == 510
+                    && blikError?.errorCode1 == .customerTypeDisabled
+                    && blikError?.errorCode2 == .noTrnToConf
+                let errorStatus: GetTrnToConfErrorResult = shouldWatchStatus ? .watchStatus : .endProcess
+                return .error(.init(errorStatus.rawValue))
+            }
         }
     }
 }

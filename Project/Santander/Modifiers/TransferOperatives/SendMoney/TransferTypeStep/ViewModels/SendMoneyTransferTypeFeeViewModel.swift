@@ -14,7 +14,7 @@ final class SendMoneyTransferTypeFeeViewModel {
     let status: OneStatus
     
     init?(amount: AmountRepresentable?,
-         status: OneStatus) {
+          status: OneStatus) {
         guard let amount = amount else { return nil }
         self.amount = amount
         self.status = status

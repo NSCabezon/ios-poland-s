@@ -19,13 +19,26 @@ final class PLSessionUseCase: UseCase<Void, Void, PLUseCaseErrorOutput<LoginErro
         self.dependenciesResolver = dependenciesResolver
     }
     
-    private var sessionController: SessionControllerProtocol {
-        return self.dependenciesResolver.resolve(for: SessionControllerProtocol.self)
+    private var sessionManager: CoreSessionManager {
+        return self.dependenciesResolver.resolve(for: CoreSessionManager.self)
     }
+    
+    private lazy var sessionDataManager: SessionDataManager = {
+        let manager = self.dependenciesResolver.resolve(for: SessionDataManager.self)
+        manager.setDataManagerDelegate(self)
+        return manager
+    }()
 
     public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<Void, PLUseCaseErrorOutput<LoginErrorType>> {
-        sessionController.openSession(completion: nil)
-        sessionController.setLoginTime(date: Date())
+        sessionManager.sessionStarted(completion: nil)
+        sessionDataManager.load()
         return .ok()
+    }
+}
+
+
+extension PLSessionUseCase: SessionDataManagerDelegate {
+    func willLoadSession() {
+        dependenciesResolver.resolve(for: PfmControllerProtocol.self).cancelAll()
     }
 }

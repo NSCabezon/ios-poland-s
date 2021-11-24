@@ -46,28 +46,28 @@ final class ChequeDetailsViewModelMapper: ChequeDetailsViewModelMapperProtocol {
             items.append(
                 ChequeDetailsViewModel.Item(
                     name: localized("pl_blik_label_chequeStatus"),
-                    value: "#Aktywny"
+                    value: localized("pl_blik_text_chequeStatus_active")
                 )
             )
         case .canceled:
             items.append(
                 ChequeDetailsViewModel.Item(
                     name: localized("pl_blik_label_chequeStatus"),
-                    value: "#Anulowany"
+                    value: localized("pl_blik_text_chequeStatus_deleted")
                 )
             )
         case .rejected:
             items.append(
                 ChequeDetailsViewModel.Item(
                     name: localized("pl_blik_label_chequeStatus"),
-                    value: "#Odrzucony"
+                    value: localized("pl_blik_text_chequeStatus_rejected")
                 )
             )
         case .expired:
             items.append(
                 ChequeDetailsViewModel.Item(
                     name: localized("pl_blik_label_chequeStatus"),
-                    value: "#Niezrealizowany"
+                    value: localized("pl_blik_text_chequeStatus_expired")
                 )
             )
         case let .executed(money):
@@ -84,7 +84,7 @@ final class ChequeDetailsViewModelMapper: ChequeDetailsViewModelMapperProtocol {
             items.append(
                 ChequeDetailsViewModel.Item(
                     name: localized("pl_blik_label_chequeStatus"),
-                    value: "#Zrealizowany"
+                    value: localized("pl_blik_text_chequeStatus_used")
                 )
             )
         }

@@ -15,7 +15,7 @@ final class CreditCardRepaymentFormManagerFactoryMock {
     static func make(dependenciesResolver: DependenciesResolver) -> CreditCardRepaymentFormManagerMock {
         let useCase = dependenciesResolver.resolve(for: CreateCreditCardRepaymentFormUseCaseProtocol.self)
         let formManager = CreditCardRepaymentFormManagerMock()
-        if let output = try? useCase.executeUseCase(requestValues: .init(accountNumber: nil)).getOkResult() {
+        if let output = try? useCase.executeUseCase(requestValues: .init(creditCardEntity: nil)).getOkResult() {
             formManager.initialSetup(
                 form: output.form,
                 steps: output.steps,

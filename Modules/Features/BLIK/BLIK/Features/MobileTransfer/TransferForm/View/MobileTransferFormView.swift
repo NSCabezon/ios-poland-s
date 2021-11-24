@@ -4,9 +4,10 @@ import Commons
 import PLCommons
 import SANLegacyLibrary
 import IQKeyboardManagerSwift
+import Models
 
 protocol MobileTransferFormViewProtocol: AnyObject {
-    func didChangeForm()
+    func didChangeForm(phoneNumberStartedEdited: Bool)
     func showContacts()
 }
 
@@ -24,6 +25,7 @@ final class MobileTransferFormView: UIView {
     private let transferAmountAccessoryView = CurrencyAccessoryView()
     private let titleView = LisboaTextField()
     private let dateView = LisboaTextField()
+    private var phoneNumberDidStartedEdited = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +37,10 @@ final class MobileTransferFormView: UIView {
     }
     
     func getCurrentForm() -> MobileTransferForm {
-        let amount = Decimal(string: transferAmountTextField.text ?? "")
+        var amount: Decimal?
+        if let amountText = transferAmountTextField.text, !amountText.isEmpty {
+            amount = Decimal(string: amountText)
+        }
         let phoneNumber = phoneNumberTextField.text?.replacingOccurrences(of: " ", with: "")
         return MobileTransferForm(recipent: recipientView.text,
                                   phoneNumber: phoneNumber,
@@ -147,7 +152,7 @@ private extension MobileTransferFormView {
     func setUpDateTextField() {
         dateView.setPlaceholder(localized("pl_blik_label_dateTransfer"))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         dateView.setText(dateFormatter.string(from: Date()))
         let formatter = UIFormattedCustomTextField()
         dateView.setEditingStyle(.writable(configuration: .init(type: .floatingTitle,
@@ -222,7 +227,10 @@ private extension MobileTransferFormView {
 
 extension MobileTransferFormView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        delegate?.didChangeForm()
+        if !phoneNumberDidStartedEdited {
+            phoneNumberDidStartedEdited = !(phoneNumberTextField.text?.isEmpty ?? true)
+        }
+        delegate?.didChangeForm(phoneNumberStartedEdited: phoneNumberDidStartedEdited)
     }
 }
 

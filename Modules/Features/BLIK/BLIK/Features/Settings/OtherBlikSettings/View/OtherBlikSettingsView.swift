@@ -88,7 +88,7 @@ private extension OtherBlikSettingsView {
             detailsLabel.leadingAnchor.constraint(equalTo: detailsLabelTitle.leadingAnchor),
             
             detailsButton.centerYAnchor.constraint(equalTo: detailsLabel.centerYAnchor),
-            detailsButton.leadingAnchor.constraint(equalTo: detailsLabel.trailingAnchor),
+            detailsButton.leadingAnchor.constraint(equalTo: detailsLabel.trailingAnchor, constant: 16),
             detailsButton.trailingAnchor.constraint(equalTo: detailsLabelTitle.trailingAnchor),
             detailsButton.widthAnchor.constraint(equalToConstant: 43),
             detailsButton.heightAnchor.constraint(equalToConstant: 28),
@@ -109,8 +109,7 @@ private extension OtherBlikSettingsView {
             blikLabelTextField.topAnchor.constraint(equalTo: blikLabelInfoButton.bottomAnchor, constant: 8),
             blikLabelTextField.leadingAnchor.constraint(equalTo: detailsLabelTitle.leadingAnchor),
             blikLabelTextField.trailingAnchor.constraint(equalTo: detailsLabelTitle.trailingAnchor),
-            blikLabelTextField.heightAnchor.constraint(equalToConstant: 48),
-            blikLabelTextField.bottomAnchor.constraint(equalTo: bottomAnchor)
+            blikLabelTextField.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0)
         ])
     }
     
@@ -122,6 +121,7 @@ private extension OtherBlikSettingsView {
             size: 16
         )
         
+        detailsLabel.numberOfLines = 0
         detailsLabel.textColor = .lisboaGray
         detailsLabel.font = .santander(
             family: .micro,

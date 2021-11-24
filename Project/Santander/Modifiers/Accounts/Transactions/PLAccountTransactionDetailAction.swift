@@ -8,7 +8,7 @@ import Models
 
 class PLAccountTransactionDetailAction: AccountTransactionDetailActionProtocol {
     func getTransactionActions(for transaction: AccountTransactionEntity) -> [AccountTransactionDetailAction]? {
-        return [.share(nil), .pdf]
+        return [.pdf, .share(nil)]
     }
 
     func showComingSoonToast() -> Bool {

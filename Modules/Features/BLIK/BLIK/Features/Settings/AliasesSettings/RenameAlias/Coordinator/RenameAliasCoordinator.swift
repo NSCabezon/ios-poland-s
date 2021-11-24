@@ -80,12 +80,16 @@ private extension RenameAliasCoordinator {
             )
         }
         
-        dependenciesEngine.register(for: RegisterAliasUseCaseProtocol.self) { resolver in
-            return RegisterAliasUseCase(dependenciesResolver: resolver)
+        dependenciesEngine.register(for: UpdateAliasUseCaseProtocol.self) { resolver in
+            return UpdateAliasUseCase(dependenciesResolver: resolver)
         }
         
         dependenciesEngine.register(for: BlikAliasNewLabelMapping.self) { resolver in
             return BlikAliasNewLabelMapper()
+        }
+        
+        dependenciesEngine.register(for: AliasNameValidatorProtocol.self) { _ in
+            return AliasNameValidator()
         }
     }
 }

@@ -13,7 +13,8 @@ import Commons
 import PLCommons
 import Repository
 
-final class PLGetUserPreferencesUseCase: UseCase<PLGetUserPrefEntityUseCaseInput, PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+final class PLGetUserPreferencesUseCase: UseCase<Void, PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+    
     private let dependenciesResolver: DependenciesResolver
     private let appRepository: AppRepositoryProtocol
     private let defaultTheme: BackgroundImagesTheme = .nature
@@ -23,14 +24,26 @@ final class PLGetUserPreferencesUseCase: UseCase<PLGetUserPrefEntityUseCaseInput
         self.appRepository = self.dependenciesResolver.resolve(for: AppRepositoryProtocol.self)
     }
 
-    override func executeUseCase(requestValues: PLGetUserPrefEntityUseCaseInput) throws -> UseCaseResponse<PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
-        let userPrefEntity = appRepository.getUserPreferences(userId: String(requestValues.userId))
+    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let persistedUser = try appRepository.getPersistedUser().getResponseData()
+        guard let userId = persistedUser?.userId else {
+            let output = PLGetUserPrefEntityUseCaseOutput(name: "",
+                                                          theme: self.defaultTheme,
+                                                          biometricsEnabled: false,
+                                                          userId: nil,
+                                                          login: nil)
+            return .ok(output)
+        }
+        let userPrefEntity = appRepository.getUserPreferences(userId: userId)
         let theme = getBackgroundTheme(for: userPrefEntity.pgUserPrefDTO.photoThemeOptionSelected)
         let biometrics = userPrefEntity.pgUserPrefDTO.touchOrFaceIdProfileSaved
         let alias = userPrefEntity.pgUserPrefDTO.alias
         let name = (alias != "" ? alias : persistedUser?.name ?? "").lowercased().capitalized
-        let output = PLGetUserPrefEntityUseCaseOutput(name: name, theme: theme, biometricsEnabled: biometrics)
+        let output = PLGetUserPrefEntityUseCaseOutput(name: name,
+                                                      theme: theme,
+                                                      biometricsEnabled: biometrics,
+                                                      userId: userId,
+                                                      login: persistedUser?.login)
         return UseCaseResponse.ok(output)
     }
 }
@@ -54,8 +67,6 @@ struct PLGetUserPrefEntityUseCaseOutput {
     let name: String
     let theme: BackgroundImagesTheme
     let biometricsEnabled: Bool
-}
-
-struct PLGetUserPrefEntityUseCaseInput {
-    var userId: Int
+    let userId: String?
+    let login: String?
 }

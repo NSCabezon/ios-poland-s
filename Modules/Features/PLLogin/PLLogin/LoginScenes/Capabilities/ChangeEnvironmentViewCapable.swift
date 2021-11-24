@@ -34,6 +34,7 @@ extension ChangeEnvironmentViewCapable {
         environmentButton?.titleLabel?.textAlignment = .center
         environmentButton?.titleLabel?.numberOfLines = 2
         environmentButton?.titleLabel?.font = UIFont.santander(family: .lato, size: 14)
+        environmentButton?.setTitleColor(.white, for: .normal)
         environmentButton?.layer.cornerRadius = 5
         environmentButton?.layer.borderColor = UIColor.sanGreyDark.cgColor
         environmentButton?.layer.borderWidth = 0.5

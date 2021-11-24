@@ -1,19 +1,12 @@
 import UI
 import Commons
 import Operative
-
-public struct CreditCardAccountNumber {
-    let number: String // number account connected with credit card
-    
-    public init(number: String) {
-        self.number = number
-    }
-}
+import Models
 
 public protocol CreditCardRepaymentModuleCoordinatorProtocol {
     var navigationController: UINavigationController? { get set }
     func start()
-    func start(with creditCardAccountNumber: CreditCardAccountNumber)
+    func start(with creditCardEntity: CardEntity)
 }
 
 public final class CreditCardRepaymentModuleCoordinator: CreditCardRepaymentModuleCoordinatorProtocol {
@@ -32,11 +25,11 @@ public final class CreditCardRepaymentModuleCoordinator: CreditCardRepaymentModu
         goToCreditCardRepayment(operativeData: CreditCardRepaymentOperativeData(formManager: formManager), handler: self)
     }
     
-    public func start(with creditCardAccountNumber: CreditCardAccountNumber) {
+    public func start(with creditCardEntity: CardEntity) {
         goToCreditCardRepayment(
             operativeData: CreditCardRepaymentOperativeData(
                 formManager: formManager,
-                creditCardAccountNumber: creditCardAccountNumber
+                creditCardEntity: creditCardEntity
             ),
             handler: self
         )

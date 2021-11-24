@@ -50,4 +50,13 @@ extension HelpCenterConfig.Element {
             return true
         }
     }
+    
+    var webViewIdentifier: String? {
+        switch self {
+        case .yourCases:
+            return "CUSTOMER_SERVICE" // TODO: Maybe move PLAccountOtherOperativesIdentifier to PLCommon and use it here?
+        default: // TODO: Add rest of the cases in separate tasks
+            return nil
+        }
+    }
 }

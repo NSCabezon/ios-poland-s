@@ -62,7 +62,7 @@ final class PLUnrememberedLoginNormalPwdViewController: UIViewController {
     
     func setNavigationBar() {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
-//            .setRightActions(.menu(action: #selector(didSelectMenu)))
+            .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
     }
     
@@ -80,8 +80,6 @@ extension PLUnrememberedLoginNormalPwdViewController: PLUnrememberedLoginNormalP
         self.documentTextField.setText(identifier)
     }
 
-    func didUpdateEnvironments() {
-    }
 
     func resetPassword() {
         self.passwordTextField?.reset()
@@ -129,14 +127,14 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     func configureBackground() {
-        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.backgroundImage
+        backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
     }
     
     func configureTextFields() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         self.documentTextField.isUserInteractionEnabled = false
-        passwordTextField?.setPlaceholder(localized("login_hint_password").plainText)
+        passwordTextField?.setPlaceholder(localized("login_hint_password").text)
         passwordTextField?.delegate = self
         passwordTextField?.textField?.delegate = self
     }
@@ -174,7 +172,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
     }
     
     func regardNow() -> String {
-        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).plainText
+        return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }
 
     func configureKeyboard() {

@@ -12,6 +12,7 @@ public struct AcceptDomesticTransactionParameters: Encodable {
     let debitAmountData: AmountData
     let debitAccountData: DebitAccountData
     let creditAccountData: CreditAccountData
+    let creditAmountData: AmountData?
     
     public init(title: String,
                 type: TransactionType,
@@ -21,7 +22,8 @@ public struct AcceptDomesticTransactionParameters: Encodable {
                 valueDate: String,
                 debitAmountData: AmountData,
                 debitAccountData: DebitAccountData,
-                creditAccountData: CreditAccountData
+                creditAccountData: CreditAccountData,
+                creditAmountData: AmountData? = nil
     ) {
         self.title = title
         self.type = type
@@ -32,6 +34,7 @@ public struct AcceptDomesticTransactionParameters: Encodable {
         self.debitAccountData = debitAccountData
         self.creditAccountData = creditAccountData
         self.dstPhoneNo = dstPhoneNo
+        self.creditAmountData = creditAmountData
     }
     
 }
@@ -47,10 +50,10 @@ public extension AcceptDomesticTransactionParameters {
     }
     
     struct AmountData: Encodable {
-        let amount: Double
+        let amount: Decimal
         let currency: String
         
-        public init(amount: Double, currency: String) {
+        public init(amount: Decimal, currency: String) {
             self.amount = amount
             self.currency = currency
         }
@@ -60,11 +63,13 @@ public extension AcceptDomesticTransactionParameters {
         let accountType: Int
         let accountSequenceNumber: Int
         let accountNo: String
+        let accountName: String?
         
-        public init(accountType: Int, accountSequenceNumber: Int, accountNo: String) {
+        public init(accountType: Int, accountSequenceNumber: Int, accountNo: String, accountName: String? = nil) {
             self.accountType = accountType
             self.accountSequenceNumber = accountSequenceNumber
             self.accountNo = accountNo
+            self.accountName = accountName
         }
     }
     

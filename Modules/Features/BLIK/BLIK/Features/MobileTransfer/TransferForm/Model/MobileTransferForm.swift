@@ -1,3 +1,4 @@
+import CoreDomain
 
 public struct MobileTransferForm {
     let recipent: String?

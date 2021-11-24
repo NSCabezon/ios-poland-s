@@ -1,6 +1,7 @@
 import Foundation
 import SANPLLibrary
 import Commons
+import PLCommons
 import SANLegacyLibrary
 import Models
 
@@ -15,6 +16,14 @@ struct BLIKTransactionViewModel {
     var trnId: Int {
         transaction.transactionId
     }
+    
+    var merchantId: String? {
+        transaction.merchantId
+    }
+    
+    var acquirerId: String? {
+        transaction.acquirerId
+    }
 
     var title: String {
         transaction.title
@@ -22,7 +31,7 @@ struct BLIKTransactionViewModel {
     
     var dateString: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         return dateFormatter.string(from: transaction.date ?? Date())
     }
     
@@ -66,5 +75,32 @@ struct BLIKTransactionViewModel {
     
     var transactionDate: String {
         DateFormats.toString(date: transaction.date ?? Date(), output: .YYYYMMDD)
+    }
+    
+    var aliasLabelUsedInTransaction: String? {
+        switch transaction.aliasContext {
+        case let .transactionWasPerformedWithAlias(alias):
+            return alias.label
+        case .none, .receivedAliasProposal:
+            return nil
+        }
+    }
+    
+    var proposedAlias: Transaction.AliasProposal? {
+        switch transaction.aliasContext {
+        case let .receivedAliasProposal(proposal):
+            return proposal
+        case .none, .transactionWasPerformedWithAlias:
+            return nil
+        }
+    }
+    
+    var shouldShowAliasTransferInfoBanner: Bool {
+        switch transaction.aliasContext {
+        case .transactionWasPerformedWithAlias:
+            return true
+        case .none, .receivedAliasProposal:
+            return false
+        }
     }
 }

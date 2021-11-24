@@ -15,7 +15,7 @@ final class NotificationPermissionsManager {
     private var lastSettings: UNNotificationSettings?
     
     private var isLoggedIn: Bool {
-        dependenciesResolver.resolve(for: SessionController.self).currentState == .loggedIn
+        dependenciesResolver.resolve(for: CoreSessionManager.self).isSessionActive
     }
     
     private let dependenciesResolver: DependenciesResolver
@@ -27,9 +27,6 @@ final class NotificationPermissionsManager {
 
 extension NotificationPermissionsManager: PushNotificationPermissionsManagerProtocol {
    
-    
-   
-    
     func isNotificationsEnabled(completion: @escaping (Bool) -> Void) {
 
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
@@ -107,4 +104,3 @@ private extension NotificationPermissionsManager {
         checkAccess(completion)
     }
 }
-

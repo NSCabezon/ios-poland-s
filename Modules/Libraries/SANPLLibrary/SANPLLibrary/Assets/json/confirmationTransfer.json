@@ -1,0 +1,73 @@
+{
+    "12345678Z": {
+        "0":
+        {
+            "customerAddressData": {
+                "customerName": "Konto Jakie Chcê",
+                "city": "Warszawa",
+                "street": "ul. Icchoka Lejba Pereca 1A",
+                "zipCode": "00-849",
+                "baseAddress": "ul. Icchoka Lejba Pereca 1A,00-849 Warszawa"
+            },
+            "debitAmountData": {
+                "currency": "PLN",
+                "amount": -1.23,
+                "currencyRate": "",
+                "currencyUnit": 0
+            },
+            "creditAmountData": {
+                "currency": "PLN",
+                "amount": 1.23,
+                "currencyRate": "",
+                "currencyUnit": 0
+            },
+            "debitAccountData": {
+                "accountType": 101,
+                "accountSequenceNumber": 1,
+                "branchId": "10902284",
+                "accountNo": "30109022840000000142694856",
+                "accountName": "DANIEL DUBIELOMNII UL. TEST 123 03-185 WARSZAWA"
+            },
+            "creditAccountData": {
+                "accountType": 90,
+                "accountSequenceNumber": 0,
+                "branchId": "12404269",
+                "accountNo": "04124042691111000046776648",
+                "accountName": "Not trusted Elixir"
+            },
+            "transactionAmountData": {
+                "baseAmount": -1.23
+            },
+            "title": "rUjSIw6vPqy8Hcpk",
+            "type": "DEFAULT_TRANSACTION",
+            "valueDate": "2021-11-02",
+            "sendApplicationId": 21,
+            "timestamp": 337554106,
+            "options": 4,
+            "ownerCifNumber": 1015862485,
+            "transactionSide": "TRN_NO_SIDE",
+            "noFixedRate": 0,
+            "customerRef": "",
+            "transferType": "ELIXIR",
+            "key": {
+                "id": 445259,
+                "date": "2021-11-02"
+            },
+            "signHistoryData": [
+                {
+                    "signLoginId": 34568186,
+                    "signResult": 0,
+                    "signTime": "2021-11-02T14:49:30.000",
+                    "signTrnState": "ACCEPTED",
+                    "signCifNumber": 1015862485,
+                    "signApplicationId": 21
+                }
+            ],
+            "state": "ACCEPTED",
+            "sendError": 0,
+            "postingId": 0,
+            "acceptanceTime": "2021-11-02T14:49:30.000"
+        }
+    }
+}
+

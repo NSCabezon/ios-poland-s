@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreDomain
 
 public struct PendingChallengeDTO: Codable {
     public let authorizationId: Int?
@@ -20,4 +21,12 @@ public struct SoftwareTokenKeysDataDTO: Codable {
     public let randomKey: String
     public let name: String
     public let softwareTokenType: String
+}
+
+extension PendingChallengeDTO: PINChallengeRepresentable {}
+
+extension PendingChallengeDTO: ChallengeRepresentable {
+    public var identifier: String {
+        return softwareTokenKeys.map{ $0.softwareTokenType }.joined(separator: "+")
+    }
 }

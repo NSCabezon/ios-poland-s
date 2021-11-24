@@ -8,6 +8,7 @@
 import Commons
 import PLCommons
 import DomainCommon
+import PLCryptography
 import CryptoSwift
 
 final class PLDeviceDataTransportKeyEncryptionUseCase: UseCase<PLDeviceDataTransportKeyEncryptionUseCaseInput, PLDeviceDataTransportKeyEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
@@ -44,7 +45,7 @@ private extension PLDeviceDataTransportKeyEncryptionUseCase {
 
         guard transportKeyBytes.count == 16 else { throw PLDeviceDataEncryptionError.transportKeyEncryptionError }
 
-        let passKeyLength16 = PLLoginTrustedDeviceHelpers.length16Password(passKey)
+        let passKeyLength16 = PLTrustedDeviceHelpers.length16Password(passKey)
         // Length 16 password bytes
         let passKeyLength16Bytes = passKeyLength16?.bytes
 

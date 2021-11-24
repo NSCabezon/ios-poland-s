@@ -55,6 +55,7 @@ public enum PLLocalServiceName: String {
     case pubKey = "pub_key"
     case authenticateInit = "authenticate_init"
     case authenticate = "authenticate"
+    case logout = "logout"
     case pendingChallenge = "pendingChallenge"
     case confirmChallenge = "confirmChallenge"
     case registerDeviceTrustDevice = "registerDeviceTrustDevice"
@@ -67,6 +68,8 @@ public enum PLLocalServiceName: String {
     case notificationTokenRegister = "notificationTokenRegister"
     case cardDetail = "cardDetail"
     case accountsForDebit = "accountsForDebit"
+    case accountsForCredit = "accountsForCredit"
+    case creditCardRepaymentSend = "creditCardRepaymentSend"
     case getPayees
     case recentRecipients
     case ibanValidation = "ibanValidation"
@@ -75,4 +78,8 @@ public enum PLLocalServiceName: String {
     case cardDisable
     case trustedDeviceInfo = "trustedDeviceInfo"
     case checkFinalFee = "checkFinalFee"
+    case confirmationTransfer = "confirmationTransfer"
+    case challenge = "challenge"
+    case checkTransaction = "checkTransaction"
+    case notifiyDevice = "notifyDevice"
 }

@@ -64,9 +64,9 @@ class PLTimerDialogViewController: UIViewController {
     // MARK: - Private
     
     @objc private func updateText() {
-        if self.dateTimeStamp > 0 {
-            let date = Date(timeIntervalSince1970: self.dateTimeStamp)
-            guard date > now else { return }
+        let date = Date(timeIntervalSince1970: self.dateTimeStamp)
+        if date > now {
+    
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour, .minute, .second]
 
@@ -87,7 +87,7 @@ class PLTimerDialogViewController: UIViewController {
             }
 
             let text = localized("pl_login_alert_tryAgain", [StringPlaceholder(.value, minutes)])
-            self.textLabel.text = text.plainText
+            self.textLabel.text = text.text
             self.dateTimeStamp -= 1
         } else {
             countTimer.invalidate()
@@ -100,7 +100,7 @@ class PLTimerDialogViewController: UIViewController {
         self.contentView.isHidden = true
         self.contentView.layer.cornerRadius = 5.0
         self.contentView.layer.masksToBounds = true
-        self.textLabel.text = localized("pl_login_alert_tryAgain", [StringPlaceholder(.value, "00:00")]).plainText
+        self.textLabel.text = localized("pl_login_alert_tryAgain", [StringPlaceholder(.value, "00:00")]).text
         self.textLabel.textColor = .black
         self.textLabel.textAlignment = .center
         self.textLabel.font = .santander(family: .text, type: .regular, size: 16)

@@ -23,8 +23,9 @@ final class CancelBLIKTransactionUseCase: UseCase<CancelBLIKTransactionUseCaseIn
         case .success:
             return .ok()
         case .failure(let error):
-            let errorBody: ErrorDTO? = error.getErrorBody()
-            guard let errorBody = errorBody, errorBody.errorCode1 == .customerTypeDisabled, errorBody.errorCode2 == .errPosting else {
+            let blikError = BlikError(with: error.getErrorBody())
+            guard blikError?.errorCode1 == .customerTypeDisabled,
+                  blikError?.errorCode2 == .errPosting else {
                 return .error(.init(error.localizedDescription))
             }
          

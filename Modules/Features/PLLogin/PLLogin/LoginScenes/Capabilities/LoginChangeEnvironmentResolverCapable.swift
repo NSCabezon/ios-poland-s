@@ -4,6 +4,7 @@
 
 import Foundation
 import Commons
+import CommonUseCase
 
 protocol LoginChangeEnvironmentResolverCapable {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector { get }
@@ -11,6 +12,7 @@ protocol LoginChangeEnvironmentResolverCapable {
 
 extension LoginChangeEnvironmentResolverCapable {
     func registerEnvironmentDependencies() {
+        
         self.dependenciesEngine.register(for: GetPLCurrentEnvironmentUseCase.self) { resolver in
             return GetPLCurrentEnvironmentUseCase(dependenciesResolver: resolver)
         }

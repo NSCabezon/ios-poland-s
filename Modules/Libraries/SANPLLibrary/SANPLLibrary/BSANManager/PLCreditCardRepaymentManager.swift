@@ -9,11 +9,16 @@ public protocol PLCreditCardRepaymentManagerProtocol {
 
 public final class PLCreditCardRepaymentManager {
     private let creditCardRepaymentDataSource: CreditCardRepaymentDataSourceProtocol
+    private let cardDetailDataSource: CardDetailDataSourceProtocol
     private let globalPositionDataSource: GlobalPositionDataSourceProtocol
     private let bsanDataProvider: BSANDataProvider
     
     public init(bsanDataProvider: BSANDataProvider, networkProvider: NetworkProvider) {
         self.creditCardRepaymentDataSource = CreditCardRepaymentDataSource(
+            networkProvider: networkProvider,
+            dataProvider: bsanDataProvider
+        )
+        self.cardDetailDataSource = CardDetailDataSource(
             networkProvider: networkProvider,
             dataProvider: bsanDataProvider
         )
@@ -81,15 +86,30 @@ extension PLCreditCardRepaymentManager: PLCreditCardRepaymentManagerProtocol {
         }
         
         // Conditions have been taken from this story https://godzilla.centrala.bzwbk:9998/browse/MOBILE-8148
-        let ccrCards = cards
+        let ccrCards = try cards
             .filter { $0.type == "CREDIT" }
             .filter { $0.generalStatus != "CANCELLED" }
             .compactMap { card -> CCRCardDTO? in
                 guard let account = accounts.first(where: { card.relatedAccount == $0.number }) else { return nil }
-                return CCRCardDTO.mapFromCardDTO(card, account: account)
+                let creditCardAccountDetails: CreditCardDetailsDTO? = try {
+                    if let panIdentifier = card.panIdentifier,
+                       case let .success(cardDetailDTO) = try getCardDetail(cardId: panIdentifier) {
+                        return cardDetailDTO.creditCardAccountDetails
+                    } else {
+                        return nil
+                    }
+                }()
+                return CCRCardDTO.mapFromCardDTO(card, account: account, creditCardAccountDetails: creditCardAccountDetails)
             }
+        
         bsanDataProvider.store(creditCardRepaymentCards: ccrCards)
         return .success(ccrCards)
+    }
+    
+    func getCardDetail(cardId: String) throws -> Result<CardDetailDTO, NetworkProviderError> {
+        let parameters: CardDetailParameters = CardDetailParameters(virtualPan: cardId)
+        let result = try self.cardDetailDataSource.getCardDetail(parameters)
+        return result
     }
     
     public func sendRepayment(_ parameters: AcceptDomesticTransactionParameters) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {

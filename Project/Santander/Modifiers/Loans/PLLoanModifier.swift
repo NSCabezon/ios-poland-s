@@ -11,7 +11,6 @@ import Commons
 import Models
 import SANPLLibrary
 
-
 final class PLLoanModifier {
     private let managersProvider: PLManagersProviderProtocol
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
@@ -29,7 +28,7 @@ final class PLLoanModifier {
 extension PLLoanModifier: LoansModifierProtocol {
     
     func formatLoanId(_ loanId: String) -> String {
-        //Introduce loan id formatting if necessary
+        // Introduce loan id formatting if necessary
         return loanId
     }
     
@@ -53,15 +52,15 @@ extension PLLoanModifier: LoansModifierProtocol {
         return false
     }
 
-    var sortByMostRecent: Bool {
-        return false
+    var transactionsSortType: LoanTransactionsSortType {
+        return .byMostRecent
     }
 
     func getLoansOptions(for loan: LoanEntity?, with loanDetail: LoanDetailEntity?) -> [LoansHomeOption]? {
         return [self.loanScheduleButton, self.customerServiceButton, .loanDetail]
     }
 
-    func didSelectLoanOption(_ option: LoansHomeOption) {
+    func didSelectLoanOption(_ option: LoansHomeOption, loan: LoanEntity?) {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
 

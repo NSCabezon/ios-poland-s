@@ -4,6 +4,7 @@
 //
 //  Created by Piotr Mielcarzewicz on 22/07/2021.
 //
+import Commons
 
 enum PhoneTransferSettingsViewModel {
     case unregisteredPhoneNumber
@@ -11,19 +12,19 @@ enum PhoneTransferSettingsViewModel {
     case expiredPhoneNumber
     
     var title: String {
-        return "#Przelew na telefon"
+        return localized("pl_blik_title_payMobile")
     }
     
     var userMessage: String {
         switch self {
         case .unregisteredPhoneNumber, .registeredPhoneNumber:
-            return "#Przelew na telefon to przelew, do którego wysłania nie jest konieczne podanie numeru konta. Wystarczy numer telefonu. Przelew jest bezpłatny. Pieniądze natychmiast trafiają na konto odbiorcy.\n\nAby otrzymać pieniądze odbiorca musi zarejestrować swój numer telefonu w bazie powiązań BLIK."
+            return localized("pl_blik_text_payMobileInfo")
         case .expiredPhoneNumber:
-            return "#Z powodu zmiany numeru telefonu służącego do przesyłania smsKodów konieczna jest aktualizacja numeru telefonu do otrzymywania Przelewów na telefon."
+            return localized("pl_blik_text_updateNumbInfo")
         }
     }
     
     var icon: UIImage {
-        return Images.info
+        return Images.info_lisboaGray
     }
 }

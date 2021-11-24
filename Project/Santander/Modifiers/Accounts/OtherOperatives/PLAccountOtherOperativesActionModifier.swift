@@ -21,7 +21,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
-        if case .custome(let identifier,_,_,_,_,_) = action {
+        if case .custome(let identifier, _, _, _, _, _) = action {
             switch identifier {
             case PLAccountOtherOperativesIdentifier.addBanks.rawValue,
                  PLAccountOtherOperativesIdentifier.changeAccount.rawValue,
@@ -52,7 +52,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     private func showWebView(identifier: String, entity: AccountEntity) {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-        guard let list = repository.get()?.accounts_options, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
+        guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
         if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
         }
@@ -71,10 +71,8 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     
     private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
         var entity: PLAccountOtherOperativesData?
-        for dto in list {
-            if dto.id == identifier {
-                entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil)
-            }
+        for dto in list where dto.id == identifier {
+            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil)
         }
         return entity
     }

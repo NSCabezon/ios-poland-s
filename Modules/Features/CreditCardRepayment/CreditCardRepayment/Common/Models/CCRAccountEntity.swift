@@ -61,4 +61,14 @@ extension CCRAccountEntity {
         )
         return AmountEntity(amountDTO)
     }
+    
+    static func amount(from balance: BalanceDTO) -> AmountEntity {
+        // Based on [TEET-153408]
+        // All amount values are transformed to positive on this layer (similar solution is implemented on android side)
+        let amountDTO = AmountDTO(
+            value: Decimal(abs(balance.value ?? 0)),
+            currency: CurrencyDTO(currencyName: balance.currencyCode ?? "PL", currencyType: .other)
+        )
+        return AmountEntity(amountDTO)
+    }
 }

@@ -8,11 +8,6 @@ public protocol GetAccountsForDebitProtocol: UseCase<Void, [AccountForDebit], St
 
 public final class GetAccountsForDebitUseCase: UseCase<Void, [AccountForDebit], StringErrorOutput> {
     
-    public enum TransactionType: Int {
-        case mobileTransfer = 33
-        case charityTransfer = 16
-    }
-    
     private let managersProvider: PLManagersProviderProtocol
     private let mapper: AccountForDebitMapping
     private let transactionType: TransactionType

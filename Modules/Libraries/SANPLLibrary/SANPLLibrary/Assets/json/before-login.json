@@ -1,0 +1,22 @@
+{
+    "12345678Z": {
+        "0": {
+            "userId" : 36167469,
+            "certificateTime" : "2021-11-11T08:33:05.000",
+            "pinMobileDefault" : true,
+            "pinMobileDisabled" : false,
+            "pushCount" : 0,
+            "awaitingBlikConfirmation" : false,
+            "softwareTokenHeaders" : [{
+                "name" : "00014451265184838236",
+                "state" : "ACTIVE",
+                "awaitingSoftwareTokenConfirmation" : false,
+                "type" : "PIN"},{
+                "name" : "03473215779005379164",
+                "state" : "ACTIVE",
+                "awaitingSoftwareTokenConfirmation" : false,
+                "type" : "BIOMETRICS"
+            }]
+        }
+    }
+}

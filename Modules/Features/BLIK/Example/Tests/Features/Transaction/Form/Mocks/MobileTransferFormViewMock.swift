@@ -2,7 +2,7 @@
 import UI
 
 class MobileTransferFormViewMock: MobileTransferFormViewControllerProtocol {
-    
+  
     var showLoaderCalled = false
     
     func showDialog(_ dialog: LisboaDialog) {}
@@ -23,4 +23,6 @@ class MobileTransferFormViewMock: MobileTransferFormViewControllerProtocol {
     
     func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {}
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {}
+    func showErrorMessage(title: String, message: String, actionButtonTitle: String, closeButton: Dialog.CloseButton, onConfirm: (() -> Void)?) {
+    }
 }

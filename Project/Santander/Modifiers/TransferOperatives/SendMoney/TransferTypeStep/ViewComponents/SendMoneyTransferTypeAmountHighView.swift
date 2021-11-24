@@ -33,7 +33,6 @@ final class SendMoneyTransferTypeAmountHighView: UIView {
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var descriptionLabelHeight: NSLayoutConstraint!
     @IBOutlet private weak var actionButton: FloatingButton!
     
     weak var delegate: SendMoneyTransferTypeAmountHighViewDelegate?
@@ -51,7 +50,6 @@ final class SendMoneyTransferTypeAmountHighView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.descriptionLabelHeight.constant = self.descriptionLabel.intrinsicContentSize.height
     }
 }
 
@@ -84,9 +82,11 @@ private extension SendMoneyTransferTypeAmountHighView {
         self.titleLabel.font = .typography(fontName: .oneH300Bold)
         self.titleLabel.textColor = .oneLisboaGray
         self.titleLabel.configureText(withKey: Constants.TitleLabel.textKey)
+        self.titleLabel.sizeToFit()
         self.descriptionLabel.font = .typography(fontName: .oneB400Regular)
         self.descriptionLabel.textColor = .oneLisboaGray
         self.descriptionLabel.configureText(withKey: Constants.DescriptionLabel.textKey)
+        self.descriptionLabel.sizeToFit()
     }
     
     func configureActionButton() {

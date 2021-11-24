@@ -36,18 +36,13 @@ public final class UnrememberedLoginConfiguration {
     }
 }
 
-public enum RememberedLoginType: Equatable {
-    case Pin (value: String)
-    case Biometrics
-}
-
 public final class RememberedLoginConfiguration {
 
-    public let userIdentifier: String
+    public var userIdentifier: String
     public let isTrustedDevice: Bool
-    public let isBiometricsAvailable: Bool
-    public let isPinAvailable: Bool
-    
+    public var isBiometricsAvailable: Bool
+    public var isPinAvailable: Bool
+    public var isDemoUser: Bool = false
     public var userPref: RememberedLoginUserPreferencesConfiguration?
     public var unblockRemainingTimeInSecs: Double?
     public var secondFactorDataFinalState: String?

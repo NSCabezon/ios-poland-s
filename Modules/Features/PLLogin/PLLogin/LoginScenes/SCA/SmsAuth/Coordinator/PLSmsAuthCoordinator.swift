@@ -37,8 +37,9 @@ final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtoco
 private extension PLSmsAuthCoordinator {
     func setupDependencies() {
         let presenter = PLSmsAuthPresenter(dependenciesResolver: self.dependenciesEngine)
-        let authProcessUseCase = PLAuthProcessUseCase(dependenciesEngine: self.dependenciesEngine)
-        let notificationGetTokenAndRegisterUseCase = PLGetNotificationTokenAndRegisterUseCase(dependenciesEngine: self.dependenciesEngine)
+        let authProcessGroup = PLAuthProcessGroup(dependenciesEngine: self.dependenciesEngine)
+        let notificationTokenRegisterProcessGroup = PLNotificationTokenRegisterProcessGroup(dependenciesEngine: self.dependenciesEngine)
+        let openSessionProcessGroup = PLOpenSessionProcessGroup(dependenciesEngine: self.dependenciesEngine)
 
         self.dependenciesEngine.register(for: PLScaAuthCoordinatorProtocol.self) { _ in
             return self
@@ -56,8 +57,12 @@ private extension PLSmsAuthCoordinator {
             return self
         }
 
-        self.dependenciesEngine.register(for: PLGetNotificationTokenAndRegisterUseCase.self) { resolver in
-            return notificationGetTokenAndRegisterUseCase
+        self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
+            return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
+            return notificationTokenRegisterProcessGroup
         }
 
         self.dependenciesEngine.register(for: PLSmsAuthViewController.self) { resolver in
@@ -74,13 +79,13 @@ private extension PLSmsAuthCoordinator {
         self.dependenciesEngine.register(for: PLAuthenticateInitUseCase.self) { resolver in
            return PLAuthenticateInitUseCase(dependenciesResolver: resolver)
         }
-        
-        self.dependenciesEngine.register(for: PLGetGlobalPositionOptionUseCase.self) { resolver in
-            return PLGetGlobalPositionOptionUseCase(dependenciesResolver: resolver)
+
+        self.dependenciesEngine.register(for: PLAuthProcessGroup.self) { resolver in
+            return authProcessGroup
         }
-        
-        self.dependenciesEngine.register(for: PLAuthProcessUseCase.self) { _ in
-            return authProcessUseCase
+
+        self.dependenciesEngine.register(for: PLOpenSessionProcessGroup.self) { resolver in
+            return openSessionProcessGroup
         }
         
         self.registerEnvironmentDependencies()

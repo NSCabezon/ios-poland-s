@@ -24,4 +24,5 @@ enum PLAccessibilityPGFrequentOperatives: String {
     case addBanks
     case financialAgenda
     case exploreProducts
+    case atmAndBranches
 }

@@ -7,6 +7,7 @@ protocol CharityTransferFormCoordinatorProtocol {
     func pop()
     func closeProcess()
     func showAccountSelector()
+    func showConfirmation(with model: CharityTransferModel)
 }
 
 public protocol FormAccountSelectable: AnyObject {
@@ -51,6 +52,15 @@ extension CharityTransferFormCoordinator: CharityTransferFormCoordinatorProtocol
                                                      navigationController: navigationController,
                                                      viewModels: accounts,
                                                      sourceView: .form, selectableAccountDelegate: self)
+        coordinator.start()
+    }
+    
+    func showConfirmation(with model: CharityTransferModel) {
+        let coordinator = CharityTransferConfirmationCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            model: model
+        )
         coordinator.start()
     }
 }

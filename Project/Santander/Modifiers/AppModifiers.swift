@@ -5,7 +5,6 @@
 //  Created by Juan Carlos López Robles on 04/02/2021.
 //
 
-//import UI
 import Models
 import RetailLegacy
 import Commons
@@ -18,7 +17,6 @@ import Loans
 import PersonalArea
 import SANLegacyLibrary
 import DomainCommon
-import PersonalArea
 import TransferOperatives
 
 final class AppModifiers {
@@ -59,6 +57,9 @@ final class AppModifiers {
     private lazy var getGPAccountsOperativeOptionProtocol: GetGPAccountOperativeModifier = {
         return GetGPAccountOperativeModifier(dependenciesEngine: self.dependencieEngine)
     }()
+    private lazy var getGPLoanOperativeOptionProtocol: GetGPLoanOperativeModifier = {
+        return GetGPLoanOperativeModifier()
+    }()
     private lazy var getGPInsuranceProtectionOperativeOptionProtocol: GetGPInsuranceProtectionOperativeModifier = {
         return GetGPInsuranceProtectionOperativeModifier()
     }()
@@ -97,7 +98,7 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
             return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { _ in
             return self.cardHomeModifier
         }
         self.dependencieEngine.register(for: CardDetailModifierProtocol.self) { _ in
@@ -106,10 +107,10 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: LoansModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
             return self.loansModifier
         }
-        self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { _ in
             return self.loanDetailModifier
         }
         self.dependencieEngine.register(for: AmountFormatterProvider.self) { _ in
@@ -124,13 +125,16 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: GetGPAccountOperativeOptionProtocol.self) { _ in
             return self.getGPAccountsOperativeOptionProtocol
         }
+        self.dependencieEngine.register(for: GetGPLoanOperativeOptionProtocol.self) { _ in
+            return self.getGPLoanOperativeOptionProtocol
+        }
         self.dependencieEngine.register(for: GetGPInsuranceProtectionOperativeOptionProtocol.self) { _ in
             return self.getGPInsuranceProtectionOperativeOptionProtocol
         }
         self.dependencieEngine.register(for: GetGPOtherOperativeOptionProtocol.self) { _ in
             return self.getGPOtherOperativeOptionProtocol
         }
-        self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: OtherOperativesModifierProtocol.self) { _ in
             return self.otherOperativesModifier
         }
         self.dependencieEngine.register(for: GetPersonalBasicInfoUseCaseProtocol.self) { resolver in
@@ -139,7 +143,7 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
-        self.dependencieEngine.register(for: CardTransactionsSearchModifierProtocol.self) { resolver in
+        self.dependencieEngine.register(for: CardTransactionsSearchModifierProtocol.self) { _ in
             return self.cardTransactionsSearchModifier
         }
         self.dependencieEngine.register(for: OnboardingPermissionOptionsProtocol.self) { _ in
@@ -172,12 +176,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountsHomePresenterModifier.self) { _ in
             return PLAccountsHomePresenterModifier()
         }
-        SendMoneyDependencies(dependenciesEngine: dependencieEngine).registerDependencies()
+        SendMoneyDependencies(dependenciesEngine: self.dependencieEngine).registerDependencies()
         self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
             return PLOpinatorInfoOption()
-        }
-        self.dependencieEngine.register(for: SendMoneyModifierProtocol.self) { _ in
-            return SendMoneyModifier()
         }
         self.dependencieEngine.register(for: GetCardOnOffPredefinedSCAUseCaseProtocol.self) { resolver in
             PLGetCardOnOffPredefinedSCAUseCase(dependenciesResolver: resolver)
@@ -185,7 +186,8 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: ValidateCardOnOffUseCaseProtocol.self) { resolver in
             PLValidateCardOnOffUseCase(dependenciesResolver: resolver)
         }
+        self.dependencieEngine.register(for: SendMoneyConfirmationStepUseCaseProtocol.self) { resolver in
+            PLSendMoneyConfirmationStepUseCase(dependenciesResolver: resolver)
+        }
     }
 }
-
-

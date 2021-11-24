@@ -20,7 +20,7 @@ final class PLSetDemoUserUseCase: UseCase<PLSetDemoUserUseCaseInput, PLSetDemoUs
     public override func executeUseCase(requestValues: PLSetDemoUserUseCaseInput) throws -> UseCaseResponse<PLSetDemoUserUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let isDemoUser = managerProvider.getLoginManager().setDemoModeIfNeeded(for: requestValues.userId)
-        return UseCaseResponse.ok(PLSetDemoUserUseCaseOkOutput(isDemoUser: isDemoUser))
+        return UseCaseResponse.ok(PLSetDemoUserUseCaseOkOutput(isDemoUser: isDemoUser, userId: requestValues.userId))
     }
 }
 
@@ -30,4 +30,5 @@ public struct PLSetDemoUserUseCaseInput {
 
 public struct PLSetDemoUserUseCaseOkOutput {
     let isDemoUser: Bool
+    let userId: String
 }
