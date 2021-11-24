@@ -63,11 +63,13 @@ public extension AcceptDomesticTransactionParameters {
         let accountType: Int
         let accountSequenceNumber: Int
         let accountNo: String
+        let accountName: String?
         
-        public init(accountType: Int, accountSequenceNumber: Int, accountNo: String) {
+        public init(accountType: Int, accountSequenceNumber: Int, accountNo: String, accountName: String? = nil) {
             self.accountType = accountType
             self.accountSequenceNumber = accountSequenceNumber
             self.accountNo = accountNo
+            self.accountName = accountName
         }
     }
     

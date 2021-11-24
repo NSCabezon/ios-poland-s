@@ -32,7 +32,8 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
         let accountData: AcceptDomesticTransactionParameters.DebitAccountData = .init(
             accountType: account.accountType,
             accountSequenceNumber: account.accountSequenceNumber,
-            accountNo: debitAccountFormated
+            accountNo: debitAccountFormated,
+            accountName: account.name
         )
         let creditAccountFormated = IBANFormatter.formatIbanToNrb(
             for: requestValues.dstAccNo

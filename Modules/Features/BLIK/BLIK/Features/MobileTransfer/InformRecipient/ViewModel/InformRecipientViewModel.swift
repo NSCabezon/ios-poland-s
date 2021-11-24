@@ -10,7 +10,7 @@ struct InformRecipientViewModel {
     }
     
     var header: String {
-        "#Cześć, \(summary.accountName) wysłał przelew z takimi informacjami:"
+        "#Cześć, \(summary.accountHolder) wysłał przelew z takimi informacjami:"
     }
     
     var listViewModel: [InformRecipientInfoItem.ViewModel] {
