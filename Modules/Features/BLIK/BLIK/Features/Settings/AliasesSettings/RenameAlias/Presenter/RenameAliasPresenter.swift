@@ -14,6 +14,7 @@ protocol RenameAliasPresenterProtocol {
     func viewDidLoad()
     func didPressSave(with label: String)
     func didPressClose(with label: String)
+    func didUpdateNameAlias(name: String?)
 }
 
 final class RenameAliasPresenter: RenameAliasPresenterProtocol {
@@ -34,7 +35,10 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
-    weak var view: RenameAliasView?
+    private var validator: AliasNameValidatorProtocol {
+     dependenciesResolver.resolve(for: AliasNameValidatorProtocol.self)
+    }
+    weak var view: RenameAliasViewProtocol?
     
     init(
         dependenciesResolver: DependenciesResolver,
@@ -46,11 +50,25 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
     
     func viewDidLoad() {
         view?.setAliasLabel(alias.label)
+        didUpdateNameAlias(name: alias.label)
+    }
+    
+    func didUpdateNameAlias(name: String?) {
+        let isNameValid = validator.validate(name)
+        switch isNameValid {
+        case .valid:
+            view?.clearValidationMessages()
+        case let .invalid(messages):
+            view?.showInvalidFormMessages(messages)
+        }
     }
     
     func didPressSave(with label: String) {
+        let trimmedName = label.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
         view?.showLoader()
-        let updatedAlias = blikAliasNewLabelMapper.map(alias: alias, withNewLabel: label)
+        let updatedAlias = blikAliasNewLabelMapper.map(alias: alias, withNewLabel: trimmedName)
         Scenario(useCase: updateAliasUseCase, input: updatedAlias)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in

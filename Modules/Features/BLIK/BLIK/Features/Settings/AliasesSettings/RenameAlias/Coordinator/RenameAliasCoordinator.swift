@@ -87,6 +87,10 @@ private extension RenameAliasCoordinator {
         dependenciesEngine.register(for: BlikAliasNewLabelMapping.self) { resolver in
             return BlikAliasNewLabelMapper()
         }
+        
+        dependenciesEngine.register(for: AliasNameValidatorProtocol.self) { _ in
+            return AliasNameValidator()
+        }
     }
 }
 
