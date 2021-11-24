@@ -8,8 +8,9 @@ public struct GenericSendMoneyConfirmationInput: Codable {
     let title: String?
     let type: String?
     let transferType: String?
+    let valueDate: String?
     
-    public init(customerAddressData: CustomerAddressDataParameters?, debitAmountData: ItAmountDataParameters?, creditAmountData: ItAmountDataParameters?, debitAccountData: ItAccountDataParameters?, creditAccountData: ItAccountDataParameters?, signData: SignDataParameters?, title: String?, type: String?, transferType: String?) {
+    public init(customerAddressData: CustomerAddressDataParameters?, debitAmountData: ItAmountDataParameters?, creditAmountData: ItAmountDataParameters?, debitAccountData: ItAccountDataParameters?, creditAccountData: ItAccountDataParameters?, signData: SignDataParameters?, title: String?, type: String?, transferType: String?, valueDate: String?) {
         self.customerAddressData = customerAddressData
         self.debitAmountData = debitAmountData
         self.creditAmountData = creditAmountData
@@ -19,6 +20,7 @@ public struct GenericSendMoneyConfirmationInput: Codable {
         self.title = title
         self.type = type
         self.transferType = transferType
+        self.valueDate = valueDate
     }
 }
 

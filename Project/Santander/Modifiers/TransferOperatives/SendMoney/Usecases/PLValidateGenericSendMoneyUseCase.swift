@@ -32,7 +32,10 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
                                                         accountName: (requestValues.name ?? "") + (requestValues.payeeSelected?.payeeAddress ?? ""),
                                                         accountSequenceNumber: 0,
                                                         accountType: 90)
-        
+        var valueDate: String?
+        if case .day(let date) = requestValues.time {
+            valueDate = date.toString(format: "YYYY-MM-dd")
+        }
         let sendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: nil,
                                                                            debitAmountData: amountData,
                                                                            creditAmountData: amountData,
@@ -41,7 +44,8 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
                                                                            signData: nil,
                                                                            title: requestValues.concept,
                                                                            type: requestValues.transactionType,
-                                                                           transferType: transferType)
+                                                                           transferType: transferType,
+                                                                           valueDate: valueDate)
         
         let result = try self.transferRepository.getChallenge(parameters: sendMoneyConfirmationInput)
         switch result {
@@ -57,6 +61,8 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
         }
     }
 }
+
+extension PLValidateGenericSendMoneyUseCase: ValidateScheduledSendMoneyUseCaseProtocol { }
 
 private extension PLValidateGenericSendMoneyUseCase {
     enum Constants {

@@ -40,7 +40,10 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
                                                         accountName: (requestValues.name ?? "") + (requestValues.payeeSelected?.payeeAddress ?? ""),
                                                         accountSequenceNumber: 0,
                                                         accountType: 90)
-        
+        var valueDate: String?
+        if case .day(let date) = requestValues.time {
+            valueDate = date.toString(format: "YYYY-MM-dd")
+        }
         let sendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: customerAddressData,
                                                                            debitAmountData: amountData,
                                                                            creditAmountData: amountData,
@@ -49,7 +52,8 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
                                                                            signData: signData,
                                                                            title: requestValues.concept,
                                                                            type: requestValues.transactionType,
-                                                                           transferType: transferType)
+                                                                           transferType: transferType,
+                                                                           valueDate: valueDate)
         let manager = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self).getTransferManager()
         let result = try manager.sendConfirmation(sendMoneyConfirmationInput)
         switch result {
