@@ -8,20 +8,21 @@ import Commons
 */
 protocol BLIKConfirmationCoordinatorProtocol {
     func cancelTransfer(type: CancelType)
-    func goToSummary()
+    func goToSummary(with viewModel: BLIKTransactionViewModel)
     func goToGlobalPosition()
 }
 
 final class BLIKConfirmationCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let viewModel: BLIKTransactionViewModel
+    private let viewModelSource: BLIKTransactionViewModelSource
     
     init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
-         viewModel: BLIKTransactionViewModel) {
+         viewModelSource: BLIKTransactionViewModelSource
+    ) {
         self.navigationController = navigationController
-        self.viewModel = viewModel
+        self.viewModelSource = viewModelSource
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.setupDependencies()
     }
@@ -44,7 +45,7 @@ extension BLIKConfirmationCoordinator: BLIKConfirmationCoordinatorProtocol {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func goToSummary() {
+    func goToSummary(with viewModel: BLIKTransactionViewModel) {
         let coordinator = BLIKSummaryCoordinator(dependenciesResolver: dependenciesEngine,
                                                  navigationController: navigationController,
                                                  viewModel: viewModel)
@@ -62,17 +63,6 @@ private extension BLIKConfirmationCoordinator {
         self.dependenciesEngine.register(for: BLIKConfirmationCoordinatorProtocol.self) { _ in
             return self
         }
-         
-        self.dependenciesEngine.register(for: BLIKConfirmationPresenterProtocol.self) {[weak self] resolver in
-            return BLIKConfirmationPresenter(dependenciesResolver: resolver, viewModel: self?.viewModel)
-        }
-         
-        self.dependenciesEngine.register(for: BLIKConfirmationViewController.self) { resolver in
-            var presenter = resolver.resolve(for: BLIKConfirmationPresenterProtocol.self)
-            let viewController = BLIKConfirmationViewController(presenter: presenter)
-            presenter.view = viewController
-            return viewController
-        }
         
         self.dependenciesEngine.register(for: CancelBLIKTransactionProtocol.self) { resolver in
             return CancelBLIKTransactionUseCase(dependenciesResolver: resolver)
@@ -80,6 +70,34 @@ private extension BLIKConfirmationCoordinator {
         
         self.dependenciesEngine.register(for: AcceptBLIKTransactionProtocol.self) { resolver in
             return AcceptBLIKTransactionUseCase(dependenciesResolver: resolver)
+        }
+
+        self.dependenciesEngine.register(for: GetTrnToConfProtocol.self) { resolver in
+            return GetTrnToConfUseCase(dependenciesResolver: resolver)
+        }
+         
+        self.dependenciesEngine.register(for: TransactionMapping.self) { _ in
+            return TransactionMapper()
+        }
+        
+        self.dependenciesEngine.register(for: BLIKTransactionViewModelProviding.self) { [viewModelSource] resolver in
+            switch viewModelSource {
+            case let .prefetched(viewModel):
+                return PrefetchedBLIKTransactionViewModelProvider(viewModel: viewModel)
+            case .needsToBeFetched:
+                return BLIKTransactionViewModelAsyncProvider(dependenciesResolver: resolver)
+            }
+        }
+        
+        self.dependenciesEngine.register(for: BLIKConfirmationPresenterProtocol.self) { resolver in
+            return BLIKConfirmationPresenter(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: BLIKConfirmationViewController.self) { resolver in
+            var presenter = resolver.resolve(for: BLIKConfirmationPresenterProtocol.self)
+            let viewController = BLIKConfirmationViewController(presenter: presenter)
+            presenter.view = viewController
+            return viewController
         }
     }
 }

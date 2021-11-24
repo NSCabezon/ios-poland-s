@@ -61,7 +61,7 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
     func showBLIKConfirmation(viewModel: BLIKTransactionViewModel) {
         let coordinator = BLIKConfirmationCoordinator(dependenciesResolver: dependenciesEngine,
                                                       navigationController: navigationController,
-                                                      viewModel: viewModel)
+                                                      viewModelSource: .prefetched(viewModel))
         
         coordinator.start()
     }

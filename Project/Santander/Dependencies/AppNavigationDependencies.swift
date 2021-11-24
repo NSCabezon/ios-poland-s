@@ -57,6 +57,12 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in
             return PLHelpCenterModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
+        dependenciesEngine.register(for: DeeplinkedBLIKConfirmationCoordinator.self) { resolver in
+            return DeeplinkedBLIKConfirmationCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
         dependenciesEngine.register(for: CreditCardRepaymentModuleCoordinator.self) { resolver in
             return CreditCardRepaymentModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }

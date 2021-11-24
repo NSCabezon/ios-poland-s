@@ -10,6 +10,7 @@ import RetailLegacy
 import Models
 
 import PLHelpCenter
+import BLIK
 
 struct DeeplinkLauncher {
     private let dependenciesResolver: DependenciesResolver
@@ -38,6 +39,8 @@ private extension DeeplinkLauncher {
             dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
         case .contact:
             dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
+        case .blikTransaction:
+            dependenciesResolver.resolve(for: DeeplinkedBLIKConfirmationCoordinator.self).start()
         }
     }
 }
