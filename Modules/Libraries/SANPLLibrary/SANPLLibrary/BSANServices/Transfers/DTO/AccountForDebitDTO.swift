@@ -63,7 +63,7 @@ extension AccountForDebitDTO: AccountRepresentable {
     }
     
     var currentBalanceRepresentable: AmountRepresentable? {
-        self.adaptBalanceToAmount(self.balance)
+        self.adaptBalanceToAmount(self.availableFunds)
     }
     
     var ibanRepresentable: IBANRepresentable? {
