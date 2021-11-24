@@ -16,6 +16,7 @@ import Dynatrace
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
     var loginConfiguration:RememberedLoginConfiguration { get set }
+    var currentBiometryType: BiometryTypeEntity { get set }
     func viewDidLoad()
     func viewWillAppear()
     func viewDidAppear()
@@ -23,7 +24,6 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func didSelectBalance()
     func didSelectBlik()
     func didSelectMenu()
-    func getBiometryTypeAvailable() -> BiometryTypeEntity
     func setAllowLoginBlockedUsers()
     func startBiometricAuth()
     func trackView()
@@ -35,6 +35,7 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
     internal let dependenciesResolver: DependenciesResolver
     weak var view: PLRememberedLoginPinViewControllerProtocol?
     public var loginConfiguration:RememberedLoginConfiguration
+    public var currentBiometryType: BiometryTypeEntity = .none
     private let localAuth: LocalAuthenticationPermissionsManagerProtocol
     private var allowLoginBlockedUsers = true
 
@@ -76,6 +77,7 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
         self.dependenciesResolver = dependenciesResolver
         self.localAuth = dependenciesResolver.resolve(for: LocalAuthenticationPermissionsManagerProtocol.self)
         self.loginConfiguration = configuration
+        self.currentBiometryType = self.getBiometryTypeAvailable()
     }
 }
 
@@ -182,11 +184,6 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         }
     }
     
-    func getBiometryTypeAvailable() -> BiometryTypeEntity {
-        guard loginConfiguration.isBiometricsAvailable else { return .none }
-        return self.localAuth.biometryTypeAvailable
-    }
-    
     func didSelectBalance() {
         
     }
@@ -244,6 +241,11 @@ private extension PLRememberedLoginPinPresenter {
         }
     }
     
+    func getBiometryTypeAvailable() -> BiometryTypeEntity {
+        guard loginConfiguration.isBiometricsAvailable else { return .none }
+        return self.localAuth.biometryTypeAvailable
+    }
+    
     func biometryFails(error: Error? = nil) {
         safetyCurtainSafeguardEventDidFinish()
         
@@ -299,7 +301,10 @@ private extension PLRememberedLoginPinPresenter {
     }
     
     @objc func didBecomeActive() {
-        view?.applicationDidBecomeActive(for: self.getBiometryTypeAvailable())
+        let biometryType = self.getBiometryTypeAvailable()
+        guard currentBiometryType != biometryType else { return }
+        self.currentBiometryType = biometryType
+        view?.applicationDidBecomeActive()
     }
 }
 

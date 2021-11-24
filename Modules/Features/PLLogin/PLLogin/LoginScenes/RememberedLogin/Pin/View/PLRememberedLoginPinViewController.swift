@@ -18,7 +18,7 @@ protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCa
     func setUserName(_ name: String)
     func tryPinAuth(withError: Bool)
     var currentLoginType: PLRememberedLoginType { get set }
-    func applicationDidBecomeActive(for biometryType: BiometryTypeEntity)
+    func applicationDidBecomeActive()
 }
 
 public enum PLRememberedLoginDialogType {
@@ -88,6 +88,7 @@ final class PLRememberedLoginPinViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presenter.viewDidAppear()
+        self.tryBiometricAuth()
     }
 }
 
@@ -96,6 +97,16 @@ private extension PLRememberedLoginPinViewController {
         NavigationBarBuilder(style: .clear(tintColor: .white), title: .none)
             .setRightActions(.menu(action: #selector(didSelectMenu)))
             .build(on: self, with: nil)
+    }
+    
+    func tryBiometricAuth() {
+        switch presenter.currentBiometryType {
+        case .touchId, .faceId:
+            self.configureViewForLogin(type: .BIOMETRICS)
+            self.presenter.startBiometricAuth()
+        default:
+            break
+        }
     }
     
     @objc func didSelectMenu() {
@@ -109,14 +120,13 @@ private extension PLRememberedLoginPinViewController {
     
     @objc func didSelectChangeLoginTypeButton() {
         self.presenter.trackChangeLoginTypeButton()
-        switch currentLoginType {
+        switch self.currentLoginType {
         case .PIN:
-            self.currentLoginType = .BIOMETRICS
+            self.configureViewForLogin(type: .BIOMETRICS)
             self.presenter.startBiometricAuth()
         case .BIOMETRICS:
-            self.currentLoginType = .PIN
+            self.configureViewForLogin(type: .PIN)
         }
-        self.configureViewForLoginType()
     }
     
     @objc func didSelectBlikButton() {
@@ -161,8 +171,9 @@ private extension PLRememberedLoginPinViewController {
                                                                   action: #selector(didSelectBlikButton)))
     }
     
-    func configureViewForLoginType() {
-        switch currentLoginType {
+    func configureViewForLogin(type: PLRememberedLoginType) {
+        self.currentLoginType = type
+        switch self.currentLoginType {
         case .PIN:
             self.numberPadView.isHidden = false
             self.biometryCover.isHidden = true
@@ -179,7 +190,7 @@ private extension PLRememberedLoginPinViewController {
     }
     
     func setupBiometry() {
-        switch presenter.getBiometryTypeAvailable() {
+        switch presenter.currentBiometryType {
         case .touchId:
             changeLoginTypeButton.setImage(Assets.image(named: "smallFingerprint"), for: .normal)
             biometryBigImage.image = Assets.image(named: "icnFingerprintLogin")
@@ -255,15 +266,15 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         self.presenter.didSelectChooseEnvironment()
     }
     
-    func applicationDidBecomeActive(for biometryType: BiometryTypeEntity) {
-        switch biometryType {
+    func applicationDidBecomeActive() {
+        switch presenter.currentBiometryType {
         case .error(biometry: _, error: _), .none:
-            self.currentLoginType = .PIN
-        default:
-            break
+            self.configureViewForLogin(type: .PIN)
+        case .touchId, .faceId:
+            self.configureViewForLogin(type: .BIOMETRICS)
+            self.tryBiometricAuth()
         }
         self.setupBiometry()
-        self.configureViewForLoginType()
     }
     
     func tryPinAuth(withError: Bool) {
@@ -271,8 +282,7 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
             let textStyle = LocalizedStylableText(text: localized("pl_login_alert_lastBiometricAttempt"), styles: nil)
             TopAlertController.setup(TopAlertView.self).showAlert(textStyle, alertType: .failure, duration: 5.0)
         }
-        self.currentLoginType = .PIN
-        self.configureViewForLoginType()
+        self.configureViewForLogin(type: .PIN)
     }
     
     func setUserName(_ name: String) {
