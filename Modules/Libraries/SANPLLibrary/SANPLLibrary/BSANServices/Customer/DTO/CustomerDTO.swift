@@ -56,6 +56,18 @@ extension CustomerDTO: PersonalBasicInfoRepresentable {
          address?.countryCode ?? "",
          address?.voivodship ?? ""]
     }
+    
+    public var correspondenceAddressNodes: [String] {
+        [
+            correspondenceAddress?.name ?? "",
+            correspondenceAddress?.city ?? "",
+            correspondenceAddress?.street ?? "",
+            correspondenceAddress?.propertyNo ?? "",
+            correspondenceAddress?.zip ?? "",
+            correspondenceAddress?.countryCode ?? "",
+            correspondenceAddress?.voivodship ?? ""
+        ]
+    }
 
     public var documentType: DocumentType? {
         nil

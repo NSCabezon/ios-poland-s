@@ -11,15 +11,14 @@ import Commons
 class PLPersonalDataModifier: PersonalDataModifier {
     func buildPersonalData(with personalInfo: PersonalInfoWrapper?) -> PersonalDataInfo? {
         guard let personalInfo = personalInfo else { return nil }
-        let polandAddress = polandAddress(personalInfo.addressNodes)
+        let address = polandAddress(personalInfo.addressNodes)
         var personalDataInfo = PersonalDataInfo()
-        personalDataInfo.mainAddress = polandAddress
-        personalDataInfo.correspondenceAddress = polandAddress
+        personalDataInfo.mainAddress = address
+        personalDataInfo.correspondenceAddress = polandAddress(personalInfo.correspondenceAddressNodes)
         personalDataInfo.phone = maskedPhone(personalInfo.phone)
         personalDataInfo.smsPhone = maskedPhone(personalInfo.phone)
         let email = (personalInfo.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : personalInfo.email
         personalDataInfo.email = email
-        
         personalDataInfo.correspondenceAddressMode = .web
         personalDataInfo.phoneMode = .web
         personalDataInfo.emailMode = .web

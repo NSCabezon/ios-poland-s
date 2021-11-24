@@ -21,6 +21,7 @@ final class CustomerDTOAdapter {
         let addressArray: [String] = [addressName, addressCity, addressStreet, addressPropertyNo, addressZip, countryCode, voivodship]
         personBasicDataDTO.mainAddress = plCustomer.address?.name?.capitalized ?? ""
         personBasicDataDTO.addressNodes = addressArray
+        personBasicDataDTO.correspondenceAddressNodes = plCustomer.correspondenceAddressNodes
         personBasicDataDTO.documentNumber = plCustomer.pesel?.capitalized ?? ""
         personBasicDataDTO.birthString = plCustomer.dateOfBirth?.capitalized ?? ""
         personBasicDataDTO.phoneNumber = plCustomer.contactData?.phoneNo?.number ?? ""
