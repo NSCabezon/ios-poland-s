@@ -104,10 +104,10 @@ extension  InputSignatureView: PLUIInputCodeViewDelegate {
     }
 
     public func codeView(_ view: PLUIInputCodeView, didBeginEditing position: NSInteger) {
-        view.setBoxView(position: position, backgroundColor: .oneTurquoise.withAlphaComponent(0.07), borderWidth: 2, borderColor: .oneTurquoise)
+        view.setBoxView(position: position, backgroundColor: .oneTurquoise.withAlphaComponent(0.07), borderWidth: 2, borderColor: .oneDarkTurquoise)
     }
 
     public func codeView(_ view: PLUIInputCodeView, didEndEditing position: NSInteger) {
-        view.setBoxView(position: position, backgroundColor: .clear, borderWidth: 1, borderColor: .oneMediumSkyGray)
+        view.setBoxView(position: position, backgroundColor: .clear, borderWidth: 1, borderColor: .oneBrownGray)
     }
 }
