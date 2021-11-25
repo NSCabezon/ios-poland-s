@@ -13,9 +13,9 @@ final class CardDetailDTOAdapter {
 
     static func adaptPLCreditCardToCardDetail(_ plCard: SANPLLibrary.CardDetailDTO) -> SANLegacyLibrary.CardDetailDTO {
         var cardDataDTO = SANLegacyLibrary.CardDetailDTO()
-        cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.relatedAccountData?.availableFunds)
-        cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.relatedAccountData?.balance)
-        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.relatedAccountData?.creditLimit)
+        cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToAmount(plCard.relatedAccountData?.availableFunds)
+        cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plCard.relatedAccountData?.balance)
+        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToAmount(plCard.relatedAccountData?.creditLimit)
         cardDataDTO.holder = plCard.emboss1 + " " + plCard.emboss2
         cardDataDTO.beneficiary = plCard.emboss1 + " " + plCard.emboss2
         cardDataDTO.expirationDate = DateFormats.toDate(string: plCard.cardExpirationDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
