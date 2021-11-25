@@ -29,7 +29,7 @@ Pod::Spec.new do |spec|
   spec.dependency "Repository"
   spec.dependency "CommonUseCase"
   spec.dependency "LoginCommon"
-  spec.dependency "iOSPublicFiles"
+  spec.dependency "CoreFoundationLib"
   spec.dependency "SANPLLibrary"
   spec.dependency "PLLegacyAdapter"
   spec.dependency 'PLCryptography'

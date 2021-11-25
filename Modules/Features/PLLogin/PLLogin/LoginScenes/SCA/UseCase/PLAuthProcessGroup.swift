@@ -6,7 +6,7 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
 import Repository

@@ -1,6 +1,6 @@
 import UIKit
 import SANLegacyLibrary
-import DomainCommon
+import CoreFoundationLib
 import Models
 import UI
 import SANPLLibrary

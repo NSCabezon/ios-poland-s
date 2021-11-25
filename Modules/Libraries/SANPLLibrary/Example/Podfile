@@ -7,15 +7,15 @@ def core_dependencies
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'Models', :path => '../../../../santander-one/Models'
-  pod 'DomainCommon', :path => '../../../../santander-one/Modules/Libraries/DomainCommon'
+  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
   pod 'Commons', :path => '../../../../santander-one/Commons'
-  pod 'iOSPullOffers', :path => '../../../../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   # Microsite configuration
-  pod 'iOSPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSPublicFiles'
-  pod 'iOSCommonPublicFiles', :path => '../../../../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
+  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
 
 end
 

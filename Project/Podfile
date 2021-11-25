@@ -16,7 +16,7 @@ def core_dependencies
   pod 'Models', :path => '../santander-one/Models'
   pod 'Commons', :path => '../santander-one/Commons'
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
-  pod 'DomainCommon', :path => '../santander-one/Modules/Libraries/DomainCommon'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
@@ -24,12 +24,12 @@ def core_dependencies
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   
   # Microsite configuration
-  pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
-  pod 'iOSCommonPublicFiles', :path => '../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
-  pod 'iOSPullOffers', :path => '../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'PFM', :path => '../santander-one/Modules/Libraries/PFM'
   pod 'Loans', :path => '../santander-one/Loans'
   pod 'Account', :path => '../santander-one/Accounts'

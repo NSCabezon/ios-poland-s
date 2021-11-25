@@ -8,7 +8,7 @@
 import TransferOperatives
 import SANLegacyLibrary
 import SANPLLibrary
-import DomainCommon
+import CoreFoundationLib
 import CoreDomain
 import Commons
 import Models

@@ -8,7 +8,7 @@
 import Foundation
 import Commons
 import Models
-import DomainCommon
+import CoreFoundationLib
 import CommonUseCase
 
 final class PLLoginPullOfferLoader {

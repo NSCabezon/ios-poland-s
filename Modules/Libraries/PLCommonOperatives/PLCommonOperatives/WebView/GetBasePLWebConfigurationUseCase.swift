@@ -1,7 +1,7 @@
 import Foundation
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import Models
 import SANPLLibrary
 

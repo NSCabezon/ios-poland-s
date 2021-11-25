@@ -5,7 +5,7 @@
 //  Created by Rodrigo Jurado on 21/6/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import Repository
 import Models

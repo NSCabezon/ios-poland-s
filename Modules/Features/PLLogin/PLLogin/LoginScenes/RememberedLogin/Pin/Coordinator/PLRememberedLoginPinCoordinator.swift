@@ -12,7 +12,7 @@ import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLCommons
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {

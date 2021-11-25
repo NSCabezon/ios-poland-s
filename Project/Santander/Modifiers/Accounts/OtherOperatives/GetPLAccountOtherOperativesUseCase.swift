@@ -1,9 +1,9 @@
 import SANLegacyLibrary
-import DomainCommon
+import CoreFoundationLib
 import Models
 import Commons
 import Account
-import iOSPublicFiles
+import CoreFoundationLib
 import RetailLegacy
 import Repository
 

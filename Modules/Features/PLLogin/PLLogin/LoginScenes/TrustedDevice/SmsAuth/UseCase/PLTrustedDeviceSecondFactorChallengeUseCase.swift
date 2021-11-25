@@ -5,7 +5,7 @@
 
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 final class PLTrustedDeviceSecondFactorChallengeUseCase: UseCase<PLTrustedDeviceSecondFactorChallengeInput, PLTrustedDeviceSecondFactorChallengeOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

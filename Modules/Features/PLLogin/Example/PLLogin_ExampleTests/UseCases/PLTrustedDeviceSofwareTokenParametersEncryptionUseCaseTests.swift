@@ -7,7 +7,7 @@
 
 import XCTest
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import CryptoSwift
 import SANPLLibrary
 import PLCryptography

@@ -5,7 +5,7 @@
 //  Created by Juan Sánchez Marín on 16/6/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import PLCryptography
 import PLCommons

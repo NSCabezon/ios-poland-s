@@ -1,6 +1,6 @@
 import Foundation
 import Contacts
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol GetContactsUseCaseProtocol: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {}

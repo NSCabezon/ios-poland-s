@@ -16,6 +16,10 @@ final class OtherOperativesModifier: OtherOperativesModifierProtocol {
         self.dependenciesEngine = dependenciesEngine
     }
     
+    var isStockAccountsDisabled: Bool {
+        return true
+    }
+    
     func isOtherOperativeEnabled(_ option: PGFrequentOperativeOption) -> Bool {
         return true
     }

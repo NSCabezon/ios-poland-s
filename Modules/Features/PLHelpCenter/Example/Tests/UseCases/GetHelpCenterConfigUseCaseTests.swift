@@ -8,7 +8,7 @@
 
 import Commons
 @testable import PLHelpCenter
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import XCTest
 

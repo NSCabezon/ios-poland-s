@@ -8,7 +8,7 @@
 import Commons
 import UI
 import PLUI
-import DomainCommon
+import CoreFoundationLib
 
 protocol AliasDateChangePresenterProtocol {
     var view: AliasDateChangeView? { get set }

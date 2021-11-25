@@ -5,7 +5,7 @@
 
 import Cards
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import Models
 import Operative
 import SANLegacyLibrary

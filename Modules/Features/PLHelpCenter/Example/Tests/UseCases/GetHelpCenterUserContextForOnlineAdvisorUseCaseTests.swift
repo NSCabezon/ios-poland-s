@@ -9,7 +9,7 @@
 import XCTest
 import Commons
 import SANPLLibrary
-import DomainCommon
+import CoreFoundationLib
 @testable import PLHelpCenter
 
 class GetHelpCenterUserContextForOnlineAdvisorUseCaseTests: XCTestCase {

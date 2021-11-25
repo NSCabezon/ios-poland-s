@@ -32,5 +32,5 @@ Pod::Spec.new do |s|
   s.dependency 'SANPLLibrary'
   s.dependency 'SelfSignedCertificate'
   s.dependency 'Commons'
-  s.dependency 'DomainCommon'
+  s.dependency 'CoreFoundationLib'
 end

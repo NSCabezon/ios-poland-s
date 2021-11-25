@@ -6,7 +6,7 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import Models
 
 final class PLSessionDataManagerModifier: SessionDataManagerModifier {

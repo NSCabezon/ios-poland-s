@@ -7,7 +7,7 @@
 
 import Commons
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol DeleteAliasUseCaseProtocol: UseCase<DeleteAliasRequest, Void, StringErrorOutput> {}

@@ -25,7 +25,7 @@ import Menu
 import Cards
 import PLNotifications
 import Loans
-import iOSPublicFiles
+import CoreFoundationLib
 import CoreDomain
 import CommonUseCase
 import PLCryptography

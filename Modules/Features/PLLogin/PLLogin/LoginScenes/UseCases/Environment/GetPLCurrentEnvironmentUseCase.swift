@@ -3,7 +3,7 @@
 //  PLLogin
 
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import SANLegacyLibrary
 import SANPLLibrary
 import Commons

@@ -1,6 +1,6 @@
 import Commons
 @testable import BLIK
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import XCTest
 

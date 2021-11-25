@@ -16,7 +16,7 @@ import PLCommons
 import Loans
 import PersonalArea
 import SANLegacyLibrary
-import DomainCommon
+import CoreFoundationLib
 import TransferOperatives
 
 final class AppModifiers {

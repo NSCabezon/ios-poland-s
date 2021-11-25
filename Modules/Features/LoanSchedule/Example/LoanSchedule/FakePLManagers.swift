@@ -9,7 +9,7 @@
 import Foundation
 import LoanSchedule
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import Repository
 import SANPLLibrary
 import SANLegacyLibrary

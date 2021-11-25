@@ -5,7 +5,7 @@
 //  Created by Mario Rosales Maillo on 27/7/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 
 public class PLUseCaseErrorOutput<T>: StringErrorOutput {
     public var genericError: PLGenericError = .unknown

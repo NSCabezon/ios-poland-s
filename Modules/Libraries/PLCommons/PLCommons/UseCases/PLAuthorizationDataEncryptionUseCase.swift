@@ -6,7 +6,7 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import CryptoSwift
 
 public final class PLAuthorizationDataEncryptionUseCase<Error>: UseCase<PLAuthorizationDataEncryptionUseCaseInput, PLAuthorizationDataEncryptionUseCaseOutput, PLUseCaseErrorOutput<Error>>{

@@ -6,7 +6,7 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import Foundation
 import Models // for AmountEntity
 import SANLegacyLibrary // for currencyType

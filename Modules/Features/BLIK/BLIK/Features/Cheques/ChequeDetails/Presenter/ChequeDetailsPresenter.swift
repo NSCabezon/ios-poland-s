@@ -8,7 +8,7 @@
 import UIKit
 import UI
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol ChequeDetailsPresenterProtocol {
     func viewDidLoad(completion: (ChequeDetailsViewModel) -> Void)

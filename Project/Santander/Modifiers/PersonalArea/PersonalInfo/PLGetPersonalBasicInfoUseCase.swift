@@ -7,7 +7,7 @@
 
 import PersonalArea
 import Models
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import SANPLLibrary
 import SANLegacyLibrary

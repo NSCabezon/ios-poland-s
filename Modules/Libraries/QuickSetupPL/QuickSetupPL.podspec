@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   spec.dependency "QuickSetup/standard"
   spec.dependency "SANPLLibrary"
-  spec.dependency "DomainCommon"
+  spec.dependency "CoreFoundationLib"
   spec.dependency "DataRepository"
   spec.dependency "Localization"
   spec.dependency "Models"

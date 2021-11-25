@@ -35,5 +35,5 @@ Pod::Spec.new do |s|
   s.dependency "LoginCommon"
   s.dependency "SANPLLibrary"
   s.dependency "CommonUseCase"
-  s.dependency "iOSPublicFiles"
+  s.dependency "CoreFoundationLib"
 end

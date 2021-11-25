@@ -1,5 +1,5 @@
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLCommons
 import PLUI
 

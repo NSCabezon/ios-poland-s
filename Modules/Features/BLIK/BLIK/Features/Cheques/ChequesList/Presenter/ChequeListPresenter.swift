@@ -7,7 +7,7 @@
 
 import UI
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol ChequeListPresenterProtocol {
     func viewDidLoad()

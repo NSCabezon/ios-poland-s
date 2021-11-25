@@ -10,7 +10,7 @@ import Commons
 import PLCommons
 import SANPLLibrary
 import PLCryptography
-import DomainCommon
+import CoreFoundationLib
 
 final class PLRememberedLoginProcessGroup: ProcessGroup <PLRememberedLoginProcessGroupInput, PLRememberedLoginProcessGroupOutput, PLRememberedLoginProcessGroupError> {
 

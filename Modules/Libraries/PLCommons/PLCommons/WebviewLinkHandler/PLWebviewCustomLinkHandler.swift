@@ -9,7 +9,7 @@
 import Foundation
 import Commons
 import WebViews
-import DomainCommon
+import CoreFoundationLib
 import Models
 import os
 

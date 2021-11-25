@@ -6,7 +6,7 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol ChequePinPresenterProtocol {
     func viewDidLoad()

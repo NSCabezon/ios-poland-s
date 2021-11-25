@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 31/08/2021.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import PLUI
 

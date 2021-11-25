@@ -12,7 +12,7 @@ import PLUI
 import Commons
 import PLCommons
 import PLCommonOperatives
-import DomainCommon
+import CoreFoundationLib
 
 final class OneAppInitViewController: UIViewController, ErrorPresentable {
     

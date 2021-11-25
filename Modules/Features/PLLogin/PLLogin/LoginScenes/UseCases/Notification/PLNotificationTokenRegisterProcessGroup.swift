@@ -8,7 +8,7 @@
 import Foundation
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import PLNotifications
 import os
 

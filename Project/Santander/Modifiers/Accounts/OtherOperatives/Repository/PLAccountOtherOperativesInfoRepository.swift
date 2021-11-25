@@ -5,9 +5,9 @@
 //  Created by Julio Nieto Santiago on 7/10/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
-import iOSPublicFiles
+import CoreFoundationLib
 
 struct PLAccountOtherOperativesInfoRepository: BaseRepository {
     typealias T = PLAccountOtherOperativesDTOList
