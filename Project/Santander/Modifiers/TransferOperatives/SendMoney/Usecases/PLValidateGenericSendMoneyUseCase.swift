@@ -82,7 +82,7 @@ private extension PLValidateGenericSendMoneyUseCase {
             guard let authorizationIdString = authorizationId.authorizationId else {
                 return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil)))
             }
-            return .ok(ValidateSendMoneyUseCaseOkOutput(beneficiaryMail: nil, sca: ValidateSendMoneySCA(authorizationId: "\(authorizationIdString)")))
+            return .ok(ValidateSendMoneyUseCaseOkOutput(beneficiaryMail: nil, sca: SCAEntity(ValidateSendMoneySCA(authorizationId: "\(authorizationIdString)"))))
         case .failure(let error):
             return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
         }
