@@ -20,6 +20,7 @@ protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol 
     func didSelectTransferType(at index: Int)
     func didPressedFloatingButton()
     func didTapCloseAmountHigh()
+    func didTapTooltip()
     func getSubtitleInfo() -> String
 }
 
@@ -49,6 +50,7 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     func viewDidLoad() {
         let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
         self.view?.showTransferTypes(viewModel: viewModel)
+        self.trackerManager.trackScreen(screenId: self.trackerPage.page, extraParameters: ["transfer_country" : self.operativeData.type.trackerName])
     }
     
     func didSelectBack() {
@@ -81,6 +83,10 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     
     func getSubtitleInfo() -> String {
         self.container?.getSubtitleInfo(presenter: self) ?? ""
+    }
+    
+    func didTapTooltip() {
+        self.trackerManager.trackEvent(screenId: self.trackerPage.page, eventId: SendMoneyTransferTypePage.Action.clickTooltip.rawValue, extraParameters: ["transfer_country" : self.operativeData.type.trackerName])
     }
 }
 
@@ -155,5 +161,16 @@ extension PolandTransferType {
         case .creditCardAccount, .zero, .one, .four:
             return AmountDTO(value: .zero, currency: .create(.złoty))
         }
+    }
+}
+
+extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
+    
+    var trackerPage: SendMoneyTransferTypePage {
+        SendMoneyTransferTypePage()
+    }
+    
+    var trackerManager: TrackerManager {
+        dependenciesResolver.resolve(for: TrackerManager.self)
     }
 }
