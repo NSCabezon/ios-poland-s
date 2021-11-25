@@ -165,7 +165,7 @@ private extension BLIKConfirmationViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            aliasInfoBanner.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            aliasInfoBanner.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
             aliasInfoBanner.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             aliasInfoBanner.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
