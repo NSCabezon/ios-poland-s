@@ -67,12 +67,15 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
     }
     
     func showSettings(with wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>) {
-        let coordinator = BlikSettingsCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            navigationController: navigationController,
-            wallet: wallet
-        )
-        coordinator.start()
+        Toast.show(localized("generic_alert_notAvailableOperation"))
+        // TODO:- Settings are disabled in current build, will be restored in future task
+        
+//        let coordinator = BlikSettingsCoordinator(
+//            dependenciesResolver: dependenciesEngine,
+//            navigationController: navigationController,
+//            wallet: wallet
+//        )
+//        coordinator.start()
     }
     
     func showContacts() {
@@ -83,11 +86,14 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
     }
     
     func showAliasPayment() {
-        let coordinator = AliasListSettingsCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            navigationController: navigationController
-        )
-        coordinator.start()
+        Toast.show(localized("generic_alert_notAvailableOperation"))
+        // TODO:- AliasSettings are disabled in current build, will be restored in future task
+        
+//        let coordinator = AliasListSettingsCoordinator(
+//            dependenciesResolver: dependenciesEngine,
+//            navigationController: navigationController
+//        )
+//        coordinator.start()
     }
 }
 
