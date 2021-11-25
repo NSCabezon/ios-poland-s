@@ -195,7 +195,9 @@ private extension TransactionLimitPresenter {
         switch response.serviceStatus {
         case let .available(fetchedWallet):
             self.wallet.setValue(fetchedWallet)
-            coordinator.showLimitUpdateSuccessAndClose()
+            coordinator.showLimitUpdateSuccess()
+            let newViewModel = viewModelMapper.map(fetchedWallet)
+            view?.setViewModel(viewModel: newViewModel)
         case .unavailable:
             view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
                 self?.coordinator.goBackToGlobalPosition()

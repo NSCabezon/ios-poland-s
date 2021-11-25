@@ -17,7 +17,7 @@ protocol BlikSettingsCoordinatorProtocol: ModuleCoordinator {
     func showOtherSettings()
     func close()
     func closeToGlobalPosition()
-    func showLimitUpdateSuccessAndClose()
+    func showLimitUpdateSuccess()
     func goBackToGlobalPosition()
 }
 
@@ -105,13 +105,12 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func showLimitUpdateSuccessAndClose() {
+    func showLimitUpdateSuccess() {
         TopAlertController.setup(TopAlertView.self).showAlert(
             localized("pl_blik_text_limitChangedSuccess"),
             alertType: .info,
             position: .top
         )
-        close()
     }
     
     func goBackToGlobalPosition() {
