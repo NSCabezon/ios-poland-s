@@ -72,6 +72,7 @@ def pl_features
   pod 'mCommerce', :path => '../Modules/Features/mCommerce'
   pod 'PLNotificationsInbox', :path => '../Modules/Features/PLNotificationsInbox'
   pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
+  pod 'PhoneTopUp', :path => '../Modules/Features/PhoneTopUp'
 end
 
 def pl_libraries

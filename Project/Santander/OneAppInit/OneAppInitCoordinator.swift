@@ -20,6 +20,7 @@ import PLUI
 import CharityTransfer
 import Models
 import SANLegacyLibrary
+import PhoneTopUp
 
 enum OneAppInitModule: String, CaseIterable {
     case deepLink = "Deep Link"
@@ -33,6 +34,7 @@ enum OneAppInitModule: String, CaseIterable {
     case mCommerce = "mCommerce"
     case notificationsInbox = "Notifications Inbox"
     case charityTransfer = "Charity transfer"
+    case phoneTopUp = "Phone Top-Up"
 }
 
 extension OneAppInitModule {
@@ -162,6 +164,12 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             coordinator.start()
         case .notificationsInbox:
             let coordinator = PLNotificationsInboxModuleCoordinator(
+                dependenciesResolver: dependenciesEngine,
+                navigationController: navigationController
+            )
+            coordinator.start()
+        case .phoneTopUp:
+            let coordinator = PhoneTopUpCoordinator(
                 dependenciesResolver: dependenciesEngine,
                 navigationController: navigationController
             )
