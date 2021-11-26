@@ -65,17 +65,7 @@ pipeline {
 				sh "cd Project && fastlane ios release deploy_env:pre notify_testers:true branch:master"
 			}
 		}
-
-		stage('Distribute Pro iOS') {
-			when {
-				 branch 'release/*'
-			}
-			steps {
-				echo "Distributing Pro app"
-				sh "cd Project && fastlane ios release_appstore deploy_env:pro"
-			}
-		}
-
+		
 		stage('Increment Version and Update Repo Version ') {
 			when {
 				anyOf { branch 'develop'; branch 'master'; branch 'release/*' }
