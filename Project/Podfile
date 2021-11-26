@@ -22,10 +22,7 @@ def core_dependencies
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
-  
-  # Microsite configuration
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
+  pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
