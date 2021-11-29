@@ -209,8 +209,8 @@ platform :ios do
     match(
       git_url: "git@github.com:santander-group-europe/ios-certificates-development.git",
       app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
-       "pl.bancosantander.oneapp.intern.#{options[:version]}",
-       "pl.bancosantander.oneapp.pre.#{options[:version]}"],
+       "pl.bancosantander.oneapp.intern.0.0",
+       "pl.bancosantander.oneapp.pre.0.0"],
       type: 'development',
       readonly: true
     )
@@ -221,8 +221,8 @@ platform :ios do
     match(
       git_url: "ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/certificates-release.git",
       app_identifier: [
-      "pl.bancosantander.oneapp.intern.#{options[:version]}",
-      "pl.bancosantander.oneapp.pre.#{options[:version]}"],
+      "pl.bancosantander.oneapp.intern.0.0",
+      "pl.bancosantander.oneapp.pre.0.0"],
       type: 'enterprise',
       readonly: true
     )
