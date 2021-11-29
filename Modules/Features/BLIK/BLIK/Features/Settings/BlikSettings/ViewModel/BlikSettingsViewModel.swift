@@ -31,7 +31,7 @@ enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
     var title: String {
         switch self {
         case .aliasPayment:
-            return localized("pl_blik_label_withoutCodeDesc")
+            return localized("pl_blik_text_withoutCode")
         case .phoneTransfer:
             return localized("pl_blik_text_payMobile")
         case .transferLimits:
@@ -44,7 +44,7 @@ enum BlikSettingsViewModel: MenuViewModel, CaseIterable {
     var description: String {
         switch self {
         case .aliasPayment:
-            return localized("pl_blik_text_withoutCode")
+            return localized("pl_blik_label_withoutCodeDesc")
         case .phoneTransfer:
             return localized("pl_blik_label_payMobileDesc")
         case .transferLimits:
