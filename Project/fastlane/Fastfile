@@ -216,13 +216,14 @@ platform :ios do
     )
   end
 
+  # Note: in Poland CI we only manage one app bundle id, designed as 0.0.
   desc 'Fetch Distribution certificates and provisioning profiles'
   lane :certificates_release do |options|
     match(
       git_url: "ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/certificates-release.git",
       app_identifier: [
-      "pl.bancosantander.oneapp.intern.#{options[:version]}",
-      "pl.bancosantander.oneapp.pre.#{options[:version]}"],
+      "pl.bancosantander.oneapp.intern.0.0",
+      "pl.bancosantander.oneapp.pre.0.0"],
       type: 'enterprise',
       readonly: true
     )
