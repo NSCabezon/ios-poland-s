@@ -397,11 +397,13 @@ end
       UI.message("🚀  Current branch: #{branch}")      
       git_add(path: "./Project/Santander.xcodeproj/project.pbxproj")
       git_add(path: "./Project/Santander/Info.plist")
+      git_add(path: "./Project/Santander.xcodeproj/xcshareddata/xcschemes/*.xcscheme")
       git_commit(
         path: 
         [
           "./Project/Santander.xcodeproj/project.pbxproj",
-          "./Project/Santander/Info.plist"
+          "./Project/Santander/Info.plist",
+          "./Project/Santander.xcodeproj/xcshareddata/xcschemes/*.xcscheme"
         ],
         message: "Updating Version #{Actions.lane_context[SharedValues::VERSION_NUMBER]}"
         )
