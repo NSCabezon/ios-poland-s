@@ -7,7 +7,7 @@ class BLIKConfirmationProgressView: UIStackView, ProgressBarPresentable {
         let bar = ProgressBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
         bar.setProgresColor(.darkTorquoise)
-        bar.setProgressBackgroundColor(.clear)
+        bar.setProgressBackgroundColor(.white)
         bar.setProgressAlpha(1)
         return bar
     }()
