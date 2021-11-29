@@ -74,6 +74,30 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
         icon: "icnEditGoal"
     )
 
+    private let moneyBack: AccountActionType = .custome(
+        identifier: PLAccountOtherOperativesIdentifier.moneyBack.rawValue,
+        accesibilityIdentifier: "",
+        trackName: "",
+        localizedKey: "accountOption_button_moneyBack",
+        icon: "icnMoneyBack"
+    )
+
+    private let multicurrency: AccountActionType = .custome(
+        identifier: PLAccountOtherOperativesIdentifier.multicurrency.rawValue,
+        accesibilityIdentifier: "",
+        trackName: "",
+        localizedKey: "frequentOperative_button_multicurrency",
+        icon: "icnMulticurrency"
+    )
+
+    private let atmPackage: AccountActionType = .custome(
+        identifier: PLAccountOtherOperativesIdentifier.atmPackage.rawValue,
+        accesibilityIdentifier: "",
+        trackName: "",
+        localizedKey: "frequentOperative_button_atmPackage",
+        icon: "icnAtmPackage"
+    )
+
     private lazy var transactionHistory: AccountActionType = .custome(
         identifier: PLAccountOtherOperativesIdentifier.history.rawValue,
         accesibilityIdentifier: "",
@@ -96,6 +120,14 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
         trackName: "",
         localizedKey: "accountOption_button_customerService",
         icon: "icnCustomerService"
+    )
+
+    private let ourOffer: AccountActionType = .custome(
+        identifier: PLAccountOtherOperativesIdentifier.ourOffer.rawValue,
+        accesibilityIdentifier: "",
+        trackName: "",
+        localizedKey: "frequentOperative_button_contract",
+        icon: "icnOffer"
     )
 
     private let openDeposit: AccountActionType = .custome(
@@ -123,11 +155,15 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
     )
 
     private lazy var everyDayOperatives: [AccountActionType] = {
-        [addBanks, changeAlias, changeAccount, qrCode, alerts24, cardRepayment, editGoal]
+        [addBanks, changeAlias, changeAccount, qrCode, alerts24]
     }()
 
     private lazy var otherOperativeActions: [AccountActionType] = {
-        [addBanks, changeAlias, changeAccount, qrCode, alerts24, cardRepayment, editGoal, transactionHistory, accountStatements, customerService, openDeposit, currencyExchange, memberGetMember]
+        [addBanks, changeAlias, changeAccount, qrCode, alerts24, cardRepayment, editGoal, moneyBack, multicurrency, atmPackage, transactionHistory, accountStatements, customerService, ourOffer, openDeposit, currencyExchange, memberGetMember]
+    }()
+
+    private lazy var adjustAccounts: [AccountActionType] = {
+        [moneyBack, multicurrency, atmPackage]
     }()
 
     private lazy var queriesActions: [AccountActionType] = {
@@ -135,7 +171,7 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
     }()
 
     private lazy var contractActions: [AccountActionType] = {
-        [openDeposit, currencyExchange, memberGetMember]
+        [ourOffer, openDeposit, currencyExchange, memberGetMember]
     }()
        
     init(dependenciesResolver: DependenciesResolver) {
@@ -143,7 +179,7 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
     }
     
     override func executeUseCase(requestValues: GetAccountOtherOperativesActionUseCaseInput) throws -> UseCaseResponse<GetAccountOtherOperativesActionUseCaseOkOutput, StringErrorOutput> {
-        return .ok(GetAccountOtherOperativesActionUseCaseOkOutput(everyDayOperatives: everyDayOperatives, otherOperativeActions: otherOperativeActions, queriesActions: queriesActions, contractActions: contractActions, officeArrangementActions: []))
+        return .ok(GetAccountOtherOperativesActionUseCaseOkOutput(everyDayOperatives: everyDayOperatives, otherOperativeActions: otherOperativeActions, adjustAccounts: adjustAccounts, queriesActions: queriesActions, contractActions: contractActions, officeArrangementActions: []))
     }
 }
 
