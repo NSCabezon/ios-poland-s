@@ -35,7 +35,6 @@ final class TransactionLimitViewController: UIViewController, TransactionLimitVi
         DispatchQueue.main.async { [weak self] in
             self?.contentView.set(viewModel: viewModel)
         }
-
     }
     
     func setIsSaveButtonEnabled(_ isEnabled: Bool) {

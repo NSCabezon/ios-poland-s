@@ -89,7 +89,6 @@ private extension PhoneTransferSettingsPresenter {
     }
     
     func updateWalletAndViewState() {
-        view?.showLoader()
         Scenario(useCase: getWalletUseCase)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
