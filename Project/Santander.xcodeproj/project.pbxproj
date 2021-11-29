@@ -84,6 +84,8 @@
 		4488918926EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4488918826EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift */; };
 		4488918B26EB8F0F00F5FA24 /* PLFiltersAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4488918A26EB8F0E00F5FA24 /* PLFiltersAlertModifier.swift */; };
 		4497E816270CB23200D6EE05 /* PLLoanTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4497E815270CB23200D6EE05 /* PLLoanTransaction.swift */; };
+		44DE753F2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE753E2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift */; };
+		44DE75412754CC56004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE75402754CC55004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift */; };
 		5F02263D27328E0C005161B6 /* LoadPfmSessionStartedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */; };
 		5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */; };
 		669A37CE270F564800C0F272 /* PLAccountOtherOperativesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37CC270F564800C0F272 /* PLAccountOtherOperativesData.swift */; };
@@ -289,6 +291,8 @@
 		4488918826EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetAccountTransactionsUseCase.swift; sourceTree = "<group>"; };
 		4488918A26EB8F0E00F5FA24 /* PLFiltersAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLFiltersAlertModifier.swift; sourceTree = "<group>"; };
 		4497E815270CB23200D6EE05 /* PLLoanTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanTransaction.swift; sourceTree = "<group>"; };
+		44DE753E2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericDialogActionsModifier.swift; sourceTree = "<group>"; };
+		44DE75402754CC55004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetGenericErrorDialogDataUseCase.swift; sourceTree = "<group>"; };
 		49E699CFE2834DE4BE0C281D /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		5243E3FFFBB6EFCACA6C344E /* Pods-Santander.regression-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-debug.xcconfig"; sourceTree = "<group>"; };
 		5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPfmSessionStartedAction.swift; sourceTree = "<group>"; };
@@ -757,6 +761,7 @@
 				0DCED399268B0B16001D38CC /* Accounts */,
 				447D7D2D268F002700F9A70D /* Cards */,
 				B01155F92715933300A4C175 /* DeepLinks */,
+				44DE753D2754C741004DF0E7 /* GenericErrorDIalog */,
 				446E0C1D265FE42400847FCA /* GlobalPosition */,
 				0D7CA2CB26B8077D007E0C10 /* Inbox */,
 				0D4D558B26A6DE6D0032466B /* Loans */,
@@ -810,6 +815,15 @@
 				447D7D2F268F009300F9A70D /* PLCardHomeModifier.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		44DE753D2754C741004DF0E7 /* GenericErrorDIalog */ = {
+			isa = PBXGroup;
+			children = (
+				44DE753E2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift */,
+				44DE75402754CC55004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift */,
+			);
+			path = GenericErrorDIalog;
 			sourceTree = "<group>";
 		};
 		5F02263B27328DFB005161B6 /* Session */ = {
@@ -1448,6 +1462,7 @@
 				0DCD893626C54D0C00275A90 /* PLSendMoneyOperative.swift in Sources */,
 				CCE45A9B2732AC5400691E91 /* PLAuthorizationPresenter.swift in Sources */,
 				669A37CE270F564800C0F272 /* PLAccountOtherOperativesData.swift in Sources */,
+				44DE753F2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift in Sources */,
 				0DB4958026C1592600F0985F /* PLBlikOperative.swift in Sources */,
 				0DAA4D5526C3CB5F005A921C /* GetGPOtherOperativeModifier.swift in Sources */,
 				90CFA854273E7DAF006AD6CB /* PLSessionDataManagerModifier.swift in Sources */,
@@ -1534,6 +1549,7 @@
 				9CA9EEBC270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift in Sources */,
 				3462BDBC27200A7D00FAA715 /* SendMoneyTransferTypeFeeView.swift in Sources */,
 				446C4F9226D798640080D7EC /* PLAccountTransaction.swift in Sources */,
+				44DE75412754CC56004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift in Sources */,
 				0D8746CA26E61CB10041C9FA /* OnboardingPermissionOptions.swift in Sources */,
 				CCE45AA32732AC5400691E91 /* InputBiometricsView.swift in Sources */,
 				7E8AD11F26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift in Sources */,

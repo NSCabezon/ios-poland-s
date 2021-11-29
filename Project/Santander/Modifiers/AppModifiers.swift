@@ -18,6 +18,7 @@ import PersonalArea
 import SANLegacyLibrary
 import DomainCommon
 import TransferOperatives
+import UI
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
@@ -188,6 +189,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: SendMoneyConfirmationStepUseCaseProtocol.self) { resolver in
             PLSendMoneyConfirmationStepUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: GenericDialogAddBranchLocatorActionCapable.self) { _ in
+            GenericDialogActionsModifier()
         }
     }
 }
