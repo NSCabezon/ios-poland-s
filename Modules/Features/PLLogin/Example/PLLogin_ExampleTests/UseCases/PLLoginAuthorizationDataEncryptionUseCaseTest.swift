@@ -8,6 +8,7 @@
 
 import XCTest
 import Commons
+import PLCommons
 import CoreFoundationLib
 import CryptoSwift
 @testable import PLLogin
@@ -45,9 +46,8 @@ class PLLoginAuthorizationDataEncryptionUseCaseTest: XCTestCase {
         }
 
         do {
-
-            let useCase = PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: self.dependencies)
-            let input = PLLoginAuthorizationDataEncryptionUseCaseInput(appId:  Constants.Input.trustedDeviceAppId,
+            let useCase = PLAuthorizationDataEncryptionUseCase<LoginErrorType>(dependenciesResolver: self.dependencies)
+            let input = PLAuthorizationDataEncryptionUseCaseInput(appId:  Constants.Input.trustedDeviceAppId,
                                                                        pin: Constants.Input.pin,
                                                                        encryptedUserKey: Constants.Input.storedEncryptedUserKey,
                                                                        randomKey: Constants.Input.randomKey,
@@ -84,8 +84,8 @@ class PLLoginAuthorizationDataEncryptionUseCaseTest: XCTestCase {
 
         do {
 
-            let useCase = PLLoginAuthorizationDataEncryptionUseCase(dependenciesResolver: self.dependencies)
-            let input = PLLoginAuthorizationDataEncryptionUseCaseInput(appId:  Constants.Input.appId,
+            let useCase = PLAuthorizationDataEncryptionUseCase<LoginErrorType>(dependenciesResolver: self.dependencies)
+            let input = PLAuthorizationDataEncryptionUseCaseInput(appId:  Constants.Input.appId,
                                                                        pin: Constants.Input.pin,
                                                                        encryptedUserKey: Constants.Input.storedEncryptedUserKey,
                                                                        randomKey: Constants.Input.randomKey,

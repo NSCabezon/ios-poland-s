@@ -8,6 +8,7 @@
 
 import XCTest
 import Commons
+import PLCommons
 import CoreFoundationLib
 import CryptoSwift
 @testable import PLLogin
@@ -39,7 +40,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
 
         do {
 
-            let result = try PLLoginEncryptionHelper.desaltFromPublicKeyEncryption(hexString: Constants.Input.decryptedAndSaltedUserKeyAsHexString,
+            let result = try PLEncryptionHelper.desaltFromPublicKeyEncryption(hexString: Constants.Input.decryptedAndSaltedUserKeyAsHexString,
                                                                                    privateKeyLength: Constants.Input.privateKeyLength,
                                                                                    symmetricKeyLength: Constants.Input.softwareTokenKeyLength)
             XCTAssertEqual(result, Constants.Output.desaltedResult)
@@ -61,7 +62,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: Constants.Input.appId,
+            let result = try PLEncryptionHelper.createSymmetricKeyForSoftwareTokenUserKeyUsage(appId: Constants.Input.appId,
                                                                                                     pin: Constants.Input.pin)
             XCTAssertEqual(result, Constants.Output.symetricKey)
         } catch {
@@ -80,7 +81,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
             }
         }
 
-        let result = PLLoginEncryptionHelper.calculateHash(randomKey: Constants.Input.randomKey)
+        let result = PLEncryptionHelper.calculateHash(randomKey: Constants.Input.randomKey)
         XCTAssertEqual(result, Constants.Output.expectedOutput)
     }
 
@@ -96,7 +97,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let vector = try PLLoginEncryptionHelper.createInitializationVectorByTrustedDeviceAppId(appId: Constants.Input.appId)
+            let vector = try PLEncryptionHelper.createInitializationVectorByTrustedDeviceAppId(appId: Constants.Input.appId)
             XCTAssertEqual(vector.toHexString().uppercased(), Constants.Output.expectedIV)
         } catch {
             XCTFail("testCreateInitialiationVector Error")
@@ -122,7 +123,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.calculateAuthorizationData(randomKey: Constants.Input.randomKey,
+            let result = try PLEncryptionHelper.calculateAuthorizationData(randomKey: Constants.Input.randomKey,
                                                                                 challenge: Constants.Input.challenge,
                                                                                 privateKey: Constants.Input.privateKey)
             XCTAssertEqual(result, Constants.Output.expectedOutput)
@@ -146,7 +147,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.getRandomKeyFromSoftwareToken(appId: Constants.Input.appId,
+            let result = try PLEncryptionHelper.getRandomKeyFromSoftwareToken(appId: Constants.Input.appId,
                                                                                    pin: Constants.Input.pin,
                                                                                    encryptedUserKey: Constants.Input.encodedAndEncryptedUserKey,
                                                                                    randomKey: Constants.Input.randomKey)
@@ -169,7 +170,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.encryptSoftwareTokenUserKeyForStoringItIntoTrustedDevice(softwareTokenKeyFromService: Constants.Input.softwareTokenKeyFromService,
+            let result = try PLEncryptionHelper.encryptSoftwareTokenUserKeyForStoringItIntoTrustedDevice(softwareTokenKeyFromService: Constants.Input.softwareTokenKeyFromService,
                                                                                                               symmetricKeyForSoftwareTokenUserKey: Constants.Input.symmetricKeyForSoftwareTokenUserKey)
             XCTAssertEqual(Constants.Output.expectedOutput, result)
         } catch {
@@ -191,7 +192,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         let encryptedUserKey = Data(base64Encoded: Constants.Input.encodedAndEncryptedUserKey)!.bytes
 
         do {
-            let result = try PLLoginEncryptionHelper.decryptSoftwareTokenUserKeyStoredInTrustedDevice(encryptedUserKey: encryptedUserKey,
+            let result = try PLEncryptionHelper.decryptSoftwareTokenUserKeyStoredInTrustedDevice(encryptedUserKey: encryptedUserKey,
                                                                                                       symmetricKeyForSoftwareTokenUserKey: Constants.Input.symmetricKeyForSoftwareTokenUserKey)
             print(result)
             XCTAssertEqual(Constants.Output.softwareTokenKeyFromService, result)
@@ -216,7 +217,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.decryptSoftTokenUserKeyUsingTrustedDevicePrivateKey(privateKey: Constants.Input.privateKey,
+            let result = try PLEncryptionHelper.decryptSoftTokenUserKeyUsingTrustedDevicePrivateKey(privateKey: Constants.Input.privateKey,
                                                                                                          encodedSoftwareTokenKey: Constants.Input.encodedSoftwareTokenKey)
             XCTAssertEqual(result.toHexString(), Constants.Output.expectedOutput)
         } catch {
@@ -242,7 +243,7 @@ class PLLoginEncryptionHelperTests: XCTestCase {
         }
 
         do {
-            let result = try PLLoginEncryptionHelper.reEncryptUserKey(Constants.Input.appId,
+            let result = try PLEncryptionHelper.reEncryptUserKey(Constants.Input.appId,
                                                                       pin: Constants.Input.pin,
                                                                       privateKey: Constants.Input.privateKey,
                                                                       encryptedUserKey: Constants.Input.encodedAndEncryptedUserKey)
