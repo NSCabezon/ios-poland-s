@@ -15,7 +15,7 @@
                             "name": "Rachunek dowolny"
                         },
                         "currencyCode": "PLN",
-                        "accountNo": "91103018853861105823286224",
+                        "accountNo": "PL05105001037737934454629906",
                         "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
                         "branchInfo": {
                             "branchCode": "88980003",
@@ -44,7 +44,7 @@
                             "cost": "SHA",
                             "customerEmail": "adam.smith@gmail.com",
                             "payment": {
-                                "accountNo": "91103018853861105823286224",
+                                "accountNo": "PL05105001037737934454629906",
                                 "currencyCode": "PLN"
                             },
                             "instructions": "some instructions"
@@ -63,7 +63,7 @@
                             "name": "Rachunek dowolny"
                         },
                         "currencyCode": "PLN",
-                        "accountNo": "91103018853861105823286335",
+                        "accountNo": "PL05105001037737934454629906",
                         "payeeName": "VIKSIM POLSKO ROSYJSKA SP. Z O.O",
                         "branchInfo": {
                             "branchCode": "10100071",
@@ -101,7 +101,7 @@
                             }
                         },
                         "currencyCode": "PLN",
-                        "accountNo": "91103018853861105823286224",
+                        "accountNo": "PL05105001037737934454629906",
                         "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
                         "branchInfo": {
                             "branchCode": "88980003",
@@ -130,7 +130,7 @@
                             "cost": "SHA",
                             "customerEmail": "adam.smith@gmail.com",
                             "payment": {
-                                "accountNo": "91103018853861105823286224",
+                                "accountNo": "PL05105001037737934454629906",
                                 "currencyCode": "PLN"
                             },
                             "instructions": "some instructions"
@@ -156,7 +156,7 @@
                             }
                         },
                         "currencyCode": "PLN",
-                        "accountNo": "91103018853861105823286335",
+                        "accountNo": "PL05105001037737934454629906",
                         "payeeName": "VIKSIM POLSKO ROSYJSKA SP. Z O.O",
                         "branchInfo": {
                             "branchCode": "10100071",
