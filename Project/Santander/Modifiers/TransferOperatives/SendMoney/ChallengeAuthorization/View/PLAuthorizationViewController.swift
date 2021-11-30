@@ -135,7 +135,7 @@ private extension PLAuthorizationViewController {
         self.continueFloatingButton.configureWith(
             type: .primary,
             size: .medium(
-                FloatingButton.ButtonSize.MediumButtonConfig(title: localized("generic_button_continue"),
+                FloatingButton.ButtonSize.MediumButtonConfig(title: localized("generic_button_confirm"),
                                                             icons: .none, fullWidth: true)),
             status: .ready)
         self.continueFloatingButton.isEnabled = false
