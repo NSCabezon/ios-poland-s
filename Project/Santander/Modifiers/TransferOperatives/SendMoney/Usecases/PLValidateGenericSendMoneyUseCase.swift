@@ -6,7 +6,7 @@ import Commons
 import Models
 import CoreDomain
 
-class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, ValidateSendMoneyUseCaseOkOutput, ValidateTransferUseCaseErrorOutput>, ValidateGenericSendMoneyUseCaseProtocol {
+class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, ValidateSendMoneyUseCaseOkOutput, StringErrorOutput>, ValidateGenericSendMoneyUseCaseProtocol {
     let dependenciesResolver: DependenciesResolver
     var transferRepository: PLTransfersRepository {
         return dependenciesResolver.resolve()
@@ -16,7 +16,7 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
         self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: ValidateSendMoneyUseCaseInput) throws -> UseCaseResponse<ValidateSendMoneyUseCaseOkOutput, ValidateTransferUseCaseErrorOutput> {
+    override func executeUseCase(requestValues: ValidateSendMoneyUseCaseInput) throws -> UseCaseResponse<ValidateSendMoneyUseCaseOkOutput, StringErrorOutput> {
         let transferType = self.dependenciesResolver.resolve(forOptionalType: SendMoneyModifierProtocol.self)?.transferTypeFor(onePayType: requestValues.type, subtype: requestValues.subType?.serviceString ?? "")
         let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyName, amount: requestValues.amount.value)
         guard let originAccount = requestValues.originAccount as? PolandAccountRepresentable,
@@ -69,7 +69,7 @@ private extension PLValidateGenericSendMoneyUseCase {
         public static let notificationSchemaId = "195"
     }
     
-    func executeNotifyDevice(_ challenge: String, alias: String, destinationAccountNumber: IBANRepresentable, amount: AmountRepresentable) throws -> UseCaseResponse<ValidateSendMoneyUseCaseOkOutput, ValidateTransferUseCaseErrorOutput> {
+    func executeNotifyDevice(_ challenge: String, alias: String, destinationAccountNumber: IBANRepresentable, amount: AmountRepresentable) throws -> UseCaseResponse<ValidateSendMoneyUseCaseOkOutput, StringErrorOutput> {
         let input = NotifyDeviceInput(challenge: challenge,
                                       softwareTokenType: nil,
                                       notificationSchemaId: Constants.notificationSchemaId,
