@@ -86,7 +86,7 @@ final class PLAuthorizationViewController: UIViewController {
 
 extension PLAuthorizationViewController: PLAuthorizationView {
     func setContinueButton(_ isEnabled: Bool) {
-        self.continueFloatingButton.isEnabledButton(isEnabled)
+        self.continueFloatingButton.isEnabled = isEnabled
     }
     
     func addRemainingTimeView(_ viewModel: RemainingTimeViewModel) {
