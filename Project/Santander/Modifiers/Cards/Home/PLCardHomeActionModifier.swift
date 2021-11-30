@@ -279,6 +279,10 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
             }
         }
     }
+
+    override func rearrangeApplePayAction() -> Bool {
+        return false
+    }
     
     func getCardData(identifier: PLCardWebViewType) -> PLAccountOtherOperativesData {
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
