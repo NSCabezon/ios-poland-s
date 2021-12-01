@@ -125,6 +125,10 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
+
+    func getTransferDetail(transfer: TransferRepresentable) throws -> Result<TransferRepresentable, Error> {
+        return .success(transfer)
+    }
     
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {
         let response = try bsanTransferManager.getChallenge(parameters: parameters)
