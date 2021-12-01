@@ -258,8 +258,10 @@ private extension PLRememberedLoginPinPresenter {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             switch laError.code {
-            case .userFallback, .authenticationFailed:
-                self?.view?.tryPinAuth(withError: laError.code == .authenticationFailed)
+            case .userFallback:
+                self?.view?.tryPinAuth(withError: false)
+            case .authenticationFailed, .biometryLockout, .passcodeNotSet:
+                self?.view?.tryPinAuth(withError: true)
             case .userCancel:
                 break
             default:

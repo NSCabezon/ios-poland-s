@@ -29,6 +29,7 @@ import CoreFoundationLib
 import CoreDomain
 import CommonUseCase
 import PLCryptography
+import UI
 
 final class AppDependencies {
     #if DEBUG
@@ -324,6 +325,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PLOneAuthorizationProcessorRepository.self) { _ in
             return self.servicesLibrary.oneAuthorizationProcessorRepository
+        }
+        self.dependencieEngine.register(for: GetGenericErrorDialogDataUseCaseProtocol.self) { _ in
+            return PLGetGenericErrorDialogDataUseCase()
         }
     }
 }

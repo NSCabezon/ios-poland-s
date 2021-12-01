@@ -38,15 +38,17 @@ extension PLGetPersonalBasicInfoUseCase: GetPersonalBasicInfoUseCaseProtocol { }
 private extension PLGetPersonalBasicInfoUseCase {
     func basicInfoRepresentableToEntity(_ representable: PersonalBasicInfoRepresentable) -> PersonalInformationEntity {
         let email = (representable.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : representable.email
-        return PersonalInformationEntity(PersonBasicDataDTO(mainAddress: representable.mainAddress,
-                                                     addressNodes: representable.addressNodes,
-                                                     documentType: representable.documentType,
-                                                     documentNumber: representable.documentNumber,
-                                                     birthDate: representable.birthdayDate,
-                                                     birthString: representable.birthString,
-                                                     phoneNumber: representable.phoneNumber,
-                                                     contactHourFrom: representable.contactHourFrom,
-                                                     contactHourTo: representable.contactHourTo,
-                                                     email: email))
+        var dto = PersonBasicDataDTO(mainAddress: representable.mainAddress,
+                                     addressNodes: representable.addressNodes,
+                                     documentType: representable.documentType,
+                                     documentNumber: representable.documentNumber,
+                                     birthDate: representable.birthdayDate,
+                                     birthString: representable.birthString,
+                                     phoneNumber: representable.phoneNumber,
+                                     contactHourFrom: representable.contactHourFrom,
+                                     contactHourTo: representable.contactHourTo,
+                                     email: email)
+        dto.correspondenceAddressNodes = representable.correspondenceAddressNodes
+        return PersonalInformationEntity(dto)
     }
 }

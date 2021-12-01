@@ -1,0 +1,43 @@
+
+pipeline {
+	agent any
+	environment {
+		APP_NAME = 'spain'
+		LANG = 'en_US.UTF-8'
+		LANGUAGE = 'en_US.UTF-8'
+		LC_ALL = 'en_US.UTF-8'
+	}
+
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH', quickFilterEnabled: true
+        string(name: 'VERSION', defaultValue: '0.2', description: '')
+    }
+
+	stages {
+
+         stage('Clean Source Code') {
+			steps {
+				echo "Removing Example Apps"
+				sh "rm -rf santander-one/*/Example santander-one/QuickSetup"
+				echo "Cleaning fastlane, git and ruby"
+                sh "rm -rf Project/fastlane Gemfile .git*"
+				echo "Cleaning Jenkinsfiles"
+				sh "rm Jenkinsfile*"
+				
+			}
+		}
+
+        stage('Zip and Archive') {
+			steps {
+				echo "Zipping"
+                sh "zip -r spain-v${VERSION}.zip ."
+                archiveArtifacts artifacts: "spain-v${VERSION}.zip"
+			}
+		}
+	}
+	post {
+		always {
+			cleanWs()
+		}
+	}
+}

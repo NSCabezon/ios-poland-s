@@ -10,6 +10,7 @@ import Models
 import UI
 import Commons
 import CreditCardRepayment
+import PersonalArea
 
 enum PLCardHomeActionIdentifier: String {
     case sendMoneyPL = "SendMoneyPoland"
@@ -270,10 +271,17 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
                     return
                 }
                 showWebView(identifier: trackName, entity: entity, cardData: cardData)
+            case PLCardHomeActionIdentifier.changeAliasesPL.rawValue:
+                goToPGProductsCustomization()
+                break
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
         }
+    }
+
+    override func rearrangeApplePayAction() -> Bool {
+        return false
     }
     
     func getCardData(identifier: PLCardWebViewType) -> PLAccountOtherOperativesData {
@@ -341,5 +349,10 @@ private extension PLCardHomeActionModifier {
     func goToCardUnblock(_ card: CardEntity) {
         let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
         coordinator.didSelectAction(.onCard, card)
+    }
+    
+    func goToPGProductsCustomization() {
+        let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
+        coordinator.goToGPProductsCustomization()
     }
 }

@@ -124,7 +124,7 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                              method: .delete,
                                                                                                              headers: self.headers,
                                                                                                              localServiceName: .logout,
-                                                                                                             authorization: .trustedDeviceOnly))
+                                                                                                             authorization: .oauth))
         return result
     }
 }

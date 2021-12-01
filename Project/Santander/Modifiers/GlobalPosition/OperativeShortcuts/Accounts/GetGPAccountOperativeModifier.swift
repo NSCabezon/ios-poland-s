@@ -17,7 +17,7 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
     }
 
     public func getAllAccountOperativeActionType() -> [AccountOperativeActionTypeProtocol] {
-        return [PLSendMoneyOperative(),
+        return [PLSendMoneyOperative(dependenciesResolver: self.dependenciesEngine),
                 PLDomesticTransferOperative(),
                 self.getSwitchBetweenAccount(),
                 PLSendMoneyFavouriteOperative(),
@@ -31,7 +31,7 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
     }
     
     public func getCountryAccountOperativeActionType(accounts: [AccountEntity]) -> [AccountOperativeActionTypeProtocol] {
-        return [PLSendMoneyOperative(),
+        return [PLSendMoneyOperative(dependenciesResolver: self.dependenciesEngine),
                 PLDomesticTransferOperative(),
                 self.getSwitchBetweenAccount(),
                 PLSendMoneyFavouriteOperative(),

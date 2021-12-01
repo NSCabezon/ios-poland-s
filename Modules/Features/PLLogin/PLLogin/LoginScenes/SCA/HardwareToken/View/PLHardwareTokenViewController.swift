@@ -127,7 +127,7 @@ private extension PLHardwareTokenViewController {
         passwordTextField.textField.keyboardType = .numberPad
         passwordTextField.textField.delegate = self
         passwordTextField.configureLoginTypeLabel(text: localized("pl_login_hint_tokenCode"))
-        passwordTextField.configureTextTextField(text: nil)
+        passwordTextField.configureTextFieldPlaceholder(text: LocalizedStylableText.empty)
         passwordTextField.textField.returnKeyType = .default
     }
 
