@@ -11,7 +11,7 @@ import PLCommons
 public struct CharityTransferModel {
     public let amount: Decimal?
     public let title: String?
-    public let account: SelectableAccountViewModel
+    public let account: AccountForDebit
     public let recipientName: String?
     public let transactionType: TransactionType
     public let date: Date?

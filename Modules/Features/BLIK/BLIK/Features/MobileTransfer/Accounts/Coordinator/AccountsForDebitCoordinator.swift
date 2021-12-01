@@ -2,6 +2,7 @@ import UI
 import Models
 import Commons
 import PLUI
+import PLCommons
 
 /**
     #Add method that must be handle by the AccountsForDebitCoordinator like 
@@ -9,7 +10,7 @@ import PLUI
 */
 protocol AccountsForDebitCoordinatorProtocol {
     func pop()
-    func showTransferForm(accounts: [SelectableAccountViewModel])
+    func showTransferForm(accounts: [AccountForDebit], selectedAccountNumber: String)
     func closeProcess()
 }
 
@@ -21,20 +22,23 @@ enum SourceView {
 final class AccountsForDebitCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let viewModels: [SelectableAccountViewModel]
+    private let accounts: [AccountForDebit]
+    private let selectedAccountNumber: String
     private let contact: Contact?
     private let sourceView: SourceView
     weak var selectableAccountDelegate: FormAccountSelectable?
 
     init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
-         viewModels: [SelectableAccountViewModel],
+         accounts: [AccountForDebit],
+         selectedAccountNumber: String,
          contact: Contact?,
          sourceView: SourceView,
          selectableAccountDelegate: FormAccountSelectable?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.viewModels = viewModels
+        self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
         self.contact = contact
         self.sourceView = sourceView
         self.selectableAccountDelegate = selectableAccountDelegate
@@ -43,7 +47,8 @@ final class AccountsForDebitCoordinator: ModuleCoordinator {
     
     func start() {
         let presenter = AccountsForDebitPresenter(dependenciesResolver: dependenciesEngine,
-                                                  viewModels: viewModels,
+                                                  accounts: accounts,
+                                                  selectedAccountNumber: selectedAccountNumber,
                                                   sourceView: sourceView,
                                                   selectableDelegate: selectableAccountDelegate)
         let controller = AccountSelectorViewController(presenter: presenter,
@@ -58,10 +63,11 @@ extension AccountsForDebitCoordinator: AccountsForDebitCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    func showTransferForm(accounts: [SelectableAccountViewModel]) {
+    func showTransferForm(accounts: [AccountForDebit], selectedAccountNumber: String) {
         let coordinator = MobileTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                         navigationController: navigationController,
                                                         accounts: accounts,
+                                                        selectedAccountNumber: selectedAccountNumber,
                                                         contact: contact)
         
         coordinator.start()

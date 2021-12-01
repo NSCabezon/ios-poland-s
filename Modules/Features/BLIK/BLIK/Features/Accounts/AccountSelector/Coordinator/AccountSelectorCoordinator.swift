@@ -76,8 +76,8 @@ extension AccountSelectorCoordinator {
             return self
         }
         
-        dependenciesEngine.register(for: SelectableAccountViewModelMapping.self) { _ in
-            return SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+        dependenciesEngine.register(for: BlikCustomerAccountToSelectableAccountViewModelMapping.self) { _ in
+            return BlikCustomerAccountToSelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
     }
 }

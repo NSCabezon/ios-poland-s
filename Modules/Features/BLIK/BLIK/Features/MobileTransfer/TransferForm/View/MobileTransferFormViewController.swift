@@ -139,13 +139,14 @@ private extension MobileTransferFormViewController {
 
 extension MobileTransferFormViewController: MobileTransferFormViewControllerProtocol {
     func setAccountViewModel() {
-        guard let viewModel = presenter.getSelectedAccountViewModel() else { return }
-        
+        guard let account = presenter.getSelectedAccount() else { return }
+        let availableFundsText = NumberFormatter.PLAmountNumberFormatter.string(for: account.availableFunds.amount)
+            ?? "\(account.availableFunds.amount) \(account.availableFunds.currency)"
         let accountViewModel = PhoneTransferRegistrationFormViewModel.AccountViewModel(
             title: localized("pl_blik_label_accountTransfter"),
-            accountName: viewModel.name,
-            availableFunds: viewModel.availableFunds,
-            accountNumber: viewModel.accountNumber
+            accountName: account.name,
+            availableFunds: availableFundsText,
+            accountNumber: account.number
         )
         headerContent.configure(with: accountViewModel)
     }

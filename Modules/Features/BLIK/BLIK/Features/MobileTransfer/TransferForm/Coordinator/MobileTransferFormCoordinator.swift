@@ -2,17 +2,18 @@ import UI
 import Models
 import Commons
 import PLUI
+import PLCommons
 
 public protocol MobileTransferFormCoordinatorProtocol {
     func pop()
     func closeProcess()
-    func showAccountSelector(with accounts: [SelectableAccountViewModel])
+    func showAccountSelector(with accounts: [AccountForDebit], selectedAccountNumber: String)
     func showConfirmation(viewModel: MobileTransferViewModel, isDstAccInternal: Bool, dstAccNo: String)
     func showContacts()
 }
 
 protocol FormAccountSelectable: AnyObject {
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel])
+    func updateSelectedAccountNumber(_ number: String)
 }
 
 protocol FormContactSelectable: AnyObject {
@@ -23,23 +24,30 @@ public final class MobileTransferFormCoordinator: ModuleCoordinator {
     
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let accounts: [SelectableAccountViewModel]
+    private let accounts: [AccountForDebit]
+    private let selectedAccountNumber: String
     private let contact: Contact?
     weak var delegate: MobileTransferFormAccountAndContactSelectable?
 
     init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
-         accounts: [SelectableAccountViewModel],
+         accounts: [AccountForDebit],
+         selectedAccountNumber: String,
          contact: Contact? = nil) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
         self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
         self.contact = contact
         setupDependencies()
     }
     
     public func start() {
-        let presenter = MobileTransferFormPresenter(dependenciesResolver: dependenciesEngine, accounts: accounts, contact: contact, formValidator: MobileTransferFormValidator())
+        let presenter = MobileTransferFormPresenter(dependenciesResolver: dependenciesEngine,
+                                                    accounts: accounts,
+                                                    contact: contact,
+                                                    selectedAccountNumber: selectedAccountNumber,
+                                                    formValidator: MobileTransferFormValidator())
         delegate = presenter
         let controller = MobileTransferFormViewController(presenter: presenter)
         presenter.view = controller
@@ -61,10 +69,11 @@ extension MobileTransferFormCoordinator: MobileTransferFormCoordinatorProtocol {
         self.navigationController?.popToViewController(contactsViewController, animated: true)
     }
 
-    public func showAccountSelector(with accounts: [SelectableAccountViewModel]) {
+    public func showAccountSelector(with accounts: [AccountForDebit], selectedAccountNumber: String) {
         let coordinator = AccountsForDebitCoordinator(dependenciesResolver: dependenciesEngine,
                                                       navigationController: navigationController,
-                                                      viewModels: accounts,
+                                                      accounts: accounts,
+                                                      selectedAccountNumber: selectedAccountNumber,
                                                       contact: contact,
                                                       sourceView: .form,
                                                       selectableAccountDelegate: self)
@@ -113,8 +122,8 @@ private extension MobileTransferFormCoordinator {
 }
 
 extension MobileTransferFormCoordinator: FormAccountSelectable {
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel]) {
-        delegate?.updateViewModel(with: updatedViewModel)
+    func updateSelectedAccountNumber(_ number: String) {
+        delegate?.updateSelectedAccountNumber(with: number)
     }
 }
 

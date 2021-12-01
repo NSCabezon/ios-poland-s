@@ -6,26 +6,31 @@ import PLUI
 protocol CharityTransferFormCoordinatorProtocol {
     func pop()
     func closeProcess()
-    func showAccountSelector()
+    func showAccountSelector(selectedAccountNumber: String)
     func showConfirmation(with model: CharityTransferModel)
 }
 
 public protocol FormAccountSelectable: AnyObject {
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel])
+    func updateSelectedAccountNumber(number: String)
 }
 
 public final class CharityTransferFormCoordinator: ModuleCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private var accounts: [SelectableAccountViewModel]
+    private let accounts: [AccountForDebit]
+    private let selectedAccountNumber: String
     weak var delegate: CharityTransferFormAccountSelectable?
+    
+    private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
     
     public init(dependenciesResolver: DependenciesResolver,
                 navigationController: UINavigationController?,
-                accounts: [SelectableAccountViewModel]) {
+                accounts: [AccountForDebit],
+                selectedAccountNumber: String) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
         self.setupDependencies()
     }
     
@@ -33,7 +38,6 @@ public final class CharityTransferFormCoordinator: ModuleCoordinator {
         let controller = self.dependenciesEngine.resolve(for: CharityTransferFormViewController.self)
         self.navigationController?.pushViewController(controller, animated: true)
     }
-    
     
 }
 
@@ -47,10 +51,11 @@ extension CharityTransferFormCoordinator: CharityTransferFormCoordinatorProtocol
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func showAccountSelector() {
+    func showAccountSelector(selectedAccountNumber: String) {
         let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
                                                      navigationController: navigationController,
-                                                     viewModels: accounts,
+                                                     accounts: accounts,
+                                                     selectedAccountNumber: selectedAccountNumber,
                                                      sourceView: .form, selectableAccountDelegate: self)
         coordinator.start()
     }
@@ -72,9 +77,10 @@ private extension CharityTransferFormCoordinator {
         }
         
         let accounts = accounts
+        let selectedAccountNumber = selectedAccountNumber
         
         self.dependenciesEngine.register(for: CharityTransferFormPresenterProtocol.self) { resolver in
-            return CharityTransferFormPresenter(dependenciesResolver: resolver, accounts: accounts)
+            return CharityTransferFormPresenter(dependenciesResolver: resolver, accounts: accounts, selectedAccountNumber: selectedAccountNumber)
         }
         
         self.dependenciesEngine.register(for: CharityTransferFormViewController.self) { [weak self] resolver in
@@ -88,8 +94,7 @@ private extension CharityTransferFormCoordinator {
 }
 
 extension CharityTransferFormCoordinator: FormAccountSelectable {
-    public func updateViewModel(with updatedViewModel: [SelectableAccountViewModel]) {
-        self.accounts = updatedViewModel
-        delegate?.updateViewModel(with: updatedViewModel)
+    public func updateSelectedAccountNumber(number: String) {
+        delegate?.updateSelectedAccountNumber(number: number)
     }
 }

@@ -180,28 +180,29 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
     }
     
     func selectCharityTransfer(accounts: [AccountForDebit]) {
-        let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-        let models = accounts.compactMap({ try? mapper.map($0) })
-        guard !models.isEmpty else {
+        guard !accounts.isEmpty else {
             view?.showError()
             return
         }
         if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
+            var selectedAccountNumber = ""
+            if accounts.count > 1 {
+                selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
+            } else {
+                selectedAccountNumber = accounts.first?.number ?? ""
+            }
             let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                              navigationController: navigationController,
-                                                             accounts: models)
+                                                             accounts: accounts,
+                                                             selectedAccountNumber: selectedAccountNumber)
             coordinator.start()
         } else {
-            do {
-                let viewModels = try accounts.map({ try mapper.map($0) })
-                let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                             navigationController: navigationController,
-                                                             viewModels: viewModels,
-                                                             sourceView: .sendMoney)
-                coordinator.start()
-            } catch {
-                view?.showError()
-            }
+            let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
+                                                         navigationController: navigationController,
+                                                         accounts: accounts,
+                                                         selectedAccountNumber: "",
+                                                         sourceView: .sendMoney)
+            coordinator.start()
         }
     }
 }

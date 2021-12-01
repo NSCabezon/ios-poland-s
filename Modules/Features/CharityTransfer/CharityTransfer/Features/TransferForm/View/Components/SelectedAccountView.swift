@@ -2,6 +2,7 @@
 import UI
 import Commons
 import PLUI
+import PLCommons
 
 class SelectedAccountView: UIView {
     
@@ -27,7 +28,7 @@ class SelectedAccountView: UIView {
         var selectedAccount: SelectableAccountViewModel
         if viewModel.count == 1, let onlyViewModel = viewModel.first {
             selectedAccount = onlyViewModel
-        } else if let defaultAccount = viewModel.first(where: { $0.isSelected == true }) {
+        } else if let defaultAccount = viewModel.first(where: { $0.isSelected }) {
             selectedAccount = defaultAccount
         } else {
             return
@@ -35,7 +36,8 @@ class SelectedAccountView: UIView {
         self.viewModel = selectedAccount
         accountNameLabel.text = selectedAccount.name
         accountNumberLabel.text = selectedAccount.accountNumber
-        availableMoneyLabel.text = selectedAccount.availableFunds
+        let availableFoundText = selectedAccount.availableFunds
+        availableMoneyLabel.text = availableFoundText
         editButton.isHidden = viewModel.count == 1
     }
     

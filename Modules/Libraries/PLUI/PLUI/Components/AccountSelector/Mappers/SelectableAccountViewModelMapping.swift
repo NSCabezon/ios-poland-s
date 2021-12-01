@@ -1,7 +1,7 @@
 import PLCommons
 
 public protocol SelectableAccountViewModelMapping {
-    func map(_ account: AccountForDebit) throws -> SelectableAccountViewModel
+    func map(_ account: AccountForDebit, selectedAccountNumber: String) throws -> SelectableAccountViewModel
 }
 
 public final class SelectableAccountViewModelMapper: SelectableAccountViewModelMapping {
@@ -14,7 +14,7 @@ public final class SelectableAccountViewModelMapper: SelectableAccountViewModelM
         self.amountFormatter = amountFormatter
     }
     
-    public func map(_ account: AccountForDebit) throws -> SelectableAccountViewModel {
+    public func map(_ account: AccountForDebit, selectedAccountNumber: String) throws -> SelectableAccountViewModel {
         amountFormatter.currencySymbol = account.availableFunds.currency
         let availableFundsText = amountFormatter.string(for: account.availableFunds.amount)
             ?? "\(account.availableFunds.amount) \(account.availableFunds.currency)"
@@ -24,10 +24,7 @@ public final class SelectableAccountViewModelMapper: SelectableAccountViewModelM
             accountNumber: try formatAccountNumber(account.number),
             accountNumberUnformatted: account.number,
             availableFunds: availableFundsText,
-            type: account.type,
-            accountSequenceNumber: account.accountSequenceNumber,
-            accountType: account.accountType,
-            isSelected: account.defaultForPayments
+            isSelected: account.number == selectedAccountNumber
         )
     }
     

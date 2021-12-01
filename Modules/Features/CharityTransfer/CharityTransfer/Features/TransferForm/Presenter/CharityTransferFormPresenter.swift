@@ -6,27 +6,32 @@ protocol CharityTransferFormPresenterProtocol {
     var view: CharityTransferFormViewProtocol? { get set }
     func didSelectClose()
     func didSelectCloseProcess()
-    func getAccounts() -> [SelectableAccountViewModel]
+    func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
+    func getSelectedAccountNumber() -> String
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel)
     func confirmTransfer()
 }
 
 public protocol CharityTransferFormAccountSelectable: AnyObject {
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel])
+    func updateSelectedAccountNumber(number: String)
 }
 
 final class CharityTransferFormPresenter {
     weak var view: CharityTransferFormViewProtocol?
     let dependenciesResolver: DependenciesResolver
-    private var accounts: [SelectableAccountViewModel]
+    private var accounts: [AccountForDebit]
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     private var transferFormViewModel: CharityTransferFormViewModel?
+    private var selectedAccountNumber: String
+    private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
 
     init(dependenciesResolver: DependenciesResolver,
-         accounts: [SelectableAccountViewModel]) {
+         accounts: [AccountForDebit],
+         selectedAccountNumber: String) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
     }
 }
 
@@ -44,12 +49,17 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
         view?.showDialog(dialog)
     }
     
-    func getAccounts() -> [SelectableAccountViewModel] {
-        accounts
+    func getSelectedAccountViewModels() -> [SelectableAccountViewModel] {
+        let selectebleAccountViewModels = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) })
+        return selectebleAccountViewModels
+    }
+    
+    func getSelectedAccountNumber() -> String {
+        selectedAccountNumber
     }
     
     func showAccountSelector() {
-        coordinator.showAccountSelector()
+        coordinator.showAccountSelector(selectedAccountNumber: selectedAccountNumber)
     }
     
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel) {
@@ -76,17 +86,17 @@ private extension CharityTransferFormPresenter {
         dependenciesResolver.resolve(for: CharityTransferFormCoordinatorProtocol.self)
     }
     
-    func getSelectedAccountViewModel() -> SelectableAccountViewModel? {
+    func getSelectedAccountViewModel() -> AccountForDebit? {
         guard accounts.count > 1 else {
             return accounts.first
         }
-        return accounts.first(where: { $0.isSelected })
+        return accounts.first(where: { $0.number == selectedAccountNumber })
     }
 }
 
 extension CharityTransferFormPresenter: CharityTransferFormAccountSelectable {
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel]) {
-        accounts = updatedViewModel
+    func updateSelectedAccountNumber(number: String) {
+        selectedAccountNumber = number
         view?.setAccountViewModel()
     }
 }

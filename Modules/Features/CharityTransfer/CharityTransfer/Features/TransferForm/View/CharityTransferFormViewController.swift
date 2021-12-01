@@ -1,9 +1,3 @@
-//
-//  CharityTransferFormViewController.swift
-//  CharityTransfer
-//
-//  Created by 187125 on 22/09/2021.
-//
 
 import UI
 import PLUI
@@ -66,7 +60,7 @@ private extension CharityTransferFormViewController {
     func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_foundtrans_title_foundTransfer")))
-            .setLeftAction(.back(action: #selector(goBack)))
+            .setLeftAction(.back(action: #selector(goBack))) //TODO: need to change back action to back send money screen
             .setRightActions(.close(action: #selector(closeProcess)))
             .build(on: self, with: nil)
     }
@@ -77,7 +71,7 @@ private extension CharityTransferFormViewController {
             // TODO: Add ready botton action
         }
         bottomView.disableButton()
-        formView.configure(with: presenter.getAccounts())
+        formView.configure(with: presenter.getSelectedAccountViewModels())
         formView.delegate = self
     }
     
@@ -107,7 +101,7 @@ private extension CharityTransferFormViewController {
 
 extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
     func setAccountViewModel() {
-        formView.configure(with: presenter.getAccounts())
+        formView.configure(with: presenter.getSelectedAccountViewModels())
     }
 }
 
