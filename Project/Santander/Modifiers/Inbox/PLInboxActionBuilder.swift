@@ -23,9 +23,7 @@ final class PLInboxActionBuilder {
 extension PLInboxActionBuilder: InboxActionBuilderProtocol {
     func addInboxActionViewModel(offerOnLine: OfferEntity?) -> [InboxActionViewModel] {
         self.addOnlineInbox(offerOnLine)
-        self.addPrivateBankStatement(offerOnLine)
         self.addInboxSetup()
-        self.addContract(offerOnLine)
         return self.inboxActions
     }
 
@@ -79,6 +77,7 @@ private extension PLInboxActionBuilder {
             imageName: "icnNotification",
             title: localized("mailbox_title_notification"),
             description: localized("mailbox_text_notification"),
+            notificationAlert: localized("mailbox_link_settingAlert"),
             extras: InboxActionExtras(action: ()),
             accessibilityIdentifier: AccesibilityInbox.notifications,
             action: { _ in

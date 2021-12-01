@@ -13,7 +13,7 @@ import Models
 class PLAppConfig: LocalAppConfig {
     let isEnabledOnboardingLocationDialog = false
     var isEnabledTopUpsPrivateMenu = false
-    var isEnabledMailbox = false
+    var isEnabledMailbox = true
     var isScheduledTransferDetailDeleteButtonEnabled = false
     var isScheduledTransferDetailEditButtonEnabled = false
     let isTransferDetailPDFButtonEnabled = true
