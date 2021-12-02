@@ -8,14 +8,14 @@
                         "contractType": "account",
                         "id": "1000"
                     },
-                    "alias": "SRPV",
+                    "alias": "Gloria",
                     "account": {
                         "accountType": {
                             "code": 90,
                             "name": "Rachunek dowolny"
                         },
                         "currencyCode": "PLN",
-                        "accountNo": "PL05105001037737934454629906",
+                        "accountNo": "PT02001801037737934454629906",
                         "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
                         "branchInfo": {
                             "branchCode": "88980003",
@@ -44,7 +44,7 @@
                             "cost": "SHA",
                             "customerEmail": "adam.smith@gmail.com",
                             "payment": {
-                                "accountNo": "PL05105001037737934454629906",
+                                "accountNo": "PT02001801037737934454629906",
                                 "currencyCode": "PLN"
                             },
                             "instructions": "some instructions"
@@ -56,14 +56,14 @@
                         "contractType": "account",
                         "id": "1001"
                     },
-                    "alias": "EE_ZAUF",
+                    "alias": "Samuel",
                     "account": {
                         "accountType": {
                             "code": 90,
                             "name": "Rachunek dowolny"
                         },
                         "currencyCode": "PLN",
-                        "accountNo": "PL05105001037737934454629906",
+                        "accountNo": "PT02026901037737934454621206",
                         "payeeName": "VIKSIM POLSKO ROSYJSKA SP. Z O.O",
                         "branchInfo": {
                             "branchCode": "10100071",
@@ -75,6 +75,534 @@
                         "validTo": "2023-12-31",
                         "transferType": "ELIXIR",
                         "status": "ACTIVE"
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Jose Sanz",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02027518853861105823283345",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Marta",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001918853861105823286244",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Miguel Bosh",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823286788",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Adrián",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823286226",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823284424",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Luis",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823284424",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Josevi",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823286213",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "David",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823286299",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Chema",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PL06105000997466000039417084",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "JJ",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823280007",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Neus",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001818853861105823286299",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
+                    }
+                },
+                {
+                    "payeeId": {
+                        "contractType": "account",
+                        "id": "1000"
+                    },
+                    "alias": "Bragado",
+                    "account": {
+                        "accountType": {
+                            "code": 90,
+                            "name": "Rachunek dowolny"
+                        },
+                        "currencyCode": "PLN",
+                        "accountNo": "PT02001918853861105823286233",
+                        "payeeName": "SANTA RITA PRIVATE VENTURES SP. Z O.O.",
+                        "branchInfo": {
+                            "branchCode": "88980003",
+                            "branchName": "BANK SPÓŁDZIELCZY OPOLE"
+                        },
+                        "address": "3 MAJA 13, 64-500 SZAMOTUŁY",
+                        "taxFormType": "0",
+                        "validFrom": "2021-08-22",
+                        "transferType": "SWIFT",
+                        "status": "ACTIVE",
+                        "swiftData": {
+                            "isActive": true,
+                            "id": "121958",
+                            "bic": "KBTGCH22XXX",
+                            "branchInfo": {
+                                "branchCode": "00784",
+                                "branchName": "(HEAD OFFICE)"
+                            },
+                            "bankName": "THURGAUER KANTONALBANK",
+                            "town": "WEINFELDEN",
+                            "country": "SWITZERLAND",
+                            "address": "BETRIEBS-ZENTRUM BANKPLATZ 1",
+                            "type": "NORMAL",
+                            "mode": "NORMAL",
+                            "priority": "LOW",
+                            "cost": "SHA",
+                            "customerEmail": "adam.smith@gmail.com",
+                            "payment": {
+                                "accountNo": "PT02001818853861105823286224",
+                                "currencyCode": "PLN"
+                            },
+                            "instructions": "some instructions"
+                        }
                     }
                 }
             ]

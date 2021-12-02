@@ -18,6 +18,22 @@
                     "currency": "EUR",
                     "title": "Invoice No. 444555",
                     "postingDate": "2021-08-15"
+                },
+                {
+                    "accountNo": "PL05105001037737934454627865",
+                    "accountName": "Mario",
+                    "amount": -200.60,
+                    "currency": "PLN",
+                    "title": "Invoice No. 444343",
+                    "postingDate": "2021-08-15"
+                },
+                {
+                    "accountNo": "PL05105001037737934454627744",
+                    "accountName": "Pedro",
+                    "amount": -5.12,
+                    "currency": "EUR",
+                    "title": "Invoice No. 23423",
+                    "postingDate": "2021-08-15"
                 }
             ]
         }
