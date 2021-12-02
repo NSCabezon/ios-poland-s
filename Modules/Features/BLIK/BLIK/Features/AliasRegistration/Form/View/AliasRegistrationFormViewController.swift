@@ -3,6 +3,7 @@ import UI
 import Commons
 import UIKit
 import PLUI
+import PLCommons
 
 protocol AliasRegistrationFormViewProtocol: LoaderPresentable, ErrorPresentable {
     func set(viewModel: AliasRegistrationFormContentViewModel)

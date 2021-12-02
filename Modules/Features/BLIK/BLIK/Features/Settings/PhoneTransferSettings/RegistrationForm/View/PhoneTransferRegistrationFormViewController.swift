@@ -7,6 +7,7 @@
 
 import UI
 import PLUI
+import PLCommons
 
 protocol PhoneTransferRegistrationFormViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: PhoneTransferRegistrationFormViewModel)

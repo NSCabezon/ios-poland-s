@@ -9,6 +9,7 @@ import UI
 import UIOneComponents
 import Commons
 import PLCommons
+import PLUI
 
 public protocol BottomSheetErrorDelegate: AnyObject {
     func didTapCancelError()

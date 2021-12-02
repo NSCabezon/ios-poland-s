@@ -9,6 +9,7 @@ import UIKit
 import UI
 import Commons
 import PLCommons
+import PLUI
 
 final class EmptyDataMessageCell: UITableViewCell {
     static let identifier: String = "BLIK.EmptyDataMessageCell"

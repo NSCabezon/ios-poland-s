@@ -2,6 +2,7 @@ import UI
 import Commons
 import Foundation
 import PLUI
+import PLCommons
 
 protocol ContactsViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModels(_ viewModels: [ContactViewModel])

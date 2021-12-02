@@ -18,10 +18,10 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/Jose C. Yebes/PLLegacyAdapter'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Jose C. Yebes' => 'jose.yebes@ciberexperis.es' }
-  s.platform         = :ios, "10.3"
+  s.platform         = :ios, "11.0"
   s.source           = { :git => 'https://github.com/Jose C. Yebes/PLLegacyAdapter.git', :tag => s.version.to_s }
   s.source_files     = 'PLLegacyAdapter/**/*.{swift}'
-  
+
    s.resource_bundles = {
      'PLLegacyAdapter' => ['PLLegacyAdapter/**/*{xib,xcassets}']
    }

@@ -8,6 +8,7 @@
 import Commons
 import UI
 import PLUI
+import PLCommons
 
 protocol RenameAliasViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
     func setAliasLabel(_ label: String)

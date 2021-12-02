@@ -7,6 +7,7 @@
 
 import UI
 import PLCommons
+import PLUI
 
 final class CurrencyLabel: UIView {
     private let label = UILabel()

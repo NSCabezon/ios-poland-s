@@ -13,12 +13,12 @@ The Poland PLCommons framework.
   s.source           = { :git => 'https://santander-one-app.ciber.es/ios/poland.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.3'
-
+  s.ios.deployment_target = '11.0'
   s.source_files = 'PLCommons/**/*.{swift}'
   
 s.dependency "Commons"
 s.dependency "UI"
+s.dependency "PLUI"
 s.dependency "Helpers"
 s.dependency "WebViews"
 s.dependency "SANPLLibrary"

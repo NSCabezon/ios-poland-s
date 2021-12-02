@@ -9,6 +9,7 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 
 protocol OtherBlikSettingsViewProtocol: LoaderPresentable, ErrorPresentable, SnackbarPresentable, DialogViewPresentationCapable {
     func setViewModel(viewModel: OtherBlikSettingsViewModel)

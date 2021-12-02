@@ -9,6 +9,7 @@ import Commons
 import CoreFoundationLib
 import UI
 import PLUI
+import PLCommons
 
 protocol RenameAliasPresenterProtocol {
     func viewDidLoad()

@@ -11,6 +11,7 @@ import UIOneComponents
 import Models
 import Commons
 import PLCommons
+import PLUI
 
 protocol PLAuthorizationView: AnyObject {
     func addRemainingTimeView(_ viewModel: RemainingTimeViewModel)

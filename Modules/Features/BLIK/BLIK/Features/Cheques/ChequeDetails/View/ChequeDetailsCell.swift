@@ -8,6 +8,7 @@
 import UI
 import UIKit
 import PLCommons
+import PLUI
 
 final class ChequeDetailsCell: UITableViewCell {
     static public let identifier: String = "BLIK.ChequeDetailsCell"

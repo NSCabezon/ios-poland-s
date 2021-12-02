@@ -9,6 +9,7 @@ import UIKit
 import UI
 import Commons
 import PLCommons
+import PLUI
 
 final class ChequeDetailsFooterView: UIView {
     var sendButtonTap: (() -> Void)?

@@ -5,8 +5,6 @@
 //  Created by Piotr Mielcarzewicz on 29/07/2021.
 //
 
-import PLCommons
-
 public struct SelectableAccountViewModel {
     public let name: String
     public let accountNumber: String
