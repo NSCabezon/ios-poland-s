@@ -249,7 +249,7 @@ private extension CreditCardRepaymentForm {
         var title = repaymentType.localized
         // Show amount info only for complete and minimal type
         // Based on: [TEET-153537]
-        if let displayValue = amount?.displayValueAndCurrency, repaymentType != .other {
+        if let displayValue = amount?.getFormattedDisplayValueAndCurrency(with: NumberFormatter.PLAmountNumberFormatterWithoutCurrency), repaymentType != .other {
             title += " (" + displayValue + ")"
         }
         return title
