@@ -101,32 +101,30 @@ private extension BLIKSummaryPresenter {
             )
         ]
         
-        // TODO:- Alias registraion is disabled in current build, will be restored in future task
-        
-//        if let aliasProposal = viewModel.proposedAlias {
-//            let title: String = {
-//                switch aliasProposal.type {
-//                case .cookie:
-//                    return "#Zaufaj przeglądarkę"
-//                case .uid:
-//                    return "#Zaufaj sklep"
-//                }
-//            }()
-//            actions.append(
-//                .init(
-//                    image: "icnShareBostonRedLight",
-//                    title: title,
-//                    action: { [weak self] in
-//                        let input = RegisterAliasInput(
-//                            aliasProposal: aliasProposal,
-//                            merchantId: self?.viewModel.merchantId,
-//                            acquirerId: self?.viewModel.acquirerId
-//                        )
-//                        self?.coordinator.goToAliasRegistration(with: input)
-//                    }
-//                )
-//            )
-//        }
+        if let aliasProposal = viewModel.proposedAlias {
+            let title: String = {
+                switch aliasProposal.type {
+                case .cookie:
+                    return "#Zaufaj przeglądarkę"
+                case .uid:
+                    return "#Zaufaj sklep"
+                }
+            }()
+            actions.append(
+                .init(
+                    image: "icnShareBostonRedLight",
+                    title: title,
+                    action: { [weak self] in
+                        let input = RegisterAliasInput(
+                            aliasProposal: aliasProposal,
+                            merchantId: self?.viewModel.merchantId,
+                            acquirerId: self?.viewModel.acquirerId
+                        )
+                        self?.coordinator.goToAliasRegistration(with: input)
+                    }
+                )
+            )
+        }
         
         let footerItems: [OperativeSummaryStandardFooterItemViewModel] = [
             .init(imageKey: "icnEnviarDinero",
