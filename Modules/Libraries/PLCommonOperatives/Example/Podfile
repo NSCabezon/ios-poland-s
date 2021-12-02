@@ -2,7 +2,7 @@ use_frameworks!
 
 platform :ios, '12.3'
 
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 
 def example_app_common
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'

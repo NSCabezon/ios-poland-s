@@ -3,7 +3,7 @@ platform :ios, '12.3'
 use_frameworks!
 
 #source 'ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/iOS-private-specs.git'
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 
 
 def example_app_common
