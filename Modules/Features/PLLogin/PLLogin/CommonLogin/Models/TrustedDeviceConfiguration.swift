@@ -13,7 +13,7 @@ public class TrustedDeviceConfiguration {
     var deviceHeaders: DeviceHeaders?
     var loginPassword: String?
     var tokens: [TrustedDeviceSoftwareToken]?
-    var ivrOutputCode: Int?
+    var ivrOutputCode: String?
     var trustedDevice: TrustedDevice?
     var registrationConfirm: RegistrationConfirm?
 
