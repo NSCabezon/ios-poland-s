@@ -66,6 +66,7 @@ end
 def pl_features
   pod 'PLLogin', :path => '../Modules/Features/PLLogin'
   pod 'BLIK', :path => '../Modules/Features/BLIK'
+  pod 'TaxTransfer', :path => '../Modules/Features/TaxTransfer'
   pod 'CreditCardRepayment', :path => '../Modules/Features/CreditCardRepayment'
   pod 'PLHelpCenter', :path => '../Modules/Features/PLHelpCenter'
   pod 'LoanSchedule', :path => '../Modules/Features/LoanSchedule'

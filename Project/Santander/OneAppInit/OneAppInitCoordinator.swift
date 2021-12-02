@@ -8,6 +8,7 @@
 import Foundation
 import Commons
 import BLIK
+import TaxTransfer
 import CreditCardRepayment
 import PLHelpCenter
 import DemoAuthenticator
@@ -35,6 +36,7 @@ enum OneAppInitModule: String, CaseIterable {
     case notificationsInbox = "Notifications Inbox"
     case charityTransfer = "Charity transfer"
     case phoneTopUp = "Phone Top-Up"
+    case taxTransfer = "Tax Transfer"
 }
 
 extension OneAppInitModule {
@@ -170,6 +172,12 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             coordinator.start()
         case .phoneTopUp:
             let coordinator = PhoneTopUpCoordinator(
+                dependenciesResolver: dependenciesEngine,
+                navigationController: navigationController
+            )
+            coordinator.start()
+        case .taxTransfer:
+            let coordinator = TaxTransferFormCoordinator(
                 dependenciesResolver: dependenciesEngine,
                 navigationController: navigationController
             )
