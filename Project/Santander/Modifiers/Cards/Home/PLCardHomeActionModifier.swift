@@ -181,7 +181,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     private let exploreProductsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.exploreProductsPL.rawValue,
                                localizedKey: "frequentOperative_button_contract",
-                               icon: "icnExploreProducts",
+                               icon: "icnOffer",
                                section: "contract",
                                location: "",
                                isDisabled: { card in

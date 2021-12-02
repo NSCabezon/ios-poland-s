@@ -23,7 +23,7 @@ extension OurOfferPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     }
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
-        let imageKey: String = "icnExploreProducts"
+        let imageKey: String = "icnOffer"
         let titleKey: String = "frequentOperative_button_contract"
         return .defaultButton(
             DefaultActionButtonViewModel(
