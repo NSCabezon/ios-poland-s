@@ -30,7 +30,7 @@ public final class UnregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumb
                 .margin(16),
                 .styledText(
                     .init(
-                        text: .plain(text: "#Czy na pewno chcesz się wyrejestrować z bazy powiązań BLIK?"),
+                        text: .plain(text: localized("pl_blik_title_alert_deRegist")),
                         font: UIFont.santander(
                             family: .micro,
                             type: .bold,
@@ -44,7 +44,7 @@ public final class UnregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumb
                 .margin(16),
                 .styledText(
                     .init(
-                        text: .plain(text: "#Po wyrejestrowaniu nie będziesz już mógł otrzymywać przelewów na telefon.\nW każdej chwili będziesz mógł się zarejestrować ponownie przechodząc do Ustawienia > Przelew na telefon."),
+                        text: .plain(text: localized("pl_blik_text_alert_deRegist")),
                         font: UIFont.santander(
                             family: .micro,
                             type: .regular,
@@ -58,7 +58,7 @@ public final class UnregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumb
                 .margin(16),
                 .styledText(
                     .init(
-                        text: .plain(text: "#Oświadczenie"),
+                        text: .plain(text: localized("pl_blik_text_declarationRegist")),
                         font: UIFont.santander(
                             family: .micro,
                             type: .bold,
@@ -72,7 +72,8 @@ public final class UnregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumb
                 .margin(4),
                 .styledText(
                     .init(
-                        text: .plain(text: "#Odwołuję złożoną przeze mnie w Santander Bank Polska S.A. dyspozycję otrzymywania na moim rachunku bankowym \(accountToUnregisterNumber) Przelewów na telefon BLIK wysyłanych na numer telefonu komórkowego służący do przesyłania przez Santander Bank Polska S.A. smsKodów."),
+                        text: localized("pl_blik_text_deRegistMeaning",
+                                        [StringPlaceholder(.value, "\(accountToUnregisterNumber)")]),
                         font: UIFont.santander(
                             family: .micro,
                             type: .regular,
@@ -86,13 +87,13 @@ public final class UnregisterPhoneNumberConfirmationFactory: UnregisterPhoneNumb
                 .horizontalActions(
                     .init(
                         left: .init(
-                            title: .plain(text: "#Anuluj"),
+                            title: .plain(text: localized("generic_button_cancel")),
                             type: .white,
                             margins: (left: 16, right: 8),
                             action: { declineAction() }
                         ),
                         right: .init(
-                            title: .plain(text: "#Wyrejestruj"),
+                            title: .plain(text: localized("pl_blik_button_deRegist")),
                             type: .red,
                             margins: (left: 16, right: 8),
                             action: { confirmAction() }

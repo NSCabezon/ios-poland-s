@@ -79,7 +79,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
         guard let params = walletParams else {
             // TODO: temporal fix to build the project. Please consider if you need to change the localization keys. showDialog parameters must be of type LocalizedStylableText
             showDialog(
-                title: localized("#Wystąpił błąd!"),
+                title: localized("generic_title_alertError"),
                 text: localized("#Nie można utworzyć nowego czeku BLIK. Spróbuj ponownie później")
             )
             return
@@ -210,8 +210,8 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
     }
     
     private func showChequeListErrorMessage() {
-        let title = "#Wystąpił błąd"
-        let subtitle = "#Twoja lista czeków nie została poprawnie pobrana. Odśwież listę czeków lub spróbuj ponownie później."
+        let title: String = localized("generic_title_alertError")
+        let subtitle: String = localized("pl_blik_text_chequeListFail")
         let refreshAction: ErrorCellViewModel.RefreshButtonAction = { [weak self] in
             self?.loadDataWithFullscreenLoader()
         }

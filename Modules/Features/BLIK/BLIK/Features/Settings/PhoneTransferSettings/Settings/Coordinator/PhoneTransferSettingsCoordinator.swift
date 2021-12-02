@@ -140,7 +140,7 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     
     func showUnregisteredNumberSuccessAlert() {
         TopAlertController.setup(TopAlertView.self).showAlert(
-            localized("#Informacja\nNumer został wyrejestrowany z bazy powiązań BLIK"),
+            localized("pl_blik_text_deRegistSuccess"),
             alertType: .info,
             position: .top
         )

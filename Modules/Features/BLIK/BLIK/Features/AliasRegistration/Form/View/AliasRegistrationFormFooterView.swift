@@ -8,14 +8,14 @@ final class AliasRegistrationFormFooterView: UIView {
     private let saveButton: RedLisboaButton = {
         let button = RedLisboaButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("#Zapamiętaj", for: .normal)
+        button.setTitle(localized("pl_blik_text_registerLink"), for: .normal)
         return button
     }()
     
     private let rejectButton: WhiteLisboaButton = {
         let button = WhiteLisboaButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("#Nie, dziękuję", for: .normal)
+        button.setTitle(localized("pl_blik_text_registerLinkThanks"), for: .normal)
         return button
     }()
     
