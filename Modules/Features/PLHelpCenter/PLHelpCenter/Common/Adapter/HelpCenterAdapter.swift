@@ -33,12 +33,11 @@ extension HelpCenterAdapter: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionViewModel = viewModels[safe: section], sectionViewModel.isHeaderVisible else { return nil }
-        
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: sectionViewModel.identifier)
         if let header = header as? SectionViewModelSetUpable {
             header.setUp(with: sectionViewModel)
         }
-
+        tableView.removeUnnecessaryHeaderTopPadding()
         return header
     }
 

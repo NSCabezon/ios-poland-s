@@ -30,6 +30,7 @@ extension LoanScheduleListAdapter: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView.removeUnnecessaryHeaderTopPadding()
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: LoanScheduleInformationHeaderView.identifier)
     }
     
