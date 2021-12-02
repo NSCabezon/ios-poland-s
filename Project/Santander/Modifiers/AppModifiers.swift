@@ -64,6 +64,9 @@ final class AppModifiers {
     private lazy var getGPInsuranceProtectionOperativeOptionProtocol: GetGPInsuranceProtectionOperativeModifier = {
         return GetGPInsuranceProtectionOperativeModifier()
     }()
+    private lazy var getGPInvestmentFundOperativeOptionProtocol: GetGPInvestmentFundOperativeOptionModifier = {
+        return GetGPInvestmentFundOperativeOptionModifier()
+    }()
     private lazy var getGPOtherOperativeOptionProtocol: GetGPOtherOperativeModifier = {
         return GetGPOtherOperativeModifier()
     }()
@@ -131,6 +134,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: GetGPInsuranceProtectionOperativeOptionProtocol.self) { _ in
             return self.getGPInsuranceProtectionOperativeOptionProtocol
+        }
+        self.dependencieEngine.register(for: GetGPInvestmentFundOperativeOptionProtocol.self) { _ in
+            return self.getGPInvestmentFundOperativeOptionProtocol
         }
         self.dependencieEngine.register(for: GetGPOtherOperativeOptionProtocol.self) { _ in
             return self.getGPOtherOperativeOptionProtocol

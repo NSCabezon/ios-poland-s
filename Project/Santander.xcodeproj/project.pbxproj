@@ -123,6 +123,7 @@
 		7E8AD11D26F0C13B00FC54D0 /* PLApplePayOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD11C26F0C13A00FC54D0 /* PLApplePayOperative.swift */; };
 		7E8AD11F26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD11E26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift */; };
 		7E8AD12126F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD12026F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift */; };
+		7E974B0A2757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E974B092757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift */; };
 		7E9939C326B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C226B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift */; };
 		7E9939C526B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */; };
 		7E9939C726B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */; };
@@ -147,7 +148,7 @@
 		A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1B81B122726D3B300714A3E /* Regression.xcconfig */; };
 		A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
@@ -336,6 +337,7 @@
 		7E8AD11C26F0C13A00FC54D0 /* PLApplePayOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLApplePayOperative.swift; sourceTree = "<group>"; };
 		7E8AD11E26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPLAccountOtherOperativesUseCase.swift; sourceTree = "<group>"; };
 		7E8AD12026F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPLAccountHomeActionUseCase.swift; sourceTree = "<group>"; };
+		7E974B092757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGPInvestmentFundOperativeOptionModifier.swift; sourceTree = "<group>"; };
 		7E9939C226B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBanksPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E9939C426B9522A00F1040D /* FinancialAgendaPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialAgendaPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurOfferPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				0DB4957726C14DA600F0985F /* Accounts */,
 				0D6E289926BAAC6600F50A18 /* Cards */,
 				0DC3C53F26C29D4300F90591 /* InsuranceProtection */,
+				7E974B0827576F49002CA9C6 /* InvestmentFundsOperations */,
 				0D9ACF2B273523C1001D6D51 /* Loans */,
 				0DAA4D5326C3CB34005A921C /* Others */,
 			);
@@ -1020,6 +1023,14 @@
 			path = OnOff;
 			sourceTree = "<group>";
 		};
+		7E974B0827576F49002CA9C6 /* InvestmentFundsOperations */ = {
+			isa = PBXGroup;
+			children = (
+				7E974B092757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift */,
+			);
+			path = InvestmentFundsOperations;
+			sourceTree = "<group>";
+		};
 		7EC5A29C26AECB5800E14C68 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1422,7 +1433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
@@ -1504,6 +1515,7 @@
 				34939ACE2727DCD50010F987 /* SendMoneyTransferTypeRadioButtonsContainerViewModel.swift in Sources */,
 				CCE45A9F2732AC5400691E91 /* InputSignatureView.swift in Sources */,
 				0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */,
+				7E974B0A2757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift in Sources */,
 				BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */,
 				A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */,
 				446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */,
