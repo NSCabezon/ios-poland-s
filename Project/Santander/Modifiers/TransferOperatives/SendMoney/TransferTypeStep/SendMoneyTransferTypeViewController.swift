@@ -47,7 +47,7 @@ final class SendMoneyTransferTypeViewController: UIViewController {
     
     let presenter: SendMoneyTransferTypePresenterProtocol
     @IBOutlet private weak var mainStackView: UIStackView!
-    @IBOutlet private weak var floatingButton: FloatingButton!
+    @IBOutlet private weak var floatingButton: OneFloatingButton!
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -119,7 +119,7 @@ private extension SendMoneyTransferTypeViewController {
         self.floatingButton.configureWith(
             type: .primary,
             size: .large(
-                FloatingButton.ButtonSize.LargeButtonConfig(title: localized(Constants.ContinueButton.titleKey),
+                OneFloatingButton.ButtonSize.LargeButtonConfig(title: localized(Constants.ContinueButton.titleKey),
                                                             subtitle: self.presenter.getSubtitleInfo(),
                                                             icons: .right, fullWidth: false)),
             status: .ready)
