@@ -92,6 +92,10 @@ private extension PLRememberedLoginPinCoordinator {
         self.dependenciesEngine.register(for: PLRememberedLoginProcessGroup.self) { resolver in
            return rememeberedLoginProcessGroup
         }
+        
+        self.dependenciesEngine.register(for: PLRememberedLoginChangeUserUseCase.self) { resolver in
+            return PLRememberedLoginChangeUserUseCase(dependenciesResolver: resolver)
+        }
 
         self.dependenciesEngine.register(for: PLRememberedLoginPinViewController.self) { resolver in
             let viewController = PLRememberedLoginPinViewController(
