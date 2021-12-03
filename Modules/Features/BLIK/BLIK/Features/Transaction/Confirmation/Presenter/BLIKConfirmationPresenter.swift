@@ -155,7 +155,7 @@ private extension BLIKConfirmationPresenter {
     }
     
     func showError(with key: String) {
-        view?.showErrorMessage(localized(key)) {[weak self] in
+        view?.showErrorMessage(localized(key), image: "icnAlertError") {[weak self] in
             self?.coordinator.goToGlobalPosition()
         }
     }
