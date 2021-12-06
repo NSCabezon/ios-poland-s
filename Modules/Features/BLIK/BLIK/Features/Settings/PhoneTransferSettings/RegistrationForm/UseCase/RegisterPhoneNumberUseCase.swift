@@ -29,25 +29,23 @@ final class RegisterPhoneNumberUseCase: UseCase<RegisterPhoneNumberUseCaseInput,
         )
         let result = try managersProvider.getBLIKManager().registerPhoneNumber(request)
         switch result {
-        case let .success(responseDTO):
-            switch responseDTO {
-            case .successfulyRegisteredPhoneNumber:
-                return .ok(
-                    RegisterPhoneNumberUseCaseOutput(
-                        registerPhoneNumberResponse: .successfulyRegisteredPhoneNumber
-                    )
-                )
-            case .smsAuthorizationCodeSent:
+        case .success:
+            return .ok(
+                RegisterPhoneNumberUseCaseOutput(
+                    registerPhoneNumberResponse: .successfulyRegisteredPhoneNumber
+                ))
+        case let .failure(error):
+            if let blikError = BlikError(with: error.getErrorBody()),
+               blikError.errorCode1 == .customerTypeDisabled,
+               blikError.errorCode2 == .authCodeRequired {
                 return .ok(
                     RegisterPhoneNumberUseCaseOutput(
                         registerPhoneNumberResponse: .smsAuthorizationCodeSent
                     )
                 )
-            case let .error(error):
-                return .error(.init(error.message))
+            } else {
+                return .error(.init(error.localizedDescription))
             }
-        case .failure(let error):
-            return .error(.init(error.localizedDescription))
         }
     }
 }

@@ -16,7 +16,7 @@ public protocol PLBLIKManagerProtocol {
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
     func unregisterPhoneNumber() throws -> Result<Void, NetworkProviderError>
-    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError>
+    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError>
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
     func getAliases() throws -> Result<[BlikAliasDTO], NetworkProviderError>
     func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
@@ -108,7 +108,7 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
         try dataSource.unregisterPhoneNumber()
     }
     
-    public func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError> {
+    public func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError> {
         try dataSource.registerPhoneNumber(request)
     }
     

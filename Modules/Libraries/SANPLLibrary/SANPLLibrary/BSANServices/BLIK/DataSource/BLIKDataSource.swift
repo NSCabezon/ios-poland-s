@@ -16,7 +16,7 @@ protocol BLIKDataSourceProtocol {
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
-    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError>
+    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError>
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
     func getAliases() throws -> Result<[BlikAliasDTO], NetworkProviderError>
     func deleteAlias(_ request: DeleteBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
@@ -316,7 +316,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         )
     }
     
-    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError> {
+    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(request) else {
             return .failure(NetworkProviderError.other)
         }

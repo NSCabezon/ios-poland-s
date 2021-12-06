@@ -114,9 +114,14 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     }
     
     func goBackToBlikSettingsFromSmsScreen() {
-        navigationController?.popViewController(animated: false)
-        navigationController?.popViewController(animated: false)
-        navigationController?.popViewController(animated: true)
+        guard let blikSettingsVC = navigationController?.viewControllers.first(where: { vc in
+            return vc is BlikSettingsViewController
+        }) else {
+            goBackToGlobalPosition()
+            return
+        }
+        
+        navigationController?.popToViewController(blikSettingsVC, animated: true)
     }
     
     func showTransferSettingsAfterPhoneRegistrationFromFormScreen() {
@@ -125,8 +130,14 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     }
     
     func showTransferSettingsAfterPhoneRegistrationFromSmsScreen() {
-        navigationController?.popViewController(animated: false)
-        navigationController?.popViewController(animated: true)
+        guard let phoneTransferSettingsVC = navigationController?.viewControllers.first(where: { vc in
+            return vc is PhoneTransferSettingsViewController
+        }) else {
+            goBackToGlobalPosition()
+            return
+        }
+
+        navigationController?.popToViewController(phoneTransferSettingsVC, animated: true)
         phoneTransferSettingsView?.setViewModel(.registeredPhoneNumber)
     }
     
