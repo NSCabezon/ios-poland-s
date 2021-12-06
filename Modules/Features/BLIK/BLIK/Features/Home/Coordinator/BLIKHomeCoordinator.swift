@@ -67,8 +67,6 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
     }
     
     func showSettings(with wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>) {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
-        
         let coordinator = BlikSettingsCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
@@ -85,8 +83,6 @@ extension BLIKHomeCoordinator: BLIKHomeCoordinatorProtocol {
     }
     
     func showAliasPayment() {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
-        
         let coordinator = AliasListSettingsCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController
