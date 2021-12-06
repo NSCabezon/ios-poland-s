@@ -160,7 +160,7 @@ private extension OtherBlikSettingsView {
         let styledText: LocalizedStylableText = localized("pl_blik_tooltip_OtherSettingsDesc")
         BubbleLabelView.startWith(
             associated: sender,
-            text: styledText.text,
+            localizedStyleText: styledText,
             position: .bottom
         )
     }
