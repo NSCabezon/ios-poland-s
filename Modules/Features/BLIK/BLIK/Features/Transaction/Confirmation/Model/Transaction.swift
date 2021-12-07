@@ -51,7 +51,7 @@ public struct Transaction {
     }
     
     // We support only these types of alias proposals on iOS
-    public enum AliasProposalType {
+    public enum AliasProposalType: String {
         case uid
         case cookie
     }

@@ -65,11 +65,8 @@ final class RenameAliasPresenter: RenameAliasPresenterProtocol {
     }
     
     func didPressSave(with label: String) {
-        let trimmedName = label.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
         view?.showLoader()
-        let updatedAlias = blikAliasNewLabelMapper.map(alias: alias, withNewLabel: trimmedName)
+        let updatedAlias = blikAliasNewLabelMapper.map(alias: alias, withNewLabel: label)
         Scenario(useCase: updateAliasUseCase, input: updatedAlias)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in

@@ -22,6 +22,7 @@ final class RenameAliasViewController: UIViewController {
     private let aliasCharactersLimit = UILabel()
     private let bottomButton = BottomButtonView()
     private let presenter: RenameAliasPresenterProtocol
+    private var oldAliasName = ""
     
     init(
         presenter: RenameAliasPresenterProtocol
@@ -50,7 +51,9 @@ final class RenameAliasViewController: UIViewController {
 extension RenameAliasViewController: RenameAliasViewProtocol {
     func setAliasLabel(_ label: String) {
         DispatchQueue.main.async {
+            self.oldAliasName = label
             self.aliasLabelTextField.textField.setText(label)
+            self.bottomButton.disableButton()
         }
     }
     
@@ -165,6 +168,14 @@ private extension RenameAliasViewController {
 
 extension RenameAliasViewController: UpdatableTextFieldDelegate{
     func updatableTextFieldDidUpdate() {
-        presenter.didUpdateNameAlias(name: aliasLabelTextField.textField.text)
+        let trimmedName = aliasLabelTextField.textField.text?.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        guard oldAliasName != trimmedName else {
+            bottomButton.disableButton()
+            return
+        }
+        bottomButton.enableButton()
+        presenter.didUpdateNameAlias(name: trimmedName)
     }
 }
