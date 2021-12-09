@@ -5,7 +5,7 @@
 //  Created by Marcos Álvarez Mesa on 18/5/21.
 //
 
-import DataRepository
+import CoreFoundationLib
 import Repository
 
 public struct DataRepositoryBuilder {

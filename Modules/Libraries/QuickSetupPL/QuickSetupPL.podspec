@@ -19,7 +19,6 @@ Pod::Spec.new do |spec|
   spec.dependency "QuickSetup/standard"
   spec.dependency "SANPLLibrary"
   spec.dependency "CoreFoundationLib"
-  spec.dependency "DataRepository"
   spec.dependency "Localization"
   spec.dependency "Models"
   spec.dependency "Commons"

@@ -6,7 +6,7 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import DataRepository
+import CoreFoundationLib
 import Repository
 import SANLegacyLibrary
 import Commons

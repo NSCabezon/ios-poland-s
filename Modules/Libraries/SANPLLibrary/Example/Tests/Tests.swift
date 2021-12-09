@@ -1,6 +1,6 @@
 import XCTest
 @testable import SANPLLibrary
-import DataRepository
+import CoreFoundationLib
 import Repository
 import SANLegacyLibrary
 import Commons

@@ -9,7 +9,7 @@
 import XCTest
 import SANLegacyLibrary
 import Commons
-import DataRepository
+import CoreFoundationLib
 import SANPLLibrary
 
 @testable import PLCryptography
