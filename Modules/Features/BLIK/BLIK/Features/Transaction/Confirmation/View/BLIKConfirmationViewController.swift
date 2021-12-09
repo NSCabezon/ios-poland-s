@@ -95,6 +95,10 @@ extension BLIKConfirmationViewController: BLIKConfirmationViewProtocol {
         } else {
             aliasInfoBannerZeroHeightConstraint.isActive = true
         }
+        
+        progressView.isHidden = false
+        scrollView.isHidden = false
+        aliasInfoBanner.isHidden = false
     }
 }
 
@@ -138,6 +142,10 @@ private extension BLIKConfirmationViewController {
     func prepareStyles() {
         view.backgroundColor = .skyGray
         bottomView.backgroundColor = .white
+        
+        progressView.isHidden = true
+        scrollView.isHidden = true
+        aliasInfoBanner.isHidden = true
         
         stackView.axis = .vertical
         stackView.spacing = 16
