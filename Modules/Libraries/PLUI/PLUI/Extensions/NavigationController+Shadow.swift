@@ -10,7 +10,15 @@ import UI
 
 public extension UINavigationController {
     func addNavigationBarShadow() {
-        navigationBar.shadowImage = UIColor.mediumSkyGray.image()
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.shadowImage = UIColor.mediumSkyGray.image()
+            navigationBar.standardAppearance = appearance
+            navigationBar.scrollEdgeAppearance = navigationBar.standardAppearance
+        } else {
+            navigationBar.shadowImage = UIColor.mediumSkyGray.image()
+        }
     }
 }
 
