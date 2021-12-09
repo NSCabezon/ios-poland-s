@@ -139,6 +139,7 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
 
         navigationController?.popToViewController(phoneTransferSettingsVC, animated: true)
         phoneTransferSettingsView?.setViewModel(.registeredPhoneNumber)
+        showRegisterNumberSuccessAlert()
     }
     
     func close() {
@@ -152,6 +153,14 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     func showUnregisteredNumberSuccessAlert() {
         TopAlertController.setup(TopAlertView.self).showAlert(
             localized("pl_blik_text_deRegistSuccess"),
+            alertType: .info,
+            position: .top
+        )
+    }
+    
+    func showRegisterNumberSuccessAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_text_registerNumbSuccess"),
             alertType: .info,
             position: .top
         )
