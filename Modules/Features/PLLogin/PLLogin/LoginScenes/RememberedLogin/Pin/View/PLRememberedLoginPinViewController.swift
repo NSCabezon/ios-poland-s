@@ -176,6 +176,9 @@ private extension PLRememberedLoginPinViewController {
         changeUserButton.setImage(Assets.image(named: "icnUser"), for: .normal)
         changeUserButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
         changeUserButton.titleLabel?.font =  .santander(family: .text, type: .regular, size: 14)
+        changeUserButton.titleLabel?.numberOfLines = 1
+        changeUserButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        changeUserButton.titleLabel?.minimumScaleFactor = 0.5
         changeUserButton.setTitle(localized("loginRegistered_button_changeUser"), for: .normal)
         changeUserButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                      action: #selector(didSelectChangeUserButton)))
