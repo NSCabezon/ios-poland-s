@@ -6,6 +6,7 @@ import Commons
 protocol CharityTransferFormViewProtocol: AnyObject,
                                           ConfirmationDialogPresentable {
     func setAccountViewModel()
+    func showValidationMessages(messages: InvalidCharityTransferFormMessages)
 }
 
 final class CharityTransferFormViewController: UIViewController {
@@ -103,13 +104,25 @@ extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
     func setAccountViewModel() {
         formView.configure(with: presenter.getSelectedAccountViewModels())
     }
+    
+    func showValidationMessages(messages: InvalidCharityTransferFormMessages) {
+        let form = formView.getCurrentFormViewModel()
+        formView.showInvalidFormMessages(messages)
+        if messages.shouldContinueButtonBeEnabled,
+           form.amount != nil {
+            bottomView.enableButton()
+        } else {
+            bottomView.disableButton()
+        }
+    }
 }
 
 extension CharityTransferFormViewController: CharityTransferFormViewDelegate {
     func didChangeForm() {
         presenter.updateTransferFormViewModel(
             with: formView.getCurrentFormViewModel()
-        )        
+        )
+        presenter.startValidation()
     }
     
     func changeAccountTapped() {

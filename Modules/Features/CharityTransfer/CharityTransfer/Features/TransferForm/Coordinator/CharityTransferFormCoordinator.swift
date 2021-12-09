@@ -80,7 +80,10 @@ private extension CharityTransferFormCoordinator {
         let selectedAccountNumber = selectedAccountNumber
         
         self.dependenciesEngine.register(for: CharityTransferFormPresenterProtocol.self) { resolver in
-            return CharityTransferFormPresenter(dependenciesResolver: resolver, accounts: accounts, selectedAccountNumber: selectedAccountNumber)
+            return CharityTransferFormPresenter(dependenciesResolver: resolver,
+                                                accounts: accounts,
+                                                selectedAccountNumber: selectedAccountNumber,
+                                                formValidator: CharityTransferValidator())
         }
         
         self.dependenciesEngine.register(for: CharityTransferFormViewController.self) { [weak self] resolver in

@@ -10,7 +10,7 @@ protocol MobileTransferFormViewControllerProtocol: AnyObject,
                                                    LoaderPresentable,
                                                    ConfirmationDialogPresentable {
     func setAccountViewModel()
-    func showValidationMessages(messages: InvalidTransferFormMessages)
+    func showValidationMessages(messages: InvalidMobileTransferFormMessages)
     func fillWithContact(contact: Contact?)
 }
 
@@ -152,7 +152,7 @@ extension MobileTransferFormViewController: MobileTransferFormViewControllerProt
         headerContent.configure(with: accountViewModel)
     }
     
-    func showValidationMessages(messages: InvalidTransferFormMessages) {
+    func showValidationMessages(messages: InvalidMobileTransferFormMessages) {
         let currentForm = formView.getCurrentForm()
         formView.showInvalidFormMessages(messages)
         if messages.shouldContinueButtonBeEnabled,

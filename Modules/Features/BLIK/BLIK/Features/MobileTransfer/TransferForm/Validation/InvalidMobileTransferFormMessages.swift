@@ -1,5 +1,5 @@
 
-struct InvalidTransferFormMessages {
+struct InvalidMobileTransferFormMessages {
     let tooShortPhoneNumberMessage: String?
     let tooLowAmount: String?
     let tooMuchAmount: String?

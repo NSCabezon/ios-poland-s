@@ -49,7 +49,7 @@ final class MobileTransferFormView: UIView {
                                   date: Date())
     }
     
-    func showInvalidFormMessages(_ messages: InvalidTransferFormMessages) {
+    func showInvalidFormMessages(_ messages: InvalidMobileTransferFormMessages) {
         if messages.tooShortPhoneNumberMessage == nil {
             phoneNumberView.hideError()
         } else {

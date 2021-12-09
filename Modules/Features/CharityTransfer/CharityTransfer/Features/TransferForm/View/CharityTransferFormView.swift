@@ -20,7 +20,8 @@ class CharityTransferFormView: UIView {
     private let accountNumberFieldName = UILabel()
     private let accountNumberTextField = UneditableField()
     private let amountFieldName = UILabel()
-    private let amountTextField = LisboaTextField()
+    private let amountView = LisboaTextFieldWithErrorView()
+    private var amountTextField: LisboaTextField { return amountView.textField }
     private let currencyAccessoryView = CurrencyAccessoryView()
     private let titleFieldName = UILabel()
     private let titleTextField = UneditableField()
@@ -34,7 +35,7 @@ class CharityTransferFormView: UIView {
                  accountSelectorLabel, selectedAccountView,
                  recipientFieldName, recipientTextField,
                  accountNumberFieldName, accountNumberTextField,
-                 amountFieldName, amountTextField,
+                 amountFieldName, amountView,
                  titleFieldName, titleTextField,
                  dateFieldName]
         super.init(frame: frame)
@@ -53,6 +54,14 @@ class CharityTransferFormView: UIView {
         CharityTransferFormViewModel(
             amount: Decimal(string: amountTextField.text ?? "")
         )
+    }
+    
+    func showInvalidFormMessages(_ messages: InvalidCharityTransferFormMessages) {
+        if messages.tooLowAmount != nil || messages.tooMuchAmount != nil {
+            amountView.showError(messages.tooLowAmount ?? messages.tooMuchAmount)
+        } else {
+            amountView.hideError()
+        }
     }
 }
 
@@ -177,13 +186,12 @@ private extension CharityTransferFormView {
             amountFieldName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             amountFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            amountTextField.topAnchor.constraint(equalTo: amountFieldName.bottomAnchor, constant: 8),
-            amountTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            amountTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            amountTextField.heightAnchor.constraint(equalToConstant: 48),
+            amountView.topAnchor.constraint(equalTo: amountFieldName.bottomAnchor, constant: 8),
+            amountView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            amountView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             currencyAccessoryView.widthAnchor.constraint(equalToConstant: 44),
             
-            titleFieldName.topAnchor.constraint(equalTo: amountTextField.bottomAnchor, constant: 16),
+            titleFieldName.topAnchor.constraint(equalTo: amountView.bottomAnchor, constant: 16),
             titleFieldName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             titleFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             

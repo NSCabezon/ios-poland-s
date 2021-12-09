@@ -11,6 +11,7 @@ protocol CharityTransferFormPresenterProtocol {
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel)
     func confirmTransfer()
+    func startValidation()
 }
 
 public protocol CharityTransferFormAccountSelectable: AnyObject {
@@ -25,13 +26,16 @@ final class CharityTransferFormPresenter {
     private var transferFormViewModel: CharityTransferFormViewModel?
     private var selectedAccountNumber: String
     private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+    private let formValidator: CharityTransferValidator
 
     init(dependenciesResolver: DependenciesResolver,
          accounts: [AccountForDebit],
-         selectedAccountNumber: String) {
+         selectedAccountNumber: String,
+         formValidator: CharityTransferValidator) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
+        self.formValidator = formValidator
     }
 }
 
@@ -78,6 +82,18 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
             date: Date()
         )
         coordinator.showConfirmation(with: model)
+    }
+    
+    func startValidation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.validationAction()
+        }
+    }
+    
+    func validationAction() {
+        guard let form = transferFormViewModel else { return }
+        let invalidMessages = formValidator.validateForm(form: form)
+        view?.showValidationMessages(messages: invalidMessages)
     }
 }
 
