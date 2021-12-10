@@ -15,11 +15,13 @@ class GetPLAccountOtherOperativesWebConfigurationUseCase: UseCase<GetPLAccountOt
     private let dependenciesResolver: DependenciesResolver
     private let provider: BSANManagersProvider
     private let dataProvider: BSANDataProvider
+    private let networkProvider: NetworkProvider
     
-    public init(dependenciesResolver: DependenciesResolver, dataProvider: BSANDataProvider) {
+    public init(dependenciesResolver: DependenciesResolver, dataProvider: BSANDataProvider, networkProvider: NetworkProvider) {
         self.dependenciesResolver = dependenciesResolver
         self.provider = self.dependenciesResolver.resolve(for: BSANManagersProvider.self)
         self.dataProvider = dataProvider
+        self.networkProvider = networkProvider
     }
     
     override func executeUseCase(requestValues: GetPLAccountOtherOperativesWebConfigurationUseCaseInput) throws -> UseCaseResponse<GetPLAccountOtherOperativesWebConfigurationUseCaseOkOutput, StringErrorOutput> {
@@ -31,10 +33,12 @@ class GetPLAccountOtherOperativesWebConfigurationUseCase: UseCase<GetPLAccountOt
         let configuration = PLAccountOtherOperativesWebConfiguration(
             initialURL: initialURL,
             bodyParameters: parameters,
-            closingURLs: [closingUrl],
+            closingURLs: [closingUrl, "app://close"],
             webToolbarTitleKey: " ",
             httpMethod: httpMethod,
-            pdfToolbarTitleKey: " ")
+            pdfToolbarTitleKey: " ",
+            isFullScreenEnabled: requestValues.type.isFullScreen ?? true
+        )
         return UseCaseResponse.ok(GetPLAccountOtherOperativesWebConfigurationUseCaseOkOutput(configuration: configuration))
     }
 }
@@ -61,17 +65,50 @@ extension GetPLAccountOtherOperativesWebConfigurationUseCase {
         let accessToken = getAccessToken()
         let clientId = getClientId()
         let language = getLanguage()
+        let profileId = getProfileId()
         let parameters = [
             "access_token": accessToken,
             "clientId": clientId,
             "mlang": language,
-            "oneApp": "true"
+            "oneApp": "true",
+            "profileId": profileId
         ]
         return parameters
     }
     
     private func getLanguage() -> String {
         return dependenciesResolver.resolve(forOptionalType: StringLoader.self)?.getCurrentLanguage().languageType.rawValue ?? "en"
+    }
+
+    func getProfileId() -> String {
+        let result = getContext()
+        
+        switch result {
+        case .success(let context):
+            return context.profileId
+        default:
+            return "3"
+        }
+    }
+    
+    func getContext() -> Result<PLContextDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let absoluteUrl = baseUrl + "/api/as"
+        let serviceName = "/context"
+        let result: Result<PLContextDTO, NetworkProviderError> = self.networkProvider.request(PLContextRequest(serviceName: serviceName,
+                                                                                                               serviceUrl: absoluteUrl,
+                                                                                                               method: .get,
+                                                                                                               headers: nil,
+                                                                                                               contentType: .urlEncoded,
+                                                                                                               localServiceName: .authenticate)
+        )
+        return result
+    }
+
+    func getBaseUrl() -> String? {
+        return try? self.dataProvider.getEnvironment().urlBase
     }
 }
 

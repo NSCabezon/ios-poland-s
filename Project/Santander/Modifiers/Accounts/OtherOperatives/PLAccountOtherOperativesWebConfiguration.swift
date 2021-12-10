@@ -18,13 +18,15 @@ public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
     public var isFullScreenEnabled: Bool?
     public var bodyParameters: [String: String]?
     public var httpMethod: HTTPMethodType
+    public var closingURLs: [String]
 
     public init(initialURL: String,
                 bodyParameters: [String: String]?,
                 closingURLs: [String],
                 webToolbarTitleKey: String?,
                 httpMethod: HTTPMethodType,
-                pdfToolbarTitleKey: String?) {
+                pdfToolbarTitleKey: String?,
+                isFullScreenEnabled: Bool? = true) {
         self.initialURL = initialURL
         self.webToolbarTitleKey = webToolbarTitleKey
         self.pdfToolbarTitleKey = pdfToolbarTitleKey
@@ -33,5 +35,7 @@ public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
         self.reloadSessionOnClose = false
         self.bodyParameters = bodyParameters
         self.httpMethod = httpMethod
+        self.isFullScreenEnabled = isFullScreenEnabled
+        self.closingURLs = closingURLs
     }
 }

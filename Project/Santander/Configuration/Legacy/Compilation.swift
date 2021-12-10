@@ -115,7 +115,7 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt4.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
         #elseif PREPROD
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
-        #elseif PROD
+        #elseif PRO
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
         #endif
         

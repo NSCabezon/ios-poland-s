@@ -37,12 +37,12 @@ private extension GetPGFrequentOperativeOption {
                                                             PGFrequentOperativeOption.impruve,
                                                             AtmsAndBranchesPGFrequentOperativeOption(),
                                                             PGFrequentOperativeOption.personalArea,
-                                                            AddBanksPGFrequentOperativeOption(),
+                                                            AddBanksPGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
                                                             CurrencyExchangePGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
                                                             OpenGoalPGFrequentOperativeOption(),
                                                             OpenDepositPGFrequentOperativeOption(),
                                                             BuyInsurancePGFrequentOperativeOption(),
-                                                            CustomerServicePGFrequentOperativeOption(),
+                                                            CustomerServicePGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
                                                             AccountStatementPGFrequentOperativeOption()
         ]
         #if DEBUG

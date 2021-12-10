@@ -40,7 +40,7 @@ extension PLAccountHomeActionModifier {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
-        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
+        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue { 
             data.parameter = entity.productIdentifier
         }
         if let isAvailable = data.isAvailable, !isAvailable {
@@ -59,7 +59,7 @@ extension PLAccountHomeActionModifier {
     private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
         var entity: PLAccountOtherOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil)
+            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }

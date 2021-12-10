@@ -55,6 +55,9 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
         guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
         if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
+            if let contractNumber = entity.dto.contractNumber, let url = data.link?.replace(StringPlaceholder.Placeholder.number.rawValue, contractNumber) {
+                data.link = url
+            }
         }
         if let isAvailable = data.isAvailable, !isAvailable {
             Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -72,7 +75,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
         var entity: PLAccountOtherOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil)
+            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }

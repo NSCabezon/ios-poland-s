@@ -14,4 +14,5 @@ struct PLAccountOtherOperativesData {
     var isAvailable: Bool?
     var httpMethod: HTTPMethodType?
     var parameter: String?
+    var isFullScreen: Bool = true
 }

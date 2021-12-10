@@ -34,7 +34,8 @@ public class GetBasePLWebConfigurationUseCase: UseCase<GetBasePLWebConfiguration
             "clientId": login,
             "access_token": accessToken,
             "oneApp": "true",
-            "mlang": language
+            "mlang": language,
+            "profileId": "3"
         ]
         
         let configuration = BasePLWebConfiguration(

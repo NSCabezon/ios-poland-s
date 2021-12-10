@@ -43,7 +43,8 @@ class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherO
             closingURLs: [closingUrl],
             webToolbarTitleKey: " ",
             pdfToolbarTitleKey: " ",
-            httpMethod: httpMethodCard)
+            httpMethod: httpMethodCard,
+            isFullScreenEnabled: cardData.isFullScreen)
         return
             UseCaseResponse.ok(GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput(configuration: configuration))
     }
@@ -118,7 +119,7 @@ struct GetPLCardsOtherOperativesWebConfigurationUseCaseInput {
 }
 
 public enum PLCardWebViewType {
-    case cancel, multicurrency
+    case cancel, multicurrency, pin, useAbroad, changeLimits, viewStatements, enable, repayInInstallments, customerService, atmPackage, alerts24
 }
 
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput {
