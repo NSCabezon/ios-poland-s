@@ -39,6 +39,12 @@ final class SendMoneyTransferTypePresenter {
         else { return nil }
         return specialPricesOutput.fees
     }()
+    private lazy var isCreditCardAccount: Bool? = {
+        guard let specialPricesOutput = self.operativeData.specialPricesOutput as? SendMoneyTransferTypeUseCaseOkOutput
+        else { return nil }
+        return specialPricesOutput.isCreditCardAccount
+    }()
+
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
@@ -48,9 +54,13 @@ final class SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol {
     func viewDidLoad() {
-        let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
-        self.view?.showTransferTypes(viewModel: viewModel)
-        self.trackerManager.trackScreen(screenId: self.trackerPage.page, extraParameters: ["transfer_country" : self.operativeData.type.trackerName])
+        if self.isCreditCardAccount == true {
+            let viewModel = self.mapToCreditCardViewModel()
+            self.view?.showCreditCardAccount(viewModel)
+        } else {
+            let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
+            self.view?.showTransferTypes(viewModel: viewModel)
+        }
     }
     
     func didSelectBack() {
@@ -91,6 +101,13 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
 }
 
 private extension SendMoneyTransferTypePresenter {
+    func mapToCreditCardViewModel() -> OneNonSelectableRadioButtonViewModel {
+        return OneNonSelectableRadioButtonViewModel(
+            titleKey: "pl_sendMoney_title_creditCardAccount",
+            descriptionKey: "pl_sendMoney_text_creditCardAccount"
+        )
+    }
+    
     func mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from transferTypes: [SendMoneyTransferTypeFee]) -> SendMoneyTransferTypeRadioButtonsContainerViewModel {
         let radioButtonViewModels = transferTypes.compactMap { self.mapToSendMoneyTransferTypeRadioButtonViewModel(from: $0) }
         return SendMoneyTransferTypeRadioButtonsContainerViewModel(selectedIndex: self.getSelectedIndex(),
@@ -100,7 +117,7 @@ private extension SendMoneyTransferTypePresenter {
     func mapToSendMoneyTransferTypeRadioButtonViewModel(from transferType: SendMoneyTransferTypeFee) -> SendMoneyTransferTypeRadioButtonViewModel? {
         guard let type = transferType.type as? PolandTransferType else { return nil }
         let oneRadioButtonViewModel = OneRadioButtonViewModel(status: .inactive,
-                                                              titleKey: localized(type.title ?? "") ?? "",
+                                                              titleKey: localized(type.title ?? ""),
                                                               subtitleKey: localized(type.subtitle ?? ""))
         let feeViewModel = SendMoneyTransferTypeFeeViewModel(amount: transferType.fee,
                                                              status: .inactive)

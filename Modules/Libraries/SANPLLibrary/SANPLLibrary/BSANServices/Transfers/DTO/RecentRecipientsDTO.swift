@@ -58,6 +58,7 @@ extension RecentRecipientsDataDTO: TransferRepresentable {
     var transferNumber: String? {
         nil
     }
+    var contractRepresentable: ContractRepresentable? { nil }
 }
 
 private extension RecentRecipientsDataDTO {
