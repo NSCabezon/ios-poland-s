@@ -10,11 +10,22 @@ import PLUI
 import Commons
 
 protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
+    func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
 }
 
 final class PhoneTopUpFormViewController: UIViewController {
+    // MARK: Properties
     
-    init() {
+    private let presenter: PhoneTopUpFormPresenterProtocol
+    private let mainStackView = UIStackView()
+    private let formView = PhoneTopUpFormView()
+    private let navigationBarSeparator = UIView()
+    private let bottomButtonView = BottomButtonView(style: .red)
+    
+    // MARK: Lifecycle
+    
+    init(presenter: PhoneTopUpFormPresenterProtocol) {
+        self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,14 +35,73 @@ final class PhoneTopUpFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .santanderRed
+        setUp()
+        presenter.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+    // MARK: Configuration
+    
+    private func setUp() {
+        prepareNavigationBar()
+        addSubviews()
+        setUpLayout()
+        prepareStyles()
+        formView.delegate = self
+    }
+    
+    private func prepareNavigationBar() {
+        NavigationBarBuilder(style: .white,
+                             title: .title(key: localized("pl_topup_title_topup")))
+            .setLeftAction(.back(action: #selector(goBack)))
+            .setRightActions(.close(action: #selector(closeProcess)))
+            .build(on: self, with: nil)
+    }
+    
+    private func addSubviews() {
+        view.addSubviewsConstraintToSafeAreaEdges(mainStackView)
+        mainStackView.addArrangedSubview(navigationBarSeparator)
+        mainStackView.addArrangedSubview(formView)
+        mainStackView.addArrangedSubview(bottomButtonView)
+    }
+    
+    private func setUpLayout() {
+        mainStackView.axis = .vertical
+        bottomButtonView.translatesAutoresizingMaskIntoConstraints = false
+        navigationBarSeparator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            navigationBarSeparator.heightAnchor.constraint(equalToConstant: 1.0),
+        ])
+    }
+    
+    private func prepareStyles() {
+        view.backgroundColor = .white
+        navigationBarSeparator.backgroundColor = .lightSanGray
+        bottomButtonView.configure(title: localized("generic_button_continue")) {
+            // TODO: Add ready botton action
+        }
+        bottomButtonView.disableButton()
+    }
+    
+    // MARK: Actions
+    
+    @objc private func goBack() {
+        presenter.didSelectBack()
+    }
+    
+    @objc private func closeProcess() {
+        presenter.didSelectClose()
     }
 }
 
 extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
+    func updateSelectedAccount(with accountModels: [SelectableAccountViewModel]) {
+        formView.updateSelectedAccount(with: accountModels)
+    }
+}
+
+extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
+    func topUpFormDidSelectChangeAccount() {
+        presenter.didSelectChangeAccount()
+    }
 }

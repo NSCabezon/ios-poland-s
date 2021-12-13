@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.source_files = 'PhoneTopUp/Features/**/*.{swift}'
 
   s.resource_bundles = {
-    'PhoneTopUp' => ['PhoneTopUp/Assets/**/*{xib,xcassets}']
+    'PhoneTopUp' => ['PhoneTopUp/Assets/*{xib,xcassets}']
   }
 
   s.dependency "UI"

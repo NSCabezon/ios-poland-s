@@ -171,7 +171,7 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             )
             coordinator.start()
         case .phoneTopUp:
-            let coordinator = PhoneTopUpCoordinator(
+            let coordinator = PhoneTopUpFormCoordinator(
                 dependenciesResolver: dependenciesEngine,
                 navigationController: navigationController
             )

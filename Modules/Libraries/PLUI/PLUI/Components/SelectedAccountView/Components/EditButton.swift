@@ -1,7 +1,6 @@
-
 import UI
 
-class EditButton: UIView {
+public final class EditButton: UIView {
     
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
@@ -17,7 +16,7 @@ class EditButton: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(image: UIImage?, name: String, action: @escaping () -> Void) {
+    public func configure(image: UIImage?, name: String, action: @escaping () -> Void) {
         imageView.image = image?.withRenderingMode(.alwaysTemplate)
         nameLabel.text = name
         buttonAction = action

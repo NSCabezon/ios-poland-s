@@ -1,7 +1,7 @@
-import PLCommons
+import PLUI
 
 public protocol SelectableAccountViewModelMapping {
-    func map(_ account: AccountForDebit, selectedAccountNumber: String) throws -> SelectableAccountViewModel
+    func map(_ account: AccountForDebit, selectedAccountNumber: String?) throws -> SelectableAccountViewModel
 }
 
 public final class SelectableAccountViewModelMapper: SelectableAccountViewModelMapping {
@@ -14,7 +14,7 @@ public final class SelectableAccountViewModelMapper: SelectableAccountViewModelM
         self.amountFormatter = amountFormatter
     }
     
-    public func map(_ account: AccountForDebit, selectedAccountNumber: String) throws -> SelectableAccountViewModel {
+    public func map(_ account: AccountForDebit, selectedAccountNumber: String?) throws -> SelectableAccountViewModel {
         amountFormatter.currencySymbol = account.availableFunds.currency
         let availableFundsText = amountFormatter.string(for: account.availableFunds.amount)
             ?? "\(account.availableFunds.amount) \(account.availableFunds.currency)"

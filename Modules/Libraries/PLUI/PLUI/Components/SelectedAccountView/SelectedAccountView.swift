@@ -1,10 +1,8 @@
 
 import UI
 import Commons
-import PLUI
-import PLCommons
 
-class SelectedAccountView: UIView {
+public final class SelectedAccountView: UIView {
     
     private let verticalStackView = UIStackView()
     private let horizontalStackView = UIStackView()
@@ -24,7 +22,7 @@ class SelectedAccountView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setViewModel(_ viewModel: [SelectableAccountViewModel]) {
+    public func setViewModel(_ viewModel: [SelectableAccountViewModel]) {
         var selectedAccount: SelectableAccountViewModel
         if viewModel.count == 1, let onlyViewModel = viewModel.first {
             selectedAccount = onlyViewModel
@@ -41,7 +39,7 @@ class SelectedAccountView: UIView {
         editButton.isHidden = viewModel.count == 1
     }
     
-    func setChangeAction(_ action: (() -> Void)?) {
+    public func setChangeAction(_ action: (() -> Void)?) {
         self.changeButtonAction = action
     }
     
