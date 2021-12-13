@@ -44,6 +44,20 @@ final class BLIKHomePresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
         self.contactsPermission = ContactPermissionAuthorizator()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterBackgroung), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    @objc private func handleEnterForeground() {
+        startInitialScenario()
+    }
+    
+    @objc private func handleEnterBackgroung() {
+        timer.stopTimer()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
