@@ -12,11 +12,12 @@ protocol CharityTransferFormViewProtocol: AnyObject,
 final class CharityTransferFormViewController: UIViewController {
     private let presenter: CharityTransferFormPresenterProtocol
     private let scrollView = UIScrollView()
-    private let formView = CharityTransferFormView()
+    private let formView: CharityTransferFormView
     private let bottomView = BottomButtonView(style: .red)
     
     init(presenter: CharityTransferFormPresenterProtocol) {
         self.presenter = presenter
+        self.formView = CharityTransferFormView(language: presenter.getLanguage())
         super.init(nibName: nil, bundle: nil)
     }
     

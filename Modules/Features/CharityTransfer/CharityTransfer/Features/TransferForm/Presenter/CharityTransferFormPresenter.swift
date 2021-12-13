@@ -4,6 +4,7 @@ import PLCommons
 
 protocol CharityTransferFormPresenterProtocol {
     var view: CharityTransferFormViewProtocol? { get set }
+    func getLanguage() -> String
     func didSelectClose()
     func didSelectCloseProcess()
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
@@ -82,6 +83,10 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
             date: Date()
         )
         coordinator.showConfirmation(with: model)
+    }
+    
+    func getLanguage() -> String {
+        dependenciesResolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode
     }
     
     func startValidation() {
