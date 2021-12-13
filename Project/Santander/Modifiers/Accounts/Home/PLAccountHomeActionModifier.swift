@@ -21,6 +21,8 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
             switch identifier {
             case PLAccountOtherOperativesIdentifier.savingGoals.rawValue:
                 showWebView(identifier: identifier, entity: entity)
+            case PLAccountOtherOperativesIdentifier.externalTransfer.rawValue:
+                Toast.show(localized("generic_alert_notAvailableOperation"))
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }

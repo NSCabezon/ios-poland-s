@@ -3,9 +3,17 @@ import CoreFoundationLib
 import Models
 import Commons
 import Account
+import SANPLLibrary
+import Repository
 
 final class GetPLAccountHomeActionUseCase: UseCase<GetAccountHomeActionUseCaseInput, GetAccountHomeActionUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
+
+    private let externalTransfer: AccountActionType = .custome(identifier:                                                  "externalAccountTransfer",
+                                                        accesibilityIdentifier: "externalAccountTransfer",
+                                                        trackName: "externalAccountTransfer",
+                                                        localizedKey: "accountOption_button_transfer",
+                                                        icon: "icnSendMoney")
     
     private let blik: AccountActionType = .custome(identifier: "blik",
                                                    accesibilityIdentifier: "blik",
@@ -25,7 +33,24 @@ final class GetPLAccountHomeActionUseCase: UseCase<GetAccountHomeActionUseCaseIn
     }
     
     override func executeUseCase(requestValues: GetAccountHomeActionUseCaseInput) throws -> UseCaseResponse<GetAccountHomeActionUseCaseOkOutput, StringErrorOutput> {
-        return .ok(GetAccountHomeActionUseCaseOkOutput(actions: [.transfer, self.blik, .accountDetail, self.savingsGoals]))
+        guard let entityCode = requestValues.account.entityCode else {
+            return .ok(GetAccountHomeActionUseCaseOkOutput(actions: [.transfer, self.blik, .accountDetail, self.savingsGoals]))
+        }
+        if isAccountFromSantander(entityCode) {
+            return .ok(GetAccountHomeActionUseCaseOkOutput(actions: [.transfer, self.blik, .accountDetail, self.savingsGoals]))
+        } else {
+//            return .ok(GetAccountHomeActionUseCaseOkOutput(actions: [.transfer, self.externalTransfer, self.blik, .accountDetail, self.savingsGoals]))
+            return .ok(GetAccountHomeActionUseCaseOkOutput(actions: [.transfer, self.blik, .accountDetail, self.savingsGoals]))
+        }
+    }
+}
+
+private extension GetPLAccountHomeActionUseCase {
+    func isAccountFromSantander(_ entityCode: String) -> Bool {
+        let accountDescriptorRepository: AccountDescriptorRepositoryProtocol = self.dependenciesResolver.resolve(for: AccountDescriptorRepositoryProtocol.self)
+        guard let accountGroupEntities = accountDescriptorRepository.getAccountDescriptor()?.accountGroupEntities else { return false }
+
+        return accountGroupEntities.contains(where: {$0.entityCode == entityCode})
     }
 }
 
