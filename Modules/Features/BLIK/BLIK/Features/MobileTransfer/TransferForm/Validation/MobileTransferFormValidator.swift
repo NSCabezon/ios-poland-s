@@ -2,7 +2,7 @@ import Foundation
 
 struct MobileTransferFormValidator {
     
-    func validateForm(form: MobileTransferForm, validateNumber: Bool) -> InvalidTransferFormMessages {
+    func validateForm(form: MobileTransferForm, validateNumber: Bool) -> InvalidMobileTransferFormMessages {
         var toShortNumberMessage: String?
         var tooLowAmount: String?
         var tooMuchAmount: String?
@@ -19,6 +19,6 @@ struct MobileTransferFormValidator {
         if let amount = form.amount, amount > 100000 {
             tooMuchAmount = "#Podana kwota jest większa od maksymalnej dopuszczalnej kwoty"
         }
-        return InvalidTransferFormMessages(tooShortPhoneNumberMessage: toShortNumberMessage, tooLowAmount: tooLowAmount, tooMuchAmount: tooMuchAmount)
+        return InvalidMobileTransferFormMessages(tooShortPhoneNumberMessage: toShortNumberMessage, tooLowAmount: tooLowAmount, tooMuchAmount: tooMuchAmount)
     }
 }

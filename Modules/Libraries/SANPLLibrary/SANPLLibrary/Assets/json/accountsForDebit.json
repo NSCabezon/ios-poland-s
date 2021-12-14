@@ -48,7 +48,7 @@
                 "currencyCode": "PLN",
                 "name": {
                     "source": "Rachunek bieżący",
-                    "description": "Rachunek bieżący",
+                    "description": "Santander One",
                     "userDefined": ""
                 },
                 "type": "AVISTA",
@@ -78,7 +78,7 @@
                 "id": "142238836",
                 "currencyCode": "PLN",
                 "name": {
-                    "source": "Konto systematyczne",
+                    "source": "Account 123",
                     "description": "Konto systematyczne",
                     "userDefined": ""
                 },
@@ -123,7 +123,7 @@
                 },
                 "lastUpdate": "2021-06-17",
                 "systemId": 3,
-                "defaultForPayments": true,
+                "defaultForPayments": false,
                 "role": "OWNER",
                 "accountDetails": {
                     "interestRateIndicator": "VALUE",

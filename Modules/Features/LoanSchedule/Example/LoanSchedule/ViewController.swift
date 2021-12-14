@@ -2,7 +2,7 @@ import UIKit
 import UI
 import LoanSchedule
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import Repository
 import SANPLLibrary
 import SANLegacyLibrary

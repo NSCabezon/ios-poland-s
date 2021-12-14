@@ -1,13 +1,14 @@
 import UI
 import Commons
 import PLCommons
+import PLUI
 
 class BLIKConfirmationProgressView: UIStackView, ProgressBarPresentable {
     let progressBar: ProgressBar = {
         let bar = ProgressBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
         bar.setProgresColor(.darkTorquoise)
-        bar.setProgressBackgroundColor(.clear)
+        bar.setProgressBackgroundColor(.white)
         bar.setProgressAlpha(1)
         return bar
     }()

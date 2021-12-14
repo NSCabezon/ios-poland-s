@@ -8,6 +8,7 @@
 import UI
 import Commons
 import PLUI
+import PLCommons
 
 protocol PhoneTransferSettingsView: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: PhoneTransferSettingsViewModel)
@@ -50,17 +51,19 @@ final class PhoneTransferSettingsViewController: UIViewController {
 
 extension PhoneTransferSettingsViewController: PhoneTransferSettingsView {
     func setViewModel(_ viewModel: PhoneTransferSettingsViewModel) {
-        icon.image = viewModel.icon
-        titleText.text = viewModel.title
-        userMessage.text = viewModel.userMessage
-        
-        switch viewModel {
-        case .unregisteredPhoneNumber:
-            configureUnregisteredPhoneNumberLayout()
-        case .registeredPhoneNumber:
-            configureRegisteredPhoneNumberLayout()
-        case .expiredPhoneNumber:
-            configureExpiredPhoneNumberLayout()
+        DispatchQueue.main.async {
+            self.icon.image = viewModel.icon
+            self.titleText.text = viewModel.title
+            self.userMessage.text = viewModel.userMessage
+            
+            switch viewModel {
+            case .unregisteredPhoneNumber:
+                self.configureUnregisteredPhoneNumberLayout()
+            case .registeredPhoneNumber:
+                self.configureRegisteredPhoneNumberLayout()
+            case .expiredPhoneNumber:
+                self.configureExpiredPhoneNumberLayout()
+            }
         }
     }
 }

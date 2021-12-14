@@ -8,6 +8,7 @@
 import UI
 import Commons
 import PLCommons
+import PLUI
 
 public protocol RemainingTimeDelegate: AnyObject {
     func didTimerEnd()

@@ -33,7 +33,7 @@ final class SendMoneyTransferTypeAmountHighView: UIView {
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var actionButton: FloatingButton!
+    @IBOutlet private weak var actionButton: OneFloatingButton!
     
     weak var delegate: SendMoneyTransferTypeAmountHighViewDelegate?
     private var view: UIView?
@@ -93,7 +93,7 @@ private extension SendMoneyTransferTypeAmountHighView {
         self.actionButton.isEnabled = true
         self.actionButton.configureWith(type: .primary,
                                         size: .medium(
-                                            FloatingButton.ButtonSize.MediumButtonConfig(
+                                            OneFloatingButton.ButtonSize.MediumButtonConfig(
                                                 title: localized(Constants.AcceptButton.titleKey),
                                                 icons: .none,
                                                 fullWidth: false

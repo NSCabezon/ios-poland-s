@@ -6,7 +6,7 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import SelfSignedCertificate
 
 public final class PLGetSecIdentityUseCase<Error>: UseCase<PLGetSecIdentityUseCaseInput, PLGetSecIdentityUseCaseOkOutput, PLUseCaseErrorOutput<Error>> {

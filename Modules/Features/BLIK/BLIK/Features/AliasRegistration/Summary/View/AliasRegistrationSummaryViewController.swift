@@ -1,6 +1,7 @@
 import Operative
 import UI
 import Commons
+import PLCommons
 
 final class AliasRegistrationSummaryViewController: OperativeSummaryViewController {
     private let presenter: AliasRegistrationSummaryPresenterProtocol

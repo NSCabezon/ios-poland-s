@@ -47,6 +47,10 @@ final class SendMoneyTransferTypeRadioButtonsContainerView: UIView {
         self.selectedIndex = viewModel.selectedIndex
         self.didSelectTransferType(at: self.selectedIndex)
     }
+    
+    func setViewModel(_ viewModel: OneNonSelectableRadioButtonViewModel) {
+        self.setNonSelectableView(viewModel)
+    }
 }
 
 private extension SendMoneyTransferTypeRadioButtonsContainerView {
@@ -73,6 +77,14 @@ private extension SendMoneyTransferTypeRadioButtonsContainerView {
             self.addRadioButton(viewModel, index: index)
             self.addSeparatorView()
         }
+    }
+    
+    func setNonSelectableView(_ viewModel: OneNonSelectableRadioButtonViewModel) {
+        self.addSeparatorView()
+        self.stackView.addArrangedSubview(
+            OneNonSelectableRadioButtonView(model: viewModel)
+        )
+        self.addSeparatorView()
     }
     
     func addRadioButton(_ viewModel: SendMoneyTransferTypeRadioButtonViewModel, index: Int) {

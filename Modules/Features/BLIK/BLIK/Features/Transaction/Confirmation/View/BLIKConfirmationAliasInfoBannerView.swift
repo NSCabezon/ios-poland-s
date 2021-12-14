@@ -26,6 +26,7 @@ private extension BLIKConfirmationAliasInfoBannerView {
     func setUp() {
         configureSubviews()
         configureStyling()
+        configureStaticTexts()
     }
     
     func configureSubviews() {
@@ -43,11 +44,12 @@ private extension BLIKConfirmationAliasInfoBannerView {
             infoLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
             infoLabel.leadingAnchor.constraint(equalTo: infoIcon.trailingAnchor, constant: 12),
             infoLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            infoLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -48)
+            infoLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32)
         ])
     }
     
     func configureStyling() {
+        backgroundColor = .white
         infoIcon.image = Images.info_yellow
         
         infoLabel.textColor = .lisboaGray
@@ -65,5 +67,9 @@ private extension BLIKConfirmationAliasInfoBannerView {
             radius: 3,
             height: 1
         )
+    }
+    
+    func configureStaticTexts() {
+        infoLabel.text = "#Płatność została zrealizowana bez konieczności podawania kodu BLIK, ponieważ była zrealizowana za pomocą Zakupów bez kodu."
     }
 }

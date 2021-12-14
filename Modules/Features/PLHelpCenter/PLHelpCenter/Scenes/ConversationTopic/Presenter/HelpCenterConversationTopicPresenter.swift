@@ -1,6 +1,6 @@
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import UI
 
 protocol HelpCenterConversationTopicPresenterProtocol: MenuTextWrapperProtocol {

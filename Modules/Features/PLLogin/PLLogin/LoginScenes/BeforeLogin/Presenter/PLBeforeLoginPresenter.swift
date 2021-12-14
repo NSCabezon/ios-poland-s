@@ -19,6 +19,7 @@ protocol PLBeforeLoginPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLBeforeLoginViewControllerProtocol? { get set }
     func viewDidLoad()
     func viewDidAppear()
+    func viewWillDisappear()
     func openAppStore()
 }
 
@@ -115,6 +116,9 @@ private extension PLBeforeLoginPresenter {
 }
 
 extension PLBeforeLoginPresenter: PLBeforeLoginPresenterProtocol {
+    func viewWillDisappear() {
+        self.publicFilesManager.remove(subscriptor: PLBeforeLoginPresenter.self)
+    }
     
     func viewDidAppear() {
         guard isDeprecatedVersion else { return }

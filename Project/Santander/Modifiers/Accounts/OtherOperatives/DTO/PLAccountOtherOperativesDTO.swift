@@ -12,4 +12,5 @@ struct PLAccountOtherOperativesDTO: Codable {
     let url: String?
     let method: String?
     let isAvailable: Bool?
+    var isFullScreen: Bool = true
 }

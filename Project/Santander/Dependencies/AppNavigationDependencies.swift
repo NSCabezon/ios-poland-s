@@ -20,8 +20,8 @@ final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private lazy var sendMoneyCoordinator =
-        SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
-                             drawer: self.drawer)
+    SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
+                         drawer: self.drawer)
     private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: (self.drawer.currentRootViewController as? UINavigationController)!)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
     private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
@@ -31,7 +31,7 @@ final class AppNavigationDependencies {
         self.dependenciesEngine = dependenciesEngine
         self.appSideMenuNavigationDependencies = AppSideMenuNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine)
     }
-
+    
     func registerDependencies() {
         dependenciesEngine.register(for: LoginModuleCoordinatorProtocol.self) { resolver in
             return PLLoginModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
@@ -74,6 +74,10 @@ final class AppNavigationDependencies {
         }
         self.dependenciesEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self.authorizationCoordinator
+        }
+        
+        dependenciesEngine.register(for: PLWebViewCoordinatorDelegate.self) { [unowned self] resolver in
+            return PLWebViewCoordinatorNavigator(dependenciesResolver: resolver, drawer: self.drawer)
         }
         
         appSideMenuNavigationDependencies.registerDependencies()

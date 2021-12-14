@@ -15,6 +15,7 @@ struct BlikError {
         case pw_to_big_amount = 43
         case pw_account_blacklist = 99
         case pw_expr_recipient_inactive = 170
+        case authCodeRequired = 702
         case trnLimitExceeded = 709
         case cycleLimitExceeded = 710
         case errPosting = 711

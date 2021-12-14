@@ -5,7 +5,7 @@
 //  Created by Ernesto Fernandez Calles on 10/5/21.
 //
 
-import DataRepository
+import CoreFoundationLib
 import SANLegacyLibrary
 
 public enum BSANDatabaseKey : String {

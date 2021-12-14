@@ -60,7 +60,8 @@ extension PLVoiceBotViewController: PLVoiceBotViewProtocol {
     func showIVCCallSendedDialog(code: String) {
             
         // TODO: remove this in the future also remove code parameter
-        self.codeTextField.setText("\(Int(code) ?? 1111)")
+        let codeTest = Int(code) != nil ? code : "0111"
+        self.codeTextField.setText(codeTest)
         self.continueButton.backgroundColor = .santanderRed
         self.continueButton.isEnabled = true
         // -------
@@ -181,8 +182,8 @@ private extension PLVoiceBotViewController {
     }
     
     @objc func continueButtonDidPressed() {
-        guard let textCode = self.codeTextField.text, let code = Int(textCode) else { return }
-        presenter.setIvrOutputcode(code: code)
+        guard let textCode = self.codeTextField.text else { return }
+        presenter.setIvrOutputcode(code: textCode)
         presenter.getDevices()
     }
 

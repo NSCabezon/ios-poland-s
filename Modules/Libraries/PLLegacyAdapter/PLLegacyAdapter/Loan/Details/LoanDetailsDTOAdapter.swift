@@ -21,7 +21,8 @@ final class LoanDetailsDTOAdapter {
             let currentInterestAmountSt = "\(currentInterestAmount)" + " " + (plLoanDetails.loanAccountDetails?.grantedCreditLimit?.currencyCode ?? "")
             loanDetailDTO.currentInterestAmount = currentInterestAmountSt.replacingOccurrences(of: ".", with: ",", options: .literal, range: nil)
         }
-
+        
+        loanDetailDTO.lastOperationDate = DateFormats.toDate(string: plLoanDetails.lastUpdate ?? "", output: .YYYYMMDD)
         return loanDetailDTO
     }
 }

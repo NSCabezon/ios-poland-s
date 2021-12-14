@@ -9,6 +9,7 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 
 protocol OtherBlikSettingsViewProtocol: LoaderPresentable, ErrorPresentable, SnackbarPresentable, DialogViewPresentationCapable {
     func setViewModel(viewModel: OtherBlikSettingsViewModel)
@@ -105,7 +106,7 @@ private extension OtherBlikSettingsViewController {
             guard let strongSelf = self else { return }
             
             strongSelf.presenter.didPressSave(
-                viewModel: OtherBlikSettingsViewModel(
+                with: OtherBlikSettingsViewModel(
                     blikCustomerLabel: strongSelf.contentView.blikCustomerLabel,
                     isTransactionVisible: strongSelf.contentView.isTransactionVisible
                 )
@@ -115,7 +116,7 @@ private extension OtherBlikSettingsViewController {
     
     @objc func close() {
         presenter.didPressClose(
-            viewModel: OtherBlikSettingsViewModel(
+            with: OtherBlikSettingsViewModel(
                 blikCustomerLabel: contentView.blikCustomerLabel,
                 isTransactionVisible: contentView.isTransactionVisible
             )
@@ -126,7 +127,7 @@ private extension OtherBlikSettingsViewController {
 extension OtherBlikSettingsViewController: OtherBlikSettingsViewDelegate {
     func didUpdateBlikLabel() {
         presenter.didUpdateForm(
-            viewModel: OtherBlikSettingsViewModel(
+            with: OtherBlikSettingsViewModel(
                 blikCustomerLabel: contentView.blikCustomerLabel,
                 isTransactionVisible: contentView.isTransactionVisible
             )
@@ -135,7 +136,7 @@ extension OtherBlikSettingsViewController: OtherBlikSettingsViewDelegate {
     
     func didUpdateVisibility() {
         presenter.didUpdateForm(
-            viewModel: OtherBlikSettingsViewModel(
+            with: OtherBlikSettingsViewModel(
                 blikCustomerLabel: contentView.blikCustomerLabel,
                 isTransactionVisible: contentView.isTransactionVisible
             )

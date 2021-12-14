@@ -4,7 +4,7 @@
 //
 //  Created by José María Jiménez Pérez on 23/9/21.
 //
-import DomainCommon
+import CoreFoundationLib
 import TransferOperatives
 import Models
 import Repository

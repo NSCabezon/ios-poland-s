@@ -6,7 +6,7 @@
 //
 
 import SANLegacyLibrary
-import DomainCommon
+import CoreFoundationLib
 import Models
 import Commons
 import Account

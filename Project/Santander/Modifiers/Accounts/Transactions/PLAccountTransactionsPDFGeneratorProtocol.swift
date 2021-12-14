@@ -5,7 +5,7 @@
 //  Created by Ernesto Fernandez Calles on 9/9/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Models
 import Commons
 import Account

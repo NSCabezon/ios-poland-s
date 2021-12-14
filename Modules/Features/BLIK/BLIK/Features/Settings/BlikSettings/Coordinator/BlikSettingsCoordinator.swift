@@ -13,12 +13,11 @@ import SANPLLibrary
 protocol BlikSettingsCoordinatorProtocol: ModuleCoordinator {
     func showAliasPaymentSettings()
     func showPhoneTransferSettings()
-    func showTransferLimitsSettings()
+    func showTransferLimitsSettings(with params: WalletParams)
     func showOtherSettings()
-    func close()
+    func back()
     func closeToGlobalPosition()
-    func showLimitUpdateSuccessAndClose()
-    func goBackToGlobalPosition()
+    func showLimitUpdateSuccess()
 }
 
 final class BlikSettingsCoordinator: ModuleCoordinator {
@@ -38,10 +37,12 @@ final class BlikSettingsCoordinator: ModuleCoordinator {
     }
     
     public func start() {
+        var presenter = dependenciesEngine.resolve(for: BlikSettingsPresenterProtocol.self)
         let controller = BlikSettingsViewController(
-            coordinator: self,
+            presenter: presenter,
             viewModels: BlikSettingsViewModel.allCases
         )
+        presenter.view = controller
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -64,10 +65,11 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
         coordinator.start()
     }
     
-    func showTransferLimitsSettings() {
+    func showTransferLimitsSettings(with params: WalletParams) {
         let presenter = TransactionLimitPresenter(
             dependenciesResolver: dependenciesEngine,
             wallet: wallet,
+            walletParams: params,
             viewModelMapper: TransactionLimitViewModelMapper(
                 amountFormatterWithCurrency: .PLAmountNumberFormatter,
                 amountFormatterWithoutCurrency: .PLAmountNumberFormatterWithoutCurrency
@@ -91,7 +93,7 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
         coordinator.start()
     }
     
-    func close() {
+    func back() {
         navigationController?.popViewController(animated: true)
     }
     
@@ -105,17 +107,12 @@ extension BlikSettingsCoordinator: BlikSettingsCoordinatorProtocol {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func showLimitUpdateSuccessAndClose() {
+    func showLimitUpdateSuccess() {
         TopAlertController.setup(TopAlertView.self).showAlert(
             localized("pl_blik_text_limitChangedSuccess"),
             alertType: .info,
             position: .top
         )
-        close()
-    }
-    
-    func goBackToGlobalPosition() {
-        navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -123,6 +120,18 @@ private extension BlikSettingsCoordinator {
     func setUpDependencies() {
         dependenciesEngine.register(for: GetWalletsActiveProtocol.self) { resolver in
             return GetWalletsActiveUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: BlikSettingsCoordinatorProtocol.self) { _ in
+            return self
+        }
+        
+        dependenciesEngine.register(for: LoadWalletParamsUseCaseProtocol.self) { resolver in
+            return LoadWalletParamsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: BlikSettingsPresenterProtocol.self) { resolver in
+            return BlikSettingsPresenter(dependenciesResolver: resolver)
         }
     }
 }

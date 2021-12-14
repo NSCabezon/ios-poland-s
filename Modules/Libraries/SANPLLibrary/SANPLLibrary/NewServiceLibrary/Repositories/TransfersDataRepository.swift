@@ -77,7 +77,7 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
-        return .failure(ServiceError.unknown)
+        return .success(.NATIONAL_SEPA)
     }
     
     func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput) throws -> Result<ValidateAccountTransferRepresentable, Error> {
@@ -124,6 +124,10 @@ struct TransfersDataRepository: PLTransfersRepository {
         case .failure(let error):
             return .failure(error)
         }
+    }
+
+    func getTransferDetail(transfer: TransferRepresentable) throws -> Result<TransferRepresentable, Error> {
+        return .success(transfer)
     }
     
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {

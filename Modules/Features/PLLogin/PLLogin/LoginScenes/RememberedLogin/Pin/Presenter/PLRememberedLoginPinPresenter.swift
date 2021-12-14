@@ -24,6 +24,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func didSelectBalance()
     func didSelectBlik()
     func didSelectMenu()
+    func didSelectChangeUser()
     func setAllowLoginBlockedUsers()
     func startBiometricAuth()
     func trackView()
@@ -62,6 +63,10 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
     private var getPLCurrentEnvironmentUseCase: GetPLCurrentEnvironmentUseCase {
         self.dependenciesResolver.resolve(for: GetPLCurrentEnvironmentUseCase.self)
     }
+  
+    private var rememberedLoginChangeUserUseCase: PLRememberedLoginChangeUserUseCase {
+        self.dependenciesResolver.resolve(for: PLRememberedLoginChangeUserUseCase.self)
+    }
     
     private var publicFilesEnvironment: PublicFilesEnvironmentEntity?
     
@@ -82,6 +87,17 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
 }
 
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
+    
+    func didSelectChangeUser() {
+        Scenario(useCase: self.rememberedLoginChangeUserUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { [weak self] _ in
+                self?.coordinator.loadUnrememberedLogin()
+            }.onError { [weak self] error in
+                self?.handleError(error)
+            }
+    }
+    
     func didSelectChooseEnvironment() {
         self.coordinatorDelegate.goToEnvironmentsSelector { [weak self] in
             self?.chooseEnvironment()
@@ -258,8 +274,10 @@ private extension PLRememberedLoginPinPresenter {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             switch laError.code {
-            case .userFallback, .authenticationFailed:
-                self?.view?.tryPinAuth(withError: laError.code == .authenticationFailed)
+            case .userFallback:
+                self?.view?.tryPinAuth(withError: false)
+            case .authenticationFailed, .biometryLockout, .passcodeNotSet:
+                self?.view?.tryPinAuth(withError: true)
             case .userCancel:
                 break
             default:

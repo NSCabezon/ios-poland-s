@@ -7,7 +7,7 @@
 
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 final class PLRememberedLoginPendingChallengeUseCase: UseCase<PLRememberedLoginPendingChallengeUseCaseInput, PLRememberedLoginPendingChallenge, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

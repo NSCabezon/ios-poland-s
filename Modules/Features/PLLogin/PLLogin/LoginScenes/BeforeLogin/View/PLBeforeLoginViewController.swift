@@ -54,6 +54,11 @@ final class PLBeforeLoginViewController: UIViewController {
         super.viewDidAppear(animated)
         presenter.viewDidAppear()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presenter.viewWillDisappear()
+    }
 }
 
 private extension PLBeforeLoginViewController {

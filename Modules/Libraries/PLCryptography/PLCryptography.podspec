@@ -27,10 +27,9 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
      'PLCryptography' => ['PLCryptography/**/*{xib,xcassets}']
   }
-  s.dependency 'DataRepository'
   s.dependency 'SANLegacyLibrary'
   s.dependency 'SANPLLibrary'
   s.dependency 'SelfSignedCertificate'
   s.dependency 'Commons'
-  s.dependency 'DomainCommon'
+  s.dependency 'CoreFoundationLib'
 end

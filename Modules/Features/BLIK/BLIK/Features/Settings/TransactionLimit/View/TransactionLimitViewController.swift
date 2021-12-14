@@ -2,6 +2,7 @@ import UIKit
 import UI
 import PLUI
 import Commons
+import PLCommons
 
 protocol TransactionLimitViewProtocol: LoaderPresentable, ErrorPresentable, SnackbarPresentable, DialogViewPresentationCapable {
     func setViewModel(viewModel: TransactionLimitViewModel)
@@ -35,7 +36,6 @@ final class TransactionLimitViewController: UIViewController, TransactionLimitVi
         DispatchQueue.main.async { [weak self] in
             self?.contentView.set(viewModel: viewModel)
         }
-
     }
     
     func setIsSaveButtonEnabled(_ isEnabled: Bool) {

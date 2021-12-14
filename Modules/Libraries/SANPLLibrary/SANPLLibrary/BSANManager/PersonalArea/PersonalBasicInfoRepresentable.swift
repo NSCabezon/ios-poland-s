@@ -10,6 +10,7 @@ import SANLegacyLibrary
  public protocol PersonalBasicInfoRepresentable: Codable {
      var mainAddress: String? { get }
      var addressNodes: [String]? { get }
+     var correspondenceAddressNodes: [String]? { get }
      var documentType: DocumentType? { get }
      var documentNumber: String? { get }
      var birthdayDate: Date? { get }

@@ -2,7 +2,7 @@
 //  PLUnrememberedLoginIdPresenter.swift
 //  PLLogin
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import PLCommons
 import Models

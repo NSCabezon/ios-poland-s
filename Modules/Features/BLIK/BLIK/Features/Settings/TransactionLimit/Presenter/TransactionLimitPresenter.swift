@@ -1,5 +1,5 @@
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLCommons
 import PLUI
 
@@ -19,6 +19,7 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let viewModelMapper: TransactionLimitViewModelMapping
     private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
+    private let walletParams: WalletParams
     private var useCaseHandler: UseCaseHandler {
         return dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
@@ -30,6 +31,7 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
     init(
         dependenciesResolver: DependenciesResolver,
         wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>,
+        walletParams: WalletParams,
         viewModelMapper: TransactionLimitViewModelMapping,
         setTransactionsLimitUseCase: SetTransactionsLimitUseCaseProtocol,
         validator: TransactionsLimitValidation,
@@ -37,13 +39,17 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
         confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     ) {
         self.dependenciesResolver = dependenciesResolver
-        self.initialViewModel = viewModelMapper.map(wallet.getValue())
+        self.initialViewModel = viewModelMapper.map(
+            wallet: wallet.getValue(),
+            params: walletParams
+        )
         self.setTransactionsLimitUseCase = setTransactionsLimitUseCase
         self.validator = validator
         self.coordinator = coordinator
         self.confirmationDialogFactory = confirmationDialogFactory
         self.viewModelMapper = viewModelMapper
         self.wallet = wallet
+        self.walletParams = walletParams
     }
     
     func viewDidLoad() {
@@ -83,13 +89,13 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
         
         guard !didChangeWithdrawLimit && !didChangePurchaseLimit else {
             confirmationDialogFactory.createEndProcessDialog {[weak self] in
-                self?.coordinator.close()
+                self?.coordinator.back()
             } declineAction: {
             }.showIn(view)
             return
         }
         
-        coordinator.close()
+        coordinator.back()
     }
     
     func didUpdateForm(viewModel: TransactionLimitViewModel) {
@@ -185,7 +191,7 @@ private extension TransactionLimitPresenter {
             .onError { [weak self] _ in
                 self?.view?.hideLoader(completion: {
                     self?.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
-                        self?.coordinator.goBackToGlobalPosition()
+                        self?.coordinator.closeToGlobalPosition()
                     })
                 })
             }
@@ -195,10 +201,15 @@ private extension TransactionLimitPresenter {
         switch response.serviceStatus {
         case let .available(fetchedWallet):
             self.wallet.setValue(fetchedWallet)
-            coordinator.showLimitUpdateSuccessAndClose()
+            coordinator.showLimitUpdateSuccess()
+            let newViewModel = viewModelMapper.map(
+                wallet: fetchedWallet,
+                params: self.walletParams
+            )
+            view?.setViewModel(viewModel: newViewModel)
         case .unavailable:
             view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
-                self?.coordinator.goBackToGlobalPosition()
+                self?.coordinator.closeToGlobalPosition()
             })
         }
     }

@@ -1,6 +1,5 @@
 import UI
 import Commons
-import PLCommons
 import Models
 
 public class SummaryTotalAmountView: UIView {

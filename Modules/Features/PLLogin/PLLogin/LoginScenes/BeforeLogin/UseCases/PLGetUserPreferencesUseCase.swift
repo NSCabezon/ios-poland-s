@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import DomainCommon
-import iOSCommonPublicFiles
+import CoreFoundationLib
+import CoreFoundationLib
 import Models
 import Commons
 import PLCommons

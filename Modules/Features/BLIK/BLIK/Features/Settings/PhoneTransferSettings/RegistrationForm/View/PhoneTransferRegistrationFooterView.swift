@@ -47,7 +47,7 @@ private extension PhoneTransferRegistrationFooterView {
             registerButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             registerButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             registerButton.heightAnchor.constraint(equalToConstant: 48),
-            registerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -46)
+            registerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
         ])
     }
 }

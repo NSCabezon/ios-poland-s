@@ -1,6 +1,6 @@
 import Commons
 import PLUI
-import DomainCommon
+import CoreFoundationLib
 
 protocol MobileTransferConfirmationPresenterProtocol {
     var view: MobileTransferConfirmationViewControllerProtocol? { get set }

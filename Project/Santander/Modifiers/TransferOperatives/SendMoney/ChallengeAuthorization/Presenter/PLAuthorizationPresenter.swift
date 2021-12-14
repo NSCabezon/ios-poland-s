@@ -11,7 +11,7 @@ import LocalAuthentication
 import PLCommons
 import SecurityExtensions
 import CoreDomain
-import DomainCommon
+import CoreFoundationLib
 
 protocol PLAuthorizationPresenterProtocol: AnyObject {
     var view: PLAuthorizationView? { get set }

@@ -16,7 +16,7 @@ protocol PLVoiceBotPresenterProtocol: MenuTextWrapperProtocol {
     func viewDidLoad()
     func getDevices()
     func closeButtonDidPressed()
-    func setIvrOutputcode(code: Int)
+    func setIvrOutputcode(code: String)
     func requestIVRCall()
     func goBack()
 }
@@ -49,7 +49,7 @@ private extension PLVoiceBotPresenter {
 
 extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
     
-    func setIvrOutputcode(code: Int) {
+    func setIvrOutputcode(code: String) {
         self.deviceConfiguration.ivrOutputCode = code
     }
     

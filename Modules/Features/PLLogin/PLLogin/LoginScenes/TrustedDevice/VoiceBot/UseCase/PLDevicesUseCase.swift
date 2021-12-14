@@ -7,7 +7,7 @@
 
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 final class PLDevicesUseCase: UseCase<Void, PLDevicesUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

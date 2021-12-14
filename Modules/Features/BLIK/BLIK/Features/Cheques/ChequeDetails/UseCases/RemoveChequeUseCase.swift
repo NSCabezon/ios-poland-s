@@ -7,7 +7,7 @@
 
 import Commons
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol RemoveChequeUseCaseProtocol: UseCase<RemoveChequeUseCaseInput, Void, StringErrorOutput> {}

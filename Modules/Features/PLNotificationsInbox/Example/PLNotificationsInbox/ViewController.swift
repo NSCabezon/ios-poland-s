@@ -2,7 +2,7 @@ import UIKit
 import UI
 import PLNotificationsInbox
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 class ViewController: UIViewController {
     

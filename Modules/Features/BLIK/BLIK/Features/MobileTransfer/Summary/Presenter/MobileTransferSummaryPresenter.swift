@@ -1,7 +1,7 @@
 import Models
 import Commons
 import Operative
-import DomainCommon
+import CoreFoundationLib
 
 protocol MobileTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToGlobalPosition()
@@ -63,7 +63,7 @@ private extension MobileTransferSummaryPresenter {
         let bodyItems: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(title: localized("summary_item_amount"),
                   subTitle: AmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32),
-                  info: localized("pl_blik_label_transferTypeSumm")),
+                  info: summary.title),
             .init(title: localized("pl_blik_label_accountTransfter"),
                   subTitle: summary.accountName,
                   info: summary.accountNumber),

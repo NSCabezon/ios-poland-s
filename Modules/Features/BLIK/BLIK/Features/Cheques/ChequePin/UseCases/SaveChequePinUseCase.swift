@@ -1,6 +1,6 @@
 import Commons
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol SaveChequePinUseCaseProtocol: UseCase<SaveChequePinUseCaseInput, Void, StringErrorOutput> {}

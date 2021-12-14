@@ -18,8 +18,8 @@ public final class AccountTransactionDetailDTOAdapter {
         if let recipientAccountNumberConcept = accountTransaction.recipientAccountNumber, !recipientAccountNumberConcept.isBlank {
             literals.append(LiteralDTO(concept: IBANFormatter.format(iban: recipientAccountNumberConcept), literal: localized("transaction_label_recipientAccount")))
         }
-        if let state = accountTransaction.status, !state.isBlank {
-            literals.append(LiteralDTO(concept: state, literal: localized("transaction_label_statusDetail")))
+        if let state = accountTransaction.status, let stateValue = self.getValueForState(state) {
+            literals.append(LiteralDTO(concept: stateValue, literal: localized("transaction_label_statusDetail")))
         }
         if let senderDataConcept = accountTransaction.senderData, !senderDataConcept.isBlank {
             literals.append(LiteralDTO(concept: senderDataConcept, literal: localized("transaction_label_senderData")))
@@ -30,4 +30,30 @@ public final class AccountTransactionDetailDTOAdapter {
         accountTransactionDetailDTO.literalDTOs = literals
         return accountTransactionDetailDTO
     }
+
+    private static func getValueForState(_ state: String) -> String? {
+        let accountTransactionState = AccountTransactionState(rawValue: state.uppercased())
+        switch accountTransactionState {
+        case .cardAuthorisation:
+            return localized("pl_transaction_label_transStatCardAuth")
+        case .executed:
+            return localized("pl_transaction_label_transStatExecuted")
+        case .processingToBeSent:
+            return localized("pl_transaction_label_transStatToBeSent")
+        case .processingSent:
+            return localized("pl_transaction_label_transStatSent")
+        case .rejected:
+            return localized("pl_transaction_label_transStatRejected")
+        default:
+            return nil
+        }
+    }
+}
+
+private enum AccountTransactionState: String {
+    case cardAuthorisation = "CARD_AUTHORISATION"
+    case executed = "EXECUTED"
+    case processingToBeSent = "PROCESSING_TO_BE_SENT"
+    case processingSent = "PROCESSING_SENT"
+    case rejected = "REJECTED"
 }

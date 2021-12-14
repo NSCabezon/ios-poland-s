@@ -10,7 +10,7 @@ import XCTest
 import Models
 import Commons
 import Operative
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
 @testable import CreditCardRepayment

@@ -5,7 +5,7 @@
 
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 final class PLTrustedDeviceSecondFactorChallengeUseCase: UseCase<PLTrustedDeviceSecondFactorChallengeInput, PLTrustedDeviceSecondFactorChallengeOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
@@ -57,7 +57,7 @@ extension PLTrustedDeviceSecondFactorChallengeUseCase {
         challenge = challenge + getChallengeFor(tokenId: trustedDeviceId,
                                                 tokenTimeStamp: deviceTime,
                                                 id: input.userId)
-        challenge = String(format: "%@|%d", challenge, ivrCode)
+        challenge = String(format: "%@|%@", challenge, ivrCode)
         return hashChallenge(challenge)
     }
 

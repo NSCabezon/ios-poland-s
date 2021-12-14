@@ -9,6 +9,7 @@ import UI
 import Commons
 import PLCommons
 import Models
+import PLUI
 
 public protocol InputBiometricsDelegate: AnyObject {
     func didTapBiometry()

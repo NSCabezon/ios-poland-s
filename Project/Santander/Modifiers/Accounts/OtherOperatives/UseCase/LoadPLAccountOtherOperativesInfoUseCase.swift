@@ -5,7 +5,7 @@
 //  Created by Julio Nieto Santiago on 7/10/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import RetailLegacy
 import Repository

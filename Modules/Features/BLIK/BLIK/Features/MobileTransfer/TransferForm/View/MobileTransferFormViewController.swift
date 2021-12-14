@@ -3,13 +3,14 @@ import PLUI
 import Commons
 import Foundation
 import SANLegacyLibrary
+import PLCommons
 
 protocol MobileTransferFormViewControllerProtocol: AnyObject,
                                                    ErrorPresentable,
                                                    LoaderPresentable,
                                                    ConfirmationDialogPresentable {
     func setAccountViewModel()
-    func showValidationMessages(messages: InvalidTransferFormMessages)
+    func showValidationMessages(messages: InvalidMobileTransferFormMessages)
     func fillWithContact(contact: Contact?)
 }
 
@@ -139,18 +140,19 @@ private extension MobileTransferFormViewController {
 
 extension MobileTransferFormViewController: MobileTransferFormViewControllerProtocol {
     func setAccountViewModel() {
-        guard let viewModel = presenter.getSelectedAccountViewModel() else { return }
-        
+        guard let account = presenter.getSelectedAccount() else { return }
+        let availableFundsText = NumberFormatter.PLAmountNumberFormatter.string(for: account.availableFunds.amount)
+            ?? "\(account.availableFunds.amount) \(account.availableFunds.currency)"
         let accountViewModel = PhoneTransferRegistrationFormViewModel.AccountViewModel(
             title: localized("pl_blik_label_accountTransfter"),
-            accountName: viewModel.name,
-            availableFunds: viewModel.availableFunds,
-            accountNumber: viewModel.accountNumber
+            accountName: account.name,
+            availableFunds: availableFundsText,
+            accountNumber: account.number
         )
         headerContent.configure(with: accountViewModel)
     }
     
-    func showValidationMessages(messages: InvalidTransferFormMessages) {
+    func showValidationMessages(messages: InvalidMobileTransferFormMessages) {
         let currentForm = formView.getCurrentForm()
         formView.showInvalidFormMessages(messages)
         if messages.shouldContinueButtonBeEnabled,

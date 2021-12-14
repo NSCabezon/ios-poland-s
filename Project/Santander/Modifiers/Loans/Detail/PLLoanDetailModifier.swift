@@ -89,6 +89,10 @@ extension PLLoanDetailModifier: LoanDetailModifierProtocol {
         return false
     }
     
+    var isEnabledLastOperationDate: Bool {
+        return true
+    }
+    
     var isEnabledNextInstallmentDate: Bool {
         return true
     }

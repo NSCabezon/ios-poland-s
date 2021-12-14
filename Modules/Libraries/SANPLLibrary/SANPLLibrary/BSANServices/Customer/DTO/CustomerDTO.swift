@@ -57,7 +57,7 @@ extension CustomerDTO: PersonalBasicInfoRepresentable {
          address?.voivodship ?? ""]
     }
     
-    public var correspondenceAddressNodes: [String] {
+    public var correspondenceAddressNodes: [String]? {
         [
             correspondenceAddress?.name ?? "",
             correspondenceAddress?.city ?? "",

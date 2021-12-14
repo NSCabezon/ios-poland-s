@@ -7,7 +7,7 @@
 
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol AccountChooseListPresenterProtocol: MenuTextWrapperProtocol {
     var view: AccountChooseListViewProtocol? { get set }

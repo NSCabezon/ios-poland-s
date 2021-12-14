@@ -8,7 +8,6 @@ def core_dependencies
   # Common
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
   pod 'Repository', :path => '../santander-one/Repository'
-  pod 'DataRepository', :path => '../santander-one/Modules/Libraries/DataRepository'
   pod 'Operative', :path => '../santander-one/Operative'
   pod 'WebViews', :path => '../santander-one/Modules/Libraries/WebViews'
   pod 'CommonUseCase', :path => '../santander-one/CommonUseCase'
@@ -16,20 +15,17 @@ def core_dependencies
   pod 'Models', :path => '../santander-one/Models'
   pod 'Commons', :path => '../santander-one/Commons'
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
-  pod 'DomainCommon', :path => '../santander-one/Modules/Libraries/DomainCommon'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
-  
-  # Microsite configuration
-  pod 'iOSPublicFiles', :path => '../santander-one/Modules/Libraries/iOSPublicFiles'
-  pod 'iOSCommonPublicFiles', :path => '../santander-one/Modules/Libraries/iOSCommonPublicFiles'
+  pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
-  pod 'iOSPullOffers', :path => '../santander-one/Modules/Libraries/iOSPullOffers'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'PFM', :path => '../santander-one/Modules/Libraries/PFM'
   pod 'Loans', :path => '../santander-one/Loans'
   pod 'Account', :path => '../santander-one/Accounts'
@@ -69,12 +65,15 @@ end
 def pl_features
   pod 'PLLogin', :path => '../Modules/Features/PLLogin'
   pod 'BLIK', :path => '../Modules/Features/BLIK'
+  pod 'TaxTransfer', :path => '../Modules/Features/TaxTransfer'
   pod 'CreditCardRepayment', :path => '../Modules/Features/CreditCardRepayment'
   pod 'PLHelpCenter', :path => '../Modules/Features/PLHelpCenter'
   pod 'LoanSchedule', :path => '../Modules/Features/LoanSchedule'
   pod 'mCommerce', :path => '../Modules/Features/mCommerce'
   pod 'PLNotificationsInbox', :path => '../Modules/Features/PLNotificationsInbox'
   pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
+  pod 'PhoneTopUp', :path => '../Modules/Features/PhoneTopUp'
+  pod 'ZusTransfer', :path => '../Modules/Features/ZusTransfer'
 end
 
 def pl_libraries

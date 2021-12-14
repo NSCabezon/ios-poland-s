@@ -28,7 +28,6 @@ extension PersonalAreaSectionsProvider: PersonalAreaSectionsProtocol {
                 .addGeoCell()
                 .addSecureDeviceCell()
                 .addOperativeUserCell()
-                .addQuickBalanceCell()
                 .addChangePasswordCell()
                 .addChangePIN()
                 .addSignatureKeyCell()

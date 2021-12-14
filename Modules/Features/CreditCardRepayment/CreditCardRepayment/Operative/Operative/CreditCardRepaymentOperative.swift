@@ -2,7 +2,7 @@ import Foundation
 import Operative
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import UI
 
 final class CreditCardRepaymentOperative: Operative {

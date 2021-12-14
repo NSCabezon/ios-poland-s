@@ -9,7 +9,7 @@ import Commons
 import SANLegacyLibrary
 
 protocol TransactionLimitViewModelMapping {
-    func map(_ wallet: GetWalletUseCaseOkOutput.Wallet) -> TransactionLimitViewModel
+    func map(wallet: GetWalletUseCaseOkOutput.Wallet, params: WalletParams) -> TransactionLimitViewModel
     func mapAmount(_ amount: String) -> Decimal?
 }
 
@@ -26,7 +26,7 @@ final class TransactionLimitViewModelMapper: TransactionLimitViewModelMapping {
         self.amountFormatterWithoutCurrency = amountFormatterWithoutCurrency
     }
     
-    func map(_ wallet: GetWalletUseCaseOkOutput.Wallet) -> TransactionLimitViewModel {
+    func map(wallet: GetWalletUseCaseOkOutput.Wallet, params: WalletParams) -> TransactionLimitViewModel {
         
         let withdrawLimitText = localized(
             "pl_blik_text_limitMax",
@@ -41,7 +41,7 @@ final class TransactionLimitViewModelMapper: TransactionLimitViewModelMapping {
             withdrawLimitValue: getAmountText(forAmount: wallet.limits.cashLimitInfo.cycleLimit),
             purchaseLimitValue: getAmountText(forAmount: wallet.limits.shopLimitInfo.cycleLimit),
             limitCurrency: CurrencyType.złoty.name,
-            chequqBlikLimitValue: getAmountText(forAmount: wallet.limits.cashLimitInfo.trnLimit, currency: CurrencyType.złoty.name),
+            chequeBlikLimitValue: getAmountText(forAmount: params.maxChequeAmount, currency: CurrencyType.złoty.name),
             withdrawLimitText: withdrawLimitText.text,
             purchaseLimitText: purchaseLimitText.text
         )

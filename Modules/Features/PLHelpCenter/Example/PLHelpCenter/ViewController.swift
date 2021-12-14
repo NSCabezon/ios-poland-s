@@ -11,7 +11,7 @@ import UI
 import PLHelpCenter
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import Repository
 import SANPLLibrary
 import SANLegacyLibrary

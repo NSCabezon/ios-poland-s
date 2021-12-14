@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import CoreDomain
 import Commons
 import SANPLLibrary

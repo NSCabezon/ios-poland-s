@@ -1,15 +1,16 @@
 import Foundation
 import Commons
 import PLUI
+import PLCommons
 
 protocol MobileTransferMapping {
     func map(form: MobileTransferForm,
-             account: SelectableAccountViewModel) -> MobileTransfer
+             account: AccountForDebit) -> MobileTransfer
 }
 
 final class MobileTransferMapper: MobileTransferMapping {
 
-    func map(form: MobileTransferForm, account: SelectableAccountViewModel) -> MobileTransfer {
+    func map(form: MobileTransferForm, account: AccountForDebit) -> MobileTransfer {
         MobileTransfer(amount: form.amount,
                        title: form.title,
                        account: account,

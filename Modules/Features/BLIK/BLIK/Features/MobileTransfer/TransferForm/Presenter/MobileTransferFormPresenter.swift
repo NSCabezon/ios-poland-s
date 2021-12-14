@@ -1,15 +1,16 @@
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import PLUI
-import DomainCommon
+import CoreFoundationLib
+import PLCommons
 
 protocol MobileTransferFormPresenterProtocol {
     var view: MobileTransferFormViewControllerProtocol? { get set }
     func didSelectClose()
     func didSelectCloseProcess()
-    func getSelectedAccountViewModel() -> SelectableAccountViewModel?
+    func getSelectedAccount() -> AccountForDebit?
     func showAccountSelectorScreen()
     func showContacts()
     func hasUserOneAccount() -> Bool
@@ -19,14 +20,14 @@ protocol MobileTransferFormPresenterProtocol {
 }
 
 protocol MobileTransferFormAccountAndContactSelectable: AnyObject {
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel])
+    func updateSelectedAccountNumber(with number: String)
     func updateViewModel(with updatedViewModel: Contact?)
 }
 
 final class MobileTransferFormPresenter {
     weak var view: MobileTransferFormViewControllerProtocol?
     let dependenciesResolver: DependenciesResolver
-    private var accounts: [SelectableAccountViewModel]
+    private var accounts: [AccountForDebit]
     private var contact: Contact?
     private var currentForm: MobileTransferForm?
     private var formValidator: MobileTransferFormValidator
@@ -38,13 +39,16 @@ final class MobileTransferFormPresenter {
     private var p2pAliasUseCase: P2pAliasProtocol {
         dependenciesResolver.resolve()
     }
+    private var selectedAccountNumber: String
 
     init(dependenciesResolver: DependenciesResolver,
-         accounts: [SelectableAccountViewModel],
+         accounts: [AccountForDebit],
          contact: Contact?,
+         selectedAccountNumber: String,
          formValidator: MobileTransferFormValidator) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
         self.contact = contact
         self.formValidator = formValidator
     }
@@ -76,24 +80,24 @@ extension MobileTransferFormPresenter: MobileTransferFormPresenterProtocol, Mobi
         view?.showDialog(dialog)
     }
 
-    func getSelectedAccountViewModel() -> SelectableAccountViewModel? {
+    func getSelectedAccount() -> AccountForDebit? {
         guard accounts.count > 1 else {
             return accounts.first
         }
 
-        return accounts.first(where: { $0.isSelected })
+        return accounts.first(where: { $0.number == selectedAccountNumber })
     }
     
     func showAccountSelectorScreen() {
-        coordinator.showAccountSelector(with: accounts)
+        coordinator.showAccountSelector(with: accounts, selectedAccountNumber: selectedAccountNumber)
     }
     
     func showContacts() {
         coordinator.showContacts()
     }
     
-    func updateViewModel(with updatedViewModel: [SelectableAccountViewModel]) {
-        accounts = updatedViewModel
+    func updateSelectedAccountNumber(with number: String) {
+        selectedAccountNumber = number
         view?.setAccountViewModel()
     }
     
@@ -125,7 +129,7 @@ extension MobileTransferFormPresenter: MobileTransferFormPresenterProtocol, Mobi
             .onSuccess { [weak self] result in
                 self?.view?.hideLoader(completion: {
                     let mapper = MobileTransferMapper()
-                    guard let currentForm = self?.currentForm, let account = self?.getSelectedAccountViewModel() else { return }
+                    guard let currentForm = self?.currentForm, let account = self?.getSelectedAccount() else { return }
                     let mobileTransfer = mapper.map(form: currentForm, account: account)
                     self?.coordinator.showConfirmation(viewModel: .init(transfer: mobileTransfer),
                                                        isDstAccInternal: result.isDstAccInternal,

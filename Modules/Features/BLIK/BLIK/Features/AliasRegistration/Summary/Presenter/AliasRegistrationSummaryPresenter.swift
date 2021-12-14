@@ -3,6 +3,7 @@ import Commons
 import Operative
 import UI
 import PLCommons
+import PLUI
 
 protocol AliasRegistrationSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToGlobalPosition()

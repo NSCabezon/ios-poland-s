@@ -1,5 +1,5 @@
 import Commons
-import DomainCommon
+import CoreFoundationLib
 @testable import PLHelpCenter
 import SANPLLibrary
 import XCTest

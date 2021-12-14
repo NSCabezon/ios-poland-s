@@ -54,6 +54,11 @@ extension RecentRecipientsDataDTO: TransferRepresentable {
     var transferExecutedDate: Date? {
         self.postingDateToDate(self.postingDate ?? "")
     }
+
+    var transferNumber: String? {
+        nil
+    }
+    var contractRepresentable: ContractRepresentable? { nil }
 }
 
 private extension RecentRecipientsDataDTO {

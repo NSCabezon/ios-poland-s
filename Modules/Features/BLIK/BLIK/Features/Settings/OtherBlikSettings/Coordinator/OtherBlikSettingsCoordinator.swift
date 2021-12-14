@@ -15,6 +15,7 @@ import PLCommons
 protocol OtherBlikSettingsCoordinatorProtocol: ModuleCoordinator {
     func close()
     func goBackToRoot()
+    func showSaveSettingsSuccessAlert()
 }
 
 final class OtherBlikSettingsCoordinator: ModuleCoordinator {
@@ -53,6 +54,14 @@ extension OtherBlikSettingsCoordinator: OtherBlikSettingsCoordinatorProtocol {
     
     func goBackToRoot() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func showSaveSettingsSuccessAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_text_settingsChangedSuccess"),
+            alertType: .info,
+            position: .top
+        )
     }
 }
 

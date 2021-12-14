@@ -19,9 +19,11 @@ final class RegisterAliasParametersMapper: RegisterAliasParametersMapping {
     }
     
     func map(_ alias: BlikAlias) -> RegisterBlikAliasParameters {
+        let aliasType: Transaction.AliasProposalType = alias.type == .internetBrowser ? .cookie : .uid
+        
         return RegisterBlikAliasParameters(
             aliasLabel: alias.label,
-            aliasValueType: alias.type.rawValue,
+            aliasValueType: aliasType.rawValue,
             alias: alias.alias,
             acquirerId: alias.acquirerId,
             merchantId: alias.merchantId,

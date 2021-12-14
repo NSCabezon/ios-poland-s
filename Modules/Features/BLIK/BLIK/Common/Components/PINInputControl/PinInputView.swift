@@ -7,6 +7,7 @@
 
 import UIKit
 import PLCommons
+import PLUI
 
 public protocol PinInputViewDelegte: AnyObject {
     func didUpdateField()

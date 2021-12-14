@@ -47,7 +47,7 @@ final class PLRememberedLoginPinViewController: UIViewController {
     @IBOutlet private weak var pinTextField: UITextField!
     @IBOutlet private weak var balanceButton: UIButton!
     @IBOutlet private weak var changeLoginTypeButton: UIButton!
-    @IBOutlet private weak var biometrySmallLabel: UILabel!
+    @IBOutlet private weak var changeUserButton: UIButton!
     @IBOutlet private weak var biometryCover: UIView!
     @IBOutlet private weak var biometryBigImage: UIImageView!
     @IBOutlet private weak var biometryBigLabel: UILabel!
@@ -118,6 +118,10 @@ private extension PLRememberedLoginPinViewController {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
     
+    @objc func didSelectChangeUserButton() {
+        self.presenter.didSelectChangeUser()
+    }
+    
     @objc func didSelectChangeLoginTypeButton() {
         self.presenter.trackChangeLoginTypeButton()
         switch self.currentLoginType {
@@ -145,8 +149,6 @@ private extension PLRememberedLoginPinViewController {
         titleLabel.font = .santander(family: .text, type: .light, size: 40)
         titleLabel.textColor = UIColor.Legacy.uiWhite
         titleLabel.numberOfLines = 2
-        biometrySmallLabel.font = .santander(family: .text, type: .regular, size: 14)
-        biometrySmallLabel.textColor = UIColor.Legacy.uiWhite
         biometryBigLabel.font = .santander(family: .text, type: .regular, size: 16)
         biometryBigLabel.textColor = UIColor.Legacy.uiWhite
     }
@@ -155,6 +157,8 @@ private extension PLRememberedLoginPinViewController {
         balanceButton.setImage(Assets.image(named: "icnBalance"), for: .normal)
         balanceButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(didSelectBalanceButton)))
+        changeLoginTypeButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
+        changeLoginTypeButton.titleLabel?.font =  .santander(family: .text, type: .regular, size: 14)
         changeLoginTypeButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(didSelectChangeLoginTypeButton)))
         biometryBigImage.addGestureRecognizer(UITapGestureRecognizer(target: self,
@@ -169,6 +173,15 @@ private extension PLRememberedLoginPinViewController {
         blikButton.roundCorners(corners: .allCorners, radius: blikButton.frame.size.height/2)
         blikButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(didSelectBlikButton)))
+        changeUserButton.setImage(Assets.image(named: "icnUser"), for: .normal)
+        changeUserButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
+        changeUserButton.titleLabel?.font =  .santander(family: .text, type: .regular, size: 14)
+        changeUserButton.titleLabel?.numberOfLines = 1
+        changeUserButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        changeUserButton.titleLabel?.minimumScaleFactor = 0.5
+        changeUserButton.setTitle(localized("loginRegistered_button_changeUser"), for: .normal)
+        changeUserButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
+                                                                     action: #selector(didSelectChangeUserButton)))
     }
     
     func configureViewForLogin(type: PLRememberedLoginType) {
@@ -179,8 +192,8 @@ private extension PLRememberedLoginPinViewController {
             self.biometryCover.isHidden = true
             self.setupBiometry()
         case .BIOMETRICS:
-            self.biometrySmallLabel.text = localized("pl_onboarding_text_enterPIN")
             self.changeLoginTypeButton.setImage(Assets.image(named: "icnKeyboardLogin"), for: .normal)
+            self.changeLoginTypeButton.setTitle(localized("pl_onboarding_text_enterPIN"), for: .normal)
             self.numberPadView.isHidden = true
             self.biometryCover.isHidden = false
             self.pinTextField.text = ""
@@ -193,21 +206,18 @@ private extension PLRememberedLoginPinViewController {
         switch presenter.currentBiometryType {
         case .touchId:
             changeLoginTypeButton.setImage(Assets.image(named: "smallFingerprint"), for: .normal)
+            changeLoginTypeButton.setTitle(localized("loginTouchId_alert_title_touchId"), for: .normal)
             biometryBigImage.image = Assets.image(named: "icnFingerprintLogin")
-            biometrySmallLabel.text = localized("loginTouchId_alert_title_touchId")
             biometryBigLabel.text = localized("pl_login_text_loginWithTouchID")
             changeLoginTypeButton.isHidden = false
-            biometrySmallLabel.isHidden = false
         case .faceId:
             changeLoginTypeButton.setImage(Assets.image(named: "smallFaceId"), for: .normal)
+            changeLoginTypeButton.setTitle(localized("loginTouchId_alert_title_faceId"), for: .normal)
             biometryBigImage.image = Assets.image(named: "icnFaceIdLogin")
-            biometrySmallLabel.text = localized("loginTouchId_alert_title_faceId")
             biometryBigLabel.text = localized("pl_login_text_loginWithFaceID")
             changeLoginTypeButton.isHidden = false
-            biometrySmallLabel.isHidden = false
         case .error(_,_), .none:
             changeLoginTypeButton.isHidden = true
-            biometrySmallLabel.isHidden = true
             break
         }
     }

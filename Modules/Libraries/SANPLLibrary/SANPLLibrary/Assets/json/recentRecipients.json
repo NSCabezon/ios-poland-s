@@ -4,7 +4,7 @@
         {
             "recentRecipientsData": [
                 {
-                    "accountNo": "21124038421111000030819544",
+                    "accountNo": "PL05105001037737934454629906",
                     "accountName": "Jan Nowak",
                     "amount": 123.45,
                     "currency": "PLN",
@@ -12,11 +12,27 @@
                     "postingDate": "2021-06-10"
                 },
                 {
-                    "accountNo": "35109000047438000000003527",
+                    "accountNo": "PL05105001037737934454629906",
                     "accountName": "Jan Kowalski",
                     "amount": -987.65,
                     "currency": "EUR",
                     "title": "Invoice No. 444555",
+                    "postingDate": "2021-08-15"
+                },
+                {
+                    "accountNo": "PL05105001037737934454627865",
+                    "accountName": "Mario",
+                    "amount": -200.60,
+                    "currency": "PLN",
+                    "title": "Invoice No. 444343",
+                    "postingDate": "2021-08-15"
+                },
+                {
+                    "accountNo": "PL05105001037737934454627744",
+                    "accountName": "Pedro",
+                    "amount": -5.12,
+                    "currency": "EUR",
+                    "title": "Invoice No. 23423",
                     "postingDate": "2021-08-15"
                 }
             ]

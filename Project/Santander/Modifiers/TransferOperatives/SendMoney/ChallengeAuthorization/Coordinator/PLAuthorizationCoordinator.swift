@@ -12,7 +12,7 @@ import OneAuthorizationProcessor
 import CoreDomain
 import SANPLLibrary
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 
 public protocol PLAuthorizationCoordinatorProtocol {
     func dismiss()

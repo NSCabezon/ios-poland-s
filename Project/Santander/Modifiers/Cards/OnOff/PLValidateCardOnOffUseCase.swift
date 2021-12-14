@@ -9,7 +9,7 @@ import Foundation
 import Cards
 import CoreDomain
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import SANLegacyLibrary
 import Models
 

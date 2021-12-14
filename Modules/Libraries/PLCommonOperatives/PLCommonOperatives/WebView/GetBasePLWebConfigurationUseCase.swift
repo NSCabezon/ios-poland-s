@@ -1,7 +1,7 @@
 import Foundation
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import Models
 import SANPLLibrary
 
@@ -34,7 +34,8 @@ public class GetBasePLWebConfigurationUseCase: UseCase<GetBasePLWebConfiguration
             "clientId": login,
             "access_token": accessToken,
             "oneApp": "true",
-            "mlang": language
+            "mlang": language,
+            "profileId": "3"
         ]
         
         let configuration = BasePLWebConfiguration(

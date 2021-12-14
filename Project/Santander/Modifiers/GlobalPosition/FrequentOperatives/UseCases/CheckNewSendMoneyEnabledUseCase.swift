@@ -5,7 +5,7 @@
 //  Created by José María Jiménez Pérez on 22/9/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import Repository
 

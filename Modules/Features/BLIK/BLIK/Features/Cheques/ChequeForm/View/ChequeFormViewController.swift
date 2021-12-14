@@ -8,6 +8,7 @@
 import UI
 import Commons
 import PLUI
+import PLCommons
 
 protocol ChequeFormViewProtocol: AnyObject, LoaderPresentable, SnackbarPresentable, ErrorPresentable {
     func getForm() -> ChequeForm

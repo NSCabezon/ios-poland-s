@@ -7,7 +7,7 @@
 
 import Foundation
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import Models
 import SANPLLibrary
 

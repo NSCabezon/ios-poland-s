@@ -12,6 +12,7 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 fastlane_require './constants.rb'
+fastlane_require './scripts/update_shared_schemes.rb'
 
 default_platform(:ios)
 
@@ -209,20 +210,21 @@ platform :ios do
     match(
       git_url: "git@github.com:santander-group-europe/ios-certificates-development.git",
       app_identifier: ["pl.bancosantander.oneapp.dev.#{options[:version]}",
-       "pl.bancosantander.oneapp.intern.#{options[:version]}",
-       "pl.bancosantander.oneapp.pre.#{options[:version]}"],
+       "pl.bancosantander.oneapp.intern.0.0",
+       "pl.bancosantander.oneapp.pre.0.0"],
       type: 'development',
       readonly: true
     )
   end
 
+  # Note: in Poland CI we only manage one app bundle id, designed as 0.0.
   desc 'Fetch Distribution certificates and provisioning profiles'
   lane :certificates_release do |options|
     match(
       git_url: "ssh://git@gitlab.ciber-es.com:7346/mobility/Ciber/Common/iOS/certificates-release.git",
       app_identifier: [
-      "pl.bancosantander.oneapp.intern.#{options[:version]}",
-      "pl.bancosantander.oneapp.pre.#{options[:version]}"],
+      "pl.bancosantander.oneapp.intern.0.0",
+      "pl.bancosantander.oneapp.pre.0.0"],
       type: 'enterprise',
       readonly: true
     )
@@ -371,6 +373,7 @@ end
     increment_version_number(xcodeproj: "Santander.xcodeproj", bump_type: "patch")
     increment_build_number(build_number: calculateVersionCode(get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")))
     upload_build_settings_versions()
+    update_xcschemes()
     push_version()
   end
 
@@ -397,11 +400,13 @@ end
       UI.message("🚀  Current branch: #{branch}")      
       git_add(path: "./Project/Santander.xcodeproj/project.pbxproj")
       git_add(path: "./Project/Santander/Info.plist")
+      git_add(path: "./Project/Santander.xcodeproj/xcshareddata/xcschemes/*.xcscheme")
       git_commit(
         path: 
         [
           "./Project/Santander.xcodeproj/project.pbxproj",
-          "./Project/Santander/Info.plist"
+          "./Project/Santander/Info.plist",
+          "./Project/Santander.xcodeproj/xcshareddata/xcschemes/*.xcscheme"
         ],
         message: "Updating Version #{Actions.lane_context[SharedValues::VERSION_NUMBER]}"
         )
@@ -424,5 +429,13 @@ end
       configuration.build_settings["CURRENT_PROJECT_VERSION"] = build_version
     end
     project.save
+  end
+
+  private_lane :update_xcschemes do
+    UI.message "Start lane update xcshemes"
+    project_path = "../Santander.xcodeproj"
+    xcConfigFilesPath = "../Santander/Configuration/"
+    version = get_version_number(target: "Santander")
+    update_schemes(xcConfigFilesPath, project_path, version)
   end
 end

@@ -7,7 +7,7 @@
 
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import CryptoSwift
 import Security
 import CommonCrypto

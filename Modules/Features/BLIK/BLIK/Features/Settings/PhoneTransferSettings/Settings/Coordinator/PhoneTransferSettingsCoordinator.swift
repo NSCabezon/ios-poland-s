@@ -114,9 +114,14 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     }
     
     func goBackToBlikSettingsFromSmsScreen() {
-        navigationController?.popViewController(animated: false)
-        navigationController?.popViewController(animated: false)
-        navigationController?.popViewController(animated: true)
+        guard let blikSettingsVC = navigationController?.viewControllers.first(where: { vc in
+            return vc is BlikSettingsViewController
+        }) else {
+            goBackToGlobalPosition()
+            return
+        }
+        
+        navigationController?.popToViewController(blikSettingsVC, animated: true)
     }
     
     func showTransferSettingsAfterPhoneRegistrationFromFormScreen() {
@@ -125,9 +130,16 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     }
     
     func showTransferSettingsAfterPhoneRegistrationFromSmsScreen() {
-        navigationController?.popViewController(animated: false)
-        navigationController?.popViewController(animated: true)
+        guard let phoneTransferSettingsVC = navigationController?.viewControllers.first(where: { vc in
+            return vc is PhoneTransferSettingsViewController
+        }) else {
+            goBackToGlobalPosition()
+            return
+        }
+
+        navigationController?.popToViewController(phoneTransferSettingsVC, animated: true)
         phoneTransferSettingsView?.setViewModel(.registeredPhoneNumber)
+        showRegisterNumberSuccessAlert()
     }
     
     func close() {
@@ -140,7 +152,15 @@ extension PhoneTransferSettingsCoordinator: PhoneTransferSettingsCoordinatorProt
     
     func showUnregisteredNumberSuccessAlert() {
         TopAlertController.setup(TopAlertView.self).showAlert(
-            localized("#Informacja\nNumer został wyrejestrowany z bazy powiązań BLIK"),
+            localized("pl_blik_text_deRegistSuccess"),
+            alertType: .info,
+            position: .top
+        )
+    }
+    
+    func showRegisterNumberSuccessAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_text_registerNumbSuccess"),
             alertType: .info,
             position: .top
         )

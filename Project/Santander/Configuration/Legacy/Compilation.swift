@@ -107,13 +107,15 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
             PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
             PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true)
         ]
+        #elseif PRE
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false))
         #elseif UAT
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
         #elseif REG
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt4.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
         #elseif PREPROD
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
-        #elseif PROD
+        #elseif PRO
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
         #endif
         

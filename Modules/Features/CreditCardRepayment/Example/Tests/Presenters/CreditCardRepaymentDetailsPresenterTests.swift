@@ -8,7 +8,7 @@
 
 import Commons
 @testable import CreditCardRepayment
-import DomainCommon
+import CoreFoundationLib
 import Models
 import Operative
 import SANLegacyLibrary

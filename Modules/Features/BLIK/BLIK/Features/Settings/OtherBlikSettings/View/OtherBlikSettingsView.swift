@@ -156,28 +156,13 @@ private extension OtherBlikSettingsView {
         delegate?.didUpdateVisibility()
     }
     
-    @objc func didTapLabelInfoButton() {
-        let bubble = BubbleLabelView(
-            associated: blikLabelInfoButton,
-            text: localized("pl_blik_tooltip_ClientLabelDesc"),
-            position: .bottom,
-            localizedStyleText: localized("pl_blik_tooltip_ClientLabelDesc")
+    @objc func didTapLabelInfoButton(_ sender: UIButton) {
+        let styledText: LocalizedStylableText = localized("pl_blik_tooltip_OtherSettingsDesc")
+        BubbleLabelView.startWith(
+            associated: sender,
+            localizedStyleText: styledText,
+            position: .bottom
         )
-        window?.addSubview(bubble)
-        addCloseCourtain()
-    }
-    
-    func addCloseCourtain() {
-        let curtain = UIView(frame: UIScreen.main.bounds)
-        curtain.backgroundColor = UIColor.clear
-        curtain.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeBubble(_:))))
-        curtain.isUserInteractionEnabled = true
-        window?.addSubview(curtain)
-    }
-    
-    @objc func closeBubble(_ sender: UITapGestureRecognizer) {
-        window?.subviews.forEach { ($0 as? BubbleLabelView)?.dismiss() }
-        sender.view?.removeFromSuperview()
     }
 }
 

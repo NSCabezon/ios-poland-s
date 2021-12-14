@@ -28,7 +28,7 @@ public struct RegisterBlikAliasParameters: Encodable {
         registerInPSP: Bool
     ) {
         self.aliasLabel = aliasLabel
-        self.aliasValueType = aliasValueType
+        self.aliasValueType = aliasValueType.uppercased()
         self.alias = alias
         self.acquirerId = acquirerId
         self.merchantId = merchantId

@@ -9,6 +9,7 @@ import UI
 import PLUI
 import Commons
 import Operative
+import PLCommons
 
 protocol CharityTransferConfirmationViewControllerProtocol:
     ErrorPresentable,

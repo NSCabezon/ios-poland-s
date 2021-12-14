@@ -6,9 +6,10 @@
 //
 
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import UI
 import PLUI
+import PLCommons
 
 protocol PhoneTransferSettingsPresenterProtocol {
     func didPressRemovePhoneNumber()
@@ -89,7 +90,6 @@ private extension PhoneTransferSettingsPresenter {
     }
     
     func updateWalletAndViewState() {
-        view?.showLoader()
         Scenario(useCase: getWalletUseCase)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in

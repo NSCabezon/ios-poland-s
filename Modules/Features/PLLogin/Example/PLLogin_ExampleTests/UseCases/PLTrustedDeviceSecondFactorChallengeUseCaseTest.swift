@@ -7,7 +7,7 @@
 
 import XCTest
 import Commons
-import DomainCommon
+import CoreFoundationLib
 @testable import PLLogin
 
 class PLTrustedDeviceSecondFactorChallengeUseCaseTests: XCTestCase {

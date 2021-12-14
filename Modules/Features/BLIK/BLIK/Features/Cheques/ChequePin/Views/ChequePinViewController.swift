@@ -9,6 +9,7 @@ import UIKit
 import UI
 import Commons
 import PLUI
+import PLCommons
 
 protocol ChequePinViewProtocol: DialogViewPresentationCapable, SnackbarPresentable, LoaderPresentable {
     var pin: String { get }

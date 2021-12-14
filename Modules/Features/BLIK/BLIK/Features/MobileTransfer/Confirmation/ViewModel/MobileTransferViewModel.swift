@@ -67,11 +67,11 @@ public struct MobileTransferViewModel {
     }
     
     var accountNumber: String {
-        let formattedAccountNumber = IBANFormatter.format(iban: transfer.account.accountNumberUnformatted)
+        let formattedAccountNumber = IBANFormatter.format(iban: transfer.account.number)
         return formattedAccountNumber
     }
     
-    var account: SelectableAccountViewModel {
+    var account: AccountForDebit {
         transfer.account
     }
     

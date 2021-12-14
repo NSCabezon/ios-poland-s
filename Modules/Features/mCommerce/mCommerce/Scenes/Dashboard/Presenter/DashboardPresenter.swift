@@ -8,7 +8,7 @@
 import UI
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol DashboardPresenterProtocol: MenuTextWrapperProtocol {
     var view: DashboardViewProtocol? { get set }

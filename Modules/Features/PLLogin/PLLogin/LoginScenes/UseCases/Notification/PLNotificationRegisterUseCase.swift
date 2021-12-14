@@ -7,7 +7,7 @@
 
 import Commons
 import PLCommons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import Repository
 import Models

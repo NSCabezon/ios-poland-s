@@ -6,6 +6,7 @@
 //
 
 import PLCommons
+import Commons
 
 protocol PhoneTransferRegistrationFormViewModelMapping {
     func map(_ account: BlikCustomerAccount) -> PhoneTransferRegistrationFormViewModel
@@ -35,20 +36,14 @@ final class PhoneTransferRegistrationFormViewModelMapper: PhoneTransferRegistrat
         accountName: String,
         availableFunds: String
     ) -> PhoneTransferRegistrationFormViewModel {
-        let hintMessage = "#Aby otrzymywać przelew od innych osób, zarejestruj się w bazie powiązań BLIK. Rejestracja zajmie tylko chwilę."
+        let hintMessage: String = localized("pl_blik_text_registerNumbDesc")
+        let accountViewTitle: String = localized("pl_blik_text_numbAccountRegist")
         
-        let accountViewTitle = "#Na ten rachunek otrzymasz pieniądze"
+        let phoneViewTitle: String = localized("pl_blik_text_numbPhoneRegist")
+        let phoneViewNumber: String = localized("pl_blik_text_numbSameAs")
         
-        let phoneViewTitle = "#Numer telefonu"
-        let phoneViewNumber = "#Taki sam jak numer do smsKodów"
-        
-        let statementTitle = "#Oświadczenie"
-        let statementDescription = """
-    #Składam dyspozycję otrzymywania na wskazany rachunek bankowy \(accountNumber) Przelewów na telefon BLIK wysyłanych na numer telefonu komórkowego służący, zgodnie z obowiązującą „Umowa usług Santander online dla klientów indywidualnych”, do przesyłania mi przez Santander Bank Polska S.A. smsKodów.
-        
-    Moja dyspozycja uchyla ewentualne wcześniej złożone przeze mnie w Santander S.A. lub innych bankach dyspozycje dotyczące otrzymywania Przelewów na telefon BLIK wysyłanych na wskazany numer telefonu komórkowego.
-    Przyjmuję do wiadomości, że w przypadku zmiany numeru telefonu komórkowego do przesyłania smsKodów lub wskazanego numeru rachunku w celu dalszego otrzymywania Przelewów na telefon BLIK muszę ponownie złożyć odpowiednią dyspozycję.
-    """
+        let statementTitle: String = localized("pl_blik_text_declarationRegist")
+        let statementDescription: String =  localized("pl_blik_text_declarationMeaning")
         
         return PhoneTransferRegistrationFormViewModel(
             hintMessage: hintMessage,

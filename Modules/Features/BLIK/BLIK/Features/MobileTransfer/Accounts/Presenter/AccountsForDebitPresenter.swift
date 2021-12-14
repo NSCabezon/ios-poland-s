@@ -1,22 +1,27 @@
 import Models
 import Commons
 import PLUI
+import PLCommons
 
 final class AccountsForDebitPresenter {
 
     weak var view: AccountSelectorViewProtocol?
     let dependenciesResolver: DependenciesResolver
-    private var viewModels: [SelectableAccountViewModel] = []
+    private var accounts: [AccountForDebit]
+    private var selectedAccountNumber: String
     private let sourceView: SourceView
     weak var selectableDelegate: FormAccountSelectable?
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
+    private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
 
     init(dependenciesResolver: DependenciesResolver,
-         viewModels: [SelectableAccountViewModel],
+         accounts: [AccountForDebit],
+         selectedAccountNumber: String,
          sourceView: SourceView,
          selectableDelegate: FormAccountSelectable?) {
         self.dependenciesResolver = dependenciesResolver
-        self.viewModels = viewModels
+        self.accounts = accounts
+        self.selectedAccountNumber = selectedAccountNumber
         self.sourceView = sourceView
         self.selectableDelegate = selectableDelegate
     }
@@ -30,15 +35,12 @@ private extension AccountsForDebitPresenter {
 
 extension AccountsForDebitPresenter: AccountSelectorPresenterProtocol {
     func didSelectAccount(at index: Int) {
-        let previouslySelectedAccount = viewModels.firstIndex(where: { $0.isSelected }) ?? 0
-        viewModels[previouslySelectedAccount].isSelected = false
-        viewModels[index].isSelected = true
-        
+        selectedAccountNumber = accounts[index].number
         switch sourceView {
         case .contacts:
-            coordinator.showTransferForm(accounts: viewModels)
+            coordinator.showTransferForm(accounts: accounts, selectedAccountNumber: selectedAccountNumber)
         case .form:
-            selectableDelegate?.updateViewModel(with: viewModels)
+            selectableDelegate?.updateSelectedAccountNumber(selectedAccountNumber)
             didPressClose()
         }
         
@@ -49,6 +51,7 @@ extension AccountsForDebitPresenter: AccountSelectorPresenterProtocol {
     }
     
     func viewDidLoad() {
+        let viewModels = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         view?.setViewModels(viewModels)
     }
     

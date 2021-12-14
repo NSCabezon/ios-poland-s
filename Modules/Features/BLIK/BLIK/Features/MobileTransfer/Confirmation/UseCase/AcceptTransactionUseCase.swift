@@ -1,7 +1,7 @@
 import Foundation
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
 import PLCommons
@@ -27,12 +27,12 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
             currency: CurrencyType.złoty.name
         )
         let debitAccountFormated = IBANFormatter.formatIbanToNrb(
-            for: account.accountNumberUnformatted
+            for: account.number
         )
         let accountData: AcceptDomesticTransactionParameters.DebitAccountData = .init(
             accountType: account.accountType,
             accountSequenceNumber: account.accountSequenceNumber,
-            accountNo: debitAccountFormated,
+            accountNo: account.number,
             accountName: account.name
         )
         let creditAccountFormated = IBANFormatter.formatIbanToNrb(

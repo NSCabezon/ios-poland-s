@@ -1,9 +1,3 @@
-//
-//  CharityTransferFormViewController.swift
-//  CharityTransfer
-//
-//  Created by 187125 on 22/09/2021.
-//
 
 import UI
 import PLUI
@@ -12,16 +6,18 @@ import Commons
 protocol CharityTransferFormViewProtocol: AnyObject,
                                           ConfirmationDialogPresentable {
     func setAccountViewModel()
+    func showValidationMessages(messages: InvalidCharityTransferFormMessages)
 }
 
 final class CharityTransferFormViewController: UIViewController {
     private let presenter: CharityTransferFormPresenterProtocol
     private let scrollView = UIScrollView()
-    private let formView = CharityTransferFormView()
+    private let formView: CharityTransferFormView
     private let bottomView = BottomButtonView(style: .red)
     
     init(presenter: CharityTransferFormPresenterProtocol) {
         self.presenter = presenter
+        self.formView = CharityTransferFormView(language: presenter.getLanguage())
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +62,7 @@ private extension CharityTransferFormViewController {
     func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_foundtrans_title_foundTransfer")))
-            .setLeftAction(.back(action: #selector(goBack)))
+            .setLeftAction(.back(action: #selector(goBack))) //TODO: need to change back action to back send money screen
             .setRightActions(.close(action: #selector(closeProcess)))
             .build(on: self, with: nil)
     }
@@ -77,7 +73,7 @@ private extension CharityTransferFormViewController {
             // TODO: Add ready botton action
         }
         bottomView.disableButton()
-        formView.configure(with: presenter.getAccounts())
+        formView.configure(with: presenter.getSelectedAccountViewModels())
         formView.delegate = self
     }
     
@@ -107,7 +103,18 @@ private extension CharityTransferFormViewController {
 
 extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
     func setAccountViewModel() {
-        formView.configure(with: presenter.getAccounts())
+        formView.configure(with: presenter.getSelectedAccountViewModels())
+    }
+    
+    func showValidationMessages(messages: InvalidCharityTransferFormMessages) {
+        let form = formView.getCurrentFormViewModel()
+        formView.showInvalidFormMessages(messages)
+        if messages.shouldContinueButtonBeEnabled,
+           form.amount != nil {
+            bottomView.enableButton()
+        } else {
+            bottomView.disableButton()
+        }
     }
 }
 
@@ -115,7 +122,8 @@ extension CharityTransferFormViewController: CharityTransferFormViewDelegate {
     func didChangeForm() {
         presenter.updateTransferFormViewModel(
             with: formView.getCurrentFormViewModel()
-        )        
+        )
+        presenter.startValidation()
     }
     
     func changeAccountTapped() {

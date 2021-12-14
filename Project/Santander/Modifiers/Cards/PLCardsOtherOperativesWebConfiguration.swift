@@ -25,7 +25,8 @@ public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {
                 webToolbarTitleKey: String?,
                 pdfToolbarTitleKey: String?,
                 httpMethod: HTTPMethodType,
-                reloadSessionOnClose: Bool = true) {
+                reloadSessionOnClose: Bool = true,
+                isFullScreenEnabled: Bool? = true) {
         self.initialURL = initialURL
         self.webToolbarTitleKey = webToolbarTitleKey
         self.pdfToolbarTitleKey = pdfToolbarTitleKey
@@ -34,5 +35,6 @@ public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {
         self.httpMethod = httpMethod
         self.bodyParameters = bodyParameters
         self.reloadSessionOnClose = reloadSessionOnClose
+        self.isFullScreenEnabled = isFullScreenEnabled ?? true
     }
 }

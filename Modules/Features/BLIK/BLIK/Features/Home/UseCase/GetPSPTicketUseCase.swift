@@ -1,6 +1,6 @@
 import Commons
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol GetPSPTicketProtocol: UseCase<Void, GetPSPTicketUseCaseOkOutput, StringErrorOutput> {}

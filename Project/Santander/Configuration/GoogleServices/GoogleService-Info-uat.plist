@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>13775612899-cis29ekhja5quvan5l3bpo06st7p3gol.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.13775612899-cis29ekhja5quvan5l3bpo06st7p3gol</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBN6WtjI1vCSufKapeXZrCrWbUFTs_EvV4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>13775612899</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>pl.santander.oneapp.uat</string>
+	<key>PROJECT_ID</key>
+	<string>one-app---pl---uat</string>
+	<key>STORAGE_BUCKET</key>
+	<string>one-app---pl---uat.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:13775612899:ios:b2f8d788c3a210624a0ed6</string>
+</dict>
+</plist>

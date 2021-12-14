@@ -152,11 +152,11 @@ extension PLDocumentTextField {
             textField.textContentType = .username
         }
         textField.defaultTextAttributes = self.textfieldAttributes
-        configureTextTextField(text: localized("pl_login_hint_login"))
+        configureTextFieldPlaceholder(text: localized("pl_login_hint_login"))
         self.resetDefaultAttributedTextKern()
     }
 
-    public func configureTextTextField(text: LocalizedStylableText? = nil) {
+    public func configureTextFieldPlaceholder(text: LocalizedStylableText? = nil) {
         guard let text = text else { return }
         let attributes: [NSAttributedString.Key: Any] = [
             .font: Constants.textLabelFont,

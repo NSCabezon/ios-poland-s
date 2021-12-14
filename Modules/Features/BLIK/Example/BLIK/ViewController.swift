@@ -9,7 +9,7 @@
 import UIKit
 import BLIK
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 class ViewController: UIViewController {

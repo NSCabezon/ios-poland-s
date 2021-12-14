@@ -10,27 +10,32 @@ import Models
 import UI
 import Commons
 import CreditCardRepayment
+import PLCommons
+import PLCommonOperatives
+import Repository
+import PersonalArea
 
 enum PLCardHomeActionIdentifier: String {
     case sendMoneyPL = "SendMoneyPoland"
-    case repayInInstallmentsPL = "RepayInInstallmentsPoland"
+    case repayInInstallmentsPL = "REPAYMENT"
     case cardRepaymentPL = "CardRepaymentPoland"
-    case changeLimitPL = "ChangeLimitPoland"
+    case changeLimitPL = "MODIFY_LIMITS"
     case changeAliasesPL = "ChangeAliasesPoland"
     case generateQRCodePL = "GenerateQRCodePL"
-    case alerts24PL = "Alerts24Poland"
-    case customerServicePL = "CustomerServicePoland"
+    case alerts24PL = "ALERTS_NOTIFICATION"
+    case customerServicePL = "CUSTOMER_SERVICE"
     case blockedFundsPL = "BlockedFundsPoland"
-    case viewStatementsPL = "ViewStatementsPoland"
-    case managePinPL = "ManagePinPoland"
-    case usingCardAbroadPL = "UsingCardAbroad"
+    case viewStatementsPL = "STATEMENT_HISTORY"
+    case managePinPL = "MANAGE_PIN"
+    case usingCardAbroadPL = "USE_ABROAD"
     case refundForPurchasesPL = "RefundForPurchasesPoland"
     case exploreProductsPL = "ExploreProductsPoland"
     case creditLimitIncreasePL = "CreditLimitIncreasePoland"
     case multicurrencyPL = "MULTICURRENCY"
-    case atmPackagePL = "AtmPackagePoland"
+    case atmPackagePL = "ATM_PACKAGE"
     case blockPL = "CANCEL_CARD"
     case cvvPL = "CvvPoland"
+    case cardActivatePL = "CARD_ACTIVATION"
 }
 
 final class PLCardHomeActionModifier: CardHomeActionModifier {
@@ -180,7 +185,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     private let exploreProductsPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.exploreProductsPL.rawValue,
                                localizedKey: "frequentOperative_button_contract",
-                               icon: "icnExploreProducts",
+                               icon: "icnOffer",
                                section: "contract",
                                location: "",
                                isDisabled: { card in
@@ -252,7 +257,6 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     }
 
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
-
         switch action {
         case .offCard:
             goToCardBlock(entity)
@@ -260,9 +264,20 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
             goToCardUnblock(entity)
         case cardRepaymentPL:
             openCreditCardRepayment(creditCardEntity: entity)
+        case .enable:
+            onCardEnable(creditCardEntity: entity)
         default:
             switch action.trackName {
-            case PLCardHomeActionIdentifier.blockPL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+            case PLCardHomeActionIdentifier.blockPL.rawValue,
+                PLCardHomeActionIdentifier.multicurrencyPL.rawValue,
+                PLCardHomeActionIdentifier.managePinPL.rawValue,
+                PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue,
+                PLCardHomeActionIdentifier.changeLimitPL.rawValue,
+                PLCardHomeActionIdentifier.repayInInstallmentsPL.rawValue,
+                PLCardHomeActionIdentifier.customerServicePL.rawValue,
+                PLCardHomeActionIdentifier.atmPackagePL.rawValue,
+                PLCardHomeActionIdentifier.alerts24PL.rawValue,
+                PLCardHomeActionIdentifier.viewStatementsPL.rawValue:
                 guard let trackName = action.trackName else { return }
                 let cardData = getCardData(identifier: getType(identifier: trackName))
                 if let isAvailable = cardData.isAvailable, !isAvailable {
@@ -270,10 +285,17 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
                     return
                 }
                 showWebView(identifier: trackName, entity: entity, cardData: cardData)
+            case PLCardHomeActionIdentifier.changeAliasesPL.rawValue:
+                goToPGProductsCustomization()
+                break
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
         }
+    }
+
+    override func rearrangeApplePayAction() -> Bool {
+        return false
     }
     
     func getCardData(identifier: PLCardWebViewType) -> PLAccountOtherOperativesData {
@@ -286,10 +308,37 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
         var entity: PLAccountOtherOperativesData?
         for dto in list {
             if dto.id == PLCardHomeActionIdentifier.blockPL.rawValue, identifier == .cancel {
-                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.blockPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method))
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.blockPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
                 break
             } else if dto.id == PLCardHomeActionIdentifier.multicurrencyPL.rawValue, identifier == .multicurrency {
-                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.multicurrencyPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method))
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.multicurrencyPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.managePinPL.rawValue, identifier == .pin {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.managePinPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue, identifier == .useAbroad {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.changeLimitPL.rawValue, identifier == .changeLimits {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.changeLimitPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.viewStatementsPL.rawValue, identifier == .viewStatements {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.viewStatementsPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.cardActivatePL.rawValue, identifier == .enable {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.cardActivatePL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.repayInInstallmentsPL.rawValue, identifier == .repayInInstallments {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.repayInInstallmentsPL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.atmPackagePL.rawValue, identifier == .atmPackage {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.atmPackagePL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.alerts24PL.rawValue, identifier == .alerts24 {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.alerts24PL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method), isFullScreen: dto.isFullScreen)
+                break
+            } else if dto.id == PLCardHomeActionIdentifier.customerServicePL.rawValue, identifier == .customerService {
+                entity = PLAccountOtherOperativesData(identifier: PLCardHomeActionIdentifier.customerServicePL.rawValue, link: dto.url, isAvailable: dto.isAvailable, httpMethod: getHttpMethod(method: dto.method))
                 break
             }
         }
@@ -305,14 +354,30 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     }
 
     private func showWebView(identifier: String, entity: CardEntity, cardData: PLAccountOtherOperativesData) {
-        let input: GetPLCardsOtherOperativesWebConfigurationUseCaseInput
-        input = GetPLCardsOtherOperativesWebConfigurationUseCaseInput(type: getType(identifier: identifier), cardEntity: entity, cardData: cardData)
-        let useCase = self.dependenciesResolver.resolve(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self)
-        Scenario(useCase: useCase, input: input)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { result in
-                self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
+        switch identifier {
+        case PLCardHomeActionIdentifier.managePinPL.rawValue, PLCardHomeActionIdentifier.changeLimitPL.rawValue, PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue, PLCardHomeActionIdentifier.cardActivatePL.rawValue, PLCardHomeActionIdentifier.customerServicePL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+            let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
+            guard let url = cardData.link, let vpan = entity.dto.contract?.contractNumber else {
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+                return
             }
+            let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url.replace("{$VPAN}", vpan), method: cardData.httpMethod ?? .get, isFullScreenEnabled: cardData.isFullScreen ?? true)
+            Scenario(useCase: useCase, input: input)
+                .execute(on: self.dependenciesResolver.resolve())
+                .onSuccess { result in
+                    let linkHandler = PLWebviewCustomLinkHandler(configuration: result.configuration)
+                    let coordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
+                    coordinator.showWebView(handler: linkHandler)
+                }
+        default:
+            let input = GetPLCardsOtherOperativesWebConfigurationUseCaseInput(type: getType(identifier: identifier), cardEntity: entity, cardData: cardData)
+            let useCase = self.dependenciesResolver.resolve(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self)
+            Scenario(useCase: useCase, input: input)
+                .execute(on: self.dependenciesResolver.resolve())
+                .onSuccess { result in
+                    self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
+                }
+        }
     }
     
     private func getType(identifier: String) -> PLCardWebViewType {
@@ -321,6 +386,24 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
             return .cancel
         case PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
             return .multicurrency
+        case PLCardHomeActionIdentifier.managePinPL.rawValue:
+            return .pin
+        case PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue:
+            return .useAbroad
+        case PLCardHomeActionIdentifier.changeLimitPL.rawValue:
+            return .changeLimits
+        case PLCardHomeActionIdentifier.viewStatementsPL.rawValue:
+            return .viewStatements
+        case PLCardHomeActionIdentifier.cardActivatePL.rawValue:
+            return .enable
+        case PLCardHomeActionIdentifier.repayInInstallmentsPL.rawValue:
+            return .repayInInstallments
+        case PLCardHomeActionIdentifier.customerServicePL.rawValue:
+            return .customerService
+        case PLCardHomeActionIdentifier.atmPackagePL.rawValue:
+            return .atmPackage
+        case PLCardHomeActionIdentifier.alerts24PL.rawValue:
+            return .alerts24
         default:
             return .cancel
         }
@@ -329,6 +412,26 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
     private func openCreditCardRepayment(creditCardEntity: CardEntity) {
         let coordinator = self.dependenciesResolver.resolve(for: CreditCardRepaymentModuleCoordinator.self)
         coordinator.start(with: creditCardEntity)
+    }
+    
+    private func onCardEnable(creditCardEntity: CardEntity) {
+        let identifier = PLCardHomeActionIdentifier.cardActivatePL.rawValue
+        let cardData = getCardData(identifier: getType(identifier: identifier))
+        if let isAvailable = cardData.isAvailable, !isAvailable {
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+            return
+        }
+        showWebView(identifier: identifier, entity: creditCardEntity, cardData: cardData)
+    }
+    
+    private func onAlerts24(entity: CardEntity) {
+        let identifier = PLCardHomeActionIdentifier.alerts24PL.rawValue
+        let cardData = getCardData(identifier: getType(identifier: identifier))
+        if let isAvailable = cardData.isAvailable, !isAvailable {
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+            return
+        }
+        showWebView(identifier: identifier, entity: entity, cardData: cardData)
     }
 }
 
@@ -341,5 +444,10 @@ private extension PLCardHomeActionModifier {
     func goToCardUnblock(_ card: CardEntity) {
         let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
         coordinator.didSelectAction(.onCard, card)
+    }
+    
+    func goToPGProductsCustomization() {
+        let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
+        coordinator.goToGPProductsCustomization()
     }
 }

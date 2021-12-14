@@ -8,7 +8,7 @@
 
 import XCTest
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLCommons
 import CryptoSwift
 @testable import PLLogin

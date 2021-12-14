@@ -9,7 +9,7 @@ import Models
 import Commons
 import PLCommons
 import PLCommonOperatives
-import DomainCommon
+import CoreFoundationLib
 import UI
 
 protocol HelpCenterDashboardPresenterProtocol: MenuTextWrapperProtocol {

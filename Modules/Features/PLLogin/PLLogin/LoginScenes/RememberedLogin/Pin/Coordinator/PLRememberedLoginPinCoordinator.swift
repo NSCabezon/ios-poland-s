@@ -12,7 +12,7 @@ import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLCommons
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
@@ -91,6 +91,10 @@ private extension PLRememberedLoginPinCoordinator {
 
         self.dependenciesEngine.register(for: PLRememberedLoginProcessGroup.self) { resolver in
            return rememeberedLoginProcessGroup
+        }
+        
+        self.dependenciesEngine.register(for: PLRememberedLoginChangeUserUseCase.self) { resolver in
+            return PLRememberedLoginChangeUserUseCase(dependenciesResolver: resolver)
         }
 
         self.dependenciesEngine.register(for: PLRememberedLoginPinViewController.self) { resolver in

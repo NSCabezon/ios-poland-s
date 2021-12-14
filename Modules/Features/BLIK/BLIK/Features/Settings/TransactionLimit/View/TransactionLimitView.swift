@@ -15,9 +15,9 @@ final class TransactionLimitView: UIView {
     private let purchaseLimitTextField = LisboaTextField()
     private let purchaseLimitAccessoryView = CurrencyLabel()
     private let purchaseLimitHintLabel = UILabel()
-    private let chequqBlikTitleLabel = UILabel()
-    private let chequqBlikLimitLabel = UILabel()
-    private let chequqBlikLimitValueLabel = UILabel()
+    private let chequeBlikTitleLabel = UILabel()
+    private let chequeBlikLimitLabel = UILabel()
+    private let chequeBlikLimitValueLabel = UILabel()
     public weak var delegate: TransactionLimitViewDelegate?
     
     public var withdrawLimit: String? {
@@ -41,7 +41,7 @@ final class TransactionLimitView: UIView {
     }
     
     func set(viewModel: TransactionLimitViewModel) {
-        chequqBlikLimitValueLabel.text = viewModel.chequqBlikLimitValue
+        chequeBlikLimitValueLabel.text = viewModel.chequeBlikLimitValue
         withdrawLimitAccessoryView.setText(viewModel.limitCurrency)
         purchaseLimitAccessoryView.setText(viewModel.limitCurrency)
         withdrawLimitHintLabel.text = viewModel.withdrawLimitText
@@ -57,8 +57,8 @@ private extension TransactionLimitView {
         limitsTitleLabel.text = localized("pl_blik_text_limitDaily")
         withdrawLimitTextField.setPlaceholder(localized("pl_blik_label_limitCash"))
         purchaseLimitTextField.setPlaceholder(localized("pl_blik_label_limitStores"))
-        chequqBlikTitleLabel.text = localized("pl_blik_text_chequeLimit")
-        chequqBlikLimitLabel.text = localized("pl_blik_text_oneChequeLimit")
+        chequeBlikTitleLabel.text = localized("pl_blik_text_chequeLimit")
+        chequeBlikLimitLabel.text = localized("pl_blik_text_oneChequeLimit")
     }
     
     func configureDelegates() {
@@ -73,18 +73,18 @@ private extension TransactionLimitView {
         addSubview(purchaseLimitTextField)
         addSubview(purchaseLimitHintLabel)
         
-        addSubview(chequqBlikTitleLabel)
-        addSubview(chequqBlikLimitLabel)
-        addSubview(chequqBlikLimitValueLabel)
+        addSubview(chequeBlikTitleLabel)
+        addSubview(chequeBlikLimitLabel)
+        addSubview(chequeBlikLimitValueLabel)
         
         limitsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         withdrawLimitTextField.translatesAutoresizingMaskIntoConstraints = false
         withdrawLimitHintLabel.translatesAutoresizingMaskIntoConstraints = false
         purchaseLimitTextField.translatesAutoresizingMaskIntoConstraints = false
         purchaseLimitHintLabel.translatesAutoresizingMaskIntoConstraints = false
-        chequqBlikTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        chequqBlikLimitLabel.translatesAutoresizingMaskIntoConstraints = false
-        chequqBlikLimitValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        chequeBlikTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        chequeBlikLimitLabel.translatesAutoresizingMaskIntoConstraints = false
+        chequeBlikLimitValueLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             limitsTitleLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -109,17 +109,17 @@ private extension TransactionLimitView {
             purchaseLimitHintLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
             purchaseLimitHintLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
 
-            chequqBlikTitleLabel.topAnchor.constraint(equalTo: purchaseLimitHintLabel.bottomAnchor, constant: 32),
-            chequqBlikTitleLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
-            chequqBlikTitleLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
+            chequeBlikTitleLabel.topAnchor.constraint(equalTo: purchaseLimitHintLabel.bottomAnchor, constant: 32),
+            chequeBlikTitleLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
+            chequeBlikTitleLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
             
-            chequqBlikLimitLabel.topAnchor.constraint(equalTo: chequqBlikTitleLabel.bottomAnchor, constant: 16),
-            chequqBlikLimitLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
-            chequqBlikLimitLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
+            chequeBlikLimitLabel.topAnchor.constraint(equalTo: chequeBlikTitleLabel.bottomAnchor, constant: 16),
+            chequeBlikLimitLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
+            chequeBlikLimitLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
             
-            chequqBlikLimitValueLabel.topAnchor.constraint(equalTo: chequqBlikLimitLabel.bottomAnchor, constant: 4),
-            chequqBlikLimitValueLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
-            chequqBlikLimitValueLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
+            chequeBlikLimitValueLabel.topAnchor.constraint(equalTo: chequeBlikLimitLabel.bottomAnchor, constant: 4),
+            chequeBlikLimitValueLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
+            chequeBlikLimitValueLabel.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
             
             withdrawLimitAccessoryView.widthAnchor.constraint(equalToConstant: 100)
         ])
@@ -179,22 +179,22 @@ private extension TransactionLimitView {
             size: 14
         )
         
-        chequqBlikTitleLabel.textColor = .lisboaGray
-        chequqBlikTitleLabel.font = .santander(
+        chequeBlikTitleLabel.textColor = .lisboaGray
+        chequeBlikTitleLabel.font = .santander(
             family: .headline,
             type: .bold,
             size: 17
         )
         
-        chequqBlikLimitLabel.textColor = .brownGray
-        chequqBlikLimitLabel.font = .santander(
+        chequeBlikLimitLabel.textColor = .brownGray
+        chequeBlikLimitLabel.font = .santander(
             family: .micro,
             type: .regular,
             size: 14
         )
         
-        chequqBlikLimitValueLabel.textColor = .lisboaGray
-        chequqBlikLimitValueLabel.font = .santander(
+        chequeBlikLimitValueLabel.textColor = .lisboaGray
+        chequeBlikLimitValueLabel.font = .santander(
             family: .headline,
             type: .bold,
             size: 16

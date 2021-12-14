@@ -41,7 +41,7 @@ final class ChequeFormValidator: ChequeFormValidating {
         
         guard let amount = Decimal(string: form.amount) else {
             let messages = InvalidChequeFormMessages(
-                invalidAmountMessage: "#Pole nie może być puste",
+                invalidAmountMessage: localized("pl_blik_text_cheque_emptyField"),
                 invalidNameMessage: nil
             )
             return .invalid(messages)

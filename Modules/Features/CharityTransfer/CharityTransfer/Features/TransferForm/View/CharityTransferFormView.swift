@@ -20,24 +20,32 @@ class CharityTransferFormView: UIView {
     private let accountNumberFieldName = UILabel()
     private let accountNumberTextField = UneditableField()
     private let amountFieldName = UILabel()
-    private let amountTextField = LisboaTextField()
+    private let amountView = LisboaTextFieldWithErrorView()
+    private var amountTextField: LisboaTextField { return amountView.textField }
     private let currencyAccessoryView = CurrencyAccessoryView()
     private let titleFieldName = UILabel()
     private let titleTextField = UneditableField()
     private let dateFieldName = UILabel()
+    private let transfrDateSelector: TransferDateSelector
     private let views: [UIView]
+    private var selectedDate = Date()
+    private let accountNumber = "48 1910 1048 2408 0009 7068 0001" //TODO: change this value to value from configuration file - TAP-2014
     
     weak var delegate: CharityTransferFormViewDelegate?
     
-    override init(frame: CGRect) {
+    init(language: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
+        self.transfrDateSelector = TransferDateSelector(language: language,
+                                                        dateFormatter: dateFormatter)
         views = [headerLabel,
                  accountSelectorLabel, selectedAccountView,
                  recipientFieldName, recipientTextField,
                  accountNumberFieldName, accountNumberTextField,
-                 amountFieldName, amountTextField,
+                 amountFieldName, amountView,
                  titleFieldName, titleTextField,
-                 dateFieldName]
-        super.init(frame: frame)
+                 dateFieldName, transfrDateSelector]
+        super.init(frame: .zero)
         setUp()
     }
     
@@ -51,8 +59,18 @@ class CharityTransferFormView: UIView {
     
     func getCurrentFormViewModel() -> CharityTransferFormViewModel {
         CharityTransferFormViewModel(
-            amount: Decimal(string: amountTextField.text ?? "")
+            amount: Decimal(string: amountTextField.text ?? ""),
+            date: selectedDate,
+            recipientAccountNumberUnformatted: accountNumber.replace(" ", "")
         )
+    }
+    
+    func showInvalidFormMessages(_ messages: InvalidCharityTransferFormMessages) {
+        if messages.tooLowAmount != nil || messages.tooMuchAmount != nil {
+            amountView.showError(messages.tooLowAmount ?? messages.tooMuchAmount)
+        } else {
+            amountView.hideError()
+        }
     }
 }
 
@@ -94,18 +112,18 @@ private extension CharityTransferFormView {
                                                            type: .regular,
                                                            size: 14)))
         }
+        transfrDateSelector.delegate = self
     }
     
     func prepareStylesForRecipienField() {
         recipientFieldName.text = localized("pl_foundtrans_text_recipientTransfer")
-        recipientTextField.setText("pl_foundtrans_text_RecipFoudSant")
+        recipientTextField.setText("pl_foundtrans_text_RecipFoudSant") //TODO: change this value to value from configuration file - TAP-2014
         recipientTextField.setRightAccessoryView(.image(Assets.image(named: "icnUser")))
     }
     
     func prepareStylesForAccountNumberField() {
         accountNumberFieldName.text = localized("pl_foundtrans_text_accountNumb")
-        //TODO: need to get account number form microsite - TAP 2014
-        accountNumberTextField.setText(localized("53 1090 1056 0000 0001 4750 0104"))
+        accountNumberTextField.setText(accountNumber)
     }
     
     func prepareStylesForAmountField() {
@@ -124,7 +142,7 @@ private extension CharityTransferFormView {
     }
     
     func prepareStylesForTitleField() {
-        titleFieldName.text = localized("pl_foundtrans_text_transfTitle")
+        titleFieldName.text = localized("pl_foundtrans_text_transfTitle") //TODO: change this value to value from configuration file - TAP-2014
         titleTextField.setText("pl_foundtrans_text_titleTransFound")
     }
     
@@ -177,13 +195,12 @@ private extension CharityTransferFormView {
             amountFieldName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             amountFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
-            amountTextField.topAnchor.constraint(equalTo: amountFieldName.bottomAnchor, constant: 8),
-            amountTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            amountTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            amountTextField.heightAnchor.constraint(equalToConstant: 48),
+            amountView.topAnchor.constraint(equalTo: amountFieldName.bottomAnchor, constant: 8),
+            amountView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            amountView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             currencyAccessoryView.widthAnchor.constraint(equalToConstant: 44),
             
-            titleFieldName.topAnchor.constraint(equalTo: amountTextField.bottomAnchor, constant: 16),
+            titleFieldName.topAnchor.constraint(equalTo: amountView.bottomAnchor, constant: 16),
             titleFieldName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             titleFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
@@ -195,13 +212,24 @@ private extension CharityTransferFormView {
             dateFieldName.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 16),
             dateFieldName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             dateFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            dateFieldName.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16),
+            
+            transfrDateSelector.topAnchor.constraint(equalTo: dateFieldName.bottomAnchor, constant: 8),
+            transfrDateSelector.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            transfrDateSelector.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            transfrDateSelector.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16),
         ])
     }
 }
 
 extension CharityTransferFormView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
+        delegate?.didChangeForm()
+    }
+}
+
+extension CharityTransferFormView: TransferDateSelectorDelegate {
+    func didSelectDate(date: Date) {
+        selectedDate = date
         delegate?.didChangeForm()
     }
 }

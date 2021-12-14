@@ -11,15 +11,15 @@ protocol PhoneTransferSettingsViewModelMapping {
 
 final class PhoneTransferSettingsViewModelMapper: PhoneTransferSettingsViewModelMapping {
     func map(wallet: GetWalletUseCaseOkOutput.Wallet) -> PhoneTransferSettingsViewModel {
-        guard wallet.alias.isSynced else {
-            return .expiredPhoneNumber
-        }
-        
-        switch wallet.alias.type {
-        case .empty, .eWallet_Alias:
+        switch (wallet.alias.isSynced, wallet.alias.type) {
+        case (_, .empty):
             return .unregisteredPhoneNumber
-        case .eWalletAndPSP_Alias:
+        case (_, .eWallet_Alias):
+            return .unregisteredPhoneNumber
+        case (true, .eWalletAndPSP_Alias):
             return .registeredPhoneNumber
+        case (false, .eWalletAndPSP_Alias):
+            return .expiredPhoneNumber
         }
     }
 }

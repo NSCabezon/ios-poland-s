@@ -7,6 +7,7 @@
 
 import UIKit
 import PLCommons
+import PLUI
 
 class MenuItemView: UIView {
     private let stackView = UIStackView()

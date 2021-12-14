@@ -20,6 +20,7 @@ protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol 
     func didSelectTransferType(at index: Int)
     func didPressedFloatingButton()
     func didTapCloseAmountHigh()
+    func didTapTooltip()
     func getSubtitleInfo() -> String
 }
 
@@ -38,6 +39,12 @@ final class SendMoneyTransferTypePresenter {
         else { return nil }
         return specialPricesOutput.fees
     }()
+    private lazy var isCreditCardAccount: Bool? = {
+        guard let specialPricesOutput = self.operativeData.specialPricesOutput as? SendMoneyTransferTypeUseCaseOkOutput
+        else { return nil }
+        return specialPricesOutput.isCreditCardAccount
+    }()
+
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
@@ -47,8 +54,13 @@ final class SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol {
     func viewDidLoad() {
-        let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
-        self.view?.showTransferTypes(viewModel: viewModel)
+        if self.isCreditCardAccount == true {
+            let viewModel = self.mapToCreditCardViewModel()
+            self.view?.showCreditCardAccount(viewModel)
+        } else {
+            let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
+            self.view?.showTransferTypes(viewModel: viewModel)
+        }
     }
     
     func didSelectBack() {
@@ -82,9 +94,20 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     func getSubtitleInfo() -> String {
         self.container?.getSubtitleInfo(presenter: self) ?? ""
     }
+    
+    func didTapTooltip() {
+        self.trackerManager.trackEvent(screenId: self.trackerPage.page, eventId: SendMoneyTransferTypePage.Action.clickTooltip.rawValue, extraParameters: ["transfer_country" : self.operativeData.type.trackerName])
+    }
 }
 
 private extension SendMoneyTransferTypePresenter {
+    func mapToCreditCardViewModel() -> OneNonSelectableRadioButtonViewModel {
+        return OneNonSelectableRadioButtonViewModel(
+            titleKey: "pl_sendMoney_title_creditCardAccount",
+            descriptionKey: "pl_sendMoney_text_creditCardAccount"
+        )
+    }
+    
     func mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from transferTypes: [SendMoneyTransferTypeFee]) -> SendMoneyTransferTypeRadioButtonsContainerViewModel {
         let radioButtonViewModels = transferTypes.compactMap { self.mapToSendMoneyTransferTypeRadioButtonViewModel(from: $0) }
         return SendMoneyTransferTypeRadioButtonsContainerViewModel(selectedIndex: self.getSelectedIndex(),
@@ -94,7 +117,7 @@ private extension SendMoneyTransferTypePresenter {
     func mapToSendMoneyTransferTypeRadioButtonViewModel(from transferType: SendMoneyTransferTypeFee) -> SendMoneyTransferTypeRadioButtonViewModel? {
         guard let type = transferType.type as? PolandTransferType else { return nil }
         let oneRadioButtonViewModel = OneRadioButtonViewModel(status: .inactive,
-                                                              titleKey: localized(type.title ?? "") ?? "",
+                                                              titleKey: localized(type.title ?? ""),
                                                               subtitleKey: localized(type.subtitle ?? ""))
         let feeViewModel = SendMoneyTransferTypeFeeViewModel(amount: transferType.fee,
                                                              status: .inactive)
@@ -155,5 +178,16 @@ extension PolandTransferType {
         case .creditCardAccount, .zero, .one, .four:
             return AmountDTO(value: .zero, currency: .create(.złoty))
         }
+    }
+}
+
+extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
+    
+    var trackerPage: SendMoneyTransferTypePage {
+        SendMoneyTransferTypePage()
+    }
+    
+    var trackerManager: TrackerManager {
+        dependenciesResolver.resolve(for: TrackerManager.self)
     }
 }

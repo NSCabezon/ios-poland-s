@@ -6,12 +6,14 @@
 //
 
 import UI
+import PLUI
 import Commons
+import PLCommons
 
-protocol BlikSettingsViewProtocol: DialogViewPresentationCapable {}
+protocol BlikSettingsView: AnyObject, LoaderPresentable, ErrorPresentable {}
 
 final class BlikSettingsViewController: UIViewController {
-    private let coordinator: BlikSettingsCoordinatorProtocol
+    private let presenter: BlikSettingsPresenterProtocol
     private let viewModels: [BlikSettingsViewModel]
     
     private let scrollView = UIScrollView()
@@ -21,10 +23,10 @@ final class BlikSettingsViewController: UIViewController {
    
     
     init(
-        coordinator: BlikSettingsCoordinatorProtocol,
+        presenter: BlikSettingsPresenterProtocol,
         viewModels: [BlikSettingsViewModel]
     ) {
-        self.coordinator = coordinator
+        self.presenter = presenter
         self.viewModels = viewModels
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,7 +42,7 @@ final class BlikSettingsViewController: UIViewController {
     }
 }
 
-extension BlikSettingsViewController: BlikSettingsViewProtocol {}
+extension BlikSettingsViewController: BlikSettingsView {}
 
 private extension BlikSettingsViewController {
     func setUp() {
@@ -77,18 +79,18 @@ private extension BlikSettingsViewController {
     
     func configureNavigationItem() {
         NavigationBarBuilder(style: .white, title: .title(key: localized("pl_blik_title_blikSetting")))
-            .setLeftAction(.back(action: #selector(close)))
-            .setRightActions(.close(action: #selector(closeToGlobalPosition)))
+            .setLeftAction(.back(action: #selector(back)))
+            .setRightActions(.close(action: #selector(close)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
     }
     
-    @objc func close() {
-        coordinator.close()
+    @objc func back() {
+        presenter.didTapBack()
     }
     
-    @objc func closeToGlobalPosition() {
-        coordinator.closeToGlobalPosition()
+    @objc func close() {
+        presenter.didTapClose()
     }
     
     func configureStyling() {
@@ -102,17 +104,7 @@ private extension BlikSettingsViewController {
     
     func configureActions() {
         menuView.onItemTapped = { [weak self] item in
-            guard let strongSelf = self else { return }
-            switch item {
-            case .aliasPayment:
-                strongSelf.coordinator.showAliasPaymentSettings()
-            case .phoneTransfer:
-                strongSelf.coordinator.showPhoneTransferSettings()
-            case .transferLimits:
-                strongSelf.coordinator.showTransferLimitsSettings()
-            case .otherSettings:
-                strongSelf.coordinator.showOtherSettings()
-            }
+            self?.presenter.didSelectSettingsItem(with: item)
         }
     }
     

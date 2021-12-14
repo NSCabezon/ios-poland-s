@@ -12,9 +12,10 @@ import PLUI
 import Commons
 import PLCommons
 import PLCommonOperatives
-import DomainCommon
+import CoreFoundationLib
+import PhoneTopUp
 
-final class OneAppInitViewController: UIViewController, ErrorPresentable {
+final class OneAppInitViewController: UIViewController, ErrorPresentable, LoaderPresentable {
     
     private weak var delegate: OneAppInitCoordinatorDelegate?
     private let modules: [OneAppInitModule]
@@ -65,8 +66,10 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
             button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
             
             button.addAction { [weak self] in
-                if module == .charityTransfer {
-                    guard let self = self else { return }
+                guard let self = self else { return }
+                
+                switch module {
+                case .charityTransfer:
                     Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .charityTransfer, dependenciesResolver: self.dependencyResolver))
                         .execute(on: self.useCaseHandler)
                         .onSuccess { accounts in
@@ -79,8 +82,23 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable {
                         .onError { _ in
                             self.showServiceInaccessibleMessage(onConfirm: nil)
                         }
+                case .phoneTopUp:
+                    self.showLoader()
+                    Scenario(useCase: GetPhoneTopUpFormDataUseCase(dependenciesResolver: self.dependencyResolver))
+                        .execute(on: self.useCaseHandler)
+                        .onSuccess { formData in
+                            self.hideLoader {
+                                self.delegate?.selectPhoneTopUp(formData: formData)
+                            }
+                        }
+                        .onError { _ in
+                            self.hideLoader {
+                                self.showServiceInaccessibleMessage(onConfirm: nil)
+                            }
+                        }
+                default:
+                    self.delegate?.selectModule(module)
                 }
-                self?.delegate?.selectModule(module)
             }
             button.setTitle(module.rawValue, for: .normal)
             stackView.addArrangedSubview(button)

@@ -2,6 +2,7 @@ import UI
 import Commons
 import Foundation
 import PLUI
+import PLCommons
 
 protocol ContactsViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModels(_ viewModels: [ContactViewModel])
@@ -199,13 +200,11 @@ extension ContactsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard !isSearching else { return UIView() }
-
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: LetterHeaderView.identifier) as?  LetterHeaderView else {
             return UIView()
         }
-        
         header.setText(viewModels[section].letter)
-        
+        tableView.removeUnnecessaryHeaderTopPadding()
         return header
     }
 

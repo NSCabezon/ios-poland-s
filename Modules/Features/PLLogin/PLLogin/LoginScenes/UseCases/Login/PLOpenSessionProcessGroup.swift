@@ -5,7 +5,7 @@
 //  Created by Marcos Álvarez Mesa on 4/11/21.
 //
 
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import PLCommons
 import Models

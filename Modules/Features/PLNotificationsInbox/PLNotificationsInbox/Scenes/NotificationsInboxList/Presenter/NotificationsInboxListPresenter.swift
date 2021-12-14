@@ -8,7 +8,7 @@
 import UI
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol NotificationsInboxListPresenterProtocol: MenuTextWrapperProtocol {
     var view: NotificationsInboxListViewProtocol? { get set }

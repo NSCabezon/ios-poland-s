@@ -9,6 +9,7 @@ import UI
 import UIOneComponents
 import Commons
 import PLCommons
+import PLUI
 
 public protocol BottomSheetErrorDelegate: AnyObject {
     func didTapCancelError()
@@ -19,8 +20,8 @@ public final class BottomSheetErrorView: UIView {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textLabel: UILabel!
-    @IBOutlet private weak var cancelButton: FloatingButton!
-    @IBOutlet private weak var acceptButton: FloatingButton!
+    @IBOutlet private weak var cancelButton: OneFloatingButton!
+    @IBOutlet private weak var acceptButton: OneFloatingButton!
     weak var delegate: BottomSheetErrorDelegate?
     private var view: UIView?
     
@@ -80,7 +81,7 @@ private extension BottomSheetErrorView {
         self.cancelButton.configureWith(
             type: .secondary,
             size: .medium(
-                FloatingButton.ButtonSize.MediumButtonConfig(title: localized(leftButtonKey),
+                OneFloatingButton.ButtonSize.MediumButtonConfig(title: localized(leftButtonKey),
                                                              icons: .none, fullWidth: true)),
             status: .ready)
         self.cancelButton.isEnabled = true
@@ -91,7 +92,7 @@ private extension BottomSheetErrorView {
         self.acceptButton.configureWith(
             type: .primary,
             size: .medium(
-                FloatingButton.ButtonSize.MediumButtonConfig(title: localized(viewModel.mainButtonKey),
+                OneFloatingButton.ButtonSize.MediumButtonConfig(title: localized(viewModel.mainButtonKey),
                                                              icons: .none, fullWidth: true)),
             status: .ready)
         self.acceptButton.isEnabled = true

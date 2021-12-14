@@ -8,7 +8,8 @@
 import Commons
 import PLUI
 import CoreDomain
-import DomainCommon
+import CoreFoundationLib
+import PLCommons
 
 protocol CharityTransferConfirmationPresenterProtocol {
     var view: CharityTransferConfirmationViewControllerProtocol? { get set }

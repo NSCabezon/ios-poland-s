@@ -30,7 +30,7 @@ final class AliasRegistrationFormView: UIView {
 
 private extension AliasRegistrationFormView {
     func configureContent() {
-        titleLabel.text = "#Kupuj bez podawania kodu BLIK"
+        titleLabel.text = localized("pl_blik_text_payWithCode")
         imageView.image = Images.info_lisboaGray
     }
     

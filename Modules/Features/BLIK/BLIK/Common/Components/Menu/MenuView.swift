@@ -7,6 +7,7 @@
 
 import UIKit
 import PLCommons
+import PLUI
 
 class MenuView<Item: MenuViewModel>: UIStackView {
     var onItemTapped: ((Item) -> Void)?

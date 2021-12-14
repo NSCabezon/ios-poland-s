@@ -1,10 +1,10 @@
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLUI
 import PLCommons
 import PLCommonOperatives
-import DomainCommon
+import CoreFoundationLib
 
 protocol ContactsPresenterProtocol: MenuTextWrapperProtocol {
     var view: ContactsViewProtocol? { get set }
@@ -130,7 +130,7 @@ private extension ContactsPresenter {
             .execute(on: useCaseHandler)
             .onSuccess {[weak self] accounts in
                 self?.view?.hideLoader {
-                    self?.mapToViewModels(accounts)
+                    self?.showNextScreen(with: accounts)
                 }
             }
             .onError {[weak self] _ in
@@ -140,35 +140,17 @@ private extension ContactsPresenter {
             }
     }
     
-    private func mapToViewModels(_ accounts: [AccountForDebit]) {
-        do {
-            let viewModels = try accounts.map {
-                try accountsViewModelMapper.map($0)
-            }
-            
-            if viewModels.isEmpty {
-                view?.showServiceInaccessibleMessage(onConfirm: nil)
-                return
-            }
-
-            showNextScreen(with: viewModels)
-        } catch {
-            showErrorMessage()
-        }
-    }
-    
     private func showErrorMessage() {
         let message = "#Nie udało się pobrać listy kont. Spróbuj pononownie później."
         view?.showErrorMessage(message, onConfirm: nil)
     }
 
-    func showNextScreen(with accounts: [SelectableAccountViewModel]) {
-        let defaultForPayments = accounts.first(where: { $0.isSelected == true })
+    func showNextScreen(with accounts: [AccountForDebit]) {
+        let defaultForPayments = accounts.first(where: { $0.defaultForPayments == true })
         guard defaultForPayments == nil, accounts.count > 1 else {
             coordinator.showForm(with: accounts, contact: contact)
             return
         }
-        
         coordinator.showAccountSelector(with: accounts, contact: contact)
     }
 

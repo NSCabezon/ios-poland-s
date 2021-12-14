@@ -7,20 +7,20 @@
 
 import UI
 import Commons
-import DomainCommon
+import CoreFoundationLib
 import PLCommons
 import PLUI
 
 protocol OtherBlikSettingsPresenterProtocol {
     func viewDidLoad()
-    func didPressSave(viewModel: OtherBlikSettingsViewModel)
-    func didPressClose(viewModel: OtherBlikSettingsViewModel)
-    func didUpdateForm(viewModel: OtherBlikSettingsViewModel)
+    func didPressSave(with newViewModel: OtherBlikSettingsViewModel)
+    func didPressClose(with newViewModel: OtherBlikSettingsViewModel)
+    func didUpdateForm(with newViewModel: OtherBlikSettingsViewModel)
 }
 
 final class OtherBlikSettingsPresenter {
     private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
-    private let initialViewModel: OtherBlikSettingsViewModel
+    private var viewModel: OtherBlikSettingsViewModel
     private let dependenciesResolver: DependenciesResolver
 
     weak var view: OtherBlikSettingsViewController?
@@ -55,7 +55,7 @@ final class OtherBlikSettingsPresenter {
     ) {
         self.wallet = wallet
         let currentWallet = wallet.getValue()
-        self.initialViewModel = OtherBlikSettingsViewModel(
+        self.viewModel = OtherBlikSettingsViewModel(
             blikCustomerLabel: currentWallet.alias.label,
             isTransactionVisible: currentWallet.noPinTrnVisible
         )
@@ -65,12 +65,12 @@ final class OtherBlikSettingsPresenter {
 
 extension OtherBlikSettingsPresenter: OtherBlikSettingsPresenterProtocol {
     func viewDidLoad() {
-        view?.setViewModel(viewModel: initialViewModel)
+        view?.setViewModel(viewModel: viewModel)
     }
     
-    func didPressSave(viewModel: OtherBlikSettingsViewModel) {
+    func didPressSave(with newViewModel: OtherBlikSettingsViewModel) {
         view?.showLoader()
-        let input = SaveBlikCustomerLabelInput(chequePin: viewModel.blikCustomerLabel)
+        let input = SaveBlikCustomerLabelInput(chequePin: newViewModel.blikCustomerLabel)
         Scenario(useCase: saveBlikCustomerLabelUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
@@ -84,10 +84,10 @@ extension OtherBlikSettingsPresenter: OtherBlikSettingsPresenterProtocol {
 
     }
 
-    func didPressClose(viewModel: OtherBlikSettingsViewModel) {
+    func didPressClose(with newViewModel: OtherBlikSettingsViewModel) {
         guard let view = view else { return }
         
-        let viewModelDidNotChange = initialViewModel == viewModel
+        let viewModelDidNotChange = viewModel == newViewModel
         guard viewModelDidNotChange else {
             confirmationDialogFactory.createEndProcessDialog {[weak self] in
                 self?.coordinator.close()
@@ -99,9 +99,9 @@ extension OtherBlikSettingsPresenter: OtherBlikSettingsPresenterProtocol {
         coordinator.close()
     }
     
-    func didUpdateForm(viewModel: OtherBlikSettingsViewModel) {
-        let isLabelValid = validateCustomerLabel(viewModel.blikCustomerLabel)
-        let viewModelDidChange = viewModel != initialViewModel
+    func didUpdateForm(with newViewModel: OtherBlikSettingsViewModel) {
+        let isLabelValid = validateCustomerLabel(newViewModel.blikCustomerLabel)
+        let viewModelDidChange = newViewModel != viewModel
         let isSaveButonEnabled = isLabelValid && viewModelDidChange
         view?.setIsSaveButtonEnabled(isSaveButonEnabled)
     }
@@ -134,12 +134,14 @@ extension OtherBlikSettingsPresenter: OtherBlikSettingsPresenterProtocol {
     
     private func handleUpdatedWallet(with response: GetWalletUseCaseOkOutput) {
         switch response.serviceStatus {
-        case let .available(wallet):
-            view?.showSnackbar(
-                message: localized("pl_blik_text_settingsChangedSuccess"),
-                type: .success
+        case let .available(newWallet):
+            self.wallet.setValue(newWallet)
+            self.viewModel = OtherBlikSettingsViewModel(
+                blikCustomerLabel: newWallet.alias.label,
+                isTransactionVisible: newWallet.noPinTrnVisible
             )
-            self.wallet.setValue(wallet)
+            view?.setIsSaveButtonEnabled(false)
+            coordinator.showSaveSettingsSuccessAlert()
         case .unavailable:
             view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
                 self?.coordinator.goBackToRoot()

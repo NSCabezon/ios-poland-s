@@ -1,6 +1,6 @@
 import Commons
 import Foundation
-import DomainCommon
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol SaveBlikCustomerLabelUseCaseProtocol: UseCase<SaveBlikCustomerLabelInput, Void, StringErrorOutput> {}

@@ -10,7 +10,8 @@
             "id": "CHANGE_ACCOUNT",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/contact-form",
             "isAvailable": true,
-            "method": "GET"
+            "method": "GET",
+            "isFullScreen": true
         },
         {
             "id": "EDIT_GOAL",

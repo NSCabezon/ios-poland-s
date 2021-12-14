@@ -34,7 +34,7 @@ TODO: Add long description of the pod here.
     'SANPLLibrary' => 'SANPLLibrary/Assets/**/*{json}'
   }
   
-  s.dependency 'DataRepository'
+  s.dependency 'CoreFoundationLib'
   s.dependency "SANLegacyLibrary"
 end
 

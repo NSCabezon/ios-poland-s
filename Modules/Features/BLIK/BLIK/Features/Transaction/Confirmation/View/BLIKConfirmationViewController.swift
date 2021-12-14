@@ -95,6 +95,10 @@ extension BLIKConfirmationViewController: BLIKConfirmationViewProtocol {
         } else {
             aliasInfoBannerZeroHeightConstraint.isActive = true
         }
+        
+        progressView.isHidden = false
+        scrollView.isHidden = false
+        aliasInfoBanner.isHidden = false
     }
 }
 
@@ -139,6 +143,10 @@ private extension BLIKConfirmationViewController {
         view.backgroundColor = .skyGray
         bottomView.backgroundColor = .white
         
+        progressView.isHidden = true
+        scrollView.isHidden = true
+        aliasInfoBanner.isHidden = true
+        
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -165,7 +173,7 @@ private extension BLIKConfirmationViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            aliasInfoBanner.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            aliasInfoBanner.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
             aliasInfoBanner.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             aliasInfoBanner.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             

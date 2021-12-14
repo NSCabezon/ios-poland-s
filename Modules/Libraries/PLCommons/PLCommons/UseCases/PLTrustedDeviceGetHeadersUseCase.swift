@@ -7,7 +7,7 @@
 
 import Foundation
 import Repository
-import DomainCommon
+import CoreFoundationLib
 import Commons
 import SANPLLibrary
 

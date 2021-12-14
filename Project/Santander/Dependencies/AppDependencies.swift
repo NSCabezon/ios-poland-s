@@ -7,7 +7,6 @@
 
 import Commons
 import Foundation
-import DataRepository
 import RetailLegacy
 import Repository
 import SANLegacyLibrary
@@ -25,10 +24,11 @@ import Menu
 import Cards
 import PLNotifications
 import Loans
-import iOSPublicFiles
+import CoreFoundationLib
 import CoreDomain
 import CommonUseCase
 import PLCryptography
+import UI
 
 final class AppDependencies {
     #if DEBUG
@@ -65,15 +65,16 @@ final class AppDependencies {
         return DemoUserInterpreter(bsanDataProvider: bsanDataProvider, defaultDemoUser: "12345678Z",
                                    demoModeAvailable: demoModeAvailable)
     }
+    private lazy var networkProvider: NetworkProvider = {
+            return PLNetworkProvider(dataProvider: bsanDataProvider,
+                                     demoInterpreter: demoInterpreter,
+                                     isTrustInvalidCertificateEnabled: compilation.isTrustInvalidCertificateEnabled,
+                                     trustedHeadersProvider: self.dependencieEngine.resolve(
+                                         for: PLTrustedHeadersGenerable.self
+                                     ))
+        }()
     private lazy var managersProviderAdapter: PLManagersProviderAdapter = {
         let hostProvider = PLHostProvider()
-        let networkProvider = PLNetworkProvider(dataProvider: bsanDataProvider,
-                                                demoInterpreter: demoInterpreter,
-                                                isTrustInvalidCertificateEnabled: compilation.isTrustInvalidCertificateEnabled,
-                                                trustedHeadersProvider: self.dependencieEngine.resolve(
-                                                    for: PLTrustedHeadersGenerable.self
-                                                )
-        )
         return PLManagersProviderAdapter(bsanDataProvider: self.bsanDataProvider,
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
@@ -248,37 +249,7 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetBasePLWebConfigurationUseCaseProtocol.self) { resolver in
             return GetBasePLWebConfigurationUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
-            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider)
-        }
-        self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
-            let networkProvider = PLNetworkProvider(
-                dataProvider: self.bsanDataProvider,
-                demoInterpreter: self.demoInterpreter,
-                isTrustInvalidCertificateEnabled: false,
-                trustedHeadersProvider: self.dependencieEngine.resolve(for: PLTrustedHeadersGenerable.self)
-            )
-            return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: networkProvider)
-        }
-        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
-            return PLPublicMenuViewContainer(resolver: resolver)
-        }
-        self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
-            return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
-        }
-        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
-            PLCardTransactionDetailActionFactoryModifier()
-        }
-        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
-            PLCardTransactionDetailViewConfiguration()
-        }
-        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
-            PLEditBudgetHelperModifier()
-        }
         self.dependencieEngine.register(for: TransfersRepository.self) { _ in
-            return self.servicesLibrary.transfersRepository
-        }
-        self.dependencieEngine.register(for: PLTransfersRepository.self) { _ in
             return self.servicesLibrary.transfersRepository
         }
         self.dependencieEngine.register(for: ContactsSortedHandlerProtocol.self) { _ in
@@ -310,20 +281,54 @@ private extension AppDependencies {
                                         sessionStartedActions: [loadPfm],
                                         sessionFinishedActions: [stopPfm])
         }
-        self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
-            PLPrivateSideMenuModifier()
-        }
-        self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
-            PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)
-        }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
         }
         self.dependencieEngine.register(for: OneAuthorizationProcessorRepository.self) { _ in
             return self.servicesLibrary.oneAuthorizationProcessorRepository
         }
+        registerDependenciesPL()
+    }
+    
+    func registerDependenciesPL() {
+        self.dependencieEngine.register(for: GetGenericErrorDialogDataUseCaseProtocol.self) { _ in
+            return PLGetGenericErrorDialogDataUseCase()
+        }
         self.dependencieEngine.register(for: PLOneAuthorizationProcessorRepository.self) { _ in
             return self.servicesLibrary.oneAuthorizationProcessorRepository
+        }
+        self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
+            PLPrivateSideMenuModifier()
+        }
+        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
+            PLPrivateMenuModifier(resolver: resolver)
+        }
+        self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
+            PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: PLTransfersRepository.self) { _ in
+            return self.servicesLibrary.transfersRepository
+        }
+        self.dependencieEngine.register(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self) { resolver in
+            return GetPLAccountOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
+        }
+        self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
+            return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
+        }
+        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
+            return PLPublicMenuViewContainer(resolver: resolver)
+        }
+        self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
+            PLCardTransactionDetailActionFactoryModifier()
+        }
+        self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
+            PLCardTransactionDetailViewConfiguration()
+        }
+        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
+            PLEditBudgetHelperModifier()
         }
     }
 }

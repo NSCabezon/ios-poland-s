@@ -9,4 +9,6 @@ import Foundation
 
 struct CharityTransferFormViewModel {
     let amount: Decimal?
+    let date: Date
+    let recipientAccountNumberUnformatted: String
 }

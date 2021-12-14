@@ -67,7 +67,7 @@ extension CreditCardRepaymentDetailsPresenter: CreditCardRepaymentDetailsPresent
     
     func viewWillAppear() {
         // NOTE: There are problems with changing textfield text value when typing decimal separator, so this workaround is for initializing text only once
-        setUpCreditCardRepaymentDetailsRepaymentAmountViewModel(form: formManager.form, initialText: formManager.form.amount?.value?.description)
+        setUpCreditCardRepaymentDetailsRepaymentAmountViewModel(form: formManager.form, initialText: formManager.form.amount?.value?.getDecimalFormattedValue())
         container?.progressBarAlpha(1.0)
     }
     
@@ -249,7 +249,7 @@ private extension CreditCardRepaymentForm {
         var title = repaymentType.localized
         // Show amount info only for complete and minimal type
         // Based on: [TEET-153537]
-        if let displayValue = amount?.displayValueAndCurrency, repaymentType != .other {
+        if let displayValue = amount?.getFormattedDisplayValueAndCurrency(with: NumberFormatter.PLAmountNumberFormatterWithoutCurrency), repaymentType != .other {
             title += " (" + displayValue + ")"
         }
         return title

@@ -4,11 +4,12 @@ import Commons
 import Contacts
 import PLUI
 import PLCommonOperatives
+import PLCommons
 
 protocol ContactsCoordinatorProtocol {
-    func showForm(with accounts: [SelectableAccountViewModel], contact: Contact?)
+    func showForm(with accounts: [AccountForDebit], contact: Contact?)
     func pop()
-    func showAccountSelector(with accounts: [SelectableAccountViewModel], contact: Contact?)
+    func showAccountSelector(with accounts: [AccountForDebit], contact: Contact?)
 }
 
 final class ContactsCoordinator: ModuleCoordinator {
@@ -36,10 +37,12 @@ extension ContactsCoordinator: ContactsCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    func showAccountSelector(with accounts: [SelectableAccountViewModel], contact: Contact?) {
+    func showAccountSelector(with accounts: [AccountForDebit], contact: Contact?) {
+        let selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
         let coordinator = AccountsForDebitCoordinator(dependenciesResolver: dependenciesEngine,
                                                       navigationController: navigationController,
-                                                      viewModels: accounts,
+                                                      accounts: accounts,
+                                                      selectedAccountNumber: selectedAccountNumber,
                                                       contact: contact,
                                                       sourceView: .contacts,
                                                       selectableAccountDelegate: nil)
@@ -47,10 +50,12 @@ extension ContactsCoordinator: ContactsCoordinatorProtocol {
         coordinator.start()
     }
 
-    func showForm(with accounts: [SelectableAccountViewModel], contact: Contact?) {
+    func showForm(with accounts: [AccountForDebit], contact: Contact?) {
+        let selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
         let coordinator = MobileTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                         navigationController: navigationController,
                                                         accounts: accounts,
+                                                        selectedAccountNumber: selectedAccountNumber,
                                                         contact: contact)
         coordinator.start()
     }

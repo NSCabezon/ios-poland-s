@@ -1,4 +1,4 @@
-import DataRepository
+import CoreFoundationLib
 
 struct DataRepositoryBuilder {
     let appInfo: VersionInfoDTO

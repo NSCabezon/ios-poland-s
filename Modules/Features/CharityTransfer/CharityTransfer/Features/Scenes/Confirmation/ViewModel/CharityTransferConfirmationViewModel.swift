@@ -56,10 +56,10 @@ struct CharityTransferConfirmationViewModel {
     }
     
     var accountNumber: String {
-        IBANFormatter.format(iban: transfer.account.accountNumberUnformatted)
+        IBANFormatter.format(iban: transfer.account.number)
     }
     
-    var account: SelectableAccountViewModel {
+    var account: AccountForDebit {
         transfer.account
     }
     
@@ -88,4 +88,3 @@ struct CharityTransferConfirmationViewModel {
         return items
     }
 }
-

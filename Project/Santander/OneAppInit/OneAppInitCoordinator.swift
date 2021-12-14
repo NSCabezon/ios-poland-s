@@ -8,6 +8,7 @@
 import Foundation
 import Commons
 import BLIK
+import TaxTransfer
 import CreditCardRepayment
 import PLHelpCenter
 import DemoAuthenticator
@@ -16,10 +17,13 @@ import mCommerce
 import PLNotificationsInbox
 import UI
 import PLCommons
+import PLCommonOperatives
 import PLUI
 import CharityTransfer
 import Models
 import SANLegacyLibrary
+import PhoneTopUp
+import ZusTransfer
 
 enum OneAppInitModule: String, CaseIterable {
     case deepLink = "Deep Link"
@@ -33,6 +37,9 @@ enum OneAppInitModule: String, CaseIterable {
     case mCommerce = "mCommerce"
     case notificationsInbox = "Notifications Inbox"
     case charityTransfer = "Charity transfer"
+    case phoneTopUp = "Phone Top-Up"
+    case taxTransfer = "Tax Transfer"
+    case zusTransfer = "Zus Transfer"
 }
 
 extension OneAppInitModule {
@@ -49,6 +56,7 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
+    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput)
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -64,6 +72,13 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector, navigationController: UINavigationController?) {
         self.dependenciesEngine = dependenciesEngine
         self.navigationController = navigationController
+        self.registerDependencies()
+    }
+    
+    private func registerDependencies() {
+        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
+            return AccountForDebitMapper()
+        }
     }
     
     func start() {
@@ -166,34 +181,56 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             coordinator.start()
+        case .taxTransfer:
+            let coordinator = TaxTransferFormCoordinator(
+                dependenciesResolver: dependenciesEngine,
+                navigationController: navigationController
+            )
+            coordinator.start()
+        case .zusTransfer:
+            let coordinator = ZusTransferFormCoordinator(
+                dependenciesResolver: dependenciesEngine,
+                navigationController: navigationController
+            )
+            coordinator.start()
         default:
             break
         }
     }
     
+    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput) {
+        let coordinator = PhoneTopUpFormCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            formData: formData
+        )
+        coordinator.start()
+    }
+    
     func selectCharityTransfer(accounts: [AccountForDebit]) {
-        let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-        let models = accounts.compactMap({ try? mapper.map($0) })
-        guard !models.isEmpty else {
+        guard !accounts.isEmpty else {
             view?.showError()
             return
         }
         if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
+            var selectedAccountNumber = ""
+            if accounts.count > 1 {
+                selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
+            } else {
+                selectedAccountNumber = accounts.first?.number ?? ""
+            }
             let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                              navigationController: navigationController,
-                                                             accounts: models)
+                                                             accounts: accounts,
+                                                             selectedAccountNumber: selectedAccountNumber)
             coordinator.start()
         } else {
-            do {
-                let viewModels = try accounts.map({ try mapper.map($0) })
-                let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                             navigationController: navigationController,
-                                                             viewModels: viewModels,
-                                                             sourceView: .sendMoney)
-                coordinator.start()
-            } catch {
-                view?.showError()
-            }
+            let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
+                                                         navigationController: navigationController,
+                                                         accounts: accounts,
+                                                         selectedAccountNumber: "",
+                                                         sourceView: .sendMoney)
+            coordinator.start()
         }
     }
 }

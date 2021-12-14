@@ -5,14 +5,15 @@
 //  Created by José Norberto Hidalgo on 29/9/21.
 //
 
-import UI
-import UIKit
-import Operative
 import UIOneComponents
-import Models
+import Operative
 import Commons
+import Models
+import UIKit
+import UI
 
 protocol SendMoneyTransferTypeView: OperativeView {
+    func showCreditCardAccount(_ model: OneNonSelectableRadioButtonViewModel)
     func showTransferTypes(viewModel: SendMoneyTransferTypeRadioButtonsContainerViewModel)
     func showAmountTooHighView()
     func closeAmountTooHighView()
@@ -25,10 +26,12 @@ final class SendMoneyTransferTypeViewController: UIViewController {
             static let titleKey: String = "toolbar_title_sendType"
         }
         enum MainStackView {
-            static let margins = UIEdgeInsets(top: 20.0,
-                                              left: 16.0,
-                                              bottom: .zero,
-                                              right: 16.0)
+            static let margins = UIEdgeInsets(
+                top: 20.0,
+                left: 16.0,
+                bottom: .zero,
+                right: 16.0
+            )
         }
         enum TitleLabel {
             static let textKey: String = "sendMoney_label_sentType"
@@ -47,7 +50,7 @@ final class SendMoneyTransferTypeViewController: UIViewController {
     
     let presenter: SendMoneyTransferTypePresenterProtocol
     @IBOutlet private weak var mainStackView: UIStackView!
-    @IBOutlet private weak var floatingButton: FloatingButton!
+    @IBOutlet private weak var floatingButton: OneFloatingButton!
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
@@ -73,7 +76,7 @@ final class SendMoneyTransferTypeViewController: UIViewController {
     private lazy var amountHighView: SendMoneyTransferTypeAmountHighView = {
         let amountHighView = SendMoneyTransferTypeAmountHighView()
         amountHighView.delegate = self
-       return amountHighView
+        return amountHighView
     }()
     private lazy var bottomSheet: BottomSheet = {
         return BottomSheet()
@@ -119,10 +122,15 @@ private extension SendMoneyTransferTypeViewController {
         self.floatingButton.configureWith(
             type: .primary,
             size: .large(
-                FloatingButton.ButtonSize.LargeButtonConfig(title: localized(Constants.ContinueButton.titleKey),
-                                                            subtitle: self.presenter.getSubtitleInfo(),
-                                                            icons: .right, fullWidth: false)),
-            status: .ready)
+                OneFloatingButton.ButtonSize.LargeButtonConfig(
+                    title: localized(Constants.ContinueButton.titleKey),
+                    subtitle: self.presenter.getSubtitleInfo(),
+                    icons: .right,
+                    fullWidth: false
+                )
+            ),
+            status: .ready
+        )
         self.floatingButton.isEnabled = true
         self.floatingButton.addTarget(self, action: #selector(floatingButtonDidPressed), for: .touchUpInside)
     }
@@ -151,11 +159,17 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
         self.radioButtonsContainer.setViewModel(viewModel)
     }
     
+    func showCreditCardAccount(_ model: OneNonSelectableRadioButtonViewModel) {
+        self.radioButtonsContainer.setViewModel(model)
+    }
+    
     func showAmountTooHighView() {
-        self.bottomSheet.show(in: self,
-                              type: .custom(height: nil, isPan: true, bottomVisible: true),
-                              component: .all,
-                              view: self.amountHighView)
+        self.bottomSheet.show(
+            in: self,
+            type: .custom(height: nil, isPan: true, bottomVisible: true),
+            component: .all,
+            view: self.amountHighView
+        )
     }
     
     func closeAmountTooHighView() {

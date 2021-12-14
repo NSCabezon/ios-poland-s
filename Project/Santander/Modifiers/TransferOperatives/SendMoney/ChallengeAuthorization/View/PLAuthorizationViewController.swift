@@ -11,6 +11,7 @@ import UIOneComponents
 import Models
 import Commons
 import PLCommons
+import PLUI
 
 protocol PLAuthorizationView: AnyObject {
     func addRemainingTimeView(_ viewModel: RemainingTimeViewModel)
@@ -24,8 +25,8 @@ final class PLAuthorizationViewController: UIViewController {
     
     @IBOutlet private weak var floattingButtonConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackView: UIStackView!
-    @IBOutlet private weak var continueFloatingButton: FloatingButton!
-    @IBOutlet private weak var cancelFloatingButton: FloatingButton!
+    @IBOutlet private weak var continueFloatingButton: OneFloatingButton!
+    @IBOutlet private weak var cancelFloatingButton: OneFloatingButton!
     @IBOutlet private weak var floatingButtonsConstraint: NSLayoutConstraint!
     
     let presenter: PLAuthorizationPresenterProtocol
@@ -86,7 +87,7 @@ final class PLAuthorizationViewController: UIViewController {
 
 extension PLAuthorizationViewController: PLAuthorizationView {
     func setContinueButton(_ isEnabled: Bool) {
-        self.continueFloatingButton.isEnabledButton(isEnabled)
+        self.continueFloatingButton.isEnabled = isEnabled
     }
     
     func addRemainingTimeView(_ viewModel: RemainingTimeViewModel) {
@@ -135,7 +136,7 @@ private extension PLAuthorizationViewController {
         self.continueFloatingButton.configureWith(
             type: .primary,
             size: .medium(
-                FloatingButton.ButtonSize.MediumButtonConfig(title: localized("generic_button_continue"),
+                OneFloatingButton.ButtonSize.MediumButtonConfig(title: localized("generic_button_confirm"),
                                                             icons: .none, fullWidth: true)),
             status: .ready)
         self.continueFloatingButton.isEnabled = false
@@ -145,7 +146,7 @@ private extension PLAuthorizationViewController {
         self.cancelFloatingButton.configureWith(
             type: .secondary,
             size: .medium(
-                FloatingButton.ButtonSize.MediumButtonConfig(title: localized("generic_link_cancel"),
+                OneFloatingButton.ButtonSize.MediumButtonConfig(title: localized("generic_link_cancel"),
                                                              icons: .none, fullWidth: true)),
             status: .ready)
         self.cancelFloatingButton.isEnabled = true

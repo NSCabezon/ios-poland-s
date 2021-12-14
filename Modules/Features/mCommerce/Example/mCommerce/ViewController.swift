@@ -10,7 +10,7 @@ import UIKit
 import UI
 import mCommerce
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 class ViewController: UIViewController {
     

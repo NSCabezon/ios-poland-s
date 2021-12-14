@@ -7,7 +7,7 @@
 
 import Models
 import Commons
-import DomainCommon
+import CoreFoundationLib
 
 protocol RepaymentAmountOptionChooseListPresenterProtocol: MenuTextWrapperProtocol {
     var view: RepaymentAmountOptionChooseListViewProtocol? { get set }

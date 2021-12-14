@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         newComponents.append(self.smsAuthenticationViewWithDifferentStyle())
         newComponents.append(self.trustedDevicePinView())
         newComponents.append(self.interactiveInfoView())
+        newComponents.append(self.datePickerSelector())
         return newComponents
     }()
 
@@ -83,6 +84,9 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let component = self.components[section] as? UIView else {
             return nil
+        }
+        if component.subviews.contains(where: { $0 is TransferDateSelector })  {
+            return "TransferDateSelector"
         }
         return String(describing: type(of: component))
     }

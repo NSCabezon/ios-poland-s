@@ -4,6 +4,7 @@ import Commons
 public protocol ErrorPresentable {
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?)
     func showErrorMessage(_ message: String, onConfirm: (() -> Void)?)
+    func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?)
     func showErrorMessage(
         title: String,
         message: String,
@@ -38,12 +39,15 @@ extension ErrorPresentable where Self: UIViewController {
             ],
             image: "icnAlert",
             actionButton: .init(title: actionButtonTitle, style: .red, action: onConfirm ?? {}),
-            closeButton: closeButton
-        )
+            closeButton: closeButton, hasTitleAndNotAlignment: true)
         dialog.show(in: self)
     }
     
     public func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {
+        showErrorMessage(message, image: "icnAlert", onConfirm: onConfirm)
+    }
+    
+    public func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {
         let dialog = Dialog(
             title: localized("pl_blik_alert_title_error"),
             items: [
@@ -59,10 +63,9 @@ extension ErrorPresentable where Self: UIViewController {
                     )
                 )
             ],
-            image: "icnAlert",
+            image: image,
             actionButton: .init(title: localized("generic_link_ok"), style: .red, action: onConfirm ?? {}),
-            closeButton: .none
-        )
+            closeButton: .none, hasTitleAndNotAlignment: true)
         
         dialog.show(in: self)
     }

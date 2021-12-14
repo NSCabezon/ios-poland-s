@@ -88,7 +88,7 @@ extension PLCreditCardRepaymentManager: PLCreditCardRepaymentManagerProtocol {
         // Conditions have been taken from this story https://godzilla.centrala.bzwbk:9998/browse/MOBILE-8148
         let ccrCards = try cards
             .filter { $0.type == "CREDIT" }
-            .filter { $0.generalStatus != "CANCELLED" }
+            .filter { $0.generalStatus != "CANCELLED" && $0.generalStatus != "INACTIVE" }
             .compactMap { card -> CCRCardDTO? in
                 guard let account = accounts.first(where: { card.relatedAccount == $0.number }) else { return nil }
                 let creditCardAccountDetails: CreditCardDetailsDTO? = try {
