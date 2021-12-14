@@ -17,17 +17,14 @@ final class AccountSelectorPresenter {
     private var selectedAccountNumber: String?
     private let accountMapper: SelectableAccountViewModelMapping
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
-    private weak var accountSelectorDelegate: AccountSelectorDelegate?
 
     init(dependenciesResolver: DependenciesResolver,
          accounts: [AccountForDebit],
-         selectedAccountNumber: String?,
-         accountSelectorDelegate: AccountSelectorDelegate?) {
+         selectedAccountNumber: String?) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
         self.accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
-        self.accountSelectorDelegate = accountSelectorDelegate
     }
 }
 
@@ -39,12 +36,12 @@ private extension AccountSelectorPresenter {
 
 extension AccountSelectorPresenter: AccountSelectorPresenterProtocol {
     func didSelectAccount(at index: Int) {
-        accountSelectorDelegate?.accountSelectorDidSelectAccount(withAccountNumber: accounts[index].number)
-        didPressClose()
+        let selectedAccountNumber = accounts[index].number
+        coordinator.didSelectAccount(withAccountNumber: selectedAccountNumber)
     }
     
     func didPressClose() {
-        coordinator.pop()
+        coordinator.back()
     }
     
     func viewDidLoad() {

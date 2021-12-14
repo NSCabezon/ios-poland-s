@@ -11,24 +11,28 @@ import PLCommons
 import PLUI
 
 protocol AccountSelectorCoordinatorProtocol {
-    func pop()
+    func back()
+    func didSelectAccount(withAccountNumber accountNumber: String)
     func closeProcess()
 }
 
 final class AccountSelectorCoordinator: ModuleCoordinator {
     weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let mode: AccountSelectorMode
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String?
     private weak var accountSelectorDelegate: AccountSelectorDelegate?
 
     public init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
+         mode: AccountSelectorMode,
          accounts: [AccountForDebit],
          selectedAccountNumber: String?,
          accountSelectorDelegate: AccountSelectorDelegate) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.mode = mode
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
         self.accountSelectorDelegate = accountSelectorDelegate
@@ -38,17 +42,26 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
     public func start() {
         let presenter = AccountSelectorPresenter(dependenciesResolver: dependenciesEngine,
                                                  accounts: accounts,
-                                                 selectedAccountNumber: selectedAccountNumber,
-                                                 accountSelectorDelegate: accountSelectorDelegate)
+                                                 selectedAccountNumber: selectedAccountNumber)
         let controller = AccountSelectorViewController(presenter: presenter,
-                                                       screenLocationConfiguration: .charityTransfer)
+                                                       screenLocationConfiguration: .phoneTopUp)
         presenter.view = controller
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
-    public func pop() {
+    public func back() {
+        switch mode {
+        case .mustSelectDefaultAccount:
+            navigationController?.popToRootViewController(animated: true)
+        case .changeDefaultAccount:
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func didSelectAccount(withAccountNumber accountNumber: String) {
+        accountSelectorDelegate?.accountSelectorDidSelectAccount(withAccountNumber: accountNumber)
         navigationController?.popViewController(animated: true)
     }
     

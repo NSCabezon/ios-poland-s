@@ -23,6 +23,7 @@ public protocol PLManagersProviderProtocol {
     func getTransferManager() -> PLTransfersManagerProtocol
     func getCardOperativesManager() -> PLCardOperativesManagerProtocol
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol
+    func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -43,6 +44,7 @@ public final class PLManagersProvider {
     private let cardOperativesManager: PLCardOperativesManager
     private let loanScheduleManager: PLLoanScheduleManager
     private let authorizationProcessorManager: PLAuthorizationProcessorManager
+    private let phoneTopUpManager: PLPhoneTopUpManagerProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -72,6 +74,7 @@ public final class PLManagersProvider {
         self.cardOperativesManager = PLCardOperativesManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.authorizationProcessorManager = PLAuthorizationProcessorManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.phoneTopUpManager = PLPhoneTopUpManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
     }
 }
 
@@ -145,6 +148,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     
     public func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
         self.authorizationProcessorManager
+    }
+    
+    public func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
+        self.phoneTopUpManager
     }
 }
 

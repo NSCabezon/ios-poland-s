@@ -8,6 +8,7 @@ import UI
 import Commons
 import PLCommons
 import PLUI
+import PLCommonOperatives
 
 protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func back()
@@ -21,30 +22,32 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let formData: GetPhoneTopUpFormDataOutput
     private weak var accountSelectorDelegate: AccountSelectorDelegate?
+    
+    private lazy var phoneTopUpController: PhoneTopUpFormViewController = {
+        return dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
+    }()
     
     // MARK: Lifecycle
     
     public init(dependenciesResolver: DependenciesResolver,
-                navigationController: UINavigationController?) {
+                navigationController: UINavigationController?,
+                formData: GetPhoneTopUpFormDataOutput) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.formData = formData
         self.setUpDependencies()
     }
     
-    // MARK: Methods
-    
-    public func start() {
-        let controller = self.dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
+    // MARK: Dependencies
     
     private func setUpDependencies() {
         self.dependenciesEngine.register(for: PhoneTopUpFormCoordinatorProtocol.self) { _ in
             return self
         }
-        self.dependenciesEngine.register(for: PhoneTopUpFormPresenterProtocol.self) { resolver in
-            return PhoneTopUpFormPresenter(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: PhoneTopUpFormPresenterProtocol.self) { [formData] resolver in
+            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)
@@ -59,6 +62,27 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
         self.dependenciesEngine.register(for: SelectableAccountViewModelMapping.self) { _ in
             return SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
+        
+        self.dependenciesEngine.register(for: GetPhoneTopUpFormDataUseCaseProtocol.self) { resolver in
+            return GetPhoneTopUpFormDataUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
+            return AccountForDebitMapper()
+        }
+    }
+    
+    // MARK: Methods
+    
+    public func start() {
+        let selectedAccount = formData.accounts.first(where: \.defaultForPayments)
+        guard selectedAccount != nil else {
+            self.navigationController?.pushViewController(phoneTopUpController, animated: false)
+            showAccountSelector(availableAccounts: formData.accounts, selectedAccountNumber: nil, mode: .mustSelectDefaultAccount)
+            return
+        }
+        
+        self.navigationController?.pushViewController(phoneTopUpController, animated: true)
     }
 }
 
@@ -72,8 +96,13 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
     }
     
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?) {
+        showAccountSelector(availableAccounts: availableAccounts, selectedAccountNumber: selectedAccountNumber, mode: .changeDefaultAccount)
+    }
+    
+    func showAccountSelector(availableAccounts: [AccountForDebit], selectedAccountNumber: String?, mode: AccountSelectorMode) {
         let accountSelectorCoordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
                                                                     navigationController: navigationController,
+                                                                    mode: mode,
                                                                     accounts: availableAccounts,
                                                                     selectedAccountNumber: selectedAccountNumber,
                                                                     accountSelectorDelegate: self)

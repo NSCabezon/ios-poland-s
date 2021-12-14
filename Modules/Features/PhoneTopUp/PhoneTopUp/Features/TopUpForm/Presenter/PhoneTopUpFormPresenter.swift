@@ -6,9 +6,13 @@
 //
 
 import Commons
-import Foundation
 import PLCommons
+import Commons
 import PLUI
+import CoreFoundationLib
+import SANPLLibrary
+import SANLegacyLibrary
+
 
 protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate {
     var view: PhoneTopUpFormViewProtocol? { get set }
@@ -22,33 +26,33 @@ final class PhoneTopUpFormPresenter {
     // MARK: Properties
     
     weak var view: PhoneTopUpFormViewProtocol?
+    private let accounts: [AccountForDebit]
+    private let dependenciesResolver: DependenciesResolver
     private weak var coordinator: PhoneTopUpFormCoordinatorProtocol?
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
-    private let dependenciesResolver: DependenciesResolver
+    private let useCase: GetPhoneTopUpFormDataUseCaseProtocol
     private var selectedAccountNumber: String?
-    
-    #warning("todo: remove mock")
-    private var mockAccounts = [
-        AccountForDebit(id: "", name: "Konto godne polecenia", number: "022344534534534", availableFunds: Money(amount: 10000.0, currency: "PLN"), defaultForPayments: true, type: .DEPOSIT, accountSequenceNumber: 0, accountType: 2),
-        AccountForDebit(id: "", name: "Konto godne polecenia 2", number: "122344534534534", availableFunds: Money(amount: 10000.0, currency: "PLN"), defaultForPayments: false, type: .DEPOSIT, accountSequenceNumber: 0, accountType: 2),
-    ]
+    private let useCaseHandler: UseCaseHandler
     
     // MARK: Lifecycle
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, accounts: [AccountForDebit]) {
         self.dependenciesResolver = dependenciesResolver
+        self.accounts = accounts
         coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
-        selectedAccountNumber = mockAccounts.first(where: \.defaultForPayments)?.number
+        selectedAccountNumber = accounts.first(where: \.defaultForPayments)?.number
+        self.useCase = dependenciesResolver.resolve(for: GetPhoneTopUpFormDataUseCaseProtocol.self)
+        self.useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
     }
 }
 
 // MARK: PhoneTopUpFormPresenterProtocol
 extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     func viewDidLoad() {
-        let viewModels = mockAccounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
+        let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         view?.updateSelectedAccount(with: viewModels)
     }
     
@@ -66,11 +70,11 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     
     func accountSelectorDidSelectAccount(withAccountNumber accountNumber: String) {
         selectedAccountNumber = accountNumber
-        let viewModels = mockAccounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
+        let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         view?.updateSelectedAccount(with: viewModels)
     }
     
     func didSelectChangeAccount() {
-        coordinator?.didSelectChangeAccount(availableAccounts: mockAccounts, selectedAccountNumber: selectedAccountNumber)
+        coordinator?.didSelectChangeAccount(availableAccounts: accounts, selectedAccountNumber: selectedAccountNumber)
     }
 }

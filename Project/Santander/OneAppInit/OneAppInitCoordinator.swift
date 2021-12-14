@@ -17,6 +17,7 @@ import mCommerce
 import PLNotificationsInbox
 import UI
 import PLCommons
+import PLCommonOperatives
 import PLUI
 import CharityTransfer
 import Models
@@ -53,6 +54,7 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
+    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput)
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -68,6 +70,13 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector, navigationController: UINavigationController?) {
         self.dependenciesEngine = dependenciesEngine
         self.navigationController = navigationController
+        self.registerDependencies()
+    }
+    
+    private func registerDependencies() {
+        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
+            return AccountForDebitMapper()
+        }
     }
     
     func start() {
@@ -170,12 +179,6 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             coordinator.start()
-        case .phoneTopUp:
-            let coordinator = PhoneTopUpFormCoordinator(
-                dependenciesResolver: dependenciesEngine,
-                navigationController: navigationController
-            )
-            coordinator.start()
         case .taxTransfer:
             let coordinator = TaxTransferFormCoordinator(
                 dependenciesResolver: dependenciesEngine,
@@ -185,6 +188,15 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         default:
             break
         }
+    }
+    
+    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput) {
+        let coordinator = PhoneTopUpFormCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            formData: formData
+        )
+        coordinator.start()
     }
     
     func selectCharityTransfer(accounts: [AccountForDebit]) {
