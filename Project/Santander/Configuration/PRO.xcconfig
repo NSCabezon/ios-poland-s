@@ -9,10 +9,10 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 PRODUCT_NAME = Santander
-PRODUCT_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public
-WIDGET_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.widget
-SIRI_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.siriintents
-SIRI_UI_BUNDLE_IDENTIFIER = com.isban.bancosantander.pl.public.siriintentsui
+PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.prod
+WIDGET_BUNDLE_IDENTIFIER = pl.santander.oneapp.prod.widget
+SIRI_BUNDLE_IDENTIFIER = pl.santander.oneapp.prod.siriintents
+SIRI_UI_BUNDLE_IDENTIFIER = pl.santander.oneapp.prod.siriintentsui
 APP_NAME = Santander
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
 EMMA_API_KEY = santanderxqq6LQWwW
@@ -29,8 +29,8 @@ TRUSTEER_FILES_TO_EXCLUDE = $(SRCROOT)/Santander/Trusteer/Wrapper/PRE/SdkHandler
 EXCLUDED_SOURCE_FILE_NAMES = $(ENVIRONMENTS_TO_EXCLUDE) $(TRUSTEER_FILES_TO_EXCLUDE) $(SRCROOT)/Santander/Demo/assets/demo/soap/*.xml $(SRCROOT)/Santander/Demo/assets/demo/rest/*.json
 HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/Santander/Trusteer/tas/include
 TAS_ROOT = "$(SRCROOT)/Santander/Trusteer/tas"
-APP_GROUPS_IDENTIFIER = group.es.santander.sso
-SHARED_KEYCHAIN_IDENTIFIER = JFX6PVNK48.pl.santander.oneappparticulares
+APP_GROUPS_IDENTIFIER = group.pl.santander.oneapp
+SHARED_KEYCHAIN_IDENTIFIER = 6E95WJX594.pl.santander.oneapp
 CODE_SIGN_ENTITLEMENTS = $(SRCROOT)/Santander/Entitlement/Release.entitlements
 DYNATRACE_APP_ID = af58c80c-f4c7-4fc8-bbed-a8038770c738
 DYNATRACE_AUTO_ACTION_TIMEOUT = 5000

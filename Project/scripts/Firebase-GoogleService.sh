@@ -10,9 +10,12 @@ DEV=GoogleService-Info-development.plist
 INTERN=GoogleService-Info-intern.plist
 PRE=GoogleService-Info-pre.plist
 PROD=GoogleService-Info-production.plist
+UAT=GoogleService-Info-uat.plist
+REGRESSION=GoogleService-Info-regression.plist
+PREPROD=GoogleService-Info-preprod.plist
 
 GOOGLE_SERVICE_ORIGIN=$DEV
-if [[ "$CONFIGURATION" == "Dev-Debug" ]]; then
+if [[ "$CONFIGURATION" == "Dev-Debug" ]] || [[ "$CONFIGURATION" == "Dev-Release" ]]; then
     GOOGLE_SERVICE_ORIGIN=$DEV
 elif [[ "$CONFIGURATION" == "Intern-Debug" ]] || [[ "$CONFIGURATION" == "Intern-Release" ]]; then
     GOOGLE_SERVICE_ORIGIN=$INTERN
@@ -20,6 +23,12 @@ elif [[ "$CONFIGURATION" == "Pre-Debug" ]] || [[ "$CONFIGURATION" == "Pre-Releas
     GOOGLE_SERVICE_ORIGIN=$PRE
 elif [[ "$CONFIGURATION" == "Pro-Debug" ]] || [[ "$CONFIGURATION" == "Pro-Release" ]]; then
     GOOGLE_SERVICE_ORIGIN=$PROD
+elif [[ "$CONFIGURATION" == "Uat-Debug" ]] || [[ "$CONFIGURATION" == "Uat-Release" ]]; then
+    GOOGLE_SERVICE_ORIGIN=$UAT
+elif [[ "$CONFIGURATION" == "Preprod-Debug" ]] || [[ "$CONFIGURATION" == "Preprod-Release" ]]; then
+    GOOGLE_SERVICE_ORIGIN=$PREPROD
+elif [[ "$CONFIGURATION" == "Regression-Debug" ]] || [[ "$CONFIGURATION" == "Regression-Release" ]]; then
+    GOOGLE_SERVICE_ORIGIN=$REGRESSION
 fi
 
 GOOGLE_SERVICE_ORIGIN_PATH=$GOOGLE_SERVICES_PATH/$GOOGLE_SERVICE_ORIGIN
