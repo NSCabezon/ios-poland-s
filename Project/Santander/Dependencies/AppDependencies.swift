@@ -300,6 +300,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
             PLPrivateSideMenuModifier()
         }
+        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
+            PLPrivateMenuModifier(resolver: resolver)
+        }
         self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
             PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)
         }
