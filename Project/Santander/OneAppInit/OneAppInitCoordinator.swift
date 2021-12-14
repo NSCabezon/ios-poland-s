@@ -23,6 +23,7 @@ import CharityTransfer
 import Models
 import SANLegacyLibrary
 import PhoneTopUp
+import ZusTransfer
 
 enum OneAppInitModule: String, CaseIterable {
     case deepLink = "Deep Link"
@@ -38,6 +39,7 @@ enum OneAppInitModule: String, CaseIterable {
     case charityTransfer = "Charity transfer"
     case phoneTopUp = "Phone Top-Up"
     case taxTransfer = "Tax Transfer"
+    case zusTransfer = "Zus Transfer"
 }
 
 extension OneAppInitModule {
@@ -181,6 +183,12 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             coordinator.start()
         case .taxTransfer:
             let coordinator = TaxTransferFormCoordinator(
+                dependenciesResolver: dependenciesEngine,
+                navigationController: navigationController
+            )
+            coordinator.start()
+        case .zusTransfer:
+            let coordinator = ZusTransferFormCoordinator(
                 dependenciesResolver: dependenciesEngine,
                 navigationController: navigationController
             )
