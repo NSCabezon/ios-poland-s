@@ -28,7 +28,7 @@ final class AcceptBLIKTransactionUseCase: UseCase<AcceptBLIKTransactionUseCaseIn
                   blikError.errorCode1 == .customerTypeDisabled else {
                 return .error(.init(error.localizedDescription))
             }
-            return .error(.init(blikError.errorKey))
+            return .error(.init(blikError.errorKey + "." + "\(blikError.errorCode2.rawValue)"))
         }
     }
 }

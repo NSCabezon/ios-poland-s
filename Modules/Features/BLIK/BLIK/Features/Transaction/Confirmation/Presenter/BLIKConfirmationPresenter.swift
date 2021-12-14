@@ -135,15 +135,25 @@ private extension BLIKConfirmationPresenter {
                 }
             }
             .onError {[weak self] error in
-                guard let errorKey = error.getErrorDesc() else {
+                guard let errorDesc = error.getErrorDesc() else {
                     self?.view?.hideLoader {
                         self?.showServiceInaccessibleError()
                     }
                     return
                 }
-            
+                let errorDescComponents = errorDesc.components(separatedBy: ".")
+                let errorKey = errorDescComponents[0]
+                let errorCode = Int(errorDescComponents[1])
+                var errorImage = ""
+                if errorCode == BlikError.ErrorCode2.cycleLimitExceeded.rawValue ||
+                    errorCode == BlikError.ErrorCode2.trnLimitExceeded.rawValue ||
+                    errorCode == BlikError.ErrorCode2.pw_limit_exceeded.rawValue {
+                    errorImage = "icnAlert"
+                } else {
+                    errorImage = "icnAlertError"
+                }
                 self?.view?.hideLoader {
-                    self?.showError(with: errorKey)
+                    self?.showError(with: errorKey, image: errorImage)
                 }
             }
     }
@@ -154,8 +164,8 @@ private extension BLIKConfirmationPresenter {
         }
     }
     
-    func showError(with key: String) {
-        view?.showErrorMessage(localized(key), image: "icnAlertError") {[weak self] in
+    func showError(with key: String, image: String) {
+        view?.showErrorMessage(localized(key), image: image) {[weak self] in
             self?.coordinator.goToGlobalPosition()
         }
     }
