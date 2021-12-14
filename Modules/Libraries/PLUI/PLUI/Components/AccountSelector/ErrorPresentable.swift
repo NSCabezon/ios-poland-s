@@ -39,8 +39,7 @@ extension ErrorPresentable where Self: UIViewController {
             ],
             image: "icnAlert",
             actionButton: .init(title: actionButtonTitle, style: .red, action: onConfirm ?? {}),
-            closeButton: closeButton
-        )
+            closeButton: closeButton, hasTitleAndNotAlignment: true)
         dialog.show(in: self)
     }
     
@@ -66,8 +65,7 @@ extension ErrorPresentable where Self: UIViewController {
             ],
             image: image,
             actionButton: .init(title: localized("generic_link_ok"), style: .red, action: onConfirm ?? {}),
-            closeButton: .none
-        )
+            closeButton: .none, hasTitleAndNotAlignment: true)
         
         dialog.show(in: self)
     }
