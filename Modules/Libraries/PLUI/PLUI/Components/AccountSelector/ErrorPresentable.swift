@@ -66,7 +66,6 @@ extension ErrorPresentable where Self: UIViewController {
             image: image,
             actionButton: .init(title: localized("generic_link_ok"), style: .red, action: onConfirm ?? {}),
             closeButton: .none, hasTitleAndNotAlignment: true)
-        
         dialog.show(in: self)
     }
     
