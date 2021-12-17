@@ -10,8 +10,8 @@ import SANLegacyLibrary
 import SANPLLibrary
 
 final class TransferDTOAdapter {
-    static func adaptPayeeDTOtoTransferDTO(payeeDTO: PayeeDTO) -> SANLegacyLibrary.TransferDTO {
-        var transferDTO = SANLegacyLibrary.TransferDTO()
+    static func adaptPayeeDTOtoTransferDTO(payeeDTO: SANPLLibrary.PayeeDTO) -> SANLegacyLibrary.PayeeDTO {
+        var transferDTO = SANLegacyLibrary.PayeeDTO()
         transferDTO.beneficiaryBAOName = payeeDTO.alias ?? ""
         transferDTO.iban = IBANDTO(ibanString: payeeDTO.account?.accountNo ?? "")
         transferDTO.addressPayee = payeeDTO.account?.address ?? ""
