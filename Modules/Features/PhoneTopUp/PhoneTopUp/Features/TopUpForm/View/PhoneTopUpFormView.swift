@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UI
 import PLUI
 import Commons
 
@@ -13,16 +14,20 @@ protocol PhoneTopUpFormViewDelegate: AnyObject {
     func topUpFormDidSelectChangeAccount()
 }
 
-class PhoneTopUpFormView: UIView {
+final class PhoneTopUpFormView: UIView {
     // MARK: Properties
     
     weak var delegate: PhoneTopUpFormViewDelegate?
     private let contentScrollView = UIScrollView()
     private let contentStackView = UIStackView()
     private let selectedAccountSectionContainer = UIStackView()
-    private let selectedAccountHeaderLabel = UILabel()
+    private let selectedAccountHeaderLabel = FormHeaderLabel()
     private let selectedAccountView = SelectedAccountView()
     private let phoneNumberInputView = PhoneNumberInputView()
+    private let recipientNameView = RecipientNameView()
+    private let operatorSelectionView = OperatorSelectionView()
+    private let amountSelectionView = PaymentAmountSelectionView()
+    private let termsAndConditionsView = TermsAndConditionsView()
     
     // MARK: Lifecycle
     
@@ -51,6 +56,10 @@ class PhoneTopUpFormView: UIView {
         
         contentStackView.addArrangedSubview(selectedAccountSectionContainer)
         contentStackView.addArrangedSubview(phoneNumberInputView)
+        contentStackView.addArrangedSubview(recipientNameView)
+        contentStackView.addArrangedSubview(operatorSelectionView)
+        contentStackView.addArrangedSubview(amountSelectionView)
+        contentStackView.addArrangedSubview(termsAndConditionsView)
         
         selectedAccountSectionContainer.addArrangedSubview(selectedAccountHeaderLabel)
         selectedAccountSectionContainer.addArrangedSubview(selectedAccountView)
@@ -73,8 +82,6 @@ class PhoneTopUpFormView: UIView {
     
     private func prepareStyles() {
         selectedAccountHeaderLabel.text = localized("pl_topup_text_sendAccount")
-        selectedAccountHeaderLabel.font = .santander(family: .micro, type: .regular, size: 14.0)
-        selectedAccountHeaderLabel.textColor = .lisboaGray
     }
     
     private func prepareSelectAccountView() {
