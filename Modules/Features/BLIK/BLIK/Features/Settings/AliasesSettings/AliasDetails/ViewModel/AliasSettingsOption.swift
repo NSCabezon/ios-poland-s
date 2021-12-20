@@ -4,6 +4,7 @@
 //
 //  Created by Piotr Mielcarzewicz on 03/09/2021.
 //
+import Commons
 
 enum AliasSettingsOption: CaseIterable {
     case changeAliasName
@@ -13,11 +14,11 @@ enum AliasSettingsOption: CaseIterable {
     var name: String {
         switch self {
         case .changeAliasName:
-            return "#Zmień nazwę"
+            return localized("pl_blik_text_changeNameDevice")
         case .setValidityPeriod:
-            return "#Ustaw ważność"
+            return localized("pl_blik_text_setDateExpir")
         case .delete:
-            return "#Usuń"
+            return localized("pl_blik_text_deleteDevice")
         }
     }
 }

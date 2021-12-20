@@ -52,9 +52,9 @@ private extension AliasRegistrationSummaryViewController {
     func getInfoText() -> String {
         switch registeredAliasType {
         case .cookie:
-            return "#Przeglądarka została zapamiętana. Przy następnych zakupach na tej przeglądarce nie będziesz musiał wpisywać kodu BLIK."
+            return localized("pl_blik_text_saveBrowserSuccessText")
         case .uid:
-            return "#Sklep został zapamiętany. Przy następnych zakupach w tym sklepie nie będziesz musiał wpisywać kodu BLIK."
+            return localized("pl_blik_text_saveShopSuccessText")
         }
     }
 }
