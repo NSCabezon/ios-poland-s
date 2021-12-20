@@ -31,12 +31,15 @@ final class AccountDetailsDTOAdapter {
             let sourceDate = DateFormats.toDate(string: element.sourceDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
             let operTime = DateFormats.toDate(string: element.operTime ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
             
-            let newLegacyWithholding = SANLegacyLibrary.WithholdingDTO(entryDate: sourceDate ?? Date(), leavingDate: operTime ?? Date(), concept: element.transTitle ?? "", amount: element.amount ?? 0.0)
+            var newAmount = element.amount ?? 0.0
+            if element.isDebit() {
+                newAmount.negate()
+            }
             
+            let newLegacyWithholding = SANLegacyLibrary.WithholdingDTO(entryDate: sourceDate ?? Date(), leavingDate: operTime ?? Date(), concept: element.transTitle ?? "", amount: newAmount)
+           
             legacyWithholdingDTOList.append(newLegacyWithholding)
         }
-
-
         return SANLegacyLibrary.WithholdingListDTO(withholdingDTO: legacyWithholdingDTOList)
     }
 }
