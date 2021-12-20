@@ -40,7 +40,7 @@ class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherO
         let configuration = PLCardsOtherOperativesWebConfiguration(
             initialURL: initialURL,
             bodyParameters: parameters,
-            closingURLs: [closingUrl],
+            closingURLs: [closingUrl, "app://close"],
             webToolbarTitleKey: " ",
             pdfToolbarTitleKey: " ",
             httpMethod: httpMethodCard,
