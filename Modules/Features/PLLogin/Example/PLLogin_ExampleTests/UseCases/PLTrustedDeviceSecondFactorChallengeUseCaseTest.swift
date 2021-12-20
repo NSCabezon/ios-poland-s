@@ -38,7 +38,7 @@ class PLTrustedDeviceSecondFactorChallengeUseCaseTests: XCTestCase {
                                                                                    timestamp: 1314411585)]
             let trustedDeviceConf = TrustedDeviceConfiguration()
             trustedDeviceConf.tokens = tokens
-            trustedDeviceConf.ivrOutputCode = 9556
+            trustedDeviceConf.ivrOutputCode = "9556"
             let trustedDevice = TrustedDeviceConfiguration.TrustedDevice(trustedDeviceId: 4679654,
                                                                          userId: 36167469,
                                                                          trustedDeviceState: "",
@@ -79,7 +79,7 @@ class PLTrustedDeviceSecondFactorChallengeUseCaseTests: XCTestCase {
 
             let trustedDeviceConf = TrustedDeviceConfiguration()
             trustedDeviceConf.tokens = tokens
-            trustedDeviceConf.ivrOutputCode = 9556
+            trustedDeviceConf.ivrOutputCode = "9556"
             let trustedDevice = TrustedDeviceConfiguration.TrustedDevice(trustedDeviceId: 4679668,
                                                                          userId: 36167469,
                                                                          trustedDeviceState: "",
