@@ -66,7 +66,6 @@ extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
 
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration) {
         guard let deviceData = deviceConfiguration.deviceData else { return }
-        self.deviceData = deviceData
         modelDeviceValueLabel.text = deviceData.model
         modelDeviceValueLabel.accessibilityIdentifier = deviceData.model
         brandDeviceValueLabel.text = deviceData.brand
