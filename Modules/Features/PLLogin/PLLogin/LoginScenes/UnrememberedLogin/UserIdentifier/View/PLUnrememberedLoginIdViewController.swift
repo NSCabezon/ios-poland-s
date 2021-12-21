@@ -52,7 +52,12 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     override func viewDidLoad() {
         self.presenter.viewDidLoad()
         self.setupViews()
-        self.configureDebugMenuButton() // Temporary [DEBUG WELCOME] on Login
+
+        let compilation = dependenciesResolver.resolve(for: CompilationProtocol.self)
+        let service = compilation.keychain.service
+        if service.contains("UAT") || service.contains("DEV") {
+            self.configureDebugMenuButton() // Temporary [DEBUG WELCOME] on Login
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
