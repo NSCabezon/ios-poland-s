@@ -26,6 +26,7 @@ final class MobileTransferFormView: UIView {
     private let titleView = LisboaTextField()
     private let dateView = LisboaTextField()
     private var phoneNumberDidStartedEdited = false
+    private var errorMessages: InvalidMobileTransferFormMessages?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,6 +51,7 @@ final class MobileTransferFormView: UIView {
     }
     
     func showInvalidFormMessages(_ messages: InvalidMobileTransferFormMessages) {
+        errorMessages = messages
         if messages.tooShortPhoneNumberMessage == nil {
             phoneNumberView.hideError()
         } else {
@@ -227,6 +229,14 @@ private extension MobileTransferFormView {
 
 extension MobileTransferFormView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
+        //This reset ErrorAppearance is needed because validation is delayed by 1 second and sometimes it causes a delay in the textfield fill
+        if let errorMessages = errorMessages {
+            errorMessages.tooLowAmount != nil || errorMessages.tooMuchAmount != nil ? transferAmountTextField.setErrorAppearance() : transferAmountTextField.clearErrorAppearance()
+            errorMessages.tooShortPhoneNumberMessage != nil ? phoneNumberTextField.setErrorAppearance() : phoneNumberTextField.clearErrorAppearance()
+        } else {
+            transferAmountTextField.clearErrorAppearance()
+            phoneNumberTextField.clearErrorAppearance()
+        }
         if !phoneNumberDidStartedEdited {
             phoneNumberDidStartedEdited = !(phoneNumberTextField.text?.isEmpty ?? true)
         }
