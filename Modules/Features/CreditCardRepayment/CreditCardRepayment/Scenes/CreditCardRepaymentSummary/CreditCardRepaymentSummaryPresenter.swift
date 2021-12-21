@@ -109,10 +109,9 @@ extension CreditCardRepaymentSummaryPresenter: CreditCardRepaymentSummaryPresent
             .addFooterItem(
                 imageKey: "icnHelpUsMenu",
                 title: localized("generic_button_improve"),
-                action: {
-                    // TODO: Implement action maybe belowe commented opinator can be used but not sure yet
-//                    guard let opinatorCapable = self?.container?.operative as? OperativeOpinatorCapable & Operative else { return }
-//                    opinatorCapable.showOpinator()
+                action: { [weak self] in
+                    guard let opinatorCapable = self?.container?.operative as? OperativeOpinatorCapable & Operative else { return }
+                    opinatorCapable.showOpinator()
                 }
             )
             .build()
