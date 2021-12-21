@@ -27,4 +27,5 @@ public enum PLAccountOtherOperativesIdentifier: String, Codable {
     case memberGetMember = "MEMBER_GET_MEMBER"
     case savingGoals = "SAVING_GOALS"
     case externalTransfer = "EXTERNAL_TRANSFER"
+    case exploreProducts = "NEW_BBC"
 }
