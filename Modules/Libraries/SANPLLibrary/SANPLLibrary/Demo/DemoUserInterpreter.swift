@@ -9,15 +9,19 @@ import Foundation
 
 public protocol DemoUserProtocol {
     func isDemoUser(userName: String) -> Bool
+    func getDestinationFileFor(service: PLLocalServiceName) -> (file: String, bundle: Bundle?)
+    func setTestFile(_ file: String?, bundle: Bundle?)
     var isDemoModeAvailable: Bool { get }
     var expectedResponse: Int { get }
+    var demoUser: String { get }
 }
 
 public class DemoUserInterpreter: DemoUserProtocol {
+
     public var isDemoModeAvailable: Bool
-    static let demoUser = "12345678Z"
+    public var demoUser: String
     let bsanDataProvider: BSANDataProvider
-    let defaultDemoUser: String
+    private var testFile: (file: String?, bundle: Bundle?) = (nil, nil)
     private let expectedAnswer: Int?
     public var expectedResponse: Int {
         return expectedAnswer ?? 0
@@ -25,13 +29,21 @@ public class DemoUserInterpreter: DemoUserProtocol {
     
     public init(bsanDataProvider: BSANDataProvider, defaultDemoUser: String, demoModeAvailable: Bool = false, expectedAnswer: Int? = 0) {
         self.bsanDataProvider = bsanDataProvider
-        self.defaultDemoUser = defaultDemoUser
+        self.demoUser = defaultDemoUser
         self.isDemoModeAvailable = demoModeAvailable
         self.expectedAnswer = expectedAnswer
     }
 
     public func isDemoUser(userName: String) -> Bool {
-        return userName.uppercased() == DemoUserInterpreter.demoUser
+        return userName.uppercased() == self.demoUser.uppercased()
+    }
+    
+    public func setTestFile(_ file: String?, bundle: Bundle?) {
+        self.testFile = (file, bundle)
+    }
+    
+    public func getDestinationFileFor(service: PLLocalServiceName) -> (file: String, bundle: Bundle?) {
+        return (self.testFile.file ?? service.rawValue, self.testFile.bundle)
     }
 }
 

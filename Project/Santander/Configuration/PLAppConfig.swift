@@ -45,7 +45,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledGoToPersonalArea: Bool = false
     let isEnabledGoToATMLocator: Bool = true
     let isEnabledGoToHelpCenter: Bool = true
-    let isEnabledDigitalProfileView: Bool = false
+    let isEnabledDigitalProfileView: Bool = true
     let isEnabledWorld123: Bool = false
     let isEnabledSendMoney: Bool = false
     let isEnabledBills: Bool = false
@@ -79,4 +79,5 @@ class PLAppConfig: LocalAppConfig {
     let enablePGCardActivation: Bool = true
     var isAnalysisAreaHomeEnabled = false
     var countryCode = "PL"
+    var isEnabledConsentManagement = false
 }

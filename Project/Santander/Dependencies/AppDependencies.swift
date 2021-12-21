@@ -35,8 +35,8 @@ final class AppDependencies {
     private let timeToRefreshToken: TimeInterval = 10000000000000
     private let timeToExpireSession: TimeInterval = 10000000000000
     #else
-    private let timeToRefreshToken: TimeInterval = 60 * 8
-    private let timeToExpireSession: TimeInterval = 60 * 9
+    private let timeToRefreshToken: TimeInterval = 60 * 120
+    private let timeToExpireSession: TimeInterval = 60 * 5
     #endif
     let dependencieEngine: DependenciesResolver & DependenciesInjector
     private let localAppConfig: LocalAppConfig

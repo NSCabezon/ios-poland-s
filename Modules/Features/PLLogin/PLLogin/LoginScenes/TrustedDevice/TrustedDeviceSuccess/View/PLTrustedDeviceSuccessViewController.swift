@@ -54,9 +54,10 @@ private extension PLTrustedDeviceSuccessViewController {
     }
 
     func commonInit() {
-        sanIconImageView?.image = Assets.image(named: "icnSantanderBalance")
-        configureLabels()
-        configureButtons()
+        self.sanIconImageView?.image = Assets.image(named: "icnSantanderBalance")
+        self.configureAccessibilityIdentifiers()
+        self.configureLabels()
+        self.configureButtons()
     }
 
     func configureLabels() {
@@ -80,6 +81,14 @@ private extension PLTrustedDeviceSuccessViewController {
         self.continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         self.continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
         self.continueButton.isEnabled = true
+    }
+    
+    func configureAccessibilityIdentifiers() {
+        self.sanIconImageView.accessibilityIdentifier = "icnSanRed"
+        self.titleLabel.accessibilityIdentifier = "pl_onboarding_title_success"
+        self.subTitleLabel.accessibilityIdentifier = "pl_onboarding_text_appActive"
+        self.descriptionLabel.accessibilityIdentifier = "pl_onboarding_text_appActiveExpl"
+        self.continueButton.accessibilityIdentifier = "deviceTrustSuccessBtnContinue"
     }
 
     @objc func continueButtonDidPressed() {

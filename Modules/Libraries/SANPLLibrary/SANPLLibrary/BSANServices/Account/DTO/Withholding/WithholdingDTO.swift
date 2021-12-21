@@ -37,4 +37,8 @@ public struct WithholdingDTO: Codable {
     public let currencyCodeCt: String?
     public let amountBill: Decimal?
     public let currencyBillS: String?
+    
+    public func isDebit() -> Bool {
+        return debitFlag?.lowercased() == "debit"
+    }
 }

@@ -24,7 +24,7 @@ final class PartialPhoneNumberValidator {
     // MARK: Methods
     
     func validatePhoneNumberText(_ text: String) -> Bool {
-        guard text.count <= maxNumberOfCharacters else {
+        guard text.count <= maxNumberOfCharacters, text.count >= 0 else {
             return false
         }
         let textWithoutWhitespace = text.replace(" ", "")

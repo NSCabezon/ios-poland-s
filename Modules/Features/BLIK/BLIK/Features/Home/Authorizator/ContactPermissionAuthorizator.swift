@@ -66,7 +66,7 @@ private extension ContactPermissionAuthorizator {
                       margins: (left: 32.0, right: 32.0))
             ),
             .margin(24),
-            .verticalAction(VerticalLisboaDialogAction(title: localized("#Przejdź do ustawień"), type: .red, margins: (left: 16, right: 16), action: {[weak self] in
+            .verticalAction(VerticalLisboaDialogAction(title: localized("genericAlert_buttom_settings"), type: .red, margins: (left: 16, right: 16), action: {[weak self] in
                 self?.goToSettings()
             })),
             .margin(16.0)
