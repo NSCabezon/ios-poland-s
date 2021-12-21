@@ -82,6 +82,7 @@ extension PLTrustedDeviceSmsAuthViewController: PLTrustedDeviceSmsAuthViewProtoc
 private extension PLTrustedDeviceSmsAuthViewController {
     func setupViews() {
         lockImage.image = PLAssets.image(named: "threeDigitsRedLockIcon")
+        configureAccessibilityIdentifiers()
         configureLabels()
         configureButtons()
         configureSMSAuthView()
@@ -99,6 +100,15 @@ private extension PLTrustedDeviceSmsAuthViewController {
         titleLabel.font = .santander(family: .micro, type: .bold, size: 14)
         titleLabel.textColor = UIColor.Legacy.lisboaGrayNew
         titleLabel.configureText(withKey: "pl_onboarding_text_smsCode", andConfiguration: nil)
+    }
+    
+    func configureAccessibilityIdentifiers() {
+        sceneTitle.accessibilityIdentifier = "pl_onboarding_title_smsCode"
+        closeSceneButton.accessibilityIdentifier = "deviceTrustOtpSmsBtnClose"
+        lockImage.accessibilityIdentifier = "icnSecurityKey"
+        titleLabel.accessibilityIdentifier = "pl_onboarding_text_smsCode"
+        descriptionLabel.accessibilityIdentifier = "pl_onboarding_text_smsCodeExpl"
+        continueButton.accessibilityIdentifier = "deviceTrustOtpSmsBtnContinue"
     }
     
     func configureButtons() {
