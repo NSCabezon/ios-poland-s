@@ -26,7 +26,6 @@ extension PersonalAreaSectionsProvider: PersonalAreaSectionsProtocol {
         let cells = PersonalAreaSectionsSecurityBuilder(userPref: userPref, resolver: dependenciesResolver)
                 .addBiometryCell()
                 .addGeoCell()
-                .addSecureDeviceCell()
                 .addOperativeUserCell()
                 .addChangePasswordCell()
                 .addChangePIN()
