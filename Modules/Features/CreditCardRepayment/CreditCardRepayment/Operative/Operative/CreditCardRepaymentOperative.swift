@@ -149,3 +149,9 @@ private extension CreditCardRepaymentOperative {
         }
     }
 }
+
+extension CreditCardRepaymentOperative: OperativeOpinatorCapable {
+    var opinator: RegularOpinatorInfoEntity {
+        RegularOpinatorInfoEntity(path: "APP-RET-credit-card-repayment-SUCCESS/")
+    }
+}

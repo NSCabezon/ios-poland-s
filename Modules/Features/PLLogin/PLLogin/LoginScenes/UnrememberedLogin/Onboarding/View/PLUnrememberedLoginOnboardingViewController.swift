@@ -41,6 +41,7 @@ final class PLUnrememberedLoginOnboardingViewController: UIViewController {
     override func viewDidLoad() {
         self.presenter.viewDidLoad()
         self.setupViews()
+        self.configureAccesibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +99,15 @@ private extension PLUnrememberedLoginOnboardingViewController {
         createAccountButton.backgroundPressedColor = .lightSanGray
         createAccountButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 16.0)
         createAccountButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onCreateAccountButtonSelected)))
+    }
+
+    func configureAccesibilityIdentifiers() {
+        sanIconImageView.accessibilityIdentifier = "icnSanWhite"
+        titleLabel.accessibilityIdentifier = "loginOnboardingLabelGreeting"
+        lostKeyLabel.accessibilityIdentifier = "pl_onboarding_text_activateApp"
+        lostKeyTwoLabel.accessibilityIdentifier = "pl_onboarding_text_openAccount"
+        loginButton.accessibilityIdentifier = "loginOnboardingBtnActivate"
+        createAccountButton.accessibilityIdentifier = "loginOnboardingBtnOpenAccount"
     }
     
     @objc func onLoginButtonSelected() {

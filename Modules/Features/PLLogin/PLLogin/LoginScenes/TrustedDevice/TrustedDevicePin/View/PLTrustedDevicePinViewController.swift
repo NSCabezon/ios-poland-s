@@ -87,7 +87,7 @@ private extension PLTrustedDevicePinViewController {
         configurePinView()
         configureBiometryView()
         configureGradient()
-        setAccessibility()
+        configureAccessibilityIdentifiers()
         lockImage.image = PLAssets.image(named: "threeDigitsRedLockIcon")
     }
 
@@ -168,8 +168,14 @@ private extension PLTrustedDevicePinViewController {
         self.view.applyGradientBackground(colors: [.white, .skyGray])
     }
 
-    func setAccessibility() {
-        continueButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    func configureAccessibilityIdentifiers() {
+        self.continueButton.accessibilityIdentifier = "deviceTrustPinBtnContinue"
+        self.closeSceneButton.accessibilityIdentifier = "deviceTrustPinBtnClose"
+        self.sceneTitle.accessibilityIdentifier = "pl_onboarding_title_appPIN"
+        self.lockImage.accessibilityIdentifier = "icnSecurityKey"
+        self.pinDescriptionLabel.accessibilityIdentifier = "pl_onboarding_text_PINExpl"
+        self.pinTitleLabel.accessibilityIdentifier = "pl_onboarding_text_enterPIN"
+        self.repeatPinTitleLabel.accessibilityIdentifier = "pl_onboarding_text_repeatPIN"
     }
 
     // MARK: Button actions

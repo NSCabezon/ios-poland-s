@@ -67,8 +67,11 @@ extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration) {
         guard let deviceData = deviceConfiguration.deviceData else { return }
         modelDeviceValueLabel.text = deviceData.model
+        modelDeviceValueLabel.accessibilityIdentifier = deviceData.model
         brandDeviceValueLabel.text = deviceData.brand
+        brandDeviceValueLabel.accessibilityIdentifier = deviceData.brand
         idDeviceValueLabel.text = deviceData.deviceId
+        idDeviceValueLabel.accessibilityIdentifier = deviceData.deviceId
     }
 }
 
@@ -81,7 +84,7 @@ private extension PLDeviceDataViewController {
         sanIconImageView?.image = Assets.image(named: "icnSanRedComplete")
         configureLabels()
         configureButtons()
-        setAccessibility()
+        configureAccessibilityIdentifiers()
     }
 
     func configureLabels() {
@@ -123,8 +126,14 @@ private extension PLDeviceDataViewController {
         continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
     }
 
-    func setAccessibility() {
-        continueButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    func configureAccessibilityIdentifiers() {
+        sanIconImageView.accessibilityIdentifier = "icnSanRedComplete"
+        titleLabel.accessibilityIdentifier = "pl_onboarding_title_appActiveHello"
+        descriptionLabel.accessibilityIdentifier = "pl_onboarding_text_appActiveWelcome"
+        modelDeviceLabel.accessibilityIdentifier = "pl_onboarding_text_phoneModel"
+        brandDeviceLabel.accessibilityIdentifier = "pl_onboarding_text_phoneBrand"
+        idDeviceLabel.accessibilityIdentifier = "pl_onboarding_text_phoneID"
+        continueButton.accessibilityIdentifier = "deviceTrustInfoBtnContinue"
     }
 
     @objc func continueButtonDidPressed() {

@@ -33,7 +33,7 @@ private extension GetPGFrequentOperativeOption {
                                                             TransactionHistoryPGFrequentOperativeOption(),
                                                             BLIKPGFrequentOperativeOption(dependencyResolver: dependenciesResolver),
                                                             PLHelpCenterFrequentOperativeOption(dependencyResolver: dependenciesResolver),
-                                                            OurOfferPGFrequentOperativeOption(),
+                                                            OurOfferPGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
                                                             PGFrequentOperativeOption.impruve,
                                                             AtmsAndBranchesPGFrequentOperativeOption(),
                                                             PGFrequentOperativeOption.personalArea,
