@@ -55,7 +55,7 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func validateUpdateSepaPayee(payeeId: String?, transferDTO: PayeeRepresentable?, newCurrencyDTO: CurrencyDTO?, newBeneficiaryBAOName: String?, newIban: IBANDTO?) throws -> BSANResponse<SignatureWithTokenDTO> {
+    func validateUpdateSepaPayee(payeeId: String?, payee: PayeeRepresentable?, newCurrencyDTO: CurrencyDTO?, newBeneficiaryBAOName: String?, newIban: IBANDTO?) throws -> BSANResponse<SignatureWithTokenDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -75,11 +75,11 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func validateUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, transferDTO: PayeeRepresentable) throws -> BSANResponse<ValidateAccountTransferDTO> {
+    func validateUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable) throws -> BSANResponse<ValidateAccountTransferDTO> {
         return BSANErrorResponse(nil)
     }
     
-    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, transferDTO: PayeeRepresentable, signatureDTO: SignatureDTO) throws -> BSANResponse<TransferConfirmAccountDTO> {
+    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -243,7 +243,7 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         switch result {
         case .success(let response):
             let payees =  response.map {
-                TransferDTOAdapter.adaptPayeeDTOtoTransferDTO(payeeDTO: $0)
+                PayeeDTOAdapter.adaptPayeeDTOtoCore(payeeDTO: $0)
             }
             return BSANOkResponse(payees)
             
