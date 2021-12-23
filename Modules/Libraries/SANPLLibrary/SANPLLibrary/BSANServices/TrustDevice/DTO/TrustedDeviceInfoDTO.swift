@@ -11,7 +11,6 @@ public struct TrustedDeviceInfoDTO: Codable {
     public let trustedDevice: TrustedDeviceDTO
     public let applicationLanguage: String
     public let timestamp: Int
-    public let softwareTokenHeaders: [TrustedDeviceSoftwareTokenHeaderDTO]
 }
 
 public struct TrustedDeviceDTO: Codable {
