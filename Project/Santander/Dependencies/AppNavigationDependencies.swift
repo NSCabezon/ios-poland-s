@@ -15,6 +15,7 @@ import BLIK
 import PLHelpCenter
 import CreditCardRepayment
 import OneAuthorizationProcessor
+import LoanSchedule
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -75,11 +76,13 @@ final class AppNavigationDependencies {
         self.dependenciesEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self.authorizationCoordinator
         }
-        
         dependenciesEngine.register(for: PLWebViewCoordinatorDelegate.self) { [unowned self] resolver in
             return PLWebViewCoordinatorNavigator(dependenciesResolver: resolver, drawer: self.drawer)
         }
         
+        dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
+            return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
     }
