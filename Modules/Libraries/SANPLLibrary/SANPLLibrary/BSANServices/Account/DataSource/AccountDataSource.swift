@@ -12,6 +12,7 @@ protocol AccountDataSourceProtocol {
     func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError>
     func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError>
 }
 
 private extension AccountDataSource {
@@ -27,6 +28,8 @@ final class AccountDataSource {
         case cardwithholdings = "/history/cardwithholdings"
         case transactions = "/history/search"
         case accountForDebit = "/accounts/for-debit"
+        case changeAlias = "/accounts/productaliases"
+        
     }
 
     private let networkProvider: NetworkProvider
@@ -138,6 +141,29 @@ extension AccountDataSource: AccountDataSourceProtocol {
         )
         return result
     }
+    
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let accountNumber = accountDTO.contractDescription,
+              let account = try? self.dataProvider.getSessionData().globalPositionDTO?.accounts?.filter({ $0.number == accountNumber }).first,
+              let systemId = account.accountId?.systemId else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let serviceName = "\(AccountServiceType.changeAlias.rawValue)/\(systemId)/\(accountNumber)"
+        let absoluteUrl = baseUrl + self.basePath
+        let parameters = ChangeAliasParameters(userDefined: newAlias)
+        
+        let result: Result<AccountChangeAliasDTO, NetworkProviderError> = self.networkProvider.request(AccountChangeAliasRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .post,
+                                                                                                                jsonBody: parameters,
+                                                                                                                headers: self.headers,
+                                                                                                                contentType: .json,
+                                                                                                                localServiceName: .changeAlias)
+        )
+        return result
+    }
 }
 
 private struct AccountRequest: NetworkProviderRequest {
@@ -194,6 +220,40 @@ private struct AccountTransactionRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: AccountTransactionsParameters?,
+         headers: [String: String]?,
+         queryParams: [String: String]? = nil,
+         contentType: NetworkProviderContentType,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.jsonBody = jsonBody
+        self.headers = headers
+        self.queryParams = queryParams
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+
+private struct AccountChangeAliasRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]?
+    let jsonBody: ChangeAliasParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .body
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: ChangeAliasParameters?,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType,
