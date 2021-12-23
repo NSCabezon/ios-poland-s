@@ -2,7 +2,7 @@ import SANPLLibrary
 import Commons
 
 final class PLManagersProviderMock: PLManagersProviderProtocol {
-  
+ 
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
@@ -63,5 +63,9 @@ final class PLManagersProviderMock: PLManagersProviderProtocol {
     
     func getTransferManager() -> PLTransfersManagerProtocol {
         dependenciesResolver.resolve(for: PLTransfersManagerProtocol.self)
+    }
+    
+    func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
+        fatalError()
     }
 }
