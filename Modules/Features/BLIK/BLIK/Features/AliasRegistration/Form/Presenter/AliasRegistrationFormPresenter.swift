@@ -11,6 +11,7 @@ protocol AliasRegistrationFormPresenterProtocol {
     func didPressSave()
     func didPressReject()
     func didPressClose()
+    func goToGlobalPosition()
 }
 
 final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtocol {
@@ -44,7 +45,7 @@ final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtoc
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {
-                    self?.coordinator.close()
+                    self?.coordinator.goToAliasRegistrationSummary()
                 })
             }
             .onError { [weak self] error in
@@ -60,6 +61,10 @@ final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtoc
 
     func didPressClose() {
         coordinator.close()
+    }
+    
+    func goToGlobalPosition() {
+        coordinator.goToGlobalPosition()
     }
 }
 
