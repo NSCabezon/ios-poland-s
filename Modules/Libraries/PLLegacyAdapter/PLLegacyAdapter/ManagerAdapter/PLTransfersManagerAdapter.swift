@@ -59,10 +59,6 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func validateUpdateSepaPayee(transferDTO: PayeeRepresentable, newCurrencyDTO: CurrencyDTO?, newBeneficiaryBAOName: String?, newIban: IBANDTO?) throws -> BSANResponse<SignatureWithTokenDTO> {
-        return BSANErrorResponse(nil)
-    }
-    
     func validateUpdateSepaPayeeOTP(signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<OTPValidationDTO> {
         return BSANErrorResponse(nil)
     }
