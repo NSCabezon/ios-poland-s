@@ -39,7 +39,7 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
         let imageKey: String = "icnSendMoney"
-        let titleKey: String = "menu_link_onePayTransfer"
+        let titleKey: String = "frequentOperative_button_sendMoney"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,
