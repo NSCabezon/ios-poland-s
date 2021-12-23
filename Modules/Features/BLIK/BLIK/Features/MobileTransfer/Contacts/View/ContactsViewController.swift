@@ -38,6 +38,11 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
         setUp()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
+    }
+    
     func setViewModels(_ viewModels: [ContactViewModel]) {
         DispatchQueue.main.async {
             self.viewModels = viewModels

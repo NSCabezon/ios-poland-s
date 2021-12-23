@@ -55,6 +55,7 @@ final class AccountSelectorCoordinator: ModuleCoordinator {
             screenLocationConfiguration: screenLocationConfiguration
         )
         presenter.view = controller
+        self.navigationController?.addNavigationBarShadow()
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
