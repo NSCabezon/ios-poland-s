@@ -35,15 +35,15 @@ struct BlikError {
     var errorKey: String {
         switch errorCode2 {
         case .trnLimitExceeded:
-            return "pl_blik_alert_text_amountLimit"
+            return "pl_generic_alert_textAmountLimit"
         case .cycleLimitExceeded:
-            return "pl_blik_alert_text_dayLimit"
+            return "pl_generic_alert_textDayLimit"
         case .errPosting:
-            return "pl_blik_alert_text_tryLater"
+            return "pl_generic_alert_textTryLater"
         case .insufficientFunds:
-            return "pl_blik_alert_text_noFunds"
+            return "pl_generic_alert_textNoFunds"
         case .pw_limit_exceeded, .pw_to_big_amount:
-            return "#Wpisana kwota jest wyższa niż dostępny limit przelewów w aplikacji."
+            return "pl_generic_alert_textAmountLimit"
         case .pw_account_blacklist:
             return "pl_generic_error_transferAcceptedOnlyAtBranch"
         case .pw_expr_recipient_inactive:

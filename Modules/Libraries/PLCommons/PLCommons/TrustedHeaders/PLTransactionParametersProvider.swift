@@ -30,6 +30,7 @@ public class PLTransactionParametersProvider: PLTransactionParametersProviderPro
         switch type {
         case .transferToAnyAccount(let transactionParameters),
              .blikP2P(let transactionParameters),
+             .charityTransfer(let transactionParameters),
              .splitPaymentToAnyAccount(let transactionParameters),
              .multiCurrencyTransfer(let transactionParameters),
              .foreignTransfer(let transactionParameters),

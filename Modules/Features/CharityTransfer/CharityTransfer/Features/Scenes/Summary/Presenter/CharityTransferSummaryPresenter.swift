@@ -4,12 +4,11 @@ import PLCommons
 import Operative
 import CoreFoundationLib
 
-protocol MobileTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
-    func goToGlobalPosition()
-    func goToBlikCode()
+protocol CharityTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
+    func goToCharityTransfer()
 }
 
-final class MobileTransferSummaryPresenter {
+final class CharityTransferSummaryPresenter {
     weak var view: OperativeSummaryViewProtocol?
     
     //These variables below are forced to be conformed to OperativeStepPresenterProtocol, we need to have it to display summary screen from core
@@ -23,68 +22,50 @@ final class MobileTransferSummaryPresenter {
         dependenciesResolver.resolve()
     }
     
-    private var getTransactionUseCase: GetTransactionUseCaseProtocol {
-        dependenciesResolver.resolve()
-    }
-    
     private let dependenciesResolver: DependenciesResolver
-    private let summary: MobileTransferSummary
+    private let summary: CharityTransferSummary
     
-    init(dependenciesResolver: DependenciesResolver, summary: MobileTransferSummary) {
+    init(dependenciesResolver: DependenciesResolver, summary: CharityTransferSummary) {
         self.dependenciesResolver = dependenciesResolver
         self.summary = summary
     }
 }
 
-private extension MobileTransferSummaryPresenter {
-    var coordinator: MobileTransferSummaryCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: MobileTransferSummaryCoordinatorProtocol.self)
+private extension CharityTransferSummaryPresenter {
+    var coordinator: CharityTransferSummaryCoordinatorProtocol {
+        return dependenciesResolver.resolve(for: CharityTransferSummaryCoordinatorProtocol.self)
     }
 }
 
-extension MobileTransferSummaryPresenter: MobileTransferSummaryPresenterProtocol {
+extension CharityTransferSummaryPresenter: CharityTransferSummaryPresenterProtocol {
     func viewDidLoad() {
         prepareViewModel()
     }
     
-    func goToGlobalPosition() {
-        coordinator.goToGlobalPosition()
-    }
-    
-    func goToBlikCode() {
-        coordinator.goToBlikCode()
+    func goToCharityTransfer() {
+        coordinator.goToMakeAnotherPayment()
     }
 }
 
-private extension MobileTransferSummaryPresenter {
+private extension CharityTransferSummaryPresenter {
     func prepareViewModel() {
         let headerViewModel = OperativeSummaryStandardHeaderViewModel(image: "icnCheckOval1",
-                                                                      title: localized("pl_blik_text_success"),
-                                                                      description: localized("pl_blik_text_successExpl"))
+                                                                      title: localized("pl_foundtrans_text_success"),
+                                                                      description: localized("pl_foundtrans_text_successExpl"))
+        
         let bodyItems: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(title: localized("summary_item_amount"),
                   subTitle: PLAmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32),
-                  info: summary.title),
-            .init(title: localized("pl_blik_label_accountTransfter"),
+                  info: summary.title), 
+            .init(title: localized("pl_foundtrans_label_summ_accountNumb"),
                   subTitle: summary.accountName,
                   info: summary.accountNumber),
-            .init(title: localized("pl_blik_label_recipientTransfer"),
-                  subTitle: summary.recipientName,
-                  info: summary.recipientNumber),
-            .init(title: localized("pl_blik_label_transType"),
-                  subTitle: localized("pl_blik_label_transferTypeSumm")),
+            .init(title: localized("pl_foundtrans_label_date"),
+                  subTitle: summary.recipientName),
+            .init(title: localized("pl_foundtrans_label_transType"),
+                  subTitle: localized("pl_foundtrans_label_internalTransfer")),
             .init(title: localized("confirmation_item_date"),
                   subTitle: summary.dateString)
-        ]
-        
-        let actions: [OperativeSummaryStandardBodyActionViewModel] = [
-            .init(
-                image: "icnShareBostonRedLight",
-                title: "pl_topup_button_shareConfirm",
-                action: { [weak self] in
-                    self?.coordinator.shareSummary()
-                }
-            )
         ]
         
         let footerItems: [OperativeSummaryStandardFooterItemViewModel] = [
@@ -92,19 +73,18 @@ private extension MobileTransferSummaryPresenter {
                 self?.coordinator.goToMakeAnotherPayment()
             }),
             .init(imageKey: "icnPg", title: localized("generic_button_globalPosition"), action: { [weak self] in
-                self?.goToGlobalPosition()
+                self?.coordinator.goToGlobalPosition()
             }),
             .init(imageKey: "icnHelpUsMenu", title: localized("generic_button_improve"), action: { [weak self] in
-                let opinator = RegularOpinatorInfoEntity(path: "/APP-RET-blik-transfer-SUCCESS")
+                let opinator = RegularOpinatorInfoEntity(path: "APP-RET-charity-payment-SUCCESS")
                 let coordinator = self?.dependenciesResolver.resolve(for: OperativeContainerCoordinatorDelegate.self)
                 coordinator?.handleOpinator(opinator)
             })
         ]
         let viewModel = OperativeSummaryStandardViewModel(header: headerViewModel,
                                                           bodyItems: bodyItems,
-                                                          bodyActionItems: actions,
+                                                          bodyActionItems: [],
                                                           footerItems: footerItems)
-        
         
         view?.setupStandardHeader(with: viewModel.header)
         view?.setupStandardBody(withItems: viewModel.bodyItems,

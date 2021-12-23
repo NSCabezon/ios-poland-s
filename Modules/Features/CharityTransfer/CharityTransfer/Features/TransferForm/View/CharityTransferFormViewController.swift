@@ -69,8 +69,8 @@ private extension CharityTransferFormViewController {
     
     func prepareStyles() {
         view.backgroundColor = .white
-        bottomView.configure(title: localized("pl_foundtrans_button_doneTransfer")) {
-            // TODO: Add ready botton action
+        bottomView.configure(title: localized("pl_foundtrans_button_doneTransfer")) { [weak self] in
+            self?.presenter.confirmTransfer()
         }
         bottomView.disableButton()
         formView.configure(with: presenter.getSelectedAccountViewModels())

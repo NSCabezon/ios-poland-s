@@ -55,7 +55,7 @@ public struct MobileTransferViewModel {
     }
 
     func amountString(withAmountSize size: CGFloat) -> NSAttributedString {
-        AmountFormatter.amountString(
+        PLAmountFormatter.amountString(
             amount: transfer.amount ?? 0,
             currency: .złoty,
             withAmountSize: size

@@ -242,7 +242,7 @@ private extension BLIKHomePresenter {
                     }
                 case .noConnection:
                     self?.view?.hideLoader() {
-                        self?.view?.showErrorMessage(localized("pl_blik_alert_text_unstableConnection"), onConfirm: {[weak self] in
+                        self?.view?.showErrorMessage(localized("pl_generic_alert_textUnstableConnection"), onConfirm: {[weak self] in
                             self?.coordinator.pop()
                         })
                     }

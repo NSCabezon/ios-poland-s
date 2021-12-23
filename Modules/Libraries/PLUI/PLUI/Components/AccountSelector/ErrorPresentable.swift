@@ -49,7 +49,7 @@ extension ErrorPresentable where Self: UIViewController {
     
     public func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {
         let dialog = Dialog(
-            title: localized("pl_blik_alert_title_error"),
+            title: localized("pl_generic_alert_titleError"),
             items: [
                 .styledConfiguredText(
                     .plain(text: message),

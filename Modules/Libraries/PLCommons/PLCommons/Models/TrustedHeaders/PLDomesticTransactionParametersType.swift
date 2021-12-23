@@ -14,4 +14,5 @@ public enum PLDomesticTransactionParametersType {
     case blikP2PR(PLDomesticTransactionParametersInput)
     case mCommerceBelow(PLDomesticTransactionParametersInput)
     case mCommerceUnder(PLDomesticTransactionParametersInput)
+    case charityTransfer(PLDomesticTransactionParametersInput)
 }

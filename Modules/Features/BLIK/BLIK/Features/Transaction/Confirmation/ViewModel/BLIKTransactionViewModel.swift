@@ -70,7 +70,7 @@ struct BLIKTransactionViewModel {
     }
 
     func amountString(withAmountSize size: CGFloat) -> NSAttributedString {
-        AmountFormatter.amountString(amount: transaction.amount, currency: .złoty, withAmountSize: size)
+        PLAmountFormatter.amountString(amount: transaction.amount, currency: .złoty, withAmountSize: size)
     }
     
     var transactionDate: String {
