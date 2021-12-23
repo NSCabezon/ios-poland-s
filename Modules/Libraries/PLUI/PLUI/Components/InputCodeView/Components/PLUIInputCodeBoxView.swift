@@ -20,6 +20,11 @@ public class PLUIInputCodeBoxView: UIView {
         static let positionLabelHeight: CGFloat = 24.0
         static let positionLabelFontColor = UIColor.white
         static let positionLabelFont = UIFont.systemFont(ofSize: 14.0)
+
+        enum AccesibilityIdentifiers {
+            static let textField = "TextCodeItem"
+            static let positionLabel = "LabelCodeItem"
+        }
     }
     
     public enum PositionBox: Int {
@@ -159,6 +164,7 @@ private extension PLUIInputCodeBoxView {
         self.addSubviews()
         self.configureSubviews()
         self.configureConstraints()
+        self.configureAccessibilityIdentifiers()
     }
 
     func addSubviews() {
@@ -211,6 +217,11 @@ private extension PLUIInputCodeBoxView {
             self.layer.borderWidth = width
             self.layer.borderColor = color.cgColor
         }
+    }
+
+    func configureAccessibilityIdentifiers() {
+        self.codeTextField.accessibilityIdentifier = Constants.AccesibilityIdentifiers.textField
+        self.positionLabel.accessibilityIdentifier = Constants.AccesibilityIdentifiers.positionLabel
     }
 }
 
