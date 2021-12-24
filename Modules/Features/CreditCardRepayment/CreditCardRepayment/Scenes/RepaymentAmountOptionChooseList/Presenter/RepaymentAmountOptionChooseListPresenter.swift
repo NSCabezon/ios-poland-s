@@ -5,9 +5,8 @@
 //  Created by 186484 on 07/06/2021.
 //
 
-import Models
-import Commons
 import CoreFoundationLib
+import Commons
 
 protocol RepaymentAmountOptionChooseListPresenterProtocol: MenuTextWrapperProtocol {
     var view: RepaymentAmountOptionChooseListViewProtocol? { get set }

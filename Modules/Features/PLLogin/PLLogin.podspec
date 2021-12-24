@@ -23,10 +23,8 @@ Pod::Spec.new do |spec|
 
   spec.dependency "Commons"
   spec.dependency "PLCommons"
-  spec.dependency "Models"
   spec.dependency "UI"
   spec.dependency "PLUI"
-  spec.dependency "Repository"
   spec.dependency "CommonUseCase"
   spec.dependency "LoginCommon"
   spec.dependency "CoreFoundationLib"

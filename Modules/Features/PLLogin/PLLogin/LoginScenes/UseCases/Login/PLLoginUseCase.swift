@@ -5,8 +5,6 @@
 import Commons
 import CoreFoundationLib
 import SANPLLibrary
-import Repository
-import Models
 import PLCommons
 
 final class PLLoginUseCase: UseCase<PLLoginUseCaseInput, PLLoginUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

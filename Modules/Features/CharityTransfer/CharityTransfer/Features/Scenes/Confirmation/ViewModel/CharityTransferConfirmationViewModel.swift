@@ -9,7 +9,7 @@ import Commons
 import PLCommons
 import PLUI
 import Operative
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 
 struct CharityTransferConfirmationViewModel {

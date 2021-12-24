@@ -3,7 +3,7 @@
 //  Santander
 //
 
-import Models
+import CoreFoundationLib
 
 class PLOpinatorInfoOption: OpinatorInfoOptionProtocol {
     var baseUrl: String = "https://santanderone.opinator.com/PL/opi/"

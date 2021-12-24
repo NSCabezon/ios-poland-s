@@ -7,12 +7,11 @@ source 'https://cdn.cocoapods.org/'
 
 
 def example_app_common
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
 end
 
 def core_dependencies
+  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'RetailLegacy', :path => '../../../../santander-one/RetailLegacy'
   pod 'PFM', :path => '../../../../santander-one/Modules/Libraries/PFM'
   pod 'GlobalPosition', :path => '../../../../santander-one/GlobalPosition'
@@ -36,7 +35,6 @@ def core_dependencies
   pod 'SQLCipher', '4.4.2'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
-  pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'

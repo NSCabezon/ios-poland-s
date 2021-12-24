@@ -1,5 +1,5 @@
 import Foundation
-import Models
+import CoreFoundationLib
 import SANPLLibrary
 
 struct CreditCardRepaymentSummary {

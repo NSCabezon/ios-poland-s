@@ -1,6 +1,6 @@
 import Foundation
 import Commons
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 
 typealias Currency = CurrencyDTO

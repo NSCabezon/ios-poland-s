@@ -6,7 +6,7 @@
 //
 
 import Commons
-import Models
+import CoreFoundationLib
 import CorePushNotificationsService
 import FirebaseCore
 import FirebaseMessaging

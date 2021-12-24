@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import UI
-import Models
+import CoreFoundationLib
 
 final class DeepLinkDebugLauncherMenuViewController: UIViewController {
     

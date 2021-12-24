@@ -5,9 +5,8 @@
 //  Created by 186484 on 04/06/2021.
 //
 
-import Models
-import Commons
 import CoreFoundationLib
+import Commons
 import UI
 
 protocol LoanScheduleListPresenterProtocol: MenuTextWrapperProtocol {

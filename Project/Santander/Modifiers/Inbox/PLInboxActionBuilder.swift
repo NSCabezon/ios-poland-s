@@ -5,7 +5,7 @@
 
 import Foundation
 import Inbox
-import Models
+import CoreFoundationLib
 import Commons
 import UI
 

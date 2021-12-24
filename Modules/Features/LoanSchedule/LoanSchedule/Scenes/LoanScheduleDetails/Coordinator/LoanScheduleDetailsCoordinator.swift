@@ -1,5 +1,5 @@
 import UI
-import Models
+import CoreFoundationLib
 import Commons
 
 protocol LoanScheduleDetailsCoordinatorProtocol: ModuleCoordinator {

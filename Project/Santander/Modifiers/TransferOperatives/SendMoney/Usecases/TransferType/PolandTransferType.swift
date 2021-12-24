@@ -3,7 +3,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 import CoreDomain
 import Commons
-import Models
+import CoreFoundationLib
 
 enum PolandTransferType: SendMoneyTransferTypeProtocol {
     case creditCardAccount

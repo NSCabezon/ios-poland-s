@@ -1,6 +1,6 @@
 import Foundation
 import Commons
-import Models
+import CoreFoundationLib
 
 typealias CurrentLanguageProvider = () -> String
 

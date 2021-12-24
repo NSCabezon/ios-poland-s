@@ -7,8 +7,6 @@ import CoreFoundationLib
 import SANLegacyLibrary
 import SANPLLibrary
 import Commons
-import Repository
-import Models
 
 final class GetPLCurrentEnvironmentUseCase: UseCase<Void, GetCurrentBSANEnvironmentUseCaseOkOutput, GetCurrentBSANEnvironmentUseCaseErrorOutput> {
     private let dependenciesResolver: DependenciesResolver

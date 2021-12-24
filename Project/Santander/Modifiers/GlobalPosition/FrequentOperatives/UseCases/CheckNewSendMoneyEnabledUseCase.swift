@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import Commons
-import Repository
 
 final class CheckNewSendMoneyEnabledUseCase: UseCase<Void, Bool, StringErrorOutput> {
     let dependenciesResolver: DependenciesResolver

@@ -11,7 +11,6 @@ import CoreDomain
 import Commons
 import CoreFoundationLib
 import SANLegacyLibrary
-import Models
 
 final class PLValidateCardOnOffUseCase: UseCase<ValidateCardOnOffUseCaseInput, ValidateCardOnOffUseCaseOkOutput, StringErrorOutput> {
     private let provider: BSANManagersProvider

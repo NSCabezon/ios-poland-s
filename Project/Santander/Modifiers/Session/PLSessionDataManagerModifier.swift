@@ -7,7 +7,6 @@
 
 import Commons
 import CoreFoundationLib
-import Models
 
 final class PLSessionDataManagerModifier: SessionDataManagerModifier {
     private let dependenciesResolver: DependenciesResolver

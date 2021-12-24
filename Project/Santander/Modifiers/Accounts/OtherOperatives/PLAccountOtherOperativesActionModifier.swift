@@ -7,7 +7,7 @@
 
 import Foundation
 import Account
-import Models
+import CoreFoundationLib
 import UI
 import Commons
 import PersonalArea

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Repository
+import CoreFoundationLib
 
 final class EmptyTrusteerRepository {
     let appSessionId: String? = nil

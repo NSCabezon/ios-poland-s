@@ -2,7 +2,7 @@
 //  LoginConfigurations.swift
 //  PLLogin
 
-import Models
+import CoreFoundationLib
 
 /// This model will be inyected as dependency to pass information between login scenes
 public final class UnrememberedLoginConfiguration {

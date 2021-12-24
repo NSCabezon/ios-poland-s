@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import Models
 import Commons
 import Operative
 import CoreFoundationLib

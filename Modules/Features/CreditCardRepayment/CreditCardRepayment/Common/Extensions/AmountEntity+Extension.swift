@@ -1,5 +1,5 @@
 import Foundation
-import Models
+import CoreFoundationLib
 
 extension AmountEntity {
     var displayValueAndCurrency: String? {

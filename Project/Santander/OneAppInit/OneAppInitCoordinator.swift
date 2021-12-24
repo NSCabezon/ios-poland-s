@@ -20,7 +20,7 @@ import PLCommons
 import PLCommonOperatives
 import PLUI
 import CharityTransfer
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 import PhoneTopUp
 import ZusTransfer
