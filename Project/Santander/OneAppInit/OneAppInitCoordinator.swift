@@ -57,6 +57,7 @@ protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
     func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput)
+    func selectZusTransfer(accounts: [AccountForDebit])
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -187,12 +188,6 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             coordinator.start()
-        case .zusTransfer:
-            let coordinator = ZusTransferFormCoordinator(
-                dependenciesResolver: dependenciesEngine,
-                navigationController: navigationController
-            )
-            coordinator.start()
         default:
             break
         }
@@ -232,5 +227,17 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                                                          sourceView: .sendMoney)
             coordinator.start()
         }
+    }
+    
+    func selectZusTransfer(accounts: [AccountForDebit]) {
+        guard !accounts.isEmpty else {
+            view?.showError()
+            return
+        }
+        let coordinator = ZusTransferModuleCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            accounts: accounts)
+        coordinator.start()
     }
 }

@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		0B39BD956E5AD9C024811A54 /* Pods-ZusTransfer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusTransfer_Tests.release.xcconfig"; path = "Target Support Files/Pods-ZusTransfer_Tests/Pods-ZusTransfer_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		10BE8058FA0FA056D4004047 /* ZusTransfer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZusTransfer.podspec; path = ../ZusTransfer.podspec; sourceTree = "<group>"; };
+		10BE8058FA0FA056D4004047 /* ZusTransfer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZusTransfer.podspec; path = ../ZusTransfer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3E3A783DE6E3C1C18D7DD444 /* Pods-ZusTransfer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusTransfer_Example.release.xcconfig"; path = "Target Support Files/Pods-ZusTransfer_Example/Pods-ZusTransfer_Example.release.xcconfig"; sourceTree = "<group>"; };
 		40A4772866E62E8165EB13DB /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4538304292528BC65EA7FA45 /* Pods-ZusTransfer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusTransfer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ZusTransfer_Tests/Pods-ZusTransfer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
