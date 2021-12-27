@@ -30,17 +30,14 @@ final class PreSetupSendMoneyUseCase: UseCase<Void, PreSetupSendMoneyUseCaseOkOu
         switch result {
         case .success(let accounts):
             accounts.forEach { account in
-                var found = false
-                gpNotVisibleAccounts.forEach { notVisibleAccout in
-                    if account.equalsTo(other: notVisibleAccout.accountRepresentable) {
-                        found = true
-                    }
+                let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
+                    return account.ibanRepresentable?.codBban.contains(accountNotVisibles.accountRepresentable.ibanRepresentable?.codBban ?? "") ?? false
                 }
-                if found {
-                    accountNotVisibles.append(account)
-                } else {
+                guard containsAccountNotVisible else {
                     accountVisibles.append(account)
+                    return
                 }
+                accountNotVisibles.append(account)
             }
             return .ok(PreSetupSendMoneyUseCaseOkOutput(accountVisibles: accountVisibles,
                                                         accountNotVisibles: accountNotVisibles,
