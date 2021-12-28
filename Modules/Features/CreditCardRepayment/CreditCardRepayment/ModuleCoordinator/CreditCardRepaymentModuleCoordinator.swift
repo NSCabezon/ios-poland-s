@@ -1,7 +1,7 @@
 import UI
 import Commons
 import Operative
-import Models
+import CoreFoundationLib
 
 public protocol CreditCardRepaymentModuleCoordinatorProtocol {
     var navigationController: UINavigationController? { get set }

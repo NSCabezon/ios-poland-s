@@ -7,7 +7,7 @@
 
 import SANPLLibrary
 import SANLegacyLibrary
-import Models
+import CoreFoundationLib
 
 public final class AccountTransactionDTOAdapter {
     public static func adaptPLAccountTransactionToAccountTransaction(_ plAccountTransaction: SANPLLibrary.AccountTransactionDTO, customer: SANPLLibrary.CustomerDTO?) -> SANLegacyLibrary.AccountTransactionDTO {

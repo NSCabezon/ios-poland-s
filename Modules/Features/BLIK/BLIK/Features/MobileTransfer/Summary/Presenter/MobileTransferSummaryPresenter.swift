@@ -1,7 +1,7 @@
-import Models
-import Commons
-import Operative
 import CoreFoundationLib
+import Commons
+import PLCommons
+import Operative
 
 protocol MobileTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToGlobalPosition()
@@ -62,7 +62,7 @@ private extension MobileTransferSummaryPresenter {
                                                                       description: localized("pl_blik_text_successExpl"))
         let bodyItems: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(title: localized("summary_item_amount"),
-                  subTitle: AmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32),
+                  subTitle: PLAmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32),
                   info: summary.title),
             .init(title: localized("pl_blik_label_accountTransfter"),
                   subTitle: summary.accountName,
@@ -87,7 +87,7 @@ private extension MobileTransferSummaryPresenter {
         ]
         
         let footerItems: [OperativeSummaryStandardFooterItemViewModel] = [
-            .init(imageKey: "icnEnviarDinero", title: localized("pl_blik_summAnothTransf"), action: { [weak self] in
+            .init(imageKey: "icnEnviarDinero", title: localized("generic_button_anotherPayment"), action: { [weak self] in
                 self?.coordinator.goToMakeAnotherPayment()
             }),
             .init(imageKey: "icnPg", title: localized("generic_button_globalPosition"), action: { [weak self] in

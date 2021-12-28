@@ -6,7 +6,6 @@
 //
 
 import Commons
-import PLUI
 import CoreDomain
 import CoreFoundationLib
 import PLCommons
@@ -14,7 +13,7 @@ import PLCommons
 protocol CharityTransferConfirmationPresenterProtocol {
     var view: CharityTransferConfirmationViewControllerProtocol? { get set }
     func goBack()
-    func closeProcess()
+    func backToTransfer()
     func confirmTapped()
     func viewDidLoad()
 }
@@ -23,9 +22,11 @@ final class CharityTransferConfirmationPresenter {
     var view: CharityTransferConfirmationViewControllerProtocol?
     private let dependenciesResolver: DependenciesResolver
     private let model: CharityTransferModel?
-    private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
     private var useCaseHandler: UseCaseHandler {
         dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
+    private var acceptCharityTransactionUseCase: AcceptCharityTransactionProtocol {
+        dependenciesResolver.resolve()
     }
     
     init(dependenciesResolver: DependenciesResolver,
@@ -45,33 +46,54 @@ extension CharityTransferConfirmationPresenter: CharityTransferConfirmationPrese
     func goBack() {
         coordinator.pop()
     }
-
-    func closeProcess() {
-        let dialog = confirmationDialogFactory.createEndProcessDialog { [weak self] in
-            self?.coordinator.backToTransfer()
-        }
-        declineAction: {}
-        view?.showDialog(dialog)
+    
+    func backToTransfer() {
+        coordinator.backToTransfer()
     }
-
+    
     func confirmTapped() {
-        // TODO Depends on TAP-2430
+        guard let model = model else { return }
+        self.view?.showLoader()
+        Scenario(useCase: acceptCharityTransactionUseCase,
+                 input: .init(model: model))
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] result in
+                guard let self = self else { return }
+                self.view?.hideLoader {
+                    self.coordinator.showSummary(with: result.summary)
+                }
+            }
+            .onError { [weak self] error in
+                self?.view?.hideLoader {
+                    let errorResult = AcceptCharityTransactionErrorResult(rawValue: error.getErrorDesc() ?? "")
+                    switch errorResult {
+                    case .noConnection:
+                        self?.showError(with: "pl_generic_alert_textUnstableConnection")
+                    case .insufficientFunds:
+                        self?.showError(with: "pl_generic_alert_textNoFunds")
+                    case .limitExceeded:
+                        self?.showError(with: "pl_generic_alert_textDayLimit", nameImage: "icnAlert")
+                    default:
+                        self?.handleServiceInaccessible()
+                    }
+                }
+            }
     }
-
+    
     func viewDidLoad() {
         prepareViewModel()
     }
 
-    func showServiceInaccessibleError() {
-        view?.showServiceInaccessibleMessage { [weak self] in
-            self?.coordinator.backToTransfer()
-        }
+    func showError(with key: String, nameImage: String = "icnAlertError") {
+        view?.showErrorMessage(localized(key), image: nameImage, onConfirm: { [weak self] in
+            self?.coordinator.pop()
+        })
     }
-
-    func showError(with key: String) {
-        view?.showErrorMessage(localized(key)) { [weak self] in
+    
+    func handleServiceInaccessible() {
+        view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), image: "icnAlertError", onConfirm: { [weak self] in
             self?.coordinator.backToTransfer()
-        }
+        })
     }
 }
 

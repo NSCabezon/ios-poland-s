@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import Commons
 import PLCommons
-import Models
 import LoginCommon
 import SANPLLibrary
 import PLLegacyAdapter

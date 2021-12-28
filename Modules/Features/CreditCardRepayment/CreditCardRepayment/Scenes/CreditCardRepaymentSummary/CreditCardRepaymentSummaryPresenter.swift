@@ -1,6 +1,6 @@
 import Operative
 import Commons
-import Models
+import CoreFoundationLib
 import UI
 
 protocol CreditCardRepaymentSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {}

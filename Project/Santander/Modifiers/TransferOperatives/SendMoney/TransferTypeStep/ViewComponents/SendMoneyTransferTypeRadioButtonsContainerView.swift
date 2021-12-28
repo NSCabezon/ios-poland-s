@@ -7,7 +7,7 @@
 
 import UI
 import UIOneComponents
-import Models
+import CoreFoundationLib
 
 protocol SendMoneyTransferTypeRadioButtonsContainerViewDelegate: AnyObject {
     func didSelectRadioButton(at index: Int)

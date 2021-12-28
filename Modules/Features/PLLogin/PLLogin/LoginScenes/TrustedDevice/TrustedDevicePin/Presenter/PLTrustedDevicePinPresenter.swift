@@ -2,7 +2,7 @@
 //  PLTrustedDevicePinPresenter.swift
 //  PLLogin
 
-import Models
+import CoreFoundationLib
 import Commons
 import PLCommons
 import os

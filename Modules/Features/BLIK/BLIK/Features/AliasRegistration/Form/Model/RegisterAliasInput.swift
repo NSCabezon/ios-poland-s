@@ -8,5 +8,5 @@
 struct RegisterAliasInput {
     let aliasProposal: Transaction.AliasProposal
     let merchantId: String?
-    let acquirerId: String?
+    let acquirerId: Int?
 }

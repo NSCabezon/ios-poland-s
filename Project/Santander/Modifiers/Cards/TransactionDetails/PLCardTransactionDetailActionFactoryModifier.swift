@@ -7,7 +7,7 @@
 
 import Foundation
 import Cards
-import Models
+import CoreFoundationLib
 
 class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionFactoryModifierProtocol {
     var addPDFDetail: Bool = true

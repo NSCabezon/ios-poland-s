@@ -5,7 +5,6 @@
 //  Created by Juan Carlos López Robles on 04/02/2021.
 //
 
-import Models
 import RetailLegacy
 import Commons
 import GlobalPosition

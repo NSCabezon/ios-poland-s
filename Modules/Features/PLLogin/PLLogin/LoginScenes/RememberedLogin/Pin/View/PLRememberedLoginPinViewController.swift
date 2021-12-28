@@ -11,7 +11,7 @@ import Commons
 import UI
 import SANLegacyLibrary
 import PLUI
-import Models
+import CoreFoundationLib
 
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func showDialog(_ type: PLRememberedLoginDialogType)

@@ -165,14 +165,17 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         let serviceName: TransferServiceType = .confirmationTransfer
         let absoluteUrl = baseUrl + self.basePath
         let result: Result<ConfirmationTransferDTO, NetworkProviderError> = self.networkProvider.request(TransferRequest(serviceName: serviceName.rawValue,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .post,
-                                                                                                                body: body,
-                                                                                                                jsonBody: parameters,
-                                                                                                                headers: self.headers,
-                                                                                                                bodyEncoding: .body,
-                                                                                                                contentType: .json,
-                                                                                                                localServiceName: .confirmationTransfer))
+                                                                                                                         serviceUrl: absoluteUrl,
+                                                                                                                         method: .post,
+                                                                                                                         body: body,
+                                                                                                                         jsonBody: parameters,
+                                                                                                                         headers: self.headers,
+                                                                                                                         bodyEncoding: .body,
+                                                                                                                         contentType: .json,
+                                                                                                                         localServiceName: .confirmationTransfer,
+                                                                                                                         authorization: .twoFactorOperation(
+                                                                                                                            transactionParameters: parameters.transactionParameters
+                                                                                                                         )))
         return result
     }
     
@@ -224,7 +227,7 @@ private struct TransferRequest: NetworkProviderRequest {
     let bodyEncoding: NetworkProviderBodyEncoding?
     let contentType: NetworkProviderContentType
     let localServiceName: PLLocalServiceName
-    let authorization: NetworkProviderRequestAuthorization? = .oauth
+    let authorization: NetworkProviderRequestAuthorization?
 
     init(serviceName: String,
          serviceUrl: String,
@@ -235,7 +238,8 @@ private struct TransferRequest: NetworkProviderRequest {
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
          contentType: NetworkProviderContentType,
-         localServiceName: PLLocalServiceName) {
+         localServiceName: PLLocalServiceName,
+         authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.jsonBody = jsonBody
@@ -246,6 +250,7 @@ private struct TransferRequest: NetworkProviderRequest {
         self.bodyEncoding = bodyEncoding
         self.contentType = contentType
         self.localServiceName = localServiceName
+        self.authorization = authorization
     }
 }
 

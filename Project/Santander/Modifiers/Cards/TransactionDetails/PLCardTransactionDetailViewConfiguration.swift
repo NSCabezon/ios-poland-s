@@ -7,7 +7,7 @@
 
 import Foundation
 import Cards
-import Models
+import CoreFoundationLib
 import Commons
 import UI
 

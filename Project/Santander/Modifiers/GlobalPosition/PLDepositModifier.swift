@@ -8,7 +8,7 @@ import Foundation
 import GlobalPosition
 import UI
 import Commons
-import Models
+import CoreFoundationLib
 
 final class PLDepositModifier: DepositModifier {
     override func didSelectDeposit(deposit: DepositEntity) {

@@ -14,7 +14,24 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		A381FD4B2774C12B0075F1DD /* CharityTransferSummaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A381FD4A2774C12B0075F1DD /* CharityTransferSummaryPresenterTests.swift */; };
+		A381FD4D2774C14E0075F1DD /* CharityTransferSummaryCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A381FD4C2774C14E0075F1DD /* CharityTransferSummaryCoordinatorMock.swift */; };
+		A381FD4F2774C1B60075F1DD /* CharityTransferSummaryMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A381FD4E2774C1B60075F1DD /* CharityTransferSummaryMockBuilder.swift */; };
+		A381FD512774C1E10075F1DD /* CharityTransferSummaryViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A381FD502774C1E10075F1DD /* CharityTransferSummaryViewControllerMock.swift */; };
+		A396FA652760EF2200DEF2F9 /* AcceptCharityTransactionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA642760EF2200DEF2F9 /* AcceptCharityTransactionUseCaseTests.swift */; };
+		A396FA68276104B500DEF2F9 /* PLManagersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA67276104B500DEF2F9 /* PLManagersProviderMock.swift */; };
+		A396FA6A2761060600DEF2F9 /* PLLoginManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA692761060600DEF2F9 /* PLLoginManagerMock.swift */; };
+		A396FA6C27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA6B27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift */; };
+		A396FA6E27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA6D27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift */; };
+		A396FA7127612ACE00DEF2F9 /* setConfirmationResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A396FA7027612ACE00DEF2F9 /* setConfirmationResponse.json */; };
+		A396FA752761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA742761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift */; };
+		A396FA772761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA762761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift */; };
+		A396FA7A2761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA792761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift */; };
+		A396FA7D27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA7C27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift */; };
+		A396FA8027636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA7F27636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift */; };
+		A396FA82276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA81276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift */; };
+		A396FA8427638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA8327638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift */; };
+		A396FA872763A30700DEF2F9 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA862763A30700DEF2F9 /* TestHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +56,25 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* CharityTransfer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CharityTransfer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		94279742AB368146061BD038 /* Pods-CharityTransfer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CharityTransfer_Example.debug.xcconfig"; path = "Target Support Files/Pods-CharityTransfer_Example/Pods-CharityTransfer_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		A381FD4A2774C12B0075F1DD /* CharityTransferSummaryPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferSummaryPresenterTests.swift; sourceTree = "<group>"; };
+		A381FD4C2774C14E0075F1DD /* CharityTransferSummaryCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferSummaryCoordinatorMock.swift; sourceTree = "<group>"; };
+		A381FD4E2774C1B60075F1DD /* CharityTransferSummaryMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferSummaryMockBuilder.swift; sourceTree = "<group>"; };
+		A381FD502774C1E10075F1DD /* CharityTransferSummaryViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferSummaryViewControllerMock.swift; sourceTree = "<group>"; };
+		A396FA642760EF2200DEF2F9 /* AcceptCharityTransactionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptCharityTransactionUseCaseTests.swift; sourceTree = "<group>"; };
+		A396FA67276104B500DEF2F9 /* PLManagersProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLManagersProviderMock.swift; sourceTree = "<group>"; };
+		A396FA692761060600DEF2F9 /* PLLoginManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoginManagerMock.swift; sourceTree = "<group>"; };
+		A396FA6B27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransactionParametersProviderMock.swift; sourceTree = "<group>"; };
+		A396FA6D27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerSuccessMock.swift; sourceTree = "<group>"; };
+		A396FA7027612ACE00DEF2F9 /* setConfirmationResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = setConfirmationResponse.json; sourceTree = "<group>"; };
+		A396FA742761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerNonConnectionFailureMock.swift; sourceTree = "<group>"; };
+		A396FA762761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferModelMockBuilder.swift; sourceTree = "<group>"; };
+		A396FA792761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferSummaryMapperTests.swift; sourceTree = "<group>"; };
+		A396FA7C27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferConfirmationPresenterTests.swift; sourceTree = "<group>"; };
+		A396FA7F27636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferConfirmationViewControllerMock.swift; sourceTree = "<group>"; };
+		A396FA81276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptCharityTransactionUseCaseMock.swift; sourceTree = "<group>"; };
+		A396FA8327638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferConfirmationCoordinatorMock.swift; sourceTree = "<group>"; };
+		A396FA862763A30700DEF2F9 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		B3924529A0C618282595F9A0 /* Pods_CharityTransfer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CharityTransfer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3567534574F5DBCFA93090 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CC546D52BCB4250919AC9004 /* Pods-CharityTransfer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CharityTransfer_Example.release.xcconfig"; path = "Target Support Files/Pods-CharityTransfer_Example/Pods-CharityTransfer_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,7 +158,10 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				A381FD472774C1010075F1DD /* Summary */,
+				A396FA852763A2CD00DEF2F9 /* TestHelper */,
+				A396FA662761048C00DEF2F9 /* Mocks */,
+				A396FA622760EE2A00DEF2F9 /* Confirmation */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -146,6 +183,108 @@
 				CA3567534574F5DBCFA93090 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		A381FD472774C1010075F1DD /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				A381FD492774C1110075F1DD /* Presenter */,
+				A381FD482774C1080075F1DD /* Mocks */,
+			);
+			name = Summary;
+			sourceTree = "<group>";
+		};
+		A381FD482774C1080075F1DD /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A381FD4C2774C14E0075F1DD /* CharityTransferSummaryCoordinatorMock.swift */,
+				A381FD4E2774C1B60075F1DD /* CharityTransferSummaryMockBuilder.swift */,
+				A381FD502774C1E10075F1DD /* CharityTransferSummaryViewControllerMock.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		A381FD492774C1110075F1DD /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A381FD4A2774C12B0075F1DD /* CharityTransferSummaryPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		A396FA622760EE2A00DEF2F9 /* Confirmation */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA7E27636F1B00DEF2F9 /* Mocks */,
+				A396FA7B27636D2100DEF2F9 /* Presenter */,
+				A396FA782761EE0D00DEF2F9 /* Mapper */,
+				A396FA6F276129F100DEF2F9 /* JSON */,
+				A396FA632760EE4700DEF2F9 /* UseCase */,
+			);
+			name = Confirmation;
+			sourceTree = "<group>";
+		};
+		A396FA632760EE4700DEF2F9 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA642760EF2200DEF2F9 /* AcceptCharityTransactionUseCaseTests.swift */,
+			);
+			name = UseCase;
+			sourceTree = "<group>";
+		};
+		A396FA662761048C00DEF2F9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA67276104B500DEF2F9 /* PLManagersProviderMock.swift */,
+				A396FA692761060600DEF2F9 /* PLLoginManagerMock.swift */,
+				A396FA6B27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift */,
+				A396FA6D27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift */,
+				A396FA742761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift */,
+				A396FA762761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		A396FA6F276129F100DEF2F9 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA7027612ACE00DEF2F9 /* setConfirmationResponse.json */,
+			);
+			name = JSON;
+			sourceTree = "<group>";
+		};
+		A396FA782761EE0D00DEF2F9 /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA792761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift */,
+			);
+			name = Mapper;
+			sourceTree = "<group>";
+		};
+		A396FA7B27636D2100DEF2F9 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA7C27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		A396FA7E27636F1B00DEF2F9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA7F27636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift */,
+				A396FA81276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift */,
+				A396FA8327638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		A396FA852763A2CD00DEF2F9 /* TestHelper */ = {
+			isa = PBXGroup;
+			children = (
+				A396FA862763A30700DEF2F9 /* TestHelper.swift */,
+			);
+			name = TestHelper;
 			sourceTree = "<group>";
 		};
 		B2B3115076D3771CD1731C43 /* Pods */ = {
@@ -257,6 +396,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A396FA7127612ACE00DEF2F9 /* setConfirmationResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,73 +432,77 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CharityTransfer_Example/Pods-CharityTransfer_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/CharityTransfer/CharityTransfer.framework",
 				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
 				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
-				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
 				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSPublicFiles/iOSPublicFiles.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSPullOffers/iOSPullOffers.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CharityTransfer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPublicFiles.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPullOffers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
@@ -396,73 +540,77 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CharityTransfer_Tests/Pods-CharityTransfer_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/CharityTransfer/CharityTransfer.framework",
 				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
 				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/DataRepository/DataRepository.framework",
-				"${BUILT_PRODUCTS_DIR}/DomainCommon/DomainCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/Models/Models.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
 				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/Repository/Repository.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/SANLibraryV3/SANLibraryV3.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSCommonPublicFiles/iOSCommonPublicFiles.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSPublicFiles/iOSPublicFiles.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSPullOffers/iOSPullOffers.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CharityTransfer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DataRepository.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DomainCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repository.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLibraryV3.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSCommonPublicFiles.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPublicFiles.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSPullOffers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
@@ -487,7 +635,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				A396FA7A2761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift in Sources */,
+				A381FD4D2774C14E0075F1DD /* CharityTransferSummaryCoordinatorMock.swift in Sources */,
+				A396FA68276104B500DEF2F9 /* PLManagersProviderMock.swift in Sources */,
+				A396FA752761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
+				A396FA6A2761060600DEF2F9 /* PLLoginManagerMock.swift in Sources */,
+				A396FA82276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift in Sources */,
+				A396FA652760EF2200DEF2F9 /* AcceptCharityTransactionUseCaseTests.swift in Sources */,
+				A396FA772761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift in Sources */,
+				A396FA6E27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift in Sources */,
+				A396FA6C27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift in Sources */,
+				A381FD4F2774C1B60075F1DD /* CharityTransferSummaryMockBuilder.swift in Sources */,
+				A396FA8027636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift in Sources */,
+				A396FA8427638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift in Sources */,
+				A396FA7D27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift in Sources */,
+				A396FA872763A30700DEF2F9 /* TestHelper.swift in Sources */,
+				A381FD4B2774C12B0075F1DD /* CharityTransferSummaryPresenterTests.swift in Sources */,
+				A381FD512774C1E10075F1DD /* CharityTransferSummaryViewControllerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

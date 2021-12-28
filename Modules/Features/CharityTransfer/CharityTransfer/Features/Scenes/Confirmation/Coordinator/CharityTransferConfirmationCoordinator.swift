@@ -6,11 +6,16 @@
 //
 
 import UI
+import PLUI
 import Commons
+import PLCommons
+import SANPLLibrary
+import PLCryptography
 
 public protocol CharityTransferConfirmationCoordinatorProtocol {
     func pop()
     func backToTransfer()
+    func showSummary(with model: CharityTransferSummary)
 }
 
 public final class CharityTransferConfirmationCoordinator: ModuleCoordinator {
@@ -49,6 +54,24 @@ private extension CharityTransferConfirmationCoordinator {
             presenter.view = viewController
             return viewController
         }
+        dependenciesEngine.register(for: AcceptCharityTransactionProtocol.self) { resolver in
+            AcceptCharityTransactionUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
+             PLTrustedHeadersProvider(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PLDomesticTransactionParametersGenerable.self) { _ in
+             PLDomesticTransactionParametersProvider()
+        }
+        dependenciesEngine.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
+             PLTransactionParametersProvider(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: CharityTransferSummaryMapping.self) { _ in
+            CharityTransferSummaryMapper()
+        }
+        dependenciesEngine.register(for: CharityTransferSendMoneyInputMapping.self) { resolver in
+            CharityTransferSendMoneyInputMapper(dependenciesResolver: resolver)
+        }
     }
 }
 
@@ -59,11 +82,31 @@ extension CharityTransferConfirmationCoordinator: CharityTransferConfirmationCoo
     }
 
     public func backToTransfer() {
-        if let viewController = navigationController?.viewControllers.reversed()[safe: 2] {
-            navigationController?.popToViewController(viewController, animated: true)
-        } else {
-            navigationController?.popViewController(animated: true)
+        let accountSelectorViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is AccountSelectorViewController
         }
+        guard let accountSelectorViewControllerIndex = accountSelectorViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: accountSelectorViewControllerIndex - 1] else {
+            let charityTransferFormViewControllerIndex = navigationController?.viewControllers.firstIndex {
+                $0 is CharityTransferFormViewController
+            }
+            if let charityTransferFormViewControllerIndex = charityTransferFormViewControllerIndex,
+               let parentController = navigationController?.viewControllers[safe: charityTransferFormViewControllerIndex - 1] {
+                navigationController?.popToViewController(parentController, animated: true)
+                return
+            }
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
+    }
+    
+    public func showSummary(with model: CharityTransferSummary) {
+        let coordinator = CharityTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
+                                                           navigationController: navigationController,
+                                                           summary: model)
+        coordinator.start()
     }
 }
 

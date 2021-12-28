@@ -15,21 +15,23 @@ protocol CharityTransferConfirmationViewControllerProtocol:
     ErrorPresentable,
     LoaderPresentable,
     ConfirmationDialogPresentable {
-    func confirmTapped()
     func setViewModel(_ viewModel: CharityTransferConfirmationViewModel)
 }
 
 final class CharityTransferConfirmationViewController: UIViewController {
 
     private let presenter: CharityTransferConfirmationPresenterProtocol
+    private let confirmationDialogFactory: ConfirmationDialogProducing
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     private let summaryView = OperativeSummaryStandardBodyView()
     private let footer = SummaryTotalAmountView()
     private let bottomView = BottomButtonView()
 
-    init(presenter: CharityTransferConfirmationPresenterProtocol) {
+    init(presenter: CharityTransferConfirmationPresenterProtocol,
+         confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()) {
         self.presenter = presenter
+        self.confirmationDialogFactory = confirmationDialogFactory
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,7 +54,11 @@ private extension CharityTransferConfirmationViewController {
     }
 
     @objc func closeProcess() {
-        presenter.closeProcess()
+        let dialogViewModel = confirmationDialogFactory.createEndProcessDialog { [weak self] in
+            self?.presenter.backToTransfer()
+        }
+        declineAction: {}
+        showDialog(dialogViewModel)        
     }
 
     func setUp() {
@@ -80,7 +86,7 @@ private extension CharityTransferConfirmationViewController {
 
         bottomView.backgroundColor = .white
         bottomView.configure(title: localized("generic_button_confirm")) { [weak self] in
-            self?.confirmTapped()
+            self?.presenter.confirmTapped()
         }
     }
 
@@ -129,10 +135,6 @@ extension CharityTransferConfirmationViewController: CharityTransferConfirmation
                                    collapsableSections: .noCollapsable)
         footer.setAmount(viewModel.amountValueString(withAmountSize: 36))
         footer.setTitle(localized("pl_foundtrans_text_total"))
-    }
-
-    func confirmTapped() {
-        presenter.confirmTapped()
     }
 }
 

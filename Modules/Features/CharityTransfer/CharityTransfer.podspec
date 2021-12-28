@@ -33,4 +33,5 @@ Pod::Spec.new do |s|
   s.dependency "SANPLLibrary"
   s.dependency "PLCommons"
   s.dependency "Operative"
+  s.dependency "PLCryptography"
 end

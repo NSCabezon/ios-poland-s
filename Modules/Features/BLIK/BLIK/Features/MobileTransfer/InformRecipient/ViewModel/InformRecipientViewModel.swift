@@ -1,4 +1,5 @@
 import Commons
+import PLCommons
 import UI
 
 struct InformRecipientViewModel {
@@ -15,7 +16,7 @@ struct InformRecipientViewModel {
     
     var listViewModel: [InformRecipientInfoItem.ViewModel] {
         let icon: UIImage? = summary.transferType == .INTERNAL ? Assets.image(named: "icnSantanderPg") : nil
-        let amount = AmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32)
+        let amount = PLAmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32)
         let formattedAmount = AttributedStringBuilder(attributedString: amount)
             .addLineHeightMultiple(0.85).build()
         return [

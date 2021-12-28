@@ -1,7 +1,6 @@
 import UIKit
 import SANLegacyLibrary
 import CoreFoundationLib
-import Models
 import UI
 import SANPLLibrary
 
@@ -45,7 +44,7 @@ public final class CreditCardRepaymentManagerMockData {
                     }
                 },
                 {
-                    "number":"63109014894000000121600961",
+                    "number":"109025900000000142354001",
                     "id":"142367779",
                     "currencyCode":"PLN",
                     "name":{

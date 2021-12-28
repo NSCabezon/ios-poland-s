@@ -7,12 +7,11 @@
 
 import Commons
 import UI
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 import Commons
-import CoreFoundationLib
 import PLCommons
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {

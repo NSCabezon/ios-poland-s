@@ -28,6 +28,10 @@ public enum RequestedPositions {
 
 public class PLUIInputCodeView: UIView {
 
+    private enum AccesibilityIdentifiers {
+        static let container = "CodeItemsContainer"
+    }
+
     private var inputCodeBoxArray = [PLUIInputCodeBoxView]()
     public let charactersSet: CharacterSet
     private weak var delegate: PLUIInputCodeViewDelegate?
@@ -59,6 +63,7 @@ public class PLUIInputCodeView: UIView {
                                         elementSize: elementSize,
                                         requestedPositions: requestedPositions)
         self.addSubviews(view: self.facade.view(with: self.inputCodeBoxArray))
+        self.configureAccessibilityIdentifiers()
     }
 
     required init?(coder: NSCoder) {
@@ -154,6 +159,10 @@ private extension PLUIInputCodeView {
             view.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
+    }
+
+    func configureAccessibilityIdentifiers() {
+        self.accessibilityIdentifier = AccesibilityIdentifiers.container
     }
 }
 

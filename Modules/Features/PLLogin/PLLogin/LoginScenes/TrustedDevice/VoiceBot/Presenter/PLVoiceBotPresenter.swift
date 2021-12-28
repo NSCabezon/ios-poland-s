@@ -5,7 +5,7 @@
 //  Created by Juan Sánchez Marín on 29/7/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 import PLCommons
 import SANPLLibrary

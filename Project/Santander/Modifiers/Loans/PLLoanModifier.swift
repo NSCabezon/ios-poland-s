@@ -8,8 +8,10 @@
 import Loans
 import UI
 import Commons
-import Models
+import CoreFoundationLib
 import SANPLLibrary
+import LoanSchedule
+import Account
 
 final class PLLoanModifier {
     private let managersProvider: PLManagersProviderProtocol
@@ -61,7 +63,41 @@ extension PLLoanModifier: LoansModifierProtocol {
     }
 
     func didSelectLoanOption(_ option: LoansHomeOption, loan: LoanEntity?) {
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        if option == .custom(title: "loansOption_button_customerService", imageName: "icnCustomerService", accessibilityIdentifier: "loansOption_button_customerService") {
+            didSelectCustomerService()
+        } else if option == .custom(title: "loansOption_button_loanSchedule", imageName: "icnLoanSchedule", accessibilityIdentifier: "loansOption_button_loanSchedule") {
+            didSelectLoanSchedule(option, loan: loan)
+        } else {
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+        }
+    }
+    
+    private func didSelectCustomerService() {
+        let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
+        let repository = dependenciesEngine.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        let identifier = PLAccountOtherOperativesIdentifier.customerService.rawValue
+        
+        guard let list = repository.get()?.accountsOptions,
+                let data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
+        
+        input = GetPLAccountOtherOperativesWebConfigurationUseCaseInput(type: data)
+        let useCase = dependenciesEngine.resolve(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self)
+        Scenario(useCase: useCase, input: input)
+            .execute(on: self.dependenciesEngine.resolve())
+            .onSuccess { result in
+                self.dependenciesEngine.resolve(for: AccountsHomeCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
+            }
+    }
+    
+    private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
+        let dto = list.filter { $0.id == identifier }.first
+        return PLAccountOtherOperativesData(identifier: identifier, link: dto?.url, isAvailable: dto?.isAvailable, parameter: nil)
+    }
+    
+    private func didSelectLoanSchedule(_ option: LoansHomeOption, loan: LoanEntity?) {
+        let coordinator = self.dependenciesEngine.resolve(for: LoanScheduleModuleCoordinator.self)
+        let schedule = LoanScheduleIdentity(loanAccountNumber: loan?.contract?.dto.description ?? "", loanName: loan?.alias ?? "")
+        coordinator.start(with: schedule)
     }
 
     func didSelectRepaymentLoan(_ loan: LoanEntity) {

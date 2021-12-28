@@ -9,7 +9,6 @@
 import Commons
 @testable import CreditCardRepayment
 import CoreFoundationLib
-import Models
 import Operative
 import SANLegacyLibrary
 import SANPLLibrary

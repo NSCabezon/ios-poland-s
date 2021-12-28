@@ -37,6 +37,11 @@ final class MobileTransferFormViewController: UIViewController {
         setUp()
         presenter.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        prepareNavigationBar()
+    }
 }
 
 private extension MobileTransferFormViewController {

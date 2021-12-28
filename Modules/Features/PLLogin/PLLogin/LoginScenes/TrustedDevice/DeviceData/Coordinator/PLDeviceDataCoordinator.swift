@@ -7,7 +7,7 @@
 
 import Commons
 import UI
-import Models
+import CoreFoundationLib
 import CommonUseCase
 
 protocol PLDeviceDataCoordinatorProtocol {

@@ -1,10 +1,11 @@
 import UI
-import Models
+import CoreFoundationLib
 import Commons
 
 protocol AliasRegistrationFormCoordinatorProtocol {
     func goToAliasRegistrationSummary()
     func close()
+    func goToGlobalPosition()
 }
 
 final class AliasRegistrationFormCoordinator: ModuleCoordinator {
@@ -46,6 +47,10 @@ extension AliasRegistrationFormCoordinator: AliasRegistrationFormCoordinatorProt
     
     func close() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func goToGlobalPosition() {
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 

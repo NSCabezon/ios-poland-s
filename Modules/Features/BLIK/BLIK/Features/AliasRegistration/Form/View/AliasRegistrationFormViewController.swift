@@ -43,6 +43,7 @@ private extension AliasRegistrationFormViewController {
         configureNavigationItem()
         configureSubviews()
         configureStyling()
+        configureFooterView()
     }
     
     func configureSubviews() {
@@ -73,6 +74,11 @@ private extension AliasRegistrationFormViewController {
             .setLeftAction(.back(action: #selector(close)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
+    }
+    
+    func configureFooterView() {
+        footerView.configureActions(onSaveButtonTap: presenter.didPressSave,
+                                    onRejectButtonTap: presenter.goToGlobalPosition)
     }
     
     @objc func close() {

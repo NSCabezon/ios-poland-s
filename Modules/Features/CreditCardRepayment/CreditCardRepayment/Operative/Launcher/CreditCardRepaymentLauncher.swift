@@ -1,6 +1,6 @@
 import Foundation
 import Operative
-import Models
+import CoreFoundationLib
 import Commons
 
 protocol CreditCardRepaymentLauncher: OperativeContainerLauncher {

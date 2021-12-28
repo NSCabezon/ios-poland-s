@@ -5,7 +5,7 @@
 //  Created by Francisco del Real Escudero on 13/4/21.
 //
 
-import Models
+import CoreFoundationLib
 
 /** NOTE: It is possible to create deep link with arguments eg.
  case helpCenterWithInfo(info: String)

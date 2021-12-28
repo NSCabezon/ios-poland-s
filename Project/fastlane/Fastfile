@@ -164,10 +164,10 @@ end
 platform :ios do
 
   before_all do |_lane|
-    xcversion(version: '~> 12.5')
-    clean_cocoapods_cache
+    #xcversion(version: '~> 12.5')
+    #clean_cocoapods_cache
     clear_derived_data
-    cocoapods(repo_update: true)
+    #cocoapods(repo_update: true)
   end
 
   desc 'Build and send to Microsite and TestFlight'

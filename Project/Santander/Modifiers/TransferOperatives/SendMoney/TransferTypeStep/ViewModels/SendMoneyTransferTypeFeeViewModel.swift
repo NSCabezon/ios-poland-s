@@ -5,7 +5,7 @@
 //  Created by Angel Abad Perez on 26/10/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 import CoreDomain
 

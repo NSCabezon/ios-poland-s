@@ -7,7 +7,6 @@
 
 import SANLegacyLibrary
 import CoreFoundationLib
-import Models
 import Commons
 import Loans
 import SANPLLibrary

@@ -10,15 +10,11 @@ import Foundation
 public struct TrustedDeviceInfo: Codable {
     public let trustedDeviceId: Int
     public let state: String
-    public let trustedDeviceSoftwareTokenHeaders: [TrustedDeviceSoftwareTokenHeader]
     public let certificateTime: String
     public init(dto: TrustedDeviceInfoDTO) {
         self.trustedDeviceId = dto.trustedDevice.id
         self.state = dto.trustedDevice.state
         self.certificateTime = dto.trustedDevice.certificateTime
-        self.trustedDeviceSoftwareTokenHeaders = dto.softwareTokenHeaders.map({ header in
-            return TrustedDeviceSoftwareTokenHeader(dto: header)
-        })
     }
 }
 

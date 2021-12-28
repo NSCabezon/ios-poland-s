@@ -73,14 +73,16 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
     
     func confirmTransfer() {
         guard let account = getSelectedAccountViewModel(),
-              let transferFormViewModel = transferFormViewModel else { return }
+              let transferFormViewModel = transferFormViewModel,
+              let amount = transferFormViewModel.amount else { return }
         let model = CharityTransferModel(
-            amount: transferFormViewModel.amount,
+            amount: amount,
             title: localized("pl_foundtrans_text_titleTransFound"),
             account: account,
             recipientName: localized("pl_foundtrans_text_RecipFoudSant"),
+            recipientAccountNumber: transferFormViewModel.recipientAccountNumberUnformatted,
             transactionType: .charityTransfer,
-            date: Date()
+            date: transferFormViewModel.date
         )
         coordinator.showConfirmation(with: model)
     }

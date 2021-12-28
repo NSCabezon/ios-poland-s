@@ -5,7 +5,7 @@
 //  Created by Ernesto Fernandez Calles on 12/11/21.
 //
 
-import Models
+import CoreFoundationLib
 import UI
 import Commons
 

@@ -3,7 +3,6 @@ import CoreFoundationLib
 import TransferOperatives
 import SANPLLibrary
 import Commons
-import Models
 import CoreDomain
 
 class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, ValidateSendMoneyUseCaseOkOutput, StringErrorOutput>, ValidateGenericSendMoneyUseCaseProtocol {

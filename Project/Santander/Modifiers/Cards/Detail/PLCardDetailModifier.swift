@@ -10,7 +10,7 @@ import Foundation
 import Cards
 import Commons
 import SANPLLibrary
-import Models
+import CoreFoundationLib
 
 final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol

@@ -1,4 +1,5 @@
 import Foundation
+import SANPLLibrary
 
 public struct Transaction {
     
@@ -7,13 +8,9 @@ public struct Transaction {
     public let date: Date?
     public let time: Date?
     public let transferType: TransferType
-    public let placeName: String?
-    public let address: String?
-    public let city: String?
-    public let merchantId: String?
-    public let acquirerId: String?
     public let aliasContext: AliasContext
     public let amount: Decimal
+    public let merchant: GetTrnToConfDTO.Merchant?
     
     public enum TransferType: String, Decodable {
         case blikPurchases = "BLIK_PURCHASES"

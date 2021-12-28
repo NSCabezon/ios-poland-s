@@ -9,7 +9,7 @@ import UIKit
 import Operative
 import UI
 import Commons
-import Models
+import CoreFoundationLib
 
 protocol CreditCardRepaymentConfirmationViewProtocol: OperativeConfirmationViewProtocol {
     func showErrorDialog()

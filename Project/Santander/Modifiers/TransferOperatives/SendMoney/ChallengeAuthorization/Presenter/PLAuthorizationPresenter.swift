@@ -5,13 +5,12 @@
 //  Created by Daniel Gómez Barroso on 25/10/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 import LocalAuthentication
 import PLCommons
 import SecurityExtensions
 import CoreDomain
-import CoreFoundationLib
 
 protocol PLAuthorizationPresenterProtocol: AnyObject {
     var view: PLAuthorizationView? { get set }

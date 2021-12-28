@@ -9,7 +9,7 @@ import Foundation
 import UI
 import Commons
 import PLCommons
-import Repository
+import CoreFoundationLib
 
 protocol PLUnrememberedLoginOnboardingCoordinatorProtocol {
     func didSelectLogin()

@@ -5,10 +5,9 @@
 //  Created by Rodrigo Jurado on 27/5/21.
 //
 
-import Models
+import CoreFoundationLib
 import UI
 import Commons
-import Repository
 
 final class PaymentsPGFrequentOperativeOption {
     let trackName: String? = "enviar_dinero"
@@ -39,7 +38,7 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
         let imageKey: String = "icnSendMoney"
-        let titleKey: String = "menu_link_onePayTransfer"
+        let titleKey: String = "frequentOperative_button_sendMoney"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,
