@@ -7,11 +7,11 @@
 
 import OpenCombine
 import CoreDomain
-import Models
 import Commons
 import Transfer
+import CoreFoundationLib
 
-enum PTSendMoneyActionTypeIdentifier: String {
+enum PLSendMoneyActionTypeIdentifier: String {
     case blik
     case anotherBank
     case creditCard
@@ -24,70 +24,56 @@ enum PTSendMoneyActionTypeIdentifier: String {
 
 struct PLGetSendMoneyActionsUseCase {
     private let blik: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.blik.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.blik.rawValue,
         title: "pl_transferOption_button_blik",
         description: "pl_transferOption_text_blik",
         icon: "oneIcnBlik"
     )
     
     private let anotherBank: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.anotherBank.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.anotherBank.rawValue,
         title: "pl_transferOption_button_transferAnotherBank",
         description: "pt_transferOption_text_transferPackages",
         icon: "icnTransferPackages"
     )
     
     private let creditCard: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.creditCard.rawValue,
-        title: "pl_transferOption_button_creditCard",
-        description: "pl_transferOption_text_creditCard",
-        icon: "oneIcnCardRepayment"
-    )
-    
-    private let creditCard: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.creditCard.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.creditCard.rawValue,
         title: "pl_transferOption_button_creditCard",
         description: "pl_transferOption_text_creditCard",
         icon: "oneIcnCardRepayment"
     )
     
     private let transferTax: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.transferTax.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.transferTax.rawValue,
         title: "pl_transferOption_button_transferTax",
         description: "pl_transferOption_text_transferTax",
         icon: "oneIcnTransferTax"
     )
     
     private let transferZus: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.transferZus.rawValue,
-        title: "pl_transferOption_button_transferZus",
-        description: "pl_transferOption_text_transferZus",
-        icon: "oneIcnTransferZus"
-    )
-    
-    private let transferZus: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.transferZus.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.transferZus.rawValue,
         title: "pl_transferOption_button_transferZus",
         description: "pl_transferOption_text_transferZus",
         icon: "oneIcnTransferZus"
     )
     
     private let fxExchange: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.fxExchange.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.fxExchange.rawValue,
         title: "pl_transferOption_button_FxExchange",
         description: "pl_transferOption_text_FxExchange",
         icon: "oneIcnFxExchange"
     )
     
     private let scanPay: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.scanPay.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.scanPay.rawValue,
         title: "pl_transferOption_button_ScanPay",
         description: "pl_transferOption_text_ScanPay",
         icon: "oneIcnScanPay"
     )
     
     private let topUpPhone: SendMoneyActionType = .custome(
-        identifier: PTSendMoneyActionTypeIdentifier.topUpPhone.rawValue,
+        identifier: PLSendMoneyActionTypeIdentifier.topUpPhone.rawValue,
         title: "pl_transferOption_button_topUpPhone",
         description: "pl_transferOption_text_topUpPhone",
         icon: "oneIcnMobileTopUp"
@@ -103,7 +89,6 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
 
 private extension PLGetSendMoneyActionsUseCase {
     func getHomeSendMoneyActions() -> [SendMoneyActionType] {
-        return [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, .donations, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+        return [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
     }
 }
-
