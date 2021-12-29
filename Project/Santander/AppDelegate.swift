@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         self.legacyAppDelegate?.application(application, didFinishLaunchingWithOptions: launchOptions)
         AppNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
-
+        ModuleDependencies(legacyDependenciesResolver: dependenciesEngine, drawer: drawer).registerRetailLegacyDependencies()
         notificationsHandler.startServices()
 
         return true
