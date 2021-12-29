@@ -8,16 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		10DD07BB4877D7A915FBCFA3 /* Pods_PLUI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F523706E40FD737E33138CC /* Pods_PLUI_Tests.framework */; };
-		42408B8F26F5186A0007EB36 /* PLUIInputCodeSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42408B8D26F5175C0007EB36 /* PLUIInputCodeSnapshotTests.swift */; };
-		42408B9126F9C5E60007EB36 /* PLUIInteractiveInfoViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42408B9026F9C5E60007EB36 /* PLUIInteractiveInfoViewSnapshotTests.swift */; };
 		4250DC0F265D56ED00D727DD /* ViewController+InputCodeViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4250DC0E265D56ED00D727DD /* ViewController+InputCodeViewDelegate.swift */; };
+		42B52B5427639192002F320E /* PLUIInteractiveInfoViewSnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B52B5327639192002F320E /* PLUIInteractiveInfoViewSnapshotTest.swift */; };
+		42B52B56276A2534002F320E /* SnapshotTestsDeviceSceen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B52B55276A2534002F320E /* SnapshotTestsDeviceSceen.swift */; };
+		42B52B58276B93AA002F320E /* FBSnapshotTestCase+ViewValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B52B57276B93AA002F320E /* FBSnapshotTestCase+ViewValidation.swift */; };
+		42B52B5A276B9C41002F320E /* PLUIInputCodeViewSnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B52B59276B9C41002F320E /* PLUIInputCodeViewSnapshotTest.swift */; };
 		42DCA4AE2695F45600D11400 /* ViewController+InteractiveInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA4AD2695F45600D11400 /* ViewController+InteractiveInfoView.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		94CA54C815FF778FC78A3975 /* Pods_PLUI_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95829A1DB89B88204B0277BC /* Pods_PLUI_Example.framework */; };
 		B0327EAF27621678006BF39A /* ViewController+DatePickerSelectorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0327EAE27621678006BF39A /* ViewController+DatePickerSelectorDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -34,9 +35,11 @@
 
 /* Begin PBXFileReference section */
 		12EEC8AA5DC594CB8556600A /* Pods-PLUI_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLUI_Example.release.xcconfig"; path = "Target Support Files/Pods-PLUI_Example/Pods-PLUI_Example.release.xcconfig"; sourceTree = "<group>"; };
-		42408B8D26F5175C0007EB36 /* PLUIInputCodeSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLUIInputCodeSnapshotTests.swift; sourceTree = "<group>"; };
-		42408B9026F9C5E60007EB36 /* PLUIInteractiveInfoViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLUIInteractiveInfoViewSnapshotTests.swift; sourceTree = "<group>"; };
 		4250DC0E265D56ED00D727DD /* ViewController+InputCodeViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+InputCodeViewDelegate.swift"; sourceTree = "<group>"; };
+		42B52B5327639192002F320E /* PLUIInteractiveInfoViewSnapshotTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLUIInteractiveInfoViewSnapshotTest.swift; sourceTree = "<group>"; };
+		42B52B55276A2534002F320E /* SnapshotTestsDeviceSceen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestsDeviceSceen.swift; sourceTree = "<group>"; };
+		42B52B57276B93AA002F320E /* FBSnapshotTestCase+ViewValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FBSnapshotTestCase+ViewValidation.swift"; sourceTree = "<group>"; };
+		42B52B59276B9C41002F320E /* PLUIInputCodeViewSnapshotTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLUIInputCodeViewSnapshotTest.swift; sourceTree = "<group>"; };
 		42DCA4AD2695F45600D11400 /* ViewController+InteractiveInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+InteractiveInfoView.swift"; sourceTree = "<group>"; };
 		4379C52DBE43E4CA84552BCC /* Pods-PLUI_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLUI_Example.debug.xcconfig"; path = "Target Support Files/Pods-PLUI_Example/Pods-PLUI_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4B5E39FD0DD946821E0C9056 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -49,7 +52,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* PLUI_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PLUI_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6F523706E40FD737E33138CC /* Pods_PLUI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PLUI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95829A1DB89B88204B0277BC /* Pods_PLUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PLUI_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		976EFD80B261F809E8928387 /* Pods-PLUI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLUI_Tests.release.xcconfig"; path = "Target Support Files/Pods-PLUI_Tests/Pods-PLUI_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -91,10 +93,20 @@
 		42408B8C26F517340007EB36 /* Snapshots */ = {
 			isa = PBXGroup;
 			children = (
-				42408B8D26F5175C0007EB36 /* PLUIInputCodeSnapshotTests.swift */,
-				42408B9026F9C5E60007EB36 /* PLUIInteractiveInfoViewSnapshotTests.swift */,
+				42B52B59276B9C41002F320E /* PLUIInputCodeViewSnapshotTest.swift */,
+				42B52B5327639192002F320E /* PLUIInteractiveInfoViewSnapshotTest.swift */,
+				42DECDB9276CC5A1008B2C79 /* FBSnapshotTests */,
 			);
 			name = Snapshots;
+			sourceTree = "<group>";
+		};
+		42DECDB9276CC5A1008B2C79 /* FBSnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				42B52B57276B93AA002F320E /* FBSnapshotTestCase+ViewValidation.swift */,
+				42B52B55276A2534002F320E /* SnapshotTestsDeviceSceen.swift */,
+			);
+			name = FBSnapshotTests;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
@@ -147,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				42408B8C26F517340007EB36 /* Snapshots */,
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -310,9 +321,9 @@
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapshotTesting/SnapshotTesting.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSSnapshotTestCase/FBSnapshotTestCase.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
@@ -336,9 +347,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapshotTesting.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
@@ -410,9 +421,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42408B8F26F5186A0007EB36 /* PLUIInputCodeSnapshotTests.swift in Sources */,
-				42408B9126F9C5E60007EB36 /* PLUIInteractiveInfoViewSnapshotTests.swift in Sources */,
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				42B52B5A276B9C41002F320E /* PLUIInputCodeViewSnapshotTest.swift in Sources */,
+				42B52B56276A2534002F320E /* SnapshotTestsDeviceSceen.swift in Sources */,
+				42B52B58276B93AA002F320E /* FBSnapshotTestCase+ViewValidation.swift in Sources */,
+				42B52B5427639192002F320E /* PLUIInteractiveInfoViewSnapshotTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
