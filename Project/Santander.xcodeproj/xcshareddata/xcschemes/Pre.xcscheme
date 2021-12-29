@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-               BuildableName = "PL-INTERN-0.2.18.app"
+               BuildableName = "PL-INTERN-0.2.19.app"
                BlueprintName = "Santander"
                ReferencedContainer = "container:Santander.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-0.2.18.app"
+            BuildableName = "PL-INTERN-0.2.19.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-0.2.18.app"
+            BuildableName = "PL-INTERN-0.2.19.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>
