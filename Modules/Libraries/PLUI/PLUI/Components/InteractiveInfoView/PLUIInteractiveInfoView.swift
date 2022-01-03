@@ -73,7 +73,6 @@ public class PLUIInteractiveInfoView: UIView {
 
     private var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.red
         view.layer.shadowRadius = 1
         view.layer.shadowOffset = CGSize(width: 1, height: 2)
         view.layer.shadowColor = UIColor.lightGray.cgColor

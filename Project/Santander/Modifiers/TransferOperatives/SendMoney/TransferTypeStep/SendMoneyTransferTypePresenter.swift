@@ -96,7 +96,7 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     }
     
     func didTapTooltip() {
-        self.trackerManager.trackEvent(screenId: self.trackerPage.page, eventId: SendMoneyTransferTypePage.Action.clickTooltip.rawValue, extraParameters: ["transfer_country" : self.operativeData.type.trackerName])
+        self.trackerManager.trackEvent(screenId: self.trackerPage.page, eventId: SendMoneyTransferTypePage.Action.clickTooltip.rawValue, extraParameters: ["transfer_country": self.operativeData.type.trackerName])
     }
 }
 

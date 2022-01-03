@@ -36,6 +36,7 @@ extension ViewController {
                                                       elementSize: InputCodeViewConstants.SMS.boxSize,
                                                       requestedPositions: .all,
                                                       charactersSet: InputCodeViewConstants.SMS.charactersSet)
+        smsAuthenticationView.setText("12345678")
         return smsAuthenticationView
     }
 
@@ -47,6 +48,7 @@ extension ViewController {
                                                       elementSize: InputCodeViewConstants.SMS.boxSize,
                                                       requestedPositions: .all,
                                                       charactersSet: InputCodeViewConstants.SMS.charactersSet)
+        smsAuthenticationView.setText("12345678")
         return smsAuthenticationView
     }
 
@@ -60,6 +62,7 @@ extension ViewController {
                                                    elementSize: InputCodeViewConstants.MaskedPassword.boxSize,
                                                    requestedPositions: RequestedPositions.positions(requestedPositions),
                                                    charactersSet: InputCodeViewConstants.MaskedPassword.charactersSet)
+        maskedPasswordView.setText("12345678")
         return maskedPasswordView
     }
 
@@ -71,6 +74,7 @@ extension ViewController {
                                                       elementSize: InputCodeViewConstants.pinConfiguration.boxSize,
                                                       requestedPositions: .all,
                                                       charactersSet: InputCodeViewConstants.pinConfiguration.charactersSet)
+        trustedDevicePinView.setText("12345678")
         return trustedDevicePinView
     }
 }

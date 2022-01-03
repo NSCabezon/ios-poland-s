@@ -1,7 +1,6 @@
 String cron_string = BRANCH_NAME.contains("develop") ? "H 2 * * *" : ""
 
 pipeline {
-	agent any
 	environment {
 		APP_NAME = 'poland'
 		LANG = 'en_US.UTF-8'
@@ -15,6 +14,10 @@ pipeline {
       	FASTLANE_ITC_TEAM_ID=credentials('jenkins-team-id-enterprise')
       	FASTLANE_USER=credentials('jenkins-apple-id')
 	}
+	parameters {
+	    choice(name: 'NODE_LABEL', choices: ['poland', 'ios', 'hub'], description: '')
+    }
+    agent { label params.NODE_LABEL ?: 'poland' }  
 
 	triggers { cron(cron_string) }
 
@@ -24,7 +27,8 @@ pipeline {
             steps {
 			   sh "git checkout $BRANCH_NAME"
                echo "Installing dependencies"
-               sh "cd Project && fastlane ios update_pods"
+			   sh "bundle install"
+               sh "cd Project && bundle exec fastlane ios update_pods"
             }
          }
 
@@ -35,7 +39,7 @@ pipeline {
             }
 			steps {
 				echo "Distributing android app"
-				sh "cd Project && fastlane ios release deploy_env:intern notify_testers:true branch:develop"
+				sh "cd Project && bundle exec fastlane ios release deploy_env:intern notify_testers:true branch:develop"
 			}
         }
 
@@ -48,7 +52,7 @@ pipeline {
 			steps {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					echo "Distributing android app"
-					sh "cd Project && fastlane ios build_appium"
+					sh "cd Project && bundle exec fastlane ios build_appium"
 					sh "mv Build/Products/intern-iphonesimulator/*.app INTERN.app"
 					sh 'zip -vr INTERN.zip INTERN.app/ -x "*.DS_Store"'
 					archiveArtifacts artifacts: 'INTERN.zip'
@@ -62,7 +66,7 @@ pipeline {
 			}
 			steps {
 				echo "Distributing Pre app"
-				sh "cd Project && fastlane ios release deploy_env:pre notify_testers:true branch:master"
+				sh "cd Project && bundle exec fastlane ios release deploy_env:pre notify_testers:true branch:master"
 			}
 		}
 		
@@ -72,7 +76,7 @@ pipeline {
                 expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 			}
 			steps {
-				sh "cd Project && fastlane ios increment_version"
+				sh "cd Project && bundle exec fastlane ios increment_version"
 			}
          }
 	}
