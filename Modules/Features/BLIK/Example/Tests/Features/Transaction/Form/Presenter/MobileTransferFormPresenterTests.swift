@@ -2,6 +2,7 @@ import Commons
 @testable import BLIK
 import CoreFoundationLib
 import PLUI
+import PLCommons
 import SANPLLibrary
 import XCTest
 
@@ -20,48 +21,53 @@ class MobileTransferFormPresenterTests: XCTestCase {
     
     func test_get_selected_account() {
         // given
+        let id = "1"
         let accountName = "Konto jakie chcę"
         let accountNumber = "12 3456 7890 1234 5678 9012"
-        let unformattedAccountNumber = "1234567890123456789012"
-        let availableFunds = "1500"
-        let isSelected = true
-        let accountViewModel = SelectableAccountViewModel(
-            name: accountName,
-            accountNumber: accountNumber,
-            accountNumberUnformatted: unformattedAccountNumber,
-            availableFunds: availableFunds,
-            type: .PERSONAL,
-            accountSequenceNumber: 9,
-            accountType: 101,
-            isSelected: true
-        )
+        let availableFunds = Money(amount: 1500, currency: "PLN")
+        let defaultForPayments = true
+        let type: AccountForDebit.AccountType = .PERSONAL
+        let accountSequenceNumber = 1
+        let accountType = 1
+        let accounts = AccountForDebit(id: id,
+                                       name: accountName,
+                                       number: accountNumber,
+                                       availableFunds: availableFunds,
+                                       defaultForPayments: defaultForPayments,
+                                       type: type,
+                                       accountSequenceNumber: accountSequenceNumber,
+                                       accountType: accountType)
         dependencies = DependenciesDefault()
-        setUpDependencies(viewModel: accountViewModel)
+        setUpDependencies(account: accounts)
         queue = DispatchQueue(label: "MobileTransferFormPresenterTests")
         SUT = dependencies.resolve(for: MobileTransferFormPresenterProtocol.self)
         view = MobileTransferFormViewMock()
         SUT.view = view
         
         // when
-        let account = SUT.getSelectedAccountViewModel()
+        let account = SUT.getSelectedAccount()
         
         // then
+        XCTAssertEqual(account?.id, id)
         XCTAssertEqual(account?.name, accountName)
-        XCTAssertEqual(account?.accountNumber, accountNumber)
+        XCTAssertEqual(account?.number, accountNumber)
         XCTAssertEqual(account?.availableFunds, availableFunds)
-        XCTAssertEqual(account?.isSelected, isSelected)
-        XCTAssertEqual(account?.accountNumberUnformatted, unformattedAccountNumber)
+        XCTAssertEqual(account?.defaultForPayments, defaultForPayments)
+        XCTAssertEqual(account?.type, type)
+        XCTAssertEqual(account?.accountSequenceNumber, accountSequenceNumber)
+        XCTAssertEqual(account?.accountType, accountType)
     }
     
 }
 
 private extension MobileTransferFormPresenterTests {
-    func setUpDependencies(viewModel: SelectableAccountViewModel) {
+    func setUpDependencies(account: AccountForDebit) {
         dependencies.register(for: MobileTransferFormPresenterProtocol.self) { resolver in
             return MobileTransferFormPresenter(dependenciesResolver: resolver,
-                                               accounts: [viewModel],
+                                               accounts: [account],
                                                contact: Contact(fullName: "Jan Nowak",
                                                                 phoneNumber: "123 456 789"),
+                                               selectedAccountNumber: "",
                                                formValidator: MobileTransferFormValidator())
         }
         
