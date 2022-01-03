@@ -6,9 +6,17 @@
 //
 
 import CoreDomain
+import OpenCombine
 import SANLegacyLibrary
 
 struct TransfersDataRepository: PLTransfersRepository {
+    func loadAllUsualTransfers() -> AnyPublisher<[PayeeRepresentable], Error> {
+        Empty().eraseToAnyPublisher()
+    }
+    
+    func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
+        Empty().eraseToAnyPublisher()
+    }
     
     let bsanTransferManager: PLTransfersManagerProtocol
     
