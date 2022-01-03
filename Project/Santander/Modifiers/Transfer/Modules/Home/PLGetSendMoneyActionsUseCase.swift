@@ -34,7 +34,7 @@ struct PLGetSendMoneyActionsUseCase {
         identifier: PLSendMoneyActionTypeIdentifier.anotherBank.rawValue,
         title: "pl_transferOption_button_transferAnotherBank",
         description: "pt_transferOption_text_transferPackages",
-        icon: "icnTransferPackages"
+        icon: "oneIcnAnotherBank"
     )
     
     private let creditCard: SendMoneyActionType = .custome(
@@ -89,6 +89,6 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
 
 private extension PLGetSendMoneyActionsUseCase {
     func getHomeSendMoneyActions() -> [SendMoneyActionType] {
-        return [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+        return [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, .donations(nil), creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
     }
 }
