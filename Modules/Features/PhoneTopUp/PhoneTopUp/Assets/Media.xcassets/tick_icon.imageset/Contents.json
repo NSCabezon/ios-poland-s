@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "atoms_icons_06_system_sys_038_check_tick_approve_correct.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

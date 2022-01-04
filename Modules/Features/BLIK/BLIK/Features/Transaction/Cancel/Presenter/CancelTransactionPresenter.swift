@@ -1,4 +1,4 @@
-import Models
+import CoreFoundationLib
 import Commons
 
 enum CancelType: String {

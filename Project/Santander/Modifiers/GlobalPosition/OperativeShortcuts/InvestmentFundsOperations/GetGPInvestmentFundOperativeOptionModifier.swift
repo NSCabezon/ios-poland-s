@@ -5,7 +5,7 @@
 //  Created by Ernesto Fernandez Calles on 1/12/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 
 public final class GetGPInvestmentFundOperativeOptionModifier: GetGPInvestmentFundOperativeOptionProtocol {

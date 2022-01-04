@@ -6,7 +6,7 @@
 //
 
 import UI
-import Models
+import CoreFoundationLib
 import Commons
 import Operative
 import SANLegacyLibrary
@@ -201,7 +201,7 @@ private extension CreditCardRepaymentDetailsPresenter {
     }
     
     private func goBackWithValidation() {
-        guard formManager.hasFormChanged, !Calendar.current.isDate(formManager.form.date, inSameDayAs: Date()) else {
+        guard formManager.hasFormChanged else {
             goBack()
             return
         }

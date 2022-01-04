@@ -7,21 +7,34 @@ source 'https://cdn.cocoapods.org/'
 
 
 def example_app_common
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
 end
 
 def core_dependencies
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
+  pod 'RetailLegacy', :path => '../../../../santander-one/RetailLegacy'
+  pod 'PFM', :path => '../../../../santander-one/Modules/Libraries/PFM'
+  pod 'GlobalPosition', :path => '../../../../santander-one/GlobalPosition'
+  pod 'Loans', :path => '../../../../santander-one/Loans'
+  pod 'Account', :path => '../../../../santander-one/Accounts'
+  pod 'PersonalArea', :path => '../../../../santander-one/PersonalArea'
+  pod 'PersonalManager', :path => '../../../../santander-one/PersonalManager'
+  pod 'Transfer', :path => '../../../../santander-one/Transfer'
+  pod 'Inbox', :path => '../../../../santander-one/Inbox'
+  pod 'Bills', :path => '../../../../santander-one/Bills'
+  pod 'GlobalSearch', :path => '../../../../santander-one/GlobalSearch'
+  pod 'BranchLocator', :path => '../../../../santander-one/Modules/Features/BranchLocator'
+  pod 'OfferCarousel', :path => '../../../../santander-one/OfferCarousel'
+  pod 'PdfCommons', :path => '../../../../santander-one/PdfCommons'
+  pod 'FinantialTimeline', :path => '../../../../santander-one/Modules/Features/FinantialTimeline'
+  pod 'TransferOperatives', :path => '../../../../santander-one/Modules/Features/TransferOperatives'
+  pod 'UIOneComponents', :path => '../../../../santander-one/UIOneComponents'
+  pod 'OneAuthorizationProcessor', :path => '../../../../santander-one/Modules/Features/OneAuthorizationProcessor'
+  pod 'CommonAppExtensions', :path => '../../../../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'SQLCipher', '4.4.2'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
-  pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
@@ -31,6 +44,12 @@ def core_dependencies
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
+  pod 'Logger', :path => '../../../../santander-one/Modules/Libraries/Logger'
+  pod 'Operative', :path => '../../../../santander-one/Operative'
+  pod 'Cards', :path => '../../../../santander-one/Cards'
+  pod 'Menu', :path => '../../../../santander-one/Menu'
+  pod 'Localization', :path => '../../../../santander-one/Localization'
+
 end
 
 def core_thirdparty_dependencies

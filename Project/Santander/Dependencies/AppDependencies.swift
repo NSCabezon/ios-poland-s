@@ -8,14 +8,12 @@
 import Commons
 import Foundation
 import RetailLegacy
-import Repository
 import SANLegacyLibrary
 import SANPLLibrary
 import PLLegacyAdapter
 import PLCommons
 import PLCommonOperatives
 import PLLogin
-import Models
 import GlobalPosition
 import Account
 import Inbox
@@ -35,8 +33,8 @@ final class AppDependencies {
     private let timeToRefreshToken: TimeInterval = 10000000000000
     private let timeToExpireSession: TimeInterval = 10000000000000
     #else
-    private let timeToRefreshToken: TimeInterval = 60 * 8
-    private let timeToExpireSession: TimeInterval = 60 * 9
+    private let timeToRefreshToken: TimeInterval = 60 * 120
+    private let timeToExpireSession: TimeInterval = 60 * 5
     #endif
     let dependencieEngine: DependenciesResolver & DependenciesInjector
     private let localAppConfig: LocalAppConfig
@@ -329,6 +327,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
+        }
+        self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
+            PLAccountAvailableBalanceModifier()
         }
     }
 }

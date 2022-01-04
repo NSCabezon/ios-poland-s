@@ -1,4 +1,4 @@
-import Models
+import CoreFoundationLib
 import Commons
 import Operative
 import UI
@@ -105,9 +105,9 @@ private extension BLIKSummaryPresenter {
             let title: String = {
                 switch aliasProposal.type {
                 case .cookie:
-                    return "#Zaufaj przeglądarkę"
+                    return localized("pl_blik_link_saveBrowser")
                 case .uid:
-                    return "#Zaufaj sklep"
+                    return localized("pl_blik_link_saveShop")
                 }
             }()
             actions.append(

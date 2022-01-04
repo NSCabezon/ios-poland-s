@@ -7,7 +7,7 @@
 
 import Commons
 import RetailLegacy
-import Models
+import CoreFoundationLib
 
 import PLHelpCenter
 import BLIK

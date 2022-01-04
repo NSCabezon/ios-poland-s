@@ -9,22 +9,22 @@ import Foundation
 
 final class BSANLocalManager {
     typealias JSON = [String: Any]
-    private var demoId: String = "12345678Z"
-    private let defaultDemoId = "12345678Z"
+    private var userId: String = ""
     private var answerNumber: Int = 0
     private let demoInterpreter: DemoUserProtocol
     
     init(demoInterpreter: DemoUserProtocol) {
         self.demoInterpreter = demoInterpreter
+        self.userId = demoInterpreter.demoUser
     }
 }
 
 extension BSANLocalManager: NetworkProvider {
     func requestData<Request>(_ request: Request) -> Result<Data, NetworkProviderError> where Request : NetworkProviderRequest {
         do {
-            guard let stringToParse = try self.getJsonContentsFrom(serviceNameFile: request.localServiceName.rawValue),
+            guard let stringToParse = try self.getJsonContentsFrom(serviceNameFile: request.localServiceName),
                   let jsonDictionary = try self.getJsonDictionary(from: Data(stringToParse.utf8)),
-                  let answerElement = self.getAnswers(from: jsonDictionary, for: self.demoId) else {
+                  let answerElement = self.getAnswers(from: jsonDictionary, for: self.userId) else {
                 return .failure(.other)
             }
             
@@ -113,10 +113,6 @@ private extension BSANLocalManager {
             return .failure(error)
         }
     }
-}
-
-// MARK: - Private Methods
-private extension BSANLocalManager {
     
     func getJsonDictionary(from data: Data) throws -> [String: JSON]? {
         guard let jsonDictionary =  try JSONSerialization.jsonObject(with: data, options: []) as? [String: JSON]
@@ -126,23 +122,20 @@ private extension BSANLocalManager {
         return jsonDictionary
     }
     
-    func getJsonContentsFrom(serviceNameFile: String) throws -> String? {
-        if let filepath = Bundle.module?.path(forResource: serviceNameFile, ofType: "json") {
-            do {
-                return try String(contentsOfFile: filepath)
-            } catch {
-                return nil
-            }
-        } else {
+    func getJsonContentsFrom(serviceNameFile: PLLocalServiceName) throws -> String? {
+        let testDestination = demoInterpreter.getDestinationFileFor(service: serviceNameFile)
+        let bundle = testDestination.bundle ?? Bundle.module
+        guard let filepath = bundle?.path(forResource: testDestination.file, ofType: "json") else {
             return nil
         }
+        return try? String(contentsOfFile: filepath)
     }
     
     func getAnswers(from dictionary: [String: JSON], for demoId: String) -> (key: String, value: JSON)? {
         if let value = dictionary[demoId] {
             return (key: demoId, value: value)
         } else {
-            return dictionary.filter({$0.key.lowercased() == defaultDemoId.lowercased()}).first
+            return dictionary.filter({$0.key.lowercased() == self.userId.lowercased()}).first
         }
     }
     

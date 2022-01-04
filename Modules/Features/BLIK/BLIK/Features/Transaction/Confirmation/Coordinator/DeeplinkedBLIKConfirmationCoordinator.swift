@@ -6,7 +6,7 @@
 //
 
 import UI
-import Models
+import CoreFoundationLib
 import Commons
 
 public final class DeeplinkedBLIKConfirmationCoordinator: ModuleCoordinator {

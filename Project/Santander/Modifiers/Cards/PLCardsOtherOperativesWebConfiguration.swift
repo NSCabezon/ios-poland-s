@@ -18,10 +18,11 @@ public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {
     public var httpMethod: HTTPMethodType
     public var bodyParameters: [String: String]?
     public var reloadSessionOnClose: Bool
+    public var closingURLs: [String]
 
     public init(initialURL: String,
                 bodyParameters: [String: String]?,
-                closingURLs: [String],
+                closingURLs: [String] ,
                 webToolbarTitleKey: String?,
                 pdfToolbarTitleKey: String?,
                 httpMethod: HTTPMethodType,
@@ -36,5 +37,6 @@ public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {
         self.bodyParameters = bodyParameters
         self.reloadSessionOnClose = reloadSessionOnClose
         self.isFullScreenEnabled = isFullScreenEnabled ?? true
+        self.closingURLs = closingURLs
     }
 }

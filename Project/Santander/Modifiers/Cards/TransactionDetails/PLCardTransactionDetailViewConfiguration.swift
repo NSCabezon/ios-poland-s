@@ -7,7 +7,7 @@
 
 import Foundation
 import Cards
-import Models
+import CoreFoundationLib
 import Commons
 import UI
 
@@ -50,28 +50,41 @@ struct PLCardTransactionDetailViewConfiguration: CardTransactionDetailViewConfig
     
     func getConfiguration(from: CardTransactionEntity) -> [CardTransactionDetailViewConfiguration] {
         var viewConfigurations = [CardTransactionDetailViewConfiguration]()
-        let postedDate = dateFrom(dateStr: from.dto.postedDate ?? "") ?? ""
-        let row1Left = CardTransactionDetailView(title: localized("transaction_label_operationDate"), value: postedDate)
-        let status = from.dto.state ?? .none
-        let row1Right = status.hidden ? nil : CardTransactionDetailView(title: localized("transaction_label_statusDetail"), value: localized(status.title))
-        let row1 = CardTransactionDetailViewConfiguration(left: row1Left,
-                                                          right: row1Right)
-        viewConfigurations.append(row1)
-        let row2Date = dateFrom(dateStr: from.dto.sourceDate ?? "") ?? ""
-        let row2Left = CardTransactionDetailView(title: localized("transaction_label_annotationDate"), value: row2Date)
-        let row2Right = CardTransactionDetailView(title: localized("transaction_label_recipient"), value: from.dto.recipient ?? "")
-        let row2 = CardTransactionDetailViewConfiguration(left: row2Left,
-                                                          right: row2Right)
-        viewConfigurations.append(row2)
-        let accountNumberString = accountNumber(str: from.dto.cardAccountNumber ?? "")
-        let row3Left = CardTransactionDetailView(title: localized("transaction_label_cardAccountNumber"), value: accountNumberString)
-        let row3 = CardTransactionDetailViewConfiguration(left: row3Left,
-                                                          right: nil)
-        viewConfigurations.append(row3)
-        let row4Left = CardTransactionDetailView(title: localized("transaction_label_operationType"), value: from.dto.operationType?.capitalized ?? "")
-        let row4 = CardTransactionDetailViewConfiguration(left: row4Left,
-                                                          right: nil)
-        viewConfigurations.append(row4)
+        // Obtain all details columns
+        var filledDetailViews = [CardTransactionDetailView]()
+        if let date = from.dto.sourceDate, let sourceDate = dateFrom(dateStr: date) {
+            filledDetailViews.append(CardTransactionDetailView(title: localized("transaction_label_operationDate"), value: sourceDate))
+        }
+        if let status = from.dto.state, !status.hidden {
+            filledDetailViews.append(CardTransactionDetailView(title: localized("transaction_label_statusDetail"), value: localized(status.title)))
+        }
+        if let date = from.dto.postedDate, let postedDate = dateFrom(dateStr: date) {
+            filledDetailViews.append(CardTransactionDetailView(title: localized("transaction_label_annotationDate"), value: postedDate))
+        }
+        if let recipent = from.dto.recipient {
+            filledDetailViews.append(CardTransactionDetailView(title: localized("transaction_label_recipient"), value: recipent))
+        }
+        // Create first row if there are enought details columns
+        if filledDetailViews.count > 0 {
+            viewConfigurations.append(CardTransactionDetailViewConfiguration(left: getConfigurationAtPosition(0, from: filledDetailViews), right: getConfigurationAtPosition(1, from: filledDetailViews)))
+        }
+        // Create second row if there are enought details columns
+        if filledDetailViews.count > 2 {
+            viewConfigurations.append(CardTransactionDetailViewConfiguration(left: getConfigurationAtPosition(2, from: filledDetailViews), right: getConfigurationAtPosition(3, from: filledDetailViews)))
+        }
+        if let cardAccountNumber = from.dto.cardAccountNumber {
+            viewConfigurations.append(CardTransactionDetailViewConfiguration(left: CardTransactionDetailView(title: localized("transaction_label_cardAccountNumber"), value: accountNumber(str: cardAccountNumber)), right: nil))
+        }
+        if let operationType = from.dto.operationType?.capitalized {
+            viewConfigurations.append(CardTransactionDetailViewConfiguration(left: CardTransactionDetailView(title: localized("transaction_label_operationType"), value: operationType), right: nil))
+        }
         return viewConfigurations
+    }
+    
+    private func getConfigurationAtPosition(_ position: Int, from array: [CardTransactionDetailView]) -> CardTransactionDetailView? {
+        if array.count > position {
+            return array[position]
+        }
+        return nil
     }
 }

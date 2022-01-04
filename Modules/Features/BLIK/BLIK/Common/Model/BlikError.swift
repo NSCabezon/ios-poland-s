@@ -43,11 +43,11 @@ struct BlikError {
         case .insufficientFunds:
             return "pl_blik_alert_text_noFunds"
         case .pw_limit_exceeded, .pw_to_big_amount:
-            return "#Wpisana kwota jest wyższa niż dostępny limit przelewów w aplikacji."
+            return "pl_blik_alert_text_amountLimit"
         case .pw_account_blacklist:
-            return "#Sprawdź poprawność wprowadzonego numeru rachunku. Przelew na wskazany rachunek może być zrealizowany wyłącznie w Oddziale Banku."
+            return "pl_generic_error_transferAcceptedOnlyAtBranch"
         case .pw_expr_recipient_inactive:
-            return "#Bank odbiorcy nie obsługuje tego typu przelewów."
+            return "pl_generic_error_transferNotAcceptedInBeneficiaryBank"
         default:
             return "pl_blik_alert_text_error"
         }

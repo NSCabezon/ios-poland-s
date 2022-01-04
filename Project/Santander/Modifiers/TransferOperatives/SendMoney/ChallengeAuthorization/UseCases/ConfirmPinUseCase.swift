@@ -11,7 +11,6 @@ import CoreDomain
 import Commons
 import SANPLLibrary
 import PLCommons
-import Repository
 
 final class ConfirmPinUseCase: UseCase<ConfirmPinUseCaseInput, ConfirmPinUseCaseOkOutput, PLUseCaseErrorOutput<StringErrorOutput>> {
     

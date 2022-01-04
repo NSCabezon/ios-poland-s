@@ -3,7 +3,7 @@ import SANPLLibrary
 import Commons
 import PLCommons
 import SANLegacyLibrary
-import Models
+import CoreFoundationLib
 
 struct BLIKTransactionViewModel {
     
@@ -18,11 +18,11 @@ struct BLIKTransactionViewModel {
     }
     
     var merchantId: String? {
-        transaction.merchantId
+        transaction.merchant?.merchantId
     }
     
-    var acquirerId: String? {
-        transaction.acquirerId
+    var acquirerId: Int? {
+        transaction.merchant?.acquirerId
     }
 
     var title: String {
@@ -64,13 +64,15 @@ struct BLIKTransactionViewModel {
     }
     
     var address: String? {
-        let merchantString = [transaction.placeName, transaction.address, transaction.city]
+        let merchantString = [transaction.merchant?.shortName,
+                              transaction.merchant?.address,
+                              transaction.merchant?.city]
             .compactMap { $0 }.joined(separator: " ")
         return merchantString.isEmpty ? nil : merchantString
     }
 
     func amountString(withAmountSize size: CGFloat) -> NSAttributedString {
-        AmountFormatter.amountString(amount: transaction.amount, currency: .złoty, withAmountSize: size)
+        PLAmountFormatter.amountString(amount: transaction.amount, currency: .złoty, withAmountSize: size)
     }
     
     var transactionDate: String {

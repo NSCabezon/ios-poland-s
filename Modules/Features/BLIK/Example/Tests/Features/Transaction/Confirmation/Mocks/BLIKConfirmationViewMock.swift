@@ -24,6 +24,7 @@ class BLIKConfirmationViewMock: BLIKConfirmationViewProtocol {
     
     func hideLoader(completion: (() -> Void)?) {
         hideLoaderCalled = true
+        completion?()
     }
     
     func setViewModel(_ viewModel: BLIKTransactionViewModel) {
@@ -31,6 +32,9 @@ class BLIKConfirmationViewMock: BLIKConfirmationViewProtocol {
     }
     
     func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {
+    }
+    
+    func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {
     }
     
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {

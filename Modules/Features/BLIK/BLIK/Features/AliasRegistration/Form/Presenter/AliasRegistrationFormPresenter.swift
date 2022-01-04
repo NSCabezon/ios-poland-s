@@ -11,6 +11,7 @@ protocol AliasRegistrationFormPresenterProtocol {
     func didPressSave()
     func didPressReject()
     func didPressClose()
+    func goToGlobalPosition()
 }
 
 final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtocol {
@@ -30,9 +31,9 @@ final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtoc
         let aliasMessage: String = {
             switch self.registerAliasInput.aliasProposal.type {
             case .cookie:
-                return "#Aplikacja zapamięta przeglądarkę, z której dokonałeś zakupu. Będziesz mógł robić zakupy bez podawania kodu BLIK we wszystkich sklepach internetowych na zapamiętanej przeglądarce."
+                return localized("pl_blik_text_saveBrowser")
             case .uid:
-                return "#Aplikacja zapamięta sklep, w którym kupowałeś. Jeśli będziesz zalogowany do sklepu, to zrobisz zakupy bez podawania kodu BLIK na każdym urządzeniu i przeglądarce."
+                return localized("pl_blik_text_saveShop")
             }
         }()
         let viewModel = AliasRegistrationFormContentViewModel(text: aliasMessage)
@@ -44,7 +45,7 @@ final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtoc
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] in
                 self?.view?.hideLoader(completion: {
-                    self?.coordinator.close()
+                    self?.coordinator.goToAliasRegistrationSummary()
                 })
             }
             .onError { [weak self] error in
@@ -60,6 +61,10 @@ final class AliasRegistrationFormPresenter: AliasRegistrationFormPresenterProtoc
 
     func didPressClose() {
         coordinator.close()
+    }
+    
+    func goToGlobalPosition() {
+        coordinator.goToGlobalPosition()
     }
 }
 

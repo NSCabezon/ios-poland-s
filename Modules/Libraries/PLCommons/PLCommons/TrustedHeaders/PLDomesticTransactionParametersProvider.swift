@@ -4,7 +4,7 @@
 //
 //  Created by 187830 on 05/11/2021.
 //
-import Models
+import CoreFoundationLib
 import CoreDomain
 
 public class PLDomesticTransactionParametersProvider: PLDomesticTransactionParametersGenerable {

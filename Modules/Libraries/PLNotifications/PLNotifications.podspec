@@ -33,6 +33,6 @@ TODO: Add long description of the pod here.
   s.dependency 'Firebase/Messaging', '~> 8.8.0'
   s.dependency 'Firebase', '~> 8.8.0'
   s.dependency "Commons"
-  s.dependency "Models"
+  s.dependency "CoreFoundationLib"
   s.dependency "CorePushNotificationsService"
 end

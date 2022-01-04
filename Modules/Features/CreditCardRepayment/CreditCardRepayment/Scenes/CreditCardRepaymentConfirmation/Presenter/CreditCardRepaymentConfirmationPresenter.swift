@@ -7,7 +7,7 @@
 
 import Operative
 import Commons
-import Models
+import CoreFoundationLib
 import UI
 
 protocol CreditCardRepaymentConfirmationPresenterProtocol: OperativeConfirmationPresenterProtocol {

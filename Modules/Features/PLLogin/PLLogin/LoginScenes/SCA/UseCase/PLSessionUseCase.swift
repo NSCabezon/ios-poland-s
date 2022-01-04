@@ -8,8 +8,6 @@
 import Commons
 import CoreFoundationLib
 import SANPLLibrary
-import Repository
-import Models
 import PLCommons
 
 final class PLSessionUseCase: UseCase<Void, Void, PLUseCaseErrorOutput<LoginErrorType>> {

@@ -8,7 +8,7 @@
 import Foundation
 import Commons
 import UI
-import Models
+import CoreFoundationLib
 
 protocol DeepLinkDebugLauncherMenuCoordinatorDelegate: AnyObject {
     func selectDeepLink(_ deepLink: DeepLinkEnumerationCapable)

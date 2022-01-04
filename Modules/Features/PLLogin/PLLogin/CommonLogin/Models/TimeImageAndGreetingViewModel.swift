@@ -4,8 +4,7 @@
 
 import Foundation
 import UIKit
-import Models
-import Repository
+import CoreFoundationLib
 import Commons
 import UI
 

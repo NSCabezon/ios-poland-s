@@ -4,12 +4,11 @@
 
 import Commons
 import UI
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 import LoginCommon
 import CommonUseCase
 import Commons
-import CoreFoundationLib
 
 protocol PLUnrememberedLoginIdCoordinatorProtocol {
     func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration)

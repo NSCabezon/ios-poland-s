@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import Commons
 import RetailLegacy
-import Repository
 
 class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOutput> {
     private let dependencies: DependenciesResolver

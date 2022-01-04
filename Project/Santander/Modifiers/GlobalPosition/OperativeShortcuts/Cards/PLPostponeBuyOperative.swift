@@ -3,7 +3,7 @@
 //  Santander
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 
 final class PLPostponeBuyOperative {

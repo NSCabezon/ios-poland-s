@@ -7,7 +7,7 @@
 
 import UI
 import UIOneComponents
-import Models
+import CoreFoundationLib
 
 protocol SendMoneyTransferTypeFeeViewDelegate: AnyObject {
     func didSelectFeeView(at index: Int)

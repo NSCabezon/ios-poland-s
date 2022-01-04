@@ -1,10 +1,8 @@
 import SANLegacyLibrary
 import CoreFoundationLib
-import Models
 import Commons
 import Account
 import RetailLegacy
-import Repository
 
 struct LoadPLAccountOtherOperativesInfoUseCaseImpl: AdditionalUseCasesProviderProtocol {
     let dependencies: DependenciesResolver

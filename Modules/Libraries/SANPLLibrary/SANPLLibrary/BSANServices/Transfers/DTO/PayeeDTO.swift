@@ -5,9 +5,9 @@
 //  Created by Luis Escámez Sánchez on 30/9/21.
 //
 
-import Foundation
-import CoreDomain
 import SANLegacyLibrary
+import CoreDomain
+import Foundation
 
 public struct PayeeListDTO: Codable {
     public let payeeList: [PayeeDTO]?
@@ -17,6 +17,7 @@ public struct PayeeDTO: Codable {
     let payeeID: PayeeIdDTO?
     public let alias: String?
     public let account: AccountPayeeDTO?
+    public var countryCode: String?
 
     enum CodingKeys: String, CodingKey {
         case payeeID = "payeeId"
@@ -25,8 +26,77 @@ public struct PayeeDTO: Codable {
 }
 
 extension PayeeDTO: PayeeRepresentable {
+    public var destinationAccountDescription: String {
+        guard let countryCode = ibanRepresentable?.countryCode,
+              let checkDigits = ibanRepresentable?.checkDigits,
+              let codBban = ibanRepresentable?.codBban
+        else {
+            return ""
+        }
+        return "\(countryCode)\(checkDigits)\(codBban)"
+    }
+    
+    public var shortAccountNumber: String? {
+        guard let last4Numbers = account?.accountNo?.suffix(4) else {
+            return nil
+        }
+        return "*" + last4Numbers
+    }
+    
+    public var payeeId: String? {
+        return payeeID?.id
+    }
+    
     public var payeeAlias: String? {
-        self.alias
+        return self.alias
+    }
+    
+    public var payeeName: String? {
+        return account?.payeeName
+    }
+    
+    public var payeeCode: String? {
+        return nil
+    }
+    
+    public var currencyName: String? {
+        return self.account?.currencyCode
+    }
+    
+    public var currencySymbol: String? {
+        guard let currencyCode = self.account?.currencyCode else { return nil }
+        return CurrencyDTO.create(currencyCode).getSymbol()
+    }
+    
+    public var payeeAddress: String? {
+        return self.account?.address
+    }
+    
+    public var ibanPapel: String {
+        guard let ibanPapel = ibanRepresentable?.ibanPapel else { return "****" }
+        return ibanPapel
+    }
+    
+    public var shortIBAN: String {
+        guard let ibanShort = ibanRepresentable?.ibanShort(showCountryCode: false, asterisksCount: 1, lastDigitsCount: 4) else { return "****" }
+        return ibanShort
+    }
+    
+    public var entityCode: String? {
+        guard let entityCode = self.ibanRepresentable?.getEntityCode() else { return nil }
+        return entityCode
+    }
+    
+    public var baoName: String? {
+        return nil
+    }
+    
+    public var formattedAccount: String? {
+        return ibanRepresentable?.formatted
+    }
+    
+    public var isNoSepa: Bool {
+        return false
     }
     
     public var ibanRepresentable: IBANRepresentable? {
@@ -36,8 +106,16 @@ extension PayeeDTO: PayeeRepresentable {
         return IBANDTO(ibanString: displayNumber)
     }
     
-    public var payeeAddress: String? {
-        self.account?.address
+    public var accountType: String? {
+        return payeeID?.contractType
+    }
+    
+    public var destinationAccount: String? {
+        return nil
+    }
+    
+    public var recipientType: String? {
+        return nil
     }
 }
 

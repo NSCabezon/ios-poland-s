@@ -52,6 +52,7 @@ final class BLIKHomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
         presenter.viewWillAppear()
     }
 }

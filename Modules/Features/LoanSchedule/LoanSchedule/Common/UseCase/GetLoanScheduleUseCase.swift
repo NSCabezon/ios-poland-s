@@ -6,9 +6,8 @@
 //
 
 import Commons
-import CoreFoundationLib
 import Foundation
-import Models // for AmountEntity
+import CoreFoundationLib // for AmountEntity
 import SANLegacyLibrary // for currencyType
 import SANPLLibrary
 

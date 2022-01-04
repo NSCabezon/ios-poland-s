@@ -5,7 +5,7 @@
 //  Created by Rodrigo Jurado on 26/5/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 
 final class GetPGFrequentOperativeOption {
@@ -33,7 +33,7 @@ private extension GetPGFrequentOperativeOption {
                                                             TransactionHistoryPGFrequentOperativeOption(),
                                                             BLIKPGFrequentOperativeOption(dependencyResolver: dependenciesResolver),
                                                             PLHelpCenterFrequentOperativeOption(dependencyResolver: dependenciesResolver),
-                                                            OurOfferPGFrequentOperativeOption(),
+                                                            OurOfferPGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
                                                             PGFrequentOperativeOption.impruve,
                                                             AtmsAndBranchesPGFrequentOperativeOption(),
                                                             PGFrequentOperativeOption.personalArea,

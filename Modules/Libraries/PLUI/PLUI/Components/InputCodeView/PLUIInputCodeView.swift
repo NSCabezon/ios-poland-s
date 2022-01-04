@@ -28,6 +28,10 @@ public enum RequestedPositions {
 
 public class PLUIInputCodeView: UIView {
 
+    private enum AccesibilityIdentifiers {
+        static let container = "CodeItemsContainer"
+    }
+
     private var inputCodeBoxArray = [PLUIInputCodeBoxView]()
     public let charactersSet: CharacterSet
     private weak var delegate: PLUIInputCodeViewDelegate?
@@ -59,6 +63,7 @@ public class PLUIInputCodeView: UIView {
                                         elementSize: elementSize,
                                         requestedPositions: requestedPositions)
         self.addSubviews(view: self.facade.view(with: self.inputCodeBoxArray))
+        self.configureAccessibilityIdentifiers()
     }
 
     required init?(coder: NSCoder) {
@@ -99,6 +104,20 @@ public class PLUIInputCodeView: UIView {
         guard let first = self.inputCodeBoxArray.firstEmptyRequested() else { return false }
         return first.becomeFirstResponder()
     }
+
+    /**
+    Fulfill component with characters in text (used for testing porposes)
+     */
+//    Añadir Snapshot tests con componentes con texto!!!
+    public func setText(_ text: String) {
+        for character in text.characters {
+            guard let firstEmpty = self.inputCodeBoxArray.firstEmptyRequested() else { return }
+            let shouldAccept = self.delegate?.codeView(self, willChange: character, for: firstEmpty.position) ?? true
+            if shouldAccept {
+                firstEmpty.text = character
+            }
+        }
+    }
     
     public func setBoxView(position: NSInteger, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) {
         let boxView = self.inputCodeBoxArray[position - 1]
@@ -116,7 +135,7 @@ public class PLUIInputCodeView: UIView {
             break
         }
     }
-    
+
     public func getPin() -> String {
         return self.inputCodeBoxArray.fulfilledText() ?? ""
     }
@@ -154,6 +173,10 @@ private extension PLUIInputCodeView {
             view.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
+    }
+
+    func configureAccessibilityIdentifiers() {
+        self.accessibilityIdentifier = AccesibilityIdentifiers.container
     }
 }
 
@@ -246,5 +269,13 @@ extension Array where Element == PLUIInputCodeBoxView {
 
     func requestedCount() -> Int {
         return self.filter { $0.requested == true }.count
+    }
+}
+
+// MARK: String extension
+private extension String {
+
+    var characters: [String] {
+        return self.map { String($0) }
     }
 }

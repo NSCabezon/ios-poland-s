@@ -10,7 +10,6 @@ import Foundation
 import Commons
 import WebViews
 import CoreFoundationLib
-import Models
 import os
 
 public class PLWebviewCustomLinkHandler: WebViewLinkHandler {

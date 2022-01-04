@@ -58,7 +58,7 @@
         },
         {
             "id": "ACCOUNT_STATEMENT",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
             "method": "GET",
             "isFullScreen": true
@@ -94,6 +94,13 @@
         {
             "id": "SAVING_GOALS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/start-saving",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "NEW_BBC",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true

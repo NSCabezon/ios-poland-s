@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Repository
 
 public struct DataRepositoryBuilder {
     let appInfo: VersionInfoDTO

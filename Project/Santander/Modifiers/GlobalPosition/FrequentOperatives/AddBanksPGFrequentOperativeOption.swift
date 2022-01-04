@@ -5,7 +5,7 @@
 //  Created by Ernesto Fernandez Calles on 3/8/21.
 //
 
-import Models
+import CoreFoundationLib
 import UI
 import Commons
 import PLCommons
@@ -42,7 +42,8 @@ extension AddBanksPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
                 return
             }
 
-            let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url)
+            let method: HTTPMethodType = self.getHttpMethod(method: option.method)
+            let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url, method: method)
             let webViewCoordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
             let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
             
@@ -77,5 +78,13 @@ extension AddBanksPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
 
     func getLocation() -> String? {
         return nil
+    }
+    
+    private func getHttpMethod(method: String?) -> HTTPMethodType {
+        if method == "POST" {
+            return .post
+        } else {
+            return .get
+        }
     }
 }

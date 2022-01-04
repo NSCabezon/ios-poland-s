@@ -25,10 +25,8 @@ end
 
 def pods
   pod 'QuickSetupPL', :path => '../../Libraries/QuickSetupPL'
-  pod 'QuickSetup/standard', :path => '../../../santander-one/QuickSetup'
+  pod 'QuickSetup', :path => '../../../santander-one/QuickSetup'
   pod 'CoreTestData', :path => '../../../santander-one/Modules/Libraries/CoreTestData'
-  pod 'Repository', :path => '../../../santander-one/Repository'
-  pod 'Models', :path => '../../../santander-one/Models'
   pod 'UI', :path => '../../../santander-one/UI'
   pod 'Localization', :path => '../../../santander-one/Localization'
   pod 'Commons', :path => '../../../santander-one/Commons'

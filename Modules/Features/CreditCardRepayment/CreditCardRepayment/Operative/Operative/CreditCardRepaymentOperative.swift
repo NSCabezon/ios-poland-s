@@ -1,8 +1,7 @@
 import Foundation
 import Operative
-import Models
-import Commons
 import CoreFoundationLib
+import Commons
 import UI
 
 final class CreditCardRepaymentOperative: Operative {
@@ -147,5 +146,11 @@ private extension CreditCardRepaymentOperative {
             presenter.view = viewController
             return viewController
         }
+    }
+}
+
+extension CreditCardRepaymentOperative: OperativeOpinatorCapable {
+    var opinator: RegularOpinatorInfoEntity {
+        RegularOpinatorInfoEntity(path: "APP-RET-credit-card-repayment-SUCCESS/")
     }
 }

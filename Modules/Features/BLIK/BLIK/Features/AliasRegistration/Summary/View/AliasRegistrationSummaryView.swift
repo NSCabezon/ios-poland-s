@@ -6,6 +6,7 @@
 //
 
 import UI
+import Commons
 
 final class AliasRegistrationSummaryView: UIView {
     private let infoLabel = UILabel()
@@ -52,6 +53,7 @@ private extension AliasRegistrationSummaryView {
     }
     
     func configureStyling() {
+        infoLabel.numberOfLines = 0
         infoLabel.textAlignment = .center
         infoLabel.textColor = .lisboaGray
         infoLabel.font = .santander(
@@ -60,6 +62,7 @@ private extension AliasRegistrationSummaryView {
             size: 14
         )
         
+        tipLabel.numberOfLines = 0
         tipLabel.textAlignment = .center
         tipLabel.textColor = .lisboaGray
         tipLabel.font = .santander(
@@ -70,7 +73,7 @@ private extension AliasRegistrationSummaryView {
     }
     
     func configureStaticTexts() {
-        let tipText = "#Pamiętaj, że Zakupy bez kodu muszą być zawsze potwierdzane w aplikacji mobilnej. Możesz zarządzać listą zapamiętanych przeglądarek, urządzeń i sklepów w zakładce:\n{{BOLD}}Ustawienia > Blik > Zakupy bez kodu.{{/BOLD}}"
+        let tipText: String = localized("pl_blik_text_saveExpl")
         tipLabel.configureText(withLocalizedString: .plain(text: tipText))
     }
 }

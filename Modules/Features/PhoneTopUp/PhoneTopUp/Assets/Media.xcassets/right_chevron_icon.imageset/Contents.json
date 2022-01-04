@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "atoms_icons_06_system_sys_016_arrow_chevron_right_next_arrow_right_chevron_right.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

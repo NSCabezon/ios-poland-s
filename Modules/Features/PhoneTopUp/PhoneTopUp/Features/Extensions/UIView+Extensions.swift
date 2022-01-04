@@ -11,13 +11,7 @@ import UIKit
 extension UIView {
     func addSubviewConstraintToEdges(_ subview: UIView) {
         self.addSubview(subview)
-        subview.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            subview.topAnchor.constraint(equalTo: self.topAnchor),
-            subview.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            subview.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            subview.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        ])
+        subview.constrainEdges(to: self)
     }
     
     func addSubviewsConstraintToSafeAreaEdges(_ subview: UIView) {
@@ -28,6 +22,16 @@ extension UIView {
             subview.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
             subview.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             subview.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+        ])
+    }
+    
+    func constrainEdges(to view: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }

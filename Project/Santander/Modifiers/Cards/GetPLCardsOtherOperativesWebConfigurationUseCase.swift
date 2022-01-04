@@ -9,7 +9,6 @@ import Foundation
 import Commons
 import CoreFoundationLib
 import SANLegacyLibrary
-import Models
 import SANPLLibrary
 
 class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherOperativesWebConfigurationUseCaseInput, GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput, StringErrorOutput> {
@@ -40,7 +39,7 @@ class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherO
         let configuration = PLCardsOtherOperativesWebConfiguration(
             initialURL: initialURL,
             bodyParameters: parameters,
-            closingURLs: [closingUrl],
+            closingURLs: [closingUrl, "app://close"],
             webToolbarTitleKey: " ",
             pdfToolbarTitleKey: " ",
             httpMethod: httpMethodCard,

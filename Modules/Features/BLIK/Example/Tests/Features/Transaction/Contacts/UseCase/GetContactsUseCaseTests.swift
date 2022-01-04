@@ -32,9 +32,9 @@ class GetContactsUseCaseTests: XCTestCase {
         
         scenario.onSuccess { output in
             XCTAssertEqual(output.contacts.count, 2)
-            XCTAssertEqual(output.contacts[0].fullName, "Johhny Appleased")
+            XCTAssertEqual(output.contacts[0].fullName, "Johnny Appleased")
             XCTAssertEqual(output.contacts[0].phoneNumber, "123 456 789")
-            XCTAssertEqual(output.contacts[1].fullName, "Johhny Appleased")
+            XCTAssertEqual(output.contacts[1].fullName, "Johnny Appleased")
             XCTAssertEqual(output.contacts[1].phoneNumber, "987 654 321")
         }
         

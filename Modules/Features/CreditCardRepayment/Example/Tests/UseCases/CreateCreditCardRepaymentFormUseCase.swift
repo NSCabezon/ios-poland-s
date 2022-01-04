@@ -12,7 +12,6 @@ import CoreFoundationLib
 import SANPLLibrary
 import XCTest
 import SANLegacyLibrary
-import Models
 
 class CreateCreditCardRepaymentFormUseCaseTests: XCTestCase {
     private let dependencies: DependenciesResolver & DependenciesInjector = DependenciesDefault()

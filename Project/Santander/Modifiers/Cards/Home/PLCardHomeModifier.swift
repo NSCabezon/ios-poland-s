@@ -8,7 +8,7 @@
 import UI
 import Cards
 import Commons
-import Models
+import CoreFoundationLib
 import SANPLLibrary
 
 final class PLCardHomeModifier {

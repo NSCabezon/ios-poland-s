@@ -26,13 +26,9 @@ extension TransactionMapper {
                            date: date,
                            time: timeDate,
                            transferType: transferType,
-                           placeName: dto.merchant?.shortName,
-                           address: dto.merchant?.address,
-                           city: dto.merchant?.city,
-                           merchantId: dto.merchant?.merchantId,
-                           acquirerId: dto.merchant?.acquirerId,
                            aliasContext: getAliasContext(from: dto),
-                           amount: dto.amount.amount
+                           amount: dto.amount.amount,
+                           merchant: dto.merchant
         )
     }
     

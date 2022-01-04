@@ -3,14 +3,8 @@ use_frameworks!
 platform :ios, '11.0'
 
 def core_dependencies
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
-  pod 'Models', :path => '../../../../santander-one/Models'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Repository', :path => '../../../../santander-one/Repository'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'UI', :path => '../../../../santander-one/UI'
@@ -31,7 +25,7 @@ target 'PLUI_Example' do
   pl_dependencies
   core_dependencies
   core_thirdparty_dependencies
-  pod 'SnapshotTesting', '~> 1.9.0'
+  pod 'iOSSnapshotTestCase', '~> 8.0.0'
 
   target 'PLUI_Tests' do
     inherit! :search_paths

@@ -1,4 +1,5 @@
 import Commons
+import PLCommons
 import UI
 
 struct InformRecipientViewModel {
@@ -10,26 +11,25 @@ struct InformRecipientViewModel {
     }
     
     var header: String {
-        "#Cześć, \(summary.accountHolder) wysłał przelew z takimi informacjami:"
+        localized("pl_blikP2P_text_infoAboutTransfer", [StringPlaceholder(.value, summary.accountHolder)]).text
     }
     
     var listViewModel: [InformRecipientInfoItem.ViewModel] {
         let icon: UIImage? = summary.transferType == .INTERNAL ? Assets.image(named: "icnSantanderPg") : nil
-        let amount = AmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32)
+        let amount = PLAmountFormatter.amountString(amount: summary.amount, currency: summary.currency, withAmountSize: 32)
         let formattedAmount = AttributedStringBuilder(attributedString: amount)
             .addLineHeightMultiple(0.85).build()
-    
         return [
-            .init(header: localized("pl_blik_text_amountTransfer"),
+            .init(header: localized("pl_blikP2P_text_amount"),
                   value: formattedAmount),
-            .init(header: "#Tytułem",
+            .init(header: localized("pl_blikP2P_text_title"),
                   value: NSAttributedString(string: summary.title)),
-            .init(header: localized("pl_blik_label_accountTransfter"),
+            .init(header: localized("pl_blikP2P_text_accYouPayFrom"),
                   value: NSAttributedString(string: summary.accountNumber),
                   icon: icon),
-            .init(header: localized("pl_blik_label_recipientTransfer"),
+            .init(header: localized("pl_blikP2P_text_recepient"),
                   value: NSAttributedString(string: "\(summary.recipientName)\n\(summary.recipientNumber)")),
-            .init(header: localized("summary_item_transactionDate"),
+            .init(header: localized("pl_blikP2P_text_date"),
                   value: NSAttributedString(string: summary.dateString),
                   hideSeparator: true)
         ]

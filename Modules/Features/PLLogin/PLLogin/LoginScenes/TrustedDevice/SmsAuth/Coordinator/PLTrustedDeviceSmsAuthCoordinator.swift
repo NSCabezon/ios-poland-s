@@ -5,7 +5,7 @@
 //  Created by Mario Rosales Maillo on 11/8/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 import UI
 

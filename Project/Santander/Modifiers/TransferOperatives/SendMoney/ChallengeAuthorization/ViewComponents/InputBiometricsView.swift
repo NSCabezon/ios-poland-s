@@ -8,7 +8,7 @@
 import UI
 import Commons
 import PLCommons
-import Models
+import CoreFoundationLib
 import PLUI
 
 public protocol InputBiometricsDelegate: AnyObject {

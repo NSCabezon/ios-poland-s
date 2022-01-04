@@ -81,7 +81,7 @@ private extension PLVoiceBotViewController {
         configureTextFields()
         configureButtons()
         configureGradient()
-        setAccessibility()
+        configureAccessibilityIdentifiers()
         lockImage.image = PLAssets.image(named: "deviceTrustIVR")
     }
 
@@ -168,8 +168,16 @@ private extension PLVoiceBotViewController {
         self.view.applyGradientBackground(colors: [.white, .skyGray])
     }
 
-    func setAccessibility() {
-        continueButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    func configureAccessibilityIdentifiers() {
+        self.continueButton.accessibilityIdentifier = "deviceTrustVoiceBotBtnContinue"
+        self.closeSceneButton.accessibilityIdentifier = "deviceTrustVoiceBotBtnClose"
+        self.sceneTitle.accessibilityIdentifier = "pl_onboarding_title_IVR"
+        self.lockImage.accessibilityIdentifier = "icnChatBot"
+        self.descriptionLabel.accessibilityIdentifier = "pl_onboarding_text_IVRExpl"
+        self.numberLabel.accessibilityIdentifier = "deviceTrustVoiceBotLabelCode"
+        self.initVoiceBotButton.accessibilityIdentifier = "deviceTrustVoiceBotBtnCall"
+        self.codeDescriptionLabel.accessibilityIdentifier = "pl_onboarding_text_IVRcode"
+        self.codeTextField.accessibilityIdentifier = "deviceTrustVoiceBotLabelFourDigitCode"
     }
 
     // MARK: Button actions

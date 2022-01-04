@@ -9,7 +9,7 @@ import Commons
 import PLCommons
 import PLUI
 import Operative
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 
 struct CharityTransferConfirmationViewModel {
@@ -31,11 +31,11 @@ struct CharityTransferConfirmationViewModel {
     }
     
     var recipientName: String {
-        transfer.title ?? localized("pl_foundtrans_text_RecipFoudSant")
+        transfer.recipientName ?? localized("pl_foundtrans_text_RecipFoudSant")
     }
     
     var transferType: String {
-        localized("#pl_charity_label_transactionType")
+        localized("pl_foundtrans_label_internalTransfer")
     }
     
     var amountTitle: String {
@@ -43,12 +43,11 @@ struct CharityTransferConfirmationViewModel {
     }
     
     func amountValueString(withAmountSize size: CGFloat) -> NSAttributedString {
-        let moneyDecorator = MoneyDecorator(
-            AmountEntity(value: amount, currency: .złoty),
-            font: .santander(family: .text, type: .bold, size: size)
+        PLAmountFormatter.amountString(
+            amount: amount,
+            currency: .złoty,
+            withAmountSize: size
         )
-        let amount =  moneyDecorator.getFormatedCurrency() ?? NSAttributedString(string: "\(amount)")
-        return amount
     }
     
     var accountName: String {
@@ -64,7 +63,7 @@ struct CharityTransferConfirmationViewModel {
     }
     
     var amount: Decimal {
-        transfer.amount ?? 0
+        transfer.amount
     }
     
     var date: Date? {

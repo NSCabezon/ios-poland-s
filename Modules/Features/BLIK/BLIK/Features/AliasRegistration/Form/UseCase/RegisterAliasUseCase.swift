@@ -3,6 +3,7 @@ import Foundation
 import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
+import PLCommons
 
 protocol RegisterAliasUseCaseProtocol: UseCase<RegisterAliasInput, Void, StringErrorOutput> {}
 
@@ -20,19 +21,14 @@ final class RegisterAliasUseCase: UseCase<RegisterAliasInput, Void, StringErrorO
     }
     
     override func executeUseCase(requestValues: RegisterAliasInput) throws -> UseCaseResponse<Void, StringErrorOutput> {
-        let acquirerId: Int? = {
-            guard let id = requestValues.acquirerId else {
-                return nil
-            }
-            return Int(id)
-        }()
+        let aliasType = requestValues.aliasProposal.type
         let parameters = RegisterBlikAliasParameters(
             aliasLabel: requestValues.aliasProposal.label,
-            aliasValueType: "\(requestValues.aliasProposal.type.hashValue)",
+            aliasValueType: aliasType.rawValue,
             alias: requestValues.aliasProposal.alias,
-            acquirerId: acquirerId,
-            merchantId: requestValues.merchantId,
-            expirationDate: DateFormats.toString(date: Date().addMonth(months: 12), output: .YYYYMMDD_T_HHmmssSSS),
+            acquirerId: aliasType == .cookie ? nil : requestValues.acquirerId,
+            merchantId: aliasType == .cookie ? nil : requestValues.merchantId,
+            expirationDate: Date().addMonth(months: 12).toString(format: PLTimeFormat.YYYYMMDD_HHmmssSSS.rawValue),
             aliasURL: nil,
             platform: "iOS",
             registerInPSP: true
