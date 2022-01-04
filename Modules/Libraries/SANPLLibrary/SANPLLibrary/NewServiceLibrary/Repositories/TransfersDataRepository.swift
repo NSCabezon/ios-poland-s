@@ -5,19 +5,11 @@
 //  Created by Jose Javier Montes Romero on 6/10/21.
 //
 
-import CoreDomain
-import OpenCombine
 import SANLegacyLibrary
+import OpenCombine
+import CoreDomain
 
 struct TransfersDataRepository: PLTransfersRepository {
-    func loadAllUsualTransfers() -> AnyPublisher<[PayeeRepresentable], Error> {
-        Empty().eraseToAnyPublisher()
-    }
-    
-    func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
-        Empty().eraseToAnyPublisher()
-    }
-    
     let bsanTransferManager: PLTransfersManagerProtocol
     
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
@@ -133,9 +125,33 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
-
+    
     func getTransferDetail(transfer: TransferRepresentable) throws -> Result<TransferRepresentable, Error> {
         return .success(transfer)
+    }
+    
+    func loadAllUsualTransfers() -> AnyPublisher<[PayeeRepresentable], Error> {
+        Future { promise in
+            let parameters = GetPayeesParameters(recCunt: nil)
+            do {
+                let result = try self.bsanTransferManager.getPayees(parameters)
+                switch result {
+                case .success(let response):
+                    promise(.success(response))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
+        return Empty()
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
     
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {
