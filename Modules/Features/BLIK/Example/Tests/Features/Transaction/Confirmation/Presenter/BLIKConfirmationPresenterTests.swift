@@ -13,6 +13,7 @@ class BLIKConfirmationPresenterTests: XCTestCase {
     @DecodeFile(name: "getTrnToConfResponse")
     private var transaction: GetTrnToConfDTO
     private var viewModel: BLIKTransactionViewModel!
+    private var viewModelSource: BLIKTransactionViewModelSource = .needsToBeFetched
 
     override func setUp() {
         super.setUp()
@@ -23,7 +24,7 @@ class BLIKConfirmationPresenterTests: XCTestCase {
         } catch {
             XCTFail()
         }
-
+        viewModelSource = .prefetched(viewModel)
         self.dependencies = DependenciesDefault()
         setUpDependencies()
         SUT = dependencies.resolve(for: BLIKConfirmationPresenterProtocol.self)
@@ -54,9 +55,22 @@ class BLIKConfirmationPresenterTests: XCTestCase {
 private extension BLIKConfirmationPresenterTests {
     
     func setUpDependencies() {
+        
+        dependencies.register(for: BLIKTransactionViewModelProviding.self) { [viewModelSource] resolver in
+            switch viewModelSource {
+            case let .prefetched(viewModel):
+                return PrefetchedBLIKTransactionViewModelProvider(viewModel: viewModel)
+            case .needsToBeFetched:
+                return BLIKTransactionViewModelAsyncProvider(dependenciesResolver: resolver)
+            }
+        }
+        
+        dependencies.register(for: UseCaseHandler.self) { resolver in
+            UseCaseHandler()
+        }
     
-        dependencies.register(for: BLIKConfirmationPresenterProtocol.self) {[viewModel] resolver in
-            BLIKConfirmationPresenter(dependenciesResolver: resolver, viewModel: viewModel)
+        dependencies.register(for: BLIKConfirmationPresenterProtocol.self) { resolver in
+            BLIKConfirmationPresenter(dependenciesResolver: resolver)
         }
         
         dependencies.register(for: BLIKConfirmationViewProtocol.self) { resolver in

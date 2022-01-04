@@ -354,9 +354,16 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private func showWebView(identifier: String, entity: CardEntity, cardData: PLAccountOtherOperativesData) {
         switch identifier {
-        case PLCardHomeActionIdentifier.managePinPL.rawValue, PLCardHomeActionIdentifier.changeLimitPL.rawValue, PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue, PLCardHomeActionIdentifier.cardActivatePL.rawValue, PLCardHomeActionIdentifier.customerServicePL.rawValue, PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+        case PLCardHomeActionIdentifier.managePinPL.rawValue,
+            PLCardHomeActionIdentifier.changeLimitPL.rawValue,
+            PLCardHomeActionIdentifier.usingCardAbroadPL.rawValue,
+            PLCardHomeActionIdentifier.cardActivatePL.rawValue,
+            PLCardHomeActionIdentifier.customerServicePL.rawValue,
+            PLCardHomeActionIdentifier.multicurrencyPL.rawValue:
+            
             let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
-            guard let url = cardData.link, let vpan = entity.dto.contract?.contractNumber else {
+            guard let url = cardData.link,
+                  let vpan = entity.dto.contract?.contractNumber else {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
                 return
             }

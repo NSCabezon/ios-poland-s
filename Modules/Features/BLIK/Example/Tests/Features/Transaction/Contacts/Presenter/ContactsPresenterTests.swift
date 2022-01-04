@@ -67,5 +67,9 @@ private extension ContactsPresenterTests {
         dependencies.register(for: PLBLIKManagerProtocol.self) { resolver in
             MockBLIKManager()
         }
+        
+        dependencies.register(for: UseCaseHandler.self) { resolver in
+            UseCaseHandler()
+        }
     }
 }
