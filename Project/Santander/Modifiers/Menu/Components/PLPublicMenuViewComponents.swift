@@ -106,7 +106,7 @@ private extension PLPublicMenuViewComponents {
     }
     
     func didPressContactButton() {
-        showComingSoonMessage()
+        performActionFor(phoneNumber: "+48 61 811 99 99")
     }
     
     func didPressMobileAuthorizationButton() {
@@ -115,5 +115,18 @@ private extension PLPublicMenuViewComponents {
     
     private func showComingSoonMessage() {
         Toast.show(localized("generic_alert_notAvailableOperation"))
+    }
+}
+
+extension PLPublicMenuViewComponents: OpenUrlCapable {
+    func performActionFor(phoneNumber: String) {
+        let preFormattedPhoneNumber = phoneNumber.notWhitespaces()
+        guard let phoneURL = URL(string: "tel://\(preFormattedPhoneNumber)"),
+              canOpenUrl(phoneURL)
+        else {
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+            return
+        }
+        openUrl(phoneURL)
     }
 }
