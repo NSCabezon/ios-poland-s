@@ -64,4 +64,8 @@ final class PLManagersProviderMock: PLManagersProviderProtocol {
     func getTransferManager() -> PLTransfersManagerProtocol {
         fatalError()
     }
+    
+    func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
+        fatalError()
+    }
 }

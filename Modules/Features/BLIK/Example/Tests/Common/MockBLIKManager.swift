@@ -2,6 +2,10 @@ import SANPLLibrary
 import PLCryptography
 
 struct MockBLIKManager: PLBLIKManagerProtocol {
+    
+    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError> {
+        fatalError()
+    }
 
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError> {
         fatalError()
@@ -34,7 +38,7 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     
     
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError> {
-        guard forceError else { return .failure(.other)}
+        guard !forceError else { return .failure(.other)}
         return .success(P2pAliasDTO(dstAccNo: "12 3456 7890 1234 5678 9012 3456", isDstAccInternal: true))
     }
     

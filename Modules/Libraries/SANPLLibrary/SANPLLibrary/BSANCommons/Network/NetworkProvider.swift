@@ -94,6 +94,13 @@ public struct NetworkProviderResponseError {
     let headerFields: [AnyHashable: Any]?
     let error: Error?
     
+    public init(code: Int, data: Data?, headerFields: [AnyHashable:Any]?, error: Error?) {
+        self.code = code
+        self.data = data
+        self.headerFields = headerFields
+        self.error = error
+    }
+    
     public func getErrorDetail() -> PLResponseErrorDetail? {
         guard let data = self.data else { return nil }
         guard let dto: PLResponseError = try? JSONDecoder().decode(PLResponseError.self, from: data) else {

@@ -21,7 +21,6 @@ def core_dependencies
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
-  pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
   pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'

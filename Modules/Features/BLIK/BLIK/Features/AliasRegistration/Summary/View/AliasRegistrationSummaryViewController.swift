@@ -24,6 +24,7 @@ final class AliasRegistrationSummaryViewController: OperativeSummaryViewControll
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpBody()
+        setUpHeader()
         build()
     }
     
@@ -49,12 +50,28 @@ private extension AliasRegistrationSummaryViewController {
         setupBody(view)
     }
     
+    func setUpHeader() {
+        let viewModel = OperativeSummaryStandardHeaderViewModel(image: "icnCheckOval1",
+                                                                title: localized("pl_blik_text_success"),
+                                                                description: getHeaderText())
+        setupStandardHeader(with: viewModel)
+    }
+    
     func getInfoText() -> String {
         switch registeredAliasType {
         case .cookie:
             return localized("pl_blik_text_saveBrowserSuccessText")
         case .uid:
             return localized("pl_blik_text_saveShopSuccessText")
+        }
+    }
+    
+    func getHeaderText() -> String {
+        switch registeredAliasType {
+        case .cookie:
+            return localized("pl_blik_text_saveBrowserSuccess")
+        case .uid:
+            return localized("pl_blik_text_saveShopSuccess")
         }
     }
 }

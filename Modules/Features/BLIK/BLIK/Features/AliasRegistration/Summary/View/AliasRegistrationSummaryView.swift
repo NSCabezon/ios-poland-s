@@ -53,6 +53,7 @@ private extension AliasRegistrationSummaryView {
     }
     
     func configureStyling() {
+        infoLabel.numberOfLines = 0
         infoLabel.textAlignment = .center
         infoLabel.textColor = .lisboaGray
         infoLabel.font = .santander(
@@ -61,6 +62,7 @@ private extension AliasRegistrationSummaryView {
             size: 14
         )
         
+        tipLabel.numberOfLines = 0
         tipLabel.textAlignment = .center
         tipLabel.textColor = .lisboaGray
         tipLabel.font = .santander(

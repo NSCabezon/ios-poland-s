@@ -28,6 +28,7 @@ end
 def pl_dependencies
   pod 'CharityTransfer', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
 end
 
 target 'CharityTransfer_Example' do
