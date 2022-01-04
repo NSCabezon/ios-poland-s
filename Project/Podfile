@@ -47,7 +47,6 @@ end
 def legacy_libraries
   pod 'Locker', :path => '../santander-one/Modules/Libraries/Locker'
   pod 'Logger', :path => '../santander-one/Modules/Libraries/Logger'
-  pod 'Helpers', :path => '../santander-one/Modules/Libraries/Helpers'
   pod 'SANLegacyLibrary', :path => '../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'RetailLegacy', :path => '../santander-one/RetailLegacy'
 end
