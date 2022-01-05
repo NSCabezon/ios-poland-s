@@ -1,7 +1,7 @@
 
 import Foundation
 
-enum DateTransferOption {
+public enum DateTransferOption {
     case today, anotherDay
 }
 

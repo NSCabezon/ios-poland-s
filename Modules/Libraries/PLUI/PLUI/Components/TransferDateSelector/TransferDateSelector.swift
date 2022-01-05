@@ -1,6 +1,6 @@
 
 public protocol TransferDateSelectorDelegate: AnyObject {
-    func didSelectDate(date: Date)
+    func didSelectDate(date: Date, withOption: DateTransferOption)
 }
 
 public class TransferDateSelector: UIView {
@@ -68,15 +68,15 @@ extension TransferDateSelector: TransferDateSegmentViewDelegate {
         }
         switch option {
         case .today:
-            delegate?.didSelectDate(date: Date())
+            delegate?.didSelectDate(date: Date(), withOption: option)
         case .anotherDay:
-            delegate?.didSelectDate(date: anotherDateView.getSelectedDate())
+            delegate?.didSelectDate(date: anotherDateView.getSelectedDate(), withOption: option)
         }
     }
 }
 
 extension TransferDateSelector: AnotherDayViewDelegate {
     func didSelectDate() {
-        delegate?.didSelectDate(date: anotherDateView.getSelectedDate())
+        delegate?.didSelectDate(date: anotherDateView.getSelectedDate(), withOption: .anotherDay)
     }
 }

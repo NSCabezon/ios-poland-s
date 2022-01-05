@@ -53,7 +53,7 @@ pipeline {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					echo "Distributing android app"
 					sh "cd Project && bundle exec fastlane ios build_appium"
-					sh "mv Build/Products/intern-iphonesimulator/*.app INTERN.app"
+					sh "mv Build/Products/Intern-Debug-iphonesimulator/*.app INTERN.app"
 					sh 'zip -vr INTERN.zip INTERN.app/ -x "*.DS_Store"'
 					archiveArtifacts artifacts: 'INTERN.zip'
 				}

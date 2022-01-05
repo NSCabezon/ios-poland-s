@@ -80,6 +80,18 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
         self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
             return AccountForDebitMapper()
         }
+        
+        self.dependenciesEngine.register(for: OperatorMapping.self) { _ in
+            return OperatorMapper()
+        }
+        
+        self.dependenciesEngine.register(for: GSMOperatorMapping.self) { _ in
+            return GSMOperatorMapper()
+        }
+        
+        self.dependenciesEngine.register(for: MobileContactMapping.self) { _ in
+            return MobileContactMapper()
+        }
     }
     
     func start() {

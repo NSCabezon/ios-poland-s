@@ -228,7 +228,7 @@ extension CharityTransferFormView: UpdatableTextFieldDelegate {
 }
 
 extension CharityTransferFormView: TransferDateSelectorDelegate {
-    func didSelectDate(date: Date) {
+    func didSelectDate(date: Date, withOption option: DateTransferOption) {
         selectedDate = date
         delegate?.didChangeForm()
     }

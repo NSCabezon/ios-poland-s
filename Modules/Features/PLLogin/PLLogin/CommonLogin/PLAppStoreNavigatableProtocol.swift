@@ -7,7 +7,7 @@
 
 import Foundation
 import StoreKit
-import Helpers
+import CoreFoundationLib
 import PLCommons
 
 protocol PLAppStoreNavigatableProtocol: SKStoreProductViewControllerDelegate {

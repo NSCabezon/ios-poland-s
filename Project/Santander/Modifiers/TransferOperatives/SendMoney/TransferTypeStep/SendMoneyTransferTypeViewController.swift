@@ -13,8 +13,8 @@ import UIKit
 import UI
 
 protocol SendMoneyTransferTypeView: OperativeView {
-    func showCreditCardAccount(_ model: OneNonSelectableRadioButtonViewModel)
     func showTransferTypes(viewModel: SendMoneyTransferTypeRadioButtonsContainerViewModel)
+    func setBottomInformationTextKey(_ key: String)
     func showAmountTooHighView()
     func closeAmountTooHighView()
 }
@@ -39,9 +39,6 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         }
         enum RadioButtonsContainer {
             static let bottomSpace: CGFloat = 16.0
-        }
-        enum BottomLabel {
-            static let textKey: String = "sendType_disclaimer_commissions"
         }
         enum ContinueButton {
             static let titleKey: String = "generic_button_continue"
@@ -70,7 +67,6 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         bottomLabel.numberOfLines = .zero
         bottomLabel.font = .typography(fontName: .oneB200Regular)
         bottomLabel.textColor = .oneLisboaGray
-        bottomLabel.configureText(withKey: Constants.BottomLabel.textKey)
         return bottomLabel
     }()
     private lazy var amountHighView: SendMoneyTransferTypeAmountHighView = {
@@ -108,9 +104,7 @@ private extension SendMoneyTransferTypeViewController {
             .setRightAction(.help) {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
-            .setRightAction(.close) {
-                self.presenter.didSelectClose()
-            }
+            .setRightAction(.close, action: self.presenter.didSelectClose)
             .build(on: self)
     }
     
@@ -142,7 +136,6 @@ private extension SendMoneyTransferTypeViewController {
         self.mainStackView.setCustomSpacing(Constants.TitleLabel.bottomSpace, after: self.titleLabel)
         self.mainStackView.addArrangedSubview(self.radioButtonsContainer)
         self.mainStackView.setCustomSpacing(Constants.RadioButtonsContainer.bottomSpace, after: radioButtonsContainer)
-        self.mainStackView.addArrangedSubview(self.bottomLabel)
     }
     
     @objc func floatingButtonDidPressed() {
@@ -159,10 +152,6 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
         self.radioButtonsContainer.setViewModel(viewModel)
     }
     
-    func showCreditCardAccount(_ model: OneNonSelectableRadioButtonViewModel) {
-        self.radioButtonsContainer.setViewModel(model)
-    }
-    
     func showAmountTooHighView() {
         self.bottomSheet.show(
             in: self,
@@ -170,6 +159,11 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
             component: .all,
             view: self.amountHighView
         )
+    }
+    
+    func setBottomInformationTextKey(_ key: String) {
+        self.bottomLabel.configureText(withKey: key)
+        self.mainStackView.addArrangedSubview(self.bottomLabel)
     }
     
     func closeAmountTooHighView() {

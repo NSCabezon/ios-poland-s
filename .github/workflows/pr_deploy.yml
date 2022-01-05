@@ -1,0 +1,49 @@
+name: QA Deploy Poland
+
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  build:
+    if: ${{ github.event.label.name == 'deploy' }}
+    runs-on: macos-11
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          submodules: recursive
+
+      - name: Setup - Xcode
+        run: sudo xcode-select -s /Applications/Xcode_12.5.app
+
+      - name: Gems packages
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+          bundler-cache: true
+
+      - name: Pod Install
+        run: cd Project && bundle exec pod update
+
+      - name: Compile to Appium Intern
+        run: |
+          cd Project && bundle exec fastlane ios build_appium && cd ..
+          mv Build/Products/Intern-Debug-iphonesimulator/*.app INTERN.app
+          zip -vr INTERN.zip INTERN.app/ -x "*.DS_Store"
+        
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Intern App
+          path: INTERN.zip
+          if-no-files-found: error
+
+        

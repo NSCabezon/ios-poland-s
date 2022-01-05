@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>DTXApplicationID</key>
-	<string>$(DYNATRACE_APP_ID)</string>
-	<key>DTXAutoActionTimeoutMilliseconds</key>
-	<string>$(DYNATRACE_AUTO_ACTION_TIMEOUT)</string>
-	<key>DTXBeaconURL</key>
-	<string>$(DYNATRACE_BEACON_URL)</string>
-	<key>DTXUserOptIn</key>
-	<false/>
 	<key>APP_CENTER_IDENTIFIER</key>
 	<string>$(APP_CENTER_IDENTIFIER)</string>
 	<key>APP_GROUPS_IDENTIFIER</key>
@@ -29,19 +21,29 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.2.20</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>2020</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>DEFAULT_DEMO_USER</key>
 	<string>$(DEFAULT_DEMO_USER)</string>
 	<key>DEFAULT_MAGIC</key>
 	<string>$(DEFAULT_MAGIC)</string>
 	<key>DEMO_AVAILABLE</key>
 	<string>$(DEMO_AVAILABLE)</string>
+	<key>DTXApplicationID</key>
+	<string>$(DYNATRACE_APP_ID)</string>
+	<key>DTXAutoActionTimeoutMilliseconds</key>
+	<string>$(DYNATRACE_AUTO_ACTION_TIMEOUT)</string>
+	<key>DTXBeaconURL</key>
+	<string>$(DYNATRACE_BEACON_URL)</string>
+	<key>DTXUserOptIn</key>
+	<false/>
 	<key>EMMA_API_KEY</key>
 	<string>$(EMMA_API_KEY)</string>
 	<key>ENVIRONMENTS_AVAILABLE</key>
 	<string>$(ENVIRONMENTS_AVAILABLE)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>KEYCHAIN_SERVICE</key>
 	<string>$(KEYCHAIN_SERVICE)</string>
 	<key>LOAD_PFM_ENABLED</key>
@@ -50,6 +52,8 @@
 	<string>$(LOG_ENABLED)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kalendarzy?</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej kamery?</string>
 	<key>NSContactsUsageDescription</key>
@@ -62,8 +66,6 @@
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twojej lokalizacji?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich zdjęć?</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Pozwalasz aplikacji Santander mobile na dostęp do Twoich kalendarzy?</string>
 	<key>PUBLIC_FILE_ENVIRONMENTS</key>
 	<string>$(PUBLIC_FILE_ENVIRONMENTS)</string>
 	<key>SHARED_KEYCHAIN_IDENTIFIER</key>
@@ -97,7 +99,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 </dict>
 </plist>
