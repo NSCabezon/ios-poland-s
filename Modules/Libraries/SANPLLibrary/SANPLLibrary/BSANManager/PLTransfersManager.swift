@@ -92,14 +92,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     }
     
     func checkFinalFee(_ parameters: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], NetworkProviderError> {
-        guard let amountValue = parameters.amount.value, let currency = parameters.amount.currencyRepresentable?.getSymbol() else {
-            return .failure(NetworkProviderError.other)
-        }
-        let inputParameters = CheckFinalFeeParameters(serviceIds: Constants.servicesIds.rawValue,
-                                                      channelId: Constants.channelId.rawValue,
-                                                      operationAmount: amountValue,
-                                                      operationCurrency: currency)
-        let destinationAccountNumber: String = parameters.originAccount.checkDigits + parameters.originAccount.codBban
+        guard let amountValue = parameters.amount.value,
+              let currency = parameters.amount.currencyRepresentable?.getSymbol()
+        else { return .failure(NetworkProviderError.other) }
+        let inputParameters = CheckFinalFeeParameters(
+            serviceIds: parameters.servicesAvailable,
+            channelId: Constants.channelId.rawValue,
+            operationAmount: amountValue,
+            operationCurrency: currency
+        )
+        let destinationAccountNumber = parameters.originAccount.checkDigits + parameters.originAccount.codBban
         let result = try self.transferDataSource.checkFinalFee(inputParameters, destinationAccount: destinationAccountNumber)
         switch result {
         case .success(let feeResponse):

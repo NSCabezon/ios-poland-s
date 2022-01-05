@@ -44,7 +44,7 @@ final class SendMoneyTransferTypePresenter {
         else { return nil }
         return specialPricesOutput.isCreditCardAccount
     }()
-
+    
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
@@ -54,12 +54,16 @@ final class SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol {
     func viewDidLoad() {
-        if self.isCreditCardAccount == true {
-            let viewModel = self.mapToCreditCardViewModel()
-            self.view?.showCreditCardAccount(viewModel)
+        let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
+        self.view?.showTransferTypes(viewModel: viewModel)
+        self.setCreditAccountInfo()
+    }
+    
+    func setCreditAccountInfo() {
+        if isCreditCardAccount == true {
+            self.view?.setBottomInformationTextKey("pl_sendType_disclaimer_commissionsPercentage")
         } else {
-            let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
-            self.view?.showTransferTypes(viewModel: viewModel)
+            self.view?.setBottomInformationTextKey("sendType_disclaimer_commissions")
         }
     }
     
@@ -101,13 +105,6 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
 }
 
 private extension SendMoneyTransferTypePresenter {
-    func mapToCreditCardViewModel() -> OneNonSelectableRadioButtonViewModel {
-        return OneNonSelectableRadioButtonViewModel(
-            titleKey: "pl_sendMoney_title_creditCardAccount",
-            descriptionKey: "pl_sendMoney_text_creditCardAccount"
-        )
-    }
-    
     func mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from transferTypes: [SendMoneyTransferTypeFee]) -> SendMoneyTransferTypeRadioButtonsContainerViewModel {
         let radioButtonViewModels = transferTypes.compactMap { self.mapToSendMoneyTransferTypeRadioButtonViewModel(from: $0) }
         return SendMoneyTransferTypeRadioButtonsContainerViewModel(selectedIndex: self.getSelectedIndex(),
@@ -141,30 +138,26 @@ private extension SendMoneyTransferTypePresenter {
 extension PolandTransferType {
     var title: String? {
         switch self {
-        case .zero, .one:
+        case .one:
             return "sendMoney_label_standardSent"
         case .eight:
             return "sendMoney_label_immediateSend"
         case .a:
             return "sendMoney_label_expressDelivery"
-        case .creditCardAccount:
-            return "sendMoney_title_creditCardAccount"
-        case .four:
+        case .four, .zero:
             return nil
         }
     }
     
     var subtitle: String? {
         switch self {
-        case .zero, .one:
+        case .one:
             return "sendType_text_standar"
         case .eight:
             return "sendType_text_inmediate"
         case .a:
             return "sendType_text_express"
-        case .creditCardAccount:
-            return "sendMoney_text_creditCardAccount"
-        case .four:
+        case .four, .zero:
             return nil
         }
     }
@@ -175,14 +168,13 @@ extension PolandTransferType {
             return AmountDTO(value: Decimal(5000), currency: .create(.złoty))
         case .a:
             return AmountDTO(value: Decimal(20000), currency: .create(.złoty))
-        case .creditCardAccount, .zero, .one, .four:
+        case .zero, .one, .four:
             return AmountDTO(value: .zero, currency: .create(.złoty))
         }
     }
 }
 
 extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
-    
     var trackerPage: SendMoneyTransferTypePage {
         SendMoneyTransferTypePage()
     }
