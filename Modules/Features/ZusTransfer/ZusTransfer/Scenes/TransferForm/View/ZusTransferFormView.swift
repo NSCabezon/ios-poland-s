@@ -223,7 +223,7 @@ extension ZusTransferFormView: UpdatableTextFieldDelegate {
 }
 
 extension ZusTransferFormView: TransferDateSelectorDelegate {
-    func didSelectDate(date: Date) {
+    func didSelectDate(date: Date, withOption option: DateTransferOption) {
         selectedDate = date
         delegate?.didChangeForm()
     }

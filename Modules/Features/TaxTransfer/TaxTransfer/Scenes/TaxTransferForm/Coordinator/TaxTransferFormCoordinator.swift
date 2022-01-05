@@ -8,9 +8,12 @@
 import UI
 import CoreFoundationLib
 import Commons
+import PLCommons
 import SANPLLibrary
 
-public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {}
+public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
+    func back()
+}
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
@@ -22,12 +25,38 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        setUpDependencies()
     }
     
     public func start() {
-        let controller = UIViewController() // TODO:- Implement actual controller
+        var presenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
+        let controller = TaxTransferFormViewController(presenter: presenter)
+        presenter.view = controller
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {}
+extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
+    public func back() {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+private extension TaxTransferFormCoordinator {
+    func setUpDependencies() {
+        dependenciesEngine.register(for: TaxTransferFormCoordinatorProtocol.self) { _ in
+            return self
+        }
+        
+        dependenciesEngine.register(for: TaxTransferFormPresenterProtocol.self) { resolver in
+            return TaxTransferFormPresenter(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: DateSelectorConfiguration.self) { resolver in
+            return DateSelectorConfiguration(
+                language: resolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode,
+                dateFormatter: PLTimeFormat.ddMMyyyyDotted.createDateFormatter()
+            )
+        }
+    }
+}

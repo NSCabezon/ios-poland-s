@@ -1,15 +1,13 @@
 //
 //  CurrencyLabel.swift
-//  BLIK
+//  PLUI
 //
-//  Created by Piotr Mielcarzewicz on 13/07/2021.
+//  Created by 185167 on 29/12/2021.
 //
 
 import UI
-import PLCommons
-import PLUI
 
-final class CurrencyLabel: UIView {
+public final class CurrencyLabel: UIView {
     private let label = UILabel()
 
     override init(frame: CGRect) {
@@ -22,18 +20,17 @@ final class CurrencyLabel: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func getText() -> String {
+    public func getText() -> String {
         return label.text ?? ""
     }
 
-    func setText(_ text: String) {
+    public func setText(_ text: String) {
         label.text = text
     }
 
     private func setUp() {
         applyStyling()
         configureSubviews()
-        setIdentifiers()
     }
 
     private func applyStyling() {
@@ -54,9 +51,5 @@ final class CurrencyLabel: UIView {
             widthAnchor.constraint(equalToConstant: 44)
         ])
     }
-    
-    private func setIdentifiers() {
-        self.accessibilityIdentifier = AccessibilityCheques.CurrencyLabel.root.id
-        label.accessibilityIdentifier = AccessibilityCheques.CurrencyLabel.label.id
-    }
 }
+
