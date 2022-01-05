@@ -20,7 +20,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     
     // MARK: - Buttons views
     func createOtherUserView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_changeUser"), iconKey: "icnChangeUser", titleFont: smallButtonTitleFont)
+        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_changeUser"), iconKey: "icnChangeUser", titleFont: smallButtonTitleFont, labelAccessibilityIdentifier: "btnOtherUserLabel", icnAccessibilityIdentifier: "btnOtherUserIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnOtherUser")
         let view = self.makeSmallButtonView(type)
         view.action = self.didPressOtherUserButton
@@ -29,7 +29,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
     
     func createInformationView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_information"), iconKey: "icnInfoRed", titleFont: smallButtonTitleFont)
+        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_information"), iconKey: "icnInfoRed", titleFont: smallButtonTitleFont, labelAccessibilityIdentifier: "btnInfoLabel", icnAccessibilityIdentifier: "btnInfoIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnInformation")
         let view = self.makeSmallButtonView(type)
         view.action = self.setInformationButton
@@ -38,7 +38,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
     
     func createServicesView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_services"), iconKey: "icnMcommerce", titleFont: bigButtonTitleFont)
+        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_services"), iconKey: "icnMcommerce", titleFont: bigButtonTitleFont, labelAccessibilityIdentifier: "btnServiceLabel", icnAccessibilityIdentifier: "btnServiceIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnServices")
         let view = self.makeBigButtonView(type, buttonType: .publicMenu)
         view.action = self.didServicesButton
@@ -47,7 +47,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
     
     func createPLATMView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("menuPublic_link_checkAtm"), iconKey: "icnMapPointSan")
+        let buttonViewModel = ButtonViewModel(titleKey: localized("menuPublic_link_checkAtm"), iconKey: "icnMapPointSan", labelAccessibilityIdentifier: "btnMapLabel", icnAccessibilityIdentifier: "btnMapIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnAtm")
         let view = self.makeATMView(type)
         view.setViewModel(ATMMenuViewModel(backgroundImageName: "imgAtmMenu"))
@@ -57,7 +57,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
     
     func createOfferView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("menuPublic_link_becomeClient"), iconKey: "icnOffer", titleFont: bigButtonTitleFont)
+        let buttonViewModel = ButtonViewModel(titleKey: localized("menuPublic_link_becomeClient"), iconKey: "icnOffer", titleFont: bigButtonTitleFont, labelAccessibilityIdentifier: "btnOfferLabel", icnAccessibilityIdentifier: "btnOfferIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnOffer")
         let view = self.makeBigButtonView(type, buttonType: .publicMenu)
         view.action = self.didPressOfferButton
@@ -66,7 +66,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
     
     func createContactView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_emergency"), iconKey: "icnPhoneRed", titleFont: bigButtonTitleFont)
+        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_emergency"), iconKey: "icnPhoneRed", titleFont: bigButtonTitleFont, labelAccessibilityIdentifier: "btnContactLabel", icnAccessibilityIdentifier: "btnContactIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnContact")
         let view = self.makeBigButtonView(type, buttonType: .publicMenu)
         view.action = self.didPressContactButton
@@ -75,7 +75,7 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
 
     func createMobileAuthorizationView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_mobileAuthorization"), iconKey: "icnMobileAuthorization", titleFont: smallButtonTitleFont)
+        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_mobileAuthorization"), iconKey: "icnMobileAuthorization", titleFont: smallButtonTitleFont, labelAccessibilityIdentifier: "btnAuthorizationLabel", icnAccessibilityIdentifier: "btnAuthorizationIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnMobileAuthorization")
         let view = self.makeSmallButtonView(type)
         view.action = self.didPressMobileAuthorizationButton
