@@ -11,6 +11,9 @@ import Commons
 
 protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
+    func updatePhoneInput(with phoneNumber: String)
+    func showInvalidPhoneNumberError(_ showError: Bool)
+    func showOperatorSelection(with operator: Operator?)
 }
 
 final class PhoneTopUpFormViewController: UIViewController {
@@ -98,10 +101,34 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel]) {
         formView.updateSelectedAccount(with: accountModels)
     }
+    
+    func showInvalidPhoneNumberError(_ showError: Bool) {
+        formView.showInvalidPhoneNumberError(showError)
+    }
+    
+    func showOperatorSelection(with mobileOperator: Operator?) {
+        formView.showOperatorSelection(with: mobileOperator)
+    }
 }
 
 extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
     func topUpFormDidSelectChangeAccount() {
         presenter.didSelectChangeAccount()
+    }
+    
+    func didTouchContactsButton() {
+        presenter.didTouchContactsButton()
+    }
+    
+    func topUpFormDidInputPartialPhoneNumber(_ number: String) {
+        presenter.didInputPartialPhoneNumber(number)
+    }
+    
+    func topUpFormDidInputFullPhoneNumber(_ number: String) {
+        presenter.didInputFullPhoneNumber(number)
+    }
+    
+    func updatePhoneInput(with phoneNumber: String) {
+        formView.updatePhoneInput(with: phoneNumber)
     }
 }

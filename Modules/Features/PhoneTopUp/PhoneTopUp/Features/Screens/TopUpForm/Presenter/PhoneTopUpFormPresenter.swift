@@ -14,12 +14,15 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 
-protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate {
+protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate, InternetContactsDelegate {
     var view: PhoneTopUpFormViewProtocol? { get set }
     func viewDidLoad()
     func didSelectBack()
     func didSelectClose()
     func didSelectChangeAccount()
+    func didTouchContactsButton()
+    func didInputPartialPhoneNumber(_ number: String)
+    func didInputFullPhoneNumber(_ number: String)
 }
 
 final class PhoneTopUpFormPresenter {
@@ -27,6 +30,8 @@ final class PhoneTopUpFormPresenter {
     
     weak var view: PhoneTopUpFormViewProtocol?
     private let accounts: [AccountForDebit]
+    private let operators: [Operator]
+    private let gsmOperators: [GSMOperator]
     private let dependenciesResolver: DependenciesResolver
     private weak var coordinator: PhoneTopUpFormCoordinatorProtocol?
     private let confirmationDialogFactory: ConfirmationDialogProducing
@@ -37,9 +42,14 @@ final class PhoneTopUpFormPresenter {
     
     // MARK: Lifecycle
     
-    init(dependenciesResolver: DependenciesResolver, accounts: [AccountForDebit]) {
+    init(dependenciesResolver: DependenciesResolver,
+         accounts: [AccountForDebit],
+         operators: [Operator],
+         gsmOperators: [GSMOperator]) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
+        self.operators = operators
+        self.gsmOperators = gsmOperators
         coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
@@ -76,5 +86,32 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     
     func didSelectChangeAccount() {
         coordinator?.didSelectChangeAccount(availableAccounts: accounts, selectedAccountNumber: selectedAccountNumber)
+    }
+    
+    func didTouchContactsButton() {
+        coordinator?.didTouchContactsButton()
+    }
+    
+    func didInputPartialPhoneNumber(_ number: String) {
+        view?.showOperatorSelection(with: nil)
+    }
+    
+    func didInputFullPhoneNumber(_ number: String) {
+        if let matchingOperator = matchOperator(with: number) {
+            view?.showInvalidPhoneNumberError(false)
+            view?.showOperatorSelection(with: matchingOperator)
+        } else {
+            view?.showInvalidPhoneNumberError(true)
+            view?.showOperatorSelection(with: nil)
+        }
+    }
+    
+    func internetContactsDidSelectContact(_ contact: MobileContact) {
+        view?.updatePhoneInput(with: contact.phoneNumber)
+        didInputFullPhoneNumber(contact.phoneNumber.filter(\.isNumber))
+    }
+    
+    private func matchOperator(with number: String) -> Operator? {
+        return operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })
     }
 }

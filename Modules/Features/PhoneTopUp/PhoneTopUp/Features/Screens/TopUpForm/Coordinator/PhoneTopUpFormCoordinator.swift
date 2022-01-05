@@ -14,6 +14,7 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func back()
     func close()
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?)
+    func didTouchContactsButton()
 }
 
 public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
@@ -24,6 +25,7 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let formData: GetPhoneTopUpFormDataOutput
     private weak var accountSelectorDelegate: AccountSelectorDelegate?
+    private weak var internetContactsDelegate: InternetContactsDelegate?
     
     private lazy var phoneTopUpController: PhoneTopUpFormViewController = {
         return dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
@@ -47,13 +49,14 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return self
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormPresenterProtocol.self) { [formData] resolver in
-            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts)
+            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts, operators: formData.operators, gsmOperators: formData.gsmOperators)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)
             let viewController = PhoneTopUpFormViewController(presenter: presenter)
             presenter.view = viewController
             self?.accountSelectorDelegate = presenter
+            self?.internetContactsDelegate = presenter
             return viewController
         }
         self.dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
@@ -108,10 +111,25 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
                                                                     accountSelectorDelegate: self)
         accountSelectorCoordinator.start()
     }
+    
+    func didTouchContactsButton() {
+        let internetContactsCoordinator = InternetContactsCoordinator(dependenciesResolver: dependenciesEngine,
+                                                                      delegate: self,
+                                                                      navigationController: navigationController,
+                                                                      contacts: formData.internetContacts)
+        internetContactsCoordinator.start()
+    }
 }
 
 extension PhoneTopUpFormCoordinator: AccountSelectorDelegate {
     func accountSelectorDidSelectAccount(withAccountNumber accountNumber: String) {
         accountSelectorDelegate?.accountSelectorDidSelectAccount(withAccountNumber: accountNumber)
+    }
+}
+
+extension PhoneTopUpFormCoordinator: InternetContactsDelegate {
+    func internetContactsDidSelectContact(_ contact: MobileContact) {
+        navigationController?.popViewController(animated: true)
+        internetContactsDelegate?.internetContactsDidSelectContact(contact)
     }
 }

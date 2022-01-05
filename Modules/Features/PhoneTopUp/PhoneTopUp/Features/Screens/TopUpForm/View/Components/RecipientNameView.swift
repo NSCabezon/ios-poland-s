@@ -46,8 +46,6 @@ final class RecipientNameView: UIView {
     
     private func prepareStyles() {
         headerLabel.text = localized("pl_topup_text_recipName")
-        #warning("todo: remove mock data")
-        nameTextField.setText("Jan Bankowy 2")
         nameTextField.isUserInteractionEnabled = false
     }
     

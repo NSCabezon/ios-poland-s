@@ -11,6 +11,12 @@ import PLUI
 import Commons
 import PLCommons
 
+protocol PhoneNumberInputViewDelegate: AnyObject {
+    func didTouchContactsButton()
+    func didInputPartialPhoneNumber(_ number: String)
+    func didInputFullPhoneNumber(_ number: String)
+}
+
 final class PhoneNumberInputView: UIView {
     // MARK: Views
     
@@ -20,6 +26,7 @@ final class PhoneNumberInputView: UIView {
     
     // MARK: Properties
     
+    weak var delegate: PhoneNumberInputViewDelegate?
     private let phoneNumberValidator = PartialPhoneNumberValidator()
     private let phoneNumberFormatter = PartialPhoneNumberFormatter()
     private let phoneNumberPrefix = "+48 "
@@ -54,13 +61,30 @@ final class PhoneNumberInputView: UIView {
         headerLabel.text = localized("pl_topup_text_recipPhoneNumb")
         
         lisboaPhoneNumberTextField.setHeight(48.0)
-        lisboaPhoneNumberTextField.textField.setRightAccessory(.uiImage(Images.Form.contactIcon, action: {}))
+        lisboaPhoneNumberTextField.textField.setRightAccessory(.uiImage(Images.Form.contactIcon, action: { [weak self] in
+            self?.delegate?.didTouchContactsButton()
+        }))
         lisboaPhoneNumberTextField.textField.setText(phoneNumberPrefix)
     }
     
     private func setUpLayout() {
         mainContainer.axis = .vertical
         mainContainer.spacing = 8.0
+    }
+    
+    // MARK: Methods
+    
+    func showInvalidPhoneNumberError(_ showError: Bool) {
+        if showError {
+            lisboaPhoneNumberTextField.showError(localized("pl_topup_text_valid_wrongNumb"))
+        } else {
+            lisboaPhoneNumberTextField.hideError()
+        }
+    }
+    
+    func updatePhoneInput(with phoneNumber: String) {
+        let formattedPhoneNumber = phoneNumberPrefix + phoneNumberFormatter.formatPhoneNumberText(phoneNumber)
+        lisboaPhoneNumberTextField.textField.setText(formattedPhoneNumber)
     }
 }
 
@@ -74,10 +98,16 @@ extension PhoneNumberInputView: UITextFieldDelegate {
             .replacingCharacters(in: range, with: string)
             .replace(phoneNumberPrefix, "")
         
-        if phoneNumberValidator.validatePhoneNumberText(newPhoneNumber) {
+        switch phoneNumberValidator.validatePhoneNumberText(newPhoneNumber) {
+        case .invalid:
+            break
+        case .partiallyValid(number: let number):
             textField.text = phoneNumberPrefix + phoneNumberFormatter.formatPhoneNumberText(newPhoneNumber)
+            delegate?.didInputPartialPhoneNumber(number)
+        case .valid(number: let number):
+            textField.text = phoneNumberPrefix + phoneNumberFormatter.formatPhoneNumberText(newPhoneNumber)
+            delegate?.didInputFullPhoneNumber(number)
         }
-        // prevent unchecked and unformatted user input
         return false
     }
 }

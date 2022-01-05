@@ -12,6 +12,9 @@ import Commons
 
 protocol PhoneTopUpFormViewDelegate: AnyObject {
     func topUpFormDidSelectChangeAccount()
+    func didTouchContactsButton()
+    func topUpFormDidInputPartialPhoneNumber(_ number: String)
+    func topUpFormDidInputFullPhoneNumber(_ number: String)
 }
 
 final class PhoneTopUpFormView: UIView {
@@ -47,6 +50,7 @@ final class PhoneTopUpFormView: UIView {
         setUpLayout()
         prepareStyles()
         prepareSelectAccountView()
+        phoneNumberInputView.delegate = self
     }
 
     private func addSubviews() {
@@ -82,6 +86,10 @@ final class PhoneTopUpFormView: UIView {
     
     private func prepareStyles() {
         selectedAccountHeaderLabel.text = localized("pl_topup_text_sendAccount")
+        recipientNameView.isHidden = true
+        operatorSelectionView.isHidden = true
+        amountSelectionView.isHidden = true
+        termsAndConditionsView.isHidden = true
     }
     
     private func prepareSelectAccountView() {
@@ -94,5 +102,34 @@ final class PhoneTopUpFormView: UIView {
     
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel]) {
         selectedAccountView.setViewModel(accountModels)
+    }
+    
+    func showInvalidPhoneNumberError(_ showError: Bool) {
+        phoneNumberInputView.showInvalidPhoneNumberError(showError)
+        showOperatorSelection(with: nil)
+    }
+    
+    func showOperatorSelection(with mobileOperator: Operator?) {
+        operatorSelectionView.isHidden = mobileOperator == nil
+        amountSelectionView.isHidden = mobileOperator == nil
+        termsAndConditionsView.isHidden = mobileOperator == nil
+    }
+    
+    func updatePhoneInput(with phoneNumber: String) {
+        phoneNumberInputView.updatePhoneInput(with: phoneNumber)
+    }
+}
+
+extension PhoneTopUpFormView: PhoneNumberInputViewDelegate {
+    func didInputPartialPhoneNumber(_ number: String) {
+        delegate?.topUpFormDidInputPartialPhoneNumber(number)
+    }
+
+    func didInputFullPhoneNumber(_ number: String) {
+        delegate?.topUpFormDidInputFullPhoneNumber(number)
+    }
+    
+    func didTouchContactsButton() {
+        delegate?.didTouchContactsButton()
     }
 }

@@ -10,4 +10,7 @@ import PLCommons
 
 public struct GetPhoneTopUpFormDataOutput {
     let accounts: [AccountForDebit]
+    let operators: [Operator]
+    let gsmOperators: [GSMOperator]
+    let internetContacts: [MobileContact]
 }
