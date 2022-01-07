@@ -6,8 +6,6 @@ source 'https://cdn.cocoapods.org/'
 
 def example_app_common
   pod 'PLUI', :path => '../../../Libraries/PLUI'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
   pod 'Kingfisher', '5.15.8'
@@ -15,22 +13,18 @@ end
 
 def core_dependencies
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'SQLCipher', '4.4.3'
   pod 'Kingfisher', '5.15.8'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
-  pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
-  pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
 end

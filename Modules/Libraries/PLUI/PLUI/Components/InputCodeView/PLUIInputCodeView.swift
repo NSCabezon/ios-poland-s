@@ -104,6 +104,20 @@ public class PLUIInputCodeView: UIView {
         guard let first = self.inputCodeBoxArray.firstEmptyRequested() else { return false }
         return first.becomeFirstResponder()
     }
+
+    /**
+    Fulfill component with characters in text (used for testing porposes)
+     */
+//    Añadir Snapshot tests con componentes con texto!!!
+    public func setText(_ text: String) {
+        for character in text.characters {
+            guard let firstEmpty = self.inputCodeBoxArray.firstEmptyRequested() else { return }
+            let shouldAccept = self.delegate?.codeView(self, willChange: character, for: firstEmpty.position) ?? true
+            if shouldAccept {
+                firstEmpty.text = character
+            }
+        }
+    }
     
     public func setBoxView(position: NSInteger, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) {
         let boxView = self.inputCodeBoxArray[position - 1]
@@ -121,7 +135,7 @@ public class PLUIInputCodeView: UIView {
             break
         }
     }
-    
+
     public func getPin() -> String {
         return self.inputCodeBoxArray.fulfilledText() ?? ""
     }
@@ -255,5 +269,13 @@ extension Array where Element == PLUIInputCodeBoxView {
 
     func requestedCount() -> Int {
         return self.filter { $0.requested == true }.count
+    }
+}
+
+// MARK: String extension
+private extension String {
+
+    var characters: [String] {
+        return self.map { String($0) }
     }
 }

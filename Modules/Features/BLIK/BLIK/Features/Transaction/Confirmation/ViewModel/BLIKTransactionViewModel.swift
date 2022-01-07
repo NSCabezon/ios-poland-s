@@ -3,7 +3,7 @@ import SANPLLibrary
 import Commons
 import PLCommons
 import SANLegacyLibrary
-import Models
+import CoreFoundationLib
 
 struct BLIKTransactionViewModel {
     

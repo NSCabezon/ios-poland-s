@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import Models
 import Commons
 import CoreFoundationLib
 import SANPLLibrary

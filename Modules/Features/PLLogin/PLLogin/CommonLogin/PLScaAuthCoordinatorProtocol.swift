@@ -5,7 +5,7 @@
 //  Created by Mario Rosales Maillo on 30/7/21.
 //
 
-import Models
+import CoreFoundationLib
 
 protocol PLScaAuthCoordinatorProtocol: PLLoginCoordinatorProtocol {
     var deviceTrustDeviceDataCoordinator: PLDeviceDataCoordinator { get set }

@@ -8,7 +8,6 @@
 import Foundation
 import Commons
 import CoreFoundationLib
-import Models
 import SANPLLibrary
 
 final class MonthlyBalanceUseCase: UseCase<Void, MonthlyBalanceUseCaseOkOutputProtocol, StringErrorOutput> {

@@ -1,8 +1,7 @@
-import Models
+import CoreFoundationLib
 import Commons
 import PLCommons
 import Operative
-import CoreFoundationLib
 
 protocol MobileTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToGlobalPosition()

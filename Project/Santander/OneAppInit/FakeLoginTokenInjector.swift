@@ -7,7 +7,7 @@
 
 import Foundation
 import Commons
-import Models
+import CoreFoundationLib
 import CreditCardRepayment
 import SANPLLibrary
 import SANLegacyLibrary

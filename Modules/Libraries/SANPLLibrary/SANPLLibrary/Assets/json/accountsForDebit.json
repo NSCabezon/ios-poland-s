@@ -108,8 +108,8 @@
                 "id": "142353999",
                 "currencyCode": "PLN",
                 "name": {
-                    "source": "Konto Jakie Chcę",
-                    "description": "Konto Jakie Chcę",
+                    "source": "Konto Jakie Chcę 3",
+                    "description": "Konto Jakie Chcę 3",
                     "userDefined": ""
                 },
                 "type": "PERSONAL",
@@ -228,8 +228,8 @@
                 "id":"142367779",
                 "currencyCode":"PLN",
                 "name":{
-                    "source":"Konto Jakie Chcę",
-                    "description":"Konto Jakie Chcę",
+                    "source":"Konto Jakie Chcę 2",
+                    "description":"Konto Jakie Chcę 2",
                     "userDefined":""
                 },
                 "type":"PERSONAL",

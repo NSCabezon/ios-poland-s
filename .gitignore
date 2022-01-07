@@ -116,4 +116,6 @@ Modules/Features/MBWay/Example/Pods/
 Project/Santander.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 Project/Santander.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 
+# Snapshot tests
+Modules/Libraries/PLUI/Example/Tests/__FBSanpshots__/FailureDiffs/
 

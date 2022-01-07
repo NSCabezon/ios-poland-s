@@ -5,7 +5,7 @@
 //  Created by 186493 on 16/09/2021.
 //
 
-import Models
+import CoreFoundationLib
 import UI
 import Commons
 import PLHelpCenter

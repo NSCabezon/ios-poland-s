@@ -11,7 +11,6 @@ import CoreFoundationLib
 import QuickSetup
 import Foundation
 import Commons
-import Models
 import CoreTestData
 import SANPLLibrary
 import PLLegacyAdapter

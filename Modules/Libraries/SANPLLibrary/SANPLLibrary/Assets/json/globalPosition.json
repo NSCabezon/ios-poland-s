@@ -14,8 +14,6 @@
                 },
                 "currencyCode": "PLN",
                 "name": {
-                  "description": "Konto Godne Polecenia",
-                  "userDefined": "Konto Godne Polecenia"
                 },
                 "role": "CO_OWNER",
                 "permissionList": null,

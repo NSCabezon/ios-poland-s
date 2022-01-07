@@ -35,15 +35,15 @@ struct BlikError {
     var errorKey: String {
         switch errorCode2 {
         case .trnLimitExceeded:
-            return "pl_generic_alert_textAmountLimit"
+            return "pl_blik_alert_text_amountLimit"
         case .cycleLimitExceeded:
-            return "pl_generic_alert_textDayLimit"
+            return "pl_blik_alert_text_dayLimit"
         case .errPosting:
-            return "pl_generic_alert_textTryLater"
+            return "pl_blik_alert_text_tryLater"
         case .insufficientFunds:
-            return "pl_generic_alert_textNoFunds"
+            return "pl_blik_alert_text_noFunds"
         case .pw_limit_exceeded, .pw_to_big_amount:
-            return "pl_generic_alert_textAmountLimit"
+            return "pl_blik_alert_text_amountLimit"
         case .pw_account_blacklist:
             return "pl_generic_error_transferAcceptedOnlyAtBranch"
         case .pw_expr_recipient_inactive:

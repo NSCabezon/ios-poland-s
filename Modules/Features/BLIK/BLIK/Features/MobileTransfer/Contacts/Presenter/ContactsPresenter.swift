@@ -1,10 +1,8 @@
-import Models
-import Commons
 import CoreFoundationLib
+import Commons
 import PLUI
 import PLCommons
 import PLCommonOperatives
-import CoreFoundationLib
 
 protocol ContactsPresenterProtocol: MenuTextWrapperProtocol {
     var view: ContactsViewProtocol? { get set }

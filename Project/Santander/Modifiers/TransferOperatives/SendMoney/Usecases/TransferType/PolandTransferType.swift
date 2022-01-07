@@ -3,10 +3,9 @@ import SANLegacyLibrary
 import SANPLLibrary
 import CoreDomain
 import Commons
-import Models
+import CoreFoundationLib
 
 enum PolandTransferType: SendMoneyTransferTypeProtocol {
-    case creditCardAccount
     case zero
     case one
     case four
@@ -24,24 +23,31 @@ enum PolandTransferType: SendMoneyTransferTypeProtocol {
         }
     }
     
-    var asDto: MatrixTransferTypeDTO? {
+    var serviceString: String {
         switch self {
-        case .creditCardAccount:
-            return nil
         case .zero:
-            return .zero
+            return "INTERNAL"
         case .one:
-            return .one
+            return "ELIXIR"
         case .four:
-            return .four
+            return "SWIFT"
         case .eight:
-            return .eight
+            return "EXPRESS_ELIXIR"
         case .a:
-            return .a
+            return "BLUECASH"
         }
     }
     
-    var serviceString: String {
-        self.asDto?.rawValue ?? ""
+    var asFinalFeeInputParameter: String {
+        switch self {
+        case .zero, .four:
+            return ""
+        case .one:
+            return TransferFeeServiceIdDTO.elixir.rawValue
+        case .eight:
+            return TransferFeeServiceIdDTO.expressElixir.rawValue
+        case .a:
+            return TransferFeeServiceIdDTO.bluecash.rawValue
+        }
     }
 }

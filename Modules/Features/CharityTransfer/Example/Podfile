@@ -6,8 +6,6 @@ source 'https://cdn.cocoapods.org/'
 
 def example_app_common
   pod 'PLUI', :path => '../../../Libraries/PLUI'
-  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Models', :path => '../../../../santander-one/Models'
   pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
   pod 'PLCryptography', :path => '../../../Libraries/PLCryptography'
@@ -17,13 +15,11 @@ def core_dependencies
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
-  pod 'Repository', :path => '../../../../santander-one/Repository'
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
-  pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
 end
@@ -31,6 +27,7 @@ end
 def pl_dependencies
   pod 'CharityTransfer', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
 end
 
 target 'CharityTransfer_Example' do

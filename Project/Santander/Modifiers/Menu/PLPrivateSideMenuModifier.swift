@@ -7,7 +7,7 @@
 
 import RetailLegacy
 import Menu
-import Models
+import CoreFoundationLib
 
 class PLPrivateSideMenuModifier: PrivateSideMenuModifier {
     func getConfiguration(globalPosition: GlobalPositionRepresentable) -> InfoSideMenuViewModel {

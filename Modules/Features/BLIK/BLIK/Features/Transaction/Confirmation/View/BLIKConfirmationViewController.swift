@@ -3,7 +3,7 @@ import Commons
 import PLCommons
 import Foundation
 import Operative
-import Models
+import CoreFoundationLib
 import PLUI
 
 protocol BLIKConfirmationViewProtocol: AnyObject, ErrorPresentable, LoaderPresentable, ConfirmationDialogPresentable {

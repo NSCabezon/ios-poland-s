@@ -8,7 +8,7 @@
 import Foundation
 import Commons
 import SANLegacyLibrary
-import Models
+import CoreFoundationLib
 
 public struct PLAmountFormatter {
     

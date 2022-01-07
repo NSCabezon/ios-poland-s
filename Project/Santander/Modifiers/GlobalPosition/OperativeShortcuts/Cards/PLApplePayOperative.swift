@@ -5,7 +5,7 @@
 //  Created by Rodrigo Jurado on 23/8/21.
 //
 
-import Models
+import CoreFoundationLib
 import Commons
 
 final class PLApplePayOperative {

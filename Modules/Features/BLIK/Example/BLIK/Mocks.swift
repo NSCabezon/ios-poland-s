@@ -1,5 +1,4 @@
 import UI
-import Models
 import Commons
 import CoreFoundationLib
 import SANPLLibrary
@@ -28,7 +27,7 @@ struct MockManager: PLManagersProviderProtocol {
     }
     
     func getAccountsManager() -> PLAccountManagerProtocol {
-        resolver.resolve()
+        MockAccountManeger()
     }
 
     func getCreditCardRepaymentManager() -> PLCreditCardRepaymentManagerProtocol {
@@ -56,11 +55,11 @@ struct MockManager: PLManagersProviderProtocol {
     }
     
     func getCustomerManager() -> PLCustomerManagerProtocol {
-        fatalError()
+        MockCustomerManager()
     }
     
     func getLoginManager() -> PLLoginManagerProtocol {
-        resolver.resolve()
+        MockLoginManeger()
     }
     
     func getBLIKManager() -> PLBLIKManagerProtocol {
@@ -74,9 +73,17 @@ struct MockManager: PLManagersProviderProtocol {
     func getTransferManager() -> PLTransfersManagerProtocol {
         fatalError()
     }
+    
+    func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
+        fatalError()
+    }
 }
 
 struct MockBLIKManager: PLBLIKManagerProtocol {
+    
+    func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError> {
+        .failure(.noConnection)
+    }
   
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<RegisterPhoneNumberResponseDTO, NetworkProviderError> {
         .failure(.noConnection)
@@ -99,11 +106,26 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     }
     
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError> {
-        .failure(.noConnection)
+        let jsonData = """
+                {
+                "dstAccNo": "98 9876 9876 9876 9876 9876 9876",
+                "isDstAccInternal": false
+                }
+        """.data(using: .utf8)!
+            
+        let response = try! JSONDecoder().decode(P2pAliasDTO.self, from: jsonData)
+        return .success(response)
     }
     
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError> {
-        .failure(.noConnection)
+        let jsonData = """
+                {
+                "aliases": ["\("123456789".hash)"]
+                }
+        """.data(using: .utf8)!
+            
+        let response = try! JSONDecoder().decode(PhoneVerificationDTO.self, from: jsonData)
+        return .success(response)
     }
     
     func setPSPAliasLabel(_ label: String) throws -> Result<Void, NetworkProviderError> {
@@ -161,6 +183,11 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
                         "shortName": "Sklep",
                         "address": "Miastowa 8",
                         "city": "Kraków"
+                    },
+                "aliases":
+                    {
+                        "proposal": [],
+                        "auth": null
                     }
                 }
         """.data(using: .utf8)!
@@ -184,6 +211,7 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
         }
         semaphore.wait()
         return .success(response)
+//        return .failure(.error(error))
     }
 
     func cancelCheque(chequeId: Int) throws -> Result<Void, NetworkProviderError> {
@@ -289,7 +317,7 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
         let jsonData = """
             {
               "authCodeId": 0,
-              "ticket": \(random6digits),
+              "ticket": "\(random6digits)",
               "ticketTime": 120
             }
         """.data(using: .utf8)!
@@ -353,7 +381,34 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     }
     
     func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: TransactionParameters?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
-        .failure(.noConnection)
+        let jsonData = """
+                {
+                    "title": "String",
+                    "type": "BLIK_P2P_TRANSACTION",
+                    "state": "ACCEPTED",
+                    "debitAmountData": {
+                        "currency": "PLN",
+                        "amount": 50
+                    },
+                    "debitAccountData": {
+                        "accountType": 1,
+                        "accountSequenceNumber": 1,
+                        "accountNo": "12 1234 1234 1234 1234 1234 1234",
+                        "accountName": "Konto Jakie Chcesz"
+                    },
+                    "creditAccountData": {
+                        "accountType": 2,
+                        "accountSequenceNumber": 2,
+                        "accountNo": "98 9876 9876 9876 9876 9876 9876",
+                        "accountName": "Konto Jakie Chcesz"
+                    },
+                    "dstPhoneNo": "123456789",
+                    "valueDate": "13.12.2021"
+                }
+        """.data(using: .utf8)!
+            
+        let response = try! JSONDecoder().decode(AcceptDomesticTransferSummaryDTO.self, from: jsonData)
+        return .success(response)
     }
     
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
@@ -367,8 +422,176 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError> {
         fatalError()
     }
-    
-    func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: String?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
+}
+
+struct MockAccountManeger: PLAccountManagerProtocol {
+    func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError> {
         fatalError()
+    }
+    
+    func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getWithholdingList(accountNumber: String) throws -> Result<WithholdingListDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError> {
+        let jsonData = """
+        [{
+            "number": "12123412341234123412341234",
+            "id": "1",
+            "currencyCode": "PLN",
+            "name": {
+                "source": "Konto Jakie Chcesz",
+                "description": "Konto Jakie Chcesz",
+                "userDefined": ""
+            },
+            "type": "PERSONAL",
+            "balance": {
+                "value": 2000,
+                "currencyCode": "PLN"
+            },
+            "availableFunds": {
+                "value": 2000,
+                "currencyCode": "PLN"
+            },
+            "systemId": 1,
+            "defaultForPayments": false,
+            "accountDetails": {
+                "accountType": 1,
+                "sequenceNumber": 1
+            }
+        },
+        {
+            "number": "34345634563456345634563456",
+            "id": "2",
+            "currencyCode": "PLN",
+            "name": {
+                "source": "Konto Jakie Chcesz",
+                "description": "Konto Jakie Chcesz",
+                "userDefined": ""
+            },
+            "type": "PERSONAL",
+            "balance": {
+                "value": 5000,
+                "currencyCode": "PLN"
+            },
+            "availableFunds": {
+                "value": 5000,
+                "currencyCode": "PLN"
+            },
+            "systemId": 1,
+            "defaultForPayments": false,
+            "accountDetails": {
+                "accountType": 1,
+                "sequenceNumber": 1
+            }
+        }]
+        """.data(using: .utf8)!
+            
+        let response = try! JSONDecoder().decode([DebitAccountDTO].self, from: jsonData)
+        return .success(response)
+    }
+    
+    func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {
+        fatalError()
+    }
+}
+
+struct MockLoginManeger: PLLoginManagerProtocol {
+    func setDemoModeIfNeeded(for user: String) -> Bool {
+        fatalError()
+    }
+    
+    func isDemoUser(userId: String) -> Bool {
+        fatalError()
+    }
+    
+    func doLogin(_ parameters: LoginParameters) throws -> Result<LoginDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getPubKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getPersistedPubKey() throws -> PubKeyDTO {
+        fatalError()
+    }
+    
+    func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getAuthCredentials() throws -> AuthCredentials {
+        AuthCredentials(login: "123456789",
+                        userId: 1,
+                        userCif: 1,
+                        companyContext: false,
+                        accessTokenCredentials: nil,
+                        trustedDeviceTokenCredentials: nil)
+    }
+    
+    func getAppInfo() -> AppInfo? {
+        fatalError()
+    }
+    
+    func setAppInfo(_ appInfo: AppInfo) {
+        fatalError()
+    }
+    
+    func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        fatalError()
+    }
+}
+
+struct MockCustomerManager: PLCustomerManagerProtocol {
+    func getIndividual() throws -> Result<CustomerDTO, NetworkProviderError> {
+        let jsonData = """
+                {
+                "contactData": {
+                    "phoneNo": {
+                        "prefix": "48",
+                        "number": "123456789",
+                    },
+                    "email": "jannowak@mail.pl",
+                },
+                "address": {
+                    "name": "Jan Kowalski",
+                    "city": "Testowo",
+                    "street": "Testowa",
+                    "propertyNo": "55",
+                    "zip": "12-345",
+                    "countryCode": "123",
+                    "voivodship": "123"
+                },
+                "correspondenceAddress": {
+                    "name": "Jan Kowalski",
+                    "city": "Testowo",
+                    "street": "Testowa",
+                    "propertyNo": "55",
+                    "zip": "12-345",
+                    "countryCode": "123",
+                    "voivodship": "123"
+                },
+                "marketingSegment": "",
+                "cif": 123456,
+                "firstName": "Jan",
+                "secondName": "Andrzej",
+                "lastName": "Kowalski",
+                "dateOfBirth": "01.01.1970",
+                "pesel": "70010112345",
+                "citizenship": ""
+                }
+        """.data(using: .utf8)!
+            
+        let response = try! JSONDecoder().decode(CustomerDTO.self, from: jsonData)
+        return .success(response)
     }
 }

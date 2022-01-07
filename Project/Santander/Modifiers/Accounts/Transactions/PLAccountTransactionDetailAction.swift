@@ -4,7 +4,7 @@
 //
 
 import Account
-import Models
+import CoreFoundationLib
 
 class PLAccountTransactionDetailAction: AccountTransactionDetailActionProtocol {
     func getTransactionActions(for transaction: AccountTransactionEntity) -> [AccountTransactionDetailAction]? {

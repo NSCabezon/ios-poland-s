@@ -9,7 +9,7 @@ class MobileTransferFormViewMock: MobileTransferFormViewControllerProtocol {
     
     func setAccountViewModel() {}
     
-    func showValidationMessages(messages: InvalidTransferFormMessages) {}
+    func showValidationMessages(messages: InvalidMobileTransferFormMessages) {}
     
     func fillWithContact(contact: Contact?) {}
     
@@ -22,6 +22,7 @@ class MobileTransferFormViewMock: MobileTransferFormViewControllerProtocol {
     }
     
     func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {}
+    func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {}
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {}
     func showErrorMessage(title: String, message: String, actionButtonTitle: String, closeButton: Dialog.CloseButton, onConfirm: (() -> Void)?) {
     }

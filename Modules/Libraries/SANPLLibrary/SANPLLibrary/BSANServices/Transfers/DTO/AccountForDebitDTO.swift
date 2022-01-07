@@ -90,6 +90,25 @@ extension AccountForDebitDTO: AccountRepresentable {
         let currencyType = CurrencyType.parse(currencyName)
         return CurrencyDTO(currencyName: currencyName, currencyType: currencyType)
     }
+    
+    var getIBANShort: String {
+        let ibanShort = ibanRepresentable?.ibanShort(
+            showCountryCode: false,
+            asterisksCount: 1,
+            lastDigitsCount: 4
+        )
+        return ibanShort ?? "****"
+    }
+    
+    var getIBANPapel: String {
+        guard let ibanPapel = ibanRepresentable?.ibanPapel else { return "****" }
+        return ibanPapel
+    }
+    
+    var getIBANString: String {
+        guard let ibanString = ibanRepresentable?.ibanString else { return "****" }
+        return ibanString
+    }
 }
 
 extension AccountForDebitDTO: PolandAccountRepresentable {

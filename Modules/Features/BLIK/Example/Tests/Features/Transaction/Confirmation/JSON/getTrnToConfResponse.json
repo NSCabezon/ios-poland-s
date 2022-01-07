@@ -13,5 +13,10 @@
         "shortName": "Sklep",
         "address": "Miastowa 8",
         "city": "Kraków"
+    },
+    "aliases":
+    {
+        "proposal": [],
+        "auth": null
     }
 }

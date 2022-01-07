@@ -8,7 +8,7 @@
 import Loans
 import UI
 import Commons
-import Models
+import CoreFoundationLib
 import SANPLLibrary
 import LoanSchedule
 import Account

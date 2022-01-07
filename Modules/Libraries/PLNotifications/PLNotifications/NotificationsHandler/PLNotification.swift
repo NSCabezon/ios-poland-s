@@ -6,7 +6,7 @@
 //
 
 import CorePushNotificationsService
-import Models
+import CoreFoundationLib
 
 public enum SystemNotification {
     case notification(UNNotification)

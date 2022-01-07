@@ -5,9 +5,8 @@
 //  Created by 186490 on 01/06/2021.
 //  
 
-import Models
-import Commons
 import CoreFoundationLib
+import Commons
 import Operative
 
 protocol CreditCardChooseListPresenterProtocol: OperativeStepPresenterProtocol, MenuTextWrapperProtocol {

@@ -9,8 +9,6 @@ import Commons
 import PLCommons
 import CoreFoundationLib
 import SANPLLibrary
-import Repository
-import Models
 import PLCommons
 
 public final class PLNotificationRegisterUseCase: UseCase<PLNotificationRegisterUseCaseInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

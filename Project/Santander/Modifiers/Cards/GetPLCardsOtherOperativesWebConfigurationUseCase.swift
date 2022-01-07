@@ -9,7 +9,6 @@ import Foundation
 import Commons
 import CoreFoundationLib
 import SANLegacyLibrary
-import Models
 import SANPLLibrary
 
 class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherOperativesWebConfigurationUseCaseInput, GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput, StringErrorOutput> {

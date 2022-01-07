@@ -1,4 +1,5 @@
 import Commons
+import CoreFoundationLib
 
 public struct BasePLWebConfiguration: WebViewConfiguration {
     public var initialURL: String

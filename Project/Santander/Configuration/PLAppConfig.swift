@@ -8,7 +8,7 @@
 import Foundation
 
 import Commons
-import Models
+import CoreFoundationLib
 
 class PLAppConfig: LocalAppConfig {
     let isEnabledOnboardingLocationDialog = false

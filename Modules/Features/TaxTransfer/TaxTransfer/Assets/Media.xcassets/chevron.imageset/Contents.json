@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "bDigitalTechDocsEArrowsBe050ChevronRightSymbolsArrowChevron.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "bDigitalTechDocsEArrowsBe050ChevronRightSymbolsArrowChevron@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "bDigitalTechDocsEArrowsBe050ChevronRightSymbolsArrowChevron@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

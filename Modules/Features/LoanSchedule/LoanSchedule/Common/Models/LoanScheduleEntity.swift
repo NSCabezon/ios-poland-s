@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 
 struct LoanSchedule {}

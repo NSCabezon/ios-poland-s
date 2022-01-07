@@ -20,7 +20,7 @@ import PLCommons
 import PLCommonOperatives
 import PLUI
 import CharityTransfer
-import Models
+import CoreFoundationLib
 import SANLegacyLibrary
 import PhoneTopUp
 import ZusTransfer
@@ -57,6 +57,7 @@ protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
     func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput)
+    func selectZusTransfer(accounts: [AccountForDebit])
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -78,6 +79,18 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
     private func registerDependencies() {
         self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
             return AccountForDebitMapper()
+        }
+        
+        self.dependenciesEngine.register(for: OperatorMapping.self) { _ in
+            return OperatorMapper()
+        }
+        
+        self.dependenciesEngine.register(for: GSMOperatorMapping.self) { _ in
+            return GSMOperatorMapper()
+        }
+        
+        self.dependenciesEngine.register(for: MobileContactMapping.self) { _ in
+            return MobileContactMapper()
         }
     }
     
@@ -187,12 +200,6 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             coordinator.start()
-        case .zusTransfer:
-            let coordinator = ZusTransferFormCoordinator(
-                dependenciesResolver: dependenciesEngine,
-                navigationController: navigationController
-            )
-            coordinator.start()
         default:
             break
         }
@@ -232,5 +239,17 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                                                          sourceView: .sendMoney)
             coordinator.start()
         }
+    }
+    
+    func selectZusTransfer(accounts: [AccountForDebit]) {
+        guard !accounts.isEmpty else {
+            view?.showError()
+            return
+        }
+        let coordinator = ZusTransferModuleCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            accounts: accounts)
+        coordinator.start()
     }
 }

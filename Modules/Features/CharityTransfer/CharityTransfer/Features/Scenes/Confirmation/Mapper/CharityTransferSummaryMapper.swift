@@ -9,7 +9,7 @@ protocol CharityTransferSummaryMapping {
 }
 
 final class CharityTransferSummaryMapper: CharityTransferSummaryMapping {
-    
+
     func map(with confirmationTransferDto: ConfirmationTransferDTO) -> CharityTransferSummary {
         let formatter = DateFormatter()
         formatter.dateFormat = TimeFormat.yyyyMMdd.rawValue

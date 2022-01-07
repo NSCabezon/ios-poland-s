@@ -2,7 +2,7 @@
 //  PLLoginCoordinatorProtocol.swift
 //  PLLogin
 
-import Models
+import CoreFoundationLib
 import LoginCommon
 import Commons
 import UI

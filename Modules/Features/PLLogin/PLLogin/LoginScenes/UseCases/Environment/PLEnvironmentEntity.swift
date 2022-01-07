@@ -4,7 +4,7 @@
 
 import Foundation
 
-import Models
+import CoreFoundationLib
 import SANPLLibrary
 
 struct PLEnvironmentEntity: CustomStringConvertible, Codable, DTOInstantiable {
