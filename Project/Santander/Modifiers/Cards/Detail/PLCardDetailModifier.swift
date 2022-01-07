@@ -15,7 +15,7 @@ import CoreFoundationLib
 final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    var isChangeAliasEnabled: Bool = false
+    var isChangeAliasEnabled: Bool = true
     var isCardHolderEnabled: Bool = true
     var prepaidCardHeaderElements: [PrepaidCardHeaderElements] = [.availableBalance]
     var debitCardHeaderElements: [DebitCardHeaderElements] = []

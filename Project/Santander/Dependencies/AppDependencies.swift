@@ -331,6 +331,12 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
         }
+		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+			PLChangeAliasManager()
+		}
+		self.dependencieEngine.register(for: CardChangeAliasUseCaseProtocol.self) { resolver in
+			PLCardChangeAliasUseCase(dependenciesResolver: resolver)
+		}
     }
 }
 
