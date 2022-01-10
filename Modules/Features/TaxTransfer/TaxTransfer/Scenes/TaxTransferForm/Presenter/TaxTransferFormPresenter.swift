@@ -9,9 +9,10 @@ import Commons
 
 protocol TaxTransferFormPresenterProtocol {
     var view: TaxTransferFormView? { get set }
-    func getDateSelectorConfiguration() -> DateSelectorConfiguration
+    func getTaxFormConfiguration() -> TaxFormConfiguration
     func didTapBack()
-    func didTapDone()
+    func didTapDone(with data: TaxTransferFormFieldsData)
+    func didUpdateFields(with data: TaxTransferFormFieldsData)
 }
 
 final class TaxTransferFormPresenter {
@@ -27,18 +28,31 @@ private extension TaxTransferFormPresenter {
     var coordinator: TaxTransferFormCoordinatorProtocol {
         dependenciesResolver.resolve()
     }
+    var validator: TaxTransferFormValidating {
+        dependenciesResolver.resolve()
+    }
 }
 
 extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
-    func getDateSelectorConfiguration() -> DateSelectorConfiguration {
-        dependenciesResolver.resolve(for: DateSelectorConfiguration.self)
+    func getTaxFormConfiguration() -> TaxFormConfiguration {
+        dependenciesResolver.resolve(for: TaxFormConfiguration.self)
     }
     
     func didTapBack() {
         coordinator.back()
     }
     
-    func didTapDone() {
+    func didTapDone(with data: TaxTransferFormFieldsData) {
         // TODO:- Implement tax transfer request
+    }
+    
+    func didUpdateFields(with data: TaxTransferFormFieldsData) {
+        let validationResult = validator.validateDataWithoutAmountLimits(data)
+        switch validationResult {
+        case .valid:
+            view?.enableDoneButton()
+        case let .invalid(messages):
+            view?.disableDoneButton(with: messages)
+        }
     }
 }

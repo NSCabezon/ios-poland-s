@@ -52,11 +52,20 @@ private extension TaxTransferFormCoordinator {
             return TaxTransferFormPresenter(dependenciesResolver: resolver)
         }
         
-        dependenciesEngine.register(for: DateSelectorConfiguration.self) { resolver in
-            return DateSelectorConfiguration(
-                language: resolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode,
-                dateFormatter: PLTimeFormat.ddMMyyyyDotted.createDateFormatter()
+        dependenciesEngine.register(for: TaxFormConfiguration.self) { resolver in
+            return TaxFormConfiguration(
+                amountField: .init(
+                    amountFormatter: .PLAmountNumberFormatterWithoutCurrency
+                ),
+                dateSelector: .init(
+                    language: resolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode,
+                    dateFormatter: PLTimeFormat.ddMMyyyyDotted.createDateFormatter()
+                )
             )
+        }
+        
+        dependenciesEngine.register(for: TaxTransferFormValidating.self) { _ in
+            return TaxTransferFormValidator()
         }
     }
 }
