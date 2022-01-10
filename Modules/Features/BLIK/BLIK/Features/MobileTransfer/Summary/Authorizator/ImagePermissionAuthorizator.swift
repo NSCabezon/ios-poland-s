@@ -1,30 +1,37 @@
 import Foundation
-import Contacts
+import Photos
 import UI
 import PLUI
 import Commons
 
-protocol ContactPermissionAuthorizatorProtocol {
-    func authorizeContactPermission(in view: UIViewController,
+protocol ImagePermissionAuthorizatorProtocol {
+    func authorizeImagePermission(in view: UIViewController,
                                     completion: @escaping () -> Void)
 }
 
-class ContactPermissionAuthorizator: ContactPermissionAuthorizatorProtocol {
+final class ImagePermissionAuthorizator: ImagePermissionAuthorizatorProtocol {
     
-    func authorizeContactPermission(in view: UIViewController, completion: @escaping () -> Void) {
-        switch CNContactStore.authorizationStatus(for: .contacts) {
-        case .authorized:
+    func authorizeImagePermission(in view: UIViewController, completion: @escaping () -> Void) {
+        PHPhotoLibrary.authorizationStatus()
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized, .limited:
             completion()
         case .notDetermined:
-            CNContactStore().requestAccess(for: .contacts) {access, error in
-                guard access else {
-                    return
+            PHPhotoLibrary.requestAuthorization({ access in
+                if #available(iOS 14, *) {
+                    guard access == .authorized || access == .limited else {
+                        return
+                    }
+                } else {
+                    guard access == .authorized else {
+                        return
+                    }
                 }
 
                 DispatchQueue.main.async {
                     completion()
                 }
-            }
+            })
         case .denied, .restricted:
             showDialog(in: view)
         @unknown default:
@@ -33,10 +40,10 @@ class ContactPermissionAuthorizator: ContactPermissionAuthorizatorProtocol {
     }
 }
 
-private extension ContactPermissionAuthorizator {
+private extension ImagePermissionAuthorizator {
     func showDialog(in view: UIViewController) {
         let title: LocalizedStylableText = localized("pl_blikP2P_title_permissionsNeeded")
-        let info: LocalizedStylableText = localized("pl_blikP2P_text_contactsPermissionsNeededText")
+        let info: LocalizedStylableText = localized("pl_blikP2P_text_multimediaPermissionsNeededText")
         let boldInfo: LocalizedStylableText = localized("pl_blikP2P_text_contactsPermissionsNeededText2")
         
         let items: [LisboaDialogItem] = [
@@ -77,7 +84,7 @@ private extension ContactPermissionAuthorizator {
     }
     
     func goToSettings() {
-        guard let url = URL(string:UIApplication.openSettingsURLString) else { return }
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
