@@ -8,10 +8,11 @@
 import Foundation
 
 struct PLAccountOtherOperativesDTOList: Codable {
-    var accountsOptions, cardsOptions: [PLAccountOtherOperativesDTO]?
+    var accountsOptions, cardsOptions, helpCenterOptions: [PLAccountOtherOperativesDTO]?
 
     enum CodingKeys: String, CodingKey {
         case accountsOptions = "accounts_options"
         case cardsOptions = "cards_options"
+        case helpCenterOptions = "help_center_options"
     }
 }
