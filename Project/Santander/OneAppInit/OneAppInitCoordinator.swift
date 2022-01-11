@@ -247,7 +247,7 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             coordinator.start()
         }
     }
-    
+   
     func selectZusTransfer(accounts: [AccountForDebit]) {
         guard !accounts.isEmpty else {
             view?.showError()
@@ -256,7 +256,8 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         let coordinator = ZusTransferModuleCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            accounts: accounts)
+            accounts: accounts
+        )
         coordinator.start()
     }
 }

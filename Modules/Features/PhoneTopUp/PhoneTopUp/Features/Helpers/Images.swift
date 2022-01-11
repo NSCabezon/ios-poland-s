@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import PLUI
 
 enum Images {
     enum Form {
         static var contactIcon: UIImage {
-            return UIImage(fromModuleNamed: "contacts_icon")
+            return PLAssets.image(named: "contacts_icon") ?? UIImage()
         }
         
         static var rightChevronIcon: UIImage {

@@ -33,6 +33,7 @@ final class CharityTransferFormViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
         view.layoutIfNeeded()
     }
 }
