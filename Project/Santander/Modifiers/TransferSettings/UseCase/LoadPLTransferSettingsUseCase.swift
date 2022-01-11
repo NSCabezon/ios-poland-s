@@ -1,22 +1,22 @@
 //
-//  LoadPLAccountOtherOperativesInfoUseCase.swift
+//  LoadPLTransferSettingsUseCase.swift
 //  Santander
 //
-//  Created by Julio Nieto Santiago on 7/10/21.
+//  Created by 187125 on 16/12/2021.
 //
 
 import CoreFoundationLib
 import Commons
 import RetailLegacy
 
-class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOutput> {
+final class LoadPLTransferSettingsUseCase: UseCase<Void, Void, StringErrorOutput> {
     private let dependencies: DependenciesResolver
-    private let plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository
+    private let plTransferSettingsRepository: PLTransferSettingsRepository
     private let appRepository: AppRepositoryProtocol
     
     init(dependencies: DependenciesResolver) {
         self.dependencies = dependencies
-        self.plAccountOtherOperativesInfoRepository = dependencies.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        self.plTransferSettingsRepository = dependencies.resolve(for: PLTransferSettingsRepository.self)
         self.appRepository = dependencies.resolve(for: AppRepositoryProtocol.self)
     }
     
@@ -30,7 +30,7 @@ class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOu
                 let languageList = self.dependencies.resolve(for: LocalAppConfig.self).languageList
                 languageType = Language.createDefault(isPb: nil, defaultLanguage: defaultLanguage, availableLanguageList: languageList).languageType
             }
-            self.plAccountOtherOperativesInfoRepository.load(baseUrl: urlBase, publicLanguage: languageType.getPublicLanguage)
+            self.plTransferSettingsRepository.load(baseUrl: urlBase, publicLanguage: languageType.getPublicLanguage)
         }
         return UseCaseResponse.ok()
     }

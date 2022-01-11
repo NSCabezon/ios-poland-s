@@ -20,6 +20,7 @@ public final class AccountSelectorCoordinator: ModuleCoordinator {
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
     private let sourceView: SourceView
+    private let charityTransferSettings: CharityTransferSettings
     weak var selectableAccountDelegate: FormAccountSelectable?
 
     public init(dependenciesResolver: DependenciesResolver,
@@ -27,13 +28,15 @@ public final class AccountSelectorCoordinator: ModuleCoordinator {
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
          sourceView: SourceView,
-         selectableAccountDelegate: FormAccountSelectable? = nil) {
+         selectableAccountDelegate: FormAccountSelectable? = nil,
+         charityTransferSettings: CharityTransferSettings) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
         self.sourceView = sourceView
         self.selectableAccountDelegate = selectableAccountDelegate
+        self.charityTransferSettings = charityTransferSettings
         self.setupDependencies()
     }
     
@@ -59,7 +62,8 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
         let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                          navigationController: navigationController,
                                                          accounts: accounts,
-                                                         selectedAccountNumber: selectedAccountNumber)
+                                                         selectedAccountNumber: selectedAccountNumber,
+                                                         charityTransferSettings: charityTransferSettings)
         coordinator.start()
     }
     

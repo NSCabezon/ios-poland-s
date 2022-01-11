@@ -219,6 +219,11 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             view?.showError()
             return
         }
+        let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
+        let settings = repository.get()?.charityTransfer
+        let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
+                                                              transferAccountNumber: settings?.transferAccountNumber,
+                                                              transferTitle: settings?.transferTitle)
         if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
             var selectedAccountNumber = ""
             if accounts.count > 1 {
@@ -229,14 +234,16 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                              navigationController: navigationController,
                                                              accounts: accounts,
-                                                             selectedAccountNumber: selectedAccountNumber)
+                                                             selectedAccountNumber: selectedAccountNumber,
+                                                             charityTransferSettings: charityTransferSettings)
             coordinator.start()
         } else {
             let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
                                                          navigationController: navigationController,
                                                          accounts: accounts,
                                                          selectedAccountNumber: "",
-                                                         sourceView: .sendMoney)
+                                                         sourceView: .sendMoney,
+                                                         charityTransferSettings: charityTransferSettings)
             coordinator.start()
         }
     }
