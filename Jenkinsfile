@@ -19,7 +19,6 @@ pipeline {
 	}
 	parameters {
 		booleanParam(name: "DEPLOY_TO_INTERN", defaultValue: "${is_develop_branch}", description: "Do you want to deploy INTERN?")
-		booleanParam(name: "DEPLOY_TO_DEV", defaultValue: false, description: "Do you want to deploy DEV?")
 		booleanParam(name: "DEPLOY_TO_PRE", defaultValue: "${is_master_branch}", description: "Do you want to deploy PRE?")
 		booleanParam(name: "RUN_TESTS", defaultValue: false, description: "Do you want to run the build with tests?")
 		booleanParam(name: "INCREMENT_VERSION", defaultValue: true, description: "Do you want to increment the build version?")
@@ -44,6 +43,7 @@ pipeline {
 			when {
 				branch 'develop'
                 expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
+				expression { return params.DEPLOY_TO_INTERN }
             }
 			steps {
 				echo "Distributing android app"
@@ -55,7 +55,7 @@ pipeline {
 			when {
 				branch 'develop'
 				expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
-
+				expression { return params.RUN_TESTS }
             }
 			steps {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -71,6 +71,7 @@ pipeline {
 		stage('Distribute Pre iOS') {
 			when {
 				anyOf { branch 'master'; branch 'release/*' }	
+				expression { return params.DEPLOY_TO_PRE }
 			}
 			steps {
 				echo "Distributing Pre app"
@@ -81,6 +82,7 @@ pipeline {
 		stage('Increment Version and Update Repo Version ') {
 			when {
 				anyOf { branch 'develop'; branch 'master'; branch 'release/*' }
+				expression { return params.INCREMENT_VERSION }
                 expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 			}
 			steps {
@@ -91,6 +93,9 @@ pipeline {
 	post {
 		success {
 			cleanWs()
+		}
+		failure {
+			mail to: "jose.yebes@experis.es", subject: "Build: ${env.JOB_NAME} - Failed", body: "The PL build ${env.JOB_NAME} has failed"
 		}
 	}
 }
