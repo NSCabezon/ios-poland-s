@@ -21,7 +21,7 @@ extension HelpCenterConfig.Element {
         switch self {
         case .blockCard: return localized("pl_helpdesk_button_blockCard")
         case .yourCases: return localized("pl_helpdesk_button_yourItemsOnline")
-        case .mailContact: return localized("pl_helpdesk_button_mailTextUs")
+        case .mailContact: return "#mailContact" // Key still not provided, because whole section might be removed
         case .call: return localized("pl_helpdesk_button_callHelpLine")
         case .advisor(let name, _, _): return name
         case .expandableHint(let question, _): return question
@@ -55,8 +55,6 @@ extension HelpCenterConfig.Element {
         switch self {
         case .yourCases:
             return "CUSTOMER_SERVICE" // TODO: Maybe move PLAccountOtherOperativesIdentifier to PLCommon and use it here?
-        case .mailContact:
-            return "MAILBOX"
         default: // TODO: Add rest of the cases in separate tasks
             return nil
         }

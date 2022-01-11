@@ -93,21 +93,5 @@
             "isAvailable": true,
             "method": "POST"
         }
-    ],
-    "help_center_options" : [
-        {
-            "id": "YOUR_AFFAIRS",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id": "MAILBOX",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/newMessage;fresh=true",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        }
     ]
 }
