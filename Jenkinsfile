@@ -1,7 +1,6 @@
-String cron_string = "H 2 * * *"
-Bool is_develop_branch = BRANCH_NAME.contains("develop")
-Bool is_master_branch = BRANCH_NAME.contains("master")
-Bool is_develop_or_master = is_develop_branch || is_master_branch
+Boolean is_develop_branch = BRANCH_NAME.contains("develop")
+Boolean is_master_branch = BRANCH_NAME.contains("master")
+Boolean is_develop_or_master = is_develop_branch || is_master_branch
 String cron_string = is_develop_or_master ? "H 23 * * *" : ""
 
 pipeline {
