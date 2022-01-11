@@ -7,18 +7,20 @@
 
 import Foundation
 import Commons
+import CoreFoundationLib
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {
 	
-	func getProductAlias(for aliasType: ProductAlias.AliasType) -> ProductAlias? {
-		let regExp = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyząęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
+	func getProductAlias(for aliasType: ProductTypeEntity) -> ProductAlias? {
+		let regExp = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyząęćóøłńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
 		
 		switch aliasType {
-		case .cards: return ProductAlias(charSet: regExp, maxChars: 20)
-		case .savings: return ProductAlias(charSet: regExp, maxChars: 40)
-		case .accounts: return ProductAlias(charSet: regExp, maxChars: 40)
-		case .loans: return ProductAlias(charSet: regExp, maxChars: 20)
-		case .funds: return ProductAlias(charSet: regExp, maxChars: 40)
+		case .card: return ProductAlias(charSet: regExp, maxChars: 20)
+		case .deposit: return ProductAlias(charSet: regExp, maxChars: 40)
+		case .account: return ProductAlias(charSet: regExp, maxChars: 40)
+		case .loan: return ProductAlias(charSet: regExp, maxChars: 20)
+		case .fund: return ProductAlias(charSet: regExp, maxChars: 40)
+		default: return nil
 		}
 	}
 	

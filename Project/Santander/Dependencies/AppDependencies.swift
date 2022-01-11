@@ -334,9 +334,6 @@ private extension AppDependencies {
 		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
 			PLChangeAliasManager()
 		}
-		self.dependencieEngine.register(for: CardChangeAliasUseCaseProtocol.self) { resolver in
-			PLCardChangeAliasUseCase(dependenciesResolver: resolver)
-		}
     }
 }
 
