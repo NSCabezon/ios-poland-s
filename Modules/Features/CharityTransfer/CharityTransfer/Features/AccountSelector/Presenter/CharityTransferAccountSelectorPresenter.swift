@@ -3,7 +3,7 @@ import Commons
 import PLUI
 import PLCommons
 
-final class AccountSelectorPresenter {
+final class CharityTransferAccountSelectorPresenter {
 
     weak var view: AccountSelectorViewProtocol?
     let dependenciesResolver: DependenciesResolver
@@ -26,13 +26,13 @@ final class AccountSelectorPresenter {
     }
 }
 
-private extension AccountSelectorPresenter {
-    var coordinator: AccountSelectorCoordinatorProtocol {
-        return self.dependenciesResolver.resolve(for: AccountSelectorCoordinatorProtocol.self)
+private extension CharityTransferAccountSelectorPresenter {
+    var coordinator: CharityTransferAccountSelectorCoordinatorProtocol {
+        return self.dependenciesResolver.resolve(for: CharityTransferAccountSelectorCoordinatorProtocol.self)
     }
 }
 
-extension AccountSelectorPresenter: AccountSelectorPresenterProtocol {
+extension CharityTransferAccountSelectorPresenter: AccountSelectorPresenterProtocol {
     func didSelectAccount(at index: Int) {
         selectedAccountNumber = accounts[index].number
         switch sourceView {

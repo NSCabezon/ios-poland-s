@@ -55,7 +55,7 @@ extension CharityTransferFormCoordinator: CharityTransferFormCoordinatorProtocol
     }
     
     func showAccountSelector(selectedAccountNumber: String) {
-        let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
+        let coordinator = CharityTransferAccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
                                                      navigationController: navigationController,
                                                      accounts: accounts,
                                                      selectedAccountNumber: selectedAccountNumber,

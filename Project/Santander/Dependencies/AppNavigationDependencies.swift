@@ -16,6 +16,7 @@ import PLHelpCenter
 import CreditCardRepayment
 import OneAuthorizationProcessor
 import LoanSchedule
+import CharityTransfer
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -54,6 +55,10 @@ final class AppNavigationDependencies {
         }
         dependenciesEngine.register(for: BLIKHomeCoordinator.self) { resolver in
             return BLIKHomeCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        dependenciesEngine.register(for: CharityTransferModuleCoordinator.self) { resolver in
+            return CharityTransferModuleCoordinator(dependenciesResolver: resolver,
+                                                    navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in
             return PLHelpCenterModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
