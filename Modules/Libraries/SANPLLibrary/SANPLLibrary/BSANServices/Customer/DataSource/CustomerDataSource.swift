@@ -10,6 +10,7 @@ import SANLegacyLibrary
 
 protocol CustomerDataSourceProtocol {
     func getIndividual() throws -> Result<CustomerDTO, NetworkProviderError>
+    func putActiveContext(_ parameters: ActiveContextParameters) throws -> Result<Void, NetworkProviderError>
 }
 
 private extension CustomerDataSource {
@@ -21,6 +22,7 @@ private extension CustomerDataSource {
 final class CustomerDataSource {
     private enum CustomerServiceType: String {
         case individual = "/customers/individual"
+        case activeContext = "/customers/context"
     }
 
     private let networkProvider: NetworkProvider
@@ -47,9 +49,27 @@ extension CustomerDataSource: CustomerDataSourceProtocol {
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
-                                                                                                                queryParams: self.queryParams,
+                                                                                                                queryParams: ["includeContexts": true],
                                                                                                                 contentType: .urlEncoded,
                                                                                                                 localServiceName: .customerIndividual)
+        )
+        return result
+    }
+    
+    func putActiveContext(_ parameters: ActiveContextParameters) throws -> Result<Void, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName = CustomerServiceType.activeContext.rawValue
+        let result: Result<Void, NetworkProviderError> = self.networkProvider.request(CustomerRequest(serviceName: serviceName,
+                                                                                                      serviceUrl: absoluteUrl,
+                                                                                                      method: .put,
+                                                                                                      headers: ["X-Owner-Id": parameters.ownerId],
+                                                                                                      queryParams: nil,
+                                                                                                      contentType: .urlEncoded,
+                                                                                                      localServiceName: .customerIndividual)
         )
         return result
     }
