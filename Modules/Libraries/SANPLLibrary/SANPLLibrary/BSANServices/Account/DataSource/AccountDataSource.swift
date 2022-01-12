@@ -144,7 +144,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
     
     func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(),
-              let accountNumber = accountDTO.contractDescription,
+              let accountNumber = accountDTO.productId?.id,
               let systemId = accountDTO.productId?.systemId else {
             return .failure(NetworkProviderError.other)
         }
