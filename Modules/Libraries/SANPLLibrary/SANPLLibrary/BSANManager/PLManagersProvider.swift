@@ -24,6 +24,7 @@ public protocol PLManagersProviderProtocol {
     func getCardOperativesManager() -> PLCardOperativesManagerProtocol
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol
+    func getTaxTransferManager() -> PLTaxTransferManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -45,6 +46,7 @@ public final class PLManagersProvider {
     private let loanScheduleManager: PLLoanScheduleManager
     private let authorizationProcessorManager: PLAuthorizationProcessorManager
     private let phoneTopUpManager: PLPhoneTopUpManagerProtocol
+    private let taxTransferManager: PLTaxTransferManagerProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -75,6 +77,7 @@ public final class PLManagersProvider {
         self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.authorizationProcessorManager = PLAuthorizationProcessorManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.phoneTopUpManager = PLPhoneTopUpManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.taxTransferManager = PLTaxTransferManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
     }
 }
 
@@ -153,6 +156,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
         self.phoneTopUpManager
     }
+    
+    public func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
+        self.taxTransferManager
+    }
 }
 
 public extension PLManagersProviderProtocol {
@@ -222,6 +229,10 @@ public extension PLManagersProviderProtocol {
     }
     
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
         fatalError("Missing manager implementation")
     }
 }

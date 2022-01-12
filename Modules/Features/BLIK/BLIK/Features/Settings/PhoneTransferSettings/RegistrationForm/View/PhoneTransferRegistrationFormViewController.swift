@@ -46,7 +46,7 @@ final class PhoneTransferRegistrationFormViewController: UIViewController, Phone
         setSubviewsVisibility(shouldHide: false)
         infoLabel.text = viewModel.hintMessage
         statementTitleLabel.text = viewModel.statementViewModel.title
-        statementLabel.text = viewModel.statementViewModel.description
+        statementLabel.set(localizedStylableText: viewModel.statementViewModel.description)
         phoneNumberView.configure(with: viewModel.phoneViewModel)
         
         accountView.configure(with: viewModel.accountViewModel)
@@ -66,21 +66,20 @@ private extension PhoneTransferRegistrationFormViewController {
     }
     
     func configureSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(infoLabel)
-        scrollView.addSubview(accountView)
-        scrollView.addSubview(phoneNumberView)
-        scrollView.addSubview(statementTitleLabel)
-        scrollView.addSubview(statementLabel)
-        view.addSubview(footerView)
+        [infoLabel,
+        accountView,
+        phoneNumberView,
+        statementTitleLabel,
+        statementLabel].forEach {
+            scrollView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        accountView.translatesAutoresizingMaskIntoConstraints = false
-        phoneNumberView.translatesAutoresizingMaskIntoConstraints = false
-        statementTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        statementLabel.translatesAutoresizingMaskIntoConstraints = false
-        footerView.translatesAutoresizingMaskIntoConstraints = false
+        [scrollView,
+         footerView].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+         }
         
         NSLayoutConstraint.activate([
             scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),

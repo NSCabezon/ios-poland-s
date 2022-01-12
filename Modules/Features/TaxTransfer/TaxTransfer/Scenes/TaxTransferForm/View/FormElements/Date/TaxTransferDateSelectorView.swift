@@ -16,7 +16,7 @@ final class TaxTransferDateSelectorView: UIView {
         }
     }
     
-    init(configuration: DateSelectorConfiguration) {
+    init(configuration: TaxFormConfiguration.DateSelectorConfiguration) {
         self.dateSelector = TransferDateSelector(
             language: configuration.language,
             dateFormatter: configuration.dateFormatter
@@ -28,6 +28,10 @@ final class TaxTransferDateSelectorView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Storyboards are not compatbile with truth and beauty!")
+    }
+    
+    func getSelectedDate() -> Date {
+        return dateSelector.getSelectedDate()
     }
 }
 

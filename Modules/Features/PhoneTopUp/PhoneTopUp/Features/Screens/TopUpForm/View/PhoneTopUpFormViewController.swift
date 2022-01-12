@@ -14,6 +14,7 @@ protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updatePhoneInput(with phoneNumber: String)
     func showInvalidPhoneNumberError(_ showError: Bool)
     func showOperatorSelection(with operator: Operator?)
+    func showContactsPermissionsDeniedDialog()
 }
 
 final class PhoneTopUpFormViewController: UIViewController {
@@ -108,6 +109,11 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
     
     func showOperatorSelection(with mobileOperator: Operator?) {
         formView.showOperatorSelection(with: mobileOperator)
+    }
+    
+    func showContactsPermissionsDeniedDialog() {
+        let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
+        dialog.showIn(self)
     }
 }
 

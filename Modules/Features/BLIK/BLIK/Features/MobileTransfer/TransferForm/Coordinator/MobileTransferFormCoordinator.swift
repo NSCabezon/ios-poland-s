@@ -17,7 +17,7 @@ protocol FormAccountSelectable: AnyObject {
 }
 
 protocol FormContactSelectable: AnyObject {
-    func updateViewModel(with updatedViewModel: Contact?)
+    func updateViewModel(with updatedViewModel: MobileContact?)
 }
 
 public final class MobileTransferFormCoordinator: ModuleCoordinator {
@@ -26,14 +26,14 @@ public final class MobileTransferFormCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
-    private let contact: Contact?
+    private let contact: MobileContact?
     weak var delegate: MobileTransferFormAccountAndContactSelectable?
 
     init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
-         contact: Contact? = nil) {
+         contact: MobileContact? = nil) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
         self.accounts = accounts
@@ -128,7 +128,7 @@ extension MobileTransferFormCoordinator: FormAccountSelectable {
 }
 
 extension MobileTransferFormCoordinator: FormContactSelectable {
-    func updateViewModel(with updatedViewModel: Contact?) {
+    func updateViewModel(with updatedViewModel: MobileContact?) {
         delegate?.updateViewModel(with: updatedViewModel)
     }
 }

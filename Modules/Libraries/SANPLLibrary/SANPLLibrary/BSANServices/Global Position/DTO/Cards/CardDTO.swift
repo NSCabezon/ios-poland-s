@@ -23,6 +23,8 @@ public struct CardDTO: Codable {
     public let creditLimit: BalanceDTO?
     public let disposedAmount: BalanceDTO?
     
+    public let relatedAccountData: CardRelatedAccountData?
+
     public struct CardIdDTO: Codable {
         public let id: String?
         public let systemId: Int?
@@ -32,6 +34,10 @@ public struct CardDTO: Codable {
 public struct CardNameDTO: Codable {
     public let description: String?
     public let userDefined: String?
+}
+
+public struct CardRelatedAccountData: Codable {
+    public let creditLimit: BalanceDTO?
 }
 
 public enum CardRole: String {

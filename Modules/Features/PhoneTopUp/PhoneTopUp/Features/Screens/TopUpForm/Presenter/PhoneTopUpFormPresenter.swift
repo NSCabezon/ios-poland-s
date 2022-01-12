@@ -14,7 +14,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 
-protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate, InternetContactsDelegate {
+protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate, MobileContactsSelectorDelegate {
     var view: PhoneTopUpFormViewProtocol? { get set }
     func viewDidLoad()
     func didSelectBack()
@@ -29,33 +29,38 @@ final class PhoneTopUpFormPresenter {
     // MARK: Properties
     
     weak var view: PhoneTopUpFormViewProtocol?
+    private weak var coordinator: PhoneTopUpFormCoordinatorProtocol?
+    private let dependenciesResolver: DependenciesResolver
     private let accounts: [AccountForDebit]
     private let operators: [Operator]
     private let gsmOperators: [GSMOperator]
-    private let dependenciesResolver: DependenciesResolver
-    private weak var coordinator: PhoneTopUpFormCoordinatorProtocol?
+    private let internetContacts: [MobileContact]
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
-    private let useCase: GetPhoneTopUpFormDataUseCaseProtocol
     private var selectedAccountNumber: String?
+    private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
     private let useCaseHandler: UseCaseHandler
+    private let contactsPermissionHelper: ContactsPermissionHelperProtocol
     
     // MARK: Lifecycle
     
     init(dependenciesResolver: DependenciesResolver,
          accounts: [AccountForDebit],
          operators: [Operator],
-         gsmOperators: [GSMOperator]) {
+         gsmOperators: [GSMOperator],
+         internetContacts: [MobileContact]) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.operators = operators
         self.gsmOperators = gsmOperators
+        self.internetContacts = internetContacts
         coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         selectedAccountNumber = accounts.first(where: \.defaultForPayments)?.number
-        self.useCase = dependenciesResolver.resolve(for: GetPhoneTopUpFormDataUseCaseProtocol.self)
+        self.getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
         self.useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
+        self.contactsPermissionHelper = dependenciesResolver.resolve(for: ContactsPermissionHelperProtocol.self)
     }
 }
 
@@ -89,7 +94,17 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func didTouchContactsButton() {
-        coordinator?.didTouchContactsButton()
+        if !internetContacts.isEmpty {
+            coordinator?.showInternetContacts()
+        } else {
+            contactsPermissionHelper.authorizeContactsUse { [weak self] isAuthorized in
+                if isAuthorized {
+                    self?.showPhoneContacts()
+                } else {
+                    self?.view?.showContactsPermissionsDeniedDialog()
+                }
+            }
+        }
     }
     
     func didInputPartialPhoneNumber(_ number: String) {
@@ -106,12 +121,20 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
         }
     }
     
-    func internetContactsDidSelectContact(_ contact: MobileContact) {
+    func mobileContactsDidSelectContact(_ contact: MobileContact) {
         view?.updatePhoneInput(with: contact.phoneNumber)
         didInputFullPhoneNumber(contact.phoneNumber.filter(\.isNumber))
     }
     
     private func matchOperator(with number: String) -> Operator? {
         return operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })
+    }
+    
+    private func showPhoneContacts() {
+        Scenario(useCase: getPhoneContactsUseCase)
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] output in
+                self?.coordinator?.showPhoneContacts(output.contacts)
+            }
     }
 }

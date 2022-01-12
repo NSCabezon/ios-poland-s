@@ -7,6 +7,7 @@
 
 import SANPLLibrary
 import Foundation
+import PLCommons
 
 public protocol MobileContactMapping {
     func map(dto: PayeeDTO) -> MobileContact?

@@ -118,7 +118,7 @@ extension HelpCenterDashboardPresenter: HelpCenterDashboardPresenterProtocol, Op
             performActionFor(advisorDetails: details)
         case .call(let phoneNumber):
             performActionFor(phoneNumber: phoneNumber)
-        case .yourCases:
+        case .yourCases, .mailContact:
             openWebView(withIdentifier: element.webViewIdentifier)
         default:
             //TODO

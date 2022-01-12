@@ -31,7 +31,7 @@ public extension CCRCardDTO {
             relatedAccount: account,
             expirationDate: cardDTO.expirationDate,
             availableBalance: cardDTO.availableBalance,
-            creditLimit: cardDTO.creditLimit,
+            creditLimit: cardDTO.relatedAccountData?.creditLimit,
             disposedAmount: cardDTO.disposedAmount,
             creditCardAccountDetails: creditCardAccountDetails
         )

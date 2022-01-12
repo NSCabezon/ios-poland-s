@@ -17,7 +17,8 @@ final class CharityTransferFormViewController: UIViewController {
     
     init(presenter: CharityTransferFormPresenterProtocol) {
         self.presenter = presenter
-        self.formView = CharityTransferFormView(language: presenter.getLanguage())
+        self.formView = CharityTransferFormView(language: presenter.getLanguage(),
+                                                charityTransferSettings: presenter.getCharityTransferSettings())
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,6 +33,7 @@ final class CharityTransferFormViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
         view.layoutIfNeeded()
     }
 }

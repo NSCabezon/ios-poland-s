@@ -5,6 +5,8 @@
 //  Created by 186491 on 22/07/2021.
 //
 
+import Commons
+
 struct PhoneTransferRegistrationFormViewModel {
     let hintMessage: String
     let accountViewModel: AccountViewModel
@@ -25,6 +27,6 @@ struct PhoneTransferRegistrationFormViewModel {
     
     struct StatementViewModel {
         let title: String
-        let description: String
+        let description: LocalizedStylableText
     }
 }

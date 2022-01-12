@@ -223,7 +223,7 @@ private struct AuthenticateInitRequest: NetworkProviderRequest {
          headers: [String: String]?,
          contentType: NetworkProviderContentType = .json,
          localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
+         authorization: NetworkProviderRequestAuthorization? = .trustedDeviceOnly) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method

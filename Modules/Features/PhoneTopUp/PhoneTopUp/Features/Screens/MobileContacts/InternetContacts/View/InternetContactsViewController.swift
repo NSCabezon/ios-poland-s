@@ -10,6 +10,7 @@ import PLUI
 import Commons
 
 protocol InternetContactsViewProtocol: AnyObject {
+    func showContactsPermissionsDeniedDialog()
 }
 
 final class InternetContactsViewController: UIViewController {
@@ -91,8 +92,8 @@ final class InternetContactsViewController: UIViewController {
         contactsLabel.font = .santander(family: .micro, type: .regular, size: 14.0)
         contactsLabel.textColor = .lisboaGray
         contactsTableView.separatorStyle = .none
-        bottomButtonView.configure(title: localized("pl_topup_button_phonebook")) {
-            #warning("todo: implement navigation in another PR")
+        bottomButtonView.configure(title: localized("pl_topup_button_phonebook")) { [weak self] in
+            self?.presenter.didTouchPhoneContactsButton()
         }
     }
     
@@ -111,6 +112,10 @@ final class InternetContactsViewController: UIViewController {
 }
 
 extension InternetContactsViewController: InternetContactsViewProtocol {
+    func showContactsPermissionsDeniedDialog() {
+        let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
+        dialog.showIn(self)
+    }
 }
 
 extension InternetContactsViewController: UITableViewDataSource, UITableViewDelegate {

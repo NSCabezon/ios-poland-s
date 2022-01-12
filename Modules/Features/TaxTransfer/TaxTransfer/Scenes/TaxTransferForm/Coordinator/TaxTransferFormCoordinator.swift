@@ -9,6 +9,7 @@ import UI
 import CoreFoundationLib
 import Commons
 import PLCommons
+import PLCommonOperatives
 import SANPLLibrary
 
 public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
@@ -44,6 +45,8 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
 
 private extension TaxTransferFormCoordinator {
     func setUpDependencies() {
+        let amountFormatter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
+        
         dependenciesEngine.register(for: TaxTransferFormCoordinatorProtocol.self) { _ in
             return self
         }
@@ -52,10 +55,28 @@ private extension TaxTransferFormCoordinator {
             return TaxTransferFormPresenter(dependenciesResolver: resolver)
         }
         
-        dependenciesEngine.register(for: DateSelectorConfiguration.self) { resolver in
-            return DateSelectorConfiguration(
-                language: resolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode,
-                dateFormatter: PLTimeFormat.ddMMyyyyDotted.createDateFormatter()
+        dependenciesEngine.register(for: TaxFormConfiguration.self) { resolver in
+            return TaxFormConfiguration(
+                amountField: .init(
+                    amountFormatter: amountFormatter
+                ),
+                dateSelector: .init(
+                    language: resolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode,
+                    dateFormatter: PLTimeFormat.ddMMyyyyDotted.createDateFormatter()
+                )
+            )
+        }
+        
+        dependenciesEngine.register(for: TaxTransferFormValidating.self) { _ in
+            return TaxTransferFormValidator(
+                amountFormatter: amountFormatter
+            )
+        }
+        
+        dependenciesEngine.register(for: GetAccountsForDebitProtocol.self) { resolver in
+            return GetAccountsForDebitUseCase(
+                transactionType: .taxTransfer,
+                dependenciesResolver: resolver
             )
         }
     }

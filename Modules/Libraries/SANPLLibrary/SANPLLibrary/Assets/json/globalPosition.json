@@ -412,6 +412,13 @@
                         "value": 1000,
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 1000
+                    },
+                    "relatedAccountData": {
+                        "creditLimit": {
+                            "value": 4000,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 8000
+                        }
                     }
                 },
                 {
@@ -480,6 +487,13 @@
                         "value": 1000,
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 1000
+                    },
+                    "relatedAccountData": {
+                        "creditLimit": {
+                            "value": 8000,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 8000
+                        }
                     }
                 },
                 {
@@ -514,6 +528,13 @@
                         "value": 12477.4,
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 12477.4
+                    },
+                    "relatedAccountData": {
+                        "creditLimit": {
+                            "value": 15000,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 15000
+                        }
                     }
                 }
             ],

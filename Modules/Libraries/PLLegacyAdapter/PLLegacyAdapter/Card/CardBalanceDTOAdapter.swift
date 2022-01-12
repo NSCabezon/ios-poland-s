@@ -13,7 +13,7 @@ final class CardBalanceDTOAdapter {
         var cardBalanceDTO = SANLegacyLibrary.CardBalanceDTO()
         cardBalanceDTO.availableAmount = AmountAdapter.adaptBalanceToAmount(plCard.availableBalance)
         cardBalanceDTO.currentBalance = AmountAdapter.adaptBalanceToAmount(plCard.disposedAmount)
-        cardBalanceDTO.creditLimitAmount = AmountAdapter.adaptBalanceToAmount(plCard.creditLimit)
+        cardBalanceDTO.creditLimitAmount = AmountAdapter.adaptBalanceToAmount(plCard.relatedAccountData?.creditLimit)
         return cardBalanceDTO
     }
 }

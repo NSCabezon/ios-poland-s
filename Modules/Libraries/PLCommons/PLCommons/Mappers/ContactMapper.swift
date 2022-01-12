@@ -1,13 +1,15 @@
 import Contacts
 
-protocol ContactMapping {
-    func map(contacts: [CNContact]) -> [Contact]
+public protocol ContactMapping {
+    func map(contacts: [CNContact]) -> [MobileContact]
 }
 
-final class ContactMapper: ContactMapping {
+public final class ContactMapper: ContactMapping {
     
-    func map(contacts: [CNContact]) -> [Contact] {
-        var mappedContacts: [Contact] = []
+    public init() {}
+    
+    public func map(contacts: [CNContact]) -> [MobileContact] {
+        var mappedContacts: [MobileContact] = []
         
         contacts.forEach { contact in
             mappedContacts.append(contentsOf: map(contact: contact))
@@ -16,15 +18,15 @@ final class ContactMapper: ContactMapping {
         return mappedContacts
     }
     
-    func map(contact: CNContact) -> [Contact] {
+    public func map(contact: CNContact) -> [MobileContact] {
         let phoneNumbers = contact.phoneNumbers.map { number -> String in
             return number.value.stringValue
         }
         
-        var contacts: [Contact] = []
+        var contacts: [MobileContact] = []
         
         phoneNumbers.forEach { number in
-            contacts.append(Contact(fullName: fullName(contact: contact), phoneNumber: number))
+            contacts.append(MobileContact(fullName: fullName(contact: contact), phoneNumber: number))
         }
         
         return contacts

@@ -5,6 +5,7 @@
 //  Created by 188216 on 19/11/2021.
 //
 import UI
+import Contacts
 import Commons
 import PLCommons
 import PLUI
@@ -14,7 +15,8 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func back()
     func close()
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?)
-    func didTouchContactsButton()
+    func showInternetContacts()
+    func showPhoneContacts(_ contacts: [MobileContact])
 }
 
 public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
@@ -25,11 +27,9 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let formData: GetPhoneTopUpFormDataOutput
     private weak var accountSelectorDelegate: AccountSelectorDelegate?
-    private weak var internetContactsDelegate: InternetContactsDelegate?
+    private weak var contactsSelectorDelegate: MobileContactsSelectorDelegate?
     
-    private lazy var phoneTopUpController: PhoneTopUpFormViewController = {
-        return dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
-    }()
+    private lazy var phoneTopUpController = dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
     
     // MARK: Lifecycle
     
@@ -45,18 +45,30 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     // MARK: Dependencies
     
     private func setUpDependencies() {
+        self.dependenciesEngine.register(for: ContactsPermissionHelperProtocol.self) { _ in
+            return ContactsPermissionHelper()
+        }
+        
+        self.dependenciesEngine.register(for: ContactMapping.self) { _ in
+            return ContactMapper()
+        }
+        
+        self.dependenciesEngine.register(for: GetContactsUseCaseProtocol.self) { resolver in
+            return GetContactsUseCase(contactStore: CNContactStore(), contactMapper: resolver.resolve(for: ContactMapping.self))
+        }
+        
         self.dependenciesEngine.register(for: PhoneTopUpFormCoordinatorProtocol.self) { _ in
             return self
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormPresenterProtocol.self) { [formData] resolver in
-            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts, operators: formData.operators, gsmOperators: formData.gsmOperators)
+            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts, operators: formData.operators, gsmOperators: formData.gsmOperators, internetContacts: formData.internetContacts)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)
             let viewController = PhoneTopUpFormViewController(presenter: presenter)
             presenter.view = viewController
             self?.accountSelectorDelegate = presenter
-            self?.internetContactsDelegate = presenter
+            self?.contactsSelectorDelegate = presenter
             return viewController
         }
         self.dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
@@ -112,12 +124,29 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         accountSelectorCoordinator.start()
     }
     
-    func didTouchContactsButton() {
+    func showInternetContacts() {
         let internetContactsCoordinator = InternetContactsCoordinator(dependenciesResolver: dependenciesEngine,
                                                                       delegate: self,
                                                                       navigationController: navigationController,
                                                                       contacts: formData.internetContacts)
         internetContactsCoordinator.start()
+    }
+    
+    func showPhoneContacts(_ contacts: [MobileContact]) {
+        let phoneContactsCoordinator = PhoneContactsCoordinator(dependenciesResolver: dependenciesEngine,
+                                                                delegate: self,
+                                                                navigationController: navigationController,
+                                                                contacts: contacts)
+        phoneContactsCoordinator.start()
+    }
+    
+    private func showContactsPermissionDeniedDialog() {
+        guard let navigationController = navigationController else {
+            return
+        }
+
+        let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
+        dialog.showIn(navigationController)
     }
 }
 
@@ -127,9 +156,9 @@ extension PhoneTopUpFormCoordinator: AccountSelectorDelegate {
     }
 }
 
-extension PhoneTopUpFormCoordinator: InternetContactsDelegate {
-    func internetContactsDidSelectContact(_ contact: MobileContact) {
+extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
+    func mobileContactsDidSelectContact(_ contact: MobileContact) {
         navigationController?.popViewController(animated: true)
-        internetContactsDelegate?.internetContactsDidSelectContact(contact)
+        contactsSelectorDelegate?.mobileContactsDidSelectContact(contact)
     }
 }

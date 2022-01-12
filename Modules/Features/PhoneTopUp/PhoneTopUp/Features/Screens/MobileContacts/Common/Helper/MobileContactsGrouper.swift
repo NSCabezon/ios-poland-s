@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PLCommons
 
 protocol MobileContactsGrouping: AnyObject {
     func groupContacts(_ contacts: [MobileContact]) -> GroupedMobileContacts

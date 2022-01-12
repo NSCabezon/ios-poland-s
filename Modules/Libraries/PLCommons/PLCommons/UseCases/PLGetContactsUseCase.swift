@@ -1,21 +1,21 @@
-import Foundation
-import Contacts
+import Commons
 import CoreFoundationLib
-import SANPLLibrary
+import CryptoSwift
+import Contacts
 
-protocol GetContactsUseCaseProtocol: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {}
+public protocol GetContactsUseCaseProtocol: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {}
 
 
-final class GetContactsUseCase: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {
+public final class GetContactsUseCase: UseCase<Void, GetContactsUseCaseOutput, StringErrorOutput> {
     private let contactStore: CNContactStore
     private let contactMapper: ContactMapping
 
-    init(contactStore: CNContactStore, contactMapper: ContactMapping) {
+    public init(contactStore: CNContactStore, contactMapper: ContactMapping) {
         self.contactStore = contactStore
         self.contactMapper = contactMapper
     }
     
-    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<GetContactsUseCaseOutput, StringErrorOutput> {
+    public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<GetContactsUseCaseOutput, StringErrorOutput> {
         var contacts = [CNContact]()
         let keys = [
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
@@ -41,6 +41,6 @@ final class GetContactsUseCase: UseCase<Void, GetContactsUseCaseOutput, StringEr
 
 extension GetContactsUseCase: GetContactsUseCaseProtocol {}
 
-struct GetContactsUseCaseOutput {
-    let contacts: [Contact]
+public struct GetContactsUseCaseOutput {
+    public let contacts: [MobileContact]
 }
