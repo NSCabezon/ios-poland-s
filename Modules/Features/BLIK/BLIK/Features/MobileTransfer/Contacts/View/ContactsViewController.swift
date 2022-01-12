@@ -19,7 +19,7 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
     private lazy var emptyView = ContactsEmptyView()
 
     private var viewModels: [ContactViewModel] = []
-    private var filteredContacts: [Contact] = []
+    private var filteredContacts: [MobileContact] = []
     private let viewModelMapper = ContactViewModelMapper()
     private var isSearching = false
     

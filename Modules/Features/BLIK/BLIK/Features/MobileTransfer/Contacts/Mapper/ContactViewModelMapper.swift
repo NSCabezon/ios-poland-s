@@ -1,17 +1,18 @@
 import Foundation
+import PLCommons
 
 protocol ContactViewModelMapping {
-    func map(contacts: [Contact]) -> [ContactViewModel]
+    func map(contacts: [MobileContact]) -> [ContactViewModel]
 }
 
 final class ContactViewModelMapper: ContactViewModelMapping {
     private let emptyNameSign = "#"
     
-    func map(contacts: [Contact]) -> [ContactViewModel] {
+    func map(contacts: [MobileContact]) -> [ContactViewModel] {
         let viewModels = Dictionary(grouping: contacts) { contact -> String in
             return String(contact.fullName.first ?? Character(emptyNameSign))
         }
-        .map { (key: String, value: [Contact]) -> (letter: String, contacts: [Contact]) in
+        .map { (key: String, value: [MobileContact]) -> (letter: String, contacts: [MobileContact]) in
             (letter: key, contacts: value)
         }
         .sorted { left, right in

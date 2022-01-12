@@ -11,7 +11,7 @@ protocol MobileTransferFormViewControllerProtocol: AnyObject,
                                                    ConfirmationDialogPresentable {
     func setAccountViewModel()
     func showValidationMessages(messages: InvalidMobileTransferFormMessages)
-    func fillWithContact(contact: Contact?)
+    func fillWithContact(contact: MobileContact?)
 }
 
 final class MobileTransferFormViewController: UIViewController {
@@ -170,7 +170,7 @@ extension MobileTransferFormViewController: MobileTransferFormViewControllerProt
         }
     }
     
-    func fillWithContact(contact: Contact?) {
+    func fillWithContact(contact: MobileContact?) {
         formView.fillWith(contact: contact)
         let form = formView.getCurrentForm()
         if contact != nil {

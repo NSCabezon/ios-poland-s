@@ -7,6 +7,7 @@
 
 import UIKit
 import UI
+import PLCommons
 import PLUI
 
 final class ContactTableViewCell: UITableViewCell {

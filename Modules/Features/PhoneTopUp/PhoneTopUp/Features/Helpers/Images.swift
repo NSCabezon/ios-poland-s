@@ -22,6 +22,12 @@ enum Images {
             return UIImage(fromModuleNamed: "tick_icon")
         }
     }
+    
+    enum PhoneContacts {
+        static var redInfoIcon: UIImage {
+            return UIImage(fromModuleNamed: "red_info_icon")
+        }
+    }
 }
 
 private extension UIImage {
