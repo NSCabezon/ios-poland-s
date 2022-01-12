@@ -10,7 +10,7 @@ import PLCommons
 import UI
 import PLUI
 
-protocol TaxTransferFormView: AnyObject, LoaderPresentable {
+protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
     func enableDoneButton()
 }
@@ -39,6 +39,7 @@ final class TaxTransferFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        presenter.viewDidLoad()
     }
 }
 

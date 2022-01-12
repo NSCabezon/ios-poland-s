@@ -13,7 +13,6 @@ end
 
 def core_dependencies
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'DataRepository', :path => '../../../../santander-one/Modules/Libraries/DataRepository'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'SQLCipher', '4.4.3'
   pod 'Kingfisher', '5.15.8'
@@ -22,7 +21,6 @@ def core_dependencies
   pod 'UI', :path => '../../../../santander-one/UI'
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
-  pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
@@ -33,6 +31,7 @@ def pl_dependencies
   pod 'TaxTransfer', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
 end
 
 target 'TaxTransfer_Example' do
