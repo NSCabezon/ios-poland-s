@@ -87,7 +87,7 @@ extension CardTransactionsDataSource: CardTransactionsDataSourceProtocol {
     func changeAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> Result<CardChangeAliasDTO, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(),
               let cardNumber = cardDTO.PAN,
-              let systemId = cardDTO.systemId else {
+              let systemId = cardDTO.productId?.systemId else {
             return .failure(NetworkProviderError.other)
         }
         

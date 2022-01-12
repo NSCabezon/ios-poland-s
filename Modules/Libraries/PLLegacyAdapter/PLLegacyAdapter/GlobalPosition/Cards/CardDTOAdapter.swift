@@ -38,6 +38,11 @@ final class CardDTOAdapter {
         // So remember to make proper change also there in case of changing it here.
         cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plCard.virtualPan)
         cardDTO.cardTypeDescription = plCard.type
+        
+        if plCard.productId != nil {
+            cardDTO.productId = SANLegacyLibrary.CardDTO.ProductIDCardDTO(id: plCard.productId?.id, systemId: plCard.productId?.systemId ?? nil)
+        }
+        
         return cardDTO
     }
 

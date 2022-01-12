@@ -349,6 +349,10 @@
                 {
                     "maskedPan": "438371_5284",
                     "virtualPan": "438371I013523051",
+                    "productId":{
+                       "id":"412281P002925860",
+                       "systemId":2
+                    },
                     "generalStatus": "ACTIVE",
                     "cardStatus": "00",
                     "role": "OWNER",
@@ -379,6 +383,10 @@
                 {
                     "maskedPan": "421352_6505",
                     "virtualPan": "421352I013731834",
+                    "productId":{
+                       "id":"421352I036827548",
+                       "systemId":2
+                    },
                     "generalStatus": "ACTIVE",
                     "cardStatus": "00",
                     "role": "NOT_OWNER",
@@ -409,6 +417,10 @@
                 {
                     "maskedPan": "421352_6506",
                     "virtualPan": "421352I013731844",
+                    "productId":{
+                       "id":"421352I036827547",
+                       "systemId":2
+                    },
                     "generalStatus": "INACTIVE",
                     "cardStatus": "00",
                     "role": "NOT_OWNER",
@@ -439,6 +451,10 @@
                 {
                     "maskedPan": "412281_9533",
                     "virtualPan": "512281P002925830",
+                    "productId":{
+                       "id":"421352I036827546",
+                       "systemId":2
+                    },
                     "generalStatus": "BLOCKED",
                     "cardStatus": "00",
                     "role": "OWNER",
@@ -469,6 +485,10 @@
                 {
                     "maskedPan": "421352_7895",
                     "virtualPan": "421352I037372333",
+                    "productId":{
+                       "id":"421352I036827545",
+                       "systemId":2
+                    },
                     "generalStatus": "CANCELLED",
                     "cardStatus": "00",
                     "role": "OWNER",
