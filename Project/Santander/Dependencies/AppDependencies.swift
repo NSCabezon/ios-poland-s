@@ -336,6 +336,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
         }
+        self.dependencieEngine.register(for: ContextSelectorModifierProtocol.self) { resolver in
+            PLContextSelectorModifier(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
+        }
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
         }

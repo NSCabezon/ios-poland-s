@@ -19,6 +19,7 @@ public struct CustomerDTO: Codable {
     public let dateOfBirth: String?
     public let pesel: String?
     public let citizenship: String?
+    public let customerContexts: [ContextDTO]?
 }
 
 public struct ContactDetailDTO: Codable {
@@ -39,6 +40,17 @@ public struct AddressDetailDTO: Codable {
     public let zip: String?
     public let countryCode: String?
     public let voivodship: String?
+}
+
+public struct ContextDTO: Codable {
+    public let name: String?
+    public let type: ContextType?
+    public let ownerId: Decimal?
+    public let selected: Bool?
+}
+
+public enum ContextType: String, Codable {
+    case INDIVIDUAL, PROXY, MINI_COMPANY, COMPANY
 }
 
 extension CustomerDTO: PersonalBasicInfoRepresentable {

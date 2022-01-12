@@ -224,28 +224,10 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
                                                               transferAccountNumber: settings?.transferAccountNumber,
                                                               transferTitle: settings?.transferTitle)
-        if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
-            var selectedAccountNumber = ""
-            if accounts.count > 1 {
-                selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
-            } else {
-                selectedAccountNumber = accounts.first?.number ?? ""
-            }
-            let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
-                                                             navigationController: navigationController,
-                                                             accounts: accounts,
-                                                             selectedAccountNumber: selectedAccountNumber,
-                                                             charityTransferSettings: charityTransferSettings)
-            coordinator.start()
-        } else {
-            let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                         navigationController: navigationController,
-                                                         accounts: accounts,
-                                                         selectedAccountNumber: "",
-                                                         sourceView: .sendMoney,
-                                                         charityTransferSettings: charityTransferSettings)
-            coordinator.start()
-        }
+        let coordinator: CharityTransferModuleCoordinator = dependenciesEngine.resolve()
+        coordinator.setProperties(accounts: accounts,
+                                  charityTransferSettings: charityTransferSettings)
+        coordinator.start()
     }
    
     func selectZusTransfer(accounts: [AccountForDebit]) {

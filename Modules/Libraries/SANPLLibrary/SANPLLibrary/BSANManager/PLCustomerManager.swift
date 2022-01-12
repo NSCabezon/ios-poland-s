@@ -9,6 +9,7 @@ import Foundation
 
 public protocol PLCustomerManagerProtocol {
     func getIndividual() throws -> Result<CustomerDTO, NetworkProviderError>
+    func putActiveContext(ownerId: String) throws -> Result<Void, NetworkProviderError>
 }
 
 final class PLCustomerManager {
@@ -30,6 +31,12 @@ extension PLCustomerManager: PLCustomerManagerProtocol {
         }
         let result = try self.customerDataSource.getIndividual()
         self.processIndividualResult(result)
+        return result
+    }
+    
+    func putActiveContext(ownerId: String) throws -> Result<Void, NetworkProviderError> {
+        let parameters: ActiveContextParameters = ActiveContextParameters(ownerId: ownerId)
+        let result = try self.customerDataSource.putActiveContext(parameters)
         return result
     }
 }
