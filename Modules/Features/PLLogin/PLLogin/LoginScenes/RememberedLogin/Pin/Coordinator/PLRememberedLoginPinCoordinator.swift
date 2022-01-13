@@ -13,6 +13,7 @@ import LoginCommon
 import CommonUseCase
 import Commons
 import PLCommons
+import CoreDomain
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func loadUnrememberedLogin()

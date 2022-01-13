@@ -10,6 +10,7 @@ import Commons
 import PLCommons
 import LoginCommon
 import os
+import CoreDomain
 
 protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLHardwareTokenViewProtocol? { get set }
