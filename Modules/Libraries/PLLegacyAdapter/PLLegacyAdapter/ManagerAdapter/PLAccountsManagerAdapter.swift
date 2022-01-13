@@ -77,7 +77,7 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
     }
     
     func changeAccountAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
+       return try self.changeAlias(accountDTO: accountDTO, newAlias: newAlias)
     }
     
     func changeMainAccount(accountDTO: SANLegacyLibrary.AccountDTO, newMain: Bool) throws -> BSANResponse<Void> {
@@ -103,5 +103,22 @@ extension PLAccountsManagerAdapter: BSANAccountsManager {
     
     func getAccountTransactionCategory(params: TransactionCategorizerInputParams) throws -> BSANResponse<TransactionCategorizerDTO> {
         return BSANErrorResponse(nil)
+    }
+}
+
+//MARK: - Private Methods
+private extension PLAccountsManagerAdapter {
+    
+    private func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> BSANResponse<Void> {
+        let result = try? accountManager.changeAlias(accountDTO: accountDTO, newAlias: newAlias)
+        
+        switch result {
+        case .success:
+            return BSANOkResponse(nil)
+        case .failure:
+            return BSANErrorResponse(nil)
+        default:
+            return BSANErrorResponse(nil)
+        }
     }
 }

@@ -43,6 +43,7 @@ final class AppDependencies {
     private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
+    private lazy var netClient = NetClientImplementation()
 
     // MARK: - Dependecies definitions
 
@@ -102,9 +103,13 @@ final class AppDependencies {
     }()
     private lazy var plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository = {
         let assetsClient = AssetsClient()
-        let netClient = NetClientImplementation()
         let fileClient = FileClient()
         return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plTransferSettingsRepository: PLTransferSettingsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLTransferSettingsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
     private lazy var servicesLibrary: ServicesLibrary = {
         return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
@@ -189,6 +194,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
             return self.plAccountOtherOperativesInfoRepository
         }
+        self.dependencieEngine.register(for: PLTransferSettingsRepository.self) { _ in
+            return self.plTransferSettingsRepository
+        }
         self.dependencieEngine.register(for: PLWebViewLinkRepositoryProtocol.self) { resolver in
             return PLWebViewLinkRepository(dependenciesResolver: resolver)
         }
@@ -205,7 +213,7 @@ private extension AppDependencies {
             return self.productIdDelegate
         }
         self.dependencieEngine.register(for: AdditionalUseCasesProviderProtocol.self) { resolver in
-            return LoadPLAccountOtherOperativesInfoUseCaseImpl(dependencies: resolver)
+            return AdditionalUseCasesProviderImpl(dependencies: resolver)
         }
         self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
             return self.ibanFormatter
@@ -327,6 +335,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
+        }
+        self.dependencieEngine.register(for: ContextSelectorModifierProtocol.self) { resolver in
+            PLContextSelectorModifier(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()

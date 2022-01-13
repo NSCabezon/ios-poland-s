@@ -32,6 +32,7 @@ Pod::Spec.new do |s|
   s.dependency "PLUI"
   s.dependency "SANPLLibrary"
   s.dependency "PLCommons"
+  s.dependency "PLCommonOperatives"
   s.dependency "Operative"
 end
 

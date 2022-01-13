@@ -1,4 +1,5 @@
 import Foundation
+import Commons
 
 extension AccountSelectorViewController {
     
@@ -11,10 +12,9 @@ extension AccountSelectorViewController {
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz zrobić przelew:"
             case .mobileTransfer:
-                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+                return localized("pl_blik_text_infoSelectAccountForSend")
             case .charityTransfer:
-                #warning("should be changed")
-                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+                return localized("pl_foundtrans_text_infoSelectAccount")
             case .zusTransfer:
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz zrobić przelew:"

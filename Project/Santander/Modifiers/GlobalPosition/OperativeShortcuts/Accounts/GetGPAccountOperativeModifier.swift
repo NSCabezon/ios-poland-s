@@ -22,11 +22,12 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 self.getSwitchBetweenAccount(),
                 PLSendMoneyFavouriteOperative(),
                 PLBlikOperative(),
-                PLMakeDonationOperative(),
+                PLMakeDonationOperative(dependenciesResolver: self.dependenciesEngine),
                 PLPayTaxOperative(),
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
-                PLAccountNotificationsOperative()
+                PLAccountNotificationsOperative(),
+                PLTransportTicketsServicesOperative()
         ].compactMap { $0 }
     }
     
@@ -36,11 +37,12 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 self.getSwitchBetweenAccount(),
                 PLSendMoneyFavouriteOperative(),
                 PLBlikOperative(),
-                PLMakeDonationOperative(),
+                PLMakeDonationOperative(dependenciesResolver: self.dependenciesEngine),
                 PLPayTaxOperative(),
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
-                PLAccountNotificationsOperative()
+                PLAccountNotificationsOperative(),
+                PLTransportTicketsServicesOperative()
         ].compactMap { $0 }
     }
 }

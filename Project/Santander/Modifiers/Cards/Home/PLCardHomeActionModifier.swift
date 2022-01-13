@@ -37,7 +37,7 @@ enum PLCardHomeActionIdentifier: String {
     case cardActivatePL = "CARD_ACTIVATION"
 }
 
-final class PLCardHomeActionModifier: CardHomeActionModifier {
+final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingActionModifierProtocol {
     private let sendMoneyPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.sendMoneyPL.rawValue,
                                localizedKey: "accountOption_button_transfer",

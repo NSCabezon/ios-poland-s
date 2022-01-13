@@ -9,6 +9,7 @@ protocol CharityTransferFormPresenterProtocol {
     func didSelectCloseProcess()
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
     func getSelectedAccountNumber() -> String
+    func getCharityTransferSettings() -> CharityTransferSettings
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel)
     func confirmTransfer()
@@ -28,15 +29,18 @@ final class CharityTransferFormPresenter {
     private var selectedAccountNumber: String
     private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
     private let formValidator: CharityTransferValidator
+    private let charityTransferSettings: CharityTransferSettings
 
     init(dependenciesResolver: DependenciesResolver,
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
-         formValidator: CharityTransferValidator) {
+         formValidator: CharityTransferValidator,
+         charityTransferSettings: CharityTransferSettings) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
         self.formValidator = formValidator
+        self.charityTransferSettings = charityTransferSettings
     }
 }
 
@@ -63,6 +67,10 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
         selectedAccountNumber
     }
     
+    func getCharityTransferSettings() -> CharityTransferSettings {
+        charityTransferSettings
+    }
+    
     func showAccountSelector() {
         coordinator.showAccountSelector(selectedAccountNumber: selectedAccountNumber)
     }
@@ -77,9 +85,9 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
               let amount = transferFormViewModel.amount else { return }
         let model = CharityTransferModel(
             amount: amount,
-            title: localized("pl_foundtrans_text_titleTransFound"),
+            title: charityTransferSettings.transferTitle,
             account: account,
-            recipientName: localized("pl_foundtrans_text_RecipFoudSant"),
+            recipientName: charityTransferSettings.transferRecipientName,
             recipientAccountNumber: transferFormViewModel.recipientAccountNumberUnformatted,
             transactionType: .charityTransfer,
             date: transferFormViewModel.date

@@ -29,8 +29,8 @@ final class AppModifiers {
         let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
     }()
-    private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
-        let modifier = CardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
+    private lazy var cardHomeActionModifier: PLCardHomeActionModifier = {
+        let modifier = PLCardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
         modifier.setCompletion { resolver in
             modifier.add(PLCardHomeActionModifier(dependenciesResolver: resolver))
         }
@@ -96,6 +96,9 @@ private extension AppModifiers {
             return PLAccountNumberFormatter()
         }
         self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
+            return self.cardHomeActionModifier
+        }
+        self.dependencieEngine.register(for: CardBoardingActionModifierProtocol.self) { _ in
             return self.cardHomeActionModifier
         }
         self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in

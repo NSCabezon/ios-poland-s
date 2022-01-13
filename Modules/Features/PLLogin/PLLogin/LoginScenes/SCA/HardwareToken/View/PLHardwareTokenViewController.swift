@@ -107,7 +107,7 @@ private extension PLHardwareTokenViewController {
         configureTextFields()
         configureButtons()
         configureKeyboard()
-        setAccessibility()
+        configureAccessibilityIdentifiers()
     }
 
     func configureLabels() {
@@ -140,8 +140,13 @@ private extension PLHardwareTokenViewController {
         loginButton.set(localizedStylableText: localized("pl_login_button_access"), state: .normal)
     }
 
-    func setAccessibility() {
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    func configureAccessibilityIdentifiers() {
+        self.sanIconImageView.accessibilityIdentifier = "icnSanWhite"
+        self.regardLabel.accessibilityIdentifier = "loginOtpHardwareLabelGreeting"
+        self.loginButton.accessibilityIdentifier = "loginOtpHardwareBtnAccess"
+        self.passwordTextField.accessibilityIdentifier = "loginOtpHardwareContainerCodeItem"
+        self.passwordTextField.textField .accessibilityIdentifier = "loginOtpHardwareTextCodeItem"
+        self.passwordTextField.titleLabel.accessibilityIdentifier = "pl_login_hint_tokenCode"
     }
 
     func regardNow() -> String {

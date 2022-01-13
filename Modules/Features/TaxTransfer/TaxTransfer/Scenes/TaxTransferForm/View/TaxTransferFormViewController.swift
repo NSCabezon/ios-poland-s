@@ -10,7 +10,10 @@ import PLCommons
 import UI
 import PLUI
 
-protocol TaxTransferFormView: AnyObject, LoaderPresentable {}
+protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
+    func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
+    func enableDoneButton()
+}
 
 final class TaxTransferFormViewController: UIViewController {
     private let presenter: TaxTransferFormPresenterProtocol
@@ -18,7 +21,7 @@ final class TaxTransferFormViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let bottomButtonView = BottomButtonView()
     private lazy var formView = TaxTransferFormContainerView(
-        configuration: presenter.getDateSelectorConfiguration(),
+        configuration: presenter.getTaxFormConfiguration(),
         delegate: self
     )
     
@@ -36,10 +39,21 @@ final class TaxTransferFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        presenter.viewDidLoad()
     }
 }
 
-extension TaxTransferFormViewController: TaxTransferFormView {}
+extension TaxTransferFormViewController: TaxTransferFormView {
+    func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages) {
+        bottomButtonView.disableButton()
+        formView.setInvalidFormMessages(messages)
+    }
+    
+    func enableDoneButton() {
+        bottomButtonView.enableButton()
+        formView.clearInvalidFormMessages()
+    }
+}
 
 private extension TaxTransferFormViewController {
     func setUp() {
@@ -94,8 +108,10 @@ private extension TaxTransferFormViewController {
     }
     
     func configureBottomView() {
+        bottomButtonView.disableButton()
         bottomButtonView.configure(title: "#Gotowe") { [weak self] in
-             self?.presenter.didTapDone()
+            guard let data = self?.formView.getFormFieldsData() else { return }
+            self?.presenter.didTapDone(with: data)
         }
     }
     
@@ -119,5 +135,9 @@ extension TaxTransferFormViewController: TaxTransferFormContainerViewDelegate {
         if (bottomOffset.y > 0) {
             scrollView.setContentOffset(bottomOffset, animated: true)
         }
+    }
+    
+    func didUpdateFields(withData data: TaxTransferFormFieldsData) {
+        presenter.didUpdateFields(with: data)
     }
 }

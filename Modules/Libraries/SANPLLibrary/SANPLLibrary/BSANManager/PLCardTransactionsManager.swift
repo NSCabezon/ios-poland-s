@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import SANLegacyLibrary
 
 public protocol PLCardTransactionsManagerProtocol {
     func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>?
+    func changeAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> Result<CardChangeAliasDTO, NetworkProviderError>
 }
 
 final class PLCardTransactionsManager {
@@ -103,5 +105,11 @@ extension PLCardTransactionsManager: PLCardTransactionsManagerProtocol {
         case .failure:
             return .failure(NetworkProviderError.other)
         }
+    }
+    
+    
+    func changeAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> Result<CardChangeAliasDTO, NetworkProviderError> {
+        let result = try self.dataSource.changeAlias(cardDTO: cardDTO, newAlias: newAlias)
+        return result
     }
 }

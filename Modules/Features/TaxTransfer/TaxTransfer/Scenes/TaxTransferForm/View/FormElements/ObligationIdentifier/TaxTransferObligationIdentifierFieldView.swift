@@ -5,6 +5,7 @@
 //  Created by 185167 on 29/12/2021.
 //
 
+import Commons
 import UI
 import PLUI
 
@@ -13,6 +14,11 @@ final class TaxTransferObligationIdentifierFieldView: UIView {
     private let containerView = UIView()
     private let obligationIdentifier = LisboaTextFieldWithErrorView()
     private let charactersLimit = UILabel()
+    weak var textFieldDelegate: UpdatableTextFieldDelegate? {
+        didSet {
+            obligationIdentifier.textField.updatableDelegate = textFieldDelegate
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +32,18 @@ final class TaxTransferObligationIdentifierFieldView: UIView {
     
     func configure(with viewModel: TaxTransferFormViewModel) {
         obligationIdentifier.textField.setText(viewModel.obligationIdentifier)
+    }
+    
+    func getIdentifier() -> String {
+        return obligationIdentifier.textField.text ?? ""
+    }
+    
+    func setInvalidFieldMessage(_ message: String?) {
+        if let message = message {
+            obligationIdentifier.showError(message)
+        } else {
+            obligationIdentifier.hideError()
+        }
     }
 }
 
@@ -73,6 +91,7 @@ private extension TaxTransferObligationIdentifierFieldView {
     func configureStyling() {
         let formatter = UIFormattedCustomTextField()
         formatter.setMaxLength(maxLength: 40)
+        obligationIdentifier.textField.placeholder = "#Identyfikacja zobowiązania"
         obligationIdentifier.textField.setEditingStyle(
             .writable(
                 configuration: .init(

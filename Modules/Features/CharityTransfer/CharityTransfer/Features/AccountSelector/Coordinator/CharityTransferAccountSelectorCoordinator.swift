@@ -4,7 +4,7 @@ import Commons
 import PLUI
 import PLCommons
 
-public protocol AccountSelectorCoordinatorProtocol {
+public protocol CharityTransferAccountSelectorCoordinatorProtocol {
     func pop()
     func showTransferForm(accounts: [AccountForDebit], selectedAccountNumber: String)
     func closeProcess()
@@ -14,12 +14,13 @@ public enum SourceView {
     case sendMoney, form
 }
 
-public final class AccountSelectorCoordinator: ModuleCoordinator {
+public final class CharityTransferAccountSelectorCoordinator: ModuleCoordinator {
     weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
     private let sourceView: SourceView
+    private let charityTransferSettings: CharityTransferSettings
     weak var selectableAccountDelegate: FormAccountSelectable?
 
     public init(dependenciesResolver: DependenciesResolver,
@@ -27,18 +28,20 @@ public final class AccountSelectorCoordinator: ModuleCoordinator {
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
          sourceView: SourceView,
-         selectableAccountDelegate: FormAccountSelectable? = nil) {
+         selectableAccountDelegate: FormAccountSelectable? = nil,
+         charityTransferSettings: CharityTransferSettings) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
         self.sourceView = sourceView
         self.selectableAccountDelegate = selectableAccountDelegate
+        self.charityTransferSettings = charityTransferSettings
         self.setupDependencies()
     }
     
     public func start() {
-        let presenter = AccountSelectorPresenter(dependenciesResolver: dependenciesEngine,
+        let presenter = CharityTransferAccountSelectorPresenter(dependenciesResolver: dependenciesEngine,
                                                  accounts: accounts,
                                                  selectedAccountNumber: selectedAccountNumber,
                                                  sourceView: sourceView,
@@ -50,7 +53,7 @@ public final class AccountSelectorCoordinator: ModuleCoordinator {
     }
 }
 
-extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
+extension CharityTransferAccountSelectorCoordinator: CharityTransferAccountSelectorCoordinatorProtocol {
     public func pop() {
         navigationController?.popViewController(animated: true)
     }
@@ -59,7 +62,8 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
         let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                          navigationController: navigationController,
                                                          accounts: accounts,
-                                                         selectedAccountNumber: selectedAccountNumber)
+                                                         selectedAccountNumber: selectedAccountNumber,
+                                                         charityTransferSettings: charityTransferSettings)
         coordinator.start()
     }
     
@@ -72,9 +76,9 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
  #Register Scene depencencies.
 */
 
-private extension AccountSelectorCoordinator {
+private extension CharityTransferAccountSelectorCoordinator {
     func setupDependencies() {
-        self.dependenciesEngine.register(for: AccountSelectorCoordinatorProtocol.self) { _ in
+        self.dependenciesEngine.register(for: CharityTransferAccountSelectorCoordinatorProtocol.self) { _ in
             return self
         }
     }

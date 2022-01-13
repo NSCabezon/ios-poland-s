@@ -5,11 +5,13 @@
 //  Created by 185167 on 13/12/2021.
 //
 
+import Commons
 import UI
 import PLUI
 
 protocol TaxTransferFormContainerViewDelegate: AnyObject {
     func scrollToBottom()
+    func didUpdateFields(withData data: TaxTransferFormFieldsData)
 }
 
 final class TaxTransferFormContainerView: UIView {
@@ -17,18 +19,21 @@ final class TaxTransferFormContainerView: UIView {
     private let accountSelector = TaxTransferAccountSelectorView()
     private let taxPayerSelector = TaxTransferPayerSelectorView()
     private let taxAuthoritySelector = TaxTransferAuthoritySelectorView()
-    private let amountField = TaxTransferAmountFieldView()
+    private let amountField: TaxTransferAmountFieldView
     private let obligationIdentifierField = TaxTransferObligationIdentifierFieldView()
     private let dateSelector: TaxTransferDateSelectorView
     
     private weak var delegate: TaxTransferFormContainerViewDelegate?
     
     init(
-        configuration: DateSelectorConfiguration,
+        configuration: TaxFormConfiguration,
         delegate: TaxTransferFormContainerViewDelegate
     ) {
+        self.amountField = TaxTransferAmountFieldView(
+            configuration: configuration.amountField
+        )
         self.dateSelector = TaxTransferDateSelectorView(
-            configuration: configuration
+            configuration: configuration.dateSelector
         )
         self.delegate = delegate
         super.init(frame: .zero)
@@ -39,13 +44,31 @@ final class TaxTransferFormContainerView: UIView {
     required init?(coder: NSCoder) {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
+    
+    func getFormFieldsData() -> TaxTransferFormFieldsData {
+        return TaxTransferFormFieldsData(
+            amount: amountField.getAmount(),
+            obligationIdentifier: obligationIdentifierField.getIdentifier(),
+            date: dateSelector.getSelectedDate()
+        )
+    }
+    
+    func setInvalidFormMessages(_ messages: TaxTransferFormValidity.InvalidFormMessages) {
+        amountField.setInvalidFieldMessage(messages.amountMessage)
+        obligationIdentifierField.setInvalidFieldMessage(messages.obligationIdentifierMessage)
+    }
+    
+    func clearInvalidFormMessages() {
+        amountField.setInvalidFieldMessage(nil)
+        obligationIdentifierField.setInvalidFieldMessage(nil)
+    }
 }
 
 private extension TaxTransferFormContainerView {
     func setUp() {
         configureStackView()
         configureSubviews()
-        configureDateSelector()
+        configureDelegates()
     }
     
     func configureStackView() {
@@ -79,13 +102,22 @@ private extension TaxTransferFormContainerView {
         ])
     }
     
-    func configureDateSelector() {
+    func configureDelegates() {
+        amountField.textFieldDelegate = self
+        obligationIdentifierField.textFieldDelegate = self
         dateSelector.delegate = self
+    }
+}
+
+extension TaxTransferFormContainerView: UpdatableTextFieldDelegate {
+    func updatableTextFieldDidUpdate() {
+        delegate?.didUpdateFields(withData: getFormFieldsData())
     }
 }
 
 extension TaxTransferFormContainerView: TransferDateSelectorDelegate {
     func didSelectDate(date: Date, withOption option: DateTransferOption) {
+        delegate?.didUpdateFields(withData: getFormFieldsData())
         if option == .anotherDay {
             delegate?.scrollToBottom()
         }

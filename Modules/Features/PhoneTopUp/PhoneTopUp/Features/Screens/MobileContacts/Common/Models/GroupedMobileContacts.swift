@@ -6,5 +6,6 @@
 //
 
 import Foundation
+import PLCommons
 
 typealias GroupedMobileContacts = [(groupingCharacter: Character, contacts: [MobileContact])]
