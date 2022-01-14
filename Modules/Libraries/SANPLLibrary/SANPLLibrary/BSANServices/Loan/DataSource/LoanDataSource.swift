@@ -11,6 +11,7 @@ protocol LoanDataSourceProtocol {
     func getTransactions(accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getTransactions(accountId: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getInstallments(accountId: String, parameters: LoanInstallmentsParameters?) throws -> Result<LoanInstallmentsListDTO, NetworkProviderError>
+	func changeAlias(loanDTO: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> Result<LoanChangeAliasDTO, NetworkProviderError>
 }
 
 private extension LoanDataSource {
@@ -24,6 +25,7 @@ final class LoanDataSource {
         case detail = "/accounts"
         case transactions = "/history"
         case installments = "/accounts/loan/installments"
+		case changeAlias = "/loans/productaliases"
     }
     
     private let networkProvider: NetworkProvider
@@ -96,6 +98,28 @@ extension LoanDataSource: LoanDataSourceProtocol {
         )
         return result
     }
+	
+	func changeAlias(loanDTO: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> Result<LoanChangeAliasDTO, NetworkProviderError> {
+		guard let baseUrl = self.getBaseUrl(),
+			  let accountNumber = loanDTO.productId?.id,
+			  let systemId = loanDTO.productId?.systemId else {
+			return .failure(NetworkProviderError.other)
+		}
+
+		let serviceName = "\(LoanServiceType.changeAlias.rawValue)/\(systemId)/\(accountNumber)"
+		let absoluteUrl = baseUrl + self.basePath
+		let parameters = ChangeAliasParameters(userDefined: newAlias)
+		
+		let result: Result<LoanChangeAliasDTO, NetworkProviderError> = self.networkProvider.request(LoanChangeAliasRequest(serviceName: serviceName,
+																												serviceUrl: absoluteUrl,
+																												method: .post,
+																												jsonBody: parameters,
+																												headers: self.headers,
+																												contentType: .json,
+																												localServiceName: .changeAlias)
+		)
+		return result
+	}
 }
 
 private extension LoanDataSource {
@@ -157,4 +181,38 @@ private struct LoanRequest: NetworkProviderRequest {
         self.contentType = contentType
         self.localServiceName = localServiceName
     }
+}
+
+private struct LoanChangeAliasRequest: NetworkProviderRequest {
+	let serviceName: String
+	let serviceUrl: String
+	let method: NetworkProviderMethod
+	let headers: [String: String]?
+	let queryParams: [String: Any]?
+	let jsonBody: ChangeAliasParameters?
+	let formData: Data?
+	let bodyEncoding: NetworkProviderBodyEncoding? = .body
+	let contentType: NetworkProviderContentType
+	let localServiceName: PLLocalServiceName
+	let authorization: NetworkProviderRequestAuthorization? = .oauth
+
+	init(serviceName: String,
+		 serviceUrl: String,
+		 method: NetworkProviderMethod,
+		 body: Data? = nil,
+		 jsonBody: ChangeAliasParameters?,
+		 headers: [String: String]?,
+		 queryParams: [String: String]? = nil,
+		 contentType: NetworkProviderContentType,
+		 localServiceName: PLLocalServiceName) {
+		self.serviceName = serviceName
+		self.serviceUrl = serviceUrl
+		self.method = method
+		self.formData = body
+		self.jsonBody = jsonBody
+		self.headers = headers
+		self.queryParams = queryParams
+		self.contentType = contentType
+		self.localServiceName = localServiceName
+	}
 }
