@@ -1,3 +1,8 @@
+import Commons
+
+private enum Constants {
+    static let countryCode = "PL"
+}
 
 protocol ZusTransferValidating {
     func validateForm(
@@ -10,8 +15,12 @@ protocol ZusTransferValidating {
 struct ZusTransferValidator: ZusTransferValidating {
     private let accountRequiredLength: Int
     private let maxTransferAmmount: Decimal
+    private var bankingUtils: BankingUtilsProtocol
     
-    init(accountRequiredLength: Int = 26, maxTransferAmmount: Decimal = 100_000) {
+    init(dependenciesResolver: DependenciesResolver,
+         accountRequiredLength: Int = 26,
+         maxTransferAmmount: Decimal = 100_000) {
+        bankingUtils = dependenciesResolver.resolve()
         self.accountRequiredLength = accountRequiredLength
         self.maxTransferAmmount = maxTransferAmmount
     }
@@ -38,13 +47,14 @@ private extension ZusTransferValidator {
             #warning("should be changed")
             return "#Pole nie może być puste"
         }
+        
         if account.count < accountRequiredLength {
             #warning("should be changed")
             return "#Minimalna liczba znaków wynosi 26"
         }
         
         if account.count == accountRequiredLength, let accountSubstring = account.substring(2, 13) {
-            if accountSubstring != maskAccount && !maskAccount.isEmpty {
+            if accountSubstring != maskAccount && !maskAccount.isEmpty, isValidIban(account) {
                 #warning("should be changed")
                 return "#Podany numer rachunku nie jest poprawny"
             }
@@ -74,5 +84,16 @@ private extension ZusTransferValidator {
             return message
         }
         return nil
+    }
+    
+    func isValidIban(_ account: String) -> Bool {
+        if let checkDigitCandidate = account.substring(0, 2), isNumber(checkDigitCandidate) {
+            return bankingUtils.isValidIban(ibanString: [Constants.countryCode, account].joined())
+        }
+        return bankingUtils.isValidIban(ibanString: account)
+    }
+    
+    func isNumber(_ value: String) -> Bool {
+        CharacterSet.numbers.isSuperset(of: CharacterSet(charactersIn: value))
     }
 }

@@ -73,8 +73,8 @@ extension ZusTransferFormCoordinator: ZusTransferFormCoordinatorProtocol {
 
 private extension ZusTransferFormCoordinator {
     func setupDependencies() {
-        dependenciesEngine.register(for: ZusTransferValidating.self) { _ in
-            ZusTransferValidator()
+        dependenciesEngine.register(for: ZusTransferValidating.self) { resolver in
+            ZusTransferValidator(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
             ConfirmationDialogFactory()
