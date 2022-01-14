@@ -9,12 +9,15 @@ import Foundation
 import Menu
 import Commons
 import UI
+import SANPLLibrary
 
 final class PLPublicMenuViewComponents: PublicMenuViewComponents {
+    private let resolver: DependenciesResolver
     let smallButtonTitleFont: UIFont = .santander(family: .text, type: .regular, size: 18)
     let bigButtonTitleFont: UIFont = .santander(family: .text, type: .regular, size: 20)
 
     public override init(resolver: DependenciesResolver) {
+        self.resolver = resolver
         super.init(resolver: resolver)
     }
     
@@ -29,12 +32,21 @@ final class PLPublicMenuViewComponents: PublicMenuViewComponents {
     }
     
     func createInformationView() -> UIView {
-        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_information"), iconKey: "icnInfoRed", titleFont: smallButtonTitleFont, labelAccessibilityIdentifier: "btnInfoLabel", icnAccessibilityIdentifier: "btnInfoIcon")
+        let isTrustedDevice = isTrustedDevice()
+        let buttonViewModel = ButtonViewModel(titleKey: localized("pl_menuPublic_link_information"), iconKey: "icnInfoRedLight", titleFont: isTrustedDevice ? smallButtonTitleFont : bigButtonTitleFont, labelAccessibilityIdentifier: "btnInfoLabel", icnAccessibilityIdentifier: "btnInfoIcon")
         let type = PublicMenuButtonType(viewModel: buttonViewModel, accessibilityIdentifier: "btnInformation")
-        let view = self.makeSmallButtonView(type)
-        view.action = self.setInformationButton
-        
-        return view
+        if isTrustedDevice {
+            let view = self.makeSmallButtonView(type)
+            view.action = self.setInformationButton
+
+            return view
+        }
+        else {
+            let view = self.makeBigButtonView(type, buttonType: .publicMenu)
+            view.action = self.setInformationButton
+
+            return view
+        }
     }
     
     func createServicesView() -> UIView {
@@ -128,5 +140,13 @@ extension PLPublicMenuViewComponents: OpenUrlCapable {
             return
         }
         openUrl(phoneURL)
+    }
+}
+
+private extension PLPublicMenuViewComponents {
+    func isTrustedDevice() -> Bool {
+        let managerProvider: PLManagersProviderProtocol = self.resolver.resolve(for: PLManagersProviderProtocol.self)
+        let trustedDeviceManager = managerProvider.getTrustedDeviceManager()
+        return trustedDeviceManager.getTrustedDeviceHeaders() != nil
     }
 }
