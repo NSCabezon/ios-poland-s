@@ -158,7 +158,11 @@ extension PhoneTopUpFormCoordinator: AccountSelectorDelegate {
 
 extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToViewController(phoneTopUpController, animated: true)
         contactsSelectorDelegate?.mobileContactsDidSelectContact(contact)
+    }
+    
+    func mobileContactDidSelectCloseProcess() {
+        navigationController?.popToViewController(phoneTopUpController, animated: true)
     }
 }

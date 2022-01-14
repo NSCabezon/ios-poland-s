@@ -57,4 +57,10 @@ final class RecipientNameView: UIView {
             nameTextField.heightAnchor.constraint(equalToConstant: 48.0)
         ])
     }
+    
+    // MARK: Methods
+    
+    func setUp(with name: String) {
+        nameTextField.setText(name)
+    }
 }

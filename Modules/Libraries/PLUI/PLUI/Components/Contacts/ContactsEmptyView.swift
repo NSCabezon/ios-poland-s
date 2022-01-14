@@ -1,12 +1,11 @@
 import Foundation
 import UI
-import PLUI
 import Commons
 
-final class ContactsEmptyView: UIView {
-    enum `Type` {
-        case emptyContacts
-        case noSearchResult(query: String)
+public final class ContactsEmptyView: UIView {
+    public enum `Type` {
+        case emptyContacts(textKey: String)
+        case noSearchResult(query: String, textKey: String)
     }
 
     private var imageView: UIImageView = {
@@ -24,7 +23,7 @@ final class ContactsEmptyView: UIView {
         return label
     }()
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
     }
@@ -33,12 +32,12 @@ final class ContactsEmptyView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUp(with type: Type) {
+    public func setUp(with type: Type) {
         switch type {
-        case .emptyContacts:
-            titleLabel.configureText(withKey: "pl_blik_text_emptyContancs")
-        case .noSearchResult(let query):
-            let string = "\(localized("pl_blik_text_noFoundRecip"))\n\n\"\(query)\""
+        case .emptyContacts(let textKey):
+            titleLabel.configureText(withKey: textKey)
+        case .noSearchResult(let query, let textKey):
+            let string = "\(localized(textKey))\n\n\"\(query)\""
             let attrString = NSMutableAttributedString(string: string)
 
             let range = attrString.mutableString.range(of: query, options: .caseInsensitive)

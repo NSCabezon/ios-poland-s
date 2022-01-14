@@ -7,11 +7,13 @@
 
 import UI
 import PLUI
+import PLCommons
 import Commons
 
 protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
     func updatePhoneInput(with phoneNumber: String)
+    func updateContact(with contact: MobileContact)
     func showInvalidPhoneNumberError(_ showError: Bool)
     func showOperatorSelection(with operator: Operator?)
     func showContactsPermissionsDeniedDialog()
@@ -136,5 +138,10 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
     
     func updatePhoneInput(with phoneNumber: String) {
         formView.updatePhoneInput(with: phoneNumber)
+    }
+    
+    func updateContact(with contact: MobileContact) {
+        formView.updatePhoneInput(with: contact.phoneNumber)
+        formView.updateRecipientName(with: contact.fullName)
     }
 }

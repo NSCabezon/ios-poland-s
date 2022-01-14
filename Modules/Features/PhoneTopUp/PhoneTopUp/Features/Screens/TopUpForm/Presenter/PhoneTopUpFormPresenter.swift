@@ -122,8 +122,12 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
-        view?.updatePhoneInput(with: contact.phoneNumber)
+        view?.updateContact(with: contact)
         didInputFullPhoneNumber(contact.phoneNumber.filter(\.isNumber))
+    }
+    
+    func mobileContactDidSelectCloseProcess() {
+        // we don't need to do anything here
     }
     
     private func matchOperator(with number: String) -> Operator? {
@@ -133,7 +137,7 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     private func showPhoneContacts() {
         Scenario(useCase: getPhoneContactsUseCase)
             .execute(on: useCaseHandler)
-            .onSuccess { [weak self] output in
+            .onSuccess {[weak self] output in
                 self?.coordinator?.showPhoneContacts(output.contacts)
             }
     }
