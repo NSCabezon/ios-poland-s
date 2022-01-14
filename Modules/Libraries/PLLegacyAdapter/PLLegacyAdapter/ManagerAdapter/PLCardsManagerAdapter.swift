@@ -277,7 +277,7 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     }
     
     func changeCardAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
+        return try self.changeAlias(cardDTO: cardDTO, newAlias: newAlias)
     }
     
     func validateCVVOTP(cardDTO: SANLegacyLibrary.CardDTO, signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<OTPValidationDTO> {
@@ -497,6 +497,19 @@ private extension PLCardsManagerAdapter {
     
     private func loadCardTransactions(cardDTO: SANLegacyLibrary.CardDTO, pagination: PaginationDTO?, searchTerm: String? = nil, dateFilter: DateFilter?, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil, cached: Bool = false) -> BSANResponse<CardTransactionsListDTO> {
         return loadCardTransactions(cardDTO: cardDTO, pagination: pagination, searchTerm: searchTerm, dateFilter: dateFilter, fromAmount: fromAmount, toAmount: toAmount, movementType: movementType, cardOperationType: cardOperationType)
+    }
+    
+    private func changeAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> BSANResponse<Void> {
+        let result = try? cardTransactionsManager.changeAlias(cardDTO: cardDTO, newAlias: newAlias)
+        
+        switch result {
+        case .success:
+            return BSANOkResponse(nil)
+        case .failure:
+            return BSANErrorResponse(nil)
+        default:
+            return BSANErrorResponse(nil)
+        }
     }
     
     private func getCardKeyWithFilters(cardId: String, searchTerm: String? = nil, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> String {

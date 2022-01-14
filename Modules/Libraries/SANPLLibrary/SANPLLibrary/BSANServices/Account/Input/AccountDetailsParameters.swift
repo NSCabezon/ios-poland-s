@@ -22,3 +22,11 @@ public struct WithholdingParameters: Encodable {
         self.accountNumbers = accountNumbers
     }
 }
+
+public struct ChangeAliasParameters: Encodable {
+    public let userDefined: String
+    
+    public init(userDefined: String) {
+        self.userDefined = userDefined
+    }
+}
