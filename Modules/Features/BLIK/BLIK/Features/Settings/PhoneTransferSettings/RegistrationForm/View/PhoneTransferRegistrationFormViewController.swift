@@ -50,6 +50,7 @@ final class PhoneTransferRegistrationFormViewController: UIViewController, Phone
         phoneNumberView.configure(with: viewModel.phoneViewModel)
         
         accountView.configure(with: viewModel.accountViewModel)
+        accountView.shouldHideEditButton(presenter.hasUserOneAccount())
         accountView.setOnChangePress {[weak self] in
             self?.presenter.didPressChangeAccount()
         }

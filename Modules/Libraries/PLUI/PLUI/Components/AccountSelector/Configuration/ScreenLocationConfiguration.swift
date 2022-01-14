@@ -9,8 +9,7 @@ extension AccountSelectorViewController {
         var title: String {
             switch self {
             case .mobileTransferSettings:
-                #warning("should be changed")
-                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+                return localized("pl_blik_text_infoSelectAccountForSend")
             case .mobileTransfer:
                 return localized("pl_blik_text_infoSelectAccountForSend")
             case .charityTransfer:
