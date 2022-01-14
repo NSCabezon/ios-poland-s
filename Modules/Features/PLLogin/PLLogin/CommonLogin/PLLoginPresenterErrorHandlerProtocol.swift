@@ -11,12 +11,12 @@ import PLCommons
 import SANPLLibrary
 
 public protocol PLLoginPresenterErrorHandlerProtocol: PLGenericErrorPresenterLayerProtocol {
-    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>, hideTitle: Bool)
+    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>, showTitle: Bool, showCloseButton: Bool)
     func getHttpErrorCode(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>) -> String?
 }
 
 extension PLLoginPresenterErrorHandlerProtocol {
-    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>, hideTitle: Bool = false) {
+    func handleError(_ error: UseCaseError<PLUseCaseErrorOutput<LoginErrorType>>, showTitle: Bool = true, showCloseButton: Bool = false) {
         switch error {
         case .error(let err):
             guard let loginError = err?.error else {
@@ -26,7 +26,7 @@ extension PLLoginPresenterErrorHandlerProtocol {
         
             switch loginError {
             case .unauthorized:
-                self.handle(error: .unauthorized, hideTitle: hideTitle)
+                self.handle(error: .unauthorized, showTitle: showTitle, showCloseButton: showCloseButton)
             case .emptyPass:
                 self.associatedErrorView?.presentError(("pl_onboarding_alert_genFailedTitle",
                                                         "login_popup_passwordRequired"), completion: {

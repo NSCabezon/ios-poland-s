@@ -12,7 +12,7 @@ import UI
 public protocol PLGenericErrorPresentableCapable: LoadingViewPresentationCapable, DialogViewPresentationCapable {
     func showLoadingWith(loadingText: LoadingText, completion: (() -> Void)?)
     func presentError(_ error: PLGenericError, completion: @escaping (() -> Void))
-    func presentErrorWithoutTitle(_ error: PLGenericError, completion: @escaping (() -> Void))
+    func presentError(_ error: PLGenericError, _ errorConfig: PLGenericErrorConfig, completion: @escaping (() -> Void))
     func presentError(_ textKeys: (titleKey: String, descriptionKey: String), completion: @escaping (() -> Void))
     func presentError(_ error: PLGenericError)
 }
@@ -42,9 +42,13 @@ extension UIViewController : PLGenericErrorPresentableCapable {
                           completion: completion)
     }
 
-    public func presentErrorWithoutTitle(_ error: PLGenericError, completion: @escaping (() -> Void) = {}) {
-        self.presentError(localizedDescriptionKey: error.getErrorDesc(),
-                          completion: completion)
+    public func presentError(_ error: PLGenericError, _ errorConfig: PLGenericErrorConfig, completion: @escaping (() -> Void)) {
+
+        if let showTitle = errorConfig.showTitle, showTitle == true {
+           self.presentError(localizedTitleKey: "pl_onboarding_alert_genFailedTitle", localizedDescriptionKey: error.getErrorDesc(), closeButtonAvailable: errorConfig.showCloseButton ?? false, completion: completion)
+        } else {
+           self.presentError(localizedDescriptionKey: error.getErrorDesc(), closeButtonAvailable: errorConfig.showCloseButton ?? false, completion: completion)
+        }
     }
     
     public func presentError(_ textKeys: (titleKey: String, descriptionKey: String),
@@ -66,6 +70,7 @@ private extension UIViewController {
 
     func presentError(localizedTitleKey: String? = nil,
                       localizedDescriptionKey: String,
+                      closeButtonAvailable: Bool? = false,
                       completion: @escaping (() -> Void) = {}) {
         var components = [LisboaDialogItem]()
         if let localizedTitleKey = localizedTitleKey {
@@ -91,7 +96,7 @@ private extension UIViewController {
                                                                      type: LisboaDialogActionType.red,
                                                                      margins: (left: 16, right: 16), action: completion)))
         components.append(.margin(16.0))
-        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
+        let builder = LisboaDialog(items: components, closeButtonAvailable: closeButtonAvailable ?? false)
         self.associatedLoadingView.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
             builder.showIn(self.associatedDialogView)
