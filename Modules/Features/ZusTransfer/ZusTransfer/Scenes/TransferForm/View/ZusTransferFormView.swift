@@ -7,6 +7,7 @@ import PLCommons
 protocol ZusTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
     func didChangeForm(with field: TransferFormCurrentActiveField)
+    func scrollToBottom()
 }
 
 final class ZusTransferFormView: UIView {
@@ -312,5 +313,8 @@ extension ZusTransferFormView: TransferDateSelectorDelegate {
         selectedDate = date
         currentActiveField = .date
         delegate?.didChangeForm(with: currentActiveField)
+        if option == .anotherDay {
+            delegate?.scrollToBottom()
+        }
     }
 }
