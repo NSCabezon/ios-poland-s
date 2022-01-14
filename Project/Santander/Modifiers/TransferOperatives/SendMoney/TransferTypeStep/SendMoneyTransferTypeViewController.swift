@@ -92,6 +92,7 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         self.setupComponents()
         self.setupNavigationBar()
         self.setupStackView()
+        self.setAccessibilityIdentifiers()
         self.presenter.viewDidLoad()
     }
 }
@@ -137,7 +138,11 @@ private extension SendMoneyTransferTypeViewController {
         self.mainStackView.addArrangedSubview(self.radioButtonsContainer)
         self.mainStackView.setCustomSpacing(Constants.RadioButtonsContainer.bottomSpace, after: radioButtonsContainer)
     }
-    
+
+    func setAccessibilityIdentifiers() {
+        self.titleLabel.accessibilityIdentifier = Constants.TitleLabel.textKey
+    }
+
     @objc func floatingButtonDidPressed() {
         self.presenter.didPressedFloatingButton()
     }
@@ -163,6 +168,7 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
     
     func setBottomInformationTextKey(_ key: String) {
         self.bottomLabel.configureText(withKey: key)
+        self.bottomLabel.accessibilityIdentifier = key
         self.mainStackView.addArrangedSubview(self.bottomLabel)
     }
     
