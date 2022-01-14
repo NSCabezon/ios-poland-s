@@ -6,8 +6,18 @@
 //
 
 import SANLegacyLibrary
+import SANPLLibrary
+import Commons
 
-final class PLDepositsManagerAdapter {}
+final class PLDepositsManagerAdapter {
+	private let depositManager: PLDepositManagerProtocol
+	private let bsanDataProvider: BSANDataProvider
+
+	init(depositManager: PLDepositManagerProtocol, bsanDataProvider: BSANDataProvider) {
+		self.bsanDataProvider = bsanDataProvider
+		self.depositManager = depositManager
+	}
+}
  
 extension PLDepositsManagerAdapter: BSANDepositsManager {
     func getDepositImpositionsTransactions(depositDTO: SANLegacyLibrary.DepositDTO, pagination: PaginationDTO?) throws -> BSANResponse<ImpositionsListDTO> {
@@ -27,6 +37,11 @@ extension PLDepositsManagerAdapter: BSANDepositsManager {
     }
     
     func changeDepositAlias(_ deposit: SANLegacyLibrary.DepositDTO, newAlias: String) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
+        let result = try? depositManager.changeAlias(depositDTO: deposit, newAlias: newAlias)
+		
+		switch result {
+		case .success: return BSANOkResponse(nil)
+		default: return BSANErrorResponse(nil)
+		}
     }
 }
