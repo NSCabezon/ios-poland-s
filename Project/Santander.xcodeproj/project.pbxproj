@@ -173,9 +173,9 @@
 		B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */; };
 		B0115603271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */; };
 		B01156052715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */; };
-		B0327EB1276223D4006BF39A /* GoogleService-Info-uat.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0327EB0276223D4006BF39A /* GoogleService-Info-uat.plist */; };
-		B0327EB327622F0B006BF39A /* GoogleService-Info-regression.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0327EB227622F0B006BF39A /* GoogleService-Info-regression.plist */; };
-		B0327EB527622FF1006BF39A /* GoogleService-Info-preprod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0327EB427622FF1006BF39A /* GoogleService-Info-preprod.plist */; };
+		B0A18D4927904D330060E518 /* GoogleService-Info-uat.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0A18D4827904D330060E518 /* GoogleService-Info-uat.plist */; };
+		B0A18D4B27904E3B0060E518 /* GoogleService-Info-regression.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0A18D4A27904E3B0060E518 /* GoogleService-Info-regression.plist */; };
+		B0A18D4D279053E80060E518 /* GoogleService-Info-preprod.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0A18D4C279053E80060E518 /* GoogleService-Info-preprod.plist */; };
 		B0D77A4C276B4B1A00766705 /* LoadPLTransferSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D77A4B276B4B1A00766705 /* LoadPLTransferSettingsUseCase.swift */; };
 		B0D77A50276B4BD800766705 /* PLTransferSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D77A4F276B4BD800766705 /* PLTransferSettingsRepository.swift */; };
 		B0D77A53276B4C3800766705 /* PLTransferSettingsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D77A52276B4C3800766705 /* PLTransferSettingsDTO.swift */; };
@@ -399,9 +399,9 @@
 		B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDebugMenuFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLHelpCenterFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSideMenuNavigationDependencies.swift; sourceTree = "<group>"; };
-		B0327EB0276223D4006BF39A /* GoogleService-Info-uat.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-uat.plist"; sourceTree = "<group>"; };
-		B0327EB227622F0B006BF39A /* GoogleService-Info-regression.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-regression.plist"; sourceTree = "<group>"; };
-		B0327EB427622FF1006BF39A /* GoogleService-Info-preprod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-preprod.plist"; sourceTree = "<group>"; };
+		B0A18D4827904D330060E518 /* GoogleService-Info-uat.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-uat.plist"; sourceTree = "<group>"; };
+		B0A18D4A27904E3B0060E518 /* GoogleService-Info-regression.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-regression.plist"; sourceTree = "<group>"; };
+		B0A18D4C279053E80060E518 /* GoogleService-Info-preprod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-preprod.plist"; sourceTree = "<group>"; };
 		B0C54DCB2733E0DC000A63E4 /* Regression.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Regression.entitlements; sourceTree = "<group>"; };
 		B0C54DCC2733E0DC000A63E4 /* UAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UAT.entitlements; sourceTree = "<group>"; };
 		B0C54DCD2733E0DC000A63E4 /* Preprod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Preprod.entitlements; sourceTree = "<group>"; };
@@ -726,13 +726,13 @@
 		42CEB7BC26E8EDD600349ACD /* GoogleServices */ = {
 			isa = PBXGroup;
 			children = (
-				B0327EB427622FF1006BF39A /* GoogleService-Info-preprod.plist */,
-				B0327EB227622F0B006BF39A /* GoogleService-Info-regression.plist */,
-				B0327EB0276223D4006BF39A /* GoogleService-Info-uat.plist */,
 				42CEB7C026E8EE0700349ACD /* GoogleService-Info-development.plist */,
 				42CEB7BD26E8EDF300349ACD /* GoogleService-Info-intern.plist */,
 				42CEB7BF26E8EE0100349ACD /* GoogleService-Info-pre.plist */,
 				42CEB7BE26E8EDFB00349ACD /* GoogleService-Info-production.plist */,
+				B0A18D4827904D330060E518 /* GoogleService-Info-uat.plist */,
+				B0A18D4A27904E3B0060E518 /* GoogleService-Info-regression.plist */,
+				B0A18D4C279053E80060E518 /* GoogleService-Info-preprod.plist */,
 			);
 			path = GoogleServices;
 			sourceTree = "<group>";
@@ -1416,18 +1416,18 @@
 				CC8E9F87273BEF0000F967A6 /* BottomSheetErrorView.xib in Resources */,
 				CCE45AA02732AC5400691E91 /* InputBiometricsView.xib in Resources */,
 				66BC8DFC2640A58D00654CC5 /* README.md in Resources */,
+				B0A18D4B27904E3B0060E518 /* GoogleService-Info-regression.plist in Resources */,
+				B0A18D4927904D330060E518 /* GoogleService-Info-uat.plist in Resources */,
 				CCE45AA22732AC5400691E91 /* RemainingTimeView.xib in Resources */,
+				B0A18D4D279053E80060E518 /* GoogleService-Info-preprod.plist in Resources */,
 				A10AC765272A9FBC00050CF9 /* PREPROD.xcconfig in Resources */,
 				CCE45A9D2732AC5400691E91 /* PLAuthorizationViewController.xib in Resources */,
 				66BC8A6A263FFE4C00654CC5 /* PRO.xcconfig in Resources */,
 				A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */,
-				B0327EB327622F0B006BF39A /* GoogleService-Info-regression.plist in Resources */,
 				A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */,
 				66BC8A6B263FFE4C00654CC5 /* DEV.xcconfig in Resources */,
 				42BF5875264D13C900136E8D /* en.strings in Resources */,
 				66BC8A69263FFE4C00654CC5 /* PRE.xcconfig in Resources */,
-				B0327EB1276223D4006BF39A /* GoogleService-Info-uat.plist in Resources */,
-				B0327EB527622FF1006BF39A /* GoogleService-Info-preprod.plist in Resources */,
 				A1192F75272805B600B83B42 /* UAT.xcconfig in Resources */,
 				85E19B62270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib in Resources */,
 				42BF5874264D13C900136E8D /* pl.strings in Resources */,
