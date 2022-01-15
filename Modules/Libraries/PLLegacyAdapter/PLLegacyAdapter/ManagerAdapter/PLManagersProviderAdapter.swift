@@ -82,7 +82,7 @@ public final class PLManagersProviderAdapter {
         self.stocksManager = PLStocksManagerAdapter()
         self.billTaxesManager = PLBillTaxesManagerAdapter()
         self.touchIdManager = PLTouchIdManagerAdapter()
-        self.fundsManager = PLFundsManagerAdapter()
+		self.fundsManager = PLFundsManagerAdapter(fundManager: self.plManagersProvider.getFundsManager(), bsanDataProvider: bsanDataProvider)
         self.cashWithdrawalManager = PLCashWithdrawalManagerAdapter()
         self.cesManager = PLCesManagerApadater()
         self.mifidManager = PLMifidManagerAdapter()

@@ -17,6 +17,7 @@ public protocol PLManagersProviderProtocol {
     func getCardsManager() -> PLCardsManagerProtocol
 	func getLoansManager() -> PLLoanManagerProtocol
 	func getDepositsManager() -> PLDepositManagerProtocol
+	func getFundsManager() -> PLFundManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
     func getNotificationManager() -> PLNotificationManagerProtocol
@@ -41,6 +42,7 @@ public final class PLManagersProvider {
     private let cardTransactionsManager: PLCardTransactionsManager
 	private let loansManager: PLLoanManager
 	private let depositsManager: PLDepositManager
+	private let fundsManager: PLFundManager
     private let customerManager: PLCustomerManager
     private let notificationManager: PLNotificationManager
     private let transferManager: PLTransfersManager
@@ -73,6 +75,7 @@ public final class PLManagersProvider {
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 		self.depositsManager = PLDepositManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+		self.fundsManager = PLFundManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.customerManager = PLCustomerManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.notificationManager = PLNotificationManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.transferManager = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
@@ -130,6 +133,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 	
 	public func getDepositsManager() -> PLDepositManagerProtocol {
 		self.depositsManager
+	}
+	
+	public func getFundsManager() -> PLFundManagerProtocol {
+		self.fundsManager
 	}
 
     public func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol {

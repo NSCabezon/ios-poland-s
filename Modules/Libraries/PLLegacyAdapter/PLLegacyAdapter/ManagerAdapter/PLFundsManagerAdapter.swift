@@ -6,8 +6,18 @@
 //
 
 import SANLegacyLibrary
+import SANPLLibrary
+import Commons
 
-final class PLFundsManagerAdapter {}
+final class PLFundsManagerAdapter {
+	private let fundManager: PLFundManagerProtocol
+	private let bsanDataProvider: BSANDataProvider
+
+	init(fundManager: PLFundManagerProtocol, bsanDataProvider: BSANDataProvider) {
+		self.bsanDataProvider = bsanDataProvider
+		self.fundManager = fundManager
+	}
+}
  
 extension PLFundsManagerAdapter: BSANFundsManager {
     func getFundTransactions(forFund fund: FundDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<FundTransactionsListDTO> {
@@ -61,4 +71,13 @@ extension PLFundsManagerAdapter: BSANFundsManager {
     func confirmFundTransferPartialByShares(originFundDTO: FundDTO, destinationFundDTO: FundDTO, fundTransferDTO: FundTransferDTO, signatureDTO: SignatureDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
+	
+	func changeFundAlias(_ fund: FundDTO, newAlias: String) throws -> BSANResponse<Void> {
+		let result = try? fundManager.changeAlias(fundDTO: fund, newAlias: newAlias)
+		
+		switch result {
+		case .success: return BSANOkResponse(nil)
+		default: return BSANErrorResponse(nil)
+		}
+	}
 }
