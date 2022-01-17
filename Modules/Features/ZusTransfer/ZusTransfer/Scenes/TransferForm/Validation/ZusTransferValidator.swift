@@ -27,28 +27,35 @@ struct ZusTransferValidator: ZusTransferValidating {
     
     func validateForm(
         form: ZusTransferFormViewModel,
-        with currentActivefield: TransferFormCurrentActiveField,
+        with currentActiveField: TransferFormCurrentActiveField,
         maskAccount: String
     ) -> InvalidZusTransferFormData {
         InvalidZusTransferFormData(
             invalidRecieptMessages: validateText(form.recipient),
-            invalidAccountMessages: validateAccount(form.recipientAccountNumber, maskAccount: maskAccount),
+            invalidAccountMessages: validateAccount(
+                form.recipientAccountNumber,
+                maskAccount: maskAccount,
+                currentActiveField: currentActiveField
+            ),
             invalidAmountMessages: validateAmount(form.amount),
             invalidTitleMessages: validateText(form.title),
-            currentActiveField: currentActivefield
+            currentActiveField: currentActiveField
         )
     }
 }
 
 private extension ZusTransferValidator {
     
-    func validateAccount(_ account: String?, maskAccount: String) -> String? {
+    func validateAccount(_ account: String?,
+                         maskAccount: String,
+                         currentActiveField: TransferFormCurrentActiveField) -> String? {
         guard let account = account, !account.isEmpty else {
             #warning("should be changed")
             return "#Pole nie może być puste"
         }
-        
-        if account.count < accountRequiredLength {
+
+        if case let .accountNumber(controlEvent) = currentActiveField,
+           controlEvent == .endEditing, account.count < accountRequiredLength  {
             #warning("should be changed")
             return "#Minimalna liczba znaków wynosi 26"
         }
