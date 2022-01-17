@@ -55,6 +55,13 @@ final class PLSmsAuthViewController: UIViewController {
         static let distanceToRegardLabel: CGFloat = 90.0
         static let animationDuration: TimeInterval = 0.2
         static let minimumPositionsFulfilled = 8
+
+        enum Accessibility: String {
+            case loginOtpSmsBtnAccess
+            case loginOtpSmsLabelGreeting
+            case loginOtpSmsHint = "pl_login_hint_smsCode"
+            case sanIcon = "icnSanWhite"
+        }
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -120,7 +127,7 @@ private extension PLSmsAuthViewController {
         configureButtons()
         configureSMSAuthView()
         configureKeyboard()
-        setAccessibility()
+        setAccessibilityIdentifiers()
         initTimeValidateSMS()
     }
 
@@ -176,9 +183,12 @@ private extension PLSmsAuthViewController {
         }
     }
 
-    func setAccessibility() {
-        smsLabel.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
+    func setAccessibilityIdentifiers() {
+        smsLabel.accessibilityIdentifier = Constants.Accessibility.loginOtpSmsHint.rawValue
         loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+        sanIconImageView.accessibilityIdentifier = Constants.Accessibility.sanIcon.rawValue
+        regardLabel.accessibilityIdentifier = Constants.Accessibility.loginOtpSmsLabelGreeting.rawValue
+        loginButton.accessibilityIdentifier = Constants.Accessibility.loginOtpSmsBtnAccess.rawValue
     }
 
     func regardNow() -> String {

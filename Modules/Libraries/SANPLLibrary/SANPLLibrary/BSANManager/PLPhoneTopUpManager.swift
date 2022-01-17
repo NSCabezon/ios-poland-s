@@ -8,7 +8,8 @@
 import Foundation
 
 public protocol PLPhoneTopUpManagerProtocol {
-    func getFormData() throws -> Result<[DebitAccountDTO], NetworkProviderError>
+    func getFormData() throws -> Result<
+        TopUpFormDataDTO, NetworkProviderError>
 }
 
 public final class PLPhoneTopUpManager {
@@ -22,7 +23,22 @@ public final class PLPhoneTopUpManager {
 }
 
 extension PLPhoneTopUpManager: PLPhoneTopUpManagerProtocol {
-    public func getFormData() throws -> Result<[DebitAccountDTO], NetworkProviderError> {
-        return try dataSource.getPhoneTopUpAccounts()
+    public func getFormData() throws -> Result<TopUpFormDataDTO, NetworkProviderError> {
+        let accountsResult = try dataSource.getPhoneTopUpAccounts()
+        let operatorsResult = try dataSource.getOperators()
+        let gsmOperatorsResult = try dataSource.getGSMOperators()
+        let internetContactsResults = try dataSource.getInternetContacts()
+        switch (accountsResult, operatorsResult, gsmOperatorsResult, internetContactsResults) {
+        case (.success(let accounts), .success(let operators), .success(let gsmOperators), .success(let contacts)):
+            return .success(TopUpFormDataDTO(accounts: accounts, operators: operators, gsmOperators: gsmOperators, internetContacts: contacts))
+        case (.failure(let accountsFetchError), _, _, _):
+            return .failure(accountsFetchError)
+        case (_, .failure(let operatorsFetchError), _, _):
+            return .failure(operatorsFetchError)
+        case (_, _, .failure(let gsmOperatorsFetchError), _):
+            return .failure(gsmOperatorsFetchError)
+        case (_, _, _, .failure(let internetContactsFetchError)):
+            return .failure(internetContactsFetchError)
+        }
     }
 }

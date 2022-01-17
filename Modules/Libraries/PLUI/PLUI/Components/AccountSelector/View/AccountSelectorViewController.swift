@@ -6,7 +6,6 @@
 //
 
 import UI
-import PLUI
 
 public protocol AccountSelectorViewProtocol: AnyObject,
                                       LoaderPresentable,
@@ -89,7 +88,7 @@ private extension AccountSelectorViewController {
     }
     
     private func configureNavigationItem() {
-        let navBuilder = NavigationBarBuilder(style: .white, title: .title(key: "#Wybierz konto"))
+        let navBuilder = NavigationBarBuilder(style: .white, title: .title(key: "pl_blik_title_selectAccount"))
             .setLeftAction(.back(action: #selector(close)))
         
         if screenLocationConfiguration.showRightNavigationAction {

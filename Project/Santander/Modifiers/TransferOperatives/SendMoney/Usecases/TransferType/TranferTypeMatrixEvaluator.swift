@@ -1,6 +1,5 @@
 struct TranferTypeMatrixEvaluator: Hashable {
     enum MatrixTransferType {
-        case creditCardAccount
         case zero
         case one
         case oneWithOptional
@@ -10,7 +9,6 @@ struct TranferTypeMatrixEvaluator: Hashable {
         
         var toTransferType: PolandTransferType {
             switch self {
-            case .creditCardAccount: return .creditCardAccount
             case .zero: return .zero
             case .one: return .one
             case .oneWithOptional: return .one

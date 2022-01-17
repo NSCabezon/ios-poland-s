@@ -36,6 +36,16 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     private enum Constants {
         static let bottomDistance: CGFloat = 67
         static let animationDuration: TimeInterval = 0.2
+
+        enum Accessibility: String {
+            case loginUnregisteredContainerNikAlias
+            case loginUnregisteredTextNikAlias
+            case loginUnregisteredTitleLabel = "pl_login_label_login"
+            case loginUnregisteredLabelGreeting
+            case loginUnregisteredBtnShowDialogLostKey
+            case loginUnregisteredBtnAccess
+            case sanIcon = "icnSanWhite"
+        }
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -160,7 +170,7 @@ private extension PLUnrememberedLoginIdViewController {
         configureButtons()
         configureNavigationController()
         configureKeyboard()
-        setAccessibility()
+        setAccessibilityIdentifiers()
     }
     
     func configureRegardLabel() {
@@ -194,9 +204,14 @@ private extension PLUnrememberedLoginIdViewController {
         tooltipButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tooltipButtonDidPressed)))
     }
 
-    func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    func setAccessibilityIdentifiers() {
+        documentTextField.accessibilityIdentifier = Constants.Accessibility.loginUnregisteredContainerNikAlias.rawValue
+        documentTextField.titleLabel.accessibilityIdentifier = Constants.Accessibility.loginUnregisteredTitleLabel.rawValue
+        documentTextField.textField .accessibilityIdentifier = Constants.Accessibility.loginUnregisteredTextNikAlias.rawValue
+        loginButton.accessibilityIdentifier = Constants.Accessibility.loginUnregisteredBtnAccess.rawValue
+        regardLabel.accessibilityIdentifier = Constants.Accessibility.loginUnregisteredLabelGreeting.rawValue
+        sanIconImageView.accessibilityIdentifier = Constants.Accessibility.sanIcon.rawValue
+        tooltipButton.accessibilityIdentifier = Constants.Accessibility.loginUnregisteredBtnShowDialogLostKey.rawValue
     }
     
     func regardNow() -> String {

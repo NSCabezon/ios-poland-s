@@ -5,7 +5,7 @@ import Commons
 protocol ZusTransferFormViewProtocol: AnyObject,
                                       ConfirmationDialogPresentable {
     func setAccountViewModel()
-    func showValidationMessages(messages: InvalidZusTransferFormMessages)
+    func showValidationMessages(with data: InvalidZusTransferFormData)
 }
 
 final class ZusTransferFormViewController: UIViewController {
@@ -31,6 +31,7 @@ final class ZusTransferFormViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
         view.layoutIfNeeded()
     }
 }
@@ -50,6 +51,7 @@ private extension ZusTransferFormViewController {
         configureView()
         prepareNavigationBar()
         setUpLayout()
+        addKeyboardObserver()
     }
     
     func addSubviews() {
@@ -98,6 +100,18 @@ private extension ZusTransferFormViewController {
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+        
+    @objc func keyboardWillHide(notification: NSNotification) {
+        formView.setCurrentActiveFieldType(.none)
+    }
 }
 
 extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
@@ -105,23 +119,36 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
         formView.configure(with: presenter.getSelectedAccountViewModels())
     }
     
-    func showValidationMessages(messages: InvalidZusTransferFormMessages) {
+    func showValidationMessages(with data: InvalidZusTransferFormData) {
         let form = formView.getCurrentFormViewModel()
-        formView.showInvalidFormMessages(messages)
-        if messages.shouldContinueButtonBeEnabled,
+        formView.showInvalidFormMessages(with: data)
+        if data.shouldContinueButtonBeEnabled,
            form.amount != nil {
             bottomView.enableButton()
         } else {
             bottomView.disableButton()
         }
     }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
 }
 
 extension ZusTransferFormViewController: ZusTransferFormViewDelegate {
-    func didChangeForm() {
-      //TODO: Implemented form
+
+    func didChangeForm(with field: TransferFormCurrentActiveField) {
+        presenter.updateTransferFormViewModel(
+            with: formView.getCurrentFormViewModel()
+        )
+        presenter.startValidation(with: field)
     }
-    
     func changeAccountTapped() {
         presenter.showAccountSelector()
     }

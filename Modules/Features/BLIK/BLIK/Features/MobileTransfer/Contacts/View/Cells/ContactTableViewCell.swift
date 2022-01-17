@@ -1,5 +1,6 @@
 import Foundation
 import UI
+import PLCommons
 import PLUI
 
 final class ContactTableViewCell: UITableViewCell {
@@ -50,7 +51,7 @@ final class ContactTableViewCell: UITableViewCell {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     
-    func setContact(_ contact: Contact, backgroundColor: UIColor) {
+    func setContact(_ contact: MobileContact, backgroundColor: UIColor) {
         let fullName = contact.fullName
         fullNameLabel.text = fullName.isEmpty ? contact.phoneNumber : fullName
         phoneNoLabel.text = contact.phoneNumber

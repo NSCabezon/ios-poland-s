@@ -24,7 +24,7 @@ final class AccountsForDebitCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
-    private let contact: Contact?
+    private let contact: MobileContact?
     private let sourceView: SourceView
     weak var selectableAccountDelegate: FormAccountSelectable?
 
@@ -32,7 +32,7 @@ final class AccountsForDebitCoordinator: ModuleCoordinator {
          navigationController: UINavigationController?,
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
-         contact: Contact?,
+         contact: MobileContact?,
          sourceView: SourceView,
          selectableAccountDelegate: FormAccountSelectable?) {
         self.navigationController = navigationController

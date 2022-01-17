@@ -14,16 +14,8 @@ final class CardDataDTOAdapter {
         cardDataDTO.PAN = plCard.maskedPan
         cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.availableBalance)
         cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
-        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.creditLimit)
+        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.relatedAccountData?.creditLimit)
         cardDataDTO.visualCode = plCard.productCode
-        if let type = plCard.type,
-           type.lowercased() == "credit" {
-            var amount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
-            amount?.value?.negate()
-            cardDataDTO.currentBalance = amount
-        } else {
-            cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
-        }
         if let customer = customer {
             cardDataDTO.stampedName = customer
         }

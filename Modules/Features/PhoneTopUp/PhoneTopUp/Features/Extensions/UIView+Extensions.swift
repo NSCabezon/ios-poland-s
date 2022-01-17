@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 extension UIView {
-    func addSubviewConstraintToEdges(_ subview: UIView) {
+    func addSubviewConstraintToEdges(_ subview: UIView, padding: UIEdgeInsets = .zero) {
         self.addSubview(subview)
-        subview.constrainEdges(to: self)
+        subview.constrainEdges(to: self, padding: padding)
     }
     
     func addSubviewsConstraintToSafeAreaEdges(_ subview: UIView) {
@@ -25,13 +25,13 @@ extension UIView {
         ])
     }
     
-    func constrainEdges(to view: UIView) {
+    func constrainEdges(to view: UIView, padding: UIEdgeInsets = .zero) {
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topAnchor.constraint(equalTo: view.topAnchor),
-            bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -padding.left),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: padding.right),
+            view.topAnchor.constraint(equalTo: topAnchor, constant: -padding.top),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: padding.bottom)
         ])
     }
 }

@@ -11,6 +11,7 @@ protocol ZusTransferFormPresenterProtocol {
     func getSelectedAccountNumber() -> String
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
+    func startValidation(with field: TransferFormCurrentActiveField)
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -26,7 +27,10 @@ final class ZusTransferFormPresenter {
     private var confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
-
+    #warning("maskAccount should be changed")
+    //TODO: get maskAccount from Api
+    private let maskAccount = "60000002026"
+    
     init(
         dependenciesResolver: DependenciesResolver,
         accounts: [AccountForDebit],
@@ -43,6 +47,7 @@ final class ZusTransferFormPresenter {
 }
 
 extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
+    
     func getLanguage() -> String {
         dependenciesResolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode
     }
@@ -74,6 +79,22 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel) {
         transferFormViewModel = viewModel
+    }
+    
+    func startValidation(with field: TransferFormCurrentActiveField) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.validationAction(with: field)
+        }
+    }
+    
+    func validationAction(with field: TransferFormCurrentActiveField) {
+        guard let form = transferFormViewModel else { return }
+        let invalidMessages = formValidator.validateForm(
+            form: form,
+            with: field,
+            maskAccount: maskAccount
+        )
+        view?.showValidationMessages(with: invalidMessages)
     }
 }
 

@@ -2,270 +2,357 @@
     "12345678Z": {
         "0": {
             "accounts": [
-                {
-                    "number": "PL43109011990000000132578056",
-                    "accountId": {
-                        "id": "132578056",
-                        "systemId": 3
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Konto Godne Polecenia",
-                        "userDefined": "Konto Godne Polecenia"
-                    },
-                    "role": "CO_OWNER",
-                    "type": "PERSONAL",
-                    "balance": {
-                        "value": 48268.74,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 48268.74
-                    },
-                    "availableFunds": {
-                        "value": 48268.74,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 48268.74
-                    },
-                    "withholdingBalance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "overDraftLimit": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "lastUpdate": "2021-06-07",
-                    "bankId": 0,
-                    "defaultForPayments": true
+              {
+                "number": "43109011990000000132578056",
+                "accountId": {
+                  "id": "132578056",
+                  "systemId": 3
                 },
-                {
-                    "number": "14150025980000000142214872",
-                    "accountId": {
-                        "id": "142214872",
-                        "systemId": 3
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Ekstrakonto S",
-                        "userDefined": "Ekstrakonto S"
-                    },
-                    "role": "OWNER",
-                    "type": "PERSONAL",
-                    "balance": {
-                        "value": -12477.4,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": -12477.4
-                    },
-                    "availableFunds": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "withholdingBalance": {
-                        "value": 12477.4,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 12477.4
-                    },
-                    "overDraftLimit": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "lastUpdate": "2021-05-31",
-                    "bankId": 0,
-                    "defaultForPayments": false
+                "productId": {
+                  "id": "43109011990000000132578056",
+                  "systemId": 3
                 },
-                {
-                    "number": "109025900000000142354001",
-                    "accountId": {
-                        "id": "142237622",
-                        "systemId": 3
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Konto Jakie Chcę",
-                        "userDefined": "Konto Jakie Chcę"
-                    },
-                    "role": "OWNER",
-                    "type": "PERSONAL",
-                    "balance": {
-                        "value": -1097.49,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": -1097.49
-                    },
-                    "availableFunds": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "withholdingBalance": {
-                        "value": 1097.49,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 1097.49
-                    },
-                    "overDraftLimit": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "lastUpdate": "2021-06-10",
-                    "bankId": 0,
-                    "defaultForPayments": false
+                "currencyCode": "PLN",
+                "name": {
                 },
-                {
-                    "number": "15109014894000000121574471",
-                    "accountId": {
-                        "id": "3053019",
-                        "systemId": 2
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Visa Silver AP",
-                        "userDefined": "Visa Silver AP"
-                    },
-                    "role": "OWNER",
-                    "type": "CREDIT_CARD",
-                    "balance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "availableFunds": {
-                        "value": 3555,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 3555
-                    },
-                    "withholdingBalance": {
-                        "value": 3555,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 3555
-                    },
-                    "overDraftLimit": {
-                        "value": 3555,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 3555
-                    },
-                    "lastUpdate": null,
-                    "bankId": 0,
-                    "defaultForPayments": false
+                "role": "CO_OWNER",
+                "permissionList": null,
+                "type": "PERSONAL",
+                "subType": null,
+                "balance": {
+                  "value": 41927.91,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 41927.91
                 },
-                {
-                    "number": "36109014894000000121576518",
-                    "accountId": {
-                        "id": "3053151",
-                        "systemId": 2
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Visa Silver AP",
-                        "userDefined": "Visa Silver AP"
-                    },
-                    "role": "OWNER",
-                    "type": "CREDIT_CARD",
-                    "balance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "availableFunds": {
-                        "value": 1000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 1000
-                    },
-                    "withholdingBalance": {
-                        "value": 1000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 1000
-                    },
-                    "overDraftLimit": {
-                        "value": 1000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 1000
-                    },
-                    "lastUpdate": null,
-                    "bankId": 0,
-                    "defaultForPayments": false
+                "availableFunds": {
+                  "value": 41927.91,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 41927.91
                 },
-                {
-                    "number": "40109014894000000121576252",
-                    "accountId": {
-                        "id": "3053123",
-                        "systemId": 2
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Visa Silver AP",
-                        "userDefined": "Visa Silver AP"
-                    },
-                    "role": "OWNER",
-                    "type": "CREDIT_CARD",
-                    "balance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "availableFunds": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "withholdingBalance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "overDraftLimit": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "lastUpdate": null,
-                    "bankId": 0,
-                    "defaultForPayments": false
+                "withholdingBalance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
                 },
-                {
-                    "number": "55109014894000000121573945",
-                    "accountId": {
-                        "id": "3032891",
-                        "systemId": 2
-                    },
-                    "currencyCode": "PLN",
-                    "name": {
-                        "description": "Visa Silver AP",
-                        "userDefined": "Visa Silver AP"
-                    },
-                    "role": "OWNER",
-                    "type": "CREDIT_CARD",
-                    "balance": {
-                        "value": 0,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 0
-                    },
-                    "availableFunds": {
-                        "value": 7000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 7000
-                    },
-                    "withholdingBalance": {
-                        "value": 7000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 7000
-                    },
-                    "overDraftLimit": {
-                        "value": 7000,
-                        "currencyCode": "PLN",
-                        "valueInBaseCurrency": 7000
-                    },
-                    "lastUpdate": null,
-                    "bankId": 0,
-                    "defaultForPayments": false
-                }
+                "overDraftLimit": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "lastUpdate": "2021-12-06",
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "14150025980000000142214872",
+                "accountId": {
+                  "id": "142214872",
+                  "systemId": 3
+                },
+                "productId": {
+                  "id": "14150025980000000142214872",
+                  "systemId": 3
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Ekstrakonto S",
+                  "userDefined": "Ekstrakonto S"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "PERSONAL",
+                "subType": null,
+                "balance": {
+                  "value": -12696.85,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": -12696.85
+                },
+                "availableFunds": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "withholdingBalance": {
+                  "value": 12696.85,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 12696.85
+                },
+                "overDraftLimit": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "lastUpdate": "2021-11-30",
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "92109010140000000142237622",
+                "accountId": {
+                  "id": "142237622",
+                  "systemId": 3
+                },
+                "productId": {
+                  "id": "92109010140000000142237622",
+                  "systemId": 3
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Konto Jakie Chcę",
+                  "userDefined": "Konto Jakie Chcę"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "PERSONAL",
+                "subType": "KJC",
+                "balance": {
+                  "value": -1171.23,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": -1171.23
+                },
+                "availableFunds": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "withholdingBalance": {
+                  "value": 1171.23,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 1171.23
+                },
+                "overDraftLimit": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "lastUpdate": "2021-12-10",
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "15109014894000000121574471",
+                "accountId": {
+                  "id": "3053019",
+                  "systemId": 2
+                },
+                "productId": {
+                  "id": "15109014894000000121574471",
+                  "systemId": 2
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Visa Silver AP",
+                  "userDefined": "Visa Silver AP"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "CREDIT_CARD",
+                "subType": null,
+                "balance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "availableFunds": {
+                  "value": 3555,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 3555
+                },
+                "withholdingBalance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "overDraftLimit": {
+                  "value": 3555,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 3555
+                },
+                "lastUpdate": null,
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "36109014894000000121576518",
+                "accountId": {
+                  "id": "3053151",
+                  "systemId": 2
+                },
+                "productId": {
+                  "id": "36109014894000000121576518",
+                  "systemId": 2
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Visa Silver AP",
+                  "userDefined": "Visa Silver AP"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "CREDIT_CARD",
+                "subType": null,
+                "balance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "availableFunds": {
+                  "value": 1000,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 1000
+                },
+                "withholdingBalance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "overDraftLimit": {
+                  "value": 1000,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 1000
+                },
+                "lastUpdate": null,
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "40109014894000000121576252",
+                "accountId": {
+                  "id": "3053123",
+                  "systemId": 2
+                },
+                "productId": {
+                  "id": "40109014894000000121576252",
+                  "systemId": 2
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Visa Silver AP",
+                  "userDefined": "Visa Silver AP"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "CREDIT_CARD",
+                "subType": null,
+                "balance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "availableFunds": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "withholdingBalance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "overDraftLimit": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "lastUpdate": null,
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "55109014894000000121573945",
+                "accountId": {
+                  "id": "3032891",
+                  "systemId": 2
+                },
+                "productId": {
+                  "id": "55109014894000000121573945",
+                  "systemId": 2
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Visa Silver AP",
+                  "userDefined": "Visa Silver AP"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "CREDIT_CARD",
+                "subType": null,
+                "balance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "availableFunds": {
+                  "value": 7000,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 7000
+                },
+                "withholdingBalance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "overDraftLimit": {
+                  "value": 7000,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 7000
+                },
+                "lastUpdate": null,
+                "bankId": 0,
+                "defaultForPayments": false
+              },
+              {
+                "number": "62109014894000000121601076",
+                "accountId": {
+                  "id": "3091418",
+                  "systemId": 2
+                },
+                "productId": {
+                  "id": "62109014894000000121601076",
+                  "systemId": 2
+                },
+                "currencyCode": "PLN",
+                "name": {
+                  "description": "Karta kredytowa 123",
+                  "userDefined": "Karta kredytowa 123"
+                },
+                "role": "OWNER",
+                "permissionList": null,
+                "type": "CREDIT_CARD",
+                "subType": null,
+                "balance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "availableFunds": {
+                  "value": 5000,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 5000
+                },
+                "withholdingBalance": {
+                  "value": 0,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 0
+                },
+                "overDraftLimit": {
+                  "value": 5000,
+                  "currencyCode": "PLN",
+                  "valueInBaseCurrency": 5000
+                },
+                "lastUpdate": null,
+                "bankId": 0,
+                "defaultForPayments": false
+              }
             ],
             "cards": [
                 {
                     "maskedPan": "438371_5284",
-                    "virtualPan": "438371I013523051",
+                    "virtualPan": "412281P002925860",
+                    "productId":{
+                       "id":"412281P002925860",
+                       "systemId":2
+                    },
                     "generalStatus": "ACTIVE",
                     "cardStatus": "00",
                     "role": "OWNER",
@@ -295,7 +382,11 @@
                 },
                 {
                     "maskedPan": "421352_6505",
-                    "virtualPan": "421352I013731834",
+                    "virtualPan": "421352I036827548",
+                    "productId":{
+                       "id":"421352I036827548",
+                       "systemId":2
+                    },
                     "generalStatus": "ACTIVE",
                     "cardStatus": "00",
                     "role": "NOT_OWNER",
@@ -321,11 +412,22 @@
                         "value": 1000,
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 1000
+                    },
+                    "relatedAccountData": {
+                        "creditLimit": {
+                            "value": 4000,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 8000
+                        }
                     }
                 },
                 {
                     "maskedPan": "421352_6506",
-                    "virtualPan": "421352I013731844",
+                    "virtualPan": "421352I036827547",
+                    "productId":{
+                       "id":"421352I036827547",
+                       "systemId":2
+                    },
                     "generalStatus": "INACTIVE",
                     "cardStatus": "00",
                     "role": "NOT_OWNER",
@@ -355,7 +457,11 @@
                 },
                 {
                     "maskedPan": "412281_9533",
-                    "virtualPan": "512281P002925830",
+                    "virtualPan": "421352I036827546",
+                    "productId":{
+                       "id":"421352I036827546",
+                       "systemId":2
+                    },
                     "generalStatus": "BLOCKED",
                     "cardStatus": "00",
                     "role": "OWNER",
@@ -381,11 +487,22 @@
                         "value": 1000,
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 1000
+                    },
+                    "relatedAccountData": {
+                        "creditLimit": {
+                            "value": 8000,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 8000
+                        }
                     }
                 },
                 {
                     "maskedPan": "421352_7895",
-                    "virtualPan": "421352I037372333",
+                    "virtualPan": "421352I036827545",
+                    "productId":{
+                       "id":"421352I036827545",
+                       "systemId":2
+                    },
                     "generalStatus": "CANCELLED",
                     "cardStatus": "00",
                     "role": "OWNER",
@@ -411,6 +528,13 @@
                         "value": 12477.4,
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 12477.4
+                    },
+                    "relatedAccountData": {
+                        "creditLimit": {
+                            "value": 15000,
+                            "currencyCode": "PLN",
+                            "valueInBaseCurrency": 15000
+                        }
                     }
                 }
             ],
@@ -678,27 +802,27 @@
                         "lastUpdate": "2021-04-03"
                     }
                 ],
-                "investmentFunds": [
-                    {
-                        "number": "00060402-08-0010",
-                        "accountId": {
-                            "id": "108617477",
-                            "systemId": 5
-                        },
+            "investmentFunds": [
+                {
+                    "number": "00060402-08-0010",
+                    "accountId": {
+                        "id": "108617477",
+                        "systemId": 5
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "SANTANDER AKCJI ŚRODKOWEJ I WSCHODNIEJ EUROPY - PRODUKT STANDARDOWY",
+                        "userDefined": "SANTANDER AKCJI ŚRODKOWEJ I WSCHODNIEJ EUROPY - PRODUKT STANDARDOWY"
+                    },
+                    "role": "OWNER",
+                    "type": "INVESTMENT",
+                    "currentValue": {
+                        "value": 15450.94,
                         "currencyCode": "PLN",
-                        "name": {
-                            "description": "SANTANDER AKCJI ŚRODKOWEJ I WSCHODNIEJ EUROPY - PRODUKT STANDARDOWY",
-                            "userDefined": "SANTANDER AKCJI ŚRODKOWEJ I WSCHODNIEJ EUROPY - PRODUKT STANDARDOWY"
-                        },
-                        "role": "OWNER",
-                        "type": "INVESTMENT",
-                        "currentValue": {
-                            "value": 15450.94,
-                            "currencyCode": "PLN",
-                            "valueInBaseCurrency": 15450.94
-                        }
+                        "valueInBaseCurrency": 15450.94
                     }
-                ]
+                }
+            ]
         }
     }
 }

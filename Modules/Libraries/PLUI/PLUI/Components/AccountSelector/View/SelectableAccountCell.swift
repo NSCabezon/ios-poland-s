@@ -5,7 +5,6 @@
 //  Created by Piotr Mielcarzewicz on 05/08/2021.
 //
 import Commons
-import PLUI
 
 final class SelectableAccountCell: UITableViewCell {
     static let identifier = "BLIK.SelectableAccountCell"

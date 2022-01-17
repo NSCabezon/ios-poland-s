@@ -19,7 +19,6 @@ def core_dependencies
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
-  pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
 end
