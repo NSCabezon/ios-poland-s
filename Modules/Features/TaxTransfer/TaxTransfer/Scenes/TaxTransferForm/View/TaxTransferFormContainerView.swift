@@ -62,6 +62,35 @@ final class TaxTransferFormContainerView: UIView {
         amountField.setInvalidFieldMessage(nil)
         obligationIdentifierField.setInvalidFieldMessage(nil)
     }
+    
+    func configureAccountSelector(
+        with viewModel: Selectable<TaxTransferFormViewModel.AccountViewModel>,
+        onTap: @escaping () -> Void
+    ) {
+        accountSelector.configure(with: viewModel, onTap: onTap)
+    }
+    
+    func configureTaxPayerSelector(
+        with viewModel: Selectable<TaxTransferFormViewModel.TaxPayerViewModel>,
+        onTap: @escaping () -> Void
+    ) {
+        taxPayerSelector.configure(with: viewModel, onTap: onTap)
+    }
+    
+    func configureTaxAuthoritySelector(
+        with viewModel: Selectable<TaxTransferFormViewModel.TaxAuthorityViewModel>,
+        onTap: @escaping () -> Void
+    ) {
+        taxAuthoritySelector.configure(with: viewModel, onTap: onTap)
+    }
+    
+    func configureAmountField(with viewModel: TaxTransferFormViewModel.AmountViewModel) {
+        amountField.configure(with: viewModel)
+    }
+    
+    func configureObligationIdentifierField(with viewModel: TaxTransferFormViewModel) {
+        obligationIdentifierField.configure(with: viewModel)
+    }
 }
 
 private extension TaxTransferFormContainerView {

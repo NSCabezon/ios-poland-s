@@ -26,7 +26,7 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let formData: GetPhoneTopUpFormDataOutput
-    private weak var accountSelectorDelegate: AccountSelectorDelegate?
+    private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var contactsSelectorDelegate: MobileContactsSelectorDelegate?
     
     private lazy var phoneTopUpController = dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
@@ -114,14 +114,21 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         showAccountSelector(availableAccounts: availableAccounts, selectedAccountNumber: selectedAccountNumber, mode: .changeDefaultAccount)
     }
     
-    func showAccountSelector(availableAccounts: [AccountForDebit], selectedAccountNumber: String?, mode: AccountSelectorMode) {
-        let accountSelectorCoordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                                    navigationController: navigationController,
-                                                                    mode: mode,
-                                                                    accounts: availableAccounts,
-                                                                    selectedAccountNumber: selectedAccountNumber,
-                                                                    accountSelectorDelegate: self)
-        accountSelectorCoordinator.start()
+    func showAccountSelector(
+        availableAccounts: [AccountForDebit],
+        selectedAccountNumber: String?,
+        mode: AccountForDebitSelectorMode
+    ) {
+        let coordinator = AccountForDebitSelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            mode: mode,
+            accounts: availableAccounts,
+            screenLocationConfiguration: .phoneTopUp,
+            selectedAccountNumber: selectedAccountNumber,
+            accountSelectorDelegate: self
+        )
+        coordinator.start()
     }
     
     func showInternetContacts() {
@@ -150,9 +157,9 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
     }
 }
 
-extension PhoneTopUpFormCoordinator: AccountSelectorDelegate {
-    func accountSelectorDidSelectAccount(withAccountNumber accountNumber: String) {
-        accountSelectorDelegate?.accountSelectorDidSelectAccount(withAccountNumber: accountNumber)
+extension PhoneTopUpFormCoordinator: AccountForDebitSelectorDelegate {
+    public func didSelectAccount(withAccountNumber accountNumber: String) {
+        accountSelectorDelegate?.didSelectAccount(withAccountNumber: accountNumber)
     }
 }
 

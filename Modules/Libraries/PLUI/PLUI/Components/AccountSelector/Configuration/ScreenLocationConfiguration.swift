@@ -4,7 +4,7 @@ import Commons
 extension AccountSelectorViewController {
     
     public enum ScreenLocationConfiguration {
-        case mobileTransferSettings, mobileTransfer, charityTransfer, phoneTopUp, zusTransfer
+        case mobileTransferSettings, mobileTransfer, charityTransfer, phoneTopUp, zusTransfer, taxTransfer
         
         var title: String {
             switch self {
@@ -20,6 +20,9 @@ extension AccountSelectorViewController {
             case .phoneTopUp:
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz doładować telefon:"
+            case .taxTransfer:
+                #warning("should be changed")
+                return "#Wybierz konto, z którego chcesz zrobić przelew:"
             }
         }
         

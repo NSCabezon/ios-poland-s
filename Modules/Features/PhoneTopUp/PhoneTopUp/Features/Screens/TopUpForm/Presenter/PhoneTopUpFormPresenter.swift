@@ -14,7 +14,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 
-protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate, MobileContactsSelectorDelegate {
+protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, MobileContactsSelectorDelegate {
     var view: PhoneTopUpFormViewProtocol? { get set }
     func viewDidLoad()
     func didSelectBack()
@@ -83,7 +83,7 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
         coordinator?.close()
     }
     
-    func accountSelectorDidSelectAccount(withAccountNumber accountNumber: String) {
+    func didSelectAccount(withAccountNumber accountNumber: String) {
         selectedAccountNumber = accountNumber
         let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         view?.updateSelectedAccount(with: viewModels)

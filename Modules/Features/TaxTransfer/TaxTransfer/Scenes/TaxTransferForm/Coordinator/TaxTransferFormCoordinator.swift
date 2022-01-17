@@ -7,18 +7,25 @@
 
 import UI
 import CoreFoundationLib
+import CoreDomain
 import Commons
 import PLCommons
 import PLCommonOperatives
 import SANPLLibrary
 
 public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
+    func showAccountSelector(
+        with accounts: [AccountForDebit],
+        selectedAccountNumber: String?,
+        mode: AccountForDebitSelectorMode
+    )
     func back()
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
 
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -30,14 +37,33 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
     }
     
     public func start() {
-        var presenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
+        let presenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
         let controller = TaxTransferFormViewController(presenter: presenter)
         presenter.view = controller
+        accountSelectorDelegate = presenter
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
+    public func showAccountSelector(
+        with accounts: [AccountForDebit],
+        selectedAccountNumber: String?,
+        mode: AccountForDebitSelectorMode
+    ) {
+        guard let delegate = accountSelectorDelegate else { return }
+        let coordinator = AccountForDebitSelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            mode: mode,
+            accounts: accounts,
+            screenLocationConfiguration: .taxTransfer,
+            selectedAccountNumber: selectedAccountNumber,
+            accountSelectorDelegate: delegate
+        )
+        coordinator.start()
+    }
+    
     public func back() {
         navigationController?.popViewController(animated: true)
     }
@@ -52,7 +78,10 @@ private extension TaxTransferFormCoordinator {
         }
         
         dependenciesEngine.register(for: TaxTransferFormPresenterProtocol.self) { resolver in
-            return TaxTransferFormPresenter(dependenciesResolver: resolver)
+            return TaxTransferFormPresenter(
+                currency: CurrencyType.złoty.name,
+                dependenciesResolver: resolver
+            )
         }
         
         dependenciesEngine.register(for: TaxFormConfiguration.self) { resolver in
@@ -78,6 +107,10 @@ private extension TaxTransferFormCoordinator {
                 transactionType: .taxTransfer,
                 dependenciesResolver: resolver
             )
+        }
+        
+        dependenciesEngine.register(for: TaxTransferAccountViewModelMapping.self) { _ in
+            return TaxTransferAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
     }
 }
