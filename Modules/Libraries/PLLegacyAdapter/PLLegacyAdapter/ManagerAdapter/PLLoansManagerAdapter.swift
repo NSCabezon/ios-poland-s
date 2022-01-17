@@ -7,6 +7,7 @@
 
 import SANLegacyLibrary
 import SANPLLibrary
+import CoreDomain
 import Commons
 
 final class PLLoansManagerAdapter {
