@@ -1,0 +1,11 @@
+{
+    "12345678Z": {
+        "0": {
+            "noOfLogins": 730,
+            "noOfBadLoginAttempts": 4,
+            "lastLogin": "2022-01-11T16:37:37.000",
+            "lastBadLoginAttempt": "2019-03-22T10:31:19.000",
+            "hasActiveAlias": false
+        }
+    }
+}
