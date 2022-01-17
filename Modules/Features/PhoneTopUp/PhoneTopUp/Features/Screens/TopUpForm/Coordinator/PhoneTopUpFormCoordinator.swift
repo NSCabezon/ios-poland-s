@@ -17,6 +17,7 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?)
     func showInternetContacts()
     func showPhoneContacts(_ contacts: [MobileContact])
+    func showTopUpConfirmation(with summary: TopUpModel)
 }
 
 public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
@@ -145,6 +146,13 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
                                                                 navigationController: navigationController,
                                                                 contacts: contacts)
         phoneContactsCoordinator.start()
+    }
+    
+    func showTopUpConfirmation(with summary: TopUpModel) {
+        let confirmationCoordinator = TopUpConfirmationCoordinator(dependenciesResolver: dependenciesEngine,
+                                                    navigationController: navigationController,
+                                                    summary: summary)
+        confirmationCoordinator.start()
     }
     
     private func showContactsPermissionDeniedDialog() {

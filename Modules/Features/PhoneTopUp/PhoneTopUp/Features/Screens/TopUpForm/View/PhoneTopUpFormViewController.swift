@@ -83,8 +83,8 @@ final class PhoneTopUpFormViewController: UIViewController {
     private func prepareStyles() {
         view.backgroundColor = .white
         navigationBarSeparator.backgroundColor = .lightSanGray
-        bottomButtonView.configure(title: localized("generic_button_continue")) {
-            // TODO: Add ready botton action
+        bottomButtonView.configure(title: localized("generic_button_continue")) { [weak self] in
+            self?.presenter.didTouchContinueButton()
         }
         bottomButtonView.disableButton()
     }

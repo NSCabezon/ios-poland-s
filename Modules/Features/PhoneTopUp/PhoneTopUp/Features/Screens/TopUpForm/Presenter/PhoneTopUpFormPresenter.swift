@@ -23,6 +23,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
     func didTouchContactsButton()
     func didInputPartialPhoneNumber(_ number: String)
     func didInputFullPhoneNumber(_ number: String)
+    func didTouchContinueButton()
 }
 
 final class PhoneTopUpFormPresenter {
@@ -80,7 +81,6 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
             self?.coordinator?.close()
         } declineAction: {}
         view?.showDialog(dialog)
-        coordinator?.close()
     }
     
     func didSelectAccount(withAccountNumber accountNumber: String) {
@@ -130,11 +130,31 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
         // we don't need to do anything here
     }
     
-    private func matchOperator(with number: String) -> Operator? {
+    func didTouchContinueButton() {
+        #warning("todo: remove mock data once whole form is implemented")
+        let account = AccountForDebit(id: "id",
+                                      name: "Konto marzeń",
+                                      number: "31109015220000000052017788",
+                                      availableFunds: Money(amount: Decimal(500.0), currency: "PLN"),
+                                      defaultForPayments: true,
+                                      type: .DEPOSIT,
+                                      accountSequenceNumber: 0,
+                                      accountType: 34)
+        let formData = TopUpModel(amount: Decimal(40.44),
+                                   account: account,
+                                   recipientNumber: "+48 558 457 348",
+                                   recipientName: "Jan Bankowy",
+                                   date: Date())
+        coordinator?.showTopUpConfirmation(with: formData)
+    }
+}
+
+private extension PhoneTopUpFormPresenter {
+    func matchOperator(with number: String) -> Operator? {
         return operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })
     }
     
-    private func showPhoneContacts() {
+    func showPhoneContacts() {
         Scenario(useCase: getPhoneContactsUseCase)
             .execute(on: useCaseHandler)
             .onSuccess {[weak self] output in
