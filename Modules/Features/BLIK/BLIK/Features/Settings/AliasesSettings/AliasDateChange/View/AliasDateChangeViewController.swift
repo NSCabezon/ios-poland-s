@@ -50,7 +50,7 @@ private extension AliasDateChangeViewController {
         configureNavigationItem()
         configureStyling()
         configureDelegates()
-        configureTargets()
+        configureSaveButton()
     }
     
     func configureSubviews() {
@@ -90,10 +90,12 @@ private extension AliasDateChangeViewController {
         view.backgroundColor = .white
     }
     
-    func configureTargets() {
+    func configureSaveButton() {
         footerView.saveButtonTap = { [weak self] in
             self?.presenter.didPressSave()
         }
+        
+        footerView.setIsSaveButtonEnabled(false)
     }
 }
 
