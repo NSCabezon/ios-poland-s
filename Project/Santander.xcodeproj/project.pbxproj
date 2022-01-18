@@ -210,7 +210,6 @@
 		D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B9E49C2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift */; };
 		D5C5A90B273BD483003963CA /* PLPrivateSideMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C5A90A273BD483003963CA /* PLPrivateSideMenuModifier.swift */; };
 		D5C5A90D273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C5A90C273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift */; };
-		D5F2354E27884207009D2B6F /* PLCardChangeAliasUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F2354D27884207009D2B6F /* PLCardChangeAliasUseCase.swift */; };
 		D5F2355227884850009D2B6F /* PLChangeAliasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F2355127884850009D2B6F /* PLChangeAliasManager.swift */; };
 		EF430D5F271DD855001DC4B9 /* TranferTypeMatrixEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */; };
 		EF446B0C271DCA770074813A /* SendMoneyDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */; };
@@ -444,7 +443,6 @@
 		D5B9E49C2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardTransactionDetailActionFactoryModifier.swift; sourceTree = "<group>"; };
 		D5C5A90A273BD483003963CA /* PLPrivateSideMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateSideMenuModifier.swift; sourceTree = "<group>"; };
 		D5C5A90C273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaMainModuleModifier.swift; sourceTree = "<group>"; };
-		D5F2354D27884207009D2B6F /* PLCardChangeAliasUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardChangeAliasUseCase.swift; sourceTree = "<group>"; };
 		D5F2355127884850009D2B6F /* PLChangeAliasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLChangeAliasManager.swift; sourceTree = "<group>"; };
 		D869E1BE63127B37323771F2 /* Pods-Santander.uat-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-debug.xcconfig"; sourceTree = "<group>"; };
 		DAAB778BA14AE2C5BAD53C4C /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
@@ -844,7 +842,6 @@
 		447D7D2D268F002700F9A70D /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				D5F2354C278841EA009D2B6F /* ChangeAlias */,
 				A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */,
 				A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */,
 				A9EF0DA3271D78B700A1604B /* PLContextDTO.swift */,
@@ -1349,14 +1346,6 @@
 			path = TransactionDetails;
 			sourceTree = "<group>";
 		};
-		D5F2354C278841EA009D2B6F /* ChangeAlias */ = {
-			isa = PBXGroup;
-			children = (
-				D5F2354D27884207009D2B6F /* PLCardChangeAliasUseCase.swift */,
-			);
-			path = ChangeAlias;
-			sourceTree = "<group>";
-		};
 		D5F2354F2788482D009D2B6F /* Commons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1582,7 +1571,6 @@
 				446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */,
 				B0D77A55276B4CB500766705 /* PLCharityTransferSettingsDTO.swift in Sources */,
 				9CDAE3B42743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift in Sources */,
-				D5F2354E27884207009D2B6F /* PLCardChangeAliasUseCase.swift in Sources */,
 				0D9E176526B96A9B00781A95 /* PLFundModifier.swift in Sources */,
 				3AF06BCA2795932000E25B23 /* ModuleDependencies.swift in Sources */,
 				447D7D30268F009300F9A70D /* PLCardHomeModifier.swift in Sources */,
