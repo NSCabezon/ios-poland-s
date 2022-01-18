@@ -95,7 +95,7 @@ private extension TaxTransferObligationIdentifierFieldView {
         obligationIdentifier.textField.setEditingStyle(
             .writable(
                 configuration: .init(
-                    type: .floatingTitle,
+                    type: .simple,
                     formatter: formatter,
                     disabledActions: [],
                     keyboardReturnAction: nil,
