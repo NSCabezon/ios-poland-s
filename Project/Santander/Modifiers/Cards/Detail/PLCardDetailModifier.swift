@@ -15,11 +15,17 @@ import CoreFoundationLib
 final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    var isChangeAliasEnabled: Bool = false
+    var isChangeAliasEnabled: Bool = true
     var isCardHolderEnabled: Bool = true
     var prepaidCardHeaderElements: [PrepaidCardHeaderElements] = [.availableBalance]
     var debitCardHeaderElements: [DebitCardHeaderElements] = []
     var creditCardHeaderElements: [CreditCardHeaderElements] = [.limitCredit, .availableCredit, .withdrawnCredit]
+    var maxAliasLength: Int {
+        return 20
+    }
+    var regExValidatorString: CharacterSet {
+        return CharacterSet(charactersIn: "^([1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ]*)$")
+    }
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
