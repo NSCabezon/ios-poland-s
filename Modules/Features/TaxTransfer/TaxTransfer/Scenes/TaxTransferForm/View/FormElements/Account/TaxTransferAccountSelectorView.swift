@@ -8,8 +8,10 @@
 import PLUI
 
 final class TaxTransferAccountSelectorView: UIView {
-    private lazy var sectionContainer = getSectionContainer()
+    private lazy var accountSection = getSectionContainer(with: accountView)
+    private lazy var selectorSection = getSectionContainer(with: selectorView)
     private let accountView = SelectedAccountView()
+    private let selectorView = TaxTransferElementSelectorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,52 +24,70 @@ final class TaxTransferAccountSelectorView: UIView {
     }
     
     func configure(
-        with viewModel: TaxTransferFormViewModel.SelectedAccount,
+        with viewModel: Selectable<TaxTransferFormViewModel.AccountViewModel>,
         onTap: @escaping () -> Void
     ) {
-        accountView.setChangeAction(onTap)
-        accountView.setViewModel(mapViewModels(from: viewModel))
+        switch viewModel {
+        case let .selected(accountViewModel):
+            showSelectedAccount(
+                viewModel: accountViewModel,
+                onTap: onTap
+            )
+        case .unselected:
+            showSelector(onTap: onTap)
+        }
     }
 }
 
 private extension TaxTransferAccountSelectorView {
+    func showSelectedAccount(
+        viewModel: TaxTransferFormViewModel.AccountViewModel,
+        onTap: @escaping () -> Void
+    ) {
+        selectorSection.isHidden = true
+        accountSection.isHidden = false
+        accountView.setViewModel(mapViewModels(from: viewModel))
+        accountView.setChangeAction(onTap)
+    }
+    
+    func showSelector(onTap: @escaping () -> Void) {
+        accountSection.isHidden = true
+        selectorSection.isHidden = false
+        selectorView.configure(onTap: onTap)
+    }
+    
     func setUp() {
         configureSubviews()
-        
-        // TODO:- Remove after hooking up data with presenter
-        configure(with:
-            .init(
-                accountName: "Konto dla Ciebie",
-                maskedAccountNumber: "*1234",
-                unformattedAccountNumber: "",
-                accountBalance: "96,73 PLN",
-                isOnlyAccount: false
-            ),
-            onTap: {}
-        )
-        //
+        showSelector(onTap: {})
     }
     
     func configureSubviews() {
-        addSubview(sectionContainer)
-        sectionContainer.translatesAutoresizingMaskIntoConstraints = false
+        [accountSection, selectorSection].forEach {
+            addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
-            sectionContainer.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            sectionContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            sectionContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            sectionContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            accountSection.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            accountSection.bottomAnchor.constraint(equalTo: bottomAnchor),
+            accountSection.leadingAnchor.constraint(equalTo: leadingAnchor),
+            accountSection.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            selectorSection.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            selectorSection.bottomAnchor.constraint(equalTo: bottomAnchor),
+            selectorSection.leadingAnchor.constraint(equalTo: leadingAnchor),
+            selectorSection.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
     
-    func getSectionContainer() -> FormSectionContainer {
+    func getSectionContainer(with view: UIView) -> FormSectionContainer {
         return FormSectionContainer(
-            containedView: accountView,
+            containedView: view,
             sectionTitle: "#Konto, z którego robisz przelew"
         )
     }
     
-    func mapViewModels(from viewModel: TaxTransferFormViewModel.SelectedAccount) -> [SelectableAccountViewModel] {
+    func mapViewModels(from viewModel: TaxTransferFormViewModel.AccountViewModel) -> [SelectableAccountViewModel] {
         let mappedViewModel = SelectableAccountViewModel(
             name: viewModel.accountName,
             accountNumber: viewModel.maskedAccountNumber,
@@ -75,20 +95,21 @@ private extension TaxTransferAccountSelectorView {
             availableFunds: viewModel.accountBalance,
             isSelected: true
         )
-        if viewModel.isOnlyAccount {
-            return [mappedViewModel]
+        
+        if viewModel.isEditButtonEnabled {
+            // There is additional dummy viewModel in order for `SelectedAccountView` to display edit button
+            return [
+                mappedViewModel,
+                SelectableAccountViewModel(
+                    name: "",
+                    accountNumber: "",
+                    accountNumberUnformatted: "",
+                    availableFunds: "",
+                    isSelected: false
+                ),
+            ]
         }
         
-        // There is additional dummy viewModel in order for `SelectedAccountView` to display edit button
-        return [
-            mappedViewModel,
-            SelectableAccountViewModel(
-                name: "",
-                accountNumber: "",
-                accountNumberUnformatted: "",
-                availableFunds: "",
-                isSelected: false
-            ),
-        ]
+        return [mappedViewModel]
     }
 }

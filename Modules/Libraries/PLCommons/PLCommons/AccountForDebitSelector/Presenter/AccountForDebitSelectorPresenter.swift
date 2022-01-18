@@ -8,9 +8,8 @@
 import CoreFoundationLib
 import Commons
 import PLUI
-import PLCommons
 
-final class AccountSelectorPresenter {
+final class AccountForDebitSelectorPresenter {
     weak var view: AccountSelectorViewProtocol?
     private let dependenciesResolver: DependenciesResolver
     private let accounts: [AccountForDebit]
@@ -28,13 +27,13 @@ final class AccountSelectorPresenter {
     }
 }
 
-private extension AccountSelectorPresenter {
-    var coordinator: AccountSelectorCoordinatorProtocol {
+private extension AccountForDebitSelectorPresenter {
+    var coordinator: AccountForDebitSelectorCoordinatorProtocol {
         return self.dependenciesResolver.resolve()
     }
 }
 
-extension AccountSelectorPresenter: AccountSelectorPresenterProtocol {
+extension AccountForDebitSelectorPresenter: AccountSelectorPresenterProtocol {
     func didSelectAccount(at index: Int) {
         let selectedAccountNumber = accounts[index].number
         coordinator.didSelectAccount(withAccountNumber: selectedAccountNumber)

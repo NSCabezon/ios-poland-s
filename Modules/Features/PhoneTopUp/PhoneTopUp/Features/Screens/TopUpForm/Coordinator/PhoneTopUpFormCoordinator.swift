@@ -17,6 +17,7 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?)
     func showInternetContacts()
     func showPhoneContacts(_ contacts: [MobileContact])
+    func showTopUpConfirmation(with summary: TopUpModel)
 }
 
 public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
@@ -26,7 +27,7 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let formData: GetPhoneTopUpFormDataOutput
-    private weak var accountSelectorDelegate: AccountSelectorDelegate?
+    private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var contactsSelectorDelegate: MobileContactsSelectorDelegate?
     
     private lazy var phoneTopUpController = dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
@@ -114,14 +115,21 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         showAccountSelector(availableAccounts: availableAccounts, selectedAccountNumber: selectedAccountNumber, mode: .changeDefaultAccount)
     }
     
-    func showAccountSelector(availableAccounts: [AccountForDebit], selectedAccountNumber: String?, mode: AccountSelectorMode) {
-        let accountSelectorCoordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                                    navigationController: navigationController,
-                                                                    mode: mode,
-                                                                    accounts: availableAccounts,
-                                                                    selectedAccountNumber: selectedAccountNumber,
-                                                                    accountSelectorDelegate: self)
-        accountSelectorCoordinator.start()
+    func showAccountSelector(
+        availableAccounts: [AccountForDebit],
+        selectedAccountNumber: String?,
+        mode: AccountForDebitSelectorMode
+    ) {
+        let coordinator = AccountForDebitSelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            mode: mode,
+            accounts: availableAccounts,
+            screenLocationConfiguration: .phoneTopUp,
+            selectedAccountNumber: selectedAccountNumber,
+            accountSelectorDelegate: self
+        )
+        coordinator.start()
     }
     
     func showInternetContacts() {
@@ -140,6 +148,13 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         phoneContactsCoordinator.start()
     }
     
+    func showTopUpConfirmation(with summary: TopUpModel) {
+        let confirmationCoordinator = TopUpConfirmationCoordinator(dependenciesResolver: dependenciesEngine,
+                                                    navigationController: navigationController,
+                                                    summary: summary)
+        confirmationCoordinator.start()
+    }
+    
     private func showContactsPermissionDeniedDialog() {
         guard let navigationController = navigationController else {
             return
@@ -150,15 +165,19 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
     }
 }
 
-extension PhoneTopUpFormCoordinator: AccountSelectorDelegate {
-    func accountSelectorDidSelectAccount(withAccountNumber accountNumber: String) {
-        accountSelectorDelegate?.accountSelectorDidSelectAccount(withAccountNumber: accountNumber)
+extension PhoneTopUpFormCoordinator: AccountForDebitSelectorDelegate {
+    public func didSelectAccount(withAccountNumber accountNumber: String) {
+        accountSelectorDelegate?.didSelectAccount(withAccountNumber: accountNumber)
     }
 }
 
 extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToViewController(phoneTopUpController, animated: true)
         contactsSelectorDelegate?.mobileContactsDidSelectContact(contact)
+    }
+    
+    func mobileContactDidSelectCloseProcess() {
+        navigationController?.popToViewController(phoneTopUpController, animated: true)
     }
 }

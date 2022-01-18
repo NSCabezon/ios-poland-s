@@ -22,6 +22,7 @@ def core_dependencies
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
 end
 
 def pl_dependencies

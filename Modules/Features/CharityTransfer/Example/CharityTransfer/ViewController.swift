@@ -59,12 +59,17 @@ class ViewController: UIViewController {
                                                              navigationController: navigationController,
                                                              accounts: accounts,
                                                              selectedAccountNumber: "",
-                                                             sourceView: .sendMoney)
+                                                             sourceView: .sendMoney,
+                                                             charityTransferSettings: CharityTransferSettings(
+                                                                transferRecipientName: "Fundacja Santander",
+                                                                transferAccountNumber: "26 1090 0088 0000 0001 4223 0553",
+                                                                transferTitle: "Darowizna dla Fundacji Santander"
+                                                             )
+                )
                 coordinator.start()
             }
         
         self.present(navigationController, animated: true, completion: nil)
     }
-
 }
 

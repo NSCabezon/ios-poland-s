@@ -13,6 +13,7 @@ protocol LoginDataSourceProtocol {
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError>
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -35,6 +36,7 @@ class LoginDataSource: LoginDataSourceProtocol {
         case authenticateInit = "/authenticate/init"
         case authenticate = "/authenticate"
         case logout = "/token"
+        case info = "/login/info"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -125,6 +127,21 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                              headers: self.headers,
                                                                                                              localServiceName: .logout,
                                                                                                              authorization: .oauth))
+        return result
+    }
+    
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName =  LoginServiceType.info.rawValue
+        let result: Result<LoginInfoDTO, NetworkProviderError> = self.networkProvider.request(LoginInfoRequest(serviceName: serviceName,
+                                                                                                               serviceUrl: absoluteUrl,
+                                                                                                               method: .get,
+                                                                                                               contentType: .urlEncoded,
+                                                                                                               localServiceName: .loginInfo))
         return result
     }
 }
@@ -308,3 +325,37 @@ private struct LogoutRequest: NetworkProviderRequest {
         self.authorization = authorization
     }
 }
+
+private struct LoginInfoRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]?
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .none
+    let contentType: NetworkProviderContentType
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: Encodable? = nil,
+         headers: [String: String]? = nil,
+         queryParams: [String: Any]? = nil,
+         contentType: NetworkProviderContentType,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.headers = headers
+        self.queryParams = queryParams
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+

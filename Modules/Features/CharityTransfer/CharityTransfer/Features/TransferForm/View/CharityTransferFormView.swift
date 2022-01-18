@@ -8,6 +8,7 @@ import PLCommons
 protocol CharityTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
     func didChangeForm()
+    func scrollToBottom()
 }
 
 class CharityTransferFormView: UIView {
@@ -234,5 +235,8 @@ extension CharityTransferFormView: TransferDateSelectorDelegate {
     func didSelectDate(date: Date, withOption option: DateTransferOption) {
         selectedDate = date
         delegate?.didChangeForm()
+        if option == .anotherDay {
+            delegate?.scrollToBottom()
+        }
     }
 }

@@ -6,40 +6,33 @@
 //
 
 struct TaxTransferFormViewModel {
-    let selectedAccount: SelectedAccount
-    let taxPayer: TaxPayer
-    let taxAuthority: TaxAuthority
-    let sendAmount: Amount
+    let account: Selectable<AccountViewModel>
+    let taxPayer: Selectable<TaxPayerViewModel>
+    let taxAuthority: Selectable<TaxAuthorityViewModel>
+    let sendAmount: AmountViewModel
     let obligationIdentifier: String
-    let transferDate: TransferDate
 }
 
 extension TaxTransferFormViewModel {
-    struct SelectedAccount {
+    struct AccountViewModel {
+        let id: String
         let accountName: String
         let maskedAccountNumber: String
         let unformattedAccountNumber: String
         let accountBalance: String
-        let isOnlyAccount: Bool
+        let isEditButtonEnabled: Bool
     }
     
-    enum TaxPayer {
-        case selected // TODO:- Add TaxPayerViewModel as associated value
-        case unselected
+    struct TaxPayerViewModel {
+        // TODO:- Add TaxPayerViewModel as associated value in TAP-2492
     }
     
-    enum TaxAuthority {
-        case selected // TODO: Add TaxAuthorityViewModel as associated value
-        case unselected
+    struct TaxAuthorityViewModel {
+        // TODO: Add TaxAuthorityViewModel as associated value in TAP-2517
     }
     
-    struct Amount {
+    struct AmountViewModel {
         let amount: String
         let currency: String
-    }
-    
-    enum TransferDate {
-        case today
-        case otherDay(Date)
     }
 }

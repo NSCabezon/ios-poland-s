@@ -129,6 +129,16 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
             bottomView.disableButton()
         }
     }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
 }
 
 extension ZusTransferFormViewController: ZusTransferFormViewDelegate {

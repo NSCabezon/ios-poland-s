@@ -32,7 +32,8 @@ final class AliasDatePeriodSelectorView: UIView {
         let dropdownConfiguration = DropdownConfiguration<AliasDateValidityPeriod>(
             title: localized("pl_blik_label_chequeTerm"),
             elements: validityPeriods,
-            displayMode: .growToScreenBounds(inset: 20)
+            displayMode: .growToScreenBounds(inset: 20),
+            firstElementDefaultSelected: false
         )
         dropdownView.configure(dropdownConfiguration)
         self.onSelected = onSelected

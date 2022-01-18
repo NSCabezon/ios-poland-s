@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>431428303818-0ctrf04tj8i5gbbn6utn3i9073ma2h3a.apps.googleusercontent.com</string>
+	<string>159590857819-om9nos14m8p7h8vq1n5inag30mjkjg21.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.431428303818-0ctrf04tj8i5gbbn6utn3i9073ma2h3a</string>
+	<string>com.googleusercontent.apps.159590857819-om9nos14m8p7h8vq1n5inag30mjkjg21</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAL7n36IKKeLVAdKi1dsiowT1Xv2F6HLVw</string>
+	<string>AIzaSyB8LnS87QOSSJQaAZ8n9oXkEn_u3pTaHEo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>431428303818</string>
+	<string>159590857819</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>pl.santander.oneapp.preprod</string>
 	<key>PROJECT_ID</key>
-	<string>one-app---pl---preprod</string>
+	<string>one-app---pl---zt001</string>
 	<key>STORAGE_BUCKET</key>
-	<string>one-app---pl---preprod.appspot.com</string>
+	<string>one-app---pl---zt001.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:431428303818:ios:7d94a62b5f3eb265842d33</string>
+	<string>1:159590857819:ios:4c28858c4aec76c856137e</string>
 </dict>
 </plist>

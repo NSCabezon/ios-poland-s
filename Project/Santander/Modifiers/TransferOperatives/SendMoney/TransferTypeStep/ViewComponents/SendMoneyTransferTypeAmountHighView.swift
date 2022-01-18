@@ -59,6 +59,7 @@ private extension SendMoneyTransferTypeAmountHighView {
         self.configureIconImageView()
         self.configureActionButton()
         self.configureLabels()
+        self.setAccessibilityIdentifiers()
     }
     
     func xibSetup() {
@@ -101,6 +102,11 @@ private extension SendMoneyTransferTypeAmountHighView {
                                         ),
                                         status: .ready)
         self.actionButton.addTarget(self, action: #selector(didTapActionButton), for: .touchUpInside)
+    }
+
+    func setAccessibilityIdentifiers() {
+        self.titleLabel.accessibilityIdentifier = Constants.TitleLabel.textKey
+        self.descriptionLabel.accessibilityIdentifier = Constants.DescriptionLabel.textKey
     }
     
     @objc func didTapActionButton() {

@@ -1,5 +1,5 @@
 //
-//  AccountSelectorCoordinator.swift
+//  AccountForDebitSelectorCoordinator.swift
 //  PLUI
 //
 //  Created by 188216 on 26/11/2021.
@@ -7,50 +7,58 @@
 
 import UI
 import Commons
-import PLCommons
 import PLUI
 
-protocol AccountSelectorCoordinatorProtocol {
+public protocol AccountForDebitSelectorCoordinatorProtocol {
     func back()
     func didSelectAccount(withAccountNumber accountNumber: String)
     func closeProcess()
 }
 
-final class AccountSelectorCoordinator: ModuleCoordinator {
+public final class AccountForDebitSelectorCoordinator: ModuleCoordinator {
     weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let mode: AccountSelectorMode
+    private let mode: AccountForDebitSelectorMode
     private let accounts: [AccountForDebit]
+    private let screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration
     private let selectedAccountNumber: String?
-    private weak var accountSelectorDelegate: AccountSelectorDelegate?
+    private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
 
-    public init(dependenciesResolver: DependenciesResolver,
-         navigationController: UINavigationController?,
-         mode: AccountSelectorMode,
-         accounts: [AccountForDebit],
-         selectedAccountNumber: String?,
-         accountSelectorDelegate: AccountSelectorDelegate) {
+    public init(
+        dependenciesResolver: DependenciesResolver,
+        navigationController: UINavigationController?,
+        mode: AccountForDebitSelectorMode,
+        accounts: [AccountForDebit],
+        screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration,
+        selectedAccountNumber: String?,
+        accountSelectorDelegate: AccountForDebitSelectorDelegate
+    ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.mode = mode
         self.accounts = accounts
+        self.screenLocationConfiguration = screenLocationConfiguration
         self.selectedAccountNumber = selectedAccountNumber
         self.accountSelectorDelegate = accountSelectorDelegate
         self.setupDependencies()
     }
     
     public func start() {
-        let presenter = AccountSelectorPresenter(dependenciesResolver: dependenciesEngine,
-                                                 accounts: accounts,
-                                                 selectedAccountNumber: selectedAccountNumber)
-        let controller = AccountSelectorViewController(presenter: presenter,
-                                                       screenLocationConfiguration: .phoneTopUp)
+        let presenter = AccountForDebitSelectorPresenter(
+            dependenciesResolver: dependenciesEngine,
+            accounts: accounts,
+            selectedAccountNumber: selectedAccountNumber
+        )
+        let controller = AccountSelectorViewController(
+            presenter: presenter,
+            screenLocationConfiguration: screenLocationConfiguration
+        )
         presenter.view = controller
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
+extension AccountForDebitSelectorCoordinator: AccountForDebitSelectorCoordinatorProtocol {
     public func back() {
         switch mode {
         case .mustSelectDefaultAccount:
@@ -60,8 +68,8 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
         }
     }
     
-    func didSelectAccount(withAccountNumber accountNumber: String) {
-        accountSelectorDelegate?.accountSelectorDidSelectAccount(withAccountNumber: accountNumber)
+    public func didSelectAccount(withAccountNumber accountNumber: String) {
+        accountSelectorDelegate?.didSelectAccount(withAccountNumber: accountNumber)
         navigationController?.popViewController(animated: true)
     }
     
@@ -74,9 +82,9 @@ extension AccountSelectorCoordinator: AccountSelectorCoordinatorProtocol {
  #Register Scene depencencies.
 */
 
-private extension AccountSelectorCoordinator {
+private extension AccountForDebitSelectorCoordinator {
     func setupDependencies() {
-        dependenciesEngine.register(for: AccountSelectorCoordinatorProtocol.self) { _ in
+        dependenciesEngine.register(for: AccountForDebitSelectorCoordinatorProtocol.self) { _ in
             return self
         }
         

@@ -11,12 +11,11 @@ final class TaxTransferAuthoritySelectorView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let subviewsContainer = UIView()
     private let selectorView = TaxTransferElementSelectorView()
-    private let selectedAuthorityView = UIView() // TODO:- Implementation in other TAP story
+    private let selectedAuthorityView = UIView() // TODO: Implement in TAP-2517
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
-        configure(with: .unselected, onTap: {}) // TODO:- Remove this line. Implementation of config in other TAP story
     }
     
     @available(*, unavailable)
@@ -25,25 +24,30 @@ final class TaxTransferAuthoritySelectorView: UIView {
     }
     
     func configure(
-        with viewModel: TaxTransferFormViewModel.TaxAuthority,
+        with viewModel: Selectable<TaxTransferFormViewModel.TaxAuthorityViewModel>,
         onTap: @escaping () -> Void
     ) {
         switch viewModel {
         case .selected:
             selectorView.isHidden = true
             selectedAuthorityView.isHidden = false
-            // TODO:- Further view implementation in another TAP story
+        // TODO: Implement in TAP-2517
         case .unselected:
-            selectorView.isHidden = false
-            selectedAuthorityView.isHidden = true
-            selectorView.configure(onTap: onTap)
+            showSelector(onTap: onTap)
         }
     }
 }
 
 private extension TaxTransferAuthoritySelectorView {
+    func showSelector(onTap: @escaping () -> Void) {
+        selectorView.isHidden = false
+        selectedAuthorityView.isHidden = true
+        selectorView.configure(onTap: onTap)
+    }
+    
     func setUp() {
         configureSubviews()
+        showSelector(onTap: {})
     }
     
     func configureSubviews() {

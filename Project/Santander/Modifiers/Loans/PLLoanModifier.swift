@@ -96,7 +96,7 @@ extension PLLoanModifier: LoansModifierProtocol {
     
     private func didSelectLoanSchedule(_ option: LoansHomeOption, loan: LoanEntity?) {
         let coordinator = self.dependenciesEngine.resolve(for: LoanScheduleModuleCoordinator.self)
-        let schedule = LoanScheduleIdentity(loanAccountNumber: loan?.contract?.dto.description ?? "", loanName: loan?.alias ?? "")
+        let schedule = LoanScheduleIdentity(loanAccountNumber: loan?.dto.contractDescription ?? "", loanName: loan?.alias ?? "")
         coordinator.start(with: schedule)
     }
 

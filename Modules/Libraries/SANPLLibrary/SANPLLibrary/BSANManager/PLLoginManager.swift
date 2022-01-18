@@ -19,6 +19,7 @@ public protocol PLLoginManagerProtocol {
     func getAppInfo() -> AppInfo?
     func setAppInfo(_ appInfo: AppInfo)
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError>
 }
 
 public final class PLLoginManager {
@@ -89,6 +90,11 @@ extension PLLoginManager: PLLoginManagerProtocol {
 
     public func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
         let result = try loginDataSource.doLogout()
+        return result
+    }
+    
+    public func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        let result = try loginDataSource.getLoginInfo()
         return result
     }
 }
