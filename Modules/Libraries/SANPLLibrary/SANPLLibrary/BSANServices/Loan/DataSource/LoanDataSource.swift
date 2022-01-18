@@ -25,7 +25,7 @@ final class LoanDataSource {
         case detail = "/accounts"
         case transactions = "/history"
         case installments = "/accounts/loan/installments"
-		case changeAlias = "/loans/productaliases"
+		case changeAlias = "/accounts/productaliases"
     }
     
     private let networkProvider: NetworkProvider

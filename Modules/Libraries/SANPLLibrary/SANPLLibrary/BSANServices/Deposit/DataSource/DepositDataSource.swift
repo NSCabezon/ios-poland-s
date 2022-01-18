@@ -14,7 +14,7 @@ protocol DepositDataSourceProtocol {
 
 final class DepositDataSource {
 	private enum DepositServiceType: String {
-		case changeAlias = "/deposits/productaliases"
+		case changeAlias = "/accounts/productaliases"
 	}
 	
 	private let networkProvider: NetworkProvider

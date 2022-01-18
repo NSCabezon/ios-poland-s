@@ -14,7 +14,7 @@ protocol FundDataSourceProtocol {
 
 final class FundDataSource {
 	private enum FundServiceType: String {
-		case changeAlias = "/funds/productaliases"
+		case changeAlias = "/accounts/productaliases"
 	}
 	
 	private let networkProvider: NetworkProvider
