@@ -7,14 +7,16 @@
 
 import UI
 import Loans
+import Menu
 import Commons
 import CoreDomain
 import Foundation
 import RetailLegacy
 import CoreFoundationLib
 
-struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-
+struct ModuleDependencies: RetailLegacyExternalDependenciesResolver,
+                           PublicMenuExternalDependenciesResolver {
+    
     let legacyDependenciesResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     
@@ -63,6 +65,9 @@ extension ModuleDependencies {
         }
         legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
             return DefaultGlobalPositionRepository.current
+        }
+        legacyDependenciesResolver.register(for: RetailLegacyMenuExternalDependenciesResolver.self) { _ in
+            self
         }
     }
 }

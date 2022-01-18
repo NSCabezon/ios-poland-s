@@ -134,6 +134,9 @@
 		7E9939C726B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */; };
 		7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */; };
 		7EDB3AE3273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDB3AE2273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift */; };
+		82AED7852796F6BA00E6133D /* MenuModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7842796F6B900E6133D /* MenuModuleDependencies.swift */; };
+		82AED7882796F80800E6133D /* PLHomeTipsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7872796F80800E6133D /* PLHomeTipsRepository.swift */; };
+		82AED78A2796F81C00E6133D /* PLPublicMenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7892796F81C00E6133D /* PLPublicMenuRepository.swift */; };
 		85E19B61270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B5B270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift */; };
 		85E19B62270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85E19B5C270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib */; };
 		85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B5D270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift */; };
@@ -361,6 +364,9 @@
 		7E9939C626B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurOfferPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountDetailModifier.swift; sourceTree = "<group>"; };
 		7EDB3AE2273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtmsAndBranchesPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		82AED7842796F6B900E6133D /* MenuModuleDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModuleDependencies.swift; sourceTree = "<group>"; };
+		82AED7872796F80800E6133D /* PLHomeTipsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLHomeTipsRepository.swift; sourceTree = "<group>"; };
+		82AED7892796F81C00E6133D /* PLPublicMenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPublicMenuRepository.swift; sourceTree = "<group>"; };
 		85E19B5B270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeViewController.swift; sourceTree = "<group>"; };
 		85E19B5C270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendMoneyTransferTypeViewController.xib; sourceTree = "<group>"; };
 		85E19B5D270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypePresenter.swift; sourceTree = "<group>"; };
@@ -720,6 +726,7 @@
 			isa = PBXGroup;
 			children = (
 				3AF06BC92795932000E25B23 /* ModuleDependencies.swift */,
+				82AED7842796F6B900E6133D /* MenuModuleDependencies.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1091,6 +1098,15 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		82AED7862796F7EF00E6133D /* PublicMenu */ = {
+			isa = PBXGroup;
+			children = (
+				82AED7872796F80800E6133D /* PLHomeTipsRepository.swift */,
+				82AED7892796F81C00E6133D /* PLPublicMenuRepository.swift */,
+			);
+			path = PublicMenu;
+			sourceTree = "<group>";
+		};
 		85E19B5A270E295C00EFA1CC /* TransferTypeStep */ = {
 			isa = PBXGroup;
 			children = (
@@ -1127,6 +1143,7 @@
 		9E92903B26F9EABA00A0178A /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				82AED7862796F7EF00E6133D /* PublicMenu */,
 				9E92903C26F9EADB00A0178A /* Components */,
 				D5C5A90A273BD483003963CA /* PLPrivateSideMenuModifier.swift */,
 				04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */,
@@ -1544,6 +1561,7 @@
 				BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */,
 				CCE45A9C2732AC5400691E91 /* PLAuthorizationViewController.swift in Sources */,
 				B01155F3271581BD00A4C175 /* CreditCardRepaymentMockInjector.swift in Sources */,
+				82AED78A2796F81C00E6133D /* PLPublicMenuRepository.swift in Sources */,
 				85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */,
 				0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
@@ -1580,6 +1598,7 @@
 				B01155FD2715935900A4C175 /* DeeplinkDependencies.swift in Sources */,
 				04304E2B276773C900AF0A99 /* PLPrivateMenuModifier.swift in Sources */,
 				A97543392784BA4F00400A0A /* PLMobilePaymentsOperative.swift in Sources */,
+				82AED7852796F6BA00E6133D /* MenuModuleDependencies.swift in Sources */,
 				669A37D6270F571B00C0F272 /* GetPLAccountOtherOperativesWebConfigurationUseCase.swift in Sources */,
 				446E0C25265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift in Sources */,
 				D5B9E49D2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift in Sources */,
@@ -1678,6 +1697,7 @@
 				0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */,
 				0DB4957A26C150D700F0985F /* GetGPAccountOperativeModifier.swift in Sources */,
 				4488918926EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift in Sources */,
+				82AED7882796F80800E6133D /* PLHomeTipsRepository.swift in Sources */,
 				0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */,
 				EFF1301327317B1400ECE22E /* PolandTransactionType.swift in Sources */,
 				669A37D4270F566600C0F272 /* PLAccountOtherOperativesDTO.swift in Sources */,
