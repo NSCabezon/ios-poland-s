@@ -51,6 +51,18 @@ pipeline {
 				sh "cd Project && bundle exec fastlane ios release deploy_env:intern notify_testers:true branch:develop"
 			}
         }
+		
+		stage('Run Unit tests') {
+			when {
+				branch 'develop'
+				expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
+				expression { return params.RUN_TESTS }
+			}
+			steps {
+				echo "Testing Poland Local Example Apps"
+				sh "cd Project && bundle exec fastlane ios tests"
+			}
+		}
 
 		stage('Compile Intern to Appium') {
 			when {
@@ -62,7 +74,7 @@ pipeline {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					echo "Distributing iOS app"
 					sh "cd Project && bundle exec fastlane ios build_appium"
-					sh "mv $HOME/derived_data/Build/Products/Intern-Debug-iphonesimulator/*.app INTERN.app"
+					sh "mv $HOME/derived_data/Build/Products/Intern-Debug-iphonesimulator/PL-INTERN*.app INTERN.app"
 					sh 'zip -vr INTERN.zip INTERN.app/ -x "*.DS_Store"'
 					archiveArtifacts artifacts: 'INTERN.zip'
 				}
