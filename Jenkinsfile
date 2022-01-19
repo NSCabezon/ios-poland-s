@@ -18,10 +18,11 @@ pipeline {
       	FASTLANE_USER=credentials('jenkins-apple-id')
 	}
 	parameters {
-		booleanParam(name: "DEPLOY_TO_INTERN", defaultValue: "${is_develop_branch}", description: "Do you want to deploy INTERN?")
-		booleanParam(name: "DEPLOY_TO_PRE", defaultValue: "${is_master_branch}", description: "Do you want to deploy PRE?")
-		booleanParam(name: "RUN_TESTS", defaultValue: false, description: "Do you want to run the build with tests?")
-		booleanParam(name: "INCREMENT_VERSION", defaultValue: true, description: "Do you want to increment the build version?")
+		booleanParam(name: "DEPLOY_TO_INTERN", defaultValue: "${is_develop_branch}", description: "Mark this check to build and deploy Intern version")
+		booleanParam(name: "DEPLOY_TO_PRE", defaultValue: "${is_master_branch}", description: "Mark this check to build and deploy PRE version")
+		booleanParam(name: "RUN_APPIUM", defaultValue: "${is_develop_branch}", description: "Mark this check to build a version for Appium tests ")
+		booleanParam(name: "RUN_TESTS", defaultValue: false, description: "Mark this check to execute unit and snapshot tests ")
+		booleanParam(name: "INCREMENT_VERSION", defaultValue: true, description: "Mark this check to commit a version tag and bump version release nuber C (A.B.C)")
 		choice(name: 'NODE_LABEL', choices: ['poland', 'ios', 'hub'], description: '')
     }
     agent { label params.NODE_LABEL ?: 'poland' }  
@@ -55,13 +56,13 @@ pipeline {
 			when {
 				branch 'develop'
 				expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
-				expression { return params.RUN_TESTS }
+				expression { return params.RUN_APPIUM }
             }
 			steps {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					echo "Distributing iOS app"
 					sh "cd Project && bundle exec fastlane ios build_appium"
-					sh "mv Build/Products/Intern-Debug-iphonesimulator/*.app INTERN.app"
+					sh "mv $HOME/derived_data/Build/Products/Intern-Debug-iphonesimulator/*.app INTERN.app"
 					sh 'zip -vr INTERN.zip INTERN.app/ -x "*.DS_Store"'
 					archiveArtifacts artifacts: 'INTERN.zip'
 				}
