@@ -32,7 +32,7 @@ extension ViewController {
 }
 
 extension ViewController: TransferDateSelectorDelegate {
-    func didSelectDate(date: Date) {
+    func didSelectDate(date: Date, withOption option: DateTransferOption) {
         print("Selected date: \(date)")
     }
 }

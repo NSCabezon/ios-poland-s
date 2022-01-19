@@ -65,7 +65,7 @@ final class MobileTransferFormView: UIView {
         }
     }
     
-    func fillWith(contact: Contact?) {
+    func fillWith(contact: MobileContact?) {
         if let contact = contact {
             let formatter = PLPhoneNumberTextFieldFormatter()
             phoneNumberTextField.setText(formatter.formatStrnig(numberInString: contact.phoneNumber))

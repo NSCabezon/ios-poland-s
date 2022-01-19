@@ -25,13 +25,14 @@ Pod::Spec.new do |s|
   s.source_files = 'TaxTransfer/**/*.{swift}'
   
   s.resource_bundles = {
-     'TaxTransfer' => ['TaxTransfer/**/*{xib,xcassets}']
+     'TaxTransfer' => ['TaxTransfer/Assets/*{xib,xcassets}']
   }
 
   s.dependency "UI"
   s.dependency "PLUI"
   s.dependency "SANPLLibrary"
   s.dependency "PLCommons"
+  s.dependency "PLCommonOperatives"
   s.dependency "Operative"
 end
 

@@ -6,6 +6,7 @@
 //
 
 import Commons
+import CoreFoundationLib
 
 public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
     public var reloadSessionOnClose: Bool    

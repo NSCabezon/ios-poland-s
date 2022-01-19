@@ -8,5 +8,5 @@
 import Foundation
 
 final class AliasDateChangeViewModel {
-    var selectedPeriod: AliasDateValidityPeriod = .month1
+    var selectedPeriod: AliasDateValidityPeriod?
 }

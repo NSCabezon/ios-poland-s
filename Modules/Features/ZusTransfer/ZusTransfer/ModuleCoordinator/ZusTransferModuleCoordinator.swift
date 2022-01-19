@@ -18,7 +18,7 @@ public final class ZusTransferModuleCoordinator: ModuleCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let accounts: [AccountForDebit]
-
+    
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,

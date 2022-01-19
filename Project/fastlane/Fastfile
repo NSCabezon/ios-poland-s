@@ -340,7 +340,7 @@ end
     UI.message "Start lane to appium"
     build_ios_app(
       workspace: "Santander.xcworkspace",
-      configuration: "Intern",
+      configuration: "Intern-Debug",
       skip_package_ipa: true,
       skip_archive: true,
       clean: true,

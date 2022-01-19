@@ -8,6 +8,12 @@
 import Foundation
 
 final class PartialPhoneNumberValidator {
+    enum ValidationResults {
+        case invalid
+        case partiallyValid(number: String)
+        case valid(number: String)
+    }
+    
     // MARK: Properties
     
     private let maxNumberOfDigits = 9
@@ -23,12 +29,18 @@ final class PartialPhoneNumberValidator {
     
     // MARK: Methods
     
-    func validatePhoneNumberText(_ text: String) -> Bool {
+    func validatePhoneNumberText(_ text: String) -> ValidationResults {
         guard text.count <= maxNumberOfCharacters, text.count >= 0 else {
-            return false
+            return .invalid
         }
         let textWithoutWhitespace = text.replace(" ", "")
         let isTextAllNumbers = textWithoutWhitespace.allSatisfy(\.isNumber)
-        return isTextAllNumbers && textWithoutWhitespace.count <= maxNumberOfDigits
+        if isTextAllNumbers && textWithoutWhitespace.count < maxNumberOfDigits {
+            return .partiallyValid(number: textWithoutWhitespace)
+        } else if isTextAllNumbers && textWithoutWhitespace.count == maxNumberOfDigits {
+            return .valid(number: textWithoutWhitespace)
+        } else {
+            return .invalid
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Commons
+import CoreFoundationLib
 
 struct CreateAccountWebViewConfiguration: WebViewConfiguration {
     let initialURL: String

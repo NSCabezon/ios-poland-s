@@ -12,6 +12,7 @@ public protocol PLAccountManagerProtocol {
     func getWithholdingList(accountNumber: String) throws -> Result<SANPLLibrary.WithholdingListDTO, NetworkProviderError>
     func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError>
 }
 
 final class PLAccountManager {
@@ -62,6 +63,11 @@ extension PLAccountManager: PLAccountManagerProtocol {
 
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {
         let result = try self.accountDataSource.loadAccountTransactions(parameters: parameters)
+        return result
+    }
+    
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
+        let result = try self.accountDataSource.changeAlias(accountDTO: accountDTO, newAlias: newAlias)
         return result
     }
 }

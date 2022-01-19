@@ -1,7 +1,7 @@
 import CoreDomain
 import Commons
 import SANPLLibrary
-import Models
+import CoreFoundationLib
 
 struct MockHostProvider: PLHostProviderProtocol {
     var environmentDefault: BSANPLEnvironmentDTO {

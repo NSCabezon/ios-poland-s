@@ -23,45 +23,43 @@ final class SendMoneyTransferTypeUseCase: UseCase<SendMoneyTransferTypeUseCaseIn
         guard let requestValues = requestValues as? SendMoneyTransferTypeUseCaseInput,
               let sourceAccount = requestValues.sourceAccount as? PolandAccountRepresentable
         else { return .error(StringErrorOutput(nil)) }
-        guard sourceAccount.type != .creditCard else {
-            return .ok(SendMoneyTransferTypeUseCaseOkOutput(
-                isCreditCardAccount: true,
-                fees: [SendMoneyTransferTypeFee(type: PolandTransferType.creditCardAccount, fee: nil)],
-                transactionType: nil
-            ))
-        }
+        let isCreditCard = sourceAccount.type == .creditCard
         let matrixEvaluation = evaluateMatrix(sourceAccount: sourceAccount, requestValues: requestValues)
-        guard let transferType = matrixEvaluation.0, let transactionType = matrixEvaluation.1
-        else { return .error(StringErrorOutput(nil)) }
-        guard transferType.toTransferType == .one else {
-            return .ok(SendMoneyTransferTypeUseCaseOkOutput(
-                isCreditCardAccount: false,
-                fees: [SendMoneyTransferTypeFee(type: transferType.toTransferType, fee: nil)],
-                transactionType: transactionType
-            ))
-        }
-        
-        let fees = try getFinalfees(requestValues: requestValues)
-        guard fees[.one] != nil
-        else { return .error(StringErrorOutput(nil)) }
-        guard transferType == .oneWithOptional else {
-            return .ok(SendMoneyTransferTypeUseCaseOkOutput(
-                isCreditCardAccount: false,
-                fees: [SendMoneyTransferTypeFee(type: transferType.toTransferType, fee: fees[transferType.toTransferType])],
-                transactionType: transactionType
-            ))
-        }
-        let availableTransferTypes = try getAvailableTransferTypes(requestValues: requestValues, fees: fees)
-        return .ok(SendMoneyTransferTypeUseCaseOkOutput(
-            isCreditCardAccount: false,
-            fees: availableTransferTypes.map { type in
-                return SendMoneyTransferTypeFee(
-                    type: type,
-                    fee: fees[type]
+        guard let matrixTransferType = matrixEvaluation.0, let transactionType = matrixEvaluation.1 else { return .error(StringErrorOutput(nil)) }
+        guard matrixTransferType.toTransferType == .one else {
+            return .ok(
+                SendMoneyTransferTypeUseCaseOkOutput(
+                    isCreditCardAccount: isCreditCard,
+                    fees: [
+                        SendMoneyTransferTypeFee(type: matrixTransferType.toTransferType, fee: nil)
+                    ],
+                    transactionType: transactionType
                 )
-            },
-            transactionType: transactionType
-        ))
+            )
+        }
+        var fees: [SendMoneyTransferTypeFee] = []
+        var availableTransferTypes: [PolandTransferType] = [.one]
+        if matrixTransferType == .oneWithOptional {
+            availableTransferTypes.append(contentsOf: (try? getAvailableTransferTypes(requestValues: requestValues)) ?? [])
+        }
+        var feesResponse: [PolandTransferType: AmountRepresentable] = [:]
+        if !isCreditCard,
+           let finalFees = try? getFinalFees(requestValues: requestValues, availableServices: availableTransferTypes) {
+            feesResponse = finalFees
+        }
+        fees += availableTransferTypes.map { type in
+            return SendMoneyTransferTypeFee(
+                type: type,
+                fee: feesResponse[type]
+            )
+        }
+        return .ok(
+            SendMoneyTransferTypeUseCaseOkOutput(
+                isCreditCardAccount: isCreditCard,
+                fees: fees,
+                transactionType: transactionType
+            )
+        )
     }
 }
 
@@ -82,42 +80,43 @@ private extension SendMoneyTransferTypeUseCase {
         return (matrix.evaluateTransferType(), matrix.evaluateTransactionType())
     }
     
-    func getFinalfees(requestValues: SendMoneyTransferTypeUseCaseInput) throws -> [PolandTransferType: AmountRepresentable] {
-        guard let originIban = requestValues.sourceAccount.ibanRepresentable else { fatalError() }
+    func getFinalFees(requestValues: SendMoneyTransferTypeUseCaseInput, availableServices: [PolandTransferType]) throws -> [PolandTransferType: AmountRepresentable] {
+        guard let originIban = requestValues.sourceAccount.ibanRepresentable else { return [:] }
         let feesResponse = try transfersRepository.getFinalFee(
             input: CheckFinalFeeInput(
                 originAccount: originIban,
-                amount: requestValues.amount
+                amount: requestValues.amount,
+                servicesAvailable: availableServices.map { $0.asFinalFeeInputParameter }.joined(separator: ",")
             )
         )
         var fees: [PolandTransferType: AmountRepresentable] = [:]
         switch feesResponse {
         case .success(let feesDto):
             fees = parseFees(feesDto)
-        case .failure(let error):
-            throw error
+        case .failure:
+            break
         }
         return fees
     }
     
-    func getAvailableTransferTypes(requestValues: SendMoneyTransferTypeUseCaseInput, fees: [PolandTransferType: AmountRepresentable]) throws -> [PolandTransferType] {
+    func getAvailableTransferTypes(requestValues: SendMoneyTransferTypeUseCaseInput) throws -> [PolandTransferType] {
         let availableResponse = try transfersRepository.checkTransactionAvailability(
             input: CheckTransactionAvailabilityInput(
                 destinationAccount: requestValues.destinationIban,
                 transactionAmount: requestValues.amount.value ?? 0
             )
         )
-        var availableTransferTypes: [PolandTransferType] = [.one]
+        var availableTransferTypes: [PolandTransferType] = []
         switch availableResponse {
         case .success(let dto):
-            if fees[.eight] != nil && dto.expressElixirStatusCode == 0 {
+            if dto.expressElixirStatusCode == 0 {
                 availableTransferTypes.append(.eight)
             }
-            if fees[.a] != nil && dto.blueCashStatusCode == 0 {
+            if dto.blueCashStatusCode == 0 {
                 availableTransferTypes.append(.a)
             }
-        case .failure(let error):
-            throw error
+        case .failure:
+            break
         }
         return availableTransferTypes
     }
@@ -144,7 +143,7 @@ struct SendMoneyTransferTypeUseCaseInput: SendMoneyTransferTypeUseCaseInputProto
 
 struct SendMoneyTransferTypeUseCaseOkOutput: SendMoneyTransferTypeUseCaseOkOutputProtocol {    
     var shouldShowSpecialPrices: Bool {
-        return fees.contains { [.one, .creditCardAccount].contains($0.type as? PolandTransferType) }
+        return fees.contains { ($0.type as? PolandTransferType) == .one }
     }
     let isCreditCardAccount: Bool
     let fees: [SendMoneyTransferTypeFee]

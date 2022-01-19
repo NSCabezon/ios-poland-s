@@ -47,7 +47,6 @@ end
 def legacy_libraries
   pod 'Locker', :path => '../santander-one/Modules/Libraries/Locker'
   pod 'Logger', :path => '../santander-one/Modules/Libraries/Logger'
-  pod 'Helpers', :path => '../santander-one/Modules/Libraries/Helpers'
   pod 'SANLegacyLibrary', :path => '../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'RetailLegacy', :path => '../santander-one/RetailLegacy'
 end
@@ -57,6 +56,7 @@ def core_thirdparty_dependencies
   pod 'Kingfisher', '5.15.8'
   pod 'lottie-ios'
   pod 'TealiumIOS', '5.6.6'
+  pod 'RxSwift', '6.2.0'
 end
  
 # --------- Poland only dependencies
@@ -72,6 +72,7 @@ def pl_features
   pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
   pod 'PhoneTopUp', :path => '../Modules/Features/PhoneTopUp'
   pod 'ZusTransfer', :path => '../Modules/Features/ZusTransfer'
+  pod 'PLContexts', :path => '../Modules/Features/PLContexts'
 end
 
 def pl_libraries

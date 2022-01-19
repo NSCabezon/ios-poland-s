@@ -21,6 +21,7 @@ public final class PLUIInputCodeSMSFacade {
 
     public init(facadeStyle:PLUIInputCodeSMSFacadeStyle = .blackBackground) {
         self.facadeStyle = facadeStyle
+        self.setAccessibilityIdentifiers()
     }
 
     private enum Constants {
@@ -29,6 +30,10 @@ public final class PLUIInputCodeSMSFacade {
         static let hyphenSize = Screen.isScreenSizeBiggerThanIphone5() ? CGSize(width: 24.0, height: 4.0) : CGSize(width: 14, height: 4.0)
         static func getSpacingBetweenColumns(style: PLUIInputCodeSMSFacadeStyle) -> CGFloat {
             return style == .blackBackground ? 10.0 : 2.0
+        }
+        
+        enum Accessibility: String {
+            case dashView
         }
     }
 
@@ -101,5 +106,9 @@ private extension PLUIInputCodeSMSFacade {
                 boxes[position-1].configureCorners(corners: [.topRight, .bottomRight], radius: 6)
             }
          }
+    }
+
+    func setAccessibilityIdentifiers() {
+        self.hyphenView.accessibilityIdentifier = Constants.Accessibility.dashView.rawValue
     }
 }

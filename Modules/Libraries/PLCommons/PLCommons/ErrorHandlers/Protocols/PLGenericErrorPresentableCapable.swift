@@ -12,6 +12,7 @@ import UI
 public protocol PLGenericErrorPresentableCapable: LoadingViewPresentationCapable, DialogViewPresentationCapable {
     func showLoadingWith(loadingText: LoadingText, completion: (() -> Void)?)
     func presentError(_ error: PLGenericError, completion: @escaping (() -> Void))
+    func presentError(_ error: PLGenericError, _ errorConfig: PLGenericErrorConfig, completion: @escaping (() -> Void))
     func presentError(_ textKeys: (titleKey: String, descriptionKey: String), completion: @escaping (() -> Void))
     func presentError(_ error: PLGenericError)
 }
@@ -40,6 +41,15 @@ extension UIViewController : PLGenericErrorPresentableCapable {
                           localizedDescriptionKey: error.getErrorDesc(),
                           completion: completion)
     }
+
+    public func presentError(_ error: PLGenericError, _ errorConfig: PLGenericErrorConfig, completion: @escaping (() -> Void)) {
+
+        if let showTitle = errorConfig.showTitle, showTitle == true {
+           self.presentError(localizedTitleKey: "pl_onboarding_alert_genFailedTitle", localizedDescriptionKey: error.getErrorDesc(), closeButtonAvailable: errorConfig.showCloseButton ?? false, completion: completion)
+        } else {
+           self.presentError(localizedDescriptionKey: error.getErrorDesc(), closeButtonAvailable: errorConfig.showCloseButton ?? false, completion: completion)
+        }
+    }
     
     public func presentError(_ textKeys: (titleKey: String, descriptionKey: String),
                              completion: @escaping (() -> Void) = {}) {
@@ -58,33 +68,35 @@ private extension UIViewController {
         static let descriptionFont = UIFont.santander(family: .text, type: .light, size: 16)
     }
 
-    func presentError(localizedTitleKey: String,
+    func presentError(localizedTitleKey: String? = nil,
                       localizedDescriptionKey: String,
+                      closeButtonAvailable: Bool? = false,
                       completion: @escaping (() -> Void) = {}) {
-        let components: [LisboaDialogItem] = [
-            .image(Constants.image),
-            .styledText(
+        var components = [LisboaDialogItem]()
+        if let localizedTitleKey = localizedTitleKey {
+            components.append(.image(Constants.image))
+            components.append(.styledText(
                 LisboaDialogTextItem(
                     text: localized(localizedTitleKey),
                     font: Constants.titleFont,
                     color: .lisboaGray,
                     alignament: .center,
-                    margins: Constants.absoluteMargin)),
-            .margin(12.0),
-            .styledText(
-                LisboaDialogTextItem(
-                    text:  localized(localizedDescriptionKey),
-                    font: Constants.descriptionFont,
-                    color: .lisboaGray,
-                    alignament: .center,
-                    margins: Constants.absoluteMargin)),
-            .margin(24.0),
-            .verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"),
-                                                       type: LisboaDialogActionType.red,
-                                                       margins: (left: 16, right: 16), action: completion)),
-            .margin(16.0)
-        ]
-        let builder = LisboaDialog(items: components, closeButtonAvailable: false)
+                    margins: Constants.absoluteMargin)))
+        }
+        components.append(.margin(12.0))
+        components.append(.styledText(
+            LisboaDialogTextItem(
+                text:  localized(localizedDescriptionKey),
+                font: Constants.descriptionFont,
+                color: .lisboaGray,
+                alignament: .center,
+                margins: Constants.absoluteMargin)))
+        components.append(.margin(24.0))
+        components.append(.verticalAction(VerticalLisboaDialogAction(title: localized("generic_button_understand"),
+                                                                     type: LisboaDialogActionType.red,
+                                                                     margins: (left: 16, right: 16), action: completion)))
+        components.append(.margin(16.0))
+        let builder = LisboaDialog(items: components, closeButtonAvailable: closeButtonAvailable ?? false)
         self.associatedLoadingView.dismissLoading(completion: { [weak self] in
             guard let self = self else { return }
             builder.showIn(self.associatedDialogView)

@@ -53,6 +53,10 @@ final class GetHelpCenterConfigUseCase: UseCase<Void, GetHelpCenterConfigUseCase
                     elements: advisorElements
                 ))
             }
+            sections.append(HelpCenterConfig.Section(
+                section: .mail,
+                elements: [.mailContact]
+            ))
         }
         
         let config = HelpCenterConfig(sections: sections)

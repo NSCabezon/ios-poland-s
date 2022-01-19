@@ -38,6 +38,11 @@ final class CardDTOAdapter {
         // So remember to make proper change also there in case of changing it here.
         cardDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plCard.virtualPan)
         cardDTO.cardTypeDescription = plCard.type
+        
+        if plCard.productId != nil {
+            cardDTO.productId = SANLegacyLibrary.CardDTO.ProductIDCardDTO(id: plCard.productId?.id, systemId: plCard.productId?.systemId ?? nil)
+        }
+        
         return cardDTO
     }
 
@@ -46,15 +51,13 @@ final class CardDTOAdapter {
         cardDataDTO.PAN = repeatElement("X", count: Constants.maskedPANLength).joined() + String(plCard.maskedPan?.suffix(Constants.visiblePANDigits) ?? "")
         cardDataDTO.availableAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.availableBalance)
         cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
-        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.creditLimit)
+        cardDataDTO.creditLimitAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.relatedAccountData?.creditLimit)
         cardDataDTO.visualCode = plCard.productCode
+        var amount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
         if plCard.type?.lowercased() == "credit" {
-            var amount = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
             amount?.value?.negate()
-            cardDataDTO.currentBalance = amount
-        } else {
-            cardDataDTO.currentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plCard.disposedAmount)
         }
+        cardDataDTO.currentBalance = amount
         return cardDataDTO
     }
 

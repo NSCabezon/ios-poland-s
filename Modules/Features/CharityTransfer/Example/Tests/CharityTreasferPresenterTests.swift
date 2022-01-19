@@ -88,7 +88,13 @@ private extension CharityTreasferPresenterTests {
             let presenter = CharityTransferFormPresenter(dependenciesResolver: resolver,
                                                          accounts: AccountForDebitMockBuilder.getAccountForDebitMockMock(),
                                                          selectedAccountNumber: "12123412341234123412341234",
-                                                         formValidator: CharityTransferValidator())
+                                                         formValidator: CharityTransferValidator(),
+                                                         charityTransferSettings: CharityTransferSettings(
+                                                            transferRecipientName: "Fundacja Santander",
+                                                            transferAccountNumber: "26 1090 0088 0000 0001 4223 0553",
+                                                            transferTitle: "Darowizna dla Fundacji Santander"
+                                                         )
+            )
             return presenter
         }
         

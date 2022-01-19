@@ -37,6 +37,8 @@ class ViewController: UIViewController {
         newComponents.append(self.trustedDevicePinView())
         newComponents.append(self.interactiveInfoView())
         newComponents.append(self.datePickerSelector())
+        newComponents.append(self.formSectionContainer())
+        newComponents.append(self.tappableControl())
         return newComponents
     }()
 
@@ -105,6 +107,9 @@ extension ViewController: UITableViewDataSource {
         newCell.translatesAutoresizingMaskIntoConstraints = false
         newCell.selectionStyle = .none
         let component = self.componentForRow(indexPath: indexPath)
+        newCell.contentView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
         newCell.contentView.addSubview(component)
         NSLayoutConstraint.activate([
             component.topAnchor.constraint(equalTo: newCell.contentView.topAnchor, constant: 10),
