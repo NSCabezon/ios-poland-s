@@ -14,8 +14,8 @@ pipeline {
 		NEXUS_USERNAME=credentials('jenkins-nexus-username')
 		NEXUS_PASSWORD=credentials('jenkins-nexus-password')
 		APPLE_ID=credentials('jenkins-apple-id')
-      	FASTLANE_ITC_TEAM_ID=credentials('jenkins-team-id-enterprise')
-      	FASTLANE_USER=credentials('jenkins-apple-id')
+      		FASTLANE_ITC_TEAM_ID=credentials('jenkins-team-id-enterprise')
+      		FASTLANE_USER=credentials('jenkins-apple-id')
 	}
 	parameters {
 		booleanParam(name: "DEPLOY_TO_INTERN", defaultValue: "${is_develop_branch}", description: "Do you want to deploy INTERN?")
@@ -24,6 +24,7 @@ pipeline {
 		booleanParam(name: "INCREMENT_VERSION", defaultValue: true, description: "Do you want to increment the build version?")
 		choice(name: 'NODE_LABEL', choices: ['poland', 'ios', 'hub'], description: '')
     }
+	
     agent { label params.NODE_LABEL ?: 'poland' }  
 
 	triggers { cron(cron_string) }
@@ -55,7 +56,6 @@ pipeline {
 			when {
 				branch 'develop'
 				expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
-				expression { return params.RUN_TESTS }
             }
 			steps {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -72,6 +72,7 @@ pipeline {
 			when {
 				anyOf { branch 'master'; branch 'release/*' }	
 				expression { return params.DEPLOY_TO_PRE }
+				expression { return  !env.COMMIT_MESSAGE.contains("Updating Version")}
 			}
 			steps {
 				echo "Distributing Pre app"
