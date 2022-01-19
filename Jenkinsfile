@@ -60,7 +60,7 @@ pipeline {
 			}
 			steps {
 				echo "Testing Poland Local Example Apps"
-				sh "cd Project && bundle exec fastlane ios tests"
+				sh "cd Project && bundle exec fastlane ios test"
 			}
 		}
 
