@@ -182,10 +182,6 @@
 		B0D77A53276B4C3800766705 /* PLTransferSettingsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D77A52276B4C3800766705 /* PLTransferSettingsDTO.swift */; };
 		B0D77A55276B4CB500766705 /* PLCharityTransferSettingsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D77A54276B4CB500766705 /* PLCharityTransferSettingsDTO.swift */; };
 		B0D77A5C276C8C0300766705 /* AdditionalUseCasesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D77A5B276C8C0300766705 /* AdditionalUseCasesProvider.swift */; };
-		BA35170B2775FF4E00ABEA95 /* ModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA35170A2775FF4E00ABEA95 /* ModuleDependencies.swift */; };
-		BA35170E2775FF7500ABEA95 /* OneTransferHomeExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA35170D2775FF7400ABEA95 /* OneTransferHomeExternalDependenciesResolver.swift */; };
-		BA3517132776003800ABEA95 /* PLGetSendMoneyActionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3517122776003800ABEA95 /* PLGetSendMoneyActionsUseCase.swift */; };
-		BA351715277605D700ABEA95 /* PLOneTransferHomeActionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA351714277605D700ABEA95 /* PLOneTransferHomeActionsCoordinator.swift */; };
 		BADCDAFA273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADCDAF9273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift */; };
 		BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */; };
 		BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */; };
@@ -416,10 +412,6 @@
 		B0D77A52276B4C3800766705 /* PLTransferSettingsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransferSettingsDTO.swift; sourceTree = "<group>"; };
 		B0D77A54276B4CB500766705 /* PLCharityTransferSettingsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCharityTransferSettingsDTO.swift; sourceTree = "<group>"; };
 		B0D77A5B276C8C0300766705 /* AdditionalUseCasesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalUseCasesProvider.swift; sourceTree = "<group>"; };
-		BA35170A2775FF4E00ABEA95 /* ModuleDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDependencies.swift; sourceTree = "<group>"; };
-		BA35170D2775FF7400ABEA95 /* OneTransferHomeExternalDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTransferHomeExternalDependenciesResolver.swift; sourceTree = "<group>"; };
-		BA3517122776003800ABEA95 /* PLGetSendMoneyActionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetSendMoneyActionsUseCase.swift; sourceTree = "<group>"; };
-		BA351714277605D700ABEA95 /* PLOneTransferHomeActionsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLOneTransferHomeActionsCoordinator.swift; sourceTree = "<group>"; };
 		BADCDAF9273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLValidateGenericSendMoneyUseCase.swift; sourceTree = "<group>"; };
 		BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaSectionsSecurityModifier.swift; sourceTree = "<group>"; };
 		BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalAreaSectionsProvider.swift; sourceTree = "<group>"; };
@@ -973,7 +965,6 @@
 		66B3CFA82639C6C5000AAD0F /* Santander */ = {
 			isa = PBXGroup;
 			children = (
-				BA3517092775FF3400ABEA95 /* Modules */,
 				5F02263B27328DFB005161B6 /* Session */,
 				669A37E32721831400C0F272 /* Entitlement */,
 				B01155E42715818200A4C175 /* OneAppInit */,
@@ -1552,7 +1543,6 @@
 				446E0C28265FE49F00847FCA /* PLAccessibilityPGFrequentOperatives.swift in Sources */,
 				BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */,
 				CCE45A9C2732AC5400691E91 /* PLAuthorizationViewController.swift in Sources */,
-				BA35170B2775FF4E00ABEA95 /* ModuleDependencies.swift in Sources */,
 				B01155F3271581BD00A4C175 /* CreditCardRepaymentMockInjector.swift in Sources */,
 				85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */,
 				0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */,
@@ -1595,7 +1585,6 @@
 				D5B9E49D2706CEEF0043196C /* PLCardTransactionDetailViewConfiguration.swift in Sources */,
 				446E0C22265FE42400847FCA /* BLIKPGFrequentOperativeOption.swift in Sources */,
 				4488918B26EB8F0F00F5FA24 /* PLFiltersAlertModifier.swift in Sources */,
-				BA35170E2775FF7500ABEA95 /* OneTransferHomeExternalDependenciesResolver.swift in Sources */,
 				D547C8FC272A9B2C0090DABF /* PLPersonalDataModifier.swift in Sources */,
 				BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */,
 				B01156052715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift in Sources */,
@@ -1615,7 +1604,6 @@
 				5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */,
 				EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */,
 				7E2CCA8B26B80CF500CBDB11 /* BuyInsurancePGFrequentOperativeOption.swift in Sources */,
-				BA351715277605D700ABEA95 /* PLOneTransferHomeActionsCoordinator.swift in Sources */,
 				4497E816270CB23200D6EE05 /* PLLoanTransaction.swift in Sources */,
 				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
 				B01155EE271581BD00A4C175 /* OneAppInitViewController.swift in Sources */,
@@ -1676,7 +1664,6 @@
 				90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */,
 				7E1B7DDF27216100002CC226 /* PLValidateCardOnOffUseCase.swift in Sources */,
 				A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */,
-				BA3517132776003800ABEA95 /* PLGetSendMoneyActionsUseCase.swift in Sources */,
 				0DCD893426C547FA00275A90 /* PLSetUpAlertsOperative.swift in Sources */,
 				7E2CCA8226B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift in Sources */,
 				B01155F2271581BD00A4C175 /* OneAppInitWelcomeViewController.swift in Sources */,
