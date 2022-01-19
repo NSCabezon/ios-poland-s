@@ -4,6 +4,7 @@ import Commons
 import CoreFoundationLib
 import RetailLegacy
 import UI
+import SANPLLibrary
 
 extension ModuleDependencies {
     func retailLegacyPublicMenuCoordinator() -> RetailLegacyPublicMenuCoordinator {
@@ -19,7 +20,7 @@ extension ModuleDependencies {
     }
     
     func resolve() -> PublicMenuRepository {
-        return PLPublicMenuRepository()
+        return PLPublicMenuRepository(legacyDependenciesResolver.resolve(for: PLManagersProviderProtocol.self))
     }
     
     func resolve() -> SegmentedUserRepository {
@@ -31,11 +32,27 @@ extension ModuleDependencies {
     }
     
     func publicMenuATMLocatorCoordinator() -> Coordinator {
-        self.retailLegacyPublicMenuCoordinator()
+        return ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
     func resolve() -> DataBinding {
         fatalError()
+    }
+    
+    func publicMenuCustomCoordinatorForAction(_ action: String) -> Coordinator? {
+        guard let plAction = PLCustomActions(rawValue: action) else { return nil }
+        switch plAction {
+        case .otherUser:
+            return ToastCoordinator("generic_alert_notAvailableOperation")
+        case .information:
+            return ToastCoordinator("generic_alert_notAvailableOperation")
+        case .service:
+            return ToastCoordinator("generic_alert_notAvailableOperation")
+        case .offer:
+            return ToastCoordinator("generic_alert_notAvailableOperation")
+        case .mobileAuthorization:
+            return ToastCoordinator("generic_alert_notAvailableOperation")
+        }
     }
 }
 
