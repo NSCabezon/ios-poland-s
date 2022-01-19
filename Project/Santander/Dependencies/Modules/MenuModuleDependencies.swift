@@ -32,6 +32,7 @@ extension ModuleDependencies {
     }
     
     func publicMenuATMLocatorCoordinator() -> Coordinator {
+        drawer.toggleSideMenu()
         return ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
@@ -40,6 +41,7 @@ extension ModuleDependencies {
     }
     
     func publicMenuCustomCoordinatorForAction(_ action: String) -> Coordinator? {
+        drawer.toggleSideMenu()
         guard let plAction = PLCustomActions(rawValue: action) else { return nil }
         switch plAction {
         case .otherUser:
