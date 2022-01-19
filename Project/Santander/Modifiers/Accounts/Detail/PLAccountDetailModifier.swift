@@ -19,7 +19,7 @@ final class PLAccountDetailModifier: AccountDetailModifierProtocol {
     }
     
     var regExValidatorString: CharacterSet {
-        return CharacterSet(charactersIn: "^([1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ]*)$")
+        return CharacterSet(charactersIn: "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/&")
     }
         
     var isEnabledEditAlias: Bool {
