@@ -74,8 +74,8 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     func validateUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable) throws -> BSANResponse<ValidateAccountTransferDTO> {
         return BSANErrorResponse(nil)
     }
-    
-    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO) throws -> BSANResponse<TransferConfirmAccountDTO> {
+
+    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
     
