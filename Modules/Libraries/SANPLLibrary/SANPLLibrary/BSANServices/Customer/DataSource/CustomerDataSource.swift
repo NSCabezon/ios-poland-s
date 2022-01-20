@@ -50,7 +50,7 @@ extension CustomerDataSource: CustomerDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: ["includeContexts": true],
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .customerIndividual)
         )
         return result
@@ -84,7 +84,7 @@ private struct CustomerRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .none
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
     
@@ -95,7 +95,7 @@ private struct CustomerRequest: NetworkProviderRequest {
          jsonBody: Encodable? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

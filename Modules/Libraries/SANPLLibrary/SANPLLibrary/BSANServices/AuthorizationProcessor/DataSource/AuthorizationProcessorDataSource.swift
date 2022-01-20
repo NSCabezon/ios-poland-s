@@ -98,7 +98,7 @@ extension AuthorizationProcessorDataSource: AuthorizationProcessorDataSourceProt
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 bodyEncoding: .none,
-                                                                                                                contentType: .queryString,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .confirmChallenge))
         return result
     }
@@ -113,7 +113,7 @@ private struct AuthPendingChallengeRequest: NetworkProviderRequest {
     let jsonBody: PendingChallengeParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -125,7 +125,7 @@ private struct AuthPendingChallengeRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
@@ -149,7 +149,7 @@ private struct ConfirmChallengeRequest: NetworkProviderRequest {
     let jsonBody: ConfirmChallengeParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -160,7 +160,7 @@ private struct ConfirmChallengeRequest: NetworkProviderRequest {
          jsonBody: ConfirmChallengeParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName

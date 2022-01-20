@@ -60,7 +60,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .loanDetails)
         )
         return result
@@ -93,7 +93,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .loanInstallments)
         )
         return result
@@ -143,7 +143,7 @@ private extension LoanDataSource {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .loanTransactions)
         )
         return result
@@ -159,7 +159,7 @@ private struct LoanRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .none
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
     
@@ -170,7 +170,7 @@ private struct LoanRequest: NetworkProviderRequest {
          jsonBody: Encodable? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
@@ -192,7 +192,7 @@ private struct LoanChangeAliasRequest: NetworkProviderRequest {
 	let jsonBody: ChangeAliasParameters?
 	let formData: Data?
 	let bodyEncoding: NetworkProviderBodyEncoding? = .body
-	let contentType: NetworkProviderContentType
+	let contentType: NetworkProviderContentType?
 	let localServiceName: PLLocalServiceName
 	let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -203,7 +203,7 @@ private struct LoanChangeAliasRequest: NetworkProviderRequest {
 		 jsonBody: ChangeAliasParameters?,
 		 headers: [String: String]?,
 		 queryParams: [String: String]? = nil,
-		 contentType: NetworkProviderContentType,
+		 contentType: NetworkProviderContentType?,
 		 localServiceName: PLLocalServiceName) {
 		self.serviceName = serviceName
 		self.serviceUrl = serviceUrl
