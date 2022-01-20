@@ -1,7 +1,7 @@
 
 import Foundation
 
-public struct AccountForDebit {
+public struct AccountForDebit: Equatable {
     public let id: String
     public let name: String
     public let number: String
@@ -29,8 +29,7 @@ public struct AccountForDebit {
         self.accountType = accountType
     }
     
-    public enum AccountType: String {
+    public enum AccountType: String, Equatable {
         case AVISTA, SAVINGS, DEPOSIT, CREDIT_CARD, LOAN, INVESTMENT, VAT, SLINK, EFX, OTHER, PERSONAL
     }
 }
-

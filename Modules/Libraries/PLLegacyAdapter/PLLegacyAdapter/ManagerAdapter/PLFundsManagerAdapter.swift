@@ -62,4 +62,8 @@ extension PLFundsManagerAdapter: BSANFundsManager {
     func confirmFundTransferPartialByShares(originFundDTO: FundDTO, destinationFundDTO: FundDTO, fundTransferDTO: FundTransferDTO, signatureDTO: SignatureDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
     }
+
+    func changeFundAlias(_ fund: FundDTO, newAlias: String) throws -> BSANResponse<Void> {
+        return BSANErrorResponse(nil)
+    }
 }

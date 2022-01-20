@@ -80,7 +80,7 @@ private extension TaxTransferAmountFieldView {
         amount.textField.setEditingStyle(
             .writable(
                 configuration: .init(
-                    type: .floatingTitle,
+                    type: .simple,
                     formatter: PLAmountTextFieldFormatter(),
                     disabledActions: [],
                     keyboardReturnAction: nil,

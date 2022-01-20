@@ -33,11 +33,8 @@ extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityMo
     var isEnabledDataPrivacy: Bool {
         return false
     }
-    var isDisabledLastAccess: Bool {
-        return false
-    }
     var isEnabledLastAccess: Bool {
-        return false
+        return true
     }
     var isESignatureFunctionalityEnabled: Bool {
         return false

@@ -9,6 +9,10 @@ struct AdditionalUseCasesProviderImpl: AdditionalUseCasesProviderProtocol {
         return [(LoadPLAccountOtherOperativesInfoUseCase(dependencies: dependencies),
                  isMandatory: true),
                 (LoadPLTransferSettingsUseCase(dependencies: dependencies),
+                 isMandatory: true),
+                (LoadPLHelpCenterOnlineAdvisorUseCase(dependencies: dependencies),
+                 isMandatory: true),
+                (LoadPLHelpHelpQuestionsUseCase(dependencies: dependencies),
                  isMandatory: true)
         ]
     }
