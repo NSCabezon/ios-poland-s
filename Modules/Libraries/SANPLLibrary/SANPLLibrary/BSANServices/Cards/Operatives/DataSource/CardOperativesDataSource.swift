@@ -103,7 +103,7 @@ private struct CardOperativeRequest: NetworkProviderRequest {
     var jsonBody: CardOperativeReasonBodyParameters? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .body
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -115,7 +115,7 @@ private struct CardOperativeRequest: NetworkProviderRequest {
          bodyEncoding: NetworkProviderBodyEncoding? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

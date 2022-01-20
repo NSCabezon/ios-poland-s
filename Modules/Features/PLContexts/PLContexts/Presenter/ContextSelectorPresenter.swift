@@ -36,6 +36,7 @@ final class ContextSelectorPresenter {
 
 extension ContextSelectorPresenter: ContextSelectorPresenterProtocol {
     func viewHasLoad() {
+        self.trackEvent(.unfoldContextList)
         self.trackerManager.trackScreen(screenId: GlobalPositionContextsPage().page, extraParameters: [:])
         let getContextsUseCase = GetContextsUseCase(dependenciesResolver: self.dependenciesResolver, bsanDataProvider: self.bsanDataProvider)
         Scenario(useCase: getContextsUseCase, input: () )

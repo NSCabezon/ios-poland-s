@@ -71,6 +71,11 @@ extension PLLoansManagerAdapter: BSANLoansManager {
     }
     
     func changeLoanAlias(_ loan: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
+		let result = try? loanManager.changeAlias(loanDTO: loan, newAlias: newAlias)
+		
+		switch result {
+		case .success: return BSANOkResponse(nil)
+		default: return BSANErrorResponse(nil)
+		}
     }
 }

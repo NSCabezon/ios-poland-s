@@ -24,7 +24,7 @@ final class PLCardDetailModifier: CardDetailModifierProtocol {
         return 20
     }
     var regExValidatorString: CharacterSet {
-        return CharacterSet(charactersIn: "^([1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ]*)$")
+        return CharacterSet(charactersIn: "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
     }
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {

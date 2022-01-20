@@ -117,7 +117,7 @@ private struct CardTransationsRequest: NetworkProviderRequest {
     let jsonBody: CardTransactionsParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
     
@@ -129,7 +129,7 @@ private struct CardTransationsRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
@@ -153,7 +153,7 @@ private struct CardChangeAliasRequest: NetworkProviderRequest {
     let jsonBody: ChangeAliasParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .body
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -164,7 +164,7 @@ private struct CardChangeAliasRequest: NetworkProviderRequest {
          jsonBody: ChangeAliasParameters?,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

@@ -9,7 +9,7 @@ struct AcceptDomesticTransferRequest: NetworkProviderRequest {
     let jsonBody: AcceptDomesticTransactionParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
     
@@ -21,7 +21,7 @@ struct AcceptDomesticTransferRequest: NetworkProviderRequest {
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]? = [:],
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName = .authenticateInit,
          authorization: NetworkProviderRequestAuthorization? = .oauth
     ) {

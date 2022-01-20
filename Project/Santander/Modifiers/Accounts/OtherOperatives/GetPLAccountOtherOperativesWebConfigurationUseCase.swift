@@ -101,7 +101,7 @@ extension GetPLAccountOtherOperativesWebConfigurationUseCase {
                                                                                                                serviceUrl: absoluteUrl,
                                                                                                                method: .get,
                                                                                                                headers: nil,
-                                                                                                               contentType: .urlEncoded,
+                                                                                                               contentType: nil,
                                                                                                                localServiceName: .authenticate)
         )
         return result

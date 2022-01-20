@@ -234,6 +234,11 @@ private extension ContextSelectorViewController {
         }
         return height
     }
+
+    private func setAccessibilityIdentifiers() {
+        self.titleLabel.accessibilityIdentifier = AccessibilityContext.lblTitle
+        self.closeButton.accessibilityIdentifier = AccessibilityContext.btnClose
+    }
 }
 
 // MARK: - ContextSelectorViewProtocol
@@ -245,6 +250,7 @@ extension ContextSelectorViewController: ContextSelectorViewProtocol {
         setupLabels()
         setupLayout()
         setupPanGesture()
+        setAccessibilityIdentifiers()
     }
 }
 

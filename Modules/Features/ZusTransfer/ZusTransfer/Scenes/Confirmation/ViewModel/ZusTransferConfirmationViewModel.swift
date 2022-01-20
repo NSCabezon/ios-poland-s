@@ -32,7 +32,7 @@ struct ZusTransferConfirmationViewModel {
     }
     
     var transferType: String {
-        localized("#Przelew zewnętrzny")
+        localized("pl_zusTransfer_text_transactionTypeText")
     }
     
     func amountValueString(withAmountSize size: CGFloat) -> NSAttributedString {
