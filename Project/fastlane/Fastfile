@@ -122,8 +122,8 @@ CONFIGURATIONS = {
 # Add pairs with app name and configurations
 # i.e. "PLLogin" => {  path: Dir.pwd + "/../../Modules/Features/PlLogin/Example", workspace: "", scheme: "" }
 TEST_EXAMPLE_APPS_CONFIGURATION = {
-  "PLLogin" => {  path: Dir.pwd + "/../../Modules/Features/PlLogin/Example/", workspace: "PLLogin.xcworkspace", scheme: "PLLogin_ExampleTests" },
-  "PLUI" => { path: Dir.pwd + "/../../Modules/Libraries/PLUI/Example/", workspace: "PLUI.xcworkspace", scheme: "PLUI_ExampleTests" } 
+  "PLLogin" => {  path: Dir.pwd + "/../../Modules/Features/PlLogin/Example/", workspace: "PLLogin.xcworkspace", scheme: "PLLogin-Example" },
+  "PLUI" => { path: Dir.pwd + "/../../Modules/Libraries/PLUI/Example/", workspace: "PLUI.xcworkspace", scheme: "PLUI-Example" } 
 }
 
 def calculateVersionCode(versionName)

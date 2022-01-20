@@ -16,6 +16,11 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
+### ios upload_for_tests
+```
+fastlane ios upload_for_tests
+```
+Build and send to Microsite and TestFlight
 ### ios create_app_id
 ```
 fastlane ios create_app_id
@@ -40,7 +45,7 @@ Updating pods and Provisions
 ```
 fastlane ios test
 ```
-Test all example apps
+Test selected example apps
 ### ios check_pods
 ```
 fastlane ios check_pods
