@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum AccountForDebitSelectorMode {
+public enum AccountForDebitSelectorMode: Equatable {
     case mustSelectDefaultAccount
     case changeDefaultAccount
 }

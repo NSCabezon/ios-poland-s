@@ -21,6 +21,7 @@ final class PLRememberedLoginChangeUserUseCase: UseCase<Void, Void, PLUseCaseErr
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         managerProvider.getTrustedDeviceManager().deleteTrustedDeviceHeaders()
         managerProvider.getTrustedDeviceManager().deleteDeviceId()
+        managerProvider.getTrustedDeviceManager().deleteEncryptedUserKeys()
         return .ok()
     }
 }

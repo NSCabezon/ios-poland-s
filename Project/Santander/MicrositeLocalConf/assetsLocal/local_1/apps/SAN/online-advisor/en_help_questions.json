@@ -1,0 +1,51 @@
+{
+   "main-window-category-title":"What you want to do?",
+   "sections":[
+      {
+         "profiles":[
+            "klient_indywidualny"
+         ],
+         "questions":[
+            {
+               "name":"Report an error, suggestion or complaint",
+               "answer":"Use the form here: <a href=\"https://bledywoneapp.webankieta.pl\">https://bledywoneapp.webankieta.pl</a> Submit all your comments on a regular basis. This will help us improve the new app for our customers. If an error in the pilot version of the app affects your finances (e.g. incorrect presentation of account balance), check the Critical priority in the form. We consider such reports to be complaints."
+            },
+            {
+               "name":"Authorise an online transfer using mobile authorisation",
+               "answer":"To authorise all transfers you submit online (e.g. online purchases) use mobile authorisation in your current Santander mobile app."
+            },
+            {
+               "name":"Find out more about the pilot version of the app",
+               "answer":"You will find more information about the pilot version of the app in the Prompter (Sufler). We sent you the link in the invitation to the pilot."
+            },
+            {
+               "name":"Use the current Santander mobile app",
+               "answer":"The current Santander mobile app is still available. Keep using it as usual. It will be especially useful if you do not find the feature you need in the pilot version of the app."
+            }
+         ]
+      },
+      {
+         "profiles":[
+            "klient_firmowy"
+         ],
+         "questions":[
+            {
+               "name":"Report an error, suggestion or complaint",
+               "answer":"Use the form here: <a href=\"https://bledywoneapp.webankieta.pl\">https://bledywoneapp.webankieta.pl</a> Submit all your comments on a regular basis. This will help us improve the new app for our customers. If an error in the pilot version of the app affects your finances (e.g. incorrect presentation of account balance), check the Critical priority in the form. We consider such reports to be complaints."
+            },
+            {
+               "name":"Authorise an online transfer using mobile authorisation",
+               "answer":"To authorise all transfers you submit online (e.g. online purchases) use mobile authorisation in your current Santander mobile app."
+            },
+            {
+               "name":"Find out more about the pilot version of the app",
+               "answer":"You will find more information about the pilot version of the app in the Prompter (Sufler). We sent you the link in the invitation to the pilot."
+            },
+            {
+               "name":"Use the current Santander mobile app",
+               "answer":"The current Santander mobile app is still available. Keep using it as usual. It will be especially useful if you do not find the feature you need in the pilot version of the app."
+            }
+         ]
+      }
+   ]
+}

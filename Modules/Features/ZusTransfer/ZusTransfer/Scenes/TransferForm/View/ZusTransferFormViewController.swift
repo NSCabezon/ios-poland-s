@@ -70,8 +70,8 @@ private extension ZusTransferFormViewController {
     
     func configureView() {
         view.backgroundColor = .white
-        bottomView.configure(title: localized("#Gotowe")) {
-            // TODO: Add ready botton action
+        bottomView.configure(title: localized("#Gotowe")) { [weak self] in
+            self?.presenter.showConfirmation()
         }
         bottomView.disableButton()
         formView.configure(with: presenter.getSelectedAccountViewModels())
@@ -149,6 +149,7 @@ extension ZusTransferFormViewController: ZusTransferFormViewDelegate {
         )
         presenter.startValidation(with: field)
     }
+    
     func changeAccountTapped() {
         presenter.showAccountSelector()
     }

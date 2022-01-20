@@ -64,10 +64,10 @@ final class ZusTransferFormView: UIView {
     }
     
     func getCurrentFormViewModel() -> ZusTransferFormViewModel {
-        return ZusTransferFormViewModel(
-            recipient: recipientTextField.text,
-            amount: Decimal(string: amountTextField.text ?? ""),
-            title: titleTextField.text,
+        ZusTransferFormViewModel(
+            recipient: recipientTextField.text ?? "",
+            amount: Decimal(string: amountTextField.text ?? "") ?? 0,
+            title: titleTextField.text ?? "",
             date: selectedDate,
             recipientAccountNumber: accountNumberTextField.text?.replace(" ", "") ?? ""
         )

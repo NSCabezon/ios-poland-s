@@ -20,6 +20,12 @@ final class PLCardDetailModifier: CardDetailModifierProtocol {
     var prepaidCardHeaderElements: [PrepaidCardHeaderElements] = [.availableBalance]
     var debitCardHeaderElements: [DebitCardHeaderElements] = []
     var creditCardHeaderElements: [CreditCardHeaderElements] = [.limitCredit, .availableCredit, .withdrawnCredit]
+    var maxAliasLength: Int {
+        return 20
+    }
+    var regExValidatorString: CharacterSet {
+        return CharacterSet(charactersIn: "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
+    }
 
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
