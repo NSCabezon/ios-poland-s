@@ -21,6 +21,9 @@ final class LoanDTOAdapter {
         counterValueAmount?.value?.negate()
         loanDTO.counterValueCurrentBalanceAmount = counterValueAmount
         loanDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plLoan.accountId?.id)
+		if let productId = plLoan.accountId {
+			loanDTO.productId = .init(id: productId.id, systemId: productId.systemId)
+		}
         return loanDTO
     }
 }
