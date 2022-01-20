@@ -139,7 +139,10 @@
 		85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B5D270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift */; };
 		85E19B65270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B60270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift */; };
 		900EECE0273E784E00B7AD95 /* ConfirmPinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EECDF273E784E00B7AD95 /* ConfirmPinUseCase.swift */; };
+		903E5BF827996290000BE389 /* PLOneTransferHomeActionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E5BF62799628F000BE389 /* PLOneTransferHomeActionsCoordinator.swift */; };
+		903E5BF927996290000BE389 /* PLGetSendMoneyActionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */; };
 		90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A952732AC5300691E91 /* RemainingTimeView.swift */; };
+		90C661C227987420007647B3 /* OneTransferDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C661C127987420007647B3 /* OneTransferDependenciesResolver.swift */; };
 		90CFA854273E7DAF006AD6CB /* PLSessionDataManagerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABD87B273D213900431F7F /* PLSessionDataManagerModifier.swift */; };
 		9C0BFBE526F8C5B0000F2C8E /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BFBE426F8C5B0000F2C8E /* SendMoneyCoordinator.swift */; };
 		9CA9EEBC270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9EEBB270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift */; };
@@ -367,6 +370,9 @@
 		85E19B60270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeUseCase.swift; sourceTree = "<group>"; };
 		8CAF3B50D254CC1A6D76F25D /* Pods-Santander.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-release.xcconfig"; sourceTree = "<group>"; };
 		900EECDF273E784E00B7AD95 /* ConfirmPinUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPinUseCase.swift; sourceTree = "<group>"; };
+		903E5BF62799628F000BE389 /* PLOneTransferHomeActionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOneTransferHomeActionsCoordinator.swift; sourceTree = "<group>"; };
+		903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetSendMoneyActionsUseCase.swift; sourceTree = "<group>"; };
+		90C661C127987420007647B3 /* OneTransferDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTransferDependenciesResolver.swift; sourceTree = "<group>"; };
 		93CC7D2998660FC4E8F99CBE /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		9A17194677FA9103CB795DDB /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0BFBE426F8C5B0000F2C8E /* SendMoneyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SendMoneyCoordinator.swift; path = Santander/Modifiers/TransferOperatives/SendMoney/SendMoneyCoordinator.swift; sourceTree = SOURCE_ROOT; };
@@ -720,6 +726,7 @@
 			isa = PBXGroup;
 			children = (
 				3AF06BC92795932000E25B23 /* ModuleDependencies.swift */,
+				90C661C127987420007647B3 /* OneTransferDependenciesResolver.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -797,6 +804,7 @@
 		446E0C1C265FE42400847FCA /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				903E5BF32799628F000BE389 /* Transfer */,
 				B0D77A5A276C8BEF00766705 /* AdditionalUseCases */,
 				5FBDB730273BB47D00FB6DAF /* Session */,
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
@@ -1114,6 +1122,31 @@
 				9CDAE3B32743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift */,
 			);
 			path = Usecases;
+			sourceTree = "<group>";
+		};
+		903E5BF32799628F000BE389 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				903E5BF42799628F000BE389 /* Modules */,
+			);
+			path = Transfer;
+			sourceTree = "<group>";
+		};
+		903E5BF42799628F000BE389 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				903E5BF52799628F000BE389 /* Home */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		903E5BF52799628F000BE389 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				903E5BF62799628F000BE389 /* PLOneTransferHomeActionsCoordinator.swift */,
+				903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		90607A2527397F3200643651 /* UseCases */ = {
@@ -1570,7 +1603,9 @@
 				7E9939C326B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift in Sources */,
 				1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */,
 				0DAA4D5926C3E833005A921C /* PLMakeDonationOperative.swift in Sources */,
+				903E5BF827996290000BE389 /* PLOneTransferHomeActionsCoordinator.swift in Sources */,
 				0D38C7E726DE3CB70062C02C /* PLRepaymentOperative.swift in Sources */,
+				90C661C227987420007647B3 /* OneTransferDependenciesResolver.swift in Sources */,
 				A9EF0DA4271D78B800A1604B /* PLContextDTO.swift in Sources */,
 				0D9ACF2D27352416001D6D51 /* GetGPLoanOperativeModifier.swift in Sources */,
 				85E19B65270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift in Sources */,
@@ -1714,6 +1749,7 @@
 				9C0BFBE526F8C5B0000F2C8E /* SendMoneyCoordinator.swift in Sources */,
 				0D13A93326E91CFB00359D5B /* PLSwitchBetweenAccountOperative.swift in Sources */,
 				0D7CA2CD26B8079C007E0C10 /* PLInboxActionBuilder.swift in Sources */,
+				903E5BF927996290000BE389 /* PLGetSendMoneyActionsUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

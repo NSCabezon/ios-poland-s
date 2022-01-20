@@ -12,12 +12,14 @@ import CoreDomain
 import Foundation
 import RetailLegacy
 import CoreFoundationLib
+import Transfer
 
 struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
 
     let legacyDependenciesResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
-    
+    let coreDependencies = DefaultCoreDependencies()
+
     func resolve() -> TimeManager {
         legacyDependenciesResolver.resolve()
     }
@@ -64,5 +66,15 @@ extension ModuleDependencies {
         legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
             return DefaultGlobalPositionRepository.current
         }
+        legacyDependenciesResolver.register(for: OneTransferHomeExternalDependenciesResolver.self) { _ in
+            self
+        }
+    }
+}
+
+extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesResolver {
+    
+    func resolve() -> CoreDependencies {
+        return coreDependencies
     }
 }
