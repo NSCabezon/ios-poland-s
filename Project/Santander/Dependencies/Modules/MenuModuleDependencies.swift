@@ -27,7 +27,7 @@ extension ModuleDependencies {
         return legacyDependenciesResolver.resolve(for: SegmentedUserRepository.self)
     }
     
-    func resolveSide() -> UINavigationController {
+    func resolveSideNavigationController() -> UINavigationController {
         drawer.currentSideMenuViewController as? UINavigationController ?? UINavigationController()
     }
     
