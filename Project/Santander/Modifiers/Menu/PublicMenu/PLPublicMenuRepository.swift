@@ -17,14 +17,6 @@ final class PLPublicMenuRepository: PublicMenuRepository {
     }
 }
 
-public enum PLCustomActions: String {
-    case otherUser
-    case information
-    case service
-    case offer
-    case mobileAuthorization
-}
-
 private extension PLPublicMenuRepository {
     func isTrustedDevice() -> Bool {
         let trustedDeviceManager = managerProvider.getTrustedDeviceManager()
@@ -142,6 +134,14 @@ private struct PublicMenuOption: PublicMenuOptionRepresentable {
 private struct MenuOption: PublicMenuElementRepresentable {
     var top: PublicMenuOptionRepresentable?
     var bottom: PublicMenuOptionRepresentable?
+}
+
+public enum PLCustomActions: String {
+    case otherUser
+    case information
+    case service
+    case offer
+    case mobileAuthorization
 }
 
 extension KindOfPublicMenuNode {
