@@ -350,7 +350,7 @@ end
       skip_archive: true,
       clean: true,
       scheme: "Intern",
-      derived_data_path: "~/derived_data",
+      derived_data_path: "../",
       sdk: "iphonesimulator"
       )
   end
