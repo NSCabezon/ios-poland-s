@@ -28,59 +28,63 @@ private struct PLPublicMenuConfiguration {
     
     private let contactNumber = "+48 61 811 99 99"
     
+    // TODO: - Replace the action with .custom(action: PLCustomActions.otherUser.rawValue) when will be available
     private let otherUserItem = PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                  titleKey: KindOfPublicMenuNode.otherUserViewModel.titleKey,
                                                  iconKey: KindOfPublicMenuNode.otherUserViewModel.iconKey,
-                                                 action: .custom(action: PLCustomActions.otherUser.rawValue),
+                                                 action: .comingSoon,
                                                  accessibilityIdentifier: KindOfPublicMenuNode.otherUserViewModel.accessibility,
                                                  type: .smallButton(style: PLSmallButtonType()))
-
+    
+    // TODO: - Replace the action with .custom(action: PLCustomActions.information.rawValue) when will be available
     private lazy var informationItem = PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                         titleKey: KindOfPublicMenuNode.informationViewModel.titleKey,
                                                         iconKey: KindOfPublicMenuNode.informationViewModel.iconKey,
-                                                        action: .custom(action: PLCustomActions.information.rawValue),
+                                                        action: .comingSoon,
                                                         accessibilityIdentifier: KindOfPublicMenuNode.informationViewModel.accessibility,
                                                         type: (self.trustedDevice ? .smallButton(style: PLSmallButtonType()) : .bigButton(style: PLBigButtonType(fontSize: 20.0))))
 
     private lazy var firstItem = MenuOption(top: (self.trustedDevice ? otherUserItem : informationItem),
                                             bottom: (self.trustedDevice ? informationItem : nil))
     
+    // TODO: - Replace the action with .custom(action: PLCustomActions.service.rawValue) when will be available
     private let serviceItem = MenuOption(top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                                titleKey: KindOfPublicMenuNode.serviceViewModel.titleKey,
                                                                iconKey: KindOfPublicMenuNode.serviceViewModel.iconKey,
-                                                               action: .custom(action: PLCustomActions.service.rawValue),
+                                                               action: .comingSoon,
                                                                accessibilityIdentifier: KindOfPublicMenuNode.serviceViewModel.accessibility,
                                                                type: .bigButton(style: PLBigButtonType(fontSize: 20.0))),
                                          bottom: nil)
     
+    // TODO: - Replace the action with .goToATMLocator when will be available
     private let atmItem = MenuOption(top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                            titleKey: KindOfPublicMenuNode.plATMViewModel.titleKey,
                                                            iconKey: KindOfPublicMenuNode.plATMViewModel.iconKey,
-                                                           action: .goToATMLocator,
+                                                           action: .comingSoon,
                                                            accessibilityIdentifier: KindOfPublicMenuNode.plATMViewModel.accessibility,
                                                            type: .atm(bgImage: "imgAtmMenu")),
                                      bottom: nil)
-    
+    // TODO: - Replace the action with .custom(action: PLCustomActions.offer.rawValue) when will be available
     private let offerItem = MenuOption(top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                              titleKey: KindOfPublicMenuNode.offerViewModel.titleKey,
                                                              iconKey: KindOfPublicMenuNode.offerViewModel.iconKey,
-                                                             action: .custom(action: PLCustomActions.offer.rawValue),
+                                                             action: .comingSoon,
                                                              accessibilityIdentifier: KindOfPublicMenuNode.offerViewModel.accessibility,
                                                              type: .bigButton(style: PLBigButtonType(fontSize: 20.0))),
                                        bottom: nil)
-    
+    // TODO: - Replace the action with .callPhone(number: contactNumber) when will be available
     private lazy var contactItem = MenuOption(top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                                titleKey: KindOfPublicMenuNode.contactViewModel.titleKey,
                                                                iconKey: KindOfPublicMenuNode.contactViewModel.iconKey,
-                                                               action: .callPhone(number: contactNumber),
+                                                               action: .comingSoon,
                                                                accessibilityIdentifier: KindOfPublicMenuNode.contactViewModel.accessibility,
                                                                type: .bigButton(style: PLBigButtonType(fontSize: 20.0))),
                                          bottom: nil)
-    
+    // TODO: - Replace the action with .custom(action: PLCustomActions.mobileAuthorization.rawValue) when will be available
     private let mobileAuthorizationItem = MenuOption(top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                                                                            titleKey: KindOfPublicMenuNode.mobileAuthorizationViewModel.titleKey,
                                                                            iconKey: KindOfPublicMenuNode.mobileAuthorizationViewModel.iconKey,
-                                                                           action: .custom(action: PLCustomActions.mobileAuthorization.rawValue),
+                                                                           action: .comingSoon,
                                                                            accessibilityIdentifier: KindOfPublicMenuNode.mobileAuthorizationViewModel.accessibility,
                                                                            type: .smallButton(style: PLSmallButtonType())),
                                                      bottom: nil)
