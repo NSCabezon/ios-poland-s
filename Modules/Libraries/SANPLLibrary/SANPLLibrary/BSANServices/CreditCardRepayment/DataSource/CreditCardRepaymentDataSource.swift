@@ -48,7 +48,7 @@ extension CreditCardRepaymentDataSource: CreditCardRepaymentDataSourceProtocol {
                     method: .get,
                     headers: headers,
                     queryParams: queryParams,
-                    contentType: .urlEncoded,
+                    contentType: nil,
                     localServiceName: .accountsForCredit,
                     authorization: .oauth
                 )
@@ -72,7 +72,7 @@ extension CreditCardRepaymentDataSource: CreditCardRepaymentDataSourceProtocol {
                     method: .get,
                     headers: headers,
                     queryParams: queryParams,
-                    contentType: .urlEncoded,
+                    contentType: nil,
                     localServiceName: .accountsForDebit,
                     authorization: .oauth
                 )

@@ -7,6 +7,7 @@
 
 import SANLegacyLibrary
 import SANPLLibrary
+import CoreDomain
 
 final class PLAccountsManagerAdapter {
 

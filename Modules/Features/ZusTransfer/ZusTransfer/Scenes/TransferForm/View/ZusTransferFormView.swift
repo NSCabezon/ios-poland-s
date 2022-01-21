@@ -37,6 +37,7 @@ final class ZusTransferFormView: UIView {
     private let accountNumberTextFieldDelegate = TextFieldDelegate()
     private let titleTextFieldDelegate = TextFieldDelegate()
     private let amountTextFieldDelegate = TextFieldDelegate()
+    private var accountNumberWasEditing = false
     weak var delegate: ZusTransferFormViewDelegate?
 
     init(language: String) {
@@ -63,10 +64,10 @@ final class ZusTransferFormView: UIView {
     }
     
     func getCurrentFormViewModel() -> ZusTransferFormViewModel {
-        return ZusTransferFormViewModel(
-            recipient: recipientTextField.text,
-            amount: Decimal(string: amountTextField.text ?? ""),
-            title: titleTextField.text,
+        ZusTransferFormViewModel(
+            recipient: recipientTextField.text ?? "",
+            amount: Decimal(string: amountTextField.text ?? "") ?? 0,
+            title: titleTextField.text ?? "",
             date: selectedDate,
             recipientAccountNumber: accountNumberTextField.text?.replace(" ", "") ?? ""
         )
@@ -80,7 +81,7 @@ final class ZusTransferFormView: UIView {
         switch data.currentActiveField {
         case .recipient:
             showError(for: recipientView, with: data.invalidRecieptMessages)
-        case .accountNumber:
+        case .accountNumber(_):
             showError(for: accountView, with: data.invalidAccountMessages)
         case .amount:
             showError(for: amountView, with: data.invalidAmountMessages)
@@ -178,7 +179,11 @@ private extension ZusTransferFormView {
         accountNumberTextField.updatableDelegate = self
         accountNumberTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
             guard let self = self else { return }
-            self.currentActiveField = .accountNumber
+            self.currentActiveField = .accountNumber(controlEvent: .beginEditing)
+        }
+        accountNumberTextFieldDelegate.textFieldDidEndEditing = { [weak self] in
+            guard let self = self, self.accountNumberWasEditing else { return }
+            self.delegate?.didChangeForm(with: .accountNumber(controlEvent: .endEditing))
         }
         accountFormatter.delegate = accountNumberTextFieldDelegate
     }
@@ -220,6 +225,9 @@ private extension ZusTransferFormView {
             guard let self = self else { return }
             self.titleTextField.setText(nil)
             self.currentActiveField = .title
+        }
+        titleTextFieldDelegate.textFieldDidEndEditing = { [weak self] in
+            self?.delegate?.didChangeForm(with: .title)
         }
         formatter.delegate = titleTextFieldDelegate
     }
@@ -304,6 +312,9 @@ private extension ZusTransferFormView {
 
 extension ZusTransferFormView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
+        if case .accountNumber(_) = currentActiveField {
+            accountNumberWasEditing = true
+        }
         delegate?.didChangeForm(with: currentActiveField)
     }
 }

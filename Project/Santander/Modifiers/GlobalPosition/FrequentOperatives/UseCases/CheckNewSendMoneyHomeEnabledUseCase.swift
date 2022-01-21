@@ -8,7 +8,7 @@
 import CoreFoundationLib
 import Commons
 
-final class CheckNewSendMoneyEnabledUseCase: UseCase<Void, Bool, StringErrorOutput> {
+final class CheckNewSendMoneyHomeEnabledUseCase: UseCase<Void, Bool, StringErrorOutput> {
     let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {

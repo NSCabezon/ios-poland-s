@@ -22,7 +22,7 @@ public struct PLContextRequest: NetworkProviderRequest {
     public let jsonBody: AuthenticateInitParameters?
     public let formData: Data?
     public let bodyEncoding: NetworkProviderBodyEncoding?
-    public let contentType: NetworkProviderContentType
+    public let contentType: NetworkProviderContentType?
     public let localServiceName: PLLocalServiceName
     public let authorization: NetworkProviderRequestAuthorization?
 
@@ -33,7 +33,7 @@ public struct PLContextRequest: NetworkProviderRequest {
          jsonBody: AuthenticateInitParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName

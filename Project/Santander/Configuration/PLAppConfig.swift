@@ -60,7 +60,7 @@ class PLAppConfig: LocalAppConfig {
     let enablePortfoliosHome: Bool = true
     let enablePensionsHome: Bool = true
     let enableInsuranceSavingHome: Bool = true
-    let enabledChangeAliasProducts: [ProductTypeEntity] = []
+	let enabledChangeAliasProducts: [ProductTypeEntity] = [.card,.account,.loan,.deposit,.fund]
     let isEnabledSecurityArea: Bool = true
     let isEnabledAnalysisArea: Bool = false
     let isEnabledWithholdings: Bool = true

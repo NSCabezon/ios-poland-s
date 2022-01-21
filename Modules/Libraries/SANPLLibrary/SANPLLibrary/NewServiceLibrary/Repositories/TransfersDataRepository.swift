@@ -112,7 +112,7 @@ struct TransfersDataRepository: PLTransfersRepository {
         return .failure(ServiceError.unknown)
     }
     
-    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<Void, Error> {
         return .failure(ServiceError.unknown)
     }
     

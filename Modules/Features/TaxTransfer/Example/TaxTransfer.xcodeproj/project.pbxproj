@@ -12,8 +12,14 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		C6A52CBB0F8A08ACEB8A242C /* Pods_TaxTransfer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D3C3329E178629BF38B37C /* Pods_TaxTransfer_Tests.framework */; };
+		D42B711B279051B8009DF3D4 /* AccountForDebitStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B711A279051B8009DF3D4 /* AccountForDebitStub.swift */; };
+		D42B711E27959B82009DF3D4 /* TaxTransferFormValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B711D27959B82009DF3D4 /* TaxTransferFormValidatorTests.swift */; };
+		D42B71212795A245009DF3D4 /* TaxTransferFormPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B71202795A244009DF3D4 /* TaxTransferFormPresenterTests.swift */; };
+		D42B71272795A292009DF3D4 /* TaxTransferAccountViewModelMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B71262795A292009DF3D4 /* TaxTransferAccountViewModelMapperTests.swift */; };
+		D42B71292795B119009DF3D4 /* TaxTransferFormValidatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B71282795B119009DF3D4 /* TaxTransferFormValidatorMock.swift */; };
+		D42B712B2795B1DC009DF3D4 /* TaxTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B712A2795B1DC009DF3D4 /* TaxTransferFormViewMock.swift */; };
+		D42B712D2795B6AB009DF3D4 /* TaxTransferFormCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B712C2795B6AB009DF3D4 /* TaxTransferFormCoordinatorMock.swift */; };
 		EF26FEC4CF0730C3A268B89E /* Pods_TaxTransfer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5466670277DD338A10B55EF /* Pods_TaxTransfer_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,9 +49,16 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* TaxTransfer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaxTransfer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7AB80483707891672194DD32 /* Pods-TaxTransfer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaxTransfer_Tests.release.xcconfig"; path = "Target Support Files/Pods-TaxTransfer_Tests/Pods-TaxTransfer_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		887A19294EBD22A21C945E5A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D42B7119279051B7009DF3D4 /* TaxTransfer_Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TaxTransfer_Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D42B711A279051B8009DF3D4 /* AccountForDebitStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitStub.swift; sourceTree = "<group>"; };
+		D42B711D27959B82009DF3D4 /* TaxTransferFormValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxTransferFormValidatorTests.swift; sourceTree = "<group>"; };
+		D42B71202795A244009DF3D4 /* TaxTransferFormPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxTransferFormPresenterTests.swift; sourceTree = "<group>"; };
+		D42B71262795A292009DF3D4 /* TaxTransferAccountViewModelMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxTransferAccountViewModelMapperTests.swift; sourceTree = "<group>"; };
+		D42B71282795B119009DF3D4 /* TaxTransferFormValidatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxTransferFormValidatorMock.swift; sourceTree = "<group>"; };
+		D42B712A2795B1DC009DF3D4 /* TaxTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxTransferFormViewMock.swift; sourceTree = "<group>"; };
+		D42B712C2795B6AB009DF3D4 /* TaxTransferFormCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxTransferFormCoordinatorMock.swift; sourceTree = "<group>"; };
 		F5466670277DD338A10B55EF /* Pods_TaxTransfer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TaxTransfer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,7 +137,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				D42B711627905025009DF3D4 /* Scenes */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -133,6 +146,7 @@
 		607FACE91AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D42B7119279051B7009DF3D4 /* TaxTransfer_Tests-Bridging-Header.h */,
 				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -157,6 +171,60 @@
 				7AB80483707891672194DD32 /* Pods-TaxTransfer_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D42B711627905025009DF3D4 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				D42B711727905193009DF3D4 /* TaxTransferForm */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		D42B711727905193009DF3D4 /* TaxTransferForm */ = {
+			isa = PBXGroup;
+			children = (
+				D42B71252795A281009DF3D4 /* Mapper */,
+				D42B711F2795A230009DF3D4 /* Presenter */,
+				D42B711C27959B5C009DF3D4 /* Validator */,
+				D42B71182790519F009DF3D4 /* TestDoubles */,
+			);
+			name = TaxTransferForm;
+			sourceTree = "<group>";
+		};
+		D42B71182790519F009DF3D4 /* TestDoubles */ = {
+			isa = PBXGroup;
+			children = (
+				D42B711A279051B8009DF3D4 /* AccountForDebitStub.swift */,
+				D42B71282795B119009DF3D4 /* TaxTransferFormValidatorMock.swift */,
+				D42B712A2795B1DC009DF3D4 /* TaxTransferFormViewMock.swift */,
+				D42B712C2795B6AB009DF3D4 /* TaxTransferFormCoordinatorMock.swift */,
+			);
+			name = TestDoubles;
+			sourceTree = "<group>";
+		};
+		D42B711C27959B5C009DF3D4 /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				D42B711D27959B82009DF3D4 /* TaxTransferFormValidatorTests.swift */,
+			);
+			name = Validator;
+			sourceTree = "<group>";
+		};
+		D42B711F2795A230009DF3D4 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				D42B71202795A244009DF3D4 /* TaxTransferFormPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		D42B71252795A281009DF3D4 /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				D42B71262795A292009DF3D4 /* TaxTransferAccountViewModelMapperTests.swift */,
+			);
+			name = Mapper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,7 +285,7 @@
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1250;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -487,7 +555,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				D42B71212795A245009DF3D4 /* TaxTransferFormPresenterTests.swift in Sources */,
+				D42B71272795A292009DF3D4 /* TaxTransferAccountViewModelMapperTests.swift in Sources */,
+				D42B711B279051B8009DF3D4 /* AccountForDebitStub.swift in Sources */,
+				D42B712B2795B1DC009DF3D4 /* TaxTransferFormViewMock.swift in Sources */,
+				D42B711E27959B82009DF3D4 /* TaxTransferFormValidatorTests.swift in Sources */,
+				D42B71292795B119009DF3D4 /* TaxTransferFormValidatorMock.swift in Sources */,
+				D42B712D2795B6AB009DF3D4 /* TaxTransferFormCoordinatorMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +732,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 42F853B192A06F52CFEEA83F /* Pods-TaxTransfer_Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -670,6 +745,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/TaxTransfer_Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TaxTransfer_Example.app/TaxTransfer_Example";
@@ -680,6 +757,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AB80483707891672194DD32 /* Pods-TaxTransfer_Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -688,6 +766,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/TaxTransfer_Tests-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TaxTransfer_Example.app/TaxTransfer_Example";

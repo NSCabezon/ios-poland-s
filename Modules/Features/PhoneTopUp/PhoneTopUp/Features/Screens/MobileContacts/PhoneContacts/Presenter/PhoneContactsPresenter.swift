@@ -30,13 +30,16 @@ final class PhoneContactsPresenter {
     
     weak var view: PhoneContactsViewProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private var groupedContacts: GroupedMobileContacts {
+    private weak var coordinator: PhoneContactsCoordinatorProtocol?
+    private lazy var contactsPermissionHelper = dependenciesResolver.resolve(for: ContactsPermissionHelperProtocol.self)
+    private lazy var getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
+    private lazy var useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
+    private lazy var searchFilter = dependenciesResolver.resolve(for: MobileContactsSearchFiltering.self)
+    private let allContacts: GroupedMobileContacts
+    private var searchQuery = ""
+    private var filteredContacts: GroupedMobileContacts {
         return searchFilter.filterContacts(allContacts, query: searchQuery)
     }
-    private let allContacts: GroupedMobileContacts
-    private weak var coordinator: PhoneContactsCoordinatorProtocol?
-    private lazy var searchFilter = dependenciesResolver.resolve(for: MobileContactsSearchFiltering.self)
-    private var searchQuery = ""
     
     init(dependenciesResolver: DependenciesResolver, contacts: [MobileContact]) {
         self.dependenciesResolver = dependenciesResolver
@@ -57,23 +60,23 @@ extension PhoneContactsPresenter: PhoneContactsPresenterProtocol {
     }
     
     func getNumberOfSections() -> Int {
-        return groupedContacts.count
+        return filteredContacts.count
     }
     
     func getNumberOfContacts(inSection section: Int) -> Int {
-        return groupedContacts[section].contacts.count
+        return filteredContacts[section].contacts.count
     }
     
     func getContact(for indexPath: IndexPath) -> MobileContact {
-        return groupedContacts[indexPath.section].contacts[indexPath.row]
+        return filteredContacts[indexPath.section].contacts[indexPath.row]
     }
     
     func headerTitle(forSection section: Int) -> Character {
-        return groupedContacts[section].groupingCharacter
+        return filteredContacts[section].groupingCharacter
     }
     
     func didSelectContact(at indexPath: IndexPath) {
-        let selectedContact = groupedContacts[indexPath.section].contacts[indexPath.row]
+        let selectedContact = filteredContacts[indexPath.section].contacts[indexPath.row]
         coordinator?.didSelectContact(selectedContact)
     }
     

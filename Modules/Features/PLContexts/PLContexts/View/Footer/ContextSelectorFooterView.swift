@@ -25,6 +25,7 @@ final class ContextSelectorFooterView: UIView {
         self.showAllContextsButton.setImage(PLAssets.image(named: "showMoreContextsArrow"), for: .normal)
         self.showAllContextsButton.semanticContentAttribute = UIApplication.shared
             .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
+        self.setAccessibilityIdentifiers()
     }
     
     func configure(_ numberOfHiddenContexts: Int) {
@@ -34,5 +35,11 @@ final class ContextSelectorFooterView: UIView {
     
     @IBAction func showAllContextsAction(_ sender: Any) {
         self.delegate?.didTapShowAllContexts()
+    }
+}
+
+private extension ContextSelectorFooterView {
+    private func setAccessibilityIdentifiers() {
+        self.showAllContextsButton.accessibilityIdentifier = AccessibilityContextFooter.btnShowOther
     }
 }

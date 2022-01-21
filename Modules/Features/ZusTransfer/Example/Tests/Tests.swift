@@ -1,5 +1,5 @@
 import XCTest
-import TaxTransfer
+import ZusTransfer
 
 class Tests: XCTestCase {
     

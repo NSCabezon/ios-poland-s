@@ -107,7 +107,7 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
         identifier: PLAccountOtherOperativesIdentifier.customerService.rawValue,
         accesibilityIdentifier: "",
         trackName: "",
-        localizedKey: "accountOption_button_customerService",
+        localizedKey: "frequentOperative_button_customerService",
         icon: "icnCustomerService"
     )
 

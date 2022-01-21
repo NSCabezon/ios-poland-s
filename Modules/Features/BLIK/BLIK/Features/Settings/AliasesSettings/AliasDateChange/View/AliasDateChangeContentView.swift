@@ -37,7 +37,6 @@ final class AliasDateChangeContentView: UIView {
             self?.selectedPeriod = period
             self?.delegate?.didUpdateDate()
         }
-        periodSelector.selectElement(viewModel.selectedPeriod)
     }
 }
 
