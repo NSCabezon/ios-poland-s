@@ -77,6 +77,14 @@ struct MockManager: PLManagersProviderProtocol {
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
         fatalError()
     }
+    
+    func getDepositsManager() -> PLDepositManagerProtocol {
+        fatalError()
+    }
+    
+    func getFundsManager() -> PLFundManagerProtocol {
+        fatalError()
+    }
 }
 
 struct MockAccountManager: PLAccountManagerProtocol {
@@ -254,6 +262,14 @@ struct MockTransferManager: PLTransfersManagerProtocol {
     
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
         .failure(.noConnection)
+    }
+    
+    func getDepositsManager() -> PLDepositManagerProtocol {
+        fatalError()
+    }
+    
+    func getFundsManager() -> PLFundManagerProtocol {
+        fatalError()
     }
 }
 
