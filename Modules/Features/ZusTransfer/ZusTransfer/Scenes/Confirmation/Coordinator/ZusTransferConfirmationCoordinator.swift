@@ -97,7 +97,10 @@ extension ZusTransferConfirmationCoordinator: ZusTransferConfirmationCoordinator
     }
     
     public func showSummary(with model: ZusTransferSummary) {
-        //TODO: Show transfer summary in task TAP-2465
+        let coordinator = ZusTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
+                                                        navigationController: navigationController,
+                                                        summary: model)
+        coordinator.start()
     }
 }
 
