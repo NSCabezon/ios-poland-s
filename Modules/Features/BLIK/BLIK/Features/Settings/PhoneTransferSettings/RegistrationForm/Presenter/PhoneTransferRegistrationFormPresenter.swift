@@ -7,6 +7,7 @@ protocol PhoneTransferRegistrationFormPresenterProtocol {
     func didPressRegister()
     func didPressChangeAccount()
     func didPressClose()
+    func hasUserOneAccount() -> Bool
 }
 
 protocol PhoneTransferRegistrationFormDelegate: AnyObject {
@@ -14,6 +15,8 @@ protocol PhoneTransferRegistrationFormDelegate: AnyObject {
 }
 
 final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormDelegate {
+    weak var view: PhoneTransferRegistrationFormViewController?
+    
     private let dependenciesResolver: DependenciesResolver
     private var coordinator: PhoneTransferSettingsCoordinatorProtocol {
         dependenciesResolver.resolve()
@@ -38,7 +41,6 @@ final class PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFor
     private var fetchedAccounts: [BlikCustomerAccount] = []
     private var selectedAccountNumber: String = ""
 
-    weak var view: PhoneTransferRegistrationFormViewController?
     
     init(
         dependenciesResolver: DependenciesResolver,
@@ -105,6 +107,10 @@ extension PhoneTransferRegistrationFormPresenter: PhoneTransferRegistrationFormP
         let viewModel = viewModelMapper.map(account)
         selectedAccountNumber = account.number
         view?.setViewModel(viewModel)
+    }
+    
+    func hasUserOneAccount() -> Bool {
+        return fetchedAccounts.count <= 1
     }
 }
 

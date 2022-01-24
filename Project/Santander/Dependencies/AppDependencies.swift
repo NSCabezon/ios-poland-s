@@ -27,6 +27,7 @@ import CoreDomain
 import CommonUseCase
 import PLCryptography
 import UI
+import PLHelpCenter
 
 final class AppDependencies {
     #if DEBUG
@@ -78,7 +79,6 @@ final class AppDependencies {
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
                                          demoInterpreter: self.demoInterpreter)
-
     }()
     private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
         return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
@@ -105,6 +105,16 @@ final class AppDependencies {
         let assetsClient = AssetsClient()
         let fileClient = FileClient()
         return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plHelpCenterOnlineAdvisorRepository: PLHelpCenterOnlineAdvisorRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLHelpCenterOnlineAdvisorRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plHelpQuestionsRepository: PLHelpQuestionsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLHelpQuestionsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
     private lazy var plTransferSettingsRepository: PLTransferSettingsRepository = {
         let assetsClient = AssetsClient()
@@ -193,6 +203,12 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
             return self.plAccountOtherOperativesInfoRepository
+        }
+        self.dependencieEngine.register(for: PLHelpCenterOnlineAdvisorRepository.self) { _ in
+            return self.plHelpCenterOnlineAdvisorRepository
+        }
+        self.dependencieEngine.register(for: PLHelpQuestionsRepository.self) { _ in
+            return self.plHelpQuestionsRepository
         }
         self.dependencieEngine.register(for: PLTransferSettingsRepository.self) { _ in
             return self.plTransferSettingsRepository
@@ -342,6 +358,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
         }
+		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+			PLChangeAliasManager()
+		}
     }
 }
 

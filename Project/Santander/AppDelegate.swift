@@ -20,18 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let dependenciesEngine = appDependencies.dependencieEngine
-        self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: self)
         let localAppConfig = dependenciesEngine.resolve(for: LocalAppConfig.self)
         let drawer = BaseMenuViewController(isPrivateSideMenuEnabled: localAppConfig.privateMenu)
+        let moduleDependencies = ModuleDependencies(legacyDependenciesResolver: dependenciesEngine, drawer: drawer)
+        self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: moduleDependencies)
         application.applicationSupportsShakeToEdit = false
         self.window = UIWindow()
         self.window?.rootViewController = drawer
         self.window?.makeKeyAndVisible()
         self.legacyAppDelegate?.application(application, didFinishLaunchingWithOptions: launchOptions)
         AppNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
-
+        moduleDependencies.registerRetailLegacyDependencies()
         notificationsHandler.startServices()
-
         return true
     }
 
@@ -41,21 +41,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         self.notificationsHandler.didFailToRegisterForRemoteNotificationsWithError(error)
-    }
-}
-
-// TODO: Move to ModuleDependency once it is created
-
-extension AppDelegate: LegacyCoreDependenciesResolver, CoreDependenciesResolver {
-    func resolve() -> DependenciesResolver {
-        return appDependencies.dependencieEngine
-    }
-    
-    func resolve() -> TrackerManager {
-        return appDependencies.dependencieEngine.resolve()
-    }
-    
-    func resolve() -> CoreDependencies {
-        return coreDependencies
     }
 }

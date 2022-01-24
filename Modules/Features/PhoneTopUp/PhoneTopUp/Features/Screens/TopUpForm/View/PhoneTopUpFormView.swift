@@ -118,6 +118,11 @@ final class PhoneTopUpFormView: UIView {
     func updatePhoneInput(with phoneNumber: String) {
         phoneNumberInputView.updatePhoneInput(with: phoneNumber)
     }
+    
+    func updateRecipientName(with name: String) {
+        recipientNameView.setUp(with: name)
+        recipientNameView.isHidden = name.isEmpty
+    }
 }
 
 extension PhoneTopUpFormView: PhoneNumberInputViewDelegate {

@@ -19,6 +19,7 @@ protocol InternetContactsCoordinatorProtocol: AnyObject {
 
 protocol MobileContactsSelectorDelegate: AnyObject {
     func mobileContactsDidSelectContact(_ contact: MobileContact)
+    func mobileContactDidSelectCloseProcess()
 }
 
 final class InternetContactsCoordinator: ModuleCoordinator {

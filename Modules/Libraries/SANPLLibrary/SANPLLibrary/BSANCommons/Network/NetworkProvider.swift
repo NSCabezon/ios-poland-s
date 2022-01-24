@@ -29,7 +29,7 @@ public protocol NetworkProviderRequest {
     var jsonBody: Body? { get }
     var formData: Data? { get }
     var bodyEncoding: NetworkProviderBodyEncoding? { get }
-    var contentType: NetworkProviderContentType { get }
+    var contentType: NetworkProviderContentType? { get }
     var authorization: NetworkProviderRequestAuthorization? { get }
 }
 

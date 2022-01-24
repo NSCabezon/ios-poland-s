@@ -48,11 +48,12 @@ def core_dependencies
   pod 'Cards', :path => '../../../../santander-one/Cards'
   pod 'Menu', :path => '../../../../santander-one/Menu'
   pod 'Localization', :path => '../../../../santander-one/Localization'
-
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
 end
 
 def core_thirdparty_dependencies
   pod 'Kingfisher', '5.15.8'
+  pod 'RxSwift', '6.2.0'
 end
 
 def pl_dependencies

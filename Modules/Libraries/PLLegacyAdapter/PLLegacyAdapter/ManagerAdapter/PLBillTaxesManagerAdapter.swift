@@ -5,6 +5,7 @@
 //  Created by Marcos Álvarez 11/05/2021
 //
 
+import CoreDomain
 import Foundation
 import SANLegacyLibrary
 

@@ -16,6 +16,7 @@ protocol ZusTransferFormCoordinatorProtocol {
     func pop()
     func closeProcess()
     func showAccountSelector(selectedAccountNumber: String)
+    func showConfiramtion(model: ZusTransferModel)
 }
 
 public protocol FormAccountSelectable: AnyObject {
@@ -69,12 +70,19 @@ extension ZusTransferFormCoordinator: ZusTransferFormCoordinatorProtocol {
         )
         coordinator.start()
     }
+    
+    func showConfiramtion(model: ZusTransferModel) {
+        let coordinator = ZusTransferConfirmationCoordinator(dependenciesResolver: dependenciesEngine,
+                                                             navigationController: navigationController,
+                                                             model: model)
+        coordinator.start()
+    }
 }
 
 private extension ZusTransferFormCoordinator {
     func setupDependencies() {
-        dependenciesEngine.register(for: ZusTransferValidating.self) { _ in
-            ZusTransferValidator()
+        dependenciesEngine.register(for: ZusTransferValidating.self) { resolver in
+            ZusTransferValidator(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
             ConfirmationDialogFactory()

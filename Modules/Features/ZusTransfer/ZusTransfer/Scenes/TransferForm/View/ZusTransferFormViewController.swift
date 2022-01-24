@@ -70,8 +70,8 @@ private extension ZusTransferFormViewController {
     
     func configureView() {
         view.backgroundColor = .white
-        bottomView.configure(title: localized("#Gotowe")) {
-            // TODO: Add ready botton action
+        bottomView.configure(title: localized("#Gotowe")) { [weak self] in
+            self?.presenter.showConfirmation()
         }
         bottomView.disableButton()
         formView.configure(with: presenter.getSelectedAccountViewModels())
@@ -129,6 +129,16 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
             bottomView.disableButton()
         }
     }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
 }
 
 extension ZusTransferFormViewController: ZusTransferFormViewDelegate {
@@ -139,6 +149,7 @@ extension ZusTransferFormViewController: ZusTransferFormViewDelegate {
         )
         presenter.startValidation(with: field)
     }
+    
     func changeAccountTapped() {
         presenter.showAccountSelector()
     }

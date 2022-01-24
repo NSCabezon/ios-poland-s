@@ -14,7 +14,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 
-protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate, MobileContactsSelectorDelegate {
+protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, MobileContactsSelectorDelegate {
     var view: PhoneTopUpFormViewProtocol? { get set }
     func viewDidLoad()
     func didSelectBack()
@@ -23,6 +23,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountSelectorDelegate, MobileContact
     func didTouchContactsButton()
     func didInputPartialPhoneNumber(_ number: String)
     func didInputFullPhoneNumber(_ number: String)
+    func didTouchContinueButton()
 }
 
 final class PhoneTopUpFormPresenter {
@@ -80,10 +81,9 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
             self?.coordinator?.close()
         } declineAction: {}
         view?.showDialog(dialog)
-        coordinator?.close()
     }
     
-    func accountSelectorDidSelectAccount(withAccountNumber accountNumber: String) {
+    func didSelectAccount(withAccountNumber accountNumber: String) {
         selectedAccountNumber = accountNumber
         let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         view?.updateSelectedAccount(with: viewModels)
@@ -122,18 +122,42 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
-        view?.updatePhoneInput(with: contact.phoneNumber)
+        view?.updateContact(with: contact)
         didInputFullPhoneNumber(contact.phoneNumber.filter(\.isNumber))
     }
     
-    private func matchOperator(with number: String) -> Operator? {
+    func mobileContactDidSelectCloseProcess() {
+        // we don't need to do anything here
+    }
+    
+    func didTouchContinueButton() {
+        #warning("todo: remove mock data once whole form is implemented")
+        let account = AccountForDebit(id: "id",
+                                      name: "Konto marzeń",
+                                      number: "31109015220000000052017788",
+                                      availableFunds: Money(amount: Decimal(500.0), currency: "PLN"),
+                                      defaultForPayments: true,
+                                      type: .DEPOSIT,
+                                      accountSequenceNumber: 0,
+                                      accountType: 34)
+        let formData = TopUpModel(amount: Decimal(40.44),
+                                   account: account,
+                                   recipientNumber: "+48 558 457 348",
+                                   recipientName: "Jan Bankowy",
+                                   date: Date())
+        coordinator?.showTopUpConfirmation(with: formData)
+    }
+}
+
+private extension PhoneTopUpFormPresenter {
+    func matchOperator(with number: String) -> Operator? {
         return operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })
     }
     
-    private func showPhoneContacts() {
+    func showPhoneContacts() {
         Scenario(useCase: getPhoneContactsUseCase)
             .execute(on: useCaseHandler)
-            .onSuccess { [weak self] output in
+            .onSuccess {[weak self] output in
                 self?.coordinator?.showPhoneContacts(output.contacts)
             }
     }

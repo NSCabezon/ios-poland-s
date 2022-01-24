@@ -8,7 +8,7 @@ final class TextFieldDelegate: NSObject, UITextFieldDelegate {
         textFieldDidBeginEditing?()
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         textFieldDidEndEditing?()
     }
 }

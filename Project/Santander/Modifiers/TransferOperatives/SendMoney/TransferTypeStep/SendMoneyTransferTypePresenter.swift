@@ -121,7 +121,16 @@ private extension SendMoneyTransferTypePresenter {
         return SendMoneyTransferTypeRadioButtonViewModel(oneRadioButtonViewModel: oneRadioButtonViewModel,
                                                          feeViewModel: feeViewModel)
     }
-    
+
+    func getAccessibilitySuffixForTransferType(_ transferType: PolandTransferType) -> String {
+        switch transferType {
+        case .one: return AccessibilitySendMoneyTransferType.RadioButtons.standardSuffix
+        case .eight: return AccessibilitySendMoneyTransferType.RadioButtons.immediateSuffix
+        case .a: return AccessibilitySendMoneyTransferType.RadioButtons.expressDeliverySuffix
+        default: return "_unknown"
+        }
+    }
+
     func getSelectedIndex() -> Int {
         guard let selectedTransferTypeFee = self.operativeData.selectedTransferType,
               let selectedType = selectedTransferTypeFee.type as? PolandTransferType,

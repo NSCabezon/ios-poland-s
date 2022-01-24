@@ -24,7 +24,6 @@ final class TaxTransferAmountFieldView: UIView {
         self.amountFormatter = configuration.amountFormatter
         super.init(frame: .zero)
         setUp()
-        configure(with: .init(amount: "", currency: "PLN")) // TODO:- Remove after hooking up data with presenter
     }
     
     @available(*, unavailable)
@@ -32,7 +31,7 @@ final class TaxTransferAmountFieldView: UIView {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     
-    func configure(with viewModel: TaxTransferFormViewModel.Amount) {
+    func configure(with viewModel: TaxTransferFormViewModel.AmountViewModel) {
         amount.textField.setText(viewModel.amount)
         currency.setText(viewModel.currency)
     }
@@ -81,7 +80,7 @@ private extension TaxTransferAmountFieldView {
         amount.textField.setEditingStyle(
             .writable(
                 configuration: .init(
-                    type: .floatingTitle,
+                    type: .simple,
                     formatter: PLAmountTextFieldFormatter(),
                     disabledActions: [],
                     keyboardReturnAction: nil,

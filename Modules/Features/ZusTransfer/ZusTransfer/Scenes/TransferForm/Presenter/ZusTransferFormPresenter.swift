@@ -11,6 +11,7 @@ protocol ZusTransferFormPresenterProtocol {
     func getSelectedAccountNumber() -> String
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
+    func showConfirmation()
     func startValidation(with field: TransferFormCurrentActiveField)
 }
 
@@ -81,6 +82,21 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
         transferFormViewModel = viewModel
     }
     
+    func showConfirmation() {
+        guard let account = getSelectedAccountViewModel(),
+              let transferFormViewModel = transferFormViewModel else { return }
+        let model = ZusTransferModel(
+            amount: transferFormViewModel.amount ?? 0,
+            title: transferFormViewModel.title,
+            account: account,
+            recipientName: transferFormViewModel.recipient,
+            recipientAccountNumber: transferFormViewModel.recipientAccountNumber,
+            transactionType: .zusTransfer,
+            date: transferFormViewModel.date
+        )
+        coordinator.showConfiramtion(model: model)
+    }
+        
     func startValidation(with field: TransferFormCurrentActiveField) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.validationAction(with: field)

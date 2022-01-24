@@ -92,7 +92,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             case .failure(let error):
                 let httpErrorCode = self.getHttpErrorCode(error.useCaseError) ?? ""
                 self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.useCaseError.getErrorDesc() ?? ""])
-                self.handleError(error.useCaseError, hideTitle: true)
+                self.handleError(error.useCaseError, showTitle: false)
             }
 
         }

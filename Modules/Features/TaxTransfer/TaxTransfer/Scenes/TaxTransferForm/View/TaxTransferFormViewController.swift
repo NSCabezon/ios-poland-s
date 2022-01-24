@@ -11,8 +11,10 @@ import UI
 import PLUI
 
 protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
+    func setViewModel(_ viewModel: TaxTransferFormViewModel)
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
     func enableDoneButton()
+    func getCurrentFormData() -> TaxTransferFormFieldsData
 }
 
 final class TaxTransferFormViewController: UIViewController {
@@ -44,6 +46,25 @@ final class TaxTransferFormViewController: UIViewController {
 }
 
 extension TaxTransferFormViewController: TaxTransferFormView {
+    func setViewModel(_ viewModel: TaxTransferFormViewModel) {
+        DispatchQueue.main.async {
+            self.formView.configureAccountSelector(with: viewModel.account) { [weak self] in
+                self?.presenter.didTapAccountSelector()
+            }
+            
+            self.formView.configureTaxPayerSelector(with: viewModel.taxPayer) { [weak self] in
+                self?.presenter.didTapTaxPayer()
+            }
+            
+            self.formView.configureTaxAuthoritySelector(with: viewModel.taxAuthority) { [weak self] in
+                self?.presenter.didTapTaxAuthority()
+            }
+            
+            self.formView.configureAmountField(with: viewModel.sendAmount)
+            self.formView.configureObligationIdentifierField(with: viewModel)
+        }
+    }
+    
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages) {
         bottomButtonView.disableButton()
         formView.setInvalidFormMessages(messages)
@@ -52,6 +73,10 @@ extension TaxTransferFormViewController: TaxTransferFormView {
     func enableDoneButton() {
         bottomButtonView.enableButton()
         formView.clearInvalidFormMessages()
+    }
+    
+    func getCurrentFormData() -> TaxTransferFormFieldsData {
+        return formView.getFormFieldsData()
     }
 }
 
