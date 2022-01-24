@@ -8,6 +8,7 @@
 import Foundation
 import Commons
 import CoreFoundationLib
+import CoreDomain
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {
 	
