@@ -78,3 +78,10 @@ extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesRe
         return coreDependencies
     }
 }
+
+extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesResolver {
+    
+    func resolve() -> CoreDependencies {
+        return coreDependencies
+    }
+}

@@ -283,4 +283,8 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     func validateCreateSepaPayee(alias: String, recipientType: FavoriteRecipientType?, beneficiary: String, iban: IBANDTO?, serviceType: String?, contractType: String?, accountIdType: String?, accountId: String?, streetName: String?, townName: String?, location: String?, country: String?, operationDate: Date?) throws -> BSANResponse<SignatureWithTokenDTO?> {
         return BSANErrorResponse(nil)
     }
+
+    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<TransferConfirmAccountDTO> {
+        return BSANErrorResponse(nil)
+    }
 }
