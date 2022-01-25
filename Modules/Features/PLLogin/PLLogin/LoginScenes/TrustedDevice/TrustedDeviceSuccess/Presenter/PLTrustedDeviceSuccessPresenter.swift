@@ -6,8 +6,9 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreDomain
 import PLCommons
+import Commons
 import os
 
 protocol PLTrustedDeviceSuccessPresenterProtocol: MenuTextWrapperProtocol {

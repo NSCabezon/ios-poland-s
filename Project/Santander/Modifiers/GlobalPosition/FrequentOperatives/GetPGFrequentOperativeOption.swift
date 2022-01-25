@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import CoreDomain
 import Commons
 
 final class GetPGFrequentOperativeOption {

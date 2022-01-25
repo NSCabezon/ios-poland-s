@@ -6,9 +6,10 @@
 //
 
 import CoreFoundationLib
-import Commons
-import PLCommons
 import LoginCommon
+import CoreDomain
+import PLCommons
+import Commons
 import os
 
 protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {

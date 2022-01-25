@@ -6,12 +6,13 @@
 //
 
 import CoreFoundationLib
-import Commons
-import PLCommons
-import LoginCommon
-import SANPLLibrary
 import PLLegacyAdapter
+import SANPLLibrary
+import LoginCommon
+import CoreDomain
+import PLCommons
 import Security
+import Commons
 import os
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {

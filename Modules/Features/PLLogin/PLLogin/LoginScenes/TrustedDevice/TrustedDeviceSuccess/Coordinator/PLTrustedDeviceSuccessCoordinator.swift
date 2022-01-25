@@ -5,9 +5,10 @@
 //  Created by Juan Sánchez Marín on 13/8/21.
 //
 
-import UI
 import CoreFoundationLib
+import CoreDomain
 import Commons
+import UI
 
 protocol PLTrustedDeviceSuccessCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity)

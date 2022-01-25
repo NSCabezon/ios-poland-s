@@ -5,9 +5,9 @@
 //  Created by Alvaro Royo on 7/1/22.
 //
 
-import Foundation
-import Commons
 import CoreFoundationLib
+import CoreDomain
+import Commons
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {
 	
