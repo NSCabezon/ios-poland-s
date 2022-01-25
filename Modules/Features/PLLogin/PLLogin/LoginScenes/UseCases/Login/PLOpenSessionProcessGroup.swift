@@ -5,10 +5,10 @@
 //  Created by Marcos Álvarez Mesa on 4/11/21.
 //
 
-import Commons
-import PLCommons
 import CoreFoundationLib
 import CoreDomain
+import PLCommons
+import Commons
 
 final class PLOpenSessionProcessGroup: ProcessGroup<Void, PLOpenSessionProcessGroupOutput, PLOpenSessionProcessGroupError> {
 

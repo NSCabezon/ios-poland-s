@@ -15,15 +15,15 @@ import CoreFoundationLib
 import Transfer
 
 struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-    
+
     let legacyDependenciesResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
-    
+
     func resolve() -> TimeManager {
         legacyDependenciesResolver.resolve()
     }
-    
+
     func resolve() -> DependenciesResolver {
         return legacyDependenciesResolver
     }
@@ -73,6 +73,7 @@ extension ModuleDependencies {
 }
 
 extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesResolver {
+    
     func resolve() -> CoreDependencies {
         return coreDependencies
     }

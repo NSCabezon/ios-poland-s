@@ -6,10 +6,10 @@
 //
 
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
-import PLCommons
 import CoreDomain
+import PLCommons
+import Commons
 
 final class PLGetGlobalPositionOptionUseCase: UseCase<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     private let dependenciesResolver: DependenciesResolver

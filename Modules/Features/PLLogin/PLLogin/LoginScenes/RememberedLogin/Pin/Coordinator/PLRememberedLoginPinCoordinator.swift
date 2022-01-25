@@ -5,15 +5,14 @@
 //  Created by Mario Rosales Maillo on 30/9/21.
 //
 
-import Commons
-import UI
 import CoreFoundationLib
 import SANLegacyLibrary
-import LoginCommon
 import CommonUseCase
-import Commons
-import PLCommons
+import LoginCommon
 import CoreDomain
+import PLCommons
+import Commons
+import UI
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func loadUnrememberedLogin()

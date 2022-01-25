@@ -3,10 +3,10 @@
 //  PLLogin
 
 import CoreFoundationLib
+import CoreDomain
 import LoginCommon
 import Commons
 import UI
-import CoreDomain
 
 protocol PLLoginCoordinatorProtocol: AnyObject, OpenUrlCapable {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector { get }

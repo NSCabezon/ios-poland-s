@@ -5,11 +5,9 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
-import Foundation
-
-import Commons
 import CoreFoundationLib
 import CoreDomain
+import Commons
 
 class PLAppConfig: LocalAppConfig {
     let isEnabledOnboardingLocationDialog = false
@@ -48,7 +46,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledGoToHelpCenter: Bool = true
     let isEnabledDigitalProfileView: Bool = true
     let isEnabledWorld123: Bool = false
-    let isEnabledSendMoney: Bool = false
+    let isEnabledSendMoney: Bool = true
     let isEnabledBills: Bool = false
     let isEnabledBillsAndTaxesInMenu: Bool = false
     let isEnabledExploreProductsInMenu: Bool = false

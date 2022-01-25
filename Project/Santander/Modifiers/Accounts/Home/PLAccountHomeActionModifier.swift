@@ -3,17 +3,23 @@
 //  Santander
 //
 
-import UI
 import CoreFoundationLib
+import OpenCombine
+import CoreDomain
+import Transfer
 import Account
 import Commons
-import Foundation
+import UI
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     private let dependenciesResolver: DependenciesResolver
+    private let transferHomeDependencies: OneTransferHomeExternalDependenciesResolver
+    
+    private var subscriptions: Set<AnyCancellable> = []
     
     public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
+        self.transferHomeDependencies = dependenciesResolver.resolve()
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
@@ -27,14 +33,13 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
         } else if case .transfer = action {
-            goToSendMoney()
+            goToSendMoney(with: entity.dto)
         }
     }
     
     func getActionButtonFillViewType(for accountType: AccountActionType) -> ActionButtonFillViewType? {
         return nil
     }
-    
 }
 
 extension PLAccountHomeActionModifier {
@@ -42,7 +47,7 @@ extension PLAccountHomeActionModifier {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
-        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue { 
+        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
         }
         if let isAvailable = data.isAvailable, !isAvailable {
@@ -65,17 +70,32 @@ extension PLAccountHomeActionModifier {
         }
         return entity
     }
-
-    private func goToSendMoney() {
-        let useCase = CheckNewSendMoneyEnabledUseCase(dependenciesResolver: self.dependenciesResolver)
-        Scenario(useCase: useCase)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { enabled in
-                if enabled {
-                    self.dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
-                } else {
-                    Toast.show(localized("generic_alert_notAvailableOperation"))
+    
+    private func goToSendMoney(with account: AccountRepresentable) {
+        useCase
+            .fetchEnabled()
+            .receive(on: Schedulers.global)
+            .sink { [unowned self] isEnabled in
+                Async.main {
+                    if isEnabled {
+                        self.transferHomeDependencies.oneTransferHomeCoordinator()
+                            .set(account)
+                            .start()
+                    } else {
+                        self.sendMoneyCoordinator.start()
+                    }
                 }
             }
+            .store(in: &subscriptions)
+    }
+}
+
+private extension PLAccountHomeActionModifier {
+    var useCase: CheckNewSendMoneyHomeEnabledUseCase {
+        return dependenciesResolver.resolve()
+    }
+    
+    var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {
+        return dependenciesResolver.resolve()
     }
 }
