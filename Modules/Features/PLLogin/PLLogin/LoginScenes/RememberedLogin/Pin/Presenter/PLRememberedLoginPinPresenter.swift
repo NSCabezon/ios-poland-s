@@ -12,6 +12,7 @@ import PLCommons
 import CoreFoundationLib
 import LocalAuthentication
 import Dynatrace
+import CoreDomain
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }

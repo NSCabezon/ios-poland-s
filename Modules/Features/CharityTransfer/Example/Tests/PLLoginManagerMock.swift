@@ -57,4 +57,8 @@ final class PLLoginManagerMock: PLLoginManagerProtocol {
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
         fatalError()
     }
+    
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        fatalError()
+    }
 }

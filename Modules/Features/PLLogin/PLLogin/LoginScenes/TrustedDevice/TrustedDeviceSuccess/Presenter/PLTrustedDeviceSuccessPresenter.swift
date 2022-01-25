@@ -9,6 +9,7 @@ import CoreFoundationLib
 import Commons
 import PLCommons
 import os
+import CoreDomain
 
 protocol PLTrustedDeviceSuccessPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDeviceSuccessViewProtocol? { get set }

@@ -7,6 +7,7 @@
 
 import CoreFoundationLib
 import Commons
+import CoreDomain
 
 final class GetPGFrequentOperativeOption {
     private let dependenciesResolver: DependenciesResolver

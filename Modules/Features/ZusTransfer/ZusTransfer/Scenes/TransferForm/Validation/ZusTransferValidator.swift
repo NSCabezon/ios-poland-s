@@ -61,7 +61,7 @@ private extension ZusTransferValidator {
         }
         
         if account.count == accountRequiredLength, let accountSubstring = account.substring(2, 13) {
-            if accountSubstring != maskAccount && !maskAccount.isEmpty, isValidIban(account) {
+            if accountSubstring != maskAccount || !isValidIban(account) {
                 #warning("should be changed")
                 return "#Podany numer rachunku nie jest poprawny"
             }
