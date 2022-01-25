@@ -5,10 +5,10 @@
 //  Created by Mario Rosales Maillo on 13/12/21.
 //
 
-import Foundation
+import PLHelpCenter
+import Transfer
 import Commons
 import UI
-import PLHelpCenter
 
 final class PLPrivateMenuModifier: PrivateMenuProtocol {
     private var dependenciesResolver: DependenciesResolver
@@ -31,6 +31,10 @@ final class PLPrivateMenuModifier: PrivateMenuProtocol {
     
     func goToHelpCenterPage() {
         dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
+    }
+    
+    func goToOneTransferHome() {
+        dependenciesResolver.resolve(for: OneTransferHomeExternalDependenciesResolver.self).oneTransferHomeCoordinator().start()
     }
 }
 
