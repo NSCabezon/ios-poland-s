@@ -53,6 +53,16 @@ final class PLUnrememberedLoginMaskedPwdViewController: UIViewController {
         static let animationDuration: TimeInterval = 0.2
         static let minimumPositionsFulfilled = 8
         static let userImageSize = CGSize(width: 56.0, height: 56.0)
+
+        enum Accessibility: String {
+            case loginMaskedContainerNikAlias
+            case loginMaskedTextNikAlias
+            case loginMaskedTextTitle = "pl_login_label_login"
+            case loginMaskedLabelGreeting
+            case loginMaskedBtnAccess
+            case loginMaskedImageSecurity
+            case sanIcon = "icnSanWhite"
+        }
     }
 
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, dependenciesResolver: DependenciesResolver,
@@ -132,7 +142,7 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         configureUserImage()
         configureButtons()
         configureKeyboard()
-        setAccessibility()
+        setAccessibilityIdentifiers()
     }
     
     func configureRegardLabel() {
@@ -187,9 +197,14 @@ private extension PLUnrememberedLoginMaskedPwdViewController {
         loginButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
     }
     
-    func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
+    func setAccessibilityIdentifiers() {
+        documentTextField.accessibilityIdentifier = Constants.Accessibility.loginMaskedContainerNikAlias.rawValue
+        documentTextField.titleLabel.accessibilityIdentifier = Constants.Accessibility.loginMaskedTextTitle.rawValue
+        documentTextField.textField .accessibilityIdentifier = Constants.Accessibility.loginMaskedTextNikAlias.rawValue
+        loginButton.accessibilityIdentifier = Constants.Accessibility.loginMaskedBtnAccess.rawValue
+        sanIconImageView.accessibilityIdentifier = Constants.Accessibility.sanIcon.rawValue
+        regardLabel.accessibilityIdentifier = Constants.Accessibility.loginMaskedLabelGreeting.rawValue
+        userImageView.accessibilityIdentifier = Constants.Accessibility.loginMaskedImageSecurity.rawValue
     }
     
     func regardNow() -> String {

@@ -6,6 +6,7 @@
 //
 
 import SANLegacyLibrary
+import CoreDomain
 
 final class PLStocksManagerAdapter {}
  

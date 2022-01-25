@@ -117,7 +117,7 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         configureButtons()
         configureUserImage()
         configureKeyboard()
-        setAccessibility()
+        configureAccessibilityIdentifiers()
     }
     
     func configureRegardLabel() {
@@ -164,13 +164,19 @@ private extension PLUnrememberedLoginNormalPwdViewController {
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginButtonDidPressed)))
         loginButton.set(localizedStylableText: localized("generic_button_continue"), state: .normal)
     }
-    
-    func setAccessibility() {
-        documentTextField.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextDocument.rawValue
-        loginButton.accessibilityIdentifier = AccessibilityUnrememberedLogin.btnEnter.rawValue
-        passwordTextField?.accessibilityIdentifier = AccessibilityUnrememberedLogin.inputTextPassword.rawValue
+
+    func configureAccessibilityIdentifiers() {
+        self.backgroundImageView.accessibilityIdentifier = ""
+        self.sanIconImageView.accessibilityIdentifier = "icnSanWhite"
+        self.regardLabel.accessibilityIdentifier = "loginStandardLabelGreeting"
+        self.documentTextField.textField .accessibilityIdentifier = "loginStandardTextNikAlias"
+        self.documentTextField.titleLabel.accessibilityIdentifier = "pl_login_label_login"
+        self.documentTextField.accessibilityIdentifier = "loginStandardContainerNikAlias"
+        self.loginButton.accessibilityIdentifier = "loginStandardBtnAccess"
+        self.passwordTextField.textField?.accessibilityIdentifier = "loginStandardTextMagic"
+        self.userImageView.accessibilityIdentifier = "loginStandardImageSecurity"
     }
-    
+
     func regardNow() -> String {
         return localized(TimeImageAndGreetingViewModel.shared.greetingTextKey.rawValue).text
     }

@@ -9,6 +9,9 @@ import Foundation
 
 protocol PhoneTopUpDataSourceProtocol {
     func getPhoneTopUpAccounts() throws -> Result<[DebitAccountDTO], NetworkProviderError>
+    func getOperators() throws -> Result<[OperatorDTO], NetworkProviderError>
+    func getGSMOperators() throws -> Result<[GSMOperatorDTO], NetworkProviderError>
+    func getInternetContacts() throws -> Result<[PayeeDTO], NetworkProviderError>
 }
 
 final class PhoneTopUpDataSource {
@@ -17,6 +20,9 @@ final class PhoneTopUpDataSource {
     
     private enum PhoneTopUpServiceType: String {
         case accounts = "/accounts/for-debit/34"
+        case operators = "/topup/ws/operators"
+        case gsmOperators = "/topup/gsm-operator"
+        case internetContacts = "/payees/phone"
     }
     
     // MARK: Properties
@@ -48,7 +54,47 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let serviceName = PhoneTopUpServiceType.accounts.rawValue
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
-                                        method: .get)
+                                        method: .get,
+                                        contentType: nil)
+        return networkProvider.request(request)
+    }
+    
+    func getOperators() throws -> Result<[OperatorDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = PhoneTopUpServiceType.operators.rawValue
+        let request = PhoneTopUpRequest(serviceName: serviceName,
+                                        serviceUrl: serviceUrl,
+                                        method: .get,
+                                        contentType: nil)
+        return networkProvider.request(request)
+    }
+    
+    func getGSMOperators() throws -> Result<[GSMOperatorDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = PhoneTopUpServiceType.gsmOperators.rawValue
+        let request = PhoneTopUpRequest(serviceName: serviceName,
+                                        serviceUrl: serviceUrl,
+                                        method: .get,
+                                        contentType: nil)
+        return networkProvider.request(request)
+    }
+    
+    func getInternetContacts() throws -> Result<[PayeeDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = PhoneTopUpServiceType.internetContacts.rawValue
+        let request = PhoneTopUpRequest(serviceName: serviceName,
+                                        serviceUrl: serviceUrl,
+                                        method: .get,
+                                        contentType: nil)
         return networkProvider.request(request)
     }
 }

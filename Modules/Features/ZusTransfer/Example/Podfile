@@ -8,6 +8,7 @@ def example_app_common
   pod 'PLUI', :path => '../../../Libraries/PLUI'
   pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLCryptography', :path => '../../../Libraries/PLCryptography'
 end
 
 def core_dependencies
@@ -19,14 +20,15 @@ def core_dependencies
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
-  pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
 end
 
 def pl_dependencies
   pod 'ZusTransfer', :path => '../'
   pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
 end
 
 target 'ZusTransfer_Example' do

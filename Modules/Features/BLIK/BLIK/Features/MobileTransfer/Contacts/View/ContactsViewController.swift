@@ -19,7 +19,7 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
     private lazy var emptyView = ContactsEmptyView()
 
     private var viewModels: [ContactViewModel] = []
-    private var filteredContacts: [Contact] = []
+    private var filteredContacts: [MobileContact] = []
     private let viewModelMapper = ContactViewModelMapper()
     private var isSearching = false
     
@@ -55,7 +55,7 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
 
         if show {
             view.addSubview(emptyView)
-            emptyView.setUp(with: .emptyContacts)
+            emptyView.setUp(with: .emptyContacts(textKey: "pl_blik_text_emptyContancs"))
 
             NSLayoutConstraint.activate([
                 emptyView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -181,7 +181,7 @@ private extension ContactsViewController {
     func showNoResultsView(_ show: Bool, query: String = "") {
         if show {
             view.addSubview(emptyView)
-            emptyView.setUp(with: .noSearchResult(query: query))
+            emptyView.setUp(with: .noSearchResult(query: query, textKey: "pl_blik_text_noFoundRecip"))
 
             NSLayoutConstraint.activate([
                 emptyView.topAnchor.constraint(equalTo: searchView.bottomAnchor),

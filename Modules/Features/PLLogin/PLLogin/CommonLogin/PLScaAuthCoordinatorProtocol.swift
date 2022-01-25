@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import CoreDomain
 
 protocol PLScaAuthCoordinatorProtocol: PLLoginCoordinatorProtocol {
     var deviceTrustDeviceDataCoordinator: PLDeviceDataCoordinator { get set }

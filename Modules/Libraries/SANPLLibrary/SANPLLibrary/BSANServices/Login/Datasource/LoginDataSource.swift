@@ -13,6 +13,7 @@ protocol LoginDataSourceProtocol {
     func doAuthenticateInit(_ parameters: AuthenticateInitParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func doAuthenticate(_ parameters: AuthenticateParameters) throws -> Result<AuthenticateDTO, NetworkProviderError>
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError>
 }
 
 private extension LoginDataSource {
@@ -35,6 +36,7 @@ class LoginDataSource: LoginDataSourceProtocol {
         case authenticateInit = "/authenticate/init"
         case authenticate = "/authenticate"
         case logout = "/token"
+        case info = "/login/info"
     }
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -71,7 +73,7 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                             serviceUrl: absoluteUrl,
                                                                                                             method: .get,
                                                                                                             headers: self.headers,
-                                                                                                            contentType: .urlEncoded,
+                                                                                                            contentType: nil,
                                                                                                             localServiceName: .pubKey)
         )
         return result
@@ -127,6 +129,21 @@ class LoginDataSource: LoginDataSourceProtocol {
                                                                                                              authorization: .oauth))
         return result
     }
+    
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+
+        let absoluteUrl = baseUrl + self.basePath
+        let serviceName =  LoginServiceType.info.rawValue
+        let result: Result<LoginInfoDTO, NetworkProviderError> = self.networkProvider.request(LoginInfoRequest(serviceName: serviceName,
+                                                                                                               serviceUrl: absoluteUrl,
+                                                                                                               method: .get,
+                                                                                                               contentType: nil,
+                                                                                                               localServiceName: .loginInfo))
+        return result
+    }
 }
 
 private struct LoginRequest: NetworkProviderRequest {
@@ -138,7 +155,7 @@ private struct LoginRequest: NetworkProviderRequest {
     let jsonBody: LoginParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -149,7 +166,7 @@ private struct LoginRequest: NetworkProviderRequest {
          jsonBody: LoginParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -174,7 +191,7 @@ private struct pubKeyRequest: NetworkProviderRequest {
     let jsonBody: AuthenticateInitParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -185,7 +202,7 @@ private struct pubKeyRequest: NetworkProviderRequest {
          jsonBody: AuthenticateInitParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -210,7 +227,7 @@ private struct AuthenticateInitRequest: NetworkProviderRequest {
     let jsonBody: AuthenticateInitParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -221,9 +238,9 @@ private struct AuthenticateInitRequest: NetworkProviderRequest {
          jsonBody: AuthenticateInitParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
-         authorization: NetworkProviderRequestAuthorization? = nil) {
+         authorization: NetworkProviderRequestAuthorization? = .trustedDeviceOnly) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
@@ -246,7 +263,7 @@ private struct AuthenticateRequest: NetworkProviderRequest {
     let jsonBody: AuthenticateParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -257,7 +274,7 @@ private struct AuthenticateRequest: NetworkProviderRequest {
          jsonBody: AuthenticateParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -282,7 +299,7 @@ private struct LogoutRequest: NetworkProviderRequest {
     let jsonBody: AuthenticateParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -293,7 +310,7 @@ private struct LogoutRequest: NetworkProviderRequest {
          jsonBody: AuthenticateParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -308,3 +325,37 @@ private struct LogoutRequest: NetworkProviderRequest {
         self.authorization = authorization
     }
 }
+
+private struct LoginInfoRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]?
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .none
+    let contentType: NetworkProviderContentType?
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: Encodable? = nil,
+         headers: [String: String]? = nil,
+         queryParams: [String: Any]? = nil,
+         contentType: NetworkProviderContentType?,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.headers = headers
+        self.queryParams = queryParams
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+

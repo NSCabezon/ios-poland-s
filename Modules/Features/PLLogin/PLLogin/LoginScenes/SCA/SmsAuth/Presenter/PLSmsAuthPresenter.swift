@@ -13,6 +13,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import Security
 import os
+import CoreDomain
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLSmsAuthViewProtocol? { get set }
@@ -141,7 +142,7 @@ private extension  PLSmsAuthPresenter {
             case .failure(let error):
                 let httpErrorCode = self.getHttpErrorCode(error.useCaseError) ?? ""
                 self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.useCaseError.getErrorDesc() ?? ""])
-                self.handleError(error.useCaseError)
+                self.handleError(error.useCaseError, showCloseButton: true)
             }
         }
     }

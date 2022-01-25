@@ -99,7 +99,7 @@
             "isFullScreen": true
         },
         {
-            "id": "NEW_BBC",
+            "id": "NEW_BBC_OFFER",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer",
             "isAvailable": true,
             "method": "POST",

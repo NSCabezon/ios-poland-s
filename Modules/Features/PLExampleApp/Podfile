@@ -15,7 +15,6 @@ def libraries
   pod 'SANPLLibrary', :path => '../../Libraries/SANPLLibrary'
   pod 'PLLegacyAdapter', :path => '../../Libraries/PLLegacyAdapter'
   pod 'PLCommons', :path => '../../Libraries/PLCommons'
-  pod 'Helpers', :path => '../../../santander-one/Modules/Libraries/Helpers'
   pod 'WebViews', :path => '../../../santander-one/Modules/Libraries/WebViews'
 end
 

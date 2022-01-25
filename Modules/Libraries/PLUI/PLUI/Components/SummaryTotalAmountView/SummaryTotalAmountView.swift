@@ -6,10 +6,10 @@ public class SummaryTotalAmountView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .santander(family: .text, type: .semibold, size: 11)
+        label.font = .santander(family: .text, type: .regular, size: 14)
         label.textColor = .brownishGray
         label.textAlignment = .center
-        label.text = localized("pl_blik_text_total")
+        label.text = localized("pl_foundtrans_text_total")
         return label
     }()
     

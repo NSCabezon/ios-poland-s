@@ -6,13 +6,19 @@
 import CoreFoundationLib
 import UI
 import Commons
+import TaxTransfer
 
 final class PLPayTaxOperative: AccountOperativeActionTypeProtocol {
+    let dependenciesResolver: DependenciesResolver
     var rawValue: String = "payTaxPoland"
     var trackName: String? = "payTaxPoland"
     var accessibilityIdentifier: String? = "accountOptionButtonPayTaxes"
     private let title: String = "accountOption_button_payTaxes"
     private let icon: String = "icnPayTax"
+    
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
+    }
 
     func values() -> (title: String, imageName: String) {
         return (self.title, self.icon)
@@ -27,7 +33,11 @@ final class PLPayTaxOperative: AccountOperativeActionTypeProtocol {
 
     func getAction() -> AccountOperativeAction {
         return .custom {
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+            rootViewController?.dismiss(animated: true, completion: { [weak self] in
+                let coordinator = self?.dependenciesResolver.resolve(for: TaxTransferFormCoordinatorProtocol.self)
+                coordinator?.start()
+            })
         }
     }
 }

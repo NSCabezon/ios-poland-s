@@ -10,6 +10,7 @@ import Commons
 import PLCommons
 import LoginCommon
 import os
+import CoreDomain
 
 protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLHardwareTokenViewProtocol? { get set }
@@ -91,7 +92,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             case .failure(let error):
                 let httpErrorCode = self.getHttpErrorCode(error.useCaseError) ?? ""
                 self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.useCaseError.getErrorDesc() ?? ""])
-                self.handleError(error.useCaseError)
+                self.handleError(error.useCaseError, showTitle: false)
             }
 
         }

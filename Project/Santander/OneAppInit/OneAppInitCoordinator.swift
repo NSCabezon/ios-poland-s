@@ -80,6 +80,18 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
         self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
             return AccountForDebitMapper()
         }
+        
+        self.dependenciesEngine.register(for: OperatorMapping.self) { _ in
+            return OperatorMapper()
+        }
+        
+        self.dependenciesEngine.register(for: GSMOperatorMapping.self) { _ in
+            return GSMOperatorMapper()
+        }
+        
+        self.dependenciesEngine.register(for: MobileContactMapping.self) { _ in
+            return MobileContactMapper()
+        }
     }
     
     func start() {
@@ -207,28 +219,17 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             view?.showError()
             return
         }
-        if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
-            var selectedAccountNumber = ""
-            if accounts.count > 1 {
-                selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
-            } else {
-                selectedAccountNumber = accounts.first?.number ?? ""
-            }
-            let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
-                                                             navigationController: navigationController,
-                                                             accounts: accounts,
-                                                             selectedAccountNumber: selectedAccountNumber)
-            coordinator.start()
-        } else {
-            let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                         navigationController: navigationController,
-                                                         accounts: accounts,
-                                                         selectedAccountNumber: "",
-                                                         sourceView: .sendMoney)
-            coordinator.start()
-        }
+        let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
+        let settings = repository.get()?.charityTransfer
+        let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
+                                                              transferAccountNumber: settings?.transferAccountNumber,
+                                                              transferTitle: settings?.transferTitle)
+        let coordinator: CharityTransferModuleCoordinator = dependenciesEngine.resolve()
+        coordinator.setProperties(accounts: accounts,
+                                  charityTransferSettings: charityTransferSettings)
+        coordinator.start()
     }
-    
+   
     func selectZusTransfer(accounts: [AccountForDebit]) {
         guard !accounts.isEmpty else {
             view?.showError()
@@ -237,7 +238,8 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         let coordinator = ZusTransferModuleCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            accounts: accounts)
+            accounts: accounts
+        )
         coordinator.start()
     }
 }

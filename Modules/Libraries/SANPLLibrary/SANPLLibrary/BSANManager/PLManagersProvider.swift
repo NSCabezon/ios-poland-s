@@ -15,7 +15,9 @@ public protocol PLManagersProviderProtocol {
     func getGlobalPositionManager() -> PLGlobalPositionManagerProtocol
     func getAccountsManager() -> PLAccountManagerProtocol
     func getCardsManager() -> PLCardsManagerProtocol
-    func getLoansManager() -> PLLoanManagerProtocol
+	func getLoansManager() -> PLLoanManagerProtocol
+	func getDepositsManager() -> PLDepositManagerProtocol
+	func getFundsManager() -> PLFundManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
     func getNotificationManager() -> PLNotificationManagerProtocol
@@ -24,6 +26,7 @@ public protocol PLManagersProviderProtocol {
     func getCardOperativesManager() -> PLCardOperativesManagerProtocol
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol
+    func getTaxTransferManager() -> PLTaxTransferManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -37,7 +40,9 @@ public final class PLManagersProvider {
     private let accountManager: PLAccountManager
     private let cardsManager: PLCardsManager
     private let cardTransactionsManager: PLCardTransactionsManager
-    private let loansManager: PLLoanManager
+	private let loansManager: PLLoanManager
+	private let depositsManager: PLDepositManager
+	private let fundsManager: PLFundManager
     private let customerManager: PLCustomerManager
     private let notificationManager: PLNotificationManager
     private let transferManager: PLTransfersManager
@@ -45,6 +50,7 @@ public final class PLManagersProvider {
     private let loanScheduleManager: PLLoanScheduleManager
     private let authorizationProcessorManager: PLAuthorizationProcessorManager
     private let phoneTopUpManager: PLPhoneTopUpManagerProtocol
+    private let taxTransferManager: PLTaxTransferManagerProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -68,6 +74,8 @@ public final class PLManagersProvider {
         self.cardTransactionsManager = PLCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+		self.depositsManager = PLDepositManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+		self.fundsManager = PLFundManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.customerManager = PLCustomerManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.notificationManager = PLNotificationManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.transferManager = PLTransfersManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
@@ -75,6 +83,7 @@ public final class PLManagersProvider {
         self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.authorizationProcessorManager = PLAuthorizationProcessorManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.phoneTopUpManager = PLPhoneTopUpManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.taxTransferManager = PLTaxTransferManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
     }
 }
 
@@ -121,6 +130,14 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getLoansManager() -> PLLoanManagerProtocol {
         return self.loansManager
     }
+	
+	public func getDepositsManager() -> PLDepositManagerProtocol {
+		self.depositsManager
+	}
+	
+	public func getFundsManager() -> PLFundManagerProtocol {
+		self.fundsManager
+	}
 
     public func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol {
         self.cardTransactionsManager
@@ -152,6 +169,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     
     public func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
         self.phoneTopUpManager
+    }
+    
+    public func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
+        self.taxTransferManager
     }
 }
 
@@ -222,6 +243,10 @@ public extension PLManagersProviderProtocol {
     }
     
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+    
+    func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
         fatalError("Missing manager implementation")
     }
 }

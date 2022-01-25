@@ -16,6 +16,8 @@ final class InvestmentFundsDTOAdapter {
         fundDTO.valueAmount = AmountAdapter.adaptBalanceToAmount(plInvestmentFunds.currentValue)
         fundDTO.countervalueAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plInvestmentFunds.currentValue)
         fundDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plInvestmentFunds.accountId?.id)
+		fundDTO.accountId?.id = plInvestmentFunds.accountId?.id
+		fundDTO.accountId?.systemId = plInvestmentFunds.accountId?.systemId
         return fundDTO
     }
 }

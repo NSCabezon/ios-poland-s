@@ -27,6 +27,7 @@ import CoreDomain
 import CommonUseCase
 import PLCryptography
 import UI
+import PLHelpCenter
 
 final class AppDependencies {
     #if DEBUG
@@ -43,6 +44,7 @@ final class AppDependencies {
     private let compilation: PLCompilationProtocol
     private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
+    private lazy var netClient = NetClientImplementation()
 
     // MARK: - Dependecies definitions
 
@@ -77,7 +79,6 @@ final class AppDependencies {
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
                                          demoInterpreter: self.demoInterpreter)
-
     }()
     private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
         return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
@@ -102,9 +103,23 @@ final class AppDependencies {
     }()
     private lazy var plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository = {
         let assetsClient = AssetsClient()
-        let netClient = NetClientImplementation()
         let fileClient = FileClient()
         return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plHelpCenterOnlineAdvisorRepository: PLHelpCenterOnlineAdvisorRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLHelpCenterOnlineAdvisorRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plHelpQuestionsRepository: PLHelpQuestionsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLHelpQuestionsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plTransferSettingsRepository: PLTransferSettingsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLTransferSettingsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
     private lazy var servicesLibrary: ServicesLibrary = {
         return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
@@ -189,6 +204,15 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
             return self.plAccountOtherOperativesInfoRepository
         }
+        self.dependencieEngine.register(for: PLHelpCenterOnlineAdvisorRepository.self) { _ in
+            return self.plHelpCenterOnlineAdvisorRepository
+        }
+        self.dependencieEngine.register(for: PLHelpQuestionsRepository.self) { _ in
+            return self.plHelpQuestionsRepository
+        }
+        self.dependencieEngine.register(for: PLTransferSettingsRepository.self) { _ in
+            return self.plTransferSettingsRepository
+        }
         self.dependencieEngine.register(for: PLWebViewLinkRepositoryProtocol.self) { resolver in
             return PLWebViewLinkRepository(dependenciesResolver: resolver)
         }
@@ -205,7 +229,7 @@ private extension AppDependencies {
             return self.productIdDelegate
         }
         self.dependencieEngine.register(for: AdditionalUseCasesProviderProtocol.self) { resolver in
-            return LoadPLAccountOtherOperativesInfoUseCaseImpl(dependencies: resolver)
+            return AdditionalUseCasesProviderImpl(dependencies: resolver)
         }
         self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
             return self.ibanFormatter
@@ -328,9 +352,15 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
         }
+        self.dependencieEngine.register(for: ContextSelectorModifierProtocol.self) { resolver in
+            PLContextSelectorModifier(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
+        }
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
         }
+		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+			PLChangeAliasManager()
+		}
     }
 }
 

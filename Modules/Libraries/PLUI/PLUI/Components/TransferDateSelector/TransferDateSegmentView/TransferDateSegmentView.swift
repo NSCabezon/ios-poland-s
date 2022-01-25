@@ -1,7 +1,7 @@
 
 import Foundation
 
-enum DateTransferOption {
+public enum DateTransferOption {
     case today, anotherDay
 }
 
@@ -12,6 +12,7 @@ protocol TransferDateSegmentViewDelegate: AnyObject {
 class TransferDateSegmentView: UIView {
     
     private let stackView = UIStackView()
+    private var currentOption: DateTransferOption = .today
     weak var delegate: TransferDateSegmentViewDelegate?
     
     init() {
@@ -21,6 +22,10 @@ class TransferDateSegmentView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func getCurrentOption() -> DateTransferOption {
+        return currentOption
     }
 }
 
@@ -34,8 +39,20 @@ private extension TransferDateSegmentView {
     
     func addSubviews() {
         addSubview(stackView)
-        stackView.addArrangedSubview(TransferDateSegmentOptionView(option: .today, isSelected: true, delegate: self))
-        stackView.addArrangedSubview(TransferDateSegmentOptionView(option: .anotherDay, isSelected: false, delegate: self))
+        stackView.addArrangedSubview(
+            TransferDateSegmentOptionView(
+                option: .today,
+                isSelected: currentOption == .today,
+                delegate: self
+            )
+        )
+        stackView.addArrangedSubview(
+            TransferDateSegmentOptionView(
+                option: .anotherDay,
+                isSelected: currentOption == .anotherDay,
+                delegate: self
+            )
+        )
     }
     
     func prepareStyles() {
@@ -67,6 +84,7 @@ extension TransferDateSegmentView: TransferDateOptionDelegate {
             }
         })
         delegate?.didSelectOption(option)
+        currentOption = option
     }
     
 }

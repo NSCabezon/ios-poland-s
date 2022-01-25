@@ -12,12 +12,15 @@ import CoreDomain
 final class SendMoneyTransferTypeFeeViewModel {
     private let amount: AmountRepresentable
     let status: OneStatus
+    let accessibilitySuffix: String?
     
     init?(amount: AmountRepresentable?,
-          status: OneStatus) {
+          status: OneStatus,
+          accessibilitySuffix: String? = nil) {
         guard let amount = amount else { return nil }
         self.amount = amount
         self.status = status
+        self.accessibilitySuffix = accessibilitySuffix
     }
 }
 

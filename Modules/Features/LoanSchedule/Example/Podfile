@@ -8,7 +8,6 @@ def example_app_common
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
   pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
-  pod 'Helpers', :path => '../../../../santander-one/Modules/Libraries/Helpers'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
 end
 

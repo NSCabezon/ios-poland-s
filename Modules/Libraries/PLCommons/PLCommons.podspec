@@ -19,7 +19,7 @@ The Poland PLCommons framework.
 s.dependency "Commons"
 s.dependency "UI"
 s.dependency "PLUI"
-s.dependency "Helpers"
+s.dependency "CoreFoundationLib"
 s.dependency "WebViews"
 s.dependency "SANPLLibrary"
 s.dependency "SecurityExtensions"

@@ -36,7 +36,8 @@ public class PLTransactionParametersProvider: PLTransactionParametersProviderPro
              .foreignTransfer(let transactionParameters),
              .blikP2PR(let transactionParameters),
              .mCommerceBelow(let transactionParameters),
-             .mCommerceUnder(let transactionParameters):
+             .mCommerceUnder(let transactionParameters),
+             .zusTransfer(let transactionParameters):
             let joinedParameters = transactionProvider.getParameters(
                 transactionParametersInput: transactionParameters,
                 type: type

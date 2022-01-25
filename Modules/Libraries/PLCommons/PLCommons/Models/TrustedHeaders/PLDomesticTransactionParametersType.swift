@@ -15,4 +15,5 @@ public enum PLDomesticTransactionParametersType {
     case mCommerceBelow(PLDomesticTransactionParametersInput)
     case mCommerceUnder(PLDomesticTransactionParametersInput)
     case charityTransfer(PLDomesticTransactionParametersInput)
+    case zusTransfer(PLDomesticTransactionParametersInput)
 }

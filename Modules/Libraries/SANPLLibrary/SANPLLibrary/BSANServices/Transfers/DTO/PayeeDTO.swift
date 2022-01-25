@@ -17,11 +17,12 @@ public struct PayeeDTO: Codable {
     let payeeID: PayeeIdDTO?
     public let alias: String?
     public let account: AccountPayeeDTO?
+    public let phone: PayeePhoneDTO?
     public var countryCode: String?
 
     enum CodingKeys: String, CodingKey {
         case payeeID = "payeeId"
-        case alias, account
+        case alias, account, phone
     }
 }
 
@@ -123,7 +124,7 @@ public struct AccountPayeeDTO: Codable {
     var accountType: AccountTypeDTO?
     var currencyCode: String?
     public var accountNo: String?
-    var payeeName: String?
+    public var payeeName: String?
     var branchInfo: BranchInfoDTO?
     public var address: String?
     var taxFormType: String?
@@ -175,4 +176,10 @@ public struct PaymentDTO: Codable {
 public struct PayeeIdDTO: Codable {
     let contractType: String?
     let id: String?
+}
+
+public struct PayeePhoneDTO: Codable {
+    public let phoneNo: String
+    public let gsmOperatorId: Int
+    public let highAuthFlag: Bool
 }
