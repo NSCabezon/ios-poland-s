@@ -6,21 +6,20 @@
 //
 
 import CoreFoundationLib
+import OpenCombine
 import Commons
 
-final class CheckNewSendMoneyHomeEnabledUseCase: UseCase<Void, Bool, StringErrorOutput> {
-    let dependenciesResolver: DependenciesResolver
-    
-    init(dependenciesResolver: DependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
-    }
-    
-    override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<Bool, StringErrorOutput> {
-        let appConfig: AppConfigRepositoryProtocol = dependenciesResolver.resolve()
-        if let enabled = appConfig.getBool("enabledNewSendMoney"), enabled {
-            return .ok(true)
-        } else {
-            return .ok(false)
-        }
+protocol CheckNewSendMoneyHomeEnabledUseCase {
+    func fetchEnabled() -> AnyPublisher<Bool, Never>
+}
+
+struct DefaultCheckNewSendMoneyHomeEnabledUseCase {
+    let appConfigRepository: AppConfigRepositoryProtocol
+}
+
+extension DefaultCheckNewSendMoneyHomeEnabledUseCase: CheckNewSendMoneyHomeEnabledUseCase {
+    func fetchEnabled() -> AnyPublisher<Bool, Never> {
+        return appConfigRepository.value(for: "enableOneSendMoneyHome", defaultValue: false)
+            .eraseToAnyPublisher()
     }
 }
