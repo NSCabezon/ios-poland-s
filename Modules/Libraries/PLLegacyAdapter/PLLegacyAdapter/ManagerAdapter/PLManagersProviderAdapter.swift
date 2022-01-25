@@ -90,7 +90,7 @@ public final class PLManagersProviderAdapter {
         self.timeLineManager = PLTimeLineManagerAdapter()
         self.simulatorManager = PLLoanSimulatorManagerAdapter()
         self.onePlanManager = PLOnePlanManagerAdapter()
-        self.lastLogonManager = PLLastLogonManagerAdapter()
+        self.lastLogonManager = PLLastLogonManagerAdapter(loginManager: self.plManagersProvider.getLoginManager(), bsanDataProvider: bsanDataProvider)
         self.financialAgregatorManager = PLFinancialAgregatorManagerAdapter()
         self.bizumManager = PLBizumManagerAdapter()
         self.managerNotificationsManager = PLManagerNotificationsManagerAdapter()
