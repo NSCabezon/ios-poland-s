@@ -42,9 +42,9 @@ final class AppModifiers {
     private lazy var cardDetailModifier: CardDetailModifierProtocol = {
         return PLCardDetailModifier(dependenciesEngine: dependencieEngine)
     }()
-    private lazy var loansModifier: LoansModifierProtocol = {
-        return PLLoanModifier(dependenciesEngine: dependencieEngine)
-    }()
+//    private lazy var loansModifier: LoansModifierProtocol = {
+//        return PLLoanModifier(dependenciesEngine: dependencieEngine)
+//    }()
     private lazy var loanDetailModifier: LoanDetailModifierProtocol = {
         return PLLoanDetailModifier(dependenciesEngine: dependencieEngine)
     }()
@@ -113,9 +113,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
-            return self.loansModifier
-        }
+//        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
+//            return self.loansModifier
+//        }
         self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { _ in
             return self.loanDetailModifier
         }
@@ -200,6 +200,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: GenericDialogAddBranchLocatorActionCapable.self) { _ in
             GenericDialogActionsModifier()
+        }
+        self.dependencieEngine.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
+            PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
         }
     }
 }

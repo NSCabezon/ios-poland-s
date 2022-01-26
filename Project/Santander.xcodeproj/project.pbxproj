@@ -19,7 +19,6 @@
 		0D38C7E726DE3CB70062C02C /* PLRepaymentOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D38C7E426DE3CB70062C02C /* PLRepaymentOperative.swift */; };
 		0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D38C7E526DE3CB70062C02C /* PLTurnOffOperative.swift */; };
 		0D42455F26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42455E26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift */; };
-		0D4D558D26A6DEEC0032466B /* PLLoanModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */; };
 		0D59D63827201813007BF898 /* PLOpinatorInfoOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D59D63727201813007BF898 /* PLOpinatorInfoOption.swift */; };
 		0D603D6626C679A60035C671 /* GetPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */; };
 		0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */; };
@@ -61,15 +60,19 @@
 		34939AD22727DD150010F987 /* SendMoneyTransferTypeFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34939AD12727DD150010F987 /* SendMoneyTransferTypeFeeViewModel.swift */; };
 		34949640271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3494963F271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift */; };
 		34949642271EAD800029E276 /* SendMoneyTransferTypeAmountHighView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34949641271EAD800029E276 /* SendMoneyTransferTypeAmountHighView.xib */; };
-		3ABF726606E9503F2B99AE4F /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17194677FA9103CB795DDB /* Pods_Santander.framework */; };
-		3AF06BCA2795932000E25B23 /* ModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF06BC92795932000E25B23 /* ModuleDependencies.swift */; };
+		3A4B64E42796DDC5003FFE00 /* LoansModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64DB2796DDC5003FFE00 /* LoansModifier.swift */; };
+		3A4B64E52796DDC5003FFE00 /* LoanCustomeOptionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64DC2796DDC5003FFE00 /* LoanCustomeOptionCoordinator.swift */; };
+		3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64DE2796DDC5003FFE00 /* PLLoanModifier.swift */; };
+		3A4B64E72796DDC5003FFE00 /* LoanExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64E02796DDC5003FFE00 /* LoanExternalDependenciesResolver.swift */; };
+		3A4B64E82796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64E22796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift */; };
+		3A4B64E92796DDC5003FFE00 /* ModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */; };
+		3AEC673E277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */; };
 		42BF471526495D3400136E8D /* HostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF471426495D3400136E8D /* HostModule.swift */; };
 		42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF484326497C9200136E8D /* BSANEnvironments.swift */; };
 		42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */; };
 		42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF486C264A88B200136E8D /* TealiumCompilation.swift */; };
 		42BF5874264D13C900136E8D /* pl.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5871264D13C900136E8D /* pl.strings */; };
 		42BF5875264D13C900136E8D /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42BF5872264D13C900136E8D /* en.strings */; };
-		440043E0270B331900516A6F /* PLGetLoanTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440043DF270B331900516A6F /* PLGetLoanTransactionsUseCase.swift */; };
 		4446D0CC2701B789008B45A0 /* PLAccountHomePresenterModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4446D0CB2701B789008B45A0 /* PLAccountHomePresenterModifier.swift */; };
 		446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446325432692E9530050334F /* PLCardHomeActionModifier.swift */; };
 		446C4F8E26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */; };
@@ -203,6 +206,7 @@
 		CCE45AA22732AC5400691E91 /* RemainingTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCE45A962732AC5300691E91 /* RemainingTimeView.xib */; };
 		CCE45AA32732AC5400691E91 /* InputBiometricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A972732AC5300691E91 /* InputBiometricsView.swift */; };
 		CCE45AAF2735208800691E91 /* RemainingTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */; };
+		D27C31ED0663323E0C7994AB /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17194677FA9103CB795DDB /* Pods_Santander.framework */; };
 		D2F5C33626E62647002431DE /* PLCardTransactionsSearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */; };
 		D547C8FC272A9B2C0090DABF /* PLPersonalDataModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */; };
 		D54D2EE727201CC400781580 /* PLOpinatorInfoOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54D2EE627201CC400781580 /* PLOpinatorInfoOption.swift */; };
@@ -235,7 +239,6 @@
 		0D38C7E426DE3CB70062C02C /* PLRepaymentOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLRepaymentOperative.swift; sourceTree = "<group>"; };
 		0D38C7E526DE3CB70062C02C /* PLTurnOffOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTurnOffOperative.swift; sourceTree = "<group>"; };
 		0D42455E26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetail.swift; sourceTree = "<group>"; };
-		0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanModifier.swift; sourceTree = "<group>"; };
 		0D59D63727201813007BF898 /* PLOpinatorInfoOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLOpinatorInfoOption.swift; sourceTree = "<group>"; };
 		0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLDepositModifier.swift; sourceTree = "<group>"; };
@@ -278,9 +281,13 @@
 		34939AD12727DD150010F987 /* SendMoneyTransferTypeFeeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeFeeViewModel.swift; sourceTree = "<group>"; };
 		3494963F271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeAmountHighView.swift; sourceTree = "<group>"; };
 		34949641271EAD800029E276 /* SendMoneyTransferTypeAmountHighView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendMoneyTransferTypeAmountHighView.xib; sourceTree = "<group>"; };
-		3AA0B5BEB144370B6A66B1C5 /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
-		3AF06BC92795932000E25B23 /* ModuleDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleDependencies.swift; sourceTree = "<group>"; };
-		4188A4FBAD817520B3911343 /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
+		3A4B64DB2796DDC5003FFE00 /* LoansModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoansModifier.swift; sourceTree = "<group>"; };
+		3A4B64DC2796DDC5003FFE00 /* LoanCustomeOptionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoanCustomeOptionCoordinator.swift; sourceTree = "<group>"; };
+		3A4B64DE2796DDC5003FFE00 /* PLLoanModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLLoanModifier.swift; sourceTree = "<group>"; };
+		3A4B64E02796DDC5003FFE00 /* LoanExternalDependenciesResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoanExternalDependenciesResolver.swift; sourceTree = "<group>"; };
+		3A4B64E22796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetLoanOptionsUsecase.swift; sourceTree = "<group>"; };
+		3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleDependencies.swift; sourceTree = "<group>"; };
+		3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanTransactionDetailUseCase.swift; sourceTree = "<group>"; };
 		42BF471426495D3400136E8D /* HostModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostModule.swift; sourceTree = "<group>"; };
 		42BF484326497C9200136E8D /* BSANEnvironments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSANEnvironments.swift; sourceTree = "<group>"; };
 		42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySiriAssistant.swift; sourceTree = "<group>"; };
@@ -293,7 +300,6 @@
 		42CEB7BF26E8EE0100349ACD /* GoogleService-Info-pre.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-pre.plist"; sourceTree = "<group>"; };
 		42CEB7C026E8EE0700349ACD /* GoogleService-Info-development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development.plist"; sourceTree = "<group>"; };
 		42CEB7CA26E91D7400349ACD /* Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dev.entitlements; sourceTree = "<group>"; };
-		440043DF270B331900516A6F /* PLGetLoanTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetLoanTransactionsUseCase.swift; sourceTree = "<group>"; };
 		4446D0CB2701B789008B45A0 /* PLAccountHomePresenterModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAccountHomePresenterModifier.swift; sourceTree = "<group>"; };
 		446325432692E9530050334F /* PLCardHomeActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardHomeActionModifier.swift; sourceTree = "<group>"; };
 		446C4F8D26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetFilteredAccountTransactionsUseCase.swift; sourceTree = "<group>"; };
@@ -372,6 +378,7 @@
 		900EECDF273E784E00B7AD95 /* ConfirmPinUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPinUseCase.swift; sourceTree = "<group>"; };
 		93CC7D2998660FC4E8F99CBE /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		9A17194677FA9103CB795DDB /* Pods_Santander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Santander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A7C34D3347EC887729BD7AE /* Pods-Santander.pro-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-debug.xcconfig"; sourceTree = "<group>"; };
 		9C0BFBE426F8C5B0000F2C8E /* SendMoneyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SendMoneyCoordinator.swift; path = Santander/Modifiers/TransferOperatives/SendMoney/SendMoneyCoordinator.swift; sourceTree = SOURCE_ROOT; };
 		9CA9EEBB270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreSetupSendMoneyUseCase.swift; sourceTree = "<group>"; };
 		9CDAE3B32743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSendMoneyConfirmationStepUseCase.swift; sourceTree = "<group>"; };
@@ -457,6 +464,7 @@
 		EFF13010273177F500ECE22E /* PolandTransferType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolandTransferType.swift; sourceTree = "<group>"; };
 		EFF1301227317B1400ECE22E /* PolandTransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolandTransactionType.swift; sourceTree = "<group>"; };
 		EFFDC0C927355DE800978668 /* IbanValidationSendMoneyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IbanValidationSendMoneyUseCase.swift; sourceTree = "<group>"; };
+		F1AA95698CE64A51645F10E8 /* Pods-Santander.pre-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-release.xcconfig"; sourceTree = "<group>"; };
 		FDC790AC6F7842B08741ACC9 /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
 		FDD5976FFB0633563025CE33 /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -466,7 +474,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ABF726606E9503F2B99AE4F /* Pods_Santander.framework in Frameworks */,
+				D27C31ED0663323E0C7994AB /* Pods_Santander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,7 +492,6 @@
 		0D4D558B26A6DE6D0032466B /* Loans */ = {
 			isa = PBXGroup;
 			children = (
-				0D4D558C26A6DEEC0032466B /* PLLoanModifier.swift */,
 				440043DD270B32D600516A6F /* Detail */,
 				440043DE270B32E700516A6F /* Transactions */,
 			);
@@ -722,12 +729,57 @@
 			path = ViewComponents;
 			sourceTree = "<group>";
 		};
-		3AF06BC8279592F600E25B23 /* Modules */ = {
+		3A4B64D82796DDC4003FFE00 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				3AF06BC92795932000E25B23 /* ModuleDependencies.swift */,
+				3A4B64D92796DDC5003FFE00 /* Loans */,
+				3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		3A4B64D92796DDC5003FFE00 /* Loans */ = {
+			isa = PBXGroup;
+			children = (
+				3A4B64DA2796DDC5003FFE00 /* Coordinators */,
+				3A4B64DD2796DDC5003FFE00 /* Modifier */,
+				3A4B64DF2796DDC5003FFE00 /* Dependencies */,
+				3A4B64E12796DDC5003FFE00 /* UseCases */,
+			);
+			path = Loans;
+			sourceTree = "<group>";
+		};
+		3A4B64DA2796DDC5003FFE00 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				3A4B64DB2796DDC5003FFE00 /* LoansModifier.swift */,
+				3A4B64DC2796DDC5003FFE00 /* LoanCustomeOptionCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		3A4B64DD2796DDC5003FFE00 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				3A4B64DE2796DDC5003FFE00 /* PLLoanModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
+		3A4B64DF2796DDC5003FFE00 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				3A4B64E02796DDC5003FFE00 /* LoanExternalDependenciesResolver.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		3A4B64E12796DDC5003FFE00 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				3A4B64E22796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		42BF586F264D13BA00136E8D /* Strings */ = {
@@ -764,7 +816,7 @@
 		440043DE270B32E700516A6F /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
-				440043DF270B331900516A6F /* PLGetLoanTransactionsUseCase.swift */,
+				3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */,
 				4497E815270CB23200D6EE05 /* PLLoanTransaction.swift */,
 			);
 			path = Transactions;
@@ -993,7 +1045,7 @@
 		66BC8A55263FED9F00654CC5 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				3AF06BC8279592F600E25B23 /* Modules */,
+				3A4B64D82796DDC4003FFE00 /* Modules */,
 				04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */,
 				009046D2272AFD9300072AF8 /* PLWebViewURLRepository.swift */,
 				B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */,
@@ -1056,7 +1108,6 @@
 		7B3C019BD872523CEA4DC1E6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3AA0B5BEB144370B6A66B1C5 /* Pods-Santander.pro-debug.xcconfig */,
 				93CC7D2998660FC4E8F99CBE /* Pods-Santander.pre-debug.xcconfig */,
 				1BF682C798B6581F3DECB672 /* Pods-Santander.preprod-debug.xcconfig */,
 				D57E62313B8B9C442074E9B8 /* Pods-Santander.regression-debug.xcconfig */,
@@ -1066,10 +1117,11 @@
 				FDD5976FFB0633563025CE33 /* Pods-Santander.intern-debug.xcconfig */,
 				FDC790AC6F7842B08741ACC9 /* Pods-Santander.pro-release.xcconfig */,
 				DAAB778BA14AE2C5BAD53C4C /* Pods-Santander.intern-release.xcconfig */,
-				4188A4FBAD817520B3911343 /* Pods-Santander.pre-release.xcconfig */,
 				0026FAAFAA21549EE2D0E66A /* Pods-Santander.preprod-release.xcconfig */,
 				8CAF3B50D254CC1A6D76F25D /* Pods-Santander.uat-release.xcconfig */,
 				CA16056EE927AFF76FA97838 /* Pods-Santander.regression-release.xcconfig */,
+				9A7C34D3347EC887729BD7AE /* Pods-Santander.pro-debug.xcconfig */,
+				F1AA95698CE64A51645F10E8 /* Pods-Santander.pre-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1584,6 +1636,7 @@
 				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift in Sources */,
+				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
 				0DB4957626C13A8900F0985F /* PLPostponeBuyOperative.swift in Sources */,
 				0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */,
 				A97543372784871800400A0A /* PLLoansAliasOperative.swift in Sources */,
@@ -1602,12 +1655,12 @@
 				B0D77A55276B4CB500766705 /* PLCharityTransferSettingsDTO.swift in Sources */,
 				9CDAE3B42743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift in Sources */,
 				0D9E176526B96A9B00781A95 /* PLFundModifier.swift in Sources */,
-				3AF06BCA2795932000E25B23 /* ModuleDependencies.swift in Sources */,
 				447D7D30268F009300F9A70D /* PLCardHomeModifier.swift in Sources */,
 				66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */,
 				0DB4957E26C1586900F0985F /* PLCurrencyExchangeOperative.swift in Sources */,
 				0DCD893626C54D0C00275A90 /* PLSendMoneyOperative.swift in Sources */,
 				A97543352784805B00400A0A /* PLCashLoanOperative.swift in Sources */,
+				3A4B64E52796DDC5003FFE00 /* LoanCustomeOptionCoordinator.swift in Sources */,
 				CCE45A9B2732AC5400691E91 /* PLAuthorizationPresenter.swift in Sources */,
 				669A37CE270F564800C0F272 /* PLAccountOtherOperativesData.swift in Sources */,
 				44DE753F2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift in Sources */,
@@ -1647,9 +1700,7 @@
 				669A37DB270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
 				CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */,
-				440043E0270B331900516A6F /* PLGetLoanTransactionsUseCase.swift in Sources */,
 				B0D77A53276B4C3800766705 /* PLTransferSettingsDTO.swift in Sources */,
-				0D4D558D26A6DEEC0032466B /* PLLoanModifier.swift in Sources */,
 				BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */,
 				EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */,
 				5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */,
@@ -1676,6 +1727,7 @@
 				0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */,
 				7E974B0A2757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift in Sources */,
 				BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */,
+				3A4B64E72796DDC5003FFE00 /* LoanExternalDependenciesResolver.swift in Sources */,
 				A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */,
 				446E0C24265FE42400847FCA /* ContractPGFrequentOperativeOption.swift in Sources */,
 				66BC90672641283900654CC5 /* EmptyEmmaTrackEventList.swift in Sources */,
@@ -1687,6 +1739,7 @@
 				9E92903E26F9EAF700A0178A /* PLPublicMenuViewComponents.swift in Sources */,
 				0DA71E8F276B7CE300C90A51 /* PLContextSelectorModifier.swift in Sources */,
 				7E8AD12126F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift in Sources */,
+				3A4B64E92796DDC5003FFE00 /* ModuleDependencies.swift in Sources */,
 				669A37DE270F575F00C0F272 /* LoadPLAccountOtherOperativesInfoUseCase.swift in Sources */,
 				0DB4957C26C155F000F0985F /* PLDomesticTransferOperative.swift in Sources */,
 				5F02263D27328E0C005161B6 /* LoadPfmSessionStartedAction.swift in Sources */,
@@ -1694,6 +1747,7 @@
 				04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */,
 				78A4071327344CBF002DEBF0 /* DeeplinkLauncher.swift in Sources */,
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
+				3AEC673E277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift in Sources */,
 				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
 				B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */,
 				7E9939C726B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift in Sources */,
@@ -1712,6 +1766,7 @@
 				7E8AD11F26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift in Sources */,
 				B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */,
 				9CF5175626FB75A800332F8B /* CheckNewSendMoneyEnabledUseCase.swift in Sources */,
+				3A4B64E42796DDC5003FFE00 /* LoansModifier.swift in Sources */,
 				90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */,
 				7E1B7DDF27216100002CC226 /* PLValidateCardOnOffUseCase.swift in Sources */,
 				A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */,
@@ -1761,6 +1816,7 @@
 				BB29665126CFB5210012599D /* PLGetPersonalBasicInfoUseCase.swift in Sources */,
 				7E8AD11D26F0C13B00FC54D0 /* PLApplePayOperative.swift in Sources */,
 				0D603D6626C679A60035C671 /* GetPGFrequentOperativeOption.swift in Sources */,
+				3A4B64E82796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift in Sources */,
 				669A37D3270F566600C0F272 /* PLAccountOtherOperativesDTOList.swift in Sources */,
 				9C0BFBE526F8C5B0000F2C8E /* SendMoneyCoordinator.swift in Sources */,
 				DBD0EDF527983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift in Sources */,
@@ -1903,7 +1959,7 @@
 		};
 		66B3CFBB2639C6C8000AAD0F /* Pro-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AA0B5BEB144370B6A66B1C5 /* Pods-Santander.pro-debug.xcconfig */;
+			baseConfigurationReference = 9A7C34D3347EC887729BD7AE /* Pods-Santander.pro-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2280,7 +2336,7 @@
 		};
 		66BC8AE52640077A00654CC5 /* Pre-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4188A4FBAD817520B3911343 /* Pods-Santander.pre-release.xcconfig */;
+			baseConfigurationReference = F1AA95698CE64A51645F10E8 /* Pods-Santander.pre-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

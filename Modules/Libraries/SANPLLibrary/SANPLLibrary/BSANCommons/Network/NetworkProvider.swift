@@ -61,7 +61,7 @@ public enum NetworkProviderContentType : String {
 
 // MARK: - NetworkProviderError
 
-public enum NetworkProviderError: Error {
+public enum NetworkProviderError: LocalizedError {
     case error(_ error: NetworkProviderResponseError)
     case unauthorized
     case other
