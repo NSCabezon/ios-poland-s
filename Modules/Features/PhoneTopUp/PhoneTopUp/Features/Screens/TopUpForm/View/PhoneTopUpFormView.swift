@@ -13,6 +13,7 @@ import Commons
 protocol PhoneTopUpFormViewDelegate: AnyObject {
     func topUpFormDidSelectChangeAccount()
     func didTouchContactsButton()
+    func didTouchOperatorSelectionButton()
     func topUpFormDidInputPartialPhoneNumber(_ number: String)
     func topUpFormDidInputFullPhoneNumber(_ number: String)
 }
@@ -51,6 +52,7 @@ final class PhoneTopUpFormView: UIView {
         prepareStyles()
         prepareSelectAccountView()
         phoneNumberInputView.delegate = self
+        operatorSelectionView.delegate = self
     }
 
     private func addSubviews() {
@@ -136,5 +138,11 @@ extension PhoneTopUpFormView: PhoneNumberInputViewDelegate {
     
     func didTouchContactsButton() {
         delegate?.didTouchContactsButton()
+    }
+}
+
+extension PhoneTopUpFormView: OperatorSelectionViewDelegate {
+    func didTouchOperatorSelectionButton() {
+        delegate?.didTouchOperatorSelectionButton()
     }
 }
