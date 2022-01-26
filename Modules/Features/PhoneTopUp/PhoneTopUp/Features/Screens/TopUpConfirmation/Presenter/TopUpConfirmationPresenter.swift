@@ -16,6 +16,7 @@ protocol TopUpConfirmationPresenterProtocol: AnyObject {
     func summaryBodyItemsModels() -> [OperativeSummaryStandardBodyItemViewModel]
     func didSelectBack()
     func didSelectClose()
+    func didSelectSubmit()
 }
 
 final class TopUpConfirmationPresenter {
@@ -24,6 +25,7 @@ final class TopUpConfirmationPresenter {
     private let dependenciesResolver: DependenciesResolver
     private var coordinator: TopUpConfirmationCoordinatorProtocol?
     private let confirmationDialogFactory: ConfirmationDialogProducing
+    private let summaryMapper: TopUpSummaryMapping
     private let summary: TopUpModel
     
     // MARK: Lifecycle
@@ -32,10 +34,9 @@ final class TopUpConfirmationPresenter {
         self.dependenciesResolver = dependenciesResolver
         self.coordinator = dependenciesResolver.resolve(for: TopUpConfirmationCoordinatorProtocol.self)
         self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
+        self.summaryMapper = dependenciesResolver.resolve(for: TopUpSummaryMapping.self)
         self.summary = summary
     }
-    
-    // MARK: Methods
 }
 
 extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
@@ -50,60 +51,12 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
         view?.showDialog(dialog)
     }
     
+    func didSelectSubmit() {
+        #warning("todo: API call will be implemented in another PR")
+        coordinator?.showSummary(with: summary)
+    }
+    
     func summaryBodyItemsModels() -> [OperativeSummaryStandardBodyItemViewModel] {
-        return [
-            amountItemViewModel(),
-            accountItemViewModel(),
-            recipientItemViewModel(),
-            dateItemViewModel()
-        ]
-    }
-    
-    private func amountItemViewModel() -> OperativeSummaryStandardBodyItemViewModel {
-        return OperativeSummaryStandardBodyItemViewModel(
-            title: localized("summary_item_amount"),
-            subTitle: amountValueString(withAmountSize: 32.0)
-        )
-    }
-    
-    private func accountItemViewModel() -> OperativeSummaryStandardBodyItemViewModel {
-        return OperativeSummaryStandardBodyItemViewModel(
-            title: localized("pl_topup_label_summaryAccountSender"),
-            subTitle: summary.account.name,
-            info: "*" + (summary.account.number.substring(ofLast: 4) ?? "")
-        )
-    }
-    
-    private func recipientItemViewModel() -> OperativeSummaryStandardBodyItemViewModel {
-        if let recipientName = summary.recipientName {
-            return OperativeSummaryStandardBodyItemViewModel(
-                title: localized("pl_topup_label_summaryRecip"),
-                subTitle: recipientName,
-                info: summary.recipientNumber
-            )
-        }
-        
-        return OperativeSummaryStandardBodyItemViewModel(
-            title: localized("pl_topup_label_summaryRecip"),
-            subTitle: summary.recipientNumber
-        )
-    }
-    
-    private func dateItemViewModel() -> OperativeSummaryStandardBodyItemViewModel {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        let dateString = dateFormatter.string(from: summary.date)
-        return OperativeSummaryStandardBodyItemViewModel(
-            title: localized("pl_topup_text_dateTransfer"),
-            subTitle: dateString
-        )
-    }
-    
-    private func amountValueString(withAmountSize size: CGFloat) -> NSAttributedString {
-        return PLAmountFormatter.amountString(
-            amount: summary.amount,
-            currency: .złoty,
-            withAmountSize: size
-        )
+        return summaryMapper.mapConfirmationSummary(model: summary)
     }
 }

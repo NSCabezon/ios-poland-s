@@ -86,7 +86,7 @@ final class TopUpConfirmationViewController: UIViewController {
         summaryContainerView.backgroundColor = .clear
         
         bottomButtonView.configure(title: localized("pl_topup_button_topup")) { [weak self] in
-            #warning("todo: implement api call in another PR")
+            self?.presenter.didSelectSubmit()
         }
     }
     

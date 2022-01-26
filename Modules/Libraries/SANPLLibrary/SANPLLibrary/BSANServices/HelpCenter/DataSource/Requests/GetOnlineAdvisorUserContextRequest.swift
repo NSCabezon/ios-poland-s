@@ -9,7 +9,7 @@ struct GetOnlineAdvisorUserContextRequest: NetworkProviderRequest {
     let jsonBody: OnlineAdvisorUserContextParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
     
@@ -21,7 +21,7 @@ struct GetOnlineAdvisorUserContextRequest: NetworkProviderRequest {
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization?
     ) {

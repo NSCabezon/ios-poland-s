@@ -13,6 +13,7 @@ import SANPLLibrary
 import PLLegacyAdapter
 import Security
 import os
+import CoreDomain
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLSmsAuthViewProtocol? { get set }

@@ -61,7 +61,12 @@ private extension URLSessionNetworkProvider {
         request.headers?.forEach {
             urlRequest.addValue($0.value, forHTTPHeaderField: $0.key)
         }
-        urlRequest.addValue("application/\(request.contentType.rawValue)", forHTTPHeaderField: "Content-Type")
+        if let contentType = request.contentType?.rawValue {
+            urlRequest.addValue(
+                ["application/", contentType].joined(),
+                forHTTPHeaderField: "Content-Type"
+            )
+        }
         urlRequest.addValue("Santander PL ONE App", forHTTPHeaderField: "User-Agent")
         switch request.authorization {
         case .trustedDeviceOnly:

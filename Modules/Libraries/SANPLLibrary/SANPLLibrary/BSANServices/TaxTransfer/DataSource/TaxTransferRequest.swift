@@ -16,7 +16,7 @@ struct TaxTransferRequest: NetworkProviderRequest {
     let jsonBody: AuthenticateInitParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -28,7 +28,7 @@ struct TaxTransferRequest: NetworkProviderRequest {
          jsonBody: AuthenticateInitParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
          headers: [String: String]? = [:],
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName = .authenticateInit,
          authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName

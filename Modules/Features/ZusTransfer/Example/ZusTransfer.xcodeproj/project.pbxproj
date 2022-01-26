@@ -13,8 +13,16 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		95A954883200FEC4E5FFB048 /* Pods_ZusTransfer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CF6746A7A392CC9E453E7B /* Pods_ZusTransfer_Tests.framework */; };
+		A3C488842798C46B009E3974 /* AccountForDebitMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C488832798C46B009E3974 /* AccountForDebitMockBuilder.swift */; };
+		A3C488892798CD79009E3974 /* ZusTransferValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C488882798CD79009E3974 /* ZusTransferValidatorTests.swift */; };
+		A3C4888C2798CE02009E3974 /* ZusTransferFormPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C4888B2798CE01009E3974 /* ZusTransferFormPresenterTests.swift */; };
+		A3C4888E279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C4888D279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift */; };
+		A3C48891279AA09B009E3974 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C48890279AA09B009E3974 /* TestHelper.swift */; };
+		A3C48893279AE1C1009E3974 /* ZusTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */; };
+		A3C48895279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C48894279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift */; };
+		B0294BE827919867005A9BDD /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0294BE727919867005A9BDD /* Tests.swift */; };
+		B0294BEB27919CA4005A9BDD /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0294BE927919C96005A9BDD /* Mocks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +50,16 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* ZusTransfer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZusTransfer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		99CF6746A7A392CC9E453E7B /* Pods_ZusTransfer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZusTransfer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3C488832798C46B009E3974 /* AccountForDebitMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitMockBuilder.swift; sourceTree = "<group>"; };
+		A3C488882798CD79009E3974 /* ZusTransferValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferValidatorTests.swift; sourceTree = "<group>"; };
+		A3C4888B2798CE01009E3974 /* ZusTransferFormPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferFormPresenterTests.swift; sourceTree = "<group>"; };
+		A3C4888D279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferFormCoordinatorMock.swift; sourceTree = "<group>"; };
+		A3C48890279AA09B009E3974 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
+		A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferFormViewMock.swift; sourceTree = "<group>"; };
+		A3C48894279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferFormViewModelMockBuilder.swift; sourceTree = "<group>"; };
+		B0294BE727919867005A9BDD /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		B0294BE927919C96005A9BDD /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		B240735FBB98FFA6DFBA573A /* Pods_ZusTransfer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZusTransfer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7BA3BE1978577E1389C7716 /* Pods-ZusTransfer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusTransfer_Example.debug.xcconfig"; path = "Target Support Files/Pods-ZusTransfer_Example/Pods-ZusTransfer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F23A62D41B744ADEADCC5756 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -99,6 +115,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				B0294BE927919C96005A9BDD /* Mocks.swift */,
 			);
 			name = "Example for ZusTransfer";
 			path = ZusTransfer;
@@ -115,7 +132,9 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				A3C488862798CD1E009E3974 /* ZusTransferForm */,
+				A3C488822798C335009E3974 /* Mock */,
+				B0294BE727919867005A9BDD /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -157,6 +176,51 @@
 				0B39BD956E5AD9C024811A54 /* Pods-ZusTransfer_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A3C488822798C335009E3974 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				A3C488832798C46B009E3974 /* AccountForDebitMockBuilder.swift */,
+				A3C4888D279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift */,
+				A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */,
+				A3C48894279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift */,
+			);
+			name = Mock;
+			sourceTree = "<group>";
+		};
+		A3C488862798CD1E009E3974 /* ZusTransferForm */ = {
+			isa = PBXGroup;
+			children = (
+				A3C4888F279AA082009E3974 /* TestHelper */,
+				A3C4888A2798CDD4009E3974 /* Presenter */,
+				A3C488872798CD2B009E3974 /* Validator */,
+			);
+			name = ZusTransferForm;
+			sourceTree = "<group>";
+		};
+		A3C488872798CD2B009E3974 /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				A3C488882798CD79009E3974 /* ZusTransferValidatorTests.swift */,
+			);
+			name = Validator;
+			sourceTree = "<group>";
+		};
+		A3C4888A2798CDD4009E3974 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A3C4888B2798CE01009E3974 /* ZusTransferFormPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		A3C4888F279AA082009E3974 /* TestHelper */ = {
+			isa = PBXGroup;
+			children = (
+				A3C48890279AA09B009E3974 /* TestHelper.swift */,
+			);
+			name = TestHelper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,7 +281,7 @@
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1250;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -299,14 +363,15 @@
 				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
-				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
 				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
 				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
@@ -334,14 +399,15 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
@@ -379,14 +445,15 @@
 				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
-				"${BUILT_PRODUCTS_DIR}/Helpers/Helpers.framework",
 				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
 				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
@@ -414,14 +481,15 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Helpers.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
@@ -476,6 +544,7 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				B0294BEB27919CA4005A9BDD /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +552,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				A3C4888E279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift in Sources */,
+				A3C4888C2798CE02009E3974 /* ZusTransferFormPresenterTests.swift in Sources */,
+				A3C488842798C46B009E3974 /* AccountForDebitMockBuilder.swift in Sources */,
+				A3C48893279AE1C1009E3974 /* ZusTransferFormViewMock.swift in Sources */,
+				A3C48895279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift in Sources */,
+				A3C48891279AA09B009E3974 /* TestHelper.swift in Sources */,
+				B0294BE827919867005A9BDD /* Tests.swift in Sources */,
+				A3C488892798CD79009E3974 /* ZusTransferValidatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +728,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4538304292528BC65EA7FA45 /* Pods-ZusTransfer_Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -664,6 +741,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZusTransfer_Example.app/ZusTransfer_Example";
@@ -674,6 +752,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0B39BD956E5AD9C024811A54 /* Pods-ZusTransfer_Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
