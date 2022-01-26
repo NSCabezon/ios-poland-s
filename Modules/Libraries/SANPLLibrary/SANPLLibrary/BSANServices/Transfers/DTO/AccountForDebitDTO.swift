@@ -28,6 +28,7 @@ struct AccountForDebitDTO: Codable {
     let creditCardAccountDetails: CreditCardAccountDetailsDTO?
     let transactionMask: TransactionMaskDTO?
     let lastUpdate: String?
+    var isVisible: Bool = true
 }
 
 struct AccountForDebitNameDTO: Codable {
@@ -108,6 +109,10 @@ extension AccountForDebitDTO: AccountRepresentable {
     var getIBANString: String {
         guard let ibanString = ibanRepresentable?.ibanString else { return "****" }
         return ibanString
+    }
+    
+    var appIdentifier: String {
+        return id ?? ""
     }
 }
 
