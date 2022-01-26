@@ -22,8 +22,8 @@ final class PLLoanModifier {
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
         self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
         self.dependenciesEngine = dependenciesEngine
-        self.loanScheduleButton = .custom(title: "loansOption_button_loanSchedule", imageName: "icnLoanSchedule", accessibilityIdentifier: "loansOption_button_loanSchedule")
-        self.customerServiceButton = .custom(title: "loansOption_button_customerService", imageName: "icnCustomerService", accessibilityIdentifier: "loansOption_button_customerService")
+        self.loanScheduleButton = .custom(title: "loansOption_button_loanSchedule", imageName: "icnLoanSchedule", accessibilityIdentifier: AccessibilityLoansHome.loansBtnLoanSchedule.rawValue)
+        self.customerServiceButton = .custom(title: "loansOption_button_customerService", imageName: "icnCustomerService", accessibilityIdentifier: AccessibilityLoansHome.loansBtnCustomerService.rawValue)
     }
 }
 
@@ -63,9 +63,9 @@ extension PLLoanModifier: LoansModifierProtocol {
     }
 
     func didSelectLoanOption(_ option: LoansHomeOption, loan: LoanEntity?) {
-        if option == .custom(title: "loansOption_button_customerService", imageName: "icnCustomerService", accessibilityIdentifier: "loansOption_button_customerService") {
+        if option == .custom(title: "loansOption_button_customerService", imageName: "icnCustomerService", accessibilityIdentifier: AccessibilityLoansHome.loansBtnCustomerService.rawValue) {
             didSelectCustomerService()
-        } else if option == .custom(title: "loansOption_button_loanSchedule", imageName: "icnLoanSchedule", accessibilityIdentifier: "loansOption_button_loanSchedule") {
+        } else if option == .custom(title: "loansOption_button_loanSchedule", imageName: "icnLoanSchedule", accessibilityIdentifier: AccessibilityLoansHome.loansBtnLoanSchedule.rawValue) {
             didSelectLoanSchedule(option, loan: loan)
         } else {
             Toast.show(localized("generic_alert_notAvailableOperation"))
