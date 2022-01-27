@@ -28,7 +28,7 @@ struct AccountForDebitDTO: Codable {
     let creditCardAccountDetails: CreditCardAccountDetailsDTO?
     let transactionMask: TransactionMaskDTO?
     let lastUpdate: String?
-    var isVisible: Bool = true
+    @DefaultCodableBool(wrappedValue: true) var isVisible: Bool
 }
 
 struct AccountForDebitNameDTO: Codable {
