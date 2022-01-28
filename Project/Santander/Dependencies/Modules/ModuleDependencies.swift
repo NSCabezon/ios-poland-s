@@ -14,7 +14,7 @@ import RetailLegacy
 import CoreFoundationLib
 
 struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-
+    
     let legacyDependenciesResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
@@ -46,14 +46,6 @@ struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     func resolve() -> UINavigationController {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
-    }
-    
-    func loanHomeCoordinator() -> BindableCoordinator {
-        ToastCoordinator()
-    }
-    
-    func loanRepaymentCoordinator() -> BindableCoordinator {
-        ToastCoordinator()
     }
 }
 

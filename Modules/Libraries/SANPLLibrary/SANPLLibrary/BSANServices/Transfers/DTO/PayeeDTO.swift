@@ -66,7 +66,7 @@ extension PayeeDTO: PayeeRepresentable {
     
     public var currencySymbol: String? {
         guard let currencyCode = self.account?.currencyCode else { return nil }
-        return CurrencyDTO.create(currencyCode).getSymbol()
+        return SANLegacyLibrary.CurrencyDTO.create(currencyCode).getSymbol()
     }
     
     public var payeeAddress: String? {
