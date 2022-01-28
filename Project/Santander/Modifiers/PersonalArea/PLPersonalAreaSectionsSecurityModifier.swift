@@ -42,4 +42,7 @@ extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityMo
     var isBiometryFunctionalityEnabled: Bool {
         return false
     }
+    var isEnabledQuickerBalance: Bool {
+        return true
+    }
 }
