@@ -365,6 +365,9 @@ private extension AppDependencies {
 		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
 			PLChangeAliasManager()
 		}
+        self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
+            PLUserSegmentProtocol(dependenciesResolver: resolver)
+        }
     }
 }
 
