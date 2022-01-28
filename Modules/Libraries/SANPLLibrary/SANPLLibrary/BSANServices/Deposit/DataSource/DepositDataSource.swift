@@ -16,13 +16,13 @@ final class DepositDataSource {
 	private enum DepositServiceType: String {
 		case changeAlias = "/accounts/productaliases"
 	}
-	
+
 	private let networkProvider: NetworkProvider
 	private let dataProvider: BSANDataProvider
 	private let basePath = "/api"
 	private var headers: [String: String] = [:]
 	private var queryParams: [String: Any]? = nil
-	
+
 	init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
 		self.networkProvider = networkProvider
 		self.dataProvider = dataProvider
@@ -46,7 +46,7 @@ extension DepositDataSource: DepositDataSourceProtocol {
 		let serviceName = "\(DepositServiceType.changeAlias.rawValue)/\(systemId)/\(accountNumber)"
 		let absoluteUrl = baseUrl + self.basePath
 		let parameters = ChangeAliasParameters(userDefined: newAlias)
-		
+
 		let result: Result<DepositChangeAliasDTO, NetworkProviderError> = self.networkProvider.request(DepositChangeAliasRequest(serviceName: serviceName,
 																												serviceUrl: absoluteUrl,
 																												method: .post,

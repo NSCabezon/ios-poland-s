@@ -27,13 +27,13 @@ final class LoanDataSource {
         case installments = "/accounts/loan/installments"
 		case changeAlias = "/accounts/productaliases"
     }
-    
+
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
     private var headers: [String: String] = [:]
     private var queryParams: [String: Any]? = nil
-    
+
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
         self.dataProvider = dataProvider
@@ -98,7 +98,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
         )
         return result
     }
-	
+
 	func changeAlias(loanDTO: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> Result<LoanChangeAliasDTO, NetworkProviderError> {
 		guard let baseUrl = self.getBaseUrl(),
 			  let accountNumber = loanDTO.productId?.id,
@@ -109,7 +109,7 @@ extension LoanDataSource: LoanDataSourceProtocol {
 		let serviceName = "\(LoanServiceType.changeAlias.rawValue)/\(systemId)/\(accountNumber)"
 		let absoluteUrl = baseUrl + self.basePath
 		let parameters = ChangeAliasParameters(userDefined: newAlias)
-		
+
 		let result: Result<LoanChangeAliasDTO, NetworkProviderError> = self.networkProvider.request(LoanChangeAliasRequest(serviceName: serviceName,
 																												serviceUrl: absoluteUrl,
 																												method: .post,
@@ -162,7 +162,7 @@ private struct LoanRequest: NetworkProviderRequest {
     let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
-    
+
     init(serviceName: String,
          serviceUrl: String,
          method: NetworkProviderMethod,
