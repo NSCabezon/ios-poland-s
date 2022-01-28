@@ -22,11 +22,11 @@ extension PersonalAreaSectionsProvider: PersonalAreaSectionsProtocol {
     func getSecuritySectionCells(
         _ userPref: UserPrefWrapper?,
         completion: @escaping ([CellInfo]) -> Void) {
-            
         let cells = PersonalAreaSectionsSecurityBuilder(userPref: userPref, resolver: dependenciesResolver)
                 .addBiometryCell()
                 .addGeoCell()
                 .addOperativeUserCell()
+                .addQuickerBalanceCell()
                 .addChangePasswordCell()
                 .addChangePIN()
                 .addSignatureKeyCell()
