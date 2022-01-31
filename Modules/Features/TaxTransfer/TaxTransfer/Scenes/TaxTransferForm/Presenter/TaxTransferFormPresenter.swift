@@ -12,6 +12,7 @@ import PLCommonOperatives
 
 protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate {
     var view: TaxTransferFormView? { get set }
+    
     func viewDidLoad()
     func getTaxFormConfiguration() -> TaxFormConfiguration
     func didTapAccountSelector()
@@ -20,14 +21,18 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate {
     func didTapBack()
     func didTapDone(with data: TaxTransferFormFieldsData)
     func didUpdateFields(with data: TaxTransferFormFieldsData)
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
 }
 
 final class TaxTransferFormPresenter {
+    weak var view: TaxTransferFormView?
+
     private let dependenciesResolver: DependenciesResolver
     private let currency: String
     private var fetchedAccounts: [AccountForDebit] = []
     private var selectedAccount: AccountForDebit?
-    weak var view: TaxTransferFormView?
+    private var selectedTaxPayer: TaxPayer?
+    private var selectedPayerInfo: SelectedTaxPayerInfo?
     
     init(
         currency: String,
@@ -52,6 +57,9 @@ private extension TaxTransferFormPresenter {
         dependenciesResolver.resolve()
     }
     var useCaseHandler: UseCaseHandler {
+        return dependenciesResolver.resolve()
+    }
+    var taxPayerViewModelMapper: TaxPayerViewModelMapping {
         return dependenciesResolver.resolve()
     }
 }
@@ -95,7 +103,9 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     }
     
     func didTapTaxPayer() {
-        // TODO:- Implement in TAP-2492
+        coordinator.didTapPayerSelectorView(
+            with: selectedTaxPayer
+        )
     }
     
     func didTapTaxAuthority() {
@@ -109,7 +119,7 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     func didTapDone(with data: TaxTransferFormFieldsData) {
         // TODO:- Implement in TAP-2186
     }
-    
+
     func didUpdateFields(with data: TaxTransferFormFieldsData) {
         let validationResult = validator.validateData(data)
         switch validationResult {
@@ -118,6 +128,12 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         case let .invalid(messages):
             view?.disableDoneButton(with: messages)
         }
+    }
+    
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
+        self.selectedPayerInfo = selectedPayerInfo
+        selectedTaxPayer = taxPayer
+        refreshView()
     }
 }
 
@@ -178,7 +194,13 @@ private extension TaxTransferFormPresenter {
     }
     
     func getTaxPayerViewModel() -> Selectable<TaxTransferFormViewModel.TaxPayerViewModel> {
-        return .unselected // TODO:- Add actual viewModel in TAP-2492
+        guard let taxPayer = selectedTaxPayer,
+              let selectedInfo = selectedPayerInfo else {
+            return .unselected
+        }
+        let viewModel = taxPayerViewModelMapper.map(taxPayer, selectedInfo: selectedInfo)
+        
+        return .selected(viewModel)
     }
     
     func getTaxAuthorityViewModel() -> Selectable<TaxTransferFormViewModel.TaxAuthorityViewModel> {

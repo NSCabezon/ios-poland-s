@@ -11,7 +11,7 @@ final class TaxTransferPayerSelectorView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let subviewsContainer = UIView()
     private let selectorView = TaxTransferElementSelectorView()
-    private let selectedPayerView = UIView() // TODO:- Implement in TAP-2492
+    private let selectedPayerView = TaxTransferSelectedPayerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,10 +28,10 @@ final class TaxTransferPayerSelectorView: UIView {
         onTap: @escaping () -> Void
     ) {
         switch viewModel {
-        case .selected:
+        case let .selected(taxPayer):
             selectorView.isHidden = true
             selectedPayerView.isHidden = false
-            // TODO:- Implement in TAP-2492
+            selectedPayerView.configure(with: taxPayer, onTap: onTap)
         case .unselected:
             showSelector(onTap: onTap)
         }

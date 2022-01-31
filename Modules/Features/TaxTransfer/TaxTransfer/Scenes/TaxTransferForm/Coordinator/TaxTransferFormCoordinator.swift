@@ -12,6 +12,7 @@ import Commons
 import PLCommons
 import PLCommonOperatives
 import SANPLLibrary
+import PLUI
 
 public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     func showAccountSelector(
@@ -20,12 +21,20 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
         mode: AccountForDebitSelectorMode
     )
     func back()
+    func backToForm()
+    func goToGlobalPosition()
+    func didTapPayerSelectorView(with taxPayer: TaxPayer?)
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
+    func showTaxPayerSelector(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
+    func showPayerIdentifiers(for taxPayer: TaxPayer)
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
+    
+    private lazy var taxFormPresenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
 
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -37,10 +46,9 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
     }
     
     public func start() {
-        let presenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
-        let controller = TaxTransferFormViewController(presenter: presenter)
-        presenter.view = controller
-        accountSelectorDelegate = presenter
+        let controller = TaxTransferFormViewController(presenter: taxFormPresenter)
+        taxFormPresenter.view = controller
+        accountSelectorDelegate = taxFormPresenter
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -64,8 +72,53 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
         coordinator.start()
     }
     
+    public func showTaxPayerSelector(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
+        taxFormPresenter.didSelectTaxPayer(taxPayer, selectedPayerInfo: selectedPayerInfo)
+        backToForm()
+    }
+    
+    public func showPayerIdentifiers(for taxPayer: TaxPayer) {
+        let presenter = TaxTransferPayerIdentifiersPresenter(dependenciesResolver: dependenciesEngine)
+        let viewModel = TaxTransferPayerIdentifiersViewModel(taxPayer: taxPayer)
+        let viewController = TaxTransferPayerIdentifiersViewController(
+            presenter: presenter,
+            viewModel: viewModel
+        )
+        presenter.view = viewController
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    public func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
+        taxFormPresenter.didSelectTaxPayer(taxPayer, selectedPayerInfo: selectedPayerInfo)
+        back()
+    }
+    
+    public func didTapPayerSelectorView(with taxPayer: TaxPayer?) {
+        let presenter = TaxTransferPayersListPresenter(dependenciesResolver: dependenciesEngine)
+        let mapper = dependenciesEngine.resolve(for: TaxPayerViewModelMapping.self)
+        let viewModel = TaxTransferPayersListViewModel(mapper: mapper)
+        let viewController = TaxTransferPayersListViewController(
+           presenter: presenter,
+           viewModel: viewModel
+        )
+        presenter.view = viewController
+        viewController.set(selectedTaxPayer: taxPayer)
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    public func backToForm() {
+        guard let formViewController = navigationController?.viewControllers.first(where: { $0 is TaxTransferFormViewController }) else { return }
+        navigationController?.popToViewController(formViewController, animated: true)
+    }
+    
     public func back() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    public func goToGlobalPosition() {
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -108,9 +161,25 @@ private extension TaxTransferFormCoordinator {
                 dependenciesResolver: resolver
             )
         }
-        
+
         dependenciesEngine.register(for: TaxTransferAccountViewModelMapping.self) { _ in
             return TaxTransferAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+        }
+        
+        dependenciesEngine.register(for: TaxPayerViewModelMapping.self) { _ in
+            return TaxPayerViewModelMapper()
+        }
+        
+        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
+            return ConfirmationDialogFactory()
+        }
+        
+        dependenciesEngine.register(for: GetTaxPayersListUseCaseProtocol.self) { resolver in
+            return GetTaxPayersListUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxPayersMapping.self) { _ in
+            return TaxPayersMapper()
         }
     }
 }

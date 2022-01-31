@@ -44,7 +44,7 @@ final class TaxTransferFormContainerView: UIView {
     required init?(coder: NSCoder) {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
-    
+
     func getFormFieldsData() -> TaxTransferFormFieldsData {
         return TaxTransferFormFieldsData(
             amount: amountField.getAmount(),
@@ -104,7 +104,7 @@ private extension TaxTransferFormContainerView {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
-        stackView.spacing = 0
+        stackView.spacing = 25
     }
     
     func configureSubviews() {
