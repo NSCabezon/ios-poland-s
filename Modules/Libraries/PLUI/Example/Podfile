@@ -11,10 +11,12 @@ def core_dependencies
   pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
 end
 
 def core_thirdparty_dependencies
   pod 'Kingfisher', '5.15.8'
+  pod 'RxSwift', '6.2.0'
 end
 
 def pl_dependencies

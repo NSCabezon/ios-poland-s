@@ -42,6 +42,7 @@ public class PLUIInteractiveInfoView: UIView {
         let switcher = UISwitch()
         switcher.translatesAutoresizingMaskIntoConstraints = false
         switcher.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        switcher.accessibilityIdentifier = "deviceTrustPinBtnEnableTouchId"
         return switcher
     }()
 
@@ -51,6 +52,7 @@ public class PLUIInteractiveInfoView: UIView {
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        label.accessibilityIdentifier = "pl_onboarding_text_biometrics"
         return label
     }()
 
@@ -61,6 +63,7 @@ public class PLUIInteractiveInfoView: UIView {
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        label.accessibilityIdentifier = "pl_onboarding_text_biometricsExpl"
         return label
     }()
 
@@ -68,6 +71,7 @@ public class PLUIInteractiveInfoView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        imageView.accessibilityIdentifier = "icnFingerprintScan"
         return imageView
     }()
 

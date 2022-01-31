@@ -24,10 +24,6 @@ Pod::Spec.new do |s|
 
   s.source_files = 'ZusTransfer/**/*.{swift}'
   
-  s.resource_bundles = {
-    'ZusTransfer' => ['ZusTransfer/**/*{xib,xcassets}']
-  }
-  
   s.dependency "UI"
   s.dependency "PLUI"
   s.dependency "SANPLLibrary"

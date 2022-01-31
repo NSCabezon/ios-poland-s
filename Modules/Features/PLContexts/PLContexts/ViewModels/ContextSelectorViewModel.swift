@@ -12,7 +12,7 @@ public struct ContextSelectorViewModel {
     public let abbreviationColor: UIColor
     public let selected: Bool
     public var formattedName: String {
-        self.name.camelCasedString.withMaxSize(20, truncateTail: true)
+        self.name.lowercased().camelCasedString.withMaxSize(20, truncateTail: true)
     }
     public var typeName: String {
         self.getContextTypeName()

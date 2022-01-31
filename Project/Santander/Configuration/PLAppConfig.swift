@@ -9,6 +9,7 @@ import Foundation
 
 import Commons
 import CoreFoundationLib
+import CoreDomain
 
 class PLAppConfig: LocalAppConfig {
     let isEnabledOnboardingLocationDialog = false
@@ -45,7 +46,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledGoToPersonalArea: Bool = false
     let isEnabledGoToATMLocator: Bool = true
     let isEnabledGoToHelpCenter: Bool = true
-    let isEnabledDigitalProfileView: Bool = true
+    let isEnabledDigitalProfileView: Bool = false
     let isEnabledWorld123: Bool = false
     let isEnabledSendMoney: Bool = false
     let isEnabledBills: Bool = false
@@ -60,7 +61,7 @@ class PLAppConfig: LocalAppConfig {
     let enablePortfoliosHome: Bool = true
     let enablePensionsHome: Bool = true
     let enableInsuranceSavingHome: Bool = true
-    let enabledChangeAliasProducts: [ProductTypeEntity] = []
+    let enabledChangeAliasProducts: [ProductTypeEntity] = [.card,.account,.loan]
     let isEnabledSecurityArea: Bool = true
     let isEnabledAnalysisArea: Bool = false
     let isEnabledWithholdings: Bool = true

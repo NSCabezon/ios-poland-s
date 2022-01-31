@@ -64,7 +64,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .accountDetails)
         )
         return result
@@ -83,7 +83,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .swiftBranches)
         )
         return result
@@ -174,7 +174,7 @@ private struct AccountRequest: NetworkProviderRequest {
     let jsonBody: WithholdingParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -186,7 +186,7 @@ private struct AccountRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
@@ -210,7 +210,7 @@ private struct AccountTransactionRequest: NetworkProviderRequest {
     let jsonBody: AccountTransactionsParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .body
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -221,7 +221,7 @@ private struct AccountTransactionRequest: NetworkProviderRequest {
          jsonBody: AccountTransactionsParameters?,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
@@ -244,7 +244,7 @@ private struct AccountChangeAliasRequest: NetworkProviderRequest {
     let jsonBody: ChangeAliasParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .body
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -255,7 +255,7 @@ private struct AccountChangeAliasRequest: NetworkProviderRequest {
          jsonBody: ChangeAliasParameters?,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

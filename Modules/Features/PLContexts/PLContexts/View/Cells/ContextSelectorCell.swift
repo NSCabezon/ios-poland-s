@@ -27,6 +27,7 @@ final class ContextSelectorCell: UITableViewCell {
         self.nameLabel.textColor = context.textColor
         self.contextTypeLabel.text = context.typeName
         self.contextTypeLabel.textColor = context.textColor
+        self.setAccessibilityIdentifiers()
     }
 
 }
@@ -45,5 +46,11 @@ private extension ContextSelectorCell {
         self.abbreviationLabel.text = contextName
         self.abbreviationView.roundCorners(corners: .allCorners, radius: self.abbreviationView.frame.width)
         self.abbreviationView.backgroundColor = color
+    }
+
+    private func setAccessibilityIdentifiers() {
+        self.abbreviationView.accessibilityIdentifier = AccessibilityContextCell.viewIcon
+        self.nameLabel.accessibilityIdentifier = AccessibilityContextCell.lblName
+        self.contextTypeLabel.accessibilityIdentifier = AccessibilityContextCell.lblType
     }
 }

@@ -46,7 +46,7 @@ final class CardDetailDataSource: CardDetailDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: self.queryParams,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .cardDetail)
         )
         return result
@@ -62,7 +62,7 @@ private struct CardDetailRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding? = .none
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -73,7 +73,7 @@ private struct CardDetailRequest: NetworkProviderRequest {
          jsonBody: Encodable? = nil,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

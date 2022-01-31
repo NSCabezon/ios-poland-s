@@ -48,6 +48,9 @@ private extension ZusTransferConfirmationCoordinator {
             presenter.view = viewController
             return viewController
         }
+        dependenciesEngine.register(for: AcceptZusTransactionProtocol.self) { resolver in
+            AcceptZusTransactionUseCase(dependenciesResolver: resolver)
+        }
         dependenciesEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
              PLTrustedHeadersProvider(dependenciesResolver: resolver)
         }
@@ -59,6 +62,9 @@ private extension ZusTransferConfirmationCoordinator {
         }
         dependenciesEngine.register(for: ZusTransferSummaryMapping.self) { _ in
             ZusTransferSummaryMapper()
+        }
+        dependenciesEngine.register(for: ZusTransferSendMoneyInputMapping.self) { resolver in
+            ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
         }
     }
 }
@@ -91,7 +97,10 @@ extension ZusTransferConfirmationCoordinator: ZusTransferConfirmationCoordinator
     }
     
     public func showSummary(with model: ZusTransferSummary) {
-        //TODO: Show transfer summary in task TAP-2465
+        let coordinator = ZusTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
+                                                        navigationController: navigationController,
+                                                        summary: model)
+        coordinator.start()
     }
 }
 

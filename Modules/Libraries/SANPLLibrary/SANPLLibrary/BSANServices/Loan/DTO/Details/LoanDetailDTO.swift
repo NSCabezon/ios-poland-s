@@ -2,7 +2,7 @@
 //  LoanDetailDTO.swift
 //  SANPLLibrary
 //
-
+import CoreDomain
 import Foundation
 
 public struct LoanDetailDTO: Codable {
@@ -22,6 +22,84 @@ public struct LoanDetailDTO: Codable {
     public let functionalities: [String]?
     public let accountDetails: AccountDetailsDTO?
     public let loanAccountDetails: LoanAccountDetailsDTO?
+}
+
+extension LoanDetailDTO: LoanDetailRepresentable {
+    public var holder: String? {
+        return nil
+    }
+    
+    public var initialAmountRepresentable: AmountRepresentable? {
+        let amountValue = Decimal(loanAccountDetails?.grantedCreditLimit?.value ?? 0)
+        return AmountDTO(value: amountValue, currencyRepresentable: currency)
+    }
+    
+    public var interestType: String? {
+        let interestType = String(accountDetails?.interestRate ?? 0) + "%"
+        return interestType.replacingOccurrences(of: ".", with: ",", options: .literal, range: nil)
+    }
+    
+    public var interestTypeDesc: String? {
+        return nil
+    }
+    
+    public var feePeriodDesc: String? {
+        return nil
+    }
+    
+    public var openingDate: Date? {
+        Date().parse(accountDetails?.openedDate ?? "", format: .YYYYMMDD)
+    }
+    
+    public var initialDueDate: Date? {
+        return nil
+    }
+    
+    public var currentDueDate: Date? {
+        Date().parse(loanAccountDetails?.finalRepaymentDate ?? "", format: .YYYYMMDD)
+    }
+    
+    public var linkedAccountContractRepresentable: ContractRepresentable? {
+        return nil
+    }
+    
+    public var linkedAccountDesc: String? {
+        return nil
+    }
+    
+    public var revocable: Bool? {
+        return nil
+    }
+    
+    public var nextInstallmentDate: Date? {
+        Date().parse(loanAccountDetails?.nextInstallmentDate ?? "", format: .YYYYMMDD)
+    }
+    
+    public var currentInterestAmount: String? {
+        guard let currentInterestAmount = loanAccountDetails?.interest?.previousTotalAmount?.value else {
+            return nil
+        }
+        let currentInterestAmountSt = "\(currentInterestAmount)" + " " + (loanAccountDetails?.grantedCreditLimit?.currencyCode ?? "")
+        return currentInterestAmountSt.replacingOccurrences(of: ".", with: ",", options: .literal, range: nil)
+    }
+    
+    public var amortizable: Bool? {
+        return nil
+    }
+    
+    public var lastOperationDate: Date? {
+        Date().parse(lastUpdate ?? "", format: .YYYYMMDD)
+    }
+}
+
+private extension LoanDetailDTO {
+    var currency: CurrencyRepresentable? {
+        guard let currencyCode = loanAccountDetails?.grantedCreditLimit?.currencyCode else {
+            return nil
+        }
+        let currencyType = CurrencyType.parse(currencyCode)
+        return CurrencyDTO(currencyName: currencyCode, currencyType: currencyType)
+    }
 }
 
 public struct AccountDetailsDTO: Codable {

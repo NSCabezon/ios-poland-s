@@ -122,8 +122,8 @@ CONFIGURATIONS = {
 # Add pairs with app name and configurations
 # i.e. "PLLogin" => {  path: Dir.pwd + "/../../Modules/Features/PlLogin/Example", workspace: "", scheme: "" }
 TEST_EXAMPLE_APPS_CONFIGURATION = {
-  "PLLogin" => {  path: Dir.pwd + "/../../Modules/Features/PlLogin/Example/", workspace: "PLLogin.xcworkspace", scheme: "PLLogin_ExampleTests" },
-  "PLUI" => { path: Dir.pwd + "/../../Modules/Libraries/PLUI/Example/", workspace: "PLUI.xcworkspace", scheme: "PLUI_ExampleTests" } 
+  "PLLogin" => {  path: Dir.pwd + "/../../Modules/Features/PlLogin/Example/", workspace: "PLLogin.xcworkspace", scheme: "PLLogin-Example" },
+  "PLUI" => { path: Dir.pwd + "/../../Modules/Libraries/PLUI/Example/", workspace: "PLUI.xcworkspace", scheme: "PLUI-Example", device: "iPhone 12"}
 }
 
 def calculateVersionCode(versionName)
@@ -249,14 +249,20 @@ platform :ios do
       UI.message "Passing #{app} tests"
       path = "#{configuration[:path]}"
       cocoapods(podfile: "#{path}/Podfile")
+      begin
       run_tests(
         workspace: "#{path}/#{configuration[:workspace]}",
         scheme: configuration[:scheme],
         derived_data_path: "~/derived_data",
         build_for_testing: false,
         output_style: "basic",
+        device: configuration[:device],
+        output_directory: Dir.pwd + "/test_output/" + app,
         suppress_xcode_output: options[:suppress_xcode_output]
-    )
+        )
+      rescue => ex
+        UI.error("Something went wrong: #{ex}")
+      end
     end
   end
 
@@ -350,7 +356,7 @@ end
       skip_archive: true,
       clean: true,
       scheme: "Intern",
-      derived_data_path: "~/derived_data",
+      derived_data_path: "../",
       sdk: "iphonesimulator"
       )
   end

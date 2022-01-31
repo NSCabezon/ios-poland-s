@@ -91,7 +91,7 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
             account: account,
             recipientName: transferFormViewModel.recipient,
             recipientAccountNumber: transferFormViewModel.recipientAccountNumber,
-            transactionType: .charityTransfer,
+            transactionType: .zusTransfer,
             date: transferFormViewModel.date
         )
         coordinator.showConfiramtion(model: model)

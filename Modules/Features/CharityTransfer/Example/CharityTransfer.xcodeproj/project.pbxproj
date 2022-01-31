@@ -90,7 +90,7 @@
 		CC546D52BCB4250919AC9004 /* Pods-CharityTransfer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CharityTransfer_Example.release.xcconfig"; path = "Target Support Files/Pods-CharityTransfer_Example/Pods-CharityTransfer_Example.release.xcconfig"; sourceTree = "<group>"; };
 		D15CFA71D8D1A408A0798AD2 /* Pods-CharityTransfer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CharityTransfer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-CharityTransfer_Tests/Pods-CharityTransfer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E2AEBBBAA20C9D2097E2EA25 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		F521CAEB9C7E0DC844FE3D80 /* CharityTransfer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CharityTransfer.podspec; path = ../CharityTransfer.podspec; sourceTree = "<group>"; };
+		F521CAEB9C7E0DC844FE3D80 /* CharityTransfer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CharityTransfer.podspec; path = ../CharityTransfer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

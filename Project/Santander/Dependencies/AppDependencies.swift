@@ -122,7 +122,11 @@ final class AppDependencies {
         return PLTransferSettingsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
     private lazy var servicesLibrary: ServicesLibrary = {
-        return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
+        return ServicesLibrary(
+            bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider(),
+            bsanDataProvider: self.bsanDataProvider,
+            networkProvider: networkProvider
+        )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
         return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
@@ -354,6 +358,15 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
+        }
+        self.dependencieEngine.register(for: LoanReactiveRepository.self) { _ in
+            return self.servicesLibrary.loanReactiveDataRepository
+        }
+		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+			PLChangeAliasManager()
+		}
+        self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
+            PLUserSegmentProtocol(dependenciesResolver: resolver)
         }
     }
 }

@@ -14,7 +14,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 
 
-protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, MobileContactsSelectorDelegate {
+protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, MobileContactsSelectorDelegate, OperatorSelectorDelegate {
     var view: PhoneTopUpFormViewProtocol? { get set }
     func viewDidLoad()
     func didSelectBack()
@@ -24,6 +24,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
     func didInputPartialPhoneNumber(_ number: String)
     func didInputFullPhoneNumber(_ number: String)
     func didTouchContinueButton()
+    func didTouchOperatorSelectionButton()
 }
 
 final class PhoneTopUpFormPresenter {
@@ -39,6 +40,7 @@ final class PhoneTopUpFormPresenter {
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
     private var selectedAccountNumber: String?
+    private var selectedOperator: GSMOperator?
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
     private let useCaseHandler: UseCaseHandler
     private let contactsPermissionHelper: ContactsPermissionHelperProtocol
@@ -146,6 +148,14 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
                                    recipientName: "Jan Bankowy",
                                    date: Date())
         coordinator?.showTopUpConfirmation(with: formData)
+    }
+    
+    func didTouchOperatorSelectionButton() {
+        coordinator?.showOperatorSelection(currentlySelectedOperatorId: selectedOperator?.id)
+    }
+    
+    func didSelectOperator(_ gsmOperator: GSMOperator) {
+        selectedOperator = gsmOperator
     }
 }
 
