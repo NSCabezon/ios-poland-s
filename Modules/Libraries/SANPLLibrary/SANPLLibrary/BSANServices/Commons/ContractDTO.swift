@@ -28,4 +28,8 @@ extension ContractDTO: ContractRepresentable {
             return ""
         }
     }
+    
+    public var description: String {
+        return ""
+    }
 }
