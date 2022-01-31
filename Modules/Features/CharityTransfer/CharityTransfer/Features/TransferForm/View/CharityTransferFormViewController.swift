@@ -29,6 +29,7 @@ final class CharityTransferFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        configureKeyboardDismissGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
