@@ -48,6 +48,16 @@ struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
     }
+    
+    func resolve() -> SegmentedUserRepository {
+        return legacyDependenciesResolver.resolve(for: SegmentedUserRepository.self)
+    }
+    
+    func resolve() -> PublicMenuActionsRepository {
+        return asShared {
+            DefaultPublicMenuActionRepository()
+        }
+    }
 }
 
 extension ModuleDependencies {
@@ -58,8 +68,10 @@ extension ModuleDependencies {
         legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
             return DefaultGlobalPositionRepository.current
         }
-        legacyDependenciesResolver.register(for: RetailLegacyMenuExternalDependenciesResolver.self) { _ in
-            self
+        legacyDependenciesResolver.register(for: PublicMenuActionsRepository.self) { _ in
+            return asShared {
+                DefaultPublicMenuActionRepository()
+            }
         }
     }
 }

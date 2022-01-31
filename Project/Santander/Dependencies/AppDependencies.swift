@@ -341,9 +341,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
         }
-        self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
-            return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
-        }
         self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
             PLCardTransactionDetailActionFactoryModifier()
         }
