@@ -86,7 +86,6 @@ final class PhoneTopUpFormViewController: UIViewController {
         bottomButtonView.configure(title: localized("generic_button_continue")) { [weak self] in
             self?.presenter.didTouchContinueButton()
         }
-        bottomButtonView.disableButton()
     }
     
     // MARK: Actions
@@ -143,5 +142,9 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
     func updateContact(with contact: MobileContact) {
         formView.updatePhoneInput(with: contact.phoneNumber)
         formView.updateRecipientName(with: contact.fullName)
+    }
+    
+    func didTouchOperatorSelectionButton() {
+        presenter.didTouchOperatorSelectionButton()
     }
 }

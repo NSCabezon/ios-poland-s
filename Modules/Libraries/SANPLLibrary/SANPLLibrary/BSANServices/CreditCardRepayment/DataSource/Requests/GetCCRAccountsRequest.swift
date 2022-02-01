@@ -9,7 +9,7 @@ struct GetCCRAccountsRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
     
@@ -21,7 +21,7 @@ struct GetCCRAccountsRequest: NetworkProviderRequest {
          bodyEncoding: NetworkProviderBodyEncoding? = .form,
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil
     ) {

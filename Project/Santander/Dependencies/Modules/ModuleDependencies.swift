@@ -7,6 +7,7 @@
 
 import UI
 import Loans
+import Menu
 import Commons
 import CoreDomain
 import Foundation
@@ -14,9 +15,10 @@ import RetailLegacy
 import CoreFoundationLib
 
 struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-
+    
     let legacyDependenciesResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
+    let coreDependencies = DefaultCoreDependencies()
     
     func resolve() -> TimeManager {
         legacyDependenciesResolver.resolve()
@@ -47,12 +49,8 @@ struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
         UINavigationController ?? UINavigationController()
     }
     
-    func loanHomeCoordinator() -> BindableCoordinator {
-        ToastCoordinator()
-    }
-    
-    func loanRepaymentCoordinator() -> BindableCoordinator {
-        ToastCoordinator()
+    func resolve() -> SegmentedUserRepository {
+        return legacyDependenciesResolver.resolve(for: SegmentedUserRepository.self)
     }
 }
 
@@ -64,5 +62,12 @@ extension ModuleDependencies {
         legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
             return DefaultGlobalPositionRepository.current
         }
+    }
+}
+
+extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesResolver {
+    
+    func resolve() -> CoreDependencies {
+        return coreDependencies
     }
 }

@@ -8,6 +8,7 @@
 import UI
 import CoreFoundationLib
 import Commons
+import CoreDomain
 
 protocol PLTrustedDeviceSuccessCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func goToGlobalPositionScene(_ option: GlobalPositionOptionEntity)

@@ -63,14 +63,14 @@ extension RecentRecipientsDataDTO: TransferRepresentable {
 }
 
 private extension RecentRecipientsDataDTO {
-    func makeAmountDTO(value: Decimal, currencyCode: String?) -> AmountDTO? {
+    func makeAmountDTO(value: Decimal, currencyCode: String?) -> SANLegacyLibrary.AmountDTO? {
         guard let currencyCode = currencyCode else {
             return nil
         }
         let currencyType: CurrencyType = CurrencyType.parse(currencyCode)
         let balanceAmount = value
-        let currencyDTO = CurrencyDTO(currencyName: currencyCode, currencyType: currencyType)
-        return AmountDTO(value: balanceAmount, currency: currencyDTO)
+        let currencyDTO = SANLegacyLibrary.CurrencyDTO(currencyName: currencyCode, currencyType: currencyType)
+        return SANLegacyLibrary.AmountDTO(value: balanceAmount, currency: currencyDTO)
     }
     
     func getTransferType(_ amount: Decimal) -> TransferRepresentableType? {

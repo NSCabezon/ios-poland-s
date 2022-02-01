@@ -60,6 +60,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                       serviceUrl: absoluteUrl,
                                                       method: .get,
                                                       headers: self.headers,
+                                                      contentType: nil,
                                                       localServiceName: .trustedDeviceInfo,
                                                       authorization: .oauth)
         let result: Result<TrustedDeviceInfoDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
@@ -78,6 +79,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                 serviceUrl: absoluteUrl,
                                                 method: .get,
                                                 headers: self.headers,
+                                                contentType: nil,
                                                 localServiceName: .beforeLogin,
                                                 authorization: .none)
         let result: Result<BeforeLoginDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
@@ -201,6 +203,7 @@ class TrustDeviceDataSource: TrustDeviceDataSourceProtocol {
                                                 serviceUrl: absoluteUrl,
                                                 method: .get,
                                                 headers: self.headers,
+                                                contentType: nil,
                                                 localServiceName: .devices,
                                                 authorization: .oauth)
         let result: Result<DevicesDTO, NetworkProviderError> = self.networkProvider.request(networkRequest)
@@ -233,7 +236,7 @@ private struct BeforeLoginRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = nil
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -241,7 +244,7 @@ private struct BeforeLoginRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -263,7 +266,7 @@ private struct TrustedDeviceInfoRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = nil
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -271,7 +274,7 @@ private struct TrustedDeviceInfoRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -293,7 +296,7 @@ private struct RegisterDeviceRequest: NetworkProviderRequest {
     let jsonBody: RegisterDeviceParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -304,7 +307,7 @@ private struct RegisterDeviceRequest: NetworkProviderRequest {
          jsonBody: RegisterDeviceParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -329,7 +332,7 @@ private struct RegisterSoftwareTokenRequest: NetworkProviderRequest {
     let jsonBody: RegisterSoftwareTokenParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -365,7 +368,7 @@ private struct RegisterIvrRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = nil
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -395,7 +398,7 @@ private struct RegisterConfirmationCodeRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = nil
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -403,7 +406,7 @@ private struct RegisterConfirmationCodeRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -425,7 +428,7 @@ private struct DevicesRequest: NetworkProviderRequest {
     let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = nil
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -433,7 +436,7 @@ private struct DevicesRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -455,7 +458,7 @@ private struct ConfirmRegistrationRequest: NetworkProviderRequest {
     let jsonBody: RegisterConfirmParameters?
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = .body
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -463,7 +466,7 @@ private struct ConfirmRegistrationRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          jsonBody: RegisterConfirmParameters?,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
@@ -487,7 +490,7 @@ private struct PendingChallengeRequest: NetworkProviderRequest {
     let jsonBody: PendingChallengeParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -498,7 +501,7 @@ private struct PendingChallengeRequest: NetworkProviderRequest {
          jsonBody: PendingChallengeParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName
@@ -523,7 +526,7 @@ private struct ConfirmChallengeRequest: NetworkProviderRequest {
     let jsonBody: ConfirmChallengeParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -534,7 +537,7 @@ private struct ConfirmChallengeRequest: NetworkProviderRequest {
          jsonBody: ConfirmChallengeParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName

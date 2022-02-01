@@ -12,6 +12,7 @@ import UI
 protocol TopUpConfirmationCoordinatorProtocol: AnyObject, ModuleCoordinator {
     func back()
     func close()
+    func showSummary(with model: TopUpModel)
 }
 
 final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
@@ -19,6 +20,7 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let summary: TopUpModel
     
     // MARK: Lifecycle
     
@@ -27,12 +29,17 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
          summary: TopUpModel) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.summary = summary
         self.setupDependencies(with: summary)
     }
     
     // MARK: SetUp
     
     private func setupDependencies(with summary: TopUpModel) {
+        self.dependenciesEngine.register(for: TopUpSummaryMapping.self) { _ in
+            return TopUpSummaryMapper()
+        }
+        
         self.dependenciesEngine.register(for: TopUpConfirmationCoordinatorProtocol.self) { _ in
             return self
         }
@@ -63,5 +70,12 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     
     func close() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func showSummary(with model: TopUpModel) {
+        let coordinator = TopUpSummaryCoordinator(dependenciesResolver: dependenciesEngine,
+                                                  navigationController: navigationController,
+                                                  summary: summary)
+        coordinator.start()
     }
 }

@@ -20,7 +20,7 @@ final class PLPersonalAreaSectionsSecurityModifier {
     }
 }
 
-extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol {
+extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol {    
     var isDisabledUser: Bool {
         return false
     }
@@ -41,5 +41,8 @@ extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityMo
     }
     var isBiometryFunctionalityEnabled: Bool {
         return false
+    }
+    var isEnabledQuickerBalance: Bool {
+        return true
     }
 }

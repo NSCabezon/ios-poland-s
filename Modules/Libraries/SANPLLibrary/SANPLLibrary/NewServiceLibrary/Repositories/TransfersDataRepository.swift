@@ -9,7 +9,7 @@ import CoreDomain
 import SANLegacyLibrary
 
 struct TransfersDataRepository: PLTransfersRepository {
-    
+
     let bsanTransferManager: PLTransfersManagerProtocol
     
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {

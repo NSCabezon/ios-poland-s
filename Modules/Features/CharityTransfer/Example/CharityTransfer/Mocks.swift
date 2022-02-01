@@ -2,6 +2,7 @@ import CoreDomain
 import Commons
 import SANPLLibrary
 import CoreFoundationLib
+import SANLegacyLibrary
 
 struct MockHostProvider: PLHostProviderProtocol {
     var environmentDefault: BSANPLEnvironmentDTO {
@@ -76,10 +77,19 @@ struct MockManager: PLManagersProviderProtocol {
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
         fatalError()
     }
+    
+    func getDepositsManager() -> PLDepositManagerProtocol {
+        fatalError()
+    }
+    
+    func getFundsManager() -> PLFundManagerProtocol {
+        fatalError()
+    }
 }
 
 struct MockAccountManeger: PLAccountManagerProtocol {
-    func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError> {
+   
+    func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<SANPLLibrary.AccountDetailDTO, NetworkProviderError> {
         fatalError()
     }
     
@@ -87,7 +97,7 @@ struct MockAccountManeger: PLAccountManagerProtocol {
         fatalError()
     }
     
-    func getWithholdingList(accountNumber: String) throws -> Result<WithholdingListDTO, NetworkProviderError> {
+    func getWithholdingList(accountNumber: String) throws -> Result<SANPLLibrary.WithholdingListDTO, NetworkProviderError> {
         fatalError()
     }
     
@@ -152,6 +162,10 @@ struct MockAccountManeger: PLAccountManagerProtocol {
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError> {
         fatalError()
     }
+    
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
+        fatalError()
+    }
 }
 
 struct MockTransferManager: PLTransfersManagerProtocol {
@@ -159,7 +173,7 @@ struct MockTransferManager: PLTransfersManagerProtocol {
         .failure(.noConnection)
     }
     
-    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[SANPLLibrary.PayeeDTO], NetworkProviderError> {
         .failure(.noConnection)
     }
     
@@ -287,9 +301,14 @@ struct MockStringLoader: StringLoader {
     func getWsErrorWithNumber(_ key: String, _ phone: String) -> LocalizedStylableText {
         fatalError()
     }
+    
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
+        fatalError()
+    }
 }
 
 struct MockLoginManeger: PLLoginManagerProtocol {
+   
     func setDemoModeIfNeeded(for user: String) -> Bool {
         fatalError()
     }
@@ -318,7 +337,7 @@ struct MockLoginManeger: PLLoginManagerProtocol {
         fatalError()
     }
     
-    func getAuthCredentials() throws -> AuthCredentials {
+    func getAuthCredentials() throws -> SANPLLibrary.AuthCredentials {
         AuthCredentials(login: "123456789",
                         userId: 1,
                         userCif: 1,
@@ -336,6 +355,18 @@ struct MockLoginManeger: PLLoginManagerProtocol {
     }
     
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getDepositsManager() -> PLDepositManagerProtocol {
+        fatalError()
+    }
+    
+    func getFundsManager() -> PLFundManagerProtocol {
+        fatalError()
+    }
+    
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
         fatalError()
     }
 }

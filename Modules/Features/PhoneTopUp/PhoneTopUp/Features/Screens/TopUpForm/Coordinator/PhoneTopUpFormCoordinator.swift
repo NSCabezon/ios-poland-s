@@ -18,6 +18,7 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func showInternetContacts()
     func showPhoneContacts(_ contacts: [MobileContact])
     func showTopUpConfirmation(with summary: TopUpModel)
+    func showOperatorSelection(currentlySelectedOperatorId operatorId: Int?)
 }
 
 public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
@@ -29,6 +30,7 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     private let formData: GetPhoneTopUpFormDataOutput
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var contactsSelectorDelegate: MobileContactsSelectorDelegate?
+    private weak var operatorSelectorDelegate: OperatorSelectorDelegate?
     
     private lazy var phoneTopUpController = dependenciesEngine.resolve(for: PhoneTopUpFormViewController.self)
     
@@ -70,6 +72,7 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             presenter.view = viewController
             self?.accountSelectorDelegate = presenter
             self?.contactsSelectorDelegate = presenter
+            self?.operatorSelectorDelegate = presenter
             return viewController
         }
         self.dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
@@ -155,6 +158,16 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         confirmationCoordinator.start()
     }
     
+    func showOperatorSelection(currentlySelectedOperatorId operatorId: Int?) {
+        let operatorSelectionCoordinator = OperatorSelectionCoordinator(dependenciesResolver: dependenciesEngine,
+                                                                        delegate: self,
+                                                                        navigationController: navigationController,
+                                                                        operators: formData.operators,
+                                                                        gsmOperators: formData.gsmOperators,
+                                                                        selectedOperatorId: operatorId)
+        operatorSelectionCoordinator.start()
+    }
+    
     private func showContactsPermissionDeniedDialog() {
         guard let navigationController = navigationController else {
             return
@@ -179,5 +192,12 @@ extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
     
     func mobileContactDidSelectCloseProcess() {
         navigationController?.popToViewController(phoneTopUpController, animated: true)
+    }
+}
+
+extension PhoneTopUpFormCoordinator: OperatorSelectorDelegate {
+    func didSelectOperator(_ gsmOperator: GSMOperator) {
+        navigationController?.popToViewController(phoneTopUpController, animated: true)
+        operatorSelectorDelegate?.didSelectOperator(gsmOperator)
     }
 }

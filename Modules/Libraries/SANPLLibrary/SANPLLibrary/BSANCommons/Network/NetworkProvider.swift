@@ -29,7 +29,7 @@ public protocol NetworkProviderRequest {
     var jsonBody: Body? { get }
     var formData: Data? { get }
     var bodyEncoding: NetworkProviderBodyEncoding? { get }
-    var contentType: NetworkProviderContentType { get }
+    var contentType: NetworkProviderContentType? { get }
     var authorization: NetworkProviderRequestAuthorization? { get }
 }
 
@@ -61,7 +61,7 @@ public enum NetworkProviderContentType : String {
 
 // MARK: - NetworkProviderError
 
-public enum NetworkProviderError: Error {
+public enum NetworkProviderError: LocalizedError {
     case error(_ error: NetworkProviderResponseError)
     case unauthorized
     case other
