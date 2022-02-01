@@ -13,6 +13,10 @@ import CoreDomain
 import UI
 
 extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
+    func resolve() -> FaqsRepositoryProtocol {
+        legacyDependenciesResolver.resolve()
+    }
+    
     func resolve() -> TransfersRepository {
         legacyDependenciesResolver.resolve()
     }
