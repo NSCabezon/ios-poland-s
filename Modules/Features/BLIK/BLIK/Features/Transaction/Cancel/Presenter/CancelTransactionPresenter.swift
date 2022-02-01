@@ -1,5 +1,5 @@
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 enum CancelType: String {
     case timeout = "pl_blik_alert_timeOut"

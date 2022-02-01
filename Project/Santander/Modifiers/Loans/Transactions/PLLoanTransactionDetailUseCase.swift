@@ -8,7 +8,7 @@
 import Foundation
 import CoreFoundationLib
 import SANLegacyLibrary
-import Commons
+import CoreFoundationLib
 import Loans
 import SANPLLibrary
 import PLLegacyAdapter

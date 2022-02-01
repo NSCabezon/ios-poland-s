@@ -4,7 +4,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 final class PLSetUpAlertsOperative {
     private let identifier: String = "cardsOptionButtonSettingAlertsPoland"

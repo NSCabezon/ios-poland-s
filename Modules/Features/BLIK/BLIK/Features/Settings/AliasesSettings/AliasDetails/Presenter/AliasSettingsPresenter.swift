@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 03/09/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol AliasSettingsPresenterProtocol {
     var view: AliasSettingsView? { get set }

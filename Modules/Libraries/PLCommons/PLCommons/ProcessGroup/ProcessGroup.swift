@@ -6,7 +6,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 public protocol ProcessGroupProtocol {
     associatedtype ProcessGroupInput

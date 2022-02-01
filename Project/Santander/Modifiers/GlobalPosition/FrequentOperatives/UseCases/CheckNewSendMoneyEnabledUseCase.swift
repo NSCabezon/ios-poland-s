@@ -6,7 +6,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 final class CheckNewSendMoneyEnabledUseCase: UseCase<Void, Bool, StringErrorOutput> {
     let dependenciesResolver: DependenciesResolver

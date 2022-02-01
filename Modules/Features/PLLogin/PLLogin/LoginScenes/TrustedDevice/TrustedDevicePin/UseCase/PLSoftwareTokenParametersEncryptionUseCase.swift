@@ -5,7 +5,7 @@
 //  Created by Marcos Álvarez Mesa on 30/6/21.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommons
 import CoreFoundationLib
 import CryptoSwift

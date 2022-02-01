@@ -5,7 +5,7 @@
 //  Created by 187831 on 17/01/2022.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol TaxTransferPayerIdentifiersPresenterProtocol {
     var view: TaxTransferPayerIdentifiersViewController? { get set }

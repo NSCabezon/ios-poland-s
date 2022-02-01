@@ -5,7 +5,7 @@
 
 import UI
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 protocol NotificationsInboxListCoordinatorProtocol: ModuleCoordinator {
     func goBack()

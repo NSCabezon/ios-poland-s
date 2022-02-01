@@ -7,7 +7,7 @@
 
 import Foundation
 import PLCommons
-import Commons
+import CoreFoundationLib
 import UI
 import SANLegacyLibrary
 import PLUI

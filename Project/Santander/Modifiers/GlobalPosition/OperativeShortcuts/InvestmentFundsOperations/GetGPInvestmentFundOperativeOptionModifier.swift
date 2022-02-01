@@ -6,7 +6,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 public final class GetGPInvestmentFundOperativeOptionModifier: GetGPInvestmentFundOperativeOptionProtocol {
     public func getAllFundOperativeActionType() -> [FundActionType] {

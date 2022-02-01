@@ -9,7 +9,7 @@ import Foundation
 import Account
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 import PersonalArea
 import RetailLegacy
 

@@ -7,7 +7,7 @@
 
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 import BLIK
 
 final class BLIKPGFrequentOperativeOption {

@@ -7,7 +7,7 @@
 
 import UIKit
 import UI
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 protocol ChequeDetailsPresenterProtocol {

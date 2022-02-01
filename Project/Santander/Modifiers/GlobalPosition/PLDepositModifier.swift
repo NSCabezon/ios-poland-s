@@ -7,7 +7,7 @@ import Foundation
 
 import GlobalPosition
 import UI
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 final class PLDepositModifier: DepositModifier {

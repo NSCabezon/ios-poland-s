@@ -1,6 +1,6 @@
 import Foundation
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 
 protocol SendCreditCardRepaymentProtocol: UseCase<SendCreditCardRepaymentUseCaseInput,

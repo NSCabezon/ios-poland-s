@@ -1,4 +1,4 @@
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 public struct BasePLWebConfiguration: WebViewConfiguration {

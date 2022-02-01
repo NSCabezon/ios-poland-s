@@ -5,7 +5,7 @@
 //  Created by Marcos Álvarez Mesa on 18/10/21.
 //
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 import CryptoSwift
 import SecurityExtensions

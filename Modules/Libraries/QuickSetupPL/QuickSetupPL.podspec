@@ -20,6 +20,5 @@ Pod::Spec.new do |spec|
   spec.dependency "SANPLLibrary"
   spec.dependency "CoreFoundationLib"
   spec.dependency "Localization"
-  spec.dependency "Commons"
   spec.dependency "PLLegacyAdapter"
 end

@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 public struct PLWebViewLink {

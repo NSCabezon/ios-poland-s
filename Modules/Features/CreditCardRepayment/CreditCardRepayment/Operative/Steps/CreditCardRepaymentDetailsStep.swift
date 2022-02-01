@@ -1,6 +1,6 @@
 import Foundation
 import Operative
-import Commons
+import CoreFoundationLib
 
 final class CreditCardRepaymentDetailsStep: OperativeStep {
     

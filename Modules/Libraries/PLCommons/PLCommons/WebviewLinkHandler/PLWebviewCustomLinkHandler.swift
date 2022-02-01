@@ -7,7 +7,7 @@
     This handler be inyected in the webview presentation call when a webview requires Poland custom url actions (app://, santander://...).
  */
 import Foundation
-import Commons
+import CoreFoundationLib
 import WebViews
 import CoreFoundationLib
 import os

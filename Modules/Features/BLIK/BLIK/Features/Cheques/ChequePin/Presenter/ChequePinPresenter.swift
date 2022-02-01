@@ -5,7 +5,7 @@
 //  Created by 186491 on 03/06/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 protocol ChequePinPresenterProtocol {

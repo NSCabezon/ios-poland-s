@@ -6,7 +6,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import PLCryptography
 import PLCommons
 import LoginCommon

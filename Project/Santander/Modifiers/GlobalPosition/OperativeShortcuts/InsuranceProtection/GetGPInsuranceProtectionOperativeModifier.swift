@@ -4,7 +4,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 public final class GetGPInsuranceProtectionOperativeModifier: GetGPInsuranceProtectionOperativeOptionProtocol {
     public func getAllInsuranceProtectionOperativeActionType() -> [InsuranceProtectionActionType] {

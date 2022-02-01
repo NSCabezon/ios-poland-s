@@ -7,7 +7,7 @@
 
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 
 final class PaymentsPGFrequentOperativeOption {
     let trackName: String? = "enviar_dinero"

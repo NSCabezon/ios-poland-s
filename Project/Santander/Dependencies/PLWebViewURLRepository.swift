@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 struct PLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {

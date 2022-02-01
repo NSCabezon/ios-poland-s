@@ -6,7 +6,7 @@
 import Account
 import CoreFoundationLib
 import PLLegacyAdapter
-import Commons
+import CoreFoundationLib
 import SANLegacyLibrary
 import SANPLLibrary
 import PdfCommons

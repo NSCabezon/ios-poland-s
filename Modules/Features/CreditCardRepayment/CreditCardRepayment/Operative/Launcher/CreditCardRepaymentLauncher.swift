@@ -1,7 +1,7 @@
 import Foundation
 import Operative
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 protocol CreditCardRepaymentLauncher: OperativeContainerLauncher {
     func goToCreditCardRepayment(

@@ -2,7 +2,7 @@ import TransferOperatives
 import SANLegacyLibrary
 import SANPLLibrary
 import CoreDomain
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 enum PolandTransferType: SendMoneyTransferTypeProtocol {

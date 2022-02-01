@@ -7,7 +7,7 @@
 
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 
 final class TransactionHistoryPGFrequentOperativeOption {
     let trackName: String? = "transactionHistory"

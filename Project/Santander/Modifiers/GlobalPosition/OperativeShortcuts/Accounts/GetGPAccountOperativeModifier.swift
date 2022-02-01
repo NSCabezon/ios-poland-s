@@ -4,7 +4,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 
 public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionProtocol {

@@ -2,13 +2,13 @@
 //  PLUnrememberedLoginIdCoordinator.swift
 //  PLLogin
 
-import Commons
+import CoreFoundationLib
 import UI
 import CoreFoundationLib
 import SANLegacyLibrary
 import LoginCommon
-import CommonUseCase
-import Commons
+import CoreFoundationLib
+import CoreFoundationLib
 
 protocol PLUnrememberedLoginIdCoordinatorProtocol {
     func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration)

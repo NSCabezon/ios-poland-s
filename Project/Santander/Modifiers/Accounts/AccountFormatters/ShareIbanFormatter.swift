@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 class ShareIbanFormatter: ShareIbanFormatterProtocol {
     func ibanPapel(_ iban: IBANEntity?) -> String {

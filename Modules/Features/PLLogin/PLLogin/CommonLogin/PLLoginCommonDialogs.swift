@@ -8,7 +8,7 @@
 import Foundation
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 final class PLLoginCommonDialogs {
     

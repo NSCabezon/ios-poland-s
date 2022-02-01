@@ -5,7 +5,7 @@
 //  Created by 185167 on 19/11/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import CoreFoundationLib
 import SANPLLibrary

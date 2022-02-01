@@ -9,7 +9,7 @@
 
 import SANLegacyLibrary
 import PLCommons
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 struct Compilation: PLCompilationProtocol {

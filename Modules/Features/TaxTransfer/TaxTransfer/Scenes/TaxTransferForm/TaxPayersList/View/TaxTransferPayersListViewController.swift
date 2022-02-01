@@ -7,7 +7,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol TaxTransferPayersListView: AnyObject,
                                     ConfirmationDialogPresentable,

@@ -2,7 +2,7 @@
 //  PLLoginUseCase.swift
 //  PLLogin
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 import SANPLLibrary
 import PLCommons

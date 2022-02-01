@@ -4,7 +4,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 import Foundation
 
 protocol NotificationsInboxListViewProtocol: GenericErrorDialogPresentationCapable, LoadingViewPresentationCapable {

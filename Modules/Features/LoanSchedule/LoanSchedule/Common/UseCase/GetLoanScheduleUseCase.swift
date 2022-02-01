@@ -5,7 +5,7 @@
 //  Created by 186490 on 31/08/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import CoreFoundationLib // for AmountEntity
 import SANLegacyLibrary // for currencyType

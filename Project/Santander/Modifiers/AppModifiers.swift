@@ -6,7 +6,7 @@
 //
 
 import RetailLegacy
-import Commons
+import CoreFoundationLib
 import GlobalPosition
 import Transfer
 import Cards

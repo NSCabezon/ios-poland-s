@@ -7,7 +7,7 @@
 
 import UI
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 /**
     #Add method that must be handle by the AccountChooseListCoordinator like 

@@ -6,7 +6,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import RetailLegacy
 
 class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOutput> {

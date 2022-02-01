@@ -3,7 +3,7 @@
 //  Santander
 //
 
-import Commons
+import CoreFoundationLib
 import Loans
 import CoreFoundationLib
 import UI

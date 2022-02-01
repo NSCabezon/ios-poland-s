@@ -5,7 +5,7 @@
 //  Created by Francisco del Real Escudero on 13/4/21.
 //
 
-import Commons
+import CoreFoundationLib
 import RetailLegacy
 import CoreFoundationLib
 import PLCommons

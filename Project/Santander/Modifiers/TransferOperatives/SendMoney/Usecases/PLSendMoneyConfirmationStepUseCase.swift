@@ -7,7 +7,7 @@
 
 import TransferOperatives
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 
 final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationStepUseCaseInput, Void, StringErrorOutput> {

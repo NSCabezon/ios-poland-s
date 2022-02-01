@@ -5,7 +5,7 @@
 //  Created by Marcos Álvarez Mesa on 25/6/21.
 //
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 import PLCommons
 import SANPLLibrary

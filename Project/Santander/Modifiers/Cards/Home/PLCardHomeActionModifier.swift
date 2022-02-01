@@ -8,7 +8,7 @@
 import Cards
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 import CreditCardRepayment
 import PLCommons
 import PLCommonOperatives

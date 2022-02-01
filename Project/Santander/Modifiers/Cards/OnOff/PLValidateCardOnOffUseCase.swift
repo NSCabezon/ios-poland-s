@@ -8,7 +8,7 @@
 import Foundation
 import Cards
 import CoreDomain
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 import SANLegacyLibrary
 

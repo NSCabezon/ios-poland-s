@@ -7,7 +7,7 @@
 
 import UI
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 public struct AccountChooseListViewModel {
     var accountName: String?

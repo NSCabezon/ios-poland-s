@@ -4,7 +4,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol {
     var shortcutsOperativesAvailable: [CardOperativeActionType] = []

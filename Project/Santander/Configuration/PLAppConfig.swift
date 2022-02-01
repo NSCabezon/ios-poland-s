@@ -7,7 +7,7 @@
 
 import Foundation
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 import CoreDomain
 

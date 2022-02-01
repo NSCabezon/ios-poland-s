@@ -7,7 +7,7 @@
 
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 import PLHelpCenter
 
 // Temporary [DEBUG MENU] on GlobalPosition - whole file

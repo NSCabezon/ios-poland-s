@@ -5,7 +5,7 @@
 
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 
 final class PLDomesticTransferOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "domesticTransferPoland"

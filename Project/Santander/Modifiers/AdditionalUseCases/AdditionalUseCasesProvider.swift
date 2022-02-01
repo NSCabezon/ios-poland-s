@@ -1,5 +1,5 @@
 import RetailLegacy
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 struct AdditionalUseCasesProviderImpl: AdditionalUseCasesProviderProtocol {

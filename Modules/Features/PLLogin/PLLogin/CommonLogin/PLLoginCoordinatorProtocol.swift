@@ -4,7 +4,7 @@
 
 import CoreFoundationLib
 import LoginCommon
-import Commons
+import CoreFoundationLib
 import UI
 import CoreDomain
 

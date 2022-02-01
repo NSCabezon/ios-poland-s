@@ -5,7 +5,7 @@
 
 import CoreFoundationLib
 import UI
-import Commons
+import CoreFoundationLib
 
 final class PLBuyInsuranceOperative {
     private let identifier: String = "insurancesOptionButtonBuyInsurancePoland"

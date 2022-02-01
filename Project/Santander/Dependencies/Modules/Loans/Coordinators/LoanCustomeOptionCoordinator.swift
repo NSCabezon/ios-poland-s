@@ -7,7 +7,7 @@
 
 import UI
 import Loans
-import Commons
+import CoreFoundationLib
 import Foundation
 import CoreDomain
 import LoanSchedule

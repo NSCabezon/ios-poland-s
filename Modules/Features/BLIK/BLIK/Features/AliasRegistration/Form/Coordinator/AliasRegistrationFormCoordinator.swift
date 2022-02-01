@@ -1,6 +1,6 @@
 import UI
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 protocol AliasRegistrationFormCoordinatorProtocol {
     func goToAliasRegistrationSummary()

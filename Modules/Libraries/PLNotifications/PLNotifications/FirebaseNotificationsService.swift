@@ -5,7 +5,7 @@
 //  Created by Marcos Álvarez Mesa on 9/9/21.
 //
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 import CorePushNotificationsService
 import FirebaseCore

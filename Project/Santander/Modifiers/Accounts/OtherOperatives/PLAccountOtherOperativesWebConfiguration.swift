@@ -5,7 +5,7 @@
 //  Created by Julio Nieto Santiago on 29/9/21.
 //
 
-import Commons
+import CoreFoundationLib
 import CoreFoundationLib
 
 public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {

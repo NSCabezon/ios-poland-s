@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 final class PLGetUserPreferencesUseCase: UseCase<Void, PLGetUserPrefEntityUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

@@ -1,5 +1,5 @@
 import Foundation
-import Commons
+import CoreFoundationLib
 
 enum CreditCardRepaymentType {
     case complete

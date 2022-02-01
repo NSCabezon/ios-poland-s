@@ -6,7 +6,7 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreFoundationLib
 
 protocol RepaymentAmountOptionChooseListPresenterProtocol: MenuTextWrapperProtocol {
     var view: RepaymentAmountOptionChooseListViewProtocol? { get set }
