@@ -14,7 +14,7 @@ protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: TaxTransferFormViewModel)
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
     func enableDoneButton()
-    func getCurrentFormData() -> TaxTransferFormFieldsData
+    func getCurrentFormFields() -> TaxTransferFormFields
 }
 
 final class TaxTransferFormViewController: UIViewController {
@@ -74,8 +74,8 @@ extension TaxTransferFormViewController: TaxTransferFormView {
         formView.clearInvalidFormMessages()
     }
     
-    func getCurrentFormData() -> TaxTransferFormFieldsData {
-        return formView.getFormFieldsData()
+    func getCurrentFormFields() -> TaxTransferFormFields {
+        return formView.getFormFields()
     }
 }
 
@@ -130,7 +130,7 @@ private extension TaxTransferFormViewController {
     func configureBottomView() {
         bottomButtonView.disableButton()
         bottomButtonView.configure(title: "#Gotowe") { [weak self] in
-            guard let data = self?.formView.getFormFieldsData() else { return }
+            guard let data = self?.formView.getFormFields() else { return }
             self?.presenter.didTapDone(with: data)
         }
     }
@@ -161,7 +161,7 @@ extension TaxTransferFormViewController: TaxTransferFormContainerViewDelegate {
         }
     }
     
-    func didUpdateFields(withData data: TaxTransferFormFieldsData) {
-        presenter.didUpdateFields(with: data)
+    func didUpdateFields(withFields fields: TaxTransferFormFields) {
+        presenter.didUpdateFields(with: fields)
     }
 }

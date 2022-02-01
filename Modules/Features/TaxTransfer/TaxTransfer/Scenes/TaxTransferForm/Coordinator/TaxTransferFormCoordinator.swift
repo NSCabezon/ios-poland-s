@@ -161,11 +161,19 @@ private extension TaxTransferFormCoordinator {
                 dependenciesResolver: resolver
             )
         }
-
+        
+        dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
+            return TaxTransferFormDataProvider(dependenciesResolver: resolver)
+        }
+        
         dependenciesEngine.register(for: TaxTransferAccountViewModelMapping.self) { _ in
             return TaxTransferAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
         
+        dependenciesEngine.register(for: SourceAccountsStateMapping.self) { _ in
+            return SourceAccountsStateMapper()
+        }
+
         dependenciesEngine.register(for: TaxPayerViewModelMapping.self) { _ in
             return TaxPayerViewModelMapper()
         }
