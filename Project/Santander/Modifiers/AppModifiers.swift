@@ -164,9 +164,6 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountTransactionDetailProtocol.self) { _ in
             return PLAccountTransactionDetail()
         }
-        self.dependencieEngine.register(for: AccountTransactionDetailActionProtocol.self) { _ in
-            return PLAccountTransactionDetailAction()
-        }
         self.dependencieEngine.register(for: GetAccountHomeActionUseCaseProtocol.self) { resolver in
             return GetPLAccountHomeActionUseCase(dependenciesResolver: resolver)
         }

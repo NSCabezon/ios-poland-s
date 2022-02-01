@@ -344,9 +344,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
         }
-        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
-            PLCardTransactionDetailActionFactoryModifier()
-        }
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }

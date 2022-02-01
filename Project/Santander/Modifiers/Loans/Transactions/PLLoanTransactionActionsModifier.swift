@@ -1,41 +1,29 @@
 //
-//  PLCardTransactionDetailActionFactoryModifierProtocol.swift
+//  PLLoanTransactionActionsModifier.swift
 //  Santander
 //
-//  Created by Alvaro Royo on 24/9/21.
-//
 
-import Foundation
-import Cards
+import Commons
+import Loans
 import CoreFoundationLib
 import UI
-import Commons
 import SANPLLibrary
 import PdfCommons
 
-class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionFactoryModifierProtocol {
+final class PLLoanTransactionActionsModifier: LoanTransactionActionsModifier {
 
     private let dependenciesResolver: DependenciesResolver
     private let drawer: BaseMenuController
-    var addPDFDetail: Bool = true
 
     public init(dependenciesResolver: DependenciesResolver, drawer: BaseMenuController) {
         self.dependenciesResolver = dependenciesResolver
         self.drawer = drawer
     }
-    
-    func customViewType() -> ActionButtonFillViewType {
-        .none
-    }
 
-    func getCustomActions(for card: CardEntity) -> [CardActionType]? {
-        return [.pdfDetail, .share(nil)]
-    }
-
-    func didSelectAction(_ action: CardActionType, forTransaction transaction: CardTransactionEntity, andCard card: CardEntity) -> Bool {
+    func didSelectAction(_ action: Loans.LoanActionType, forTransaction transaction: LoanTransactionEntity, andLoan loan: LoanEntity) -> Bool {
         switch action {
-        case .pdfDetail:
-            if let receiptId = transaction.dto.receiptId {
+        case .pdfExtract:
+            if let receiptId = transaction.receiptId {
                 self.showPdfViewer(receiptId: receiptId)
             } else {
                 self.showError()
@@ -47,7 +35,7 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
     }
 }
 
-private extension PLCardTransactionDetailActionFactoryModifier {
+private extension PLLoanTransactionActionsModifier {
     private func showPdfViewer(receiptId: String) {
         self.showLoading {
             let historyManager = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self).getHistoryManager()
@@ -70,13 +58,13 @@ private extension PLCardTransactionDetailActionFactoryModifier {
     }
 }
 
-extension PLCardTransactionDetailActionFactoryModifier: GenericErrorDialogPresentationCapable {
+extension PLLoanTransactionActionsModifier: GenericErrorDialogPresentationCapable {
     var associatedGenericErrorDialogView: UIViewController {
         return self.drawer.currentRootViewController as? UINavigationController ?? UIViewController()
     }
 }
 
-extension PLCardTransactionDetailActionFactoryModifier: LoadingViewPresentationCapable {
+extension PLLoanTransactionActionsModifier: LoadingViewPresentationCapable {
     var associatedLoadingView: UIViewController {
         return self.drawer.currentRootViewController as? UINavigationController ?? UIViewController()
     }
