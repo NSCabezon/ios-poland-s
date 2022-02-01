@@ -94,7 +94,13 @@ extension PLLoginManager: PLLoginManagerProtocol {
     }
     
     public func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        if let cached = self.getCachedLoginInfo() {
+            return .success(cached)
+        }
         let result = try loginDataSource.getLoginInfo()
+        if case .success(let loginInfo) = result {
+            self.bsanDataProvider.storeLoginInfo(dto: loginInfo)
+        }
         return result
     }
 }
@@ -124,5 +130,9 @@ private extension PLLoginManager {
             let authCredentials = AuthCredentials(login: login, userId: authenticate.userId, userCif: authenticate.userCif, companyContext: authenticate.companyContext, accessTokenCredentials: accessTokenCredentials, trustedDeviceTokenCredentials: trustedDeviceTokenCredentials)
             self.bsanDataProvider.storeAuthCredentials(authCredentials)
         }
+    }
+
+    func getCachedLoginInfo() -> LoginInfoDTO? {
+        return self.bsanDataProvider.getLoginInfo()
     }
 }
