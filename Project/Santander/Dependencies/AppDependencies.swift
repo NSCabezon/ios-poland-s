@@ -173,6 +173,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: VersionInfoDTO.self) { _ in
             return self.versionInfo
         }
+        self.dependencieEngine.register(for: AppStoreInformationUseCase.self) { resolver in
+            return PLAppStoreInformationUseCase()
+        }
         // Data layer and country data adapters
         self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
             return self.managersProviderAdapter
