@@ -52,12 +52,6 @@ struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     func resolve() -> SegmentedUserRepository {
         return legacyDependenciesResolver.resolve(for: SegmentedUserRepository.self)
     }
-    
-    func resolve() -> PublicMenuActionsRepository {
-        return asShared {
-            DefaultPublicMenuActionRepository()
-        }
-    }
 }
 
 extension ModuleDependencies {
@@ -67,11 +61,6 @@ extension ModuleDependencies {
         }
         legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
             return DefaultGlobalPositionRepository.current
-        }
-        legacyDependenciesResolver.register(for: PublicMenuActionsRepository.self) { _ in
-            return asShared {
-                DefaultPublicMenuActionRepository()
-            }
         }
     }
 }
