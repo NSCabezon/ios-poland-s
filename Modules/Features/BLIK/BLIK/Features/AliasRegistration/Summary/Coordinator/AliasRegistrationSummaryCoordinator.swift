@@ -1,6 +1,5 @@
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 import Operative
 
 protocol AliasRegistrationSummaryCoordinatorProtocol {

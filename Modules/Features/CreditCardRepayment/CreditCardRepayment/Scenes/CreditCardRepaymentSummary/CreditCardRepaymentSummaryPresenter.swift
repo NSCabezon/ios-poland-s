@@ -1,6 +1,5 @@
 import Operative
 import CoreFoundationLib
-import CoreFoundationLib
 import UI
 
 protocol CreditCardRepaymentSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {}

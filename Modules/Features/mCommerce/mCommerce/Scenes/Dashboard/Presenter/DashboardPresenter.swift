@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 
 protocol DashboardPresenterProtocol: MenuTextWrapperProtocol {
     var view: DashboardViewProtocol? { get set }

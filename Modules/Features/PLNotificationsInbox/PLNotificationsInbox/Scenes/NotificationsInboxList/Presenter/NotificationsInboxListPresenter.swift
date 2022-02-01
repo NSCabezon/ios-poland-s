@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 
 protocol NotificationsInboxListPresenterProtocol: MenuTextWrapperProtocol {
     var view: NotificationsInboxListViewProtocol? { get set }

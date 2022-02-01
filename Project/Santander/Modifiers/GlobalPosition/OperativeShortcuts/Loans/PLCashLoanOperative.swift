@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 import UI
 import Loans
 
@@ -21,7 +20,7 @@ final class PLCashLoanOperative {
         return (title: self.title, imageName: self.icon)
     }
         
-    func getActionType() -> Commons.LoanActionType {
+    func getActionType() -> CoreFoundationLib.LoanActionType {
         return .custom(
             OperativeActionValues(
                 identifier: self.rawValue,

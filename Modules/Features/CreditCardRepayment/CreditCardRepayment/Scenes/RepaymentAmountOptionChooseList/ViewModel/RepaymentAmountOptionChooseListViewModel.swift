@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 
 struct RepaymentAmountOptionChooseListViewModel {
     var repaymentName: String

@@ -1,6 +1,5 @@
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 import SANLegacyLibrary
 
 typealias Currency = CurrencyDTO

@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 
 final class PLMobilePaymentsOperative {
     private let identifier: String = "cardsOptionButtonTurnOnPoland"

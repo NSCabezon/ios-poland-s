@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 
 final class PLSessionDataManagerModifier: SessionDataManagerModifier {
     private let dependenciesResolver: DependenciesResolver

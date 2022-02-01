@@ -1,6 +1,5 @@
 import RetailLegacy
 import CoreFoundationLib
-import CoreFoundationLib
 
 struct AdditionalUseCasesProviderImpl: AdditionalUseCasesProviderProtocol {
     let dependencies: DependenciesResolver

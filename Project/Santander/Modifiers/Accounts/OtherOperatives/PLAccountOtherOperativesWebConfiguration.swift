@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 
 public struct PLAccountOtherOperativesWebConfiguration: WebViewConfiguration {
     public var reloadSessionOnClose: Bool    

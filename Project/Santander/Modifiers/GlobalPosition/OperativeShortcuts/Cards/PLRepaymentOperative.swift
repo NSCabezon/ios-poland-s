@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 
 final class PLRepaymentOperative {
     static let identifier: String = "operateBtnPayOffOperativePoland"

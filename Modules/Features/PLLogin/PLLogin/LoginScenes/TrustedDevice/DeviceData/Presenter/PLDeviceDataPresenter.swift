@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 import PLCryptography
 import PLCommons
 import LoginCommon
@@ -103,7 +102,7 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
         self.trackEvent(.clickContinue)
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
-                               completion: nil)
+                               completion: {})
         
         guard let password = loginConfiguration.password,
               let deviceData = self.deviceConfiguration.deviceData else {

@@ -8,7 +8,6 @@
 import Foundation
 import Cards
 import CoreFoundationLib
-import CoreFoundationLib
 import UI
 
 struct PLCardTransactionDetailViewConfiguration: CardTransactionDetailViewConfigurationProtocol {

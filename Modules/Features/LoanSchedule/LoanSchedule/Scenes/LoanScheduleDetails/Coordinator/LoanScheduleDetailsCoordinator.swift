@@ -1,6 +1,5 @@
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 
 protocol LoanScheduleDetailsCoordinatorProtocol: ModuleCoordinator {
     func goBack()

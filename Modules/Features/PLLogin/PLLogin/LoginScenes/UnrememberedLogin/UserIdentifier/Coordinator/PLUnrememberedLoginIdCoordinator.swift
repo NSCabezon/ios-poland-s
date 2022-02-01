@@ -8,7 +8,6 @@ import CoreFoundationLib
 import SANLegacyLibrary
 import LoginCommon
 import CoreFoundationLib
-import CoreFoundationLib
 
 protocol PLUnrememberedLoginIdCoordinatorProtocol {
     func goToNormalPasswordScene(configuration: UnrememberedLoginConfiguration)

@@ -6,7 +6,6 @@
 //  
 
 import CoreFoundationLib
-import CoreFoundationLib
 import Operative
 
 protocol CreditCardChooseListPresenterProtocol: OperativeStepPresenterProtocol, MenuTextWrapperProtocol {

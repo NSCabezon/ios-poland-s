@@ -10,7 +10,6 @@
 import SANLegacyLibrary
 import PLCommons
 import CoreFoundationLib
-import CoreFoundationLib
 
 struct Compilation: PLCompilationProtocol {
     let service: String = ""

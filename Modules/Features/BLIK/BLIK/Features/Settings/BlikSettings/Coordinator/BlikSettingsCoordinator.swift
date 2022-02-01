@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol BlikSettingsCoordinatorProtocol: ModuleCoordinator {

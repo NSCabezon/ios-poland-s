@@ -1,6 +1,5 @@
 
 import CoreFoundationLib
-import CoreFoundationLib
 
 struct PLTransferSettingsRepository: BaseRepository {
     typealias T = PLTransferSettingsDTO

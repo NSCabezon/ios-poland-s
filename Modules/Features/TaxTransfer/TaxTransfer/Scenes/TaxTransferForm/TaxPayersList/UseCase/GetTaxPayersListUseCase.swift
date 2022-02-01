@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol GetTaxPayersListUseCaseProtocol: UseCase<Void, GetTaxPayersListOutput, StringErrorOutput> { }

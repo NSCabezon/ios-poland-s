@@ -1,5 +1,4 @@
 import CoreFoundationLib
-import CoreFoundationLib
 import PLCommons
 
 protocol PhoneTransferRegistrationFormPresenterProtocol {

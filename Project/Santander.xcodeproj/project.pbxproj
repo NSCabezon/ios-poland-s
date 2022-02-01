@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		009046D3272AFD9300072AF8 /* PLWebViewURLRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009046D2272AFD9300072AF8 /* PLWebViewURLRepository.swift */; };
 		04304E2B276773C900AF0A99 /* PLPrivateMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */; };
+		04741875279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */; };
 		04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */; };
 		0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */; };
 		0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */; };
@@ -157,7 +158,7 @@
 		A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1B81B122726D3B300714A3E /* Regression.xcconfig */; };
 		A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
@@ -231,6 +232,7 @@
 		0026FAAFAA21549EE2D0E66A /* Pods-Santander.preprod-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-release.xcconfig"; sourceTree = "<group>"; };
 		009046D2272AFD9300072AF8 /* PLWebViewURLRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLWebViewURLRepository.swift; sourceTree = "<group>"; };
 		04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuModifier.swift; sourceTree = "<group>"; };
+		04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAppStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLWebViewCoordinatorNavigator.swift; sourceTree = "<group>"; };
 		0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailShareableInfo.swift; sourceTree = "<group>"; };
 		0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOperativesModifier.swift; sourceTree = "<group>"; };
@@ -485,6 +487,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045D0D8127981B6700BA42DB /* AppStoreInformation */ = {
+			isa = PBXGroup;
+			children = (
+				04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */,
+			);
+			path = AppStoreInformation;
+			sourceTree = "<group>";
+		};
 		0D0340B526C5381000CB72BF /* OtherOperatives */ = {
 			isa = PBXGroup;
 			children = (
@@ -860,6 +870,7 @@
 		446E0C1C265FE42400847FCA /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				045D0D8127981B6700BA42DB /* AppStoreInformation */,
 				B0D77A5A276C8BEF00766705 /* AdditionalUseCases */,
 				5FBDB730273BB47D00FB6DAF /* Session */,
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
@@ -1639,7 +1650,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -1704,6 +1715,7 @@
 				D5C5A90D273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift in Sources */,
 				7E2CCA8726B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
+				04741875279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift in Sources */,
 				669A37DB270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
 				CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */,

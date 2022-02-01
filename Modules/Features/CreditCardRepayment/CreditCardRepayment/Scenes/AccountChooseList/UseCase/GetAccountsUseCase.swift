@@ -1,6 +1,5 @@
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 import SANPLLibrary
 
 final class GetAccountsUseCase: UseCase<Void, GetAccountsUseCaseOkOutput, StringErrorOutput> {

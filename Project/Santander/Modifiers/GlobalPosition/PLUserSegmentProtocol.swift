@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 import SANPLLibrary
 
 final class PLUserSegmentProtocol: UserSegmentProtocol {

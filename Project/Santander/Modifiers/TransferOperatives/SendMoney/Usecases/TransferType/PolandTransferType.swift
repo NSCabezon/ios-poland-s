@@ -3,7 +3,6 @@ import SANLegacyLibrary
 import SANPLLibrary
 import CoreDomain
 import CoreFoundationLib
-import CoreFoundationLib
 
 enum PolandTransferType: SendMoneyTransferTypeProtocol {
     case zero

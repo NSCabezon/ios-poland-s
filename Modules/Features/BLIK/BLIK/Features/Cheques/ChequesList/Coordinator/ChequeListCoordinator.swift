@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 import PLUI
 
 public protocol ChequesCoordinatorProtocol: ModuleCoordinator {

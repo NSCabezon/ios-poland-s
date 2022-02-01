@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 import UI
 
 final class PLTransportTicketsServicesOperative: AccountOperativeActionTypeProtocol {

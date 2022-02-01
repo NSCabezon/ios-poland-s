@@ -6,7 +6,6 @@
 import Foundation
 import Inbox
 import CoreFoundationLib
-import CoreFoundationLib
 import UI
 
 final class PLInboxActionBuilder {

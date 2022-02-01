@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 import LocalAuthentication
 import PLCommons
 import SecurityExtensions

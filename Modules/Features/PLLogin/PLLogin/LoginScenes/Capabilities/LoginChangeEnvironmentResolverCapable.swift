@@ -4,7 +4,6 @@
 
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 
 protocol LoginChangeEnvironmentResolverCapable {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector { get }

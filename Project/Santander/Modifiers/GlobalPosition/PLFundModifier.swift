@@ -6,7 +6,6 @@
 import GlobalPosition
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 
 final class PLFundModifier: FundModifier {
     override func didSelectFund(fund: FundEntity) {

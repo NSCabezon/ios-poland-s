@@ -8,7 +8,6 @@
 import Foundation
 
 import CoreFoundationLib
-import CoreFoundationLib
 import CoreDomain
 
 class PLAppConfig: LocalAppConfig {

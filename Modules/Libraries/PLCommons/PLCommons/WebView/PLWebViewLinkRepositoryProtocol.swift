@@ -5,7 +5,6 @@
 
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 
 public struct PLWebViewLink {
     public init(id: String, url: String, method: HTTPMethodType, isAvailable: Bool) {

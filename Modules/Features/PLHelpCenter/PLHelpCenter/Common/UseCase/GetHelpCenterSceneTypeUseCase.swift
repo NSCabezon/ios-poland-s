@@ -1,6 +1,5 @@
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol GetHelpCenterSceneTypeUseCaseProtocol: UseCase<Void, GetHelpCenterSceneTypeUseCaseOkOutput, StringErrorOutput> {}

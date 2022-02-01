@@ -8,7 +8,6 @@
 import UIKit
 import UI
 import CoreFoundationLib
-import CoreFoundationLib
 
 protocol ChequeDetailsPresenterProtocol {
     func viewDidLoad(completion: (ChequeDetailsViewModel) -> Void)

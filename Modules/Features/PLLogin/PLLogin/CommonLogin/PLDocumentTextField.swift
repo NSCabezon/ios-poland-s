@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreFoundationLib
-import CoreFoundationLib
 import UI
 
 public class PLDocumentTextField: LegacyDesignableView {

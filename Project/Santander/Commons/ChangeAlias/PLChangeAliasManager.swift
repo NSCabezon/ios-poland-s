@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreFoundationLib
-import CoreFoundationLib
 import CoreDomain
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {

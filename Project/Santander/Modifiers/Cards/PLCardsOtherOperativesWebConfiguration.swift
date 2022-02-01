@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import CoreFoundationLib
 
 public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {
     public var initialURL: String
