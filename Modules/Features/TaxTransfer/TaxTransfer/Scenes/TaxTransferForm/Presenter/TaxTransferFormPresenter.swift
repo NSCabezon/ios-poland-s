@@ -19,8 +19,8 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate {
     func didTapTaxPayer()
     func didTapTaxAuthority()
     func didTapBack()
-    func didTapDone(with data: TaxTransferFormFieldsData)
-    func didUpdateFields(with data: TaxTransferFormFieldsData)
+    func didTapDone(with data: TaxTransferFormFields)
+    func didUpdateFields(with fields: TaxTransferFormFields)
     func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
 }
 
@@ -29,7 +29,7 @@ final class TaxTransferFormPresenter {
 
     private let dependenciesResolver: DependenciesResolver
     private let currency: String
-    private var fetchedAccounts: [AccountForDebit] = []
+    private var formData: TaxTransferFormData
     private var selectedAccount: AccountForDebit?
     private var selectedTaxPayer: TaxPayer?
     private var selectedPayerInfo: SelectedTaxPayerInfo?
@@ -40,6 +40,9 @@ final class TaxTransferFormPresenter {
     ) {
         self.currency = currency
         self.dependenciesResolver = dependenciesResolver
+        self.formData = TaxTransferFormData(
+            sourceAccounts: []
+        )
     }
 }
 
@@ -50,14 +53,14 @@ private extension TaxTransferFormPresenter {
     var validator: TaxTransferFormValidating {
         dependenciesResolver.resolve()
     }
-    var getAccountsUseCase: GetAccountsForDebitProtocol {
+    var taxTransferFormDataProvider: TaxTransferFormDataProviding {
         dependenciesResolver.resolve()
     }
     var accountViewModelMapper: TaxTransferAccountViewModelMapping {
         dependenciesResolver.resolve()
     }
-    var useCaseHandler: UseCaseHandler {
-        return dependenciesResolver.resolve()
+    var accountsStateMapper: SourceAccountsStateMapping {
+        dependenciesResolver.resolve()
     }
     var taxPayerViewModelMapper: TaxPayerViewModelMapping {
         return dependenciesResolver.resolve()
@@ -67,22 +70,11 @@ private extension TaxTransferFormPresenter {
 extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     func viewDidLoad() {
         view?.showLoader()
-        Scenario(useCase: getAccountsUseCase)
-            .execute(on: useCaseHandler)
-            .onSuccess { [weak self] accounts in
-                guard let strongSelf = self else { return }
-                strongSelf.view?.hideLoader(completion: {
-                    strongSelf.handleFetchedAccounts(accounts)
-                })
-            }
-            .onError { [weak self] error in
-                guard let strongSelf = self else { return }
-                strongSelf.view?.hideLoader(completion: {
-                    strongSelf.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
-                        self?.coordinator.back()
-                    })
-                })
-            }
+        taxTransferFormDataProvider.getData { [weak self] result in
+            self?.view?.hideLoader(completion: {
+                self?.handleUseCaseResult(result)
+            })
+        }
     }
     
     func getTaxFormConfiguration() -> TaxFormConfiguration {
@@ -91,15 +83,15 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     
     func didTapAccountSelector() {
         coordinator.showAccountSelector(
-            with: fetchedAccounts,
+            with: formData.sourceAccounts,
             selectedAccountNumber: selectedAccount?.number,
             mode: .changeDefaultAccount
         )
     }
     
     func didSelectAccount(withAccountNumber accountNumber: String) {
-        selectedAccount = fetchedAccounts.first { $0.number == accountNumber }
-        refreshView()
+        selectedAccount = formData.sourceAccounts.first { $0.number == accountNumber }
+        updateViewWithLatestViewModel()
     }
     
     func didTapTaxPayer() {
@@ -116,12 +108,13 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         coordinator.back()
     }
     
-    func didTapDone(with data: TaxTransferFormFieldsData) {
+    func didTapDone(with data: TaxTransferFormFields) {
         // TODO:- Implement in TAP-2186
     }
+    
+    func didUpdateFields(with fields: TaxTransferFormFields) {
+        let validationResult = validator.validateFields(fields)
 
-    func didUpdateFields(with data: TaxTransferFormFieldsData) {
-        let validationResult = validator.validateData(data)
         switch validationResult {
         case .valid:
             view?.enableDoneButton()
@@ -133,24 +126,33 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
         self.selectedPayerInfo = selectedPayerInfo
         selectedTaxPayer = taxPayer
-        refreshView()
+        updateViewWithLatestViewModel()
     }
 }
 
 private extension TaxTransferFormPresenter {
-    func handleFetchedAccounts(_ accounts: [AccountForDebit]) {
-        fetchedAccounts = accounts
-        
-        guard !accounts.isEmpty else {
-            showEmptyAccountsListAlert()
-            return
+    func handleUseCaseResult(_ result: Result<TaxTransferFormData, GetTaxTransferDataUseCaseError>) {
+        switch result {
+        case let .success(data):
+            handleFetchedTaxFormData(data)
+        case .failure:
+            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                self?.coordinator.back()
+            })
         }
+    }
+    
+    func handleFetchedTaxFormData(_ data: TaxTransferFormData) {
+        formData = data
         
-        let potentialDefaultAccount = accounts.first { $0.defaultForPayments }
-        if let defaultAccount = potentialDefaultAccount {
-            selectedAccount = defaultAccount
-            refreshView()
-        } else {
+        switch accountsStateMapper.map(data.sourceAccounts) {
+        case .listIsEmpty:
+            showEmptyAccountsListAlert()
+        case let .listContainsDefaultAccount(defaultAccount):
+            selectAccount(defaultAccount)
+        case let .listContainsSingleNonDefaultAccount(onlyAccount):
+            selectAccount(onlyAccount)
+        case let .listContainsMultipleNonDefaultAccounts(accounts):
             coordinator.showAccountSelector(
                 with: accounts,
                 selectedAccountNumber: nil,
@@ -169,8 +171,8 @@ private extension TaxTransferFormPresenter {
         )
     }
     
-    func refreshView() {
-        let currentFormData = view?.getCurrentFormData()
+    func updateViewWithLatestViewModel() {
+        let currentFormData = view?.getCurrentFormFields()
         let viewModel = TaxTransferFormViewModel(
             account: getAccountViewModel(),
             taxPayer: getTaxPayerViewModel(),
@@ -184,11 +186,16 @@ private extension TaxTransferFormPresenter {
         view?.setViewModel(viewModel)
     }
     
+    func selectAccount(_ account: AccountForDebit) {
+        selectedAccount = account
+        updateViewWithLatestViewModel()
+    }
+    
     func getAccountViewModel() -> Selectable<TaxTransferFormViewModel.AccountViewModel> {
         guard let account = selectedAccount else {
             return .unselected
         }
-        let isEditButtonEnabled = (fetchedAccounts.count > 1)
+        let isEditButtonEnabled = (formData.sourceAccounts.count > 1)
         let viewModel = accountViewModelMapper.map(account, isEditButtonEnabled: isEditButtonEnabled)
         return .selected(viewModel)
     }
