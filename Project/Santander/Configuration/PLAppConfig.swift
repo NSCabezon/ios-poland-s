@@ -53,7 +53,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledBillsAndTaxesInMenu: Bool = false
     let isEnabledExploreProductsInMenu: Bool = false
     let isEnabledPersonalAreaInMenu: Bool = true
-    let isEnabledConfigureAlertsInMenu: Bool = true
+    let isEnabledConfigureAlertsInMenu: Bool = false
     let isEnabledNotificationsInMenu: Bool = true
     let isEnabledHelpUsInMenu: Bool = true
     let isEnabledPersonalData: Bool = true

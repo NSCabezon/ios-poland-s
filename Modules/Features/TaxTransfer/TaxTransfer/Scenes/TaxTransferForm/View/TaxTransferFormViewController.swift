@@ -26,8 +26,7 @@ final class TaxTransferFormViewController: UIViewController {
         configuration: presenter.getTaxFormConfiguration(),
         delegate: self
     )
-    
-    
+
     init(presenter: TaxTransferFormPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -96,10 +95,6 @@ private extension TaxTransferFormViewController {
         navigationController?.addNavigationBarShadow()
     }
     
-    @objc func back() {
-         presenter.didTapBack()
-    }
-    
     func configureSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(formView)
@@ -142,6 +137,10 @@ private extension TaxTransferFormViewController {
     
     func configureStyling() {
         view.backgroundColor = .white
+    }
+    
+    @objc func back() {
+         presenter.didTapBack()
     }
 }
 

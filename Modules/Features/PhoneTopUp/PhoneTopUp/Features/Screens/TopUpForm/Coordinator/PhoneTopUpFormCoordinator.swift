@@ -52,6 +52,10 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return ContactsPermissionHelper()
         }
         
+        dependenciesEngine.register(for: PolishContactsFiltering.self) { _ in
+            return PolishContactsFilter()
+        }
+        
         self.dependenciesEngine.register(for: ContactMapping.self) { _ in
             return ContactMapper()
         }

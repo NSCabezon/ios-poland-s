@@ -5,6 +5,7 @@ import CoreFoundationLib
 
 protocol CharityTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToCharityTransfer()
+    func goToGlobalPosition()
 }
 
 final class CharityTransferSummaryPresenter {
@@ -43,6 +44,10 @@ extension CharityTransferSummaryPresenter: CharityTransferSummaryPresenterProtoc
     
     func goToCharityTransfer() {
         coordinator.goToMakeAnotherPayment()
+    }
+    
+    func goToGlobalPosition() {
+        coordinator.goToGlobalPosition()
     }
 }
 

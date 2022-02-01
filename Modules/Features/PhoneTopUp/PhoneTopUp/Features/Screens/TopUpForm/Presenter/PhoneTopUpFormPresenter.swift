@@ -28,6 +28,20 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
 }
 
 final class PhoneTopUpFormPresenter {
+    private enum InputPhoneNumber {
+        case partial(number: String)
+        case full(number: String)
+        
+        var number: String {
+            switch self {
+            case .partial(let number):
+                return number
+            case .full(let number):
+                return number
+            }
+        }
+    }
+    
     // MARK: Properties
     
     weak var view: PhoneTopUpFormViewProtocol?
@@ -39,11 +53,37 @@ final class PhoneTopUpFormPresenter {
     private let internetContacts: [MobileContact]
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
-    private var selectedAccountNumber: String?
-    private var selectedOperator: GSMOperator?
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
     private let useCaseHandler: UseCaseHandler
     private let contactsPermissionHelper: ContactsPermissionHelperProtocol
+    private let polishContactsFilter: PolishContactsFiltering
+    
+    private var selectedAccountNumber: String?
+    private var selectedGsmOperator: GSMOperator? {
+        didSet {
+            let matchingOperator = operators.first(where: { $0.id == selectedGsmOperator?.id })
+            selectedOperator = matchingOperator
+        }
+    }
+    private var selectedOperator: Operator? {
+        didSet {
+            view?.showOperatorSelection(with: selectedOperator)
+        }
+    }
+        
+    private var phoneNumber: InputPhoneNumber = .partial(number: "") {
+        didSet {
+            view?.updatePhoneInput(with: phoneNumber.number)
+            validatePhoneNumber()
+            updateRecipientName()
+            updateOperator()
+        }
+    }
+    private var recipientName: String = "" {
+        didSet {
+            view?.updateRecipientName(with: recipientName)
+        }
+    }
     
     // MARK: Lifecycle
     
@@ -64,6 +104,7 @@ final class PhoneTopUpFormPresenter {
         self.getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
         self.useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
         self.contactsPermissionHelper = dependenciesResolver.resolve(for: ContactsPermissionHelperProtocol.self)
+        self.polishContactsFilter = dependenciesResolver.resolve(for: PolishContactsFiltering.self)
     }
 }
 
@@ -110,22 +151,16 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func didInputPartialPhoneNumber(_ number: String) {
-        view?.showOperatorSelection(with: nil)
+        phoneNumber = .partial(number: number)
     }
     
     func didInputFullPhoneNumber(_ number: String) {
-        if let matchingOperator = matchOperator(with: number) {
-            view?.showInvalidPhoneNumberError(false)
-            view?.showOperatorSelection(with: matchingOperator)
-        } else {
-            view?.showInvalidPhoneNumberError(true)
-            view?.showOperatorSelection(with: nil)
-        }
+        phoneNumber = .full(number: number)
     }
     
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
-        view?.updateContact(with: contact)
-        didInputFullPhoneNumber(contact.phoneNumber.filter(\.isNumber))
+        phoneNumber = .full(number: contact.phoneNumber)
+        recipientName = contact.fullName
     }
     
     func mobileContactDidSelectCloseProcess() {
@@ -151,24 +186,73 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func didTouchOperatorSelectionButton() {
-        coordinator?.showOperatorSelection(currentlySelectedOperatorId: selectedOperator?.id)
+        coordinator?.showOperatorSelection(currentlySelectedOperatorId: selectedGsmOperator?.id)
     }
     
     func didSelectOperator(_ gsmOperator: GSMOperator) {
-        selectedOperator = gsmOperator
+        selectedGsmOperator = gsmOperator
     }
 }
 
 private extension PhoneTopUpFormPresenter {
-    func matchOperator(with number: String) -> Operator? {
-        return operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })
+    func validatePhoneNumber() {
+        switch phoneNumber {
+        case .partial(_):
+            view?.showInvalidPhoneNumberError(false)
+        case .full(let number):
+            let showError = matchGSMOperator(with: number) == nil
+            view?.showInvalidPhoneNumberError(showError)
+        }
+    }
+    
+    func updateRecipientName() {
+        switch phoneNumber {
+        case .partial(_):
+            recipientName = ""
+        case .full(let number):
+            recipientName = ""
+            let phoneNumberDigits = number.filter(\.isNumber)
+            if let internetContact = internetContacts.first(where: { $0.phoneNumberDigits == phoneNumberDigits }) {
+                recipientName = internetContact.fullName
+                return
+            }
+            
+            getPhoneContacts { [weak self] contacts in
+                if let phoneContact = contacts.first(where: { $0.phoneNumberDigits == phoneNumberDigits }) {
+                    self?.recipientName = phoneContact.fullName
+                }
+            }
+        }
+    }
+    
+    func updateOperator() {
+        switch phoneNumber {
+        case .partial(_):
+            selectedGsmOperator = nil
+        case .full(let number):
+            selectedGsmOperator = matchGSMOperator(with: number)
+        }
+    }
+    
+    func matchGSMOperator(with number: String) -> GSMOperator? {
+        let operatorId = operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })?.id
+        return gsmOperators.first(where: { $0.id == operatorId })
     }
     
     func showPhoneContacts() {
+        getPhoneContacts { [weak self] contacts in
+            self?.coordinator?.showPhoneContacts(contacts)
+        }
+    }
+    
+    func getPhoneContacts(success: @escaping ([MobileContact]) -> Void) {
         Scenario(useCase: getPhoneContactsUseCase)
             .execute(on: useCaseHandler)
-            .onSuccess {[weak self] output in
-                self?.coordinator?.showPhoneContacts(output.contacts)
+            .onSuccess { [weak self] output in
+                let polishContacts = self?.polishContactsFilter.filterAndFormatPolishContacts(output.contacts) ?? []
+                success(polishContacts)
+            }.onError { error in
+                success([])
             }
     }
 }
