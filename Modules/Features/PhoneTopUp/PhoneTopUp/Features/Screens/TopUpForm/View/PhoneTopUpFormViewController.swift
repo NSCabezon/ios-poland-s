@@ -17,6 +17,7 @@ protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func showInvalidPhoneNumberError(_ showError: Bool)
     func showOperatorSelection(with operator: Operator?)
     func showContactsPermissionsDeniedDialog()
+    func updateRecipientName(with name: String)
 }
 
 final class PhoneTopUpFormViewController: UIViewController {
@@ -86,7 +87,6 @@ final class PhoneTopUpFormViewController: UIViewController {
         bottomButtonView.configure(title: localized("generic_button_continue")) { [weak self] in
             self?.presenter.didTouchContinueButton()
         }
-        bottomButtonView.disableButton()
     }
     
     // MARK: Actions
@@ -117,6 +117,10 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
         dialog.showIn(self)
     }
+    
+    func updateRecipientName(with name: String) {
+        formView.updateRecipientName(with: name)
+    }
 }
 
 extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
@@ -143,5 +147,9 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
     func updateContact(with contact: MobileContact) {
         formView.updatePhoneInput(with: contact.phoneNumber)
         formView.updateRecipientName(with: contact.fullName)
+    }
+    
+    func didTouchOperatorSelectionButton() {
+        presenter.didTouchOperatorSelectionButton()
     }
 }

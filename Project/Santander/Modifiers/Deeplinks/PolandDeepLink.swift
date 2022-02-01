@@ -20,6 +20,7 @@ enum PolandDeepLink: CaseIterable {
     case contact
     case blikTransaction
     case ourOffer
+    case alertsNotification
 }
 
 extension PolandDeepLink: DeepLinkEnumerationCapable {
@@ -29,6 +30,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case PolandDeepLink.contact.deepLinkKey: self = .contact
         case PolandDeepLink.blikTransaction.deepLinkKey: self = .blikTransaction
         case PolandDeepLink.ourOffer.deepLinkKey: self = .ourOffer
+        case PolandDeepLink.alertsNotification.deepLinkKey: self = .alertsNotification
         default: return nil
         }
     }
@@ -39,6 +41,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .contact: return "contact_pl"
         case .blikTransaction: return "blikTransaction_pl"
         case .ourOffer: return "ourOffer_pl"
+        case .alertsNotification: return "alertsNotification_pl"
         }
     }
       
@@ -48,6 +51,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .contact: return "contact"
         case .blikTransaction: return "blikTransaction"
         case .ourOffer: return "new_bbc_offer"
+        case .alertsNotification: return "alerts_notification"
         }
     }
     
@@ -60,6 +64,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .contact: return .publicDeepLink
         case .blikTransaction: return .privateDeepLink // TODO:- Change deepLink to public later (MVP expects it to be private)
         case .ourOffer: return .privateDeepLink
+        case .alertsNotification: return .privateDeepLink
         }
     }
 }

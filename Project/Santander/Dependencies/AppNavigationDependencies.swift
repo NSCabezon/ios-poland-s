@@ -18,6 +18,9 @@ import OneAuthorizationProcessor
 import LoanSchedule
 import TaxTransfer
 import CharityTransfer
+import Account
+import Loans
+import Cards
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -92,6 +95,15 @@ final class AppNavigationDependencies {
         
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
             return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
+            return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: LoanTransactionActionsModifier.self) { resolver in
+            return PLLoanTransactionActionsModifier(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+            return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()

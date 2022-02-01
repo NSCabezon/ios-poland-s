@@ -10,6 +10,7 @@ import OpenCombine
 import CoreDomain
 
 struct TransfersDataRepository: PLTransfersRepository {
+
     let bsanTransferManager: PLTransfersManagerProtocol
     
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {

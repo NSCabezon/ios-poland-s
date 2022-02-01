@@ -90,7 +90,7 @@ public final class PLManagersProviderAdapter {
         self.timeLineManager = PLTimeLineManagerAdapter()
         self.simulatorManager = PLLoanSimulatorManagerAdapter()
         self.onePlanManager = PLOnePlanManagerAdapter()
-        self.lastLogonManager = PLLastLogonManagerAdapter()
+        self.lastLogonManager = PLLastLogonManagerAdapter(loginManager: self.plManagersProvider.getLoginManager(), bsanDataProvider: bsanDataProvider)
         self.financialAgregatorManager = PLFinancialAgregatorManagerAdapter()
         self.bizumManager = PLBizumManagerAdapter()
         self.managerNotificationsManager = PLManagerNotificationsManagerAdapter()
@@ -106,7 +106,7 @@ public final class PLManagersProviderAdapter {
         self.accountsManager = PLAccountsManagerAdapter(accountManager: self.plManagersProvider.getAccountsManager(), bsanDataProvider: bsanDataProvider)
         self.cardsManagerAdapter = PLCardsManagerAdapter(cardsManager: self.plManagersProvider.getCardsManager(), bsanDataProvider: bsanDataProvider, globalPositionManager: self.plManagersProvider.getGlobalPositionManager(), cardTransactionsManager: self.plManagersProvider.getCardTransactionsManager(), cardOperativesManager: self.plManagersProvider.getCardOperativesManager())
         self.signatureAdapter = PLSignatureAdapter()
-		self.depositsManagerApadater = PLDepositsManagerAdapter(depositManager: self.plManagersProvider.getDepositsManager(), bsanDataProvider: bsanDataProvider)
+        self.depositsManagerApadater = PLDepositsManagerAdapter(depositManager: self.plManagersProvider.getDepositsManager(), bsanDataProvider: bsanDataProvider)
         self.loansManager = PLLoansManagerAdapter(loanManager: self.plManagersProvider.getLoansManager(), bsanDataProvider: bsanDataProvider)
         self.pensionsManager = PLPensionsManagerAdapter()
         self.favouriteTransfersManager = PLFavouriteTransfersManagerAdapter()
@@ -216,6 +216,10 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
     }
     
     public func getBsanLoansManager() -> BSANLoansManager {
+        return self.loansManager
+    }
+    
+    public func getLoansManager() -> PLLoansManagerAdapterProtocol {
         return self.loansManager
     }
     

@@ -57,11 +57,12 @@ public enum NetworkProviderContentType : String {
     case urlEncoded = "x-www-form-urlencoded"
     case json = "json"
     case queryString = "query"
+    case pdf = "pdf"
 }
 
 // MARK: - NetworkProviderError
 
-public enum NetworkProviderError: Error {
+public enum NetworkProviderError: LocalizedError {
     case error(_ error: NetworkProviderResponseError)
     case unauthorized
     case other

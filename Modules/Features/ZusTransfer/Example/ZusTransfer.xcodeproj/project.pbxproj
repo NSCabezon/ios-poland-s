@@ -21,8 +21,22 @@
 		A3C48891279AA09B009E3974 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C48890279AA09B009E3974 /* TestHelper.swift */; };
 		A3C48893279AE1C1009E3974 /* ZusTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */; };
 		A3C48895279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C48894279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift */; };
-		B0294BE827919867005A9BDD /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0294BE727919867005A9BDD /* Tests.swift */; };
 		B0294BEB27919CA4005A9BDD /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0294BE927919C96005A9BDD /* Mocks.swift */; };
+		B02F92C5279967FD005F2B66 /* ZusTransferConfirmationViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92B827996095005F2B66 /* ZusTransferConfirmationViewControllerMock.swift */; };
+		B02F92C627996800005F2B66 /* ZusTransferConfirmationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92BD279963D8005F2B66 /* ZusTransferConfirmationCoordinatorMock.swift */; };
+		B02F92C8279969F2005F2B66 /* ZusTransferConfirmationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92C7279969F2005F2B66 /* ZusTransferConfirmationPresenterTests.swift */; };
+		B02F92D0279992C3005F2B66 /* AcceptZusTransactionUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92CE279992A1005F2B66 /* AcceptZusTransactionUseCaseTests.swift */; };
+		B02F92DE279EC1B0005F2B66 /* ZusTransferSummaryMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92DC279EC1A4005F2B66 /* ZusTransferSummaryMapperTests.swift */; };
+		B02F92E3279EC690005F2B66 /* ZusTransferSummaryCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92E1279EC68B005F2B66 /* ZusTransferSummaryCoordinatorMock.swift */; };
+		B02F92EA279EC876005F2B66 /* ZusTransferSummaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92E9279EC876005F2B66 /* ZusTransferSummaryPresenterTests.swift */; };
+		B02F92EB279EC87A005F2B66 /* ZusTransferSummaryViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92E6279EC742005F2B66 /* ZusTransferSummaryViewControllerMock.swift */; };
+		B02F92EC279EC87E005F2B66 /* ZusTransferSummaryMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92E4279EC6C8005F2B66 /* ZusTransferSummaryMockBuilder.swift */; };
+		B02F92F6279FBECC005F2B66 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92F1279FBECB005F2B66 /* PLTransfersManagerNonConnectionFailureMock.swift */; };
+		B02F92F7279FBECC005F2B66 /* PLManagersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92F2279FBECB005F2B66 /* PLManagersProviderMock.swift */; };
+		B02F92F8279FBECC005F2B66 /* PLTransfersManagerSuccessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92F3279FBECB005F2B66 /* PLTransfersManagerSuccessMock.swift */; };
+		B02F92F9279FBECC005F2B66 /* PLLoginManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92F4279FBECB005F2B66 /* PLLoginManagerMock.swift */; };
+		B02F92FA279FBECC005F2B66 /* PLTransactionParametersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92F5279FBECB005F2B66 /* PLTransactionParametersProviderMock.swift */; };
+		B02F92FC279FC1EB005F2B66 /* ZusTransferModelMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02F92FB279FC1EB005F2B66 /* ZusTransferModelMockBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +72,22 @@
 		A3C48890279AA09B009E3974 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferFormViewMock.swift; sourceTree = "<group>"; };
 		A3C48894279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferFormViewModelMockBuilder.swift; sourceTree = "<group>"; };
-		B0294BE727919867005A9BDD /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		B0294BE927919C96005A9BDD /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		B02F92B827996095005F2B66 /* ZusTransferConfirmationViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferConfirmationViewControllerMock.swift; sourceTree = "<group>"; };
+		B02F92BD279963D8005F2B66 /* ZusTransferConfirmationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferConfirmationCoordinatorMock.swift; sourceTree = "<group>"; };
+		B02F92C7279969F2005F2B66 /* ZusTransferConfirmationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferConfirmationPresenterTests.swift; sourceTree = "<group>"; };
+		B02F92CE279992A1005F2B66 /* AcceptZusTransactionUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptZusTransactionUseCaseTests.swift; sourceTree = "<group>"; };
+		B02F92DC279EC1A4005F2B66 /* ZusTransferSummaryMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferSummaryMapperTests.swift; sourceTree = "<group>"; };
+		B02F92E1279EC68B005F2B66 /* ZusTransferSummaryCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferSummaryCoordinatorMock.swift; sourceTree = "<group>"; };
+		B02F92E4279EC6C8005F2B66 /* ZusTransferSummaryMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferSummaryMockBuilder.swift; sourceTree = "<group>"; };
+		B02F92E6279EC742005F2B66 /* ZusTransferSummaryViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferSummaryViewControllerMock.swift; sourceTree = "<group>"; };
+		B02F92E9279EC876005F2B66 /* ZusTransferSummaryPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferSummaryPresenterTests.swift; sourceTree = "<group>"; };
+		B02F92F1279FBECB005F2B66 /* PLTransfersManagerNonConnectionFailureMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerNonConnectionFailureMock.swift; sourceTree = "<group>"; };
+		B02F92F2279FBECB005F2B66 /* PLManagersProviderMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLManagersProviderMock.swift; sourceTree = "<group>"; };
+		B02F92F3279FBECB005F2B66 /* PLTransfersManagerSuccessMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerSuccessMock.swift; sourceTree = "<group>"; };
+		B02F92F4279FBECB005F2B66 /* PLLoginManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLLoginManagerMock.swift; sourceTree = "<group>"; };
+		B02F92F5279FBECB005F2B66 /* PLTransactionParametersProviderMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTransactionParametersProviderMock.swift; sourceTree = "<group>"; };
+		B02F92FB279FC1EB005F2B66 /* ZusTransferModelMockBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZusTransferModelMockBuilder.swift; sourceTree = "<group>"; };
 		B240735FBB98FFA6DFBA573A /* Pods_ZusTransfer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZusTransfer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7BA3BE1978577E1389C7716 /* Pods-ZusTransfer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusTransfer_Example.debug.xcconfig"; path = "Target Support Files/Pods-ZusTransfer_Example/Pods-ZusTransfer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F23A62D41B744ADEADCC5756 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -132,9 +160,10 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B02F92DF279EC3D0005F2B66 /* Summary */,
+				B02F92B72799605C005F2B66 /* Confirmation */,
 				A3C488862798CD1E009E3974 /* ZusTransferForm */,
 				A3C488822798C335009E3974 /* Mock */,
-				B0294BE727919867005A9BDD /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -181,9 +210,13 @@
 		A3C488822798C335009E3974 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				B02F92FB279FC1EB005F2B66 /* ZusTransferModelMockBuilder.swift */,
+				B02F92F4279FBECB005F2B66 /* PLLoginManagerMock.swift */,
+				B02F92F2279FBECB005F2B66 /* PLManagersProviderMock.swift */,
+				B02F92F5279FBECB005F2B66 /* PLTransactionParametersProviderMock.swift */,
+				B02F92F1279FBECB005F2B66 /* PLTransfersManagerNonConnectionFailureMock.swift */,
+				B02F92F3279FBECB005F2B66 /* PLTransfersManagerSuccessMock.swift */,
 				A3C488832798C46B009E3974 /* AccountForDebitMockBuilder.swift */,
-				A3C4888D279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift */,
-				A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */,
 				A3C48894279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift */,
 			);
 			name = Mock;
@@ -192,6 +225,7 @@
 		A3C488862798CD1E009E3974 /* ZusTransferForm */ = {
 			isa = PBXGroup;
 			children = (
+				B02F92F0279FBD65005F2B66 /* Mock */,
 				A3C4888F279AA082009E3974 /* TestHelper */,
 				A3C4888A2798CDD4009E3974 /* Presenter */,
 				A3C488872798CD2B009E3974 /* Validator */,
@@ -221,6 +255,86 @@
 				A3C48890279AA09B009E3974 /* TestHelper.swift */,
 			);
 			name = TestHelper;
+			sourceTree = "<group>";
+		};
+		B02F92B72799605C005F2B66 /* Confirmation */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92EF279FBD57005F2B66 /* Mock */,
+				B02F92CD27999277005F2B66 /* UseCase */,
+				B02F92C12799658D005F2B66 /* Mapper */,
+				B02F92C02799657D005F2B66 /* Presenter */,
+			);
+			name = Confirmation;
+			sourceTree = "<group>";
+		};
+		B02F92C02799657D005F2B66 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92C7279969F2005F2B66 /* ZusTransferConfirmationPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		B02F92C12799658D005F2B66 /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92DC279EC1A4005F2B66 /* ZusTransferSummaryMapperTests.swift */,
+			);
+			name = Mapper;
+			sourceTree = "<group>";
+		};
+		B02F92CD27999277005F2B66 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92CE279992A1005F2B66 /* AcceptZusTransactionUseCaseTests.swift */,
+			);
+			name = UseCase;
+			sourceTree = "<group>";
+		};
+		B02F92DF279EC3D0005F2B66 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92E8279EC85D005F2B66 /* Presenter */,
+				B02F92E0279EC673005F2B66 /* Mock */,
+			);
+			name = Summary;
+			sourceTree = "<group>";
+		};
+		B02F92E0279EC673005F2B66 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92E1279EC68B005F2B66 /* ZusTransferSummaryCoordinatorMock.swift */,
+				B02F92E4279EC6C8005F2B66 /* ZusTransferSummaryMockBuilder.swift */,
+				B02F92E6279EC742005F2B66 /* ZusTransferSummaryViewControllerMock.swift */,
+			);
+			name = Mock;
+			sourceTree = "<group>";
+		};
+		B02F92E8279EC85D005F2B66 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92E9279EC876005F2B66 /* ZusTransferSummaryPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		B02F92EF279FBD57005F2B66 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				B02F92B827996095005F2B66 /* ZusTransferConfirmationViewControllerMock.swift */,
+				B02F92BD279963D8005F2B66 /* ZusTransferConfirmationCoordinatorMock.swift */,
+			);
+			name = Mock;
+			sourceTree = "<group>";
+		};
+		B02F92F0279FBD65005F2B66 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				A3C4888D279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift */,
+				A3C48892279AE1C1009E3974 /* ZusTransferFormViewMock.swift */,
+			);
+			name = Mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -552,14 +666,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B02F92C5279967FD005F2B66 /* ZusTransferConfirmationViewControllerMock.swift in Sources */,
+				B02F92EC279EC87E005F2B66 /* ZusTransferSummaryMockBuilder.swift in Sources */,
+				B02F92EA279EC876005F2B66 /* ZusTransferSummaryPresenterTests.swift in Sources */,
+				B02F92FA279FBECC005F2B66 /* PLTransactionParametersProviderMock.swift in Sources */,
+				B02F92F7279FBECC005F2B66 /* PLManagersProviderMock.swift in Sources */,
+				B02F92C627996800005F2B66 /* ZusTransferConfirmationCoordinatorMock.swift in Sources */,
+				B02F92E3279EC690005F2B66 /* ZusTransferSummaryCoordinatorMock.swift in Sources */,
+				B02F92EB279EC87A005F2B66 /* ZusTransferSummaryViewControllerMock.swift in Sources */,
+				B02F92F8279FBECC005F2B66 /* PLTransfersManagerSuccessMock.swift in Sources */,
+				B02F92F6279FBECC005F2B66 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
+				B02F92C8279969F2005F2B66 /* ZusTransferConfirmationPresenterTests.swift in Sources */,
+				B02F92D0279992C3005F2B66 /* AcceptZusTransactionUseCaseTests.swift in Sources */,
+				B02F92DE279EC1B0005F2B66 /* ZusTransferSummaryMapperTests.swift in Sources */,
 				A3C4888E279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift in Sources */,
 				A3C4888C2798CE02009E3974 /* ZusTransferFormPresenterTests.swift in Sources */,
 				A3C488842798C46B009E3974 /* AccountForDebitMockBuilder.swift in Sources */,
 				A3C48893279AE1C1009E3974 /* ZusTransferFormViewMock.swift in Sources */,
 				A3C48895279AF909009E3974 /* ZusTransferFormViewModelMockBuilder.swift in Sources */,
 				A3C48891279AA09B009E3974 /* TestHelper.swift in Sources */,
-				B0294BE827919867005A9BDD /* Tests.swift in Sources */,
+				B02F92FC279FC1EB005F2B66 /* ZusTransferModelMockBuilder.swift in Sources */,
 				A3C488892798CD79009E3974 /* ZusTransferValidatorTests.swift in Sources */,
+				B02F92F9279FBECC005F2B66 /* PLLoginManagerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -449,6 +449,23 @@ public class BSANDataProvider {
                  .createPersistentPolicy()
              )
          }
+
+    // MARK: - Login Info
+    public func storeLoginInfo(dto: LoginInfoDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.loginInfo = dto
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+
+    public func getLoginInfo() -> LoginInfoDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.loginInfo
+    }
 }
 
 //MARK: -

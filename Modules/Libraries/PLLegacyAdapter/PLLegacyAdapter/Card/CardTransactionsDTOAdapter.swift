@@ -94,6 +94,7 @@ final public class CardTransactionsDTOAdapter {
             cardTransaction.cardAccountNumber = plCardTransaction.accountNumber
             cardTransaction.operationType = plCardTransaction.debitFlag
             cardTransaction.sourceDate = plCardTransaction.sourceDate
+            cardTransaction.receiptId = plCardTransaction.receiptId
             
             cardTransactions.append(cardTransaction)
             

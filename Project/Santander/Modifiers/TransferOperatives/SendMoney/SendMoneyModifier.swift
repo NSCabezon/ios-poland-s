@@ -41,4 +41,17 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     
     var isEditConfirmationEnabled: Bool = false
     var isConfirmationEmailEnabled: Bool = false
+    
+    func addSendType(operativeData: SendMoneyOperativeData) -> String? {
+        let isCreditCardAccount: Bool? = {
+            guard let specialPricesOutput = operativeData.specialPricesOutput as? SendMoneyTransferTypeUseCaseOkOutput
+            else { return nil }
+            return specialPricesOutput.isCreditCardAccount
+        }()
+        if isCreditCardAccount == true {
+            return "pl_confirmation_label_commissionsPercentage"
+        } else {
+            return nil
+        }
+    }
 }

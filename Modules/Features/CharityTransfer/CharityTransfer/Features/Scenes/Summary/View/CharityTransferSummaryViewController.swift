@@ -25,6 +25,6 @@ final class CharityTransferSummaryViewController: OperativeSummaryViewController
 
 private extension CharityTransferSummaryViewController {
     @objc func close() {
-        self.presenter.goToCharityTransfer()
+        self.presenter.goToGlobalPosition()
     }
 }
