@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import PLCommons
 import PLCryptography
-import CoreFoundationLib
 import CryptoSwift
 
 final class PLDeviceDataParametersEncryptionUseCase: UseCase<PLDeviceDataParametersEncryptionUseCaseInput, PLDeviceDataParametersEncryptionUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

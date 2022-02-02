@@ -6,7 +6,6 @@ import UIKit
 import RetailLegacy
 import CoreFoundationLib
 import PLNotifications
-import CoreFoundationLib
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -12,7 +12,6 @@ import PLUI
 import CoreFoundationLib
 import PLCommons
 import PLCommonOperatives
-import CoreFoundationLib
 import PhoneTopUp
 
 final class OneAppInitViewController: UIViewController, ErrorPresentable, LoaderPresentable {

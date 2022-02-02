@@ -9,7 +9,6 @@ import Foundation
 import CoreFoundationLib
 import LoginCommon
 import PLCommons
-import CoreFoundationLib
 import LocalAuthentication
 import Dynatrace
 import CoreDomain

@@ -11,7 +11,6 @@ import CoreFoundationLib
 import CoreDomain
 import Foundation
 import RetailLegacy
-import CoreFoundationLib
 
 struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     

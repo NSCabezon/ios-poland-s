@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 import PLCommonOperatives
 import CharityTransfer
 

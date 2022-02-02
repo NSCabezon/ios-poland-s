@@ -10,7 +10,6 @@ import SANLegacyLibrary
 import SANPLLibrary
 import CoreFoundationLib
 import CoreDomain
-import CoreFoundationLib
 
 final class SendMoneyTransferTypeUseCase: UseCase<SendMoneyTransferTypeUseCaseInputProtocol, SendMoneyTransferTypeUseCaseOkOutputProtocol, StringErrorOutput>, SendMoneyTransferTypeUseCaseProtocol {
     let transfersRepository: PLTransfersRepository

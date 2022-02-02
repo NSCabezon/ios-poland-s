@@ -8,7 +8,6 @@
 import UI
 import CoreFoundationLib
 import CoreDomain
-import CoreFoundationLib
 import PLCommons
 import PLCommonOperatives
 import SANPLLibrary

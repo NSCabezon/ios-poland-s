@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import UI
 import PLUI
-import CoreFoundationLib
 import PLCommons
 
 protocol AliasDateChangePresenterProtocol {

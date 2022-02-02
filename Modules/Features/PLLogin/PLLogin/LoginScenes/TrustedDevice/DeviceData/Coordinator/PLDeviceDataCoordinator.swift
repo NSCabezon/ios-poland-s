@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 protocol PLDeviceDataCoordinatorProtocol {
     func goToTrustedDevicePIN(with trustedDeviceConfiguration: TrustedDeviceConfiguration)

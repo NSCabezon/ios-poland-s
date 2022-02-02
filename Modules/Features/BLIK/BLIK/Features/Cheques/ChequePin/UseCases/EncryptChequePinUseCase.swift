@@ -1,6 +1,5 @@
 import CoreFoundationLib
 import Foundation
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol EncryptChequePinUseCaseProtocol: UseCase<EncryptChequePinUseCaseInput, String, StringErrorOutput> {}

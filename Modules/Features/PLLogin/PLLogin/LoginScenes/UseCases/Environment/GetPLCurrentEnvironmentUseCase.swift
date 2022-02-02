@@ -6,7 +6,6 @@ import Foundation
 import CoreFoundationLib
 import SANLegacyLibrary
 import SANPLLibrary
-import CoreFoundationLib
 
 final class GetPLCurrentEnvironmentUseCase: UseCase<Void, GetCurrentBSANEnvironmentUseCaseOkOutput, GetCurrentBSANEnvironmentUseCaseErrorOutput> {
     private let dependenciesResolver: DependenciesResolver

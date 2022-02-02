@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import PLCommons
-import CoreFoundationLib
 import SANPLLibrary
 
 final class PLDevicesUseCase: UseCase<Void, PLDevicesUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

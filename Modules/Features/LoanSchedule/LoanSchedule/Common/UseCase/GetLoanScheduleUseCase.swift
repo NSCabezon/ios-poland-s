@@ -6,8 +6,7 @@
 //
 
 import CoreFoundationLib
-import Foundation
-import CoreFoundationLib // for AmountEntity
+import Foundation // for AmountEntity
 import SANLegacyLibrary // for currencyType
 import SANPLLibrary
 

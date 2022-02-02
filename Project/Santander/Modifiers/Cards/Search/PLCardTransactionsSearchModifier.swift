@@ -8,7 +8,6 @@
 import Cards
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 import SANPLLibrary
 
 final class PLCardTransactionsSearchModifier {

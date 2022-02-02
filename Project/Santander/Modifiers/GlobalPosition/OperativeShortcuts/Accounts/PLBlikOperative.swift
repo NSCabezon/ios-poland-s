@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class PLBlikOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "blik"

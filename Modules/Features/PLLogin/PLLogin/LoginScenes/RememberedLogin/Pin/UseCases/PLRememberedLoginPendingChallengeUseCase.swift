@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import PLCommons
-import CoreFoundationLib
 import SANPLLibrary
 
 final class PLRememberedLoginPendingChallengeUseCase: UseCase<PLRememberedLoginPendingChallengeUseCaseInput, PLRememberedLoginPendingChallenge, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

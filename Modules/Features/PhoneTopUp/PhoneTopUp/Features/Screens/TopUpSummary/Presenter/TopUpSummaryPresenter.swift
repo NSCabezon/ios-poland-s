@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import PLCommons
 import Operative
-import CoreFoundationLib
 
 protocol TopUpSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func didSelectClose()

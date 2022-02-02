@@ -8,7 +8,6 @@
 import Foundation
 import CoreFoundationLib
 import PLCommons
-import CoreFoundationLib
 
 final class PLValidateVersionUseCase: UseCase<Void, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     

@@ -1,7 +1,6 @@
 import CoreFoundationLib
 import PLCommons
 import Operative
-import CoreFoundationLib
 
 protocol CharityTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToCharityTransfer()

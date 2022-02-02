@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class PLSendMoneyFavouriteOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "sendFavouritePoland"

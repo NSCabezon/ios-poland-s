@@ -1,6 +1,5 @@
 import CoreFoundationLib
 import Foundation
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol GetWalletsActiveProtocol: UseCase<Void, GetWalletUseCaseOkOutput, StringErrorOutput> {}

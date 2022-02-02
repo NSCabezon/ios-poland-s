@@ -4,7 +4,6 @@ import CoreFoundationLib
 import PLCommons
 import SANLegacyLibrary
 import IQKeyboardManagerSwift
-import CoreFoundationLib
 
 protocol MobileTransferFormViewProtocol: AnyObject {
     func didChangeForm(phoneNumberStartedEdited: Bool)

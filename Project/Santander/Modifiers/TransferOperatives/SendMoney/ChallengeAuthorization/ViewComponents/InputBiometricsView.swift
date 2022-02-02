@@ -8,7 +8,6 @@
 import UI
 import CoreFoundationLib
 import PLCommons
-import CoreFoundationLib
 import PLUI
 
 public protocol InputBiometricsDelegate: AnyObject {

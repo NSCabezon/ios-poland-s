@@ -7,10 +7,8 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 import SANLegacyLibrary
 import LoginCommon
-import CoreFoundationLib
 
 final class PLHardwareTokenCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtocol {
     weak var navigationController: UINavigationController?

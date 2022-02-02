@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import CoreDomain
-import CoreFoundationLib
 import PLCommons
 
 protocol CharityTransferConfirmationPresenterProtocol {

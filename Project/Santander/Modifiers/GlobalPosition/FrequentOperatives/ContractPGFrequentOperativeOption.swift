@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class ContractPGFrequentOperativeOption {
     let trackName: String? = "contratar"

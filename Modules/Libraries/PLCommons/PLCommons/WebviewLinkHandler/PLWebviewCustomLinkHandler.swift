@@ -9,7 +9,6 @@
 import Foundation
 import CoreFoundationLib
 import WebViews
-import CoreFoundationLib
 import os
 
 public class PLWebviewCustomLinkHandler: WebViewLinkHandler {

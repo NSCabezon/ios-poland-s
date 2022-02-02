@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import RetailLegacy
-import CoreFoundationLib
 import PLCommons
 import PLCommonOperatives
 import UI

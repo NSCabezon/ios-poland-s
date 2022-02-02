@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import Foundation
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol LoadChequesUseCaseProtocol: UseCase<LoadChequesUseCaseInput, LoadChequesUseCaseOutput, StringErrorOutput> {}

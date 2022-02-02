@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class PLSwitchBetweenAccountOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "switchBetweenAccountPoland"

@@ -6,9 +6,8 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Commons
-@testable import CreditCardRepayment
 import CoreFoundationLib
+@testable import CreditCardRepayment
 import SANPLLibrary
 import XCTest
 

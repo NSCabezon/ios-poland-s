@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class BuyInsurancePGFrequentOperativeOption {
     let trackName: String? = "buyInsurance"

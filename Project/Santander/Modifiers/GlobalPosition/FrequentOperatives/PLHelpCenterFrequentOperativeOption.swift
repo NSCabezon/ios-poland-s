@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 import PLHelpCenter
 
 final class PLHelpCenterFrequentOperativeOption {

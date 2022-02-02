@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class AtmsAndBranchesPGFrequentOperativeOption {
     let trackName: String? = "atmsAndBranches"

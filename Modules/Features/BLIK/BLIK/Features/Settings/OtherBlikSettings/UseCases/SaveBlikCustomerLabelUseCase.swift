@@ -1,6 +1,5 @@
 import CoreFoundationLib
 import Foundation
-import CoreFoundationLib
 import SANPLLibrary
 
 protocol SaveBlikCustomerLabelUseCaseProtocol: UseCase<SaveBlikCustomerLabelInput, Void, StringErrorOutput> {}

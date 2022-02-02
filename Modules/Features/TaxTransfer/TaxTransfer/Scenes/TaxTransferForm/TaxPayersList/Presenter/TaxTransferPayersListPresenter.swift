@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import PLUI
 import UI
-import CoreFoundationLib
 
 protocol TaxTransferPayersListPresenterProtocol {
     var view: TaxTransferPayersListView? { get set }

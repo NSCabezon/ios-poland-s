@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 
 final class PLAccountNotificationsOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "accountNotificationsPoland"

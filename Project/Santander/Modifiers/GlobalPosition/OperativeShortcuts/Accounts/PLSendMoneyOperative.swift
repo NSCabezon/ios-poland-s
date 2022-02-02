@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import CoreFoundationLib
 import UIKit
 
 final class PLSendMoneyOperative: AccountOperativeActionTypeProtocol {

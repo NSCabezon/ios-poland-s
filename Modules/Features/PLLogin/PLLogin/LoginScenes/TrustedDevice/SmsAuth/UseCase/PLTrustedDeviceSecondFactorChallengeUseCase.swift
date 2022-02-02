@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import PLCommons
-import CoreFoundationLib
 import SANPLLibrary
 
 final class PLTrustedDeviceSecondFactorChallengeUseCase: UseCase<PLTrustedDeviceSecondFactorChallengeInput, PLTrustedDeviceSecondFactorChallengeOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

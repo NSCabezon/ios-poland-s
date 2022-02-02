@@ -15,7 +15,6 @@ import PLCommons
 import Loans
 import PersonalArea
 import SANLegacyLibrary
-import CoreFoundationLib
 import TransferOperatives
 import UI
 

@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import PLCommons
-import CoreFoundationLib
 import PLUI
 
 protocol OperatorSelectionPresenterProtocol: AnyObject {
