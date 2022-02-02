@@ -158,7 +158,7 @@
 		A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1B81B122726D3B300714A3E /* Regression.xcconfig */; };
 		A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
@@ -870,16 +870,15 @@
 		446E0C1C265FE42400847FCA /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				045D0D8127981B6700BA42DB /* AppStoreInformation */,
-				B0D77A5A276C8BEF00766705 /* AdditionalUseCases */,
-				5FBDB730273BB47D00FB6DAF /* Session */,
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
-				DBF75833279886B500170943 /* HelpCenter */,
 				0DCED399268B0B16001D38CC /* Accounts */,
+				B0D77A5A276C8BEF00766705 /* AdditionalUseCases */,
+				045D0D8127981B6700BA42DB /* AppStoreInformation */,
 				447D7D2D268F002700F9A70D /* Cards */,
 				B01155F92715933300A4C175 /* DeepLinks */,
 				44DE753D2754C741004DF0E7 /* GenericErrorDIalog */,
 				446E0C1D265FE42400847FCA /* GlobalPosition */,
+				DBF75833279886B500170943 /* HelpCenter */,
 				0D7CA2CB26B8077D007E0C10 /* Inbox */,
 				0D4D558B26A6DE6D0032466B /* Loans */,
 				9E92903B26F9EABA00A0178A /* Menu */,
@@ -888,6 +887,7 @@
 				D54D2EE527201CC400781580 /* Opinator */,
 				0D59D636272017EC007BF898 /* Opinator */,
 				BB29664E26CFB38B0012599D /* PersonalArea */,
+				5FBDB730273BB47D00FB6DAF /* Session */,
 				1C8B3EE8270DEF1F00868449 /* TransferOperatives */,
 				B0D77A4A276B4AE300766705 /* TransferSettings */,
 			);
@@ -1650,7 +1650,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeAmountHighView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
