@@ -23,6 +23,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
     func didTouchContactsButton()
     func didInputPartialPhoneNumber(_ number: String)
     func didInputFullPhoneNumber(_ number: String)
+    func didSelectTopUpAmount(_ value: TopUpValue?)
     func didTouchContinueButton()
     func didTouchOperatorSelectionButton()
 }
@@ -59,18 +60,7 @@ final class PhoneTopUpFormPresenter {
     private let polishContactsFilter: PolishContactsFiltering
     
     private var selectedAccountNumber: String?
-    private var selectedGsmOperator: GSMOperator? {
-        didSet {
-            let matchingOperator = operators.first(where: { $0.id == selectedGsmOperator?.id })
-            selectedOperator = matchingOperator
-        }
-    }
-    private var selectedOperator: Operator? {
-        didSet {
-            view?.showOperatorSelection(with: selectedOperator)
-        }
-    }
-        
+    
     private var phoneNumber: InputPhoneNumber = .partial(number: "") {
         didSet {
             view?.updatePhoneInput(with: phoneNumber.number)
@@ -79,6 +69,28 @@ final class PhoneTopUpFormPresenter {
             updateOperator()
         }
     }
+    
+    private var selectedGsmOperator: GSMOperator? {
+        didSet {
+            view?.updateOperatorSelection(with: selectedGsmOperator)
+            let matchingOperator = operators.first(where: { $0.id == selectedGsmOperator?.id })
+            selectedOperator = matchingOperator
+        }
+    }
+    
+    private var selectedOperator: Operator? {
+        didSet {
+            selectedTopUpValue = nil
+            view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
+        }
+    }
+    
+    private var selectedTopUpValue: TopUpValue? {
+        didSet {
+            view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
+        }
+    }
+        
     private var recipientName: String = "" {
         didSet {
             view?.updateRecipientName(with: recipientName)
@@ -161,6 +173,10 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
         phoneNumber = .full(number: contact.phoneNumber)
         recipientName = contact.fullName
+    }
+    
+    func didSelectTopUpAmount(_ value: TopUpValue?) {
+        selectedTopUpValue = value
     }
     
     func mobileContactDidSelectCloseProcess() {

@@ -11,6 +11,10 @@ import PLUI
 import CoreFoundationLib
 import PLCommons
 
+protocol PaymentAmontSelectionViewDelegate: AnyObject {
+    func didSelectTopUpValue(_ value: TopUpValue?)
+}
+
 final class PaymentAmountSelectionView: UIView {
     // MARK: Views
     
@@ -18,9 +22,12 @@ final class PaymentAmountSelectionView: UIView {
     
     // MARK: Properties
     
+    weak var delegate: PaymentAmontSelectionViewDelegate?
     private let cellReuseIdentifier = "PaymentAmountCollectionViewCell"
     private let cellSpacing: CGFloat = 16.0
     private var selectedItemIndex: Int?
+    private var values: TopUpValues?
+    private var selectedValue: TopUpValue?
     
     // MARK: Lifecycle
     
@@ -34,6 +41,13 @@ final class PaymentAmountSelectionView: UIView {
     }
         
     // MARK: Configuration
+    
+    func setUp(with values: TopUpValues?, selectedValue: TopUpValue?) {
+        isHidden = values.isNil
+        self.values = values
+        self.selectedValue = selectedValue
+        collectionView.reloadData()
+    }
     
     private func setUp() {
         addSubviews()
@@ -68,23 +82,24 @@ final class PaymentAmountSelectionView: UIView {
 
 extension PaymentAmountSelectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        #warning("todo: remove mock cells")
-        return 7
+        return values?.values.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(type: PaymentAmountCollectionViewCell.self, at: indexPath)
         let cellStyle: PaymentAmountCollectionViewCell.Style = selectedItemIndex == indexPath.row ? .selected : .unselected
         cell.setStyle(cellStyle)
+        if let topUpValue = values?.values[indexPath.row] {
+            cell.setUp(with: topUpValue, isSelected: topUpValue == selectedValue)
+        }
         return cell
     }
 }
 
 extension PaymentAmountSelectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let itemIndex = indexPath.row
-        selectedItemIndex = selectedItemIndex == itemIndex ? nil : itemIndex
-        collectionView.reloadData()
+        let selectedValue = values?.values[safe: indexPath.row]
+        delegate?.didSelectTopUpValue(selectedValue)
     }
 }
 

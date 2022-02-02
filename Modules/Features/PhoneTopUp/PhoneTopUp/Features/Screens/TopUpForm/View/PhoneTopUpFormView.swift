@@ -16,6 +16,7 @@ protocol PhoneTopUpFormViewDelegate: AnyObject {
     func didTouchOperatorSelectionButton()
     func topUpFormDidInputPartialPhoneNumber(_ number: String)
     func topUpFormDidInputFullPhoneNumber(_ number: String)
+    func topUpFormDidSelectTopUpAmount(_ value: TopUpValue?)
 }
 
 final class PhoneTopUpFormView: UIView {
@@ -53,6 +54,7 @@ final class PhoneTopUpFormView: UIView {
         prepareSelectAccountView()
         phoneNumberInputView.delegate = self
         operatorSelectionView.delegate = self
+        amountSelectionView.delegate = self
     }
 
     private func addSubviews() {
@@ -108,13 +110,11 @@ final class PhoneTopUpFormView: UIView {
     
     func showInvalidPhoneNumberError(_ showError: Bool) {
         phoneNumberInputView.showInvalidPhoneNumberError(showError)
-        showOperatorSelection(with: nil)
+        updateOperatorSelection(with: nil)
     }
     
-    func showOperatorSelection(with mobileOperator: Operator?) {
-        operatorSelectionView.isHidden = mobileOperator == nil
-        amountSelectionView.isHidden = mobileOperator == nil
-        termsAndConditionsView.isHidden = mobileOperator == nil
+    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+        operatorSelectionView.setUp(with: gsmOperator)
     }
     
     func updatePhoneInput(with phoneNumber: String) {
@@ -124,6 +124,10 @@ final class PhoneTopUpFormView: UIView {
     func updateRecipientName(with name: String) {
         recipientNameView.setUp(with: name)
         recipientNameView.isHidden = name.isEmpty
+    }
+    
+    func updatePaymentAmounts(with values: TopUpValues?, selectedValue: TopUpValue?) {
+        amountSelectionView.setUp(with: values, selectedValue: selectedValue)
     }
 }
 
@@ -144,5 +148,11 @@ extension PhoneTopUpFormView: PhoneNumberInputViewDelegate {
 extension PhoneTopUpFormView: OperatorSelectionViewDelegate {
     func didTouchOperatorSelectionButton() {
         delegate?.didTouchOperatorSelectionButton()
+    }
+}
+
+extension PhoneTopUpFormView: PaymentAmontSelectionViewDelegate {
+    func didSelectTopUpValue(_ value: TopUpValue?) {
+        delegate?.topUpFormDidSelectTopUpAmount(value)
     }
 }
