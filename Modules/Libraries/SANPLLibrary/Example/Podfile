@@ -7,6 +7,8 @@ def core_dependencies
   pod 'SQLite.swift/SQLCipher', :path => '../../../../santander-one/Modules/Libraries/SQLite.swift'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
+  pod 'Localization', :path => '../../../../santander-one/Localization'
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
   # Microsite configuration
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
 

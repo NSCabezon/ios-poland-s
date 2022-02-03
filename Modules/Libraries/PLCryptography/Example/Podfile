@@ -14,6 +14,8 @@ def core_dependencies
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'UI', :path => '../../../../santander-one/UI'
+  pod 'Localization', :path => '../../../../santander-one/Localization'
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
 end
 
