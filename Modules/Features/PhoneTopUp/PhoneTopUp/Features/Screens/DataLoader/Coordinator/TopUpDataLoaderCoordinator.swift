@@ -5,7 +5,7 @@
 //  Created by 188216 on 01/02/2022.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommonOperatives
 import Foundation
 import UI
