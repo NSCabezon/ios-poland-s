@@ -12,30 +12,26 @@ import CoreDomain
 import Foundation
 import RetailLegacy
 
-struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+struct ModuleDependencies {
     
-    let legacyDependenciesResolver: DependenciesInjector & DependenciesResolver
+    let oldResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
     
     func resolve() -> TimeManager {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
 
     func resolve() -> DependenciesResolver {
-        return legacyDependenciesResolver
+        return oldResolver
     }
     
     func resolve() -> AppConfigRepositoryProtocol {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> TrackerManager {
-        legacyDependenciesResolver.resolve()
-    }
-    
-    func resolve() -> GlobalPositionRepository {
-        return DefaultGlobalPositionRepository.current
+        oldResolver.resolve()
     }
     
     func resolve() -> BaseMenuViewController {
@@ -48,18 +44,8 @@ struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     }
 }
 
-extension ModuleDependencies {
-    func registerRetailLegacyDependencies() {
-        legacyDependenciesResolver.register(for: RetailLegacyExternalDependenciesResolver.self) { _ in
-            self
-        }
-        legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
-            return DefaultGlobalPositionRepository.current
-        }
-    }
-}
-
-extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesResolver {
+extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {}
+extension ModuleDependencies: CoreDependenciesResolver {
     
     func resolve() -> CoreDependencies {
         return coreDependencies
