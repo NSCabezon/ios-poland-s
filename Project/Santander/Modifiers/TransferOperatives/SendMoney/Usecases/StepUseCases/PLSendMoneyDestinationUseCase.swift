@@ -1,5 +1,5 @@
 //
-//  PolandSendMoneyDestinationUseCase.swift
+//  PLSendMoneyDestinationUseCase.swift
 //  Santander
 //
 //  Created by David Gálvez Alonso on 3/2/22.
@@ -10,7 +10,7 @@ import TransferOperatives
 import Commons
 import SANPLLibrary
 
-final class PolandSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendMoneyOperativeData, DestinationAccountSendMoneyUseCaseErrorOutput>, SendMoneyDestinationUseCaseProtocol {
+final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendMoneyOperativeData, DestinationAccountSendMoneyUseCaseErrorOutput>, SendMoneyDestinationUseCaseProtocol {
     
     private var bankingUtils: BankingUtilsProtocol
     private var transfersRepository: PLTransfersRepository

@@ -27,7 +27,7 @@ struct SendMoneyDependencies {
             return PLValidateGenericSendMoneyUseCase(dependenciesResolver: resolver)
         }
         self.dependenciesEngine.register(for: SendMoneyDestinationUseCaseProtocol.self) { resolver in
-            return PolandSendMoneyDestinationUseCase(dependenciesResolver: resolver)
+            return PLSendMoneyDestinationUseCase(dependenciesResolver: resolver)
         }        
     }
 }
