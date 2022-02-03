@@ -10,7 +10,8 @@ import CoreFoundationLib
 import PLCommons
 import PLCommonOperatives
 
-protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate {
+protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate,
+                                           TaxPayerSelectorDelegate {
     var view: TaxTransferFormView? { get set }
     
     func viewDidLoad()
@@ -41,7 +42,8 @@ final class TaxTransferFormPresenter {
         self.currency = currency
         self.dependenciesResolver = dependenciesResolver
         self.formData = TaxTransferFormData(
-            sourceAccounts: []
+            sourceAccounts: [],
+            taxPayers: []
         )
     }
 }
@@ -95,8 +97,9 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     }
     
     func didTapTaxPayer() {
-        coordinator.didTapPayerSelectorView(
-            with: selectedTaxPayer
+        coordinator.showTaxPayerSelector(
+            with: formData.taxPayers,
+            selectedTaxPayer: selectedTaxPayer
         )
     }
     
