@@ -22,7 +22,6 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
-    
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
         let iban = input.destinationAccount
         let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban
@@ -125,6 +124,17 @@ struct TransfersDataRepository: PLTransfersRepository {
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    func getAllTransfersReactive(accounts: [AccountRepresentable]?) -> AnyPublisher<[TransferRepresentable], Error> {
+        return Future { promise in
+            do {
+                promise(try getAllTransfers(accounts: accounts))
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
     }
     
     func getTransferDetail(transfer: TransferRepresentable) throws -> Result<TransferRepresentable, Error> {
