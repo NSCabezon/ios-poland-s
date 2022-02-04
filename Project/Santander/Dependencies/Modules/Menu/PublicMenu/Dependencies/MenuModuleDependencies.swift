@@ -14,11 +14,11 @@ extension ModuleDependencies: PublicMenuExternalDependenciesResolver,
     }
     
     func resolve() -> HomeTipsRepository {
-        return PLHomeTipsRepository(dependenciesResolver: legacyDependenciesResolver)
+        return PLHomeTipsRepository(dependenciesResolver: oldResolver)
     }
     
     func resolve() -> PublicMenuRepository {
-        return PLPublicMenuRepository(legacyDependenciesResolver.resolve(for: PLManagersProviderProtocol.self))
+        return PLPublicMenuRepository(oldResolver.resolve(for: PLManagersProviderProtocol.self))
     }
     
     func resolveSideMenuNavigationController() -> UINavigationController {

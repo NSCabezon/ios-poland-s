@@ -46,7 +46,7 @@ struct ModuleDependencies {
     }
     
     func resolve() -> SegmentedUserRepository {
-        return legacyDependenciesResolver.resolve(for: SegmentedUserRepository.self)
+        return oldResolver.resolve(for: SegmentedUserRepository.self)
     }
 }
 
