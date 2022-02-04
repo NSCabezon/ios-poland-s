@@ -11,7 +11,6 @@ import Commons
 import CoreDomain
 import Foundation
 import Onboarding
-import OpenCombine
 import RetailLegacy
 import CoreFoundationLib
 
@@ -29,7 +28,7 @@ struct ModuleDependencies {
     func resolve() -> TimeManager {
         oldResolver.resolve()
     }
-
+    
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
@@ -150,7 +149,7 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     }
     
     func resolve() -> OnboardingRepository {
-        return DefaultOnboardingRepository()
+        return PLOnboardingRepository()
     }
     
     func resolve() -> UserPreferencesRepository {
@@ -168,31 +167,4 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     func resolve() -> OnboardingConfiguration {
         return PLOnboardingConfiguration()
     }
-}
-
-struct PLOnboardingConfiguration: OnboardingConfiguration {
-    var allowAbort: Bool {
-        true
-    }
-    
-    var numCountableSteps: Int {
-        4
-    }
-     
-    var steps: [StepsCoordinator<OnboardingStep>.Step] {
-        []
-    }
-}
-
-struct DefaultOnboardingRepository: OnboardingRepository {
-    func getOnboardingInfo() -> AnyPublisher<OnboardingInfoRepresentable, Error> {
-        return Just(OnboardingInfo(id: "12345678Z", name: "Pepe"))
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-}
-
-struct OnboardingInfo: OnboardingInfoRepresentable {
-    let id: String
-    let name: String
 }
