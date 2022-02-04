@@ -13,6 +13,7 @@ import Foundation
 import Onboarding
 import RetailLegacy
 import CoreFoundationLib
+import SANPLLibrary
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
@@ -149,7 +150,9 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     }
     
     func resolve() -> OnboardingRepository {
-        return PLOnboardingRepository()
+        let customerManager = oldResolver.resolve(for: PLManagersProviderProtocol.self).getCustomerManager()
+        let globalPosition = oldResolver.resolve(for: GlobalPositionRepresentable.self)
+        return OnboardingDataRepository(customerManager: customerManager, globalPosition: globalPosition)
     }
     
     func resolve() -> UserPreferencesRepository {
