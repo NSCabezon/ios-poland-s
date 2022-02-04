@@ -20,6 +20,7 @@ def core_dependencies
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
+  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
