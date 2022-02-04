@@ -754,7 +754,7 @@
 			children = (
 				3A4B64D92796DDC5003FFE00 /* Loans */,
 				3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */,
-                90C661C127987420007647B3 /* OneTransferDependenciesResolver.swift */,
+				90C661C127987420007647B3 /* OneTransferDependenciesResolver.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1820,7 +1820,7 @@
 				CCE45AA32732AC5400691E91 /* InputBiometricsView.swift in Sources */,
 				7E8AD11F26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift in Sources */,
 				B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */,
-				9CF5175626FB75A800332F8B /* CheckNewSendMoneyEnabledUseCase.swift in Sources */,
+				9CF5175626FB75A800332F8B /* CheckNewSendMoneyHomeEnabledUseCase.swift in Sources */,
 				3A4B64E42796DDC5003FFE00 /* LoansModifier.swift in Sources */,
 				90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */,
 				7E1B7DDF27216100002CC226 /* PLValidateCardOnOffUseCase.swift in Sources */,
