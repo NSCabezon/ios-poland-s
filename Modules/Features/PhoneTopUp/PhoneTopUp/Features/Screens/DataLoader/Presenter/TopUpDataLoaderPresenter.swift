@@ -21,12 +21,14 @@ final class TopUpDataLoaderPresenter {
     weak var view: TopUpDataLoaderViewProtocol?
     private let dependenciesResolver: DependenciesResolver
     private var coordinator: TopUpDataLoaderCoordinatorProtocol?
+    private let settings: TopUpSettings
     
     // MARK: Lifecycle
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, settings: TopUpSettings) {
         self.dependenciesResolver = dependenciesResolver
         self.coordinator = dependenciesResolver.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
+        self.settings = settings
     }
 }
 
@@ -35,7 +37,12 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
         view?.showLoader()
         Scenario(useCase: GetPhoneTopUpFormDataUseCase(dependenciesResolver: self.dependenciesResolver))
             .execute(on: dependenciesResolver.resolve())
-            .onSuccess { [weak self] formData in
+            .onSuccess { [weak self] output in
+                let formData = TopUpPreloadedFormData(accounts: output.accounts,
+                                                      operators: output.operators,
+                                                      gsmOperators: output.gsmOperators,
+                                                      internetContacts: output.internetContacts,
+                                                      settings: self?.settings ?? [])
                 self?.view?.hideLoader(completion: {
                     self?.coordinator?.showForm(with: formData)
                 })

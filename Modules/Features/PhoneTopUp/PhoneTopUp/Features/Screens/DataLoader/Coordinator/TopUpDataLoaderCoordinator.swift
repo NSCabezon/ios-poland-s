@@ -11,8 +11,8 @@ import Foundation
 import UI
 
 public protocol TopUpDataLoaderCoordinatorProtocol: AnyObject, ModuleCoordinator {
+    func showForm(with formData: TopUpPreloadedFormData)
     func close()
-    func showForm(with formData: GetPhoneTopUpFormDataOutput)
 }
 
 public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtocol {
@@ -20,13 +20,16 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
     
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let settings: TopUpSettings
     
     // MARK: Lifecycle
     
     public init(dependenciesResolver: DependenciesResolver,
-         navigationController: UINavigationController?) {
+         navigationController: UINavigationController?,
+         settings: TopUpSettings) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.settings = settings
         self.setupDependencies()
     }
     
@@ -53,8 +56,8 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
             return self
         }
          
-        self.dependenciesEngine.register(for: TopUpDataLoaderPresenterProtocol.self) { resolver in
-            return TopUpDataLoaderPresenter(dependenciesResolver: resolver)
+        self.dependenciesEngine.register(for: TopUpDataLoaderPresenterProtocol.self) { [settings] resolver in
+            return TopUpDataLoaderPresenter(dependenciesResolver: resolver, settings: settings)
         }
 
         self.dependenciesEngine.register(for: TopUpDataLoaderViewController.self) { resolver in
@@ -77,7 +80,7 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
         navigationController?.popToRootViewController(animated: true)
     }
     
-    public func showForm(with formData: GetPhoneTopUpFormDataOutput) {
+    public func showForm(with formData: TopUpPreloadedFormData) {
         let formCoordinator = PhoneTopUpFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                         navigationController: navigationController,
                                                         formData: formData)
