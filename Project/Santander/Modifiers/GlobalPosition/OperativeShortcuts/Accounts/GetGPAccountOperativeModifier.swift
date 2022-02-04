@@ -27,7 +27,8 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
                 PLAccountNotificationsOperative(),
-                PLTransportTicketsServicesOperative()
+                PLTransportTicketsServicesOperative(),
+                PLPhoneTopUpOperative(dependenciesResolver: self.dependenciesEngine)
         ].compactMap { $0 }
     }
     
@@ -42,7 +43,8 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
                 PLAccountNotificationsOperative(),
-                PLTransportTicketsServicesOperative()
+                PLTransportTicketsServicesOperative(),
+                PLPhoneTopUpOperative(dependenciesResolver: self.dependenciesEngine)
         ].compactMap { $0 }
     }
 }

@@ -28,7 +28,7 @@ private extension PLGetLoanOptionsUsecase {
     var loanScheduleButton: LoanOption {
         LoanOption(title: "loansOption_button_loanSchedule",
                    imageName: "icnLoanSchedule",
-                   accessibilityIdentifier: "loansOption_button_loanSchedule",
+                   accessibilityIdentifier: AccessibilityIDLoansHome.optionScheduleContainer.rawValue,
                    type: .custom(identifier: "loansOption_button_loanSchedule"),
                    titleIdentifier: "loansOption_button_loanSchedule",
                    imageIdentifier: "icnLoanSchedule")
@@ -36,7 +36,7 @@ private extension PLGetLoanOptionsUsecase {
     var customerServiceButton: LoanOption {
         LoanOption(title: "loansOption_button_customerService",
                    imageName: "icnCustomerService",
-                   accessibilityIdentifier: "loansOption_button_customerService",
+                   accessibilityIdentifier: AccessibilityIDLoansHome.optionCustomerServiceContainer.rawValue,
                    type: .custom(identifier: "loansOption_button_customerService"),
                    titleIdentifier: "loansOption_button_customerService",
                    imageIdentifier: "icnCustomerService")

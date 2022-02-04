@@ -97,4 +97,6 @@ public enum PLLocalServiceName: String {
     case notifiyDevice = "notifyDevice"
     case activeContext = "activeContext"
     case loginInfo = "loginInfo"
+    case getReceipt = "getReceipt"
+    case expensesChart = "expensesChart"
 }

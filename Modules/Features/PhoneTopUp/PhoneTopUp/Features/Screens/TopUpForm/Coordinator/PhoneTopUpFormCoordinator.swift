@@ -21,11 +21,10 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func showOperatorSelection(currentlySelectedOperatorId operatorId: Int?)
 }
 
-public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
-    
+final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     // MARK: Properties
     
-    public var navigationController: UINavigationController?
+    var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let formData: GetPhoneTopUpFormDataOutput
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
@@ -36,7 +35,7 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     // MARK: Lifecycle
     
-    public init(dependenciesResolver: DependenciesResolver,
+    init(dependenciesResolver: DependenciesResolver,
                 navigationController: UINavigationController?,
                 formData: GetPhoneTopUpFormDataOutput) {
         self.navigationController = navigationController
@@ -50,6 +49,10 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     private func setUpDependencies() {
         self.dependenciesEngine.register(for: ContactsPermissionHelperProtocol.self) { _ in
             return ContactsPermissionHelper()
+        }
+        
+        dependenciesEngine.register(for: PolishContactsFiltering.self) { _ in
+            return PolishContactsFilter()
         }
         
         self.dependenciesEngine.register(for: ContactMapping.self) { _ in
@@ -93,15 +96,15 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     // MARK: Methods
     
-    public func start() {
+    func start() {
         let selectedAccount = formData.accounts.first(where: \.defaultForPayments)
         guard selectedAccount != nil else {
-            self.navigationController?.pushViewController(phoneTopUpController, animated: false)
+            self.navigationController?.replaceTopViewController(with: phoneTopUpController, animated: true)
             showAccountSelector(availableAccounts: formData.accounts, selectedAccountNumber: nil, mode: .mustSelectDefaultAccount)
             return
         }
         
-        self.navigationController?.pushViewController(phoneTopUpController, animated: true)
+        self.navigationController?.replaceTopViewController(with: phoneTopUpController, animated: false)
     }
 }
 
@@ -179,7 +182,7 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
 }
 
 extension PhoneTopUpFormCoordinator: AccountForDebitSelectorDelegate {
-    public func didSelectAccount(withAccountNumber accountNumber: String) {
+    func didSelectAccount(withAccountNumber accountNumber: String) {
         accountSelectorDelegate?.didSelectAccount(withAccountNumber: accountNumber)
     }
 }

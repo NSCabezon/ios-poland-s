@@ -43,7 +43,7 @@
                     "amountBill": 0,
                     "currencyBillS": "",
                     "employee": null,
-                    "state": "POSTED"
+                    "state": "EXECUTED"
                 },
                 {
                     "accountNumber": "97109025900000000142238954",
@@ -86,7 +86,7 @@
                     "amountBill": 0,
                     "currencyBillS": "",
                     "employee": null,
-                    "state": "POSTED"
+                    "state": "EXECUTED"
                 },
                 {
                     "accountNumber": "97109025900000000142238954",
@@ -129,7 +129,7 @@
                     "amountBill": 10.06,
                     "currencyBillS": "PLN",
                     "employee": null,
-                    "state": "POSTED"
+                    "state": "EXECUTED"
                 },
                 {
                     "accountNumber": "97109025900000000142238954",

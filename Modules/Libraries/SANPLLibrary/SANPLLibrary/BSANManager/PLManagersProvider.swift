@@ -27,6 +27,8 @@ public protocol PLManagersProviderProtocol {
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol
     func getTaxTransferManager() -> PLTaxTransferManagerProtocol
+    func getHistoryManager() -> PLHistoryManagerProtocol
+    func getExpensesChartManager() -> PLExpensesChartManagerProtocol
 }
 
 public final class PLManagersProvider {
@@ -51,6 +53,8 @@ public final class PLManagersProvider {
     private let authorizationProcessorManager: PLAuthorizationProcessorManager
     private let phoneTopUpManager: PLPhoneTopUpManagerProtocol
     private let taxTransferManager: PLTaxTransferManagerProtocol
+    private let historyManager: PLHistoryManagerProtocol
+    private let expensesChartManager: PLExpensesChartManagerProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -84,6 +88,8 @@ public final class PLManagersProvider {
         self.authorizationProcessorManager = PLAuthorizationProcessorManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.phoneTopUpManager = PLPhoneTopUpManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.taxTransferManager = PLTaxTransferManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.historyManager = PLHistoryManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.expensesChartManager = PLExpensesChartManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
     }
 }
 
@@ -173,6 +179,14 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     
     public func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
         self.taxTransferManager
+    }
+    
+    public func getHistoryManager() -> PLHistoryManagerProtocol {
+        self.historyManager
+    }
+
+    public func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
+        self.expensesChartManager
     }
 }
 

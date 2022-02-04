@@ -8,8 +8,8 @@
 import Foundation
 
 public struct TopUpValues {
-    public let type: Int
-    public let min: Int
-    public let max: Int
+    public let type: String
+    public let min: Int?
+    public let max: Int?
     public let values: [TopUpValue]
 }

@@ -55,6 +55,38 @@ struct TransactionMaskDTO: Codable {
 }
 
 extension AccountForDebitDTO: AccountRepresentable {
+    var availableAmountRepresentable: AmountRepresentable? {
+        return availableAmount
+    }
+    
+    var availableNoAutAmountRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var overdraftRemainingRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var earningsAmountRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var productSubtypeRepresentable: ProductSubtypeRepresentable? {
+        return nil
+    }
+    
+    var countervalueCurrentBalanceAmountRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var ownershipTypeDesc: OwnershipTypeDesc? {
+        return nil
+    }
+    
+    var tipoSituacionCto: String? {
+        return situationType
+    }
+    
     var currencyName: String? {
         self.currencyCode
     }

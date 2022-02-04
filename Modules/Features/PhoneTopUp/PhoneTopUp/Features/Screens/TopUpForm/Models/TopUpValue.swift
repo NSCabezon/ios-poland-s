@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TopUpValue {
+public struct TopUpValue: Equatable {
     public let value: Int
     public let bonus: Int
 }

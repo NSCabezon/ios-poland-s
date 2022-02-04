@@ -6,7 +6,7 @@
 //
 import Commons
 
-final class SelectableAccountCell: UITableViewCell {
+public final class SelectableAccountCell: UITableViewCell {
     static let identifier = "BLIK.SelectableAccountCell"
     private let accountName = UILabel()
     private let accountNumber = UILabel()

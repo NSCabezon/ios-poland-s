@@ -14,7 +14,7 @@ protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: TaxTransferFormViewModel)
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
     func enableDoneButton()
-    func getCurrentFormData() -> TaxTransferFormFieldsData
+    func getCurrentFormFields() -> TaxTransferFormFields
 }
 
 final class TaxTransferFormViewController: UIViewController {
@@ -26,8 +26,7 @@ final class TaxTransferFormViewController: UIViewController {
         configuration: presenter.getTaxFormConfiguration(),
         delegate: self
     )
-    
-    
+
     init(presenter: TaxTransferFormPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -75,8 +74,8 @@ extension TaxTransferFormViewController: TaxTransferFormView {
         formView.clearInvalidFormMessages()
     }
     
-    func getCurrentFormData() -> TaxTransferFormFieldsData {
-        return formView.getFormFieldsData()
+    func getCurrentFormFields() -> TaxTransferFormFields {
+        return formView.getFormFields()
     }
 }
 
@@ -94,10 +93,6 @@ private extension TaxTransferFormViewController {
             .setLeftAction(.back(action: #selector(back)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
-    }
-    
-    @objc func back() {
-         presenter.didTapBack()
     }
     
     func configureSubviews() {
@@ -135,13 +130,17 @@ private extension TaxTransferFormViewController {
     func configureBottomView() {
         bottomButtonView.disableButton()
         bottomButtonView.configure(title: "#Gotowe") { [weak self] in
-            guard let data = self?.formView.getFormFieldsData() else { return }
+            guard let data = self?.formView.getFormFields() else { return }
             self?.presenter.didTapDone(with: data)
         }
     }
     
     func configureStyling() {
         view.backgroundColor = .white
+    }
+    
+    @objc func back() {
+         presenter.didTapBack()
     }
 }
 
@@ -162,7 +161,7 @@ extension TaxTransferFormViewController: TaxTransferFormContainerViewDelegate {
         }
     }
     
-    func didUpdateFields(withData data: TaxTransferFormFieldsData) {
-        presenter.didUpdateFields(with: data)
+    func didUpdateFields(withFields fields: TaxTransferFormFields) {
+        presenter.didUpdateFields(with: fields)
     }
 }

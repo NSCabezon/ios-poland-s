@@ -117,7 +117,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
 
     private let customerServicePL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.customerServicePL.rawValue,
-                               localizedKey: "accountOption_button_customerService",
+                               localizedKey: "frequentOperative_button_customerService",
                                icon: "icnCustomerService",
                                section: "otherOperatives",
                                location: "",

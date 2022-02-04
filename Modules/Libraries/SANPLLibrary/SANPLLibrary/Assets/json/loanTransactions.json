@@ -14,6 +14,7 @@
                     "title": "na rach. kred. cif 0015036493, JAF,",
                     "psCode": "BRAK",
                     "statementNo": 0,
+                    "receiptId": "12345678",
                     "extraData": {
                         "extendedTitle": "na rach. kred. cif 0015036493, JAF, J. Wiercinska",
                         "branchId": null,
@@ -50,6 +51,7 @@
                     "title": "SPLATA KREDYTU",
                     "psCode": "BRAK",
                     "statementNo": 0,
+                    "receiptId": "12345678",
                     "extraData": {
                         "extendedTitle": null,
                         "branchId": null,
@@ -82,6 +84,7 @@
                     "title": "SPLATA KREDYTU",
                     "psCode": "BRAK",
                     "statementNo": 0,
+                    "receiptId": "12345678",
                     "extraData": {
                         "extendedTitle": null,
                         "branchId": null,
@@ -114,6 +117,7 @@
                     "title": "SPLATA KREDYTU",
                     "psCode": "BRAK",
                     "statementNo": 0,
+                    "receiptId": "12345678",
                     "extraData": {
                         "extendedTitle": null,
                         "branchId": null,

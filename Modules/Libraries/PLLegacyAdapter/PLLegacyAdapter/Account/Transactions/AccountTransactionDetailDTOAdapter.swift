@@ -50,7 +50,7 @@ public final class AccountTransactionDetailDTOAdapter {
     }
 }
 
-private enum AccountTransactionState: String {
+public enum AccountTransactionState: String {
     case cardAuthorisation = "CARD_AUTHORISATION"
     case executed = "EXECUTED"
     case processingToBeSent = "PROCESSING_TO_BE_SENT"

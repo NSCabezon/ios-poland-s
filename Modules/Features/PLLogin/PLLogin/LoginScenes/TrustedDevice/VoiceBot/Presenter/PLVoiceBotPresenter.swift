@@ -63,7 +63,7 @@ extension PLVoiceBotPresenter: PLVoiceBotPresenterProtocol {
         self.trackEvent(.clickContinue)
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
-                               completion: nil)
+                               completion: {})
         
         Scenario(useCase: devicesUseCase)
             .execute(on: self.dependenciesResolver.resolve())
