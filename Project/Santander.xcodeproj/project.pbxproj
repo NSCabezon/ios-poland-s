@@ -209,6 +209,8 @@
 		CCE45AA22732AC5400691E91 /* RemainingTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCE45A962732AC5300691E91 /* RemainingTimeView.xib */; };
 		CCE45AA32732AC5400691E91 /* InputBiometricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A972732AC5300691E91 /* InputBiometricsView.swift */; };
 		CCE45AAF2735208800691E91 /* RemainingTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */; };
+		CCE52FD527ABF96200E16690 /* PLPrivateMenuFooterModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterModifier.swift */; };
+		CCE52FD727ABF9D800E16690 /* PLPrivateMenuOptionsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsModifier.swift */; };
 		D27C31ED0663323E0C7994AB /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17194677FA9103CB795DDB /* Pods_Santander.framework */; };
 		D2F5C33626E62647002431DE /* PLCardTransactionsSearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */; };
 		D547C8FC272A9B2C0090DABF /* PLPersonalDataModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */; };
@@ -450,6 +452,8 @@
 		CCE45A962732AC5300691E91 /* RemainingTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemainingTimeView.xib; sourceTree = "<group>"; };
 		CCE45A972732AC5300691E91 /* InputBiometricsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBiometricsView.swift; sourceTree = "<group>"; };
 		CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTimeViewModel.swift; sourceTree = "<group>"; };
+		CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuFooterModifier.swift; sourceTree = "<group>"; };
+		CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOptionsModifier.swift; sourceTree = "<group>"; };
 		D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardTransactionsSearchModifier.swift; sourceTree = "<group>"; };
 		D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalDataModifier.swift; sourceTree = "<group>"; };
 		D54D2EE627201CC400781580 /* PLOpinatorInfoOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOpinatorInfoOption.swift; sourceTree = "<group>"; };
@@ -887,6 +891,7 @@
 				D54D2EE527201CC400781580 /* Opinator */,
 				0D59D636272017EC007BF898 /* Opinator */,
 				BB29664E26CFB38B0012599D /* PersonalArea */,
+				CCE52FD327ABF8DA00E16690 /* PrivateMenu */,
 				5FBDB730273BB47D00FB6DAF /* Session */,
 				1C8B3EE8270DEF1F00868449 /* TransferOperatives */,
 				B0D77A4A276B4AE300766705 /* TransferSettings */,
@@ -1395,6 +1400,15 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		CCE52FD327ABF8DA00E16690 /* PrivateMenu */ = {
+			isa = PBXGroup;
+			children = (
+				CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterModifier.swift */,
+				CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsModifier.swift */,
+			);
+			path = PrivateMenu;
+			sourceTree = "<group>";
+		};
 		D2F5C33326E6262A002431DE /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -1766,6 +1780,7 @@
 				A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */,
 				78A4071327344CBF002DEBF0 /* DeeplinkLauncher.swift in Sources */,
+				CCE52FD727ABF9D800E16690 /* PLPrivateMenuOptionsModifier.swift in Sources */,
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
 				3AEC673E277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift in Sources */,
 				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
@@ -1805,6 +1820,7 @@
 				0DB4957A26C150D700F0985F /* GetGPAccountOperativeModifier.swift in Sources */,
 				4488918926EB772600F5FA24 /* PLGetAccountTransactionsUseCase.swift in Sources */,
 				0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */,
+				CCE52FD527ABF96200E16690 /* PLPrivateMenuFooterModifier.swift in Sources */,
 				EFF1301327317B1400ECE22E /* PolandTransactionType.swift in Sources */,
 				669A37D4270F566600C0F272 /* PLAccountOtherOperativesDTO.swift in Sources */,
 				D54D2EE727201CC400781580 /* PLOpinatorInfoOption.swift in Sources */,

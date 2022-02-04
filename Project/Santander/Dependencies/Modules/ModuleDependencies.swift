@@ -12,6 +12,7 @@ import CoreDomain
 import Foundation
 import RetailLegacy
 import CoreFoundationLib
+import PrivateMenu
 
 struct ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     
@@ -57,6 +58,9 @@ extension ModuleDependencies {
         legacyDependenciesResolver.register(for: GlobalPositionRepository.self) { _ in
             return DefaultGlobalPositionRepository.current
         }
+        legacyDependenciesResolver.register(for: PrivateMenuExternalDependenciesResolver.self) { _ in
+            self
+        }
     }
 }
 
@@ -64,5 +68,31 @@ extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesRe
     
     func resolve() -> CoreDependencies {
         return coreDependencies
+    }
+}
+
+extension ModuleDependencies: PrivateMenuExternalDependenciesResolver {
+    func resolve() -> GetGlobalPositionDataUseCase {
+        legacyDependenciesResolver.resolve()
+    }
+    
+    func resolve() -> LocalAppConfig {
+        legacyDependenciesResolver.resolve()
+    }
+    
+    func resolve() -> SegmentedUserRepository {
+        legacyDependenciesResolver.resolve()
+    }
+    
+    func resolve() -> MenuRepository {
+        return DefaultPrivateMenuRepository.current
+    }
+    
+    func resolve() -> GetPrivateMenuFooterOptionsUseCase {
+        return PLPrivateMenuFooterModifier()
+    }
+    
+    func resolve() -> GetPrivateMenuOptionsUseCase {
+        return PLPrivateMenuOptionsModifier()
     }
 }
