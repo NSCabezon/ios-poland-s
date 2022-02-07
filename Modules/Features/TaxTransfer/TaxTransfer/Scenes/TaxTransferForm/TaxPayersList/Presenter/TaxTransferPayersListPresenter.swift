@@ -14,17 +14,12 @@ protocol TaxTransferPayersListPresenterProtocol {
     
     func didPressClose()
     func didPressBack()
-    func viewDidLoad()
     func didSelectTaxPayer(_ taxPayer: TaxPayer,
                            selectedPayerInfo: SelectedTaxPayerInfo)
 }
 
 final class TaxTransferPayersListPresenter {
     weak var view: TaxTransferPayersListView?
-    
-    private var coordinator: TaxTransferFormCoordinatorProtocol {
-        return dependenciesResolver.resolve()
-    }
     
     private var confirmationDialogFactory: ConfirmationDialogProducing {
         return dependenciesResolver.resolve()
@@ -43,32 +38,16 @@ final class TaxTransferPayersListPresenter {
     }
     
     private let dependenciesResolver: DependenciesResolver
+    private let coordinator: TaxPayersListCoordinatorProtocol
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver,
+         coordinator: TaxPayersListCoordinatorProtocol) {
         self.dependenciesResolver = dependenciesResolver
+        self.coordinator = coordinator
     }
 }
 
 extension TaxTransferPayersListPresenter: TaxTransferPayersListPresenterProtocol {
-    func viewDidLoad() {
-        view?.showLoader()
-
-        Scenario(useCase: getTaxPayersUseCase)
-            .execute(on: useCaseHandler)
-            .onSuccess { [weak self] output in
-                self?.view?.hideLoader(completion: {
-                    self?.view?.set(taxPayers: output.taxPayers)
-                })
-            }
-            .onError { [weak self] _ in
-                self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage { [weak self] in
-                        self?.didPressBack()
-                    }
-                })
-            }
-    }
-    
     func didPressClose() {
         let closeConfirmationDialog = confirmationDialogFactory.create(
             message: localized("#Czy na pewno chcesz zakończyć"),

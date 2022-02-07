@@ -50,20 +50,21 @@ private extension ZusTransferValidator {
                          maskAccount: String,
                          currentActiveField: TransferFormCurrentActiveField) -> String? {
         guard let account = account, !account.isEmpty else {
-            #warning("should be changed")
-            return "#Pole nie może być puste"
+            return localized("pl_generic_validationText_thisFieldCannotBeEmpty").text
         }
 
         if case let .accountNumber(controlEvent) = currentActiveField,
-           controlEvent == .endEditing, account.count < accountRequiredLength  {
-            #warning("should be changed")
-            return "#Minimalna liczba znaków wynosi 26"
+           controlEvent == .endEditing {
+            if account.count < accountRequiredLength {
+                return localized("pl_generic_validationText_upTo26Characters").text
+            } else if account.count > accountRequiredLength {
+                return localized("pl_generic_validationText_invalidAccNumber").text
+            }
         }
         
         if account.count == accountRequiredLength, let accountSubstring = account.substring(2, 13) {
             if accountSubstring != maskAccount || !isValidIban(account) {
-                #warning("should be changed")
-                return "#Podany numer rachunku nie jest poprawny"
+                return localized("pl_generic_validationText_invalidAccNumber").text
             }
         }
         return nil
@@ -71,24 +72,19 @@ private extension ZusTransferValidator {
     
     func validateAmount(_ amount: Decimal?) -> String? {
         guard let amount = amount else {
-            #warning("should be changed")
-            return "#Pole nie może być puste"
+            return localized("pl_generic_validationText_thisFieldCannotBeEmpty").text
         }
         if amount <= 0 {
-            #warning("should be changed")
-            return "#Wprowadzona kwota musi być większa od zera"
+            return localized("pl_generic_validationText_amountMoreThan0").text
         } else if amount > maxTransferAmmount  {
-            #warning("should be changed")
-            return "#Podana kwota jest większa od maksymalnej dopuszczalnej kwoty"
+            return localized("pl_generic_validationText_amountLessThan100000").text
         }
         return nil
     }
     
     func validateText(_ text: String?) -> String? {
-        #warning("should be changed")
-        let message = "#Pole nie może być puste"
         guard let text = text, !text.isEmpty else {
-            return message
+            return localized("pl_generic_validationText_thisFieldCannotBeEmpty").text
         }
         return nil
     }

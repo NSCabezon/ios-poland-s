@@ -97,8 +97,13 @@ final class AppNavigationDependencies {
             return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            let settingsDto = repository.get()?.topup ?? []
+            let topUpSettings = settingsDto
+                .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
             return TopUpDataLoaderCoordinator(dependenciesResolver: resolver,
-                                              navigationController: self.drawer.currentRootViewController as? UINavigationController)
+                                              navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                                              settings: topUpSettings)
         }
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)

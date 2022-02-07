@@ -2,6 +2,7 @@
 import UI
 import PLUI
 import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol CharityTransferFormViewProtocol: AnyObject,
                                           ConfirmationDialogPresentable {
@@ -35,6 +36,7 @@ final class CharityTransferFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.addNavigationBarShadow()
+        IQKeyboardManager.shared.enableAutoToolbar = false
         view.layoutIfNeeded()
     }
 }

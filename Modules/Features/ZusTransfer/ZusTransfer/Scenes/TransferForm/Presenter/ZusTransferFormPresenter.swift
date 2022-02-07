@@ -2,7 +2,7 @@ import CoreFoundationLib
 import PLUI
 import PLCommons
 
-protocol ZusTransferFormPresenterProtocol {
+protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransferFormAccountSelectable {
     var view: ZusTransferFormViewProtocol? { get set }
     func getLanguage() -> String
     func didSelectClose()
@@ -13,6 +13,7 @@ protocol ZusTransferFormPresenterProtocol {
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
     func showConfirmation()
     func startValidation(with field: TransferFormCurrentActiveField)
+    func showRecipientSelection()
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -111,6 +112,21 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
             maskAccount: maskAccount
         )
         view?.showValidationMessages(with: invalidMessages)
+    }
+    
+    func showRecipientSelection() {
+        coordinator.showRecipientSelection(with: maskAccount)
+    }
+}
+
+extension ZusTransferFormPresenter: RecipientSelectorDelegate {
+    func didSelectRecipient(_ recipient: Recipient) {
+        view?.updateRecipient(
+            name: recipient.name,
+            accountNumber: IBANFormatter.format(
+                iban: IBANFormatter.formatIbanToNrb(for: recipient.accountNumber)
+            )
+        )
     }
 }
 

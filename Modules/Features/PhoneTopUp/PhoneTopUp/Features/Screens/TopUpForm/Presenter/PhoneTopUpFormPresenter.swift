@@ -50,6 +50,7 @@ final class PhoneTopUpFormPresenter {
     private let operators: [Operator]
     private let gsmOperators: [GSMOperator]
     private let internetContacts: [MobileContact]
+    private let settings: TopUpSettings
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
@@ -78,7 +79,7 @@ final class PhoneTopUpFormPresenter {
     
     private var selectedOperator: Operator? {
         didSet {
-            selectedTopUpValue = nil
+            selectedTopUpValue = matchDefaultTopUpValue(with: selectedOperator)
             view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
         }
     }
@@ -101,12 +102,14 @@ final class PhoneTopUpFormPresenter {
          accounts: [AccountForDebit],
          operators: [Operator],
          gsmOperators: [GSMOperator],
-         internetContacts: [MobileContact]) {
+         internetContacts: [MobileContact],
+         settings: TopUpSettings) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.operators = operators
         self.gsmOperators = gsmOperators
         self.internetContacts = internetContacts
+        self.settings = settings
         coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
@@ -268,5 +271,15 @@ private extension PhoneTopUpFormPresenter {
             }.onError { error in
                 success([])
             }
+    }
+    
+    func matchDefaultTopUpValue(with mobileOperator: Operator?) -> TopUpValue? {
+        guard let mobileOperator = mobileOperator else {
+            return nil
+        }
+    
+        let matchingOperatorSetting = settings.first(where: { $0.operatorId == mobileOperator.id })
+        let matchingTopUpValue = mobileOperator.topupValues.values.first(where: { $0.value == matchingOperatorSetting?.defaultTopUpValue })
+        return matchingTopUpValue
     }
 }

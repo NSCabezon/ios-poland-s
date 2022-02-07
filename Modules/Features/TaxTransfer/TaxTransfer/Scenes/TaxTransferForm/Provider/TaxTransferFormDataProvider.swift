@@ -29,18 +29,26 @@ final class TaxTransferFormDataProvider: TaxTransferFormDataProviding {
         var fetchedAccounts: [AccountForDebit]?
         let accountsScenario = Scenario(useCase: getAccountsUseCase)
         
+        var fetchedTaxPayers: [TaxPayer]?
+        let taxPayersScenario = Scenario(useCase: getTaxPayersUseCase)
+        
         MultiScenario(handledOn: useCaseHandler)
             .addScenario(accountsScenario) { _, accounts, _ in
                 fetchedAccounts = accounts
             }
+            .addScenario(taxPayersScenario) { _, output, _ in
+                fetchedTaxPayers = output.taxPayers
+            }
             .asScenarioHandler()
             .finally {
-                guard let fetchedAccounts = fetchedAccounts else {
+                guard let fetchedAccounts = fetchedAccounts,
+                      let fetchedTaxPayers = fetchedTaxPayers else {
                     completion(.failure(.apiFailure))
                     return
                 }
                 let data = TaxTransferFormData(
-                    sourceAccounts: fetchedAccounts
+                    sourceAccounts: fetchedAccounts,
+                    taxPayers: fetchedTaxPayers
                 )
                 completion(.success(data))
             }
@@ -53,5 +61,9 @@ private extension TaxTransferFormDataProvider {
     }
     var getAccountsUseCase: GetAccountsForDebitProtocol {
         dependenciesResolver.resolve()
+    }
+    
+    var getTaxPayersUseCase: GetTaxPayersListUseCaseProtocol {
+        return dependenciesResolver.resolve()
     }
 }
