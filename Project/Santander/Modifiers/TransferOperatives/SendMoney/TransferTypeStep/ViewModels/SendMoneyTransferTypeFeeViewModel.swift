@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import CoreDomain
 
 final class SendMoneyTransferTypeFeeViewModel {

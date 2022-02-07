@@ -1,6 +1,5 @@
 import UI
 import CoreFoundationLib
-import Commons
 
 protocol CharityTransferSummaryCoordinatorProtocol {
     func goToMakeAnotherPayment()

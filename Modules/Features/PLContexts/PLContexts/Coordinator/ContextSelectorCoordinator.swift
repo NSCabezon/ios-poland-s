@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import UI
-import CommonUseCase
 import CoreDomain
 import SANPLLibrary
 

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 final class PLUnrememberedLoginProcessGroup: ProcessGroup <PLUnrememberedLoginProcessGroupInput, PLUnrememberedLoginProcessGroupOutput, PLUnrememberedLoginProcessGroupError> {

@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 import TransferOperatives
 import OneAuthorizationProcessor
 import CoreDomain

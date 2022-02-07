@@ -6,7 +6,7 @@
 import Foundation
 import SANPLLibrary
 import SANLegacyLibrary
-import Commons
+import CoreFoundationLib
 
 final class LoanTransactionDetailDTOAdapter {
     static func adaptPLLoanTransactionToLoanTransactionDetail(_ plLoanTransaction: SANPLLibrary.LoanOperationDTO) -> SANLegacyLibrary.LoanTransactionDetailDTO {

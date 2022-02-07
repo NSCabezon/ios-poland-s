@@ -4,9 +4,8 @@
 
 import UIKit
 import RetailLegacy
-import Commons
-import PLNotifications
 import CoreFoundationLib
+import PLNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

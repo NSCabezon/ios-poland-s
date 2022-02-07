@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import Commons
 
 final class PLOfficeAppointmentOperative {
     private let identifier: String = "otherOptionButtonAppointmentInOfficePoland"

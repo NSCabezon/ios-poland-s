@@ -7,11 +7,10 @@
 
 import UI
 import Loans
-import Commons
+import CoreFoundationLib
 import CoreDomain
 import Foundation
 import RetailLegacy
-import CoreFoundationLib
 
 struct ModuleDependencies {
     

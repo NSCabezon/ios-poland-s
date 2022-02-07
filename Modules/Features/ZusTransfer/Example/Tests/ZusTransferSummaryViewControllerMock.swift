@@ -8,7 +8,7 @@
 
 import Operative
 import UI
-import Commons
+import CoreFoundationLib
 @testable import ZusTransfer
 
 final class ZusTransferSummaryViewControllerMock: UIViewController, OperativeSummaryViewProtocol {

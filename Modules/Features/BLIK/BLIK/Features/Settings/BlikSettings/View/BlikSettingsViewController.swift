@@ -7,7 +7,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 protocol BlikSettingsView: AnyObject, LoaderPresentable, ErrorPresentable {}

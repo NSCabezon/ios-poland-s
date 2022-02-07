@@ -6,7 +6,6 @@
 //
 
 import UI
-import Commons
 import CoreFoundationLib
 
 protocol NotificationsInboxListPresenterProtocol: MenuTextWrapperProtocol {

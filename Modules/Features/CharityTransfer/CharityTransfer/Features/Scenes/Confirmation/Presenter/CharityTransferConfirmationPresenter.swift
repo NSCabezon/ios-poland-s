@@ -5,9 +5,8 @@
 //  Created by 187830 on 08/11/2021.
 //
 
-import Commons
-import CoreDomain
 import CoreFoundationLib
+import CoreDomain
 import PLCommons
 
 protocol CharityTransferConfirmationPresenterProtocol {

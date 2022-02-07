@@ -1,9 +1,9 @@
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import SANLegacyLibrary
-import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol MobileTransferFormViewProtocol: AnyObject {
     func didChangeForm(phoneNumberStartedEdited: Bool)

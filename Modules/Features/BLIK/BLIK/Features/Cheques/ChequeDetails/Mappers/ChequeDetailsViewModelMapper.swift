@@ -5,7 +5,7 @@
 //  Created by 186491 on 22/06/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol ChequeDetailsViewModelMapperProtocol {
     func map(cheque: BlikCheque) -> ChequeDetailsViewModel

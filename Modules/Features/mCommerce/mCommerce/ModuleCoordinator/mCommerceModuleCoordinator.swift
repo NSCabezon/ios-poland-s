@@ -4,7 +4,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 final public class mCommerceModuleCoordinator: ModuleCoordinator {
     

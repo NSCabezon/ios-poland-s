@@ -5,9 +5,8 @@
 //  Created by Piotr Mielcarzewicz on 19/08/2021.
 //
 
-import Commons
-import Foundation
 import CoreFoundationLib
+import Foundation
 import SANPLLibrary
 
 protocol UnregisterPhoneNumberUseCaseProtocol: UseCase<Void, Void, StringErrorOutput> {}

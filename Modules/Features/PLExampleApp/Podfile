@@ -28,8 +28,6 @@ def pods
   pod 'CoreTestData', :path => '../../../santander-one/Modules/Libraries/CoreTestData'
   pod 'UI', :path => '../../../santander-one/UI'
   pod 'Localization', :path => '../../../santander-one/Localization'
-  pod 'Commons', :path => '../../../santander-one/Commons'
-  pod 'CommonUseCase', :path => '../../../santander-one/CommonUseCase'
   pod 'Operative', :path => '../../../santander-one/Operative'
   pod 'OfferCarousel', :path => '../../../santander-one/OfferCarousel'
   pod 'CorePushNotificationsService', :path => '../../../santander-one/CorePushNotificationsService'

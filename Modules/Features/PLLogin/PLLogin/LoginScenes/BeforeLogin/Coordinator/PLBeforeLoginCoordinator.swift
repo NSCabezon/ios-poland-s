@@ -7,7 +7,7 @@
 
 import Foundation
 import UI
-import Commons
+import CoreFoundationLib
 
 protocol PLBeforeLoginCoordinatorProtocol {
     func loadUnrememberedLogin()

@@ -1,6 +1,5 @@
 import Foundation
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 final class GetCreditCardsUseCase: UseCase<Void, GetCreditCardsUseCaseOkOutput, StringErrorOutput> {

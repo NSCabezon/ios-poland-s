@@ -5,7 +5,7 @@
 //  Created by Mario Rosales Maillo on 27/7/21.
 //
 
-import Commons
+import CoreFoundationLib
 
 public enum PLGenericError {
     

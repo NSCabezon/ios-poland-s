@@ -5,7 +5,6 @@
 
 import GlobalPosition
 import CoreFoundationLib
-import Commons
 import UI
 import CreditCardRepayment
 import PersonalArea

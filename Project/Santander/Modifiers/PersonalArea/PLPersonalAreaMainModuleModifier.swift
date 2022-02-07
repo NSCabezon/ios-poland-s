@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import PersonalArea
 import PLLegacyAdapter
 import SANLegacyLibrary

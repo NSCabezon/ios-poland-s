@@ -5,7 +5,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 import Foundation
 
 protocol DashboardViewProtocol: GenericErrorDialogPresentationCapable, LoadingViewPresentationCapable {

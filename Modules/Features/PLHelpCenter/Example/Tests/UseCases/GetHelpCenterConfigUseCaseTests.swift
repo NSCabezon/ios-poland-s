@@ -6,7 +6,7 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Commons
+import CoreFoundationLib
 @testable import PLHelpCenter
 import CoreFoundationLib
 import SANPLLibrary

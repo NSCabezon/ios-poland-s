@@ -1,9 +1,8 @@
 import UI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import Foundation
 import Operative
-import CoreFoundationLib
 import PLUI
 
 protocol BLIKConfirmationViewProtocol: AnyObject, ErrorPresentable, LoaderPresentable, ConfirmationDialogPresentable {

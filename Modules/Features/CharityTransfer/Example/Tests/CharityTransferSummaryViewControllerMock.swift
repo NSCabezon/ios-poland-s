@@ -1,6 +1,6 @@
 import Operative
 import UI
-import Commons
+import CoreFoundationLib
 @testable import CharityTransfer
 
 final class CharityTransferSummaryViewControllerMock: UIViewController, OperativeSummaryViewProtocol {

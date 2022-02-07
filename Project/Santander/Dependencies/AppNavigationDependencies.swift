@@ -7,7 +7,7 @@
 
 import LoginCommon
 import PLLogin
-import Commons
+import CoreFoundationLib
 import PLCommons
 import RetailLegacy
 import PersonalArea

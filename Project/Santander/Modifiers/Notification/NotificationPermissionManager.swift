@@ -7,7 +7,7 @@
 
 import UserNotifications
 import UIKit
-import Commons
+import CoreFoundationLib
 import RetailLegacy
 
 final class NotificationPermissionsManager {

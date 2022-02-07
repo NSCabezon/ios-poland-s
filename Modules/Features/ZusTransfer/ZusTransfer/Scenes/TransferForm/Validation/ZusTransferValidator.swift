@@ -1,4 +1,4 @@
-import Commons
+import CoreFoundationLib
 
 private enum Constants {
     static let countryCode = "PL"

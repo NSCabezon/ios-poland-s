@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 final class OtherBlikSettingsFooterView: UIView {
     var saveButtonTap: (() -> Void)?
