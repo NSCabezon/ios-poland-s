@@ -4,7 +4,7 @@
 //
 
 import Account
-import Commons
+import CoreFoundationLib
 
 final class PLAccountTransactionDetailShareableInfo: AccountTransactionDetailShareableInfoProtocol {
     func getShareableInfo(description: String?,

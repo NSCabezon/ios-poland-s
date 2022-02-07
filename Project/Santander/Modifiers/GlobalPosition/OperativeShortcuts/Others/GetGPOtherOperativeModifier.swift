@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 
 public final class GetGPOtherOperativeModifier: GetGPOtherOperativeOptionProtocol {
     public func getAllOtherOperativeActionType() -> [OtherActionType] {

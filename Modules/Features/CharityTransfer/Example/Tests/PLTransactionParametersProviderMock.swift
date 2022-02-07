@@ -1,5 +1,5 @@
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 final class PLTransactionParametersProviderMock: PLTransactionParametersProviderProtocol {

@@ -2,7 +2,6 @@
 //  PLGetPublicKeyUseCase.swift
 //  PLLogin
 
-import Commons
 import CoreFoundationLib
 import SANPLLibrary
 import PLCommons

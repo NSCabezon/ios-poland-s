@@ -5,7 +5,7 @@
 
 import Foundation
 import UI
-import Commons
+import CoreFoundationLib
 
 private enum Constants {
     static let titleTextFont = UIFont.santander(family: .micro, type: .regular, size: 14.0)

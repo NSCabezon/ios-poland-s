@@ -8,7 +8,7 @@
 import SANLegacyLibrary
 import SANPLLibrary
 import CoreDomain
-import Commons
+import CoreFoundationLib
 
 public protocol PLLoansManagerAdapterProtocol {
     func getLoanTransactionDetail(contractDescription: String?, transactionNumber: String?) throws -> BSANResponse<LoanTransactionDetailDTO>

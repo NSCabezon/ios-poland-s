@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import Commons
 
 protocol PLVoiceBotCoordinatorProtocol {
     func goToHardwareToken()

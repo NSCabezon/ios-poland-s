@@ -7,7 +7,7 @@
 
 import SANLegacyLibrary
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 import CoreDomain
 
 final class PLFundsManagerAdapter {

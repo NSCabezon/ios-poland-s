@@ -7,7 +7,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol InternetContactsViewProtocol: AnyObject {
     func showContactsPermissionsDeniedDialog()

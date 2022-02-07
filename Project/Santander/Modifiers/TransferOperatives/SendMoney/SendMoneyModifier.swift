@@ -1,7 +1,6 @@
 import TransferOperatives
 import CoreFoundationLib
 import Operative
-import Commons
 
 final class SendMoneyModifier: SendMoneyModifierProtocol {
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector

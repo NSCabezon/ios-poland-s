@@ -1,6 +1,5 @@
 import Foundation
 import CoreFoundationLib
-import Commons
 
 final class GetCreditCardRepaymentAmountOptionsUseCase: UseCase<GetCreditCardRepaymentAmountOptionsUseCaseInput, GetCreditCardRepaymentAmountOptionsUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver

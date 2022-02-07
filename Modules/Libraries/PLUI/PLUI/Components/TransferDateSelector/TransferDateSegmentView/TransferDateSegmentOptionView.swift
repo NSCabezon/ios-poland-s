@@ -1,6 +1,6 @@
 
 import UI
-import Commons
+import CoreFoundationLib
 
 protocol TransferDateOptionDelegate: AnyObject {
     func didSelectOption(_ option: DateTransferOption)

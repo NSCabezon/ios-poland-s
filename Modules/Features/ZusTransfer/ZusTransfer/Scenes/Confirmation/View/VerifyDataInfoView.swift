@@ -1,7 +1,7 @@
 
 import Foundation
 import UI
-import Commons
+import CoreFoundationLib
 
 class VerifyDataInfoView: UIView {
     private let infoLabel = UILabel()

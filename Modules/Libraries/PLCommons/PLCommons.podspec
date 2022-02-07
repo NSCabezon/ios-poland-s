@@ -16,7 +16,6 @@ The Poland PLCommons framework.
   s.ios.deployment_target = '11.0'
   s.source_files = 'PLCommons/**/*.{swift}'
   
-s.dependency "Commons"
 s.dependency "UI"
 s.dependency "PLUI"
 s.dependency "CoreFoundationLib"

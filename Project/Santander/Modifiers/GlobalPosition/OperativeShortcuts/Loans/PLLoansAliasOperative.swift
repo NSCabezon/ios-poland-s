@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import UI
 import PersonalArea
 
@@ -17,7 +16,7 @@ final class PLLoansAliasOperative {
     var title: String = "accountOption_button_changeLoanAlias"
     var icon: String = "icnChangeAlias"
         
-    func getActionType() -> Commons.LoanActionType {
+    func getActionType() -> CoreFoundationLib.LoanActionType {
         return .custom(
             OperativeActionValues(
                 identifier: PLLoansAliasOperative.rawValue,
