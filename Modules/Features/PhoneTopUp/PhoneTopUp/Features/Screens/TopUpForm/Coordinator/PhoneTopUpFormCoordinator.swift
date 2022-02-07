@@ -21,13 +21,12 @@ protocol PhoneTopUpFormCoordinatorProtocol: AnyObject {
     func showOperatorSelection(currentlySelectedOperatorId operatorId: Int?)
 }
 
-public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
-    
+final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     // MARK: Properties
     
-    public var navigationController: UINavigationController?
+    var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let formData: GetPhoneTopUpFormDataOutput
+    private let formData: TopUpPreloadedFormData
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var contactsSelectorDelegate: MobileContactsSelectorDelegate?
     private weak var operatorSelectorDelegate: OperatorSelectorDelegate?
@@ -36,9 +35,9 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     // MARK: Lifecycle
     
-    public init(dependenciesResolver: DependenciesResolver,
+    init(dependenciesResolver: DependenciesResolver,
                 navigationController: UINavigationController?,
-                formData: GetPhoneTopUpFormDataOutput) {
+                formData: TopUpPreloadedFormData) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.formData = formData
@@ -50,6 +49,10 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     private func setUpDependencies() {
         self.dependenciesEngine.register(for: ContactsPermissionHelperProtocol.self) { _ in
             return ContactsPermissionHelper()
+        }
+        
+        dependenciesEngine.register(for: PolishContactsFiltering.self) { _ in
+            return PolishContactsFilter()
         }
         
         self.dependenciesEngine.register(for: ContactMapping.self) { _ in
@@ -64,7 +67,12 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return self
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormPresenterProtocol.self) { [formData] resolver in
-            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts, operators: formData.operators, gsmOperators: formData.gsmOperators, internetContacts: formData.internetContacts)
+            return PhoneTopUpFormPresenter(dependenciesResolver: resolver,
+                                           accounts: formData.accounts,
+                                           operators: formData.operators,
+                                           gsmOperators: formData.gsmOperators,
+                                           internetContacts: formData.internetContacts,
+                                           settings: formData.settings)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)
@@ -93,15 +101,15 @@ public final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     // MARK: Methods
     
-    public func start() {
+    func start() {
         let selectedAccount = formData.accounts.first(where: \.defaultForPayments)
         guard selectedAccount != nil else {
-            self.navigationController?.pushViewController(phoneTopUpController, animated: false)
+            self.navigationController?.replaceTopViewController(with: phoneTopUpController, animated: true)
             showAccountSelector(availableAccounts: formData.accounts, selectedAccountNumber: nil, mode: .mustSelectDefaultAccount)
             return
         }
         
-        self.navigationController?.pushViewController(phoneTopUpController, animated: true)
+        self.navigationController?.replaceTopViewController(with: phoneTopUpController, animated: false)
     }
 }
 
@@ -179,7 +187,7 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
 }
 
 extension PhoneTopUpFormCoordinator: AccountForDebitSelectorDelegate {
-    public func didSelectAccount(withAccountNumber accountNumber: String) {
+    func didSelectAccount(withAccountNumber accountNumber: String) {
         accountSelectorDelegate?.didSelectAccount(withAccountNumber: accountNumber)
     }
 }

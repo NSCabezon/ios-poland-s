@@ -18,6 +18,10 @@ import OneAuthorizationProcessor
 import LoanSchedule
 import TaxTransfer
 import CharityTransfer
+import PhoneTopUp
+import Account
+import Loans
+import Cards
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -91,6 +95,24 @@ final class AppNavigationDependencies {
         
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
             return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            let settingsDto = repository.get()?.topup ?? []
+            let topUpSettings = settingsDto
+                .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
+            return TopUpDataLoaderCoordinator(dependenciesResolver: resolver,
+                                              navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                                              settings: topUpSettings)
+        }
+        dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
+            return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: LoanTransactionActionsModifier.self) { resolver in
+            return PLLoanTransactionActionsModifier(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+            return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()

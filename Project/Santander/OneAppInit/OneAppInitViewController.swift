@@ -82,20 +82,6 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable, Loader
                         .onError { _ in
                             self.showServiceInaccessibleMessage(onConfirm: nil)
                         }
-                case .phoneTopUp:
-                    self.showLoader()
-                    Scenario(useCase: GetPhoneTopUpFormDataUseCase(dependenciesResolver: self.dependencyResolver))
-                        .execute(on: self.useCaseHandler)
-                        .onSuccess { formData in
-                            self.hideLoader {
-                                self.delegate?.selectPhoneTopUp(formData: formData)
-                            }
-                        }
-                        .onError { _ in
-                            self.hideLoader {
-                                self.showServiceInaccessibleMessage(onConfirm: nil)
-                            }
-                        }
                 case .zusTransfer:
                     Scenario(
                         useCase: GetAccountsForDebitUseCase(

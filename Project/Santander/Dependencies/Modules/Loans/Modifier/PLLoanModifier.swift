@@ -17,7 +17,7 @@ final class PLLoanModifier {
     var hideFilterButton: Bool = false
     var waitForLoanDetail: Bool = false
     var transactionSortOrder: LoanTransactionsSortOrder = .mostRecent
-    
+
     init() {}
 }
 

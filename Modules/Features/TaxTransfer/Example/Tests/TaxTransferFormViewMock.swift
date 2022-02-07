@@ -16,7 +16,7 @@ final class TaxTransferFormViewMock: TaxTransferFormView, ErrorPresentable, Load
         XCTFail("Empty implementation")
     }
     
-    var disableDoneButtionBlock: (TaxTransferFormValidity.InvalidFormMessages) -> Void = { _ in
+    var disableDoneButtonBlock: (TaxTransferFormValidity.InvalidFormMessages) -> Void = { _ in
         XCTFail("Empty implementation")
     }
     
@@ -24,9 +24,9 @@ final class TaxTransferFormViewMock: TaxTransferFormView, ErrorPresentable, Load
         XCTFail("Empty implementation")
     }
     
-    var getCurrentFormDataBlock: () -> TaxTransferFormFieldsData = { () -> TaxTransferFormFieldsData in
+    var getCurrentFormFieldsBlock: () -> TaxTransferFormFields = { () -> TaxTransferFormFields in
         XCTFail("Empty implementation")
-        return TaxTransferFormFieldsData(
+        return TaxTransferFormFields(
             amount: "",
             obligationIdentifier: "",
             date: Date()
@@ -38,15 +38,15 @@ final class TaxTransferFormViewMock: TaxTransferFormView, ErrorPresentable, Load
     }
     
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages) {
-        disableDoneButtionBlock(messages)
+        disableDoneButtonBlock(messages)
     }
     
     func enableDoneButton() {
         enableDoneButtonBlock()
     }
     
-    func getCurrentFormData() -> TaxTransferFormFieldsData {
-        return getCurrentFormDataBlock()
+    func getCurrentFormFields() -> TaxTransferFormFields {
+        return getCurrentFormFieldsBlock()
     }
 }
 

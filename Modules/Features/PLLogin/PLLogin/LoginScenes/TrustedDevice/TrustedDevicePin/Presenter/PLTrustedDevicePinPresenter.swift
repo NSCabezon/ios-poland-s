@@ -63,7 +63,7 @@ extension PLTrustedDevicePinPresenter: PLTrustedDevicePinPresenterProtocol {
         
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
-                               completion: nil)
+                               completion: {})
 
         var deviceHeaders: TrustedDeviceConfiguration.DeviceHeaders?
         var tokens: [TrustedDeviceSoftwareToken]?

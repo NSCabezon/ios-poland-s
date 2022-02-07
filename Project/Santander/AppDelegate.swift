@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dependenciesEngine = appDependencies.dependencieEngine
         let localAppConfig = dependenciesEngine.resolve(for: LocalAppConfig.self)
         let drawer = BaseMenuViewController(isPrivateSideMenuEnabled: localAppConfig.privateMenu)
-        let moduleDependencies = ModuleDependencies(legacyDependenciesResolver: dependenciesEngine, drawer: drawer)
+        let moduleDependencies = ModuleDependencies(oldResolver: dependenciesEngine, drawer: drawer)
         self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: moduleDependencies)
         application.applicationSupportsShakeToEdit = false
         self.window = UIWindow()
@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         self.legacyAppDelegate?.application(application, didFinishLaunchingWithOptions: launchOptions)
         AppNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
-        moduleDependencies.registerRetailLegacyDependencies()
         notificationsHandler.startServices()
         return true
     }

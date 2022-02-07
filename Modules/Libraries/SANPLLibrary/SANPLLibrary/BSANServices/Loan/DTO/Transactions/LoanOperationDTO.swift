@@ -15,6 +15,7 @@ public struct LoanOperationDTO: Codable {
     public let title: String?
     public let psCode: String?
     public let statementNo: Int?
+    public let receiptId: String?
     public let extraData: LoanOperationExtraDataDTO?
     public let csrData: LoanOperationCsrDataDTO?
     
@@ -27,6 +28,7 @@ public struct LoanOperationDTO: Codable {
         case title = "title"
         case psCode = "psCode"
         case statementNo = "statementNo"
+        case receiptId = "receiptId"
         case extraData = "extraData"
         case csrData = "csrData"
     }
@@ -45,7 +47,7 @@ extension LoanOperationDTO: LoanTransactionRepresentable {
     }
     
     public var description: String? {
-        return title
+        return title?.trimed.camelCasedString
     }
     
     public var bankOperationRepresentable: BankOperationRepresentable? {

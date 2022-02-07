@@ -13,9 +13,11 @@ import Commons
 protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
     func updatePhoneInput(with phoneNumber: String)
+    func updateRecipientName(with name: String)
     func updateContact(with contact: MobileContact)
+    func updateOperatorSelection(with gsmOperator: GSMOperator?)
+    func updatePaymentAmounts(with values: TopUpValues?, selectedValue: TopUpValue?)
     func showInvalidPhoneNumberError(_ showError: Bool)
-    func showOperatorSelection(with operator: Operator?)
     func showContactsPermissionsDeniedDialog()
 }
 
@@ -108,13 +110,21 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         formView.showInvalidPhoneNumberError(showError)
     }
     
-    func showOperatorSelection(with mobileOperator: Operator?) {
-        formView.showOperatorSelection(with: mobileOperator)
+    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+        formView.updateOperatorSelection(with: gsmOperator)
     }
     
     func showContactsPermissionsDeniedDialog() {
         let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
         dialog.showIn(self)
+    }
+    
+    func updateRecipientName(with name: String) {
+        formView.updateRecipientName(with: name)
+    }
+    
+    func updatePaymentAmounts(with values: TopUpValues?, selectedValue: TopUpValue?) {
+        formView.updatePaymentAmounts(with: values, selectedValue: selectedValue)
     }
 }
 
@@ -133,6 +143,10 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
     
     func topUpFormDidInputFullPhoneNumber(_ number: String) {
         presenter.didInputFullPhoneNumber(number)
+    }
+    
+    func topUpFormDidSelectTopUpAmount(_ value: TopUpValue?) {
+        presenter.didSelectTopUpAmount(value)
     }
     
     func updatePhoneInput(with phoneNumber: String) {

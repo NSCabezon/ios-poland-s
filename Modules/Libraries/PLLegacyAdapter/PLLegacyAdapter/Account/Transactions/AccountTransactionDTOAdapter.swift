@@ -30,6 +30,7 @@ public final class AccountTransactionDTOAdapter {
         accountTransactionDTO.recipientAccountNumber = isDebit ? plAccountTransaction.othCustAccNo : plAccountTransaction.accountNumber
         accountTransactionDTO.senderData = isDebit ? customerName : plAccountTransaction.othCustName?.capitalized
         accountTransactionDTO.senderAccountNumber = isDebit ? plAccountTransaction.accountNumber : plAccountTransaction.othCustAccNo
+        accountTransactionDTO.receiptId = plAccountTransaction.receiptId
         return accountTransactionDTO
     }
 

@@ -11,7 +11,7 @@ import PLUI
 
 protocol TaxTransferFormContainerViewDelegate: AnyObject {
     func scrollToBottom()
-    func didUpdateFields(withData data: TaxTransferFormFieldsData)
+    func didUpdateFields(withFields fields: TaxTransferFormFields)
 }
 
 final class TaxTransferFormContainerView: UIView {
@@ -45,8 +45,8 @@ final class TaxTransferFormContainerView: UIView {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     
-    func getFormFieldsData() -> TaxTransferFormFieldsData {
-        return TaxTransferFormFieldsData(
+    func getFormFields() -> TaxTransferFormFields {
+        return TaxTransferFormFields(
             amount: amountField.getAmount(),
             obligationIdentifier: obligationIdentifierField.getIdentifier(),
             date: dateSelector.getSelectedDate()
@@ -104,7 +104,7 @@ private extension TaxTransferFormContainerView {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
-        stackView.spacing = 0
+        stackView.spacing = 25
     }
     
     func configureSubviews() {
@@ -140,13 +140,13 @@ private extension TaxTransferFormContainerView {
 
 extension TaxTransferFormContainerView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        delegate?.didUpdateFields(withData: getFormFieldsData())
+        delegate?.didUpdateFields(withFields: getFormFields())
     }
 }
 
 extension TaxTransferFormContainerView: TransferDateSelectorDelegate {
     func didSelectDate(date: Date, withOption option: DateTransferOption) {
-        delegate?.didUpdateFields(withData: getFormFieldsData())
+        delegate?.didUpdateFields(withFields: getFormFields())
         if option == .anotherDay {
             delegate?.scrollToBottom()
         }

@@ -10,12 +10,12 @@ import XCTest
 @testable import TaxTransfer
 
 final class TaxTransferFormValidatorMock: TaxTransferFormValidating {
-    var validationBlock: (TaxTransferFormFieldsData) -> TaxTransferFormValidity = { _ -> TaxTransferFormValidity in
+    var validationBlock: (TaxTransferFormFields) -> TaxTransferFormValidity = { _ -> TaxTransferFormValidity in
         XCTFail("Empty implementation")
         return .valid
     }
     
-    func validateData(_ data: TaxTransferFormFieldsData) -> TaxTransferFormValidity {
+    func validateFields(_ data: TaxTransferFormFields) -> TaxTransferFormValidity {
         return validationBlock(data)
     }
 }

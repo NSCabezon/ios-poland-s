@@ -27,14 +27,14 @@ class TaxTransferFormValidatorTests: XCTestCase {
     func testValidFormData() throws {
         // given
         let sut = try XCTUnwrap(sut)
-        let formData = TaxTransferFormFieldsData(
+        let formFields = TaxTransferFormFields(
             amount: "2000,95",
             obligationIdentifier: "example-identifier",
             date: Date()
         )
         
         // when
-        let validationResult = sut.validateData(formData)
+        let validationResult = sut.validateFields(formFields)
         
         // then
         let expectedValidationResult = TaxTransferFormValidity.valid
@@ -44,14 +44,14 @@ class TaxTransferFormValidatorTests: XCTestCase {
     func testEmptyFormData() throws {
         // given
         let sut = try XCTUnwrap(sut)
-        let formData = TaxTransferFormFieldsData(
+        let formFields = TaxTransferFormFields(
             amount: "",
             obligationIdentifier: "",
             date: Date()
         )
         
         // when
-        let validationResult = sut.validateData(formData)
+        let validationResult = sut.validateFields(formFields)
         
         
         // then
@@ -66,14 +66,14 @@ class TaxTransferFormValidatorTests: XCTestCase {
     func testAmountLowerThanMinimum() throws {
         // given
         let sut = try XCTUnwrap(sut)
-        let formData = TaxTransferFormFieldsData(
+        let formFields = TaxTransferFormFields(
             amount: "0.0",
             obligationIdentifier: "",
             date: Date()
         )
         
         // when
-        let validationResult = sut.validateData(formData)
+        let validationResult = sut.validateFields(formFields)
         
         // then
         switch validationResult {
@@ -88,14 +88,14 @@ class TaxTransferFormValidatorTests: XCTestCase {
     func testIllegalCharactersInObligationIdentifier() throws {
         // given
         let sut = try XCTUnwrap(sut)
-        let formData = TaxTransferFormFieldsData(
+        let formFields = TaxTransferFormFields(
             amount: "",
             obligationIdentifier: "!@#$%^&*(",
             date: Date()
         )
         
         // when
-        let validationResult = sut.validateData(formData)
+        let validationResult = sut.validateFields(formFields)
         
         
         // then
