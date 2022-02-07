@@ -3,7 +3,6 @@ import PLUI
 import Commons
 import PLCommons
 import SANLegacyLibrary
-import IQKeyboardManagerSwift
 import CoreFoundationLib
 
 protocol MobileTransferFormViewProtocol: AnyObject {
