@@ -11,17 +11,18 @@ import CoreDomain
 
 struct PLPrivateMenuOptionsModifier: GetPrivateMenuOptionsUseCase {
     private static var options: [PrivateMenuOptions] {
-        let defaultOptions: [PrivateMenuOptions] = [.globalPosition,
-                                                    .myProducts,
-                                                    .transfers,
-                                                    .blik,
-                                                    .mobileAuthorization,
-                                                    .productsAndOffers,
-                                                    .currencyExchange,
-                                                    .myHomeManager,
-                                                    .member,
-                                                    .contract,
-                                                    .contract]
+        let defaultOptions: [PrivateMenuOptions] =
+        [
+            .globalPosition,
+            .myProducts,
+            .transfers,
+            .blik,
+            .mobileAuthorization,
+            .becomeClient,
+            .currencyExchange,
+            .services,
+            .memberGetMember
+        ]
         return defaultOptions
     }
     func fetchMenuOptions() -> AnyPublisher<[PrivateMenuOptionRepresentable], Never> {
@@ -33,15 +34,15 @@ private extension PLPrivateMenuOptionsModifier {
     func getOptions() -> [PrivateMenuOptionRepresentable] {
         let defOptions = PLPrivateMenuOptionsModifier.options.map { item in
             return PLPrivateMenuOption(imageKey: item.iconKey,
-                                           titleKey: item.titleKey,
-                                           extraMessageKey: "",
-                                           newMessageKey: "",
-                                           imageURL: nil,
-                                           showArrow: item.submenuArrow,
-                                           isHighlighted: item == .globalPosition ? true : false,
-                                           type: item,
-                                           isFeatured: false,
-                                           accesibilityIdentifier: item.accessibilityIdentifier)
+                                       titleKey: item.titleKey,
+                                       extraMessageKey: "",
+                                       newMessageKey: "",
+                                       imageURL: nil,
+                                       showArrow: item.submenuArrow,
+                                       isHighlighted: item == .globalPosition ? true : false,
+                                       type: item,
+                                       isFeatured: false,
+                                       accesibilityIdentifier: item.accessibilityIdentifier)
         }
         return defOptions
     }

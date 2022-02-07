@@ -72,10 +72,6 @@ extension ModuleDependencies: LegacyCoreDependenciesResolver, CoreDependenciesRe
 }
 
 extension ModuleDependencies: PrivateMenuExternalDependenciesResolver {
-    func resolve() -> GetGlobalPositionDataUseCase {
-        legacyDependenciesResolver.resolve()
-    }
-    
     func resolve() -> LocalAppConfig {
         legacyDependenciesResolver.resolve()
     }
