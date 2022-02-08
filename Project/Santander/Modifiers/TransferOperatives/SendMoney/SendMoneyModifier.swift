@@ -52,4 +52,8 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
             return nil
         }
     }
+    
+    var selectionIssueDateViewModel: SelectionIssueDateViewModel {
+        return SelectionIssueDateViewModel(minDate: Date(), maxDate: Date().adding(.year, value: 1))
+    }
 }
