@@ -1,6 +1,6 @@
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol RecipientSelectionViewProtocol: AnyObject,
                                          LoaderPresentable,

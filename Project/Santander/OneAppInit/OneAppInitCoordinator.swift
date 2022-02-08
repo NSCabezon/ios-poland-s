@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import BLIK
 import TaxTransfer
 import CreditCardRepayment

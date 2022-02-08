@@ -9,7 +9,6 @@
 import UIKit
 import UI
 import mCommerce
-import Commons
 import CoreFoundationLib
 
 class ViewController: UIViewController {

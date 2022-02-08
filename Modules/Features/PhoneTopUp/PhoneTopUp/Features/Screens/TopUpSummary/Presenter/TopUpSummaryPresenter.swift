@@ -5,10 +5,9 @@
 //  Created by 188216 on 17/01/2022.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommons
 import Operative
-import CoreFoundationLib
 
 protocol TopUpSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func didSelectClose()

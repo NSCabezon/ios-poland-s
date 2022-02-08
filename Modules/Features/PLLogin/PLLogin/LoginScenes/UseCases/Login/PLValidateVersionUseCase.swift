@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 
 final class PLValidateVersionUseCase: UseCase<Void, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     

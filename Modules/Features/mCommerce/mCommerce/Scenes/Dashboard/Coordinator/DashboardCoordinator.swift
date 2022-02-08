@@ -5,7 +5,6 @@
 
 import UI
 import CoreFoundationLib
-import Commons
 
 protocol DashboardCoordinatorProtocol: ModuleCoordinator {
     func goBack()

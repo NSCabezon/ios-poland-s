@@ -1,6 +1,5 @@
 import UI
 import CoreFoundationLib
-import Commons
 
 /**
     #Add method that must be handle by the PLLoanScheduleCoordinator like

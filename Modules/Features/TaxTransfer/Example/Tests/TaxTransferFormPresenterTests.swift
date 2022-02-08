@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import TaxTransfer
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 class TaxTransferFormPresenterTests: XCTestCase {

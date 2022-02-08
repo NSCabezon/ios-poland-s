@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import Commons
 import CoreFoundationLib
 @testable import PLLogin
 

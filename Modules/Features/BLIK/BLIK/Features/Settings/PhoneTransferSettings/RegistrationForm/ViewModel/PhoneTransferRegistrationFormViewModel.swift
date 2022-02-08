@@ -5,7 +5,7 @@
 //  Created by 186491 on 22/07/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 struct PhoneTransferRegistrationFormViewModel {
     let hintMessage: String

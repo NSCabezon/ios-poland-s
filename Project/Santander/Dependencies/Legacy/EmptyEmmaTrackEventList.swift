@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 
 struct EmptyEmmaTrackEventList: EmmaTrackEventListProtocol {
     let globalPositionEventID: String = ""

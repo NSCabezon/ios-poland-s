@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import Commons
 import CoreFoundationLib
 import CryptoSwift
 import SANPLLibrary

@@ -1,8 +1,9 @@
 import UI
-import Commons
+import CoreFoundationLib
 import Foundation
 import PLUI
 import PLCommons
+import IQKeyboardManagerSwift
 
 protocol ContactsViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModels(_ viewModels: [ContactViewModel])
@@ -40,6 +41,7 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        IQKeyboardManager.shared.enableAutoToolbar = false
         navigationController?.addNavigationBarShadow()
     }
     

@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 14/06/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import UI
 
 protocol ChequeViewModelMapperProtocol {
