@@ -5,7 +5,7 @@
 //  Created by 186491 on 16/06/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 public enum ChequePinError: Error {
     case pinIsNotMatch

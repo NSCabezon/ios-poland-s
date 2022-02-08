@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 20/07/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 typealias BlikSettingsMenuView = MenuView<BlikSettingsViewModel>
 

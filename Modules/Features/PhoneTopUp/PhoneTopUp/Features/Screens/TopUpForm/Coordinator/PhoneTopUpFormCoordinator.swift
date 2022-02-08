@@ -6,7 +6,7 @@
 //
 import UI
 import Contacts
-import Commons
+import CoreFoundationLib
 import PLCommons
 import PLUI
 import PLCommonOperatives

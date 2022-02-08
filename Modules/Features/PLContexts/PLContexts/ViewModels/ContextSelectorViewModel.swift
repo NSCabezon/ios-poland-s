@@ -5,7 +5,7 @@
 
 import SANPLLibrary
 import UIKit
-import Commons
+import CoreFoundationLib
 
 public struct ContextSelectorViewModel {
     public let ownerId: String

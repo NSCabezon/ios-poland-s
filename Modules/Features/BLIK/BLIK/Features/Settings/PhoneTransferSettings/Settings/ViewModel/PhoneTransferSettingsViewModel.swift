@@ -4,7 +4,7 @@
 //
 //  Created by Piotr Mielcarzewicz on 22/07/2021.
 //
-import Commons
+import CoreFoundationLib
 
 enum PhoneTransferSettingsViewModel {
     case unregisteredPhoneNumber

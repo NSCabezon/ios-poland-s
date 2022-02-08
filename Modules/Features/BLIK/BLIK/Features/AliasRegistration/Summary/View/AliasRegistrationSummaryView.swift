@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 final class AliasRegistrationSummaryView: UIView {
     private let infoLabel = UILabel()

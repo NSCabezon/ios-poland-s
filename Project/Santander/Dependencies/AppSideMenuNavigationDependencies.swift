@@ -7,7 +7,7 @@
 
 import Foundation
 import RetailLegacy
-import Commons
+import CoreFoundationLib
 import PLHelpCenter
 
 final class AppSideMenuNavigationDependencies {

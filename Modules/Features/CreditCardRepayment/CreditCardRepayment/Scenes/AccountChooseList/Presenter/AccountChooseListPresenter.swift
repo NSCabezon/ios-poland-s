@@ -6,7 +6,6 @@
 //  
 
 import CoreFoundationLib
-import Commons
 
 protocol AccountChooseListPresenterProtocol: MenuTextWrapperProtocol {
     var view: AccountChooseListViewProtocol? { get set }

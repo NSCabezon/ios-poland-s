@@ -5,9 +5,8 @@
 //  Created by Mario Rosales Maillo on 3/8/21.
 //
 
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 final class PLDevicesUseCase: UseCase<Void, PLDevicesUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

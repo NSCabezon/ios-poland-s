@@ -5,7 +5,7 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import RetailLegacy
 import SANLegacyLibrary
@@ -24,7 +24,6 @@ import PLNotifications
 import Loans
 import CoreFoundationLib
 import CoreDomain
-import CommonUseCase
 import PLCryptography
 import UI
 import PLHelpCenter

@@ -5,7 +5,7 @@
 //  Created by 187831 on 01/02/2022.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol TaxPayersListCoordinatorProtocol {
     func back()

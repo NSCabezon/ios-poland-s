@@ -1,7 +1,6 @@
 import Foundation
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 public protocol GetBasePLWebConfigurationUseCaseProtocol: UseCase<GetBasePLWebConfigurationUseCaseInput, GetBasePLWebConfigurationUseCaseOutput, StringErrorOutput> {}

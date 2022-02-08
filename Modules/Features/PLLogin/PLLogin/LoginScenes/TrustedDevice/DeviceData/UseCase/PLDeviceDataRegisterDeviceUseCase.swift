@@ -5,9 +5,8 @@
 //  Created by Marcos Álvarez Mesa on 23/6/21.
 //
 
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol{
