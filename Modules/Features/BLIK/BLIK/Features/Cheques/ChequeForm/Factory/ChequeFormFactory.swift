@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 06/07/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 
 public protocol ChequeFormProducing {

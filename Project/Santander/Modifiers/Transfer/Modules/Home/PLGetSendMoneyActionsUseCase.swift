@@ -105,7 +105,7 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
     public func fetchSendMoneyActions(_ locations: [PullOfferLocation]) -> AnyPublisher<[SendMoneyActionType], Never> {
         let actions = locations.map {fetchSendMoneyAction($0)}
         return Publishers.MergeMany(actions)
-            .collect()
+            .collect(locations.count)
             .replaceError(with: [])
             .map { sendMoneyActions in
                 return getHomeSendMoneyActions(sendMoneyActions)
@@ -122,15 +122,15 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
 }
 
 private extension PLGetSendMoneyActionsUseCase {
-    func getHomeSendMoneyActions(_ actions: [SendMoneyActionType]) -> [SendMoneyActionType] {
-        var donation: SendMoneyActionType = .donations(nil)
-        for action in actions {
+    func getHomeSendMoneyActions(_ offerActions: [SendMoneyActionType]) -> [SendMoneyActionType] {
+        var actions = [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+        for action in offerActions {
             switch action {
             case .donations:
-                donation = action
-            default: donation = action
+                actions.insert(action, at: 5)
+            default: break
             }
         }
-        return [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, donation, creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+        return actions
     }
 }

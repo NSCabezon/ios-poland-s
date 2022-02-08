@@ -5,9 +5,8 @@
 //  Created by Mario Rosales Maillo on 1/12/21.
 //
 
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 final class PLRememberedLoginChangeUserUseCase: UseCase<Void, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

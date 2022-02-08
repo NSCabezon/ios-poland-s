@@ -4,9 +4,8 @@
 //
 //  Created by Mario Rosales Maillo on 12/8/21.
 //
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 final class PLConfirmationCodeRegisterUseCase: UseCase<PLPLConfirmationCodeRegisterInput, Void, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 final class AliasRegistrationFormFooterView: UIView {
     private var onSaveButtonTap: (() -> Void)?

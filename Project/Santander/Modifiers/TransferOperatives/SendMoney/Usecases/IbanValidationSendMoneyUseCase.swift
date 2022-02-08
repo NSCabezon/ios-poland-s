@@ -1,7 +1,6 @@
 import TransferOperatives
 import CoreFoundationLib
 import SANPLLibrary
-import Commons
 
 final class IbanValidationSendMoneyUseCase: UseCase<IbanValidationSendMoneyUseCaseInput, IbanValidationSendMoneyUseCaseOkOutput, DestinationAccountSendMoneyUseCaseErrorOutput>, IbanValidationSendMoneyUseCaseProtocol {
     private var transfersRepository: PLTransfersRepository

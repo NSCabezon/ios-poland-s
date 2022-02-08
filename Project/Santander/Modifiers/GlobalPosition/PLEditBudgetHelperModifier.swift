@@ -3,9 +3,9 @@
 //  Santander
 //
 
-import Commons
+import CoreFoundationLib
 
 final class PLEditBudgetHelperModifier: EditBudgetHelperModifier {
-    let maxValue: Int? = 5000
-    let minValue: Int? = 1000
+    let maxValue: Int? = 30000
+    let minValue: Int? = 0
 }

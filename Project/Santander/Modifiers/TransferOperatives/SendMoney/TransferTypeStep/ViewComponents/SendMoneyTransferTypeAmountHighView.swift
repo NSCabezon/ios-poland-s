@@ -7,7 +7,7 @@
 
 import UI
 import UIOneComponents
-import Commons
+import CoreFoundationLib
 
 protocol SendMoneyTransferTypeAmountHighViewDelegate: AnyObject {
     func didTapActionButton()

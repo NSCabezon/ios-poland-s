@@ -480,8 +480,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CharityTransfer_Example/Pods-CharityTransfer_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CharityTransfer/CharityTransfer.framework",
-				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
-				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
@@ -489,6 +487,7 @@
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
@@ -516,8 +515,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CharityTransfer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
@@ -525,6 +522,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
@@ -584,8 +582,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CharityTransfer_Tests/Pods-CharityTransfer_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CharityTransfer/CharityTransfer.framework",
-				"${BUILT_PRODUCTS_DIR}/CommonUseCase/CommonUseCase.framework",
-				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
 				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
@@ -593,6 +589,7 @@
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
@@ -620,8 +617,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CharityTransfer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUseCase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
@@ -629,6 +624,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",

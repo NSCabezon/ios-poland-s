@@ -5,7 +5,7 @@
 //  Created by 186484 on 06/07/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import UI
 
 final class CreditCardRepaymentDetailsDialogFactory {

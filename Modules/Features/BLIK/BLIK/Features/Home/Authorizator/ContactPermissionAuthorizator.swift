@@ -2,7 +2,7 @@ import Foundation
 import Contacts
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol ContactPermissionAuthorizatorProtocol {
     func authorizeContactPermission(in view: UIViewController,

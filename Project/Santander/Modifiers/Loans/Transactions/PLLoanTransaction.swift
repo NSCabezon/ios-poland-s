@@ -6,7 +6,7 @@
 //
 
 import Loans
-import Commons
+import CoreFoundationLib
 
 final class PLLoanTransaction: LoanTransactionModifier {
     let isFiltersEnabled: Bool = true

@@ -7,7 +7,7 @@
 
 import SANPLLibrary
 import SANLegacyLibrary
-import Commons
+import CoreFoundationLib
 
 final class CardDetailDTOAdapter {
 

@@ -3,8 +3,7 @@
 //  PLLogin
 
 import Foundation
-import Commons
-import CommonUseCase
+import CoreFoundationLib
 
 protocol LoginChangeEnvironmentResolverCapable {
     var dependenciesEngine: DependenciesResolver & DependenciesInjector { get }

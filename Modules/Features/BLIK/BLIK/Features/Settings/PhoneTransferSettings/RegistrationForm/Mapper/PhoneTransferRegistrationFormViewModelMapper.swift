@@ -6,7 +6,7 @@
 //
 
 import PLCommons
-import Commons
+import CoreFoundationLib
 
 protocol PhoneTransferRegistrationFormViewModelMapping {
     func map(_ account: BlikCustomerAccount) -> PhoneTransferRegistrationFormViewModel

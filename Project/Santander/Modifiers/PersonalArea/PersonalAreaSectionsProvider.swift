@@ -5,7 +5,7 @@
 //  Created by Rubén Márquez Fernández on 15/4/21.
 //
 
-import Commons
+import CoreFoundationLib
 import PersonalArea
 
 final class PersonalAreaSectionsProvider {

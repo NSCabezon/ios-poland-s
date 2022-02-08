@@ -3,9 +3,8 @@
 //  Santander
 //
 
-import Commons
-import Loans
 import CoreFoundationLib
+import Loans
 import UI
 import SANPLLibrary
 import PdfCommons

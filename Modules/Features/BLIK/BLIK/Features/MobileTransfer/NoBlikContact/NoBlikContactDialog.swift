@@ -1,7 +1,7 @@
 import Foundation
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import MessageUI
 
 class NoBlikContactDialog: NSObject {

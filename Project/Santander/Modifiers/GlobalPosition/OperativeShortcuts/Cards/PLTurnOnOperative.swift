@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 
 final class PLTurnOnOperative {
     private let identifier: String = "cardsOptionButtonTurnOnPoland"

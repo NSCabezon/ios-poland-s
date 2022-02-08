@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import UI
 
 protocol LoanScheduleListPresenterProtocol: MenuTextWrapperProtocol {

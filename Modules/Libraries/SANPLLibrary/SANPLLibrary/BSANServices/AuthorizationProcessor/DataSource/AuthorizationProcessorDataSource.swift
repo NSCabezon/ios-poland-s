@@ -18,7 +18,6 @@ protocol AuthorizationProcessorDataSourceProtocol {
     func doAuthorizeOperation(authorizationId: String, scope: String) -> AuthorizeOperationDTO
     func getPendingChallenge() throws -> Result<PendingChallengeDTO, NetworkProviderError>
     func doConfirmChallenge(_ parameters: ConfirmChallengeParameters, authorizationId: String) throws -> Result<Void, NetworkProviderError>
-    func getIsChallengeConfirmed(authorizationID: String) throws -> Result<Void, NetworkProviderError>
 }
 
 private extension AuthorizationProcessorDataSource {
@@ -79,27 +78,12 @@ extension AuthorizationProcessorDataSource: AuthorizationProcessorDataSourceProt
         let absoluteUrl = baseUrl + self.basePath
         let serviceName: String = TransferServiceType.confirmChallenge.rawValue + authorizationId
         let result: Result<Void, NetworkProviderError> = self.networkProvider.request(ConfirmChallengeRequest(serviceName: serviceName,
-                                                                                                                                                         serviceUrl: absoluteUrl,
-                                                                                                                                                         method: .post,
-                                                                                                                                                         body: body,
-                                                                                                                                                         jsonBody: parameters,
-                                                                                                                                                         headers: self.headers,
-                                                                                                                                                         localServiceName: .confirmChallenge))
-        return result
-    }
-    func getIsChallengeConfirmed(authorizationID: String) throws -> Result<Void, NetworkProviderError> {
-        guard let baseUrl = self.getBaseUrl() else {
-            return .failure(NetworkProviderError.other)
-        }
-        let serviceName = TransferServiceType.isConfirmChallenge.rawValue + authorizationID
-        let absoluteUrl = baseUrl + basePath
-        let result: Result<Void, NetworkProviderError> = self.networkProvider.request(AuthPendingChallengeRequest(serviceName: serviceName,
-                                                                                                                serviceUrl: absoluteUrl,
-                                                                                                                method: .get,
-                                                                                                                headers: self.headers,
-                                                                                                                bodyEncoding: .none,
-                                                                                                                contentType: nil,
-                                                                                                                localServiceName: .confirmChallenge))
+                                                                                                              serviceUrl: absoluteUrl,
+                                                                                                              method: .post,
+                                                                                                              body: body,
+                                                                                                              jsonBody: parameters,
+                                                                                                              headers: self.headers,
+                                                                                                              localServiceName: .confirmChallenge))
         return result
     }
 }
