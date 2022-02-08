@@ -3,7 +3,7 @@
 //  Santander
 //
 
-import Commons
+import CoreFoundationLib
 
 class OnboardingPermissionOptions: OnboardingPermissionOptionsProtocol {
     func getOptions() -> [OnboardingPermissionType] {

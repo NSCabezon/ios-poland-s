@@ -5,10 +5,9 @@
 //  Created by 187831 on 16/12/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import PLUI
 import UI
-import CoreFoundationLib
 
 protocol TaxTransferPayersListPresenterProtocol {
     var view: TaxTransferPayersListView? { get set }

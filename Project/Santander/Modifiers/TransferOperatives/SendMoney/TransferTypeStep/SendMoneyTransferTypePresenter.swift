@@ -7,7 +7,6 @@
 
 import Operative
 import CoreFoundationLib
-import Commons
 import TransferOperatives
 import CoreDomain
 import SANLegacyLibrary
@@ -141,45 +140,6 @@ private extension SendMoneyTransferTypePresenter {
                   let fee = transferTypeFee.fee?.value else { return false }
             return type == selectedType && fee == selectedFee
         }) ?? .zero
-    }
-}
-
-extension PolandTransferType {
-    var title: String? {
-        switch self {
-        case .one:
-            return "sendMoney_label_standardSent"
-        case .eight:
-            return "sendMoney_label_immediateSend"
-        case .a:
-            return "sendMoney_label_expressDelivery"
-        case .four, .zero:
-            return nil
-        }
-    }
-    
-    var subtitle: String? {
-        switch self {
-        case .one:
-            return "sendType_text_standar"
-        case .eight:
-            return "sendType_text_inmediate"
-        case .a:
-            return "sendType_text_express"
-        case .four, .zero:
-            return nil
-        }
-    }
-    
-    var limitAmount: AmountRepresentable {
-        switch self {
-        case .eight:
-            return AmountDTO(value: Decimal(5000), currency: .create(.złoty))
-        case .a:
-            return AmountDTO(value: Decimal(20000), currency: .create(.złoty))
-        case .zero, .one, .four:
-            return AmountDTO(value: .zero, currency: .create(.złoty))
-        }
     }
 }
 

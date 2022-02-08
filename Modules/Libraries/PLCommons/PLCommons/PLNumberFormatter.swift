@@ -2,7 +2,7 @@
 //  PLNumberFormatter.swift
 //  Santander
 
-import Commons
+import CoreFoundationLib
 import SANLegacyLibrary
 
 public final class PLNumberFormatter: AmountFormatterProvider {

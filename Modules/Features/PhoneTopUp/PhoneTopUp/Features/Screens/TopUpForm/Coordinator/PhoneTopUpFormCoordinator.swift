@@ -6,7 +6,7 @@
 //
 import UI
 import Contacts
-import Commons
+import CoreFoundationLib
 import PLCommons
 import PLUI
 import PLCommonOperatives
@@ -26,7 +26,7 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let formData: GetPhoneTopUpFormDataOutput
+    private let formData: TopUpPreloadedFormData
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var contactsSelectorDelegate: MobileContactsSelectorDelegate?
     private weak var operatorSelectorDelegate: OperatorSelectorDelegate?
@@ -37,7 +37,7 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     
     init(dependenciesResolver: DependenciesResolver,
                 navigationController: UINavigationController?,
-                formData: GetPhoneTopUpFormDataOutput) {
+                formData: TopUpPreloadedFormData) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.formData = formData
@@ -67,7 +67,12 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return self
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormPresenterProtocol.self) { [formData] resolver in
-            return PhoneTopUpFormPresenter(dependenciesResolver: resolver, accounts: formData.accounts, operators: formData.operators, gsmOperators: formData.gsmOperators, internetContacts: formData.internetContacts)
+            return PhoneTopUpFormPresenter(dependenciesResolver: resolver,
+                                           accounts: formData.accounts,
+                                           operators: formData.operators,
+                                           gsmOperators: formData.gsmOperators,
+                                           internetContacts: formData.internetContacts,
+                                           settings: formData.settings)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)

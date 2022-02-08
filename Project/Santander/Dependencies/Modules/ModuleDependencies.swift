@@ -7,12 +7,11 @@
 
 import UI
 import Loans
-import Commons
+import CoreFoundationLib
 import CoreDomain
 import Foundation
 import Onboarding
 import RetailLegacy
-import CoreFoundationLib
 import SANPLLibrary
 
 struct ModuleDependencies {
@@ -73,7 +72,7 @@ extension ModuleDependencies: CoreDependenciesResolver {
 
 // MARK: - OnboardingExternalDependenciesResolver
 extension ModuleDependencies: OnboardingExternalDependenciesResolver {
-    func resolve() -> OnboardingPermissionOptionsProtocol? {
+    func resolve() -> CoreFoundationLib.OnboardingPermissionOptionsProtocol? {
         return OnboardingPermissionOptions()
     }
     

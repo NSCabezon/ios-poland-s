@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 
 final class PLPostponeBuyOperative {
     private let identifier: String = "operateBtnPostponeBuyPoland"

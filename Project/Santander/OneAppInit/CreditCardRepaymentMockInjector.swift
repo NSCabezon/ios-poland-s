@@ -10,7 +10,6 @@ import CoreFoundationLib
 import CreditCardRepayment
 import SANPLLibrary
 import SANLegacyLibrary
-import Commons
 
 // Temporary class
 final class CreditCardRepaymentMockInjector {

@@ -4,7 +4,7 @@
 //
 //  Created by Piotr Mielcarzewicz on 03/09/2021.
 //
-import Commons
+import CoreFoundationLib
 
 enum AliasSettingsOption: CaseIterable {
     case changeAliasName

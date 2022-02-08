@@ -7,7 +7,7 @@
 
 import UIKit
 import UI
-import Commons
+import CoreFoundationLib
 
 final class AliasDatePeriodSelectorView: UIView {
     private let dropdownView: DropdownView<AliasDateValidityPeriod> = DropdownView<AliasDateValidityPeriod>(frame: .zero)

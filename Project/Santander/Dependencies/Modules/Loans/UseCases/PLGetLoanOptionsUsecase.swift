@@ -6,7 +6,7 @@
 //
 
 import Loans
-import Commons
+import CoreFoundationLib
 import CoreDomain
 import Foundation
 import OpenCombine

@@ -7,9 +7,8 @@
 //
 
 import XCTest
-import Commons
-import Operative
 import CoreFoundationLib
+import Operative
 import SANPLLibrary
 import SANLegacyLibrary
 @testable import CreditCardRepayment

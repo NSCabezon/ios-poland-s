@@ -7,7 +7,7 @@
 
 import Foundation
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 import PersonalArea
 
 final class PLPersonalAreaSectionsSecurityModifier {

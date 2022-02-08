@@ -5,7 +5,7 @@
 //  Created by 187830 on 19/11/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol AliasNameValidatorProtocol {
     func validate(_ name: String?) -> AliasnNameValidationResult
