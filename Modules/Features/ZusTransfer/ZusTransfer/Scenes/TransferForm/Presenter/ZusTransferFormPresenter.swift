@@ -29,18 +29,18 @@ final class ZusTransferFormPresenter {
     private var confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
-    #warning("maskAccount should be changed")
-    //TODO: get maskAccount from Api
-    private let maskAccount = "60000002026"
+    private let maskAccount: String
     
     init(
         dependenciesResolver: DependenciesResolver,
         accounts: [AccountForDebit],
-        selectedAccountNumber: String
+        selectedAccountNumber: String,
+        maskAccount: String
     ) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
+        self.maskAccount = maskAccount
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
