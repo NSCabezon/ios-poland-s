@@ -5,6 +5,7 @@
 //  Created by Mario Rosales Maillo on 13/12/21.
 //
 
+import CoreFoundationLib
 import PLHelpCenter
 import Transfer
 import Commons

@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import CoreDomain
-import Commons
 
 class PLAppConfig: LocalAppConfig {
     let isEnabledOnboardingLocationDialog = false

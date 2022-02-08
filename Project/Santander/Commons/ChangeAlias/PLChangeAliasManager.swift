@@ -10,7 +10,6 @@ import CoreDomain
 import Commons
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {
-
 	func getProductAlias(for aliasType: ProductTypeEntity) -> ProductAlias? {
 		let regExp = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyząęćóøłńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
 
@@ -23,5 +22,4 @@ class PLChangeAliasManager: ProductAliasManagerProtocol {
 		default: return nil
 		}
 	}
-
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import UI
 
 public protocol PLGenericErrorPresentableCapable: LoadingViewPresentationCapable, DialogViewPresentationCapable {

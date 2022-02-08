@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import CoreDomain
 import PLCommons
-import Commons
 import os
 
 protocol PLTrustedDeviceSuccessPresenterProtocol: MenuTextWrapperProtocol {

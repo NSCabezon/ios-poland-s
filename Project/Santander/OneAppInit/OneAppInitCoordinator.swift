@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import BLIK
 import TaxTransfer
 import CreditCardRepayment
@@ -56,7 +56,6 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
-    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput)
     func selectZusTransfer(accounts: [AccountForDebit])
 }
 
@@ -73,25 +72,6 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector, navigationController: UINavigationController?) {
         self.dependenciesEngine = dependenciesEngine
         self.navigationController = navigationController
-        self.registerDependencies()
-    }
-    
-    private func registerDependencies() {
-        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
-            return AccountForDebitMapper()
-        }
-        
-        self.dependenciesEngine.register(for: OperatorMapping.self) { _ in
-            return OperatorMapper()
-        }
-        
-        self.dependenciesEngine.register(for: GSMOperatorMapping.self) { _ in
-            return GSMOperatorMapper()
-        }
-        
-        self.dependenciesEngine.register(for: MobileContactMapping.self) { _ in
-            return MobileContactMapper()
-        }
     }
     
     func start() {
@@ -200,18 +180,18 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             coordinator.start()
+        case .phoneTopUp:
+            let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
+            let settingsDto = repository.get()?.topup ?? []
+            let topUpSettings = settingsDto
+                .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
+            let coordinator = TopUpDataLoaderCoordinator(dependenciesResolver: dependenciesEngine,
+                                                         navigationController: navigationController,
+                                                         settings: topUpSettings)
+            coordinator.start()
         default:
             break
         }
-    }
-    
-    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput) {
-        let coordinator = PhoneTopUpFormCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            navigationController: navigationController,
-            formData: formData
-        )
-        coordinator.start()
     }
     
     func selectCharityTransfer(accounts: [AccountForDebit]) {

@@ -1,5 +1,5 @@
 import UIKit
-import Commons
+import CoreFoundationLib
 import RetailLegacy
 
 struct DeeplinkDependencies {

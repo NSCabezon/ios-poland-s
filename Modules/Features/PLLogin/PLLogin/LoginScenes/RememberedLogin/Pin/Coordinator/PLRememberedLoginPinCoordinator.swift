@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import SANLegacyLibrary
-import CommonUseCase
 import LoginCommon
 import CoreDomain
 import PLCommons

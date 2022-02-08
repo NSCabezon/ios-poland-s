@@ -5,7 +5,7 @@
 //  Created by 186491 on 26/08/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import SANLegacyLibrary
 
 protocol TransactionLimitViewModelMapping {

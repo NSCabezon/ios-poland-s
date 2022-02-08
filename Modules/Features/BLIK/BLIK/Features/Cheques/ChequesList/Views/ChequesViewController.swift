@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 final class ChequesViewController: SegmentedPageViewController {
     private let dropdownPresenter: DropdownPresenter

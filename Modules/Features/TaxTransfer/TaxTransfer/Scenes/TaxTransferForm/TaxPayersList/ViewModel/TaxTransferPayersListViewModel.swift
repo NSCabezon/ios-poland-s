@@ -16,7 +16,6 @@ protocol TaxTransferPayersListViewModelProtocol {
     func isSelected(index: Int) -> Bool
     func selectPayer(index: Int)
     func payer(for index: Int) -> TaxTransferFormViewModel.TaxPayerViewModel?
-    func set(taxPayers: [TaxPayer])
     func set(selectedTaxPayer: TaxPayer)
 }
 
@@ -40,8 +39,10 @@ final class TaxTransferPayersListViewModel: TaxTransferPayersListViewModelProtoc
     private var selectedPayer: TaxPayer?
     private let mapper: TaxPayerViewModelMapping
     
-    init(mapper: TaxPayerViewModelMapping) {
+    init(mapper: TaxPayerViewModelMapping,
+         taxPayers: [TaxPayer]) {
         self.mapper = mapper
+        self.taxPayers = mapper.map(taxPayers) // TODO: handle empty tax payers list: TAP-2105
     }
     
     func selectPayer(index: Int) {
@@ -55,10 +56,6 @@ final class TaxTransferPayersListViewModel: TaxTransferPayersListViewModelProtoc
     func isSelected(index: Int) -> Bool {
         let taxPayer = taxPayers[safe: index]?.taxPayer
         return currentTaxPayer == taxPayer
-    }
-    
-    func set(taxPayers: [TaxPayer]) { // TODO: handle empty tax payers list: TAP-2105
-        self.taxPayers = mapper.map(taxPayers)
     }
     
     func set(selectedTaxPayer: TaxPayer) {

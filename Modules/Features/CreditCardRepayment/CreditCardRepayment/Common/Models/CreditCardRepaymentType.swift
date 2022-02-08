@@ -1,5 +1,5 @@
 import Foundation
-import Commons
+import CoreFoundationLib
 
 enum CreditCardRepaymentType {
     case complete
@@ -10,9 +10,9 @@ enum CreditCardRepaymentType {
 extension CreditCardRepaymentType {
     var localized: String {
         switch self {
-        case .complete: return Commons.localized("pl_creditCard_text_repTypeTot")
-        case .minimal: return Commons.localized("pl_creditCard_text_repTypeMin")
-        case .other: return Commons.localized("pl_creditCard_text_repTypeOther")
+        case .complete: return CoreFoundationLib.localized("pl_creditCard_text_repTypeTot")
+        case .minimal: return CoreFoundationLib.localized("pl_creditCard_text_repTypeMin")
+        case .other: return CoreFoundationLib.localized("pl_creditCard_text_repTypeOther")
         }
     }
 }

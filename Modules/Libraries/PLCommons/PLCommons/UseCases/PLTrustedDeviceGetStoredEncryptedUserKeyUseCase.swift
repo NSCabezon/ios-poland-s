@@ -5,7 +5,6 @@
 //  Created by Marcos Álvarez Mesa on 20/10/21.
 //
 
-import Commons
 import CoreFoundationLib
 import CryptoSwift
 import SANPLLibrary

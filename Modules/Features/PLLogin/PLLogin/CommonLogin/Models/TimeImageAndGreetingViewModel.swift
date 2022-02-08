@@ -5,7 +5,6 @@
 import Foundation
 import UIKit
 import CoreFoundationLib
-import Commons
 import UI
 
 enum Greeting: String {

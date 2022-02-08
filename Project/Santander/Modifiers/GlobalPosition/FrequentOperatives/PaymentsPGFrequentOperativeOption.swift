@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import OpenCombine
 import Transfer
-import Commons
 import UI
 
 final class PaymentsPGFrequentOperativeOption {

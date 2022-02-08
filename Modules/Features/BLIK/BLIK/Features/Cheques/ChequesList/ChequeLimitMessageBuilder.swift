@@ -5,7 +5,7 @@
 //  Created by 187831 on 17/11/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 final class ChequeLimitMessageBuilder {
     private var limit: Int = 0

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 
 public enum PLLoginTrackConstants {
     public static let referer = "referer"

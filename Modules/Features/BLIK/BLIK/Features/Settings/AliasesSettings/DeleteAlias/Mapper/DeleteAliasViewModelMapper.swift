@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 07/09/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol DeleteAliasViewModelMapping {
     func map(_ alias: BlikAlias) -> DeleteAliasViewModel
