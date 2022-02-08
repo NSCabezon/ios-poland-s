@@ -67,24 +67,24 @@ struct TranferTypeMatrixEvaluator: Hashable {
     
     var transactionTypes: [TranferTypeMatrixEvaluator: PolandTransactionType] {
         return [
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .thirty,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .thirty,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .two,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .two,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .one,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .eight,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .eight,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .eight,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .fiftyThree,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .fiftyTwo,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .eight,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: false, isAccountTrusted: false): .twelve,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .sixtyThree,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .sixtyThree,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .fiftyNine,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .fiftyNine,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .fiftyEight,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .seventyOne,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .seventyOne,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .seventyOne,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .seventyThree,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .seventySix,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: true, isAccountTrusted: false): .seventyOne,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: false, isAccountTrusted: false): .seventyTwo,
             // TODO: It has the same conditions as other one, checking with bank
-            // TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .fiftyTwo,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: false, isAccountTrusted: false): .twelve,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen,
-            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .thirteen
+            // TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: false, isCountryPLN: true, isAccountTrusted: true): .seventySix,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: false, isDestinationAccountCurrencyPLN: false, isOwner: false, isCountryPLN: false, isAccountTrusted: false): .seventyTwo,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .sixtyOne,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: false, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: true, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .sixtyOne,
+            TranferTypeMatrixEvaluator(isSourceCurrencyPLN: true, isDestinationAccountInternal: true, isDestinationAccountCurrencyPLN: false, isOwner: true, isCountryPLN: true, isAccountTrusted: false): .sixtyOne
         ]
     }
 
