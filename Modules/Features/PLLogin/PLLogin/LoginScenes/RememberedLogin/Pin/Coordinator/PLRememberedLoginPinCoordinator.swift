@@ -11,8 +11,6 @@ import SANLegacyLibrary
 import LoginCommon
 import PLCommons
 import CoreDomain
-import PLCommons
-import Commons
 import UI
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
