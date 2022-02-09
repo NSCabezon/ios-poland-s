@@ -1,5 +1,7 @@
 import UI
 import PLUI
+import Commons
+import IQKeyboardManagerSwift
 import CoreFoundationLib
 
 protocol ZusTransferFormViewProtocol: AnyObject,
@@ -34,6 +36,7 @@ final class ZusTransferFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.addNavigationBarShadow()
+        IQKeyboardManager.shared.enableAutoToolbar = false
         view.layoutIfNeeded()
     }
 }
