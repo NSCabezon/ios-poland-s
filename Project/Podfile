@@ -81,6 +81,7 @@ def pl_libraries
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
   pod 'PLCommonOperatives', :path => '../Modules/Libraries/PLCommonOperatives'
   pod 'PLCryptography', :path => '../Modules/Libraries/PLCryptography'
+  pod 'PLScenes', :path => '../Modules/Libraries/PLScenes'
 end
 
 def pl_thirdparty_dependencies
