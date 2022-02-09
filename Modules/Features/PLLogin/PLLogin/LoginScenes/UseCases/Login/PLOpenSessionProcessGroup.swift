@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import PLCommons
 import CoreDomain
-import PLCommons
 
 final class PLOpenSessionProcessGroup: ProcessGroup<Void, PLOpenSessionProcessGroupOutput, PLOpenSessionProcessGroupError> {
 
