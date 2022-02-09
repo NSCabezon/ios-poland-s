@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import UI
 
 final class PLGetGenericErrorDialogDataUseCase: UseCase<Void, GetGenericErrorDialogDataUseCaseOkOutput, StringErrorOutput> {

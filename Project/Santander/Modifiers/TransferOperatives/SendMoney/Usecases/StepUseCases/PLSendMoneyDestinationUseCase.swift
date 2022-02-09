@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import TransferOperatives
-import Commons
 import SANPLLibrary
 
 final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendMoneyOperativeData, DestinationAccountSendMoneyUseCaseErrorOutput>, SendMoneyDestinationUseCaseProtocol {

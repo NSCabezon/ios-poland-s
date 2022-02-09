@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 @testable import PLLogin
 

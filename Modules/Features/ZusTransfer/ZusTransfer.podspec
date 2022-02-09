@@ -23,6 +23,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '12.3'
 
   s.source_files = 'ZusTransfer/**/*.{swift}'
+  s.resource_bundles = { 'ZusTransfer' => ['ZusTransfer/Assets/*{xib,xcassets}'] }
   
   s.dependency "UI"
   s.dependency "PLUI"
@@ -30,4 +31,5 @@ Pod::Spec.new do |s|
   s.dependency "PLCommons"
   s.dependency "Operative"
   s.dependency "PLCryptography"
+  s.dependency "PLCommonOperatives"
 end

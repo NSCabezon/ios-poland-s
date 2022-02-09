@@ -1,5 +1,5 @@
 import TransferOperatives
-import Commons
+import CoreFoundationLib
 
 struct SendMoneyDependencies {
     let dependenciesEngine: DependenciesResolver & DependenciesInjector

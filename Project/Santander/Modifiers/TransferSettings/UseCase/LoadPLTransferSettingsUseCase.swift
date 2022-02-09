@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import RetailLegacy
 
 final class LoadPLTransferSettingsUseCase: UseCase<Void, Void, StringErrorOutput> {

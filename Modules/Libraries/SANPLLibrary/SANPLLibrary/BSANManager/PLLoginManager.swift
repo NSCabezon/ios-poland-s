@@ -82,10 +82,10 @@ extension PLLoginManager: PLLoginManagerProtocol {
     }
 
     public func setDemoModeIfNeeded(for user: String) -> Bool {
-        guard self.demoInterpreter.isDemoModeAvailable,
-            self.demoInterpreter.isDemoUser(userName: user) else { return false }
-        self.bsanDataProvider.setDemoMode(true, user)
-        return true
+        guard self.demoInterpreter.isDemoModeAvailable else { return false }
+        let isDemoUser = self.demoInterpreter.isDemoUser(userName: user)
+        self.bsanDataProvider.setDemoMode(isDemoUser, user)
+        return isDemoUser
     }
 
     public func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {

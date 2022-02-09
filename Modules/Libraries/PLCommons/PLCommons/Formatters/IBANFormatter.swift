@@ -1,4 +1,4 @@
-import Commons
+import CoreFoundationLib
 
 public class IBANFormatter {
     public static func format(iban: String?) -> String {

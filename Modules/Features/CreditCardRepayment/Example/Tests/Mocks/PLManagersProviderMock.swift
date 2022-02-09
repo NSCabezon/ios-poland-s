@@ -7,7 +7,7 @@
 //
 
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 
 final class PLManagersProviderMock: PLManagersProviderProtocol {
 

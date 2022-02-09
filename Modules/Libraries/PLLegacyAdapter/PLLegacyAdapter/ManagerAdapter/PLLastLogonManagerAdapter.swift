@@ -8,7 +8,7 @@
 import Foundation
 import SANLegacyLibrary
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 
 final class PLLastLogonManagerAdapter {
     private let loginManager: PLLoginManagerProtocol

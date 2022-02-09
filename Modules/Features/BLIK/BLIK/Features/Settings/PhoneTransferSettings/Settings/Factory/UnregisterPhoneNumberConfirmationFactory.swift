@@ -7,7 +7,7 @@
 
 import UIKit
 import UI
-import Commons
+import CoreFoundationLib
 
 public protocol UnregisterPhoneNumberConfirmationProducing {
     func create(

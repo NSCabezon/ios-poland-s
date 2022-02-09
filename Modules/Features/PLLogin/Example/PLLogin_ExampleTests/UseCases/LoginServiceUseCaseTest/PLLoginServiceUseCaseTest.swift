@@ -7,9 +7,8 @@
 //
 
 import XCTest
-import Commons
-import SANPLLibrary
 import CoreFoundationLib
+import SANPLLibrary
 import RetailLegacy
 import PLLegacyAdapter
 import PLCryptography

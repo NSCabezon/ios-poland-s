@@ -9,4 +9,5 @@ import PLCommons
 
 struct TaxTransferFormData {
     let sourceAccounts: [AccountForDebit]
+    let taxPayers: [TaxPayer]
 }

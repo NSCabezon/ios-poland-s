@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 public protocol ErrorPresentable {
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?)
