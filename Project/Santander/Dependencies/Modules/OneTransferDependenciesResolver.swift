@@ -5,24 +5,22 @@
 //  Created by Cristobal Ramos Laina on 19/1/22.
 //
 
-import Foundation
-import Transfer
-import Commons
 import CoreFoundationLib
 import CoreDomain
+import Transfer
 import UI
 
 extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> TransfersRepository {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> DependenciesInjector {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> GetSendMoneyActionsUseCase {

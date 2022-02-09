@@ -5,10 +5,8 @@
 //  Created by Carlos Monfort Gómez on 24/12/21.
 //
 
-import Foundation
-import Commons
-import UI
 import CoreFoundationLib
+import UI
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?

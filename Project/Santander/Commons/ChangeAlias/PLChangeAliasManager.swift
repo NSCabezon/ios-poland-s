@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import CoreDomain
-import Commons
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {
 	func getProductAlias(for aliasType: ProductTypeEntity) -> ProductAlias? {

@@ -12,7 +12,6 @@ import LoginCommon
 import CoreDomain
 import PLCommons
 import Security
-import Commons
 import os
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
