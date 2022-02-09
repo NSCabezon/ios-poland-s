@@ -155,7 +155,7 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     }
     
     func resolve() -> UserPreferencesRepository {
-        return UserPreferencesRepositoryImpl(persistenceDataSource: oldResolver.resolve())
+        return DefaultUserPreferencesRepository(persistenceDataSource: oldResolver.resolve())
     }
     
     func resolve() -> MenuRepository {
