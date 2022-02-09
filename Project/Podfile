@@ -23,7 +23,6 @@ def core_dependencies
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
   pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'PFM', :path => '../santander-one/Modules/Libraries/PFM'
   pod 'Loans', :path => '../santander-one/Loans'
   pod 'Account', :path => '../santander-one/Accounts'
   pod 'Cards', :path => '../santander-one/Cards'
@@ -83,6 +82,7 @@ def pl_libraries
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
   pod 'PLCommonOperatives', :path => '../Modules/Libraries/PLCommonOperatives'
   pod 'PLCryptography', :path => '../Modules/Libraries/PLCryptography'
+  pod 'PLScenes', :path => '../Modules/Libraries/PLScenes'
 end
 
 def pl_thirdparty_dependencies

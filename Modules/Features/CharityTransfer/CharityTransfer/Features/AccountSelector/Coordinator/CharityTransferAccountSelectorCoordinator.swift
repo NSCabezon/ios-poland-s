@@ -67,7 +67,7 @@ extension CharityTransferAccountSelectorCoordinator: CharityTransferAccountSelec
     }
     
     public func closeProcess() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 

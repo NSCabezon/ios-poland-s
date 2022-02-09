@@ -74,8 +74,7 @@ private extension ZusTransferSummaryPresenter {
                 self?.coordinator.goToGlobalPosition()
             }),
             .init(imageKey: "icnHelpUsMenu", title: localized("generic_button_improve"), action: { [weak self] in
-                #warning("Need to add opinator link")
-                let opinator = RegularOpinatorInfoEntity(path: "")
+                let opinator = RegularOpinatorInfoEntity(path: "APP-RET-zus-transfer-SUCCESS")
                 let coordinator = self?.dependenciesResolver.resolve(for: OperativeContainerCoordinatorDelegate.self)
                 coordinator?.handleOpinator(opinator)
             })
