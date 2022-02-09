@@ -69,6 +69,7 @@
 		3A4B64E82796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64E22796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift */; };
 		3A4B64E92796DDC5003FFE00 /* ModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */; };
 		3AEC673E277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */; };
+		4211A6BB27B3AFED0034214E /* PLSendMoneyAmountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211A6BA27B3AFED0034214E /* PLSendMoneyAmountUseCase.swift */; };
 		423015DE27AC2BBE00A7E585 /* PLSendMoneyDestinationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423015DD27AC2BBD00A7E585 /* PLSendMoneyDestinationUseCase.swift */; };
 		42BF471526495D3400136E8D /* HostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF471426495D3400136E8D /* HostModule.swift */; };
 		42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF484326497C9200136E8D /* BSANEnvironments.swift */; };
@@ -295,6 +296,7 @@
 		3A4B64E22796DDC5003FFE00 /* PLGetLoanOptionsUsecase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetLoanOptionsUsecase.swift; sourceTree = "<group>"; };
 		3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleDependencies.swift; sourceTree = "<group>"; };
 		3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanTransactionDetailUseCase.swift; sourceTree = "<group>"; };
+		4211A6BA27B3AFED0034214E /* PLSendMoneyAmountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSendMoneyAmountUseCase.swift; sourceTree = "<group>"; };
 		423015DD27AC2BBD00A7E585 /* PLSendMoneyDestinationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSendMoneyDestinationUseCase.swift; sourceTree = "<group>"; };
 		42BF471426495D3400136E8D /* HostModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostModule.swift; sourceTree = "<group>"; };
 		42BF484326497C9200136E8D /* BSANEnvironments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSANEnvironments.swift; sourceTree = "<group>"; };
@@ -805,6 +807,7 @@
 			isa = PBXGroup;
 			children = (
 				423015DD27AC2BBD00A7E585 /* PLSendMoneyDestinationUseCase.swift */,
+				4211A6BA27B3AFED0034214E /* PLSendMoneyAmountUseCase.swift */,
 			);
 			path = StepUseCases;
 			sourceTree = "<group>";
@@ -1695,6 +1698,7 @@
 				A97543352784805B00400A0A /* PLCashLoanOperative.swift in Sources */,
 				3A4B64E52796DDC5003FFE00 /* LoanCustomeOptionCoordinator.swift in Sources */,
 				CCE45A9B2732AC5400691E91 /* PLAuthorizationPresenter.swift in Sources */,
+				4211A6BB27B3AFED0034214E /* PLSendMoneyAmountUseCase.swift in Sources */,
 				423015DE27AC2BBE00A7E585 /* PLSendMoneyDestinationUseCase.swift in Sources */,
 				669A37CE270F564800C0F272 /* PLAccountOtherOperativesData.swift in Sources */,
 				44DE753F2754C7B9004DF0E7 /* GenericDialogActionsModifier.swift in Sources */,
