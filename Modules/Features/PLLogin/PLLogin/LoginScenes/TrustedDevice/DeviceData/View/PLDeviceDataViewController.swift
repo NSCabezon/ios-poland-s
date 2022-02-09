@@ -8,7 +8,7 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 protocol PLDeviceDataViewProtocol: PLGenericErrorPresentableCapable {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import BLIK
 import TaxTransfer
 import CreditCardRepayment
@@ -56,7 +56,6 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
-    func selectZusTransfer(accounts: [AccountForDebit])
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -181,8 +180,18 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             )
             coordinator.start()
         case .phoneTopUp:
+            let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
+            let settingsDto = repository.get()?.topup ?? []
+            let topUpSettings = settingsDto
+                .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
             let coordinator = TopUpDataLoaderCoordinator(dependenciesResolver: dependenciesEngine,
-                                                         navigationController: navigationController)
+                                                         navigationController: navigationController,
+                                                         settings: topUpSettings)
+            coordinator.start()
+        case .zusTransfer:
+            let coordinator = dependenciesEngine.resolve(
+                for: ZusTransferModuleCoordinatorProtocol.self
+            )
             coordinator.start()
         default:
             break
@@ -202,19 +211,6 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         let coordinator: CharityTransferModuleCoordinator = dependenciesEngine.resolve()
         coordinator.setProperties(accounts: accounts,
                                   charityTransferSettings: charityTransferSettings)
-        coordinator.start()
-    }
-   
-    func selectZusTransfer(accounts: [AccountForDebit]) {
-        guard !accounts.isEmpty else {
-            view?.showError()
-            return
-        }
-        let coordinator = ZusTransferModuleCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            navigationController: navigationController,
-            accounts: accounts
-        )
         coordinator.start()
     }
 }

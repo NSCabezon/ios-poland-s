@@ -1,6 +1,5 @@
 import UI
 import CoreFoundationLib
-import Commons
 import PLUI
 import PLCommons
 
@@ -19,6 +18,7 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
+    private let validationMask: String
     private let sourceView: SourceView
     weak var selectableAccountDelegate: FormAccountSelectable?
 
@@ -26,6 +26,7 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
          navigationController: UINavigationController?,
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
+         validationMask: String,
          sourceView: SourceView,
          selectableAccountDelegate: FormAccountSelectable? = nil) {
         self.navigationController = navigationController
@@ -34,6 +35,7 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
         self.selectedAccountNumber = selectedAccountNumber
         self.sourceView = sourceView
         self.selectableAccountDelegate = selectableAccountDelegate
+        self.validationMask = validationMask
         self.setupDependencies()
     }
     
@@ -64,7 +66,8 @@ extension ZusAccountSelectorCoordinator: ZusAccountSelectorCoordinatorProtocol {
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             accounts: accounts,
-            selectedAccountNumber: selectedAccountNumber
+            selectedAccountNumber: selectedAccountNumber,
+            validationMask: validationMask
         )
         coordinator.start()
     }

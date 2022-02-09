@@ -7,9 +7,8 @@
     This handler be inyected in the webview presentation call when a webview requires Poland custom url actions (app://, santander://...).
  */
 import Foundation
-import Commons
-import WebViews
 import CoreFoundationLib
+import WebViews
 import os
 
 public class PLWebviewCustomLinkHandler: WebViewLinkHandler {

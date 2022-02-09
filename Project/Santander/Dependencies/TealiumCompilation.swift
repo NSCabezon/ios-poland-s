@@ -3,7 +3,7 @@
 //  Santander
 
 import Foundation
-import Commons
+import CoreFoundationLib
 
 final class TealiumCompilation: TealiumCompilationProtocol {
     let profile = "pl-app-oneapp"

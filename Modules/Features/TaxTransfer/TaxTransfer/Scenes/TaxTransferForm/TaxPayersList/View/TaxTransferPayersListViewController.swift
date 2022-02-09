@@ -7,14 +7,13 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol TaxTransferPayersListView: AnyObject,
                                     ConfirmationDialogPresentable,
                                     LoaderPresentable,
                                     ErrorPresentable {
 
-    func set(taxPayers: [TaxPayer])
     func set(selectedTaxPayer: TaxPayer?)
 }
 
@@ -41,7 +40,6 @@ final class TaxTransferPayersListViewController: UIViewController {
         super.viewDidLoad()
         
         setUp()
-        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,11 +156,6 @@ extension TaxTransferPayersListViewController: UITableViewDelegate {
 }
 
 extension TaxTransferPayersListViewController: TaxTransferPayersListView {
-    func set(taxPayers: [TaxPayer]) {
-        viewModel.set(taxPayers: taxPayers)
-        payersTableView.reloadData()
-    }
-    
     func set(selectedTaxPayer: TaxPayer?) {
         guard let selectedTaxPayer = selectedTaxPayer else { return }
         viewModel.set(selectedTaxPayer: selectedTaxPayer)

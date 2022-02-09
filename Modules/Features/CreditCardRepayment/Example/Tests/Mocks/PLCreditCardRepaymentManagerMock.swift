@@ -7,7 +7,7 @@
 //
 
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 final class PLCreditCardRepaymentManagerMock: PLCreditCardRepaymentManagerProtocol {

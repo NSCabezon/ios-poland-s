@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 public final class GetGPLoanOperativeModifier: GetGPLoanOperativeOptionProtocol {

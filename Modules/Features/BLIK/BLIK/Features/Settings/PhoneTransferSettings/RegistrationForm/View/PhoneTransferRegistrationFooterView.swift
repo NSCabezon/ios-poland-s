@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 final class PhoneTransferRegistrationFooterView: UIView {
     var registerButtonTap: (() -> Void)?

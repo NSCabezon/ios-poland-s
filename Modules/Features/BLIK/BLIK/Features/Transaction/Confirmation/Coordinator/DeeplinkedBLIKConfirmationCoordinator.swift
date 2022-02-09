@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import Commons
 
 public final class DeeplinkedBLIKConfirmationCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?

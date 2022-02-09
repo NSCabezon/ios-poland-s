@@ -30,6 +30,6 @@ Pod::Spec.new do |s|
 
   s.dependency "SANLegacyLibrary"
   s.dependency "SANPLLibrary"
-  s.dependency "Commons"
+  s.dependency "CoreFoundationLib"
   s.dependency "PLCommons"
 end

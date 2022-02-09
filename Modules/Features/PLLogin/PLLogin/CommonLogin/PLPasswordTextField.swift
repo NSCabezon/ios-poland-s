@@ -7,7 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
-import Commons
+import CoreFoundationLib
 import UI
 
 public protocol PLPasswordTextFieldDelegate: AnyObject {

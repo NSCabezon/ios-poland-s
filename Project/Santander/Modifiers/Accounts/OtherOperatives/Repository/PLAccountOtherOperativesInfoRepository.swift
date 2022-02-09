@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 
 struct PLAccountOtherOperativesInfoRepository: BaseRepository {
     typealias T = PLAccountOtherOperativesDTOList

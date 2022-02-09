@@ -6,7 +6,7 @@
 //
 
 import PersonalArea
-import Commons
+import CoreFoundationLib
 
 class PLPersonalDataModifier: PersonalDataModifier {
     func buildPersonalData(with personalInfo: PersonalInfoWrapper?) -> PersonalDataInfo? {

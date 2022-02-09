@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import Commons
-import UI
 import CoreFoundationLib
+import UI
 
 public struct PLDialogTime {
     let dateTimeStamp: Double
