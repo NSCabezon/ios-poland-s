@@ -10,6 +10,7 @@ import CoreFoundationLib
 import TransferOperatives
 import CoreDomain
 import SANLegacyLibrary
+import SANPLLibrary
 
 protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol {
     var view: SendMoneyTransferTypeView? { get set }
@@ -83,6 +84,9 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
               let transferType = self.operativeData.selectedTransferType?.type as? PolandTransferType,
               let limitAmount = transferType.limitAmount.value
         else { return }
+        guard self.isValidDate else {
+            return
+        }
         if limitAmount.isZero || amount.isLessThanOrEqualTo(limitAmount) {
             self.container?.stepFinished(presenter: self)
         } else {
@@ -104,6 +108,10 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
 }
 
 private extension SendMoneyTransferTypePresenter {
+    enum ValidTransferRangeType {
+        case aYearFromToday, onlyToday
+    }
+    
     func mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from transferTypes: [SendMoneyTransferTypeFee]) -> SendMoneyTransferTypeRadioButtonsContainerViewModel {
         let radioButtonViewModels = transferTypes.compactMap { self.mapToSendMoneyTransferTypeRadioButtonViewModel(from: $0) }
         return SendMoneyTransferTypeRadioButtonsContainerViewModel(selectedIndex: self.getSelectedIndex(),
@@ -140,6 +148,43 @@ private extension SendMoneyTransferTypePresenter {
                   let fee = transferTypeFee.fee?.value else { return false }
             return type == selectedType && fee == selectedFee
         }) ?? .zero
+    }
+    
+    var isValidDate: Bool {
+        guard let transactionTypeString = self.operativeData.specialPricesOutput?.transactionTypeString,
+              let matrixTransactionType = MatrixTransactionTypeDTO(rawValue: transactionTypeString),
+              let transferType = self.operativeData.selectedTransferType?.type as? PolandTransferType
+        else {
+            return false
+        }
+        let transactionType = PolandTransactionType(dto: matrixTransactionType)
+        switch transactionType {
+        case .sixtyThree, .fiftyNine, .fiftyEight:
+            return self.validateTransferType(transferType)
+        default:
+            return false
+        }
+    }
+    
+    func validateTransferType(_ transferType: PolandTransferType) -> Bool {
+        switch transferType {
+        case .one, .zero:
+            return self.isDateInValidRange(validDateRange: .aYearFromToday)
+        case .eight, .a:
+            return self.isDateInValidRange(validDateRange: .onlyToday)
+        case .four:
+            return false
+        }
+    }
+    
+    func isDateInValidRange(validDateRange: ValidTransferRangeType) -> Bool {
+        let dateComponents = Calendar.current.dateComponents([.day], from: Date(), to: self.operativeData.issueDate)
+        switch validDateRange {
+        case .aYearFromToday:
+            return dateComponents.day ?? 0 <= 365
+        case .onlyToday:
+            return dateComponents.day ?? 0 == 0
+        }
     }
 }
 
