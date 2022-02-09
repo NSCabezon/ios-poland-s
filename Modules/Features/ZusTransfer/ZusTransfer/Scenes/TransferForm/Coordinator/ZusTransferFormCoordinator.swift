@@ -28,6 +28,7 @@ public final class ZusTransferFormCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
+    private let validationMask: String
     private weak var accountSelectableDelegate: ZusTransferFormAccountSelectable?
     private weak var recipientSelectorDelegate: RecipientSelectorDelegate?
 
@@ -35,12 +36,14 @@ public final class ZusTransferFormCoordinator: ModuleCoordinator {
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         accounts: [AccountForDebit],
-        selectedAccountNumber: String
+        selectedAccountNumber: String,
+        validationMask: String
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
+        self.validationMask = validationMask
         setupDependencies()
     }
     
@@ -66,6 +69,7 @@ extension ZusTransferFormCoordinator: ZusTransferFormCoordinatorProtocol {
             navigationController: navigationController,
             accounts: accounts,
             selectedAccountNumber: selectedAccountNumber,
+            validationMask: validationMask,
             sourceView: .form,
             selectableAccountDelegate: self
         )
@@ -106,14 +110,12 @@ private extension ZusTransferFormCoordinator {
             self
         }
         
-        let accounts = accounts
-        let selectedAccountNumber = selectedAccountNumber
-        
-        dependenciesEngine.register(for: ZusTransferFormPresenterProtocol.self) { resolver in
+        dependenciesEngine.register(for: ZusTransferFormPresenterProtocol.self) { [accounts, selectedAccountNumber, validationMask] resolver in
             ZusTransferFormPresenter(
                 dependenciesResolver: resolver,
                 accounts: accounts,
-                selectedAccountNumber: selectedAccountNumber
+                selectedAccountNumber: selectedAccountNumber,
+                maskAccount: validationMask
             )
         }
         dependenciesEngine.register(for: ZusTransferFormViewController.self) { [weak self] resolver in

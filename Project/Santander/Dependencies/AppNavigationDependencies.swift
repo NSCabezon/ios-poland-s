@@ -22,6 +22,7 @@ import PhoneTopUp
 import Account
 import Loans
 import Cards
+import ZusTransfer
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -105,6 +106,14 @@ final class AppNavigationDependencies {
             return TopUpDataLoaderCoordinator(dependenciesResolver: resolver,
                                               navigationController: self.drawer.currentRootViewController as? UINavigationController,
                                               settings: topUpSettings)
+        }
+        dependenciesEngine.register(for: ZusTransferModuleCoordinatorProtocol.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            return ZusTransferModuleCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                validationMask: repository.get()?.zusTransfer?.mask
+            )
         }
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
