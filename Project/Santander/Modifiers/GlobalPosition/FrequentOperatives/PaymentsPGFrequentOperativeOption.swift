@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import OpenCombine
 import Transfer
-import UI
 
 final class PaymentsPGFrequentOperativeOption {
     let trackName: String? = "enviar_dinero"

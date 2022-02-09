@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import OpenCombine
-import Commons
 
 protocol CheckNewSendMoneyHomeEnabledUseCase {
     func fetchEnabled() -> AnyPublisher<Bool, Never>

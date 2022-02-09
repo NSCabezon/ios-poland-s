@@ -7,22 +7,21 @@
 
 import Foundation
 import Transfer
-import Commons
 import CoreFoundationLib
 import CoreDomain
 import UI
 
 extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> TransfersRepository {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> DependenciesInjector {
-        legacyDependenciesResolver.resolve()
+        oldResolver.resolve()
     }
     
     func resolve() -> GetSendMoneyActionsUseCase {
