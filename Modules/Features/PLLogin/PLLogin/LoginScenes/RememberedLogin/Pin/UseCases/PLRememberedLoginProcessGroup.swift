@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import PLCommons
 import SANPLLibrary
 import PLCryptography
-import CoreFoundationLib
 
 final class PLRememberedLoginProcessGroup: ProcessGroup <PLRememberedLoginProcessGroupInput, PLRememberedLoginProcessGroupOutput, PLRememberedLoginProcessGroupError> {
 

@@ -8,8 +8,7 @@ import OpenCombine
 import CoreDomain
 import Transfer
 import Account
-import Commons
-import UI
+import Foundation
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     private let dependenciesResolver: DependenciesResolver

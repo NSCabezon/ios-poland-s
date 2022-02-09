@@ -1,5 +1,4 @@
 import UI
-import Commons
 import CoreFoundationLib
 
 public class SummaryTotalAmountView: UIView {

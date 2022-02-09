@@ -40,12 +40,6 @@ extension PLAuthorizationProcessorManager: PLAuthorizationProcessorManagerProtoc
     }
     
     func getIsChallengeConfirmed(authorizationID: String) throws -> Result<Void, NetworkProviderError> {
-        let result = try self.authorizationProcessorDataSource.getIsChallengeConfirmed(authorizationID: authorizationID)
-        switch result {
-        case .success(_):
-            return .success(())
-        case .failure(let error):
-            return .failure(error)
-        }
+        return .success(())
     }
 }

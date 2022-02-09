@@ -20,7 +20,9 @@ public final class OperatorMapper: OperatorMapping {
         let topUpValues = TopUpValues(type: topUpValuesDto.type,
                                       min: topUpValuesDto.min,
                                       max: topUpValuesDto.max,
-                                      values: topUpValuesDto.values.map({ TopUpValue(value: $0.value, bonus: $0.bonus) })
+                                      values: topUpValuesDto.values
+                                        .map({ TopUpValue(value: $0.value, bonus: $0.bonus) })
+                                        .sorted(by: { $0.value <= $1.value })
         )
         return Operator(id: dto.id, name: dto.name, topupValues: topUpValues, prefixes: dto.prefixes)
     }

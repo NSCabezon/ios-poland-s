@@ -1,7 +1,6 @@
 import Foundation
 import Operative
 import CoreFoundationLib
-import Commons
 import UI
 
 final class CreditCardRepaymentOperative: Operative {

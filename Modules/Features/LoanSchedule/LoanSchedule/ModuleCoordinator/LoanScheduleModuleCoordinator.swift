@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 public struct LoanScheduleIdentity {
     let loanAccountNumber: String

@@ -5,9 +5,9 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
+import Foundation
 import CoreFoundationLib
 import CoreDomain
-import Commons
 
 class PLAppConfig: LocalAppConfig {
     let isEnabledOnboardingLocationDialog = false

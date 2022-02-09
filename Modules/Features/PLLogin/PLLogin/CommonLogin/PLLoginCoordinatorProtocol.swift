@@ -5,7 +5,6 @@
 import CoreFoundationLib
 import CoreDomain
 import LoginCommon
-import Commons
 import UI
 
 protocol PLLoginCoordinatorProtocol: AnyObject, OpenUrlCapable {

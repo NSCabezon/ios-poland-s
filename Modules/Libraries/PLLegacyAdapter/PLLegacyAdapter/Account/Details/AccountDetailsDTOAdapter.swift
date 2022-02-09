@@ -6,7 +6,7 @@
 import Foundation
 import SANPLLibrary
 import SANLegacyLibrary
-import Commons
+import CoreFoundationLib
 
 final class AccountDetailsDTOAdapter {
     static func adaptPLAccountDetailsToAccountDetails(_ plAccountDetail: SANPLLibrary.AccountDetailDTO, account: SANPLLibrary.AccountDTO, swiftBranches: SwiftBranchesDTO?) -> SANLegacyLibrary.AccountDetailDTO {

@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 import LoginCommon
 
 public protocol PLLoginModuleCoordinatorProtocol: AnyObject {

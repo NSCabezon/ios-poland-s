@@ -5,9 +5,8 @@
 //  Created by Piotr Mielcarzewicz on 07/09/2021.
 //
 
-import Commons
-import Foundation
 import CoreFoundationLib
+import Foundation
 import SANPLLibrary
 
 protocol DeleteAliasUseCaseProtocol: UseCase<DeleteAliasRequest, Void, StringErrorOutput> {}

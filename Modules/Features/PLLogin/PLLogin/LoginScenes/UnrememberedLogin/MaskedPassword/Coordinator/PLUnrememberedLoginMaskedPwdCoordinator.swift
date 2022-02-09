@@ -2,12 +2,10 @@
 //  PLUnrememberedLoginMaskedPwdCoordinator.swift
 //  PLLogin
 
-import Commons
-import UI
 import CoreFoundationLib
+import UI
 import SANLegacyLibrary
 import LoginCommon
-import CommonUseCase
 
 protocol PLUnrememberedLoginMaskedPwdCoordinatorProtocol {
     func goToSMSScene()

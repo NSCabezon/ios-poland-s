@@ -5,7 +5,7 @@
 //  Created by 187831 on 17/01/2022.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol TaxTransferPayerIdentifiersPresenterProtocol {
     var view: TaxTransferPayerIdentifiersViewController? { get set }
@@ -17,21 +17,20 @@ protocol TaxTransferPayerIdentifiersPresenterProtocol {
 
 final class TaxTransferPayerIdentifiersPresenter {
     weak var view: TaxTransferPayerIdentifiersViewController?
-
-    private var coordinator: TaxTransferFormCoordinatorProtocol {
-        return dependenciesResolver.resolve()
-    }
     
     private let dependenciesResolver: DependenciesResolver
+    private let coordinator: TaxPayersListCoordinatorProtocol
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver,
+         coordinator: TaxPayersListCoordinatorProtocol) {
         self.dependenciesResolver = dependenciesResolver
+        self.coordinator = coordinator
     }
 }
 
 extension TaxTransferPayerIdentifiersPresenter: TaxTransferPayerIdentifiersPresenterProtocol {
     func didSelectTaxPayerIdentifier(taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
-        coordinator.showTaxPayerSelector(taxPayer, selectedPayerInfo: selectedPayerInfo)
+        coordinator.didSelectTaxPayer(taxPayer, selectedPayerInfo: selectedPayerInfo)
     }
     
     func didPressBack() {

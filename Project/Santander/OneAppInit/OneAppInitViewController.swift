@@ -9,10 +9,9 @@ import Foundation
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import PLCommonOperatives
-import CoreFoundationLib
 import PhoneTopUp
 
 final class OneAppInitViewController: UIViewController, ErrorPresentable, LoaderPresentable {
@@ -82,38 +81,6 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable, Loader
                         .onError { _ in
                             self.showServiceInaccessibleMessage(onConfirm: nil)
                         }
-                case .phoneTopUp:
-                    self.showLoader()
-                    Scenario(useCase: GetPhoneTopUpFormDataUseCase(dependenciesResolver: self.dependencyResolver))
-                        .execute(on: self.useCaseHandler)
-                        .onSuccess { formData in
-                            self.hideLoader {
-                                self.delegate?.selectPhoneTopUp(formData: formData)
-                            }
-                        }
-                        .onError { _ in
-                            self.hideLoader {
-                                self.showServiceInaccessibleMessage(onConfirm: nil)
-                            }
-                        }
-                case .zusTransfer:
-                    Scenario(
-                        useCase: GetAccountsForDebitUseCase(
-                            transactionType: .zusTransfer,
-                            dependenciesResolver: self.dependencyResolver
-                        )
-                    )
-                    .execute(on: self.useCaseHandler)
-                    .onSuccess { accounts in
-                        if accounts.isEmpty {
-                            self.showServiceInaccessibleMessage(onConfirm: nil)
-                            return
-                        }
-                        self.delegate?.selectZusTransfer(accounts: accounts)
-                    }
-                    .onError { _ in
-                        self.showServiceInaccessibleMessage(onConfirm: nil)
-                    }
                 default:
                     self.delegate?.selectModule(module)
                 }

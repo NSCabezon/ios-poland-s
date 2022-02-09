@@ -7,7 +7,7 @@
 
 import PLHelpCenter
 import Transfer
-import Commons
+import CoreFoundationLib
 import UI
 
 final class PLPrivateMenuModifier: PrivateMenuProtocol {

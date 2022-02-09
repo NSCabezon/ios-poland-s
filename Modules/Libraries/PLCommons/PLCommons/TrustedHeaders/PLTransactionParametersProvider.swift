@@ -5,7 +5,7 @@
 //  Created by 186484 on 02/11/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 
 public protocol PLTransactionParametersProviderProtocol {
