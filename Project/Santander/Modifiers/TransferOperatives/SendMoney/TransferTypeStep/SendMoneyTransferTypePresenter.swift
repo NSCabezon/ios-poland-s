@@ -162,7 +162,7 @@ private extension SendMoneyTransferTypePresenter {
         case .sixtyThree, .fiftyNine, .fiftyEight:
             return self.validateTransferType(transferType)
         default:
-            return false
+            return true
         }
     }
     
@@ -173,7 +173,7 @@ private extension SendMoneyTransferTypePresenter {
         case .eight, .a:
             return self.isDateInValidRange(validDateRange: .onlyToday)
         case .four:
-            return false
+            return true
         }
     }
     
