@@ -7,10 +7,10 @@
 import CoreFoundationLib
 
 struct PLBigButtonType: BigButtonTypeRepresentable {
-    public var font: UIFont
-    public var lineBreakMode: NSLineBreakMode
-    public var numberOfLines: Int
-    public var minimumScaleFactor: CGFloat?
+    var font: UIFont
+    var lineBreakMode: NSLineBreakMode
+    var numberOfLines: Int
+    var minimumScaleFactor: CGFloat?
     
     init(fontSize: CGFloat) {
         self.font = UIFont.santander(size: fontSize)

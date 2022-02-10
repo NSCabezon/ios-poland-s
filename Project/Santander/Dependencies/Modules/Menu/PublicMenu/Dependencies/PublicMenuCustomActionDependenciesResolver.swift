@@ -9,6 +9,5 @@ import UI
 import CoreFoundationLib
 
 protocol PublicMenuCustomActionDependenciesResolver {
-    var externalDependencies: PublicMenuCustomActionExternalDependenciesResolver { get }
     func resolve() -> DataBinding
 }

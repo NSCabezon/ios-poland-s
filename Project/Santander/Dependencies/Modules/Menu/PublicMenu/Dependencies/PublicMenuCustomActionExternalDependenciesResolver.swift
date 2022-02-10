@@ -6,5 +6,3 @@
 //
 import UI
 
-public protocol PublicMenuCustomActionExternalDependenciesResolver {
-}

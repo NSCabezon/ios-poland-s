@@ -5,8 +5,7 @@ import RetailLegacy
 import UI
 import SANPLLibrary
 
-extension ModuleDependencies: PublicMenuExternalDependenciesResolver,
-                                PublicMenuCustomActionExternalDependenciesResolver {
+extension ModuleDependencies: PublicMenuExternalDependenciesResolver {
     
     func resolve() -> PublicMenuToggleOutsider {
         self.drawer
@@ -29,7 +28,7 @@ extension ModuleDependencies: PublicMenuExternalDependenciesResolver,
     }
     
     func publicMenuCustomCoordinatorForAction() -> BindableCoordinator {
-        return DefaultPublicMenuCustomActionCoordinator(dependencies: self, navigationController: resolveSideMenuNavigationController())
+        return DefaultPublicMenuCustomActionCoordinator(navigationController: resolveSideMenuNavigationController())
     }
 }
 

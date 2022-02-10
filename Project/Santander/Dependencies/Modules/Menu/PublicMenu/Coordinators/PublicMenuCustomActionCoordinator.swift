@@ -14,16 +14,14 @@ import UIKit
 public final class DefaultPublicMenuCustomActionCoordinator {
     weak public var navigationController: UINavigationController?
     public var childCoordinators: [Coordinator] = []
-    private let externalDependencies: PublicMenuCustomActionExternalDependenciesResolver
     lazy public var dataBinding: DataBinding = dependencies.resolve()
     public var onFinish: (() -> Void)?
     
     private lazy var dependencies: Dependency = {
-        return Dependency(external: externalDependencies)
+        return Dependency()
     }()
     
-    public init(dependencies: PublicMenuCustomActionExternalDependenciesResolver, navigationController: UINavigationController?) {
-        self.externalDependencies = dependencies
+    public init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
 }
@@ -61,12 +59,7 @@ extension DefaultPublicMenuCustomActionCoordinator: BindableCoordinator {
 
 private extension DefaultPublicMenuCustomActionCoordinator {
     struct Dependency: PublicMenuCustomActionDependenciesResolver {
-        var external: PublicMenuCustomActionExternalDependenciesResolver
         let dataBinding = DataBindingObject()
-        
-        var externalDependencies: PublicMenuCustomActionExternalDependenciesResolver {
-            return external
-        }
         
         func resolve() -> DataBinding {
             return dataBinding
