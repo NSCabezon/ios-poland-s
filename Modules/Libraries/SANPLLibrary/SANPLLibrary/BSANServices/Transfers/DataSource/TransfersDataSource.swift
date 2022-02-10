@@ -9,7 +9,7 @@ import CoreDomain
 
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
-    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<PayeeListDTO, NetworkProviderError>
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
     func checkFinalFee(_ parameters: CheckFinalFeeParameters, destinationAccount: String) throws -> Result<CheckFinalFeeDTO, NetworkProviderError>
@@ -28,7 +28,7 @@ private extension TransfersDataSource {
 final class TransfersDataSource {
     private enum TransferServiceType: String {
         case accountForDebit = "/accounts/for-debit"
-        case payees = "/payees/account"
+        case payees = "/payees/account/all"
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
         case checkFinalFee = "/transactions/domestic/final-fee/"
@@ -87,14 +87,14 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         return result
     }
     
-    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<PayeeListDTO, NetworkProviderError> {
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(),
               let queryParameters = try? parameters.asDictionary() else {
             return .failure(NetworkProviderError.other)
         }
         let serviceName: TransferServiceType = .payees
         let absoluteUrl = baseUrl + self.basePath
-        let result: Result<PayeeListDTO, NetworkProviderError> = self.networkProvider.request(TransferRequest(serviceName: serviceName.rawValue,
+        let result: Result<[PayeeDTO], NetworkProviderError> = self.networkProvider.request(TransferRequest(serviceName: serviceName.rawValue,
                                                                                                            serviceUrl: absoluteUrl,
                                                                                                            method: .get,
                                                                                                            headers: self.headers,
