@@ -26,19 +26,19 @@ struct ModuleDependencies {
     }
     
     func resolve() -> TimeManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
-    
+
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
     
     func resolve() -> AppConfigRepositoryProtocol {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> TrackerManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> BaseMenuViewController {
@@ -46,8 +46,11 @@ struct ModuleDependencies {
     }
     
     func resolve() -> UINavigationController {
-        drawer.currentRootViewController as?
-        UINavigationController ?? UINavigationController()
+        return drawer.currentRootViewController as? UINavigationController ?? UINavigationController()
+    }
+    
+    func loanHomeCoordinator() -> BindableCoordinator {
+        return ToastCoordinator()
     }
 }
 
@@ -111,23 +114,7 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     func resolve() -> PhotoThemeModifierProtocol? {
         return nil
     }
-    
-    func resolve() -> BackgroundImageRepositoryProtocol {
-        return BackgroundImageRepository(loadImageRepository: resolve(), manageImageRepositoryProtocol: resolve())
-    }
-    
-    func resolve() -> DeleteBackgroundImageRepositoryProtocol {
-        return DocumentsBackgroundImageRepository()
-    }
-    
-    private func resolve() -> LoadBackgroundImageRepositoryProtocol {
-        return FtpBackgroundImageRepository()
-    }
-    
-    private func resolve() -> ManageBackgroundImageRepositoryProtocol {
-        return DocumentsBackgroundImageRepository()
-    }
-    
+
     func resolve() -> LocationPermissionsManagerProtocol {
         return oldResolver.resolve()
     }
@@ -152,14 +139,6 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
         let customerManager = oldResolver.resolve(for: PLManagersProviderProtocol.self).getCustomerManager()
         let globalPosition = oldResolver.resolve(for: GlobalPositionRepresentable.self)
         return OnboardingDataRepository(customerManager: customerManager, globalPosition: globalPosition)
-    }
-    
-    func resolve() -> UserPreferencesRepository {
-        return DefaultUserPreferencesRepository(persistenceDataSource: oldResolver.resolve())
-    }
-    
-    func resolve() -> MenuRepository {
-        return DefaultMenuRepository()
     }
     
     func resolve() -> CompilationProtocol {
