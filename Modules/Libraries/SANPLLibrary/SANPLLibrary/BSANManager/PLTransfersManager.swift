@@ -52,8 +52,7 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
         let result = try self.transferDataSource.getPayees(parameters)
         switch result {
-        case .success(let payeeListDTO):
-            guard let payeeList = payeeListDTO.payeeList  else { return .failure(NetworkProviderError.other)}
+        case .success(let payeeList):
             return .success(payeeList)
         case .failure(let error):
             return .failure(error)
