@@ -8,7 +8,7 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 protocol OperatorSelectionViewDelegate: AnyObject {
@@ -36,6 +36,11 @@ final class OperatorSelectionView: UIView {
     
     // MARK: Configuration
     
+    func setUp(with gsmOperator: GSMOperator?) {
+        isHidden = gsmOperator == nil
+        operatorTextField.setText(gsmOperator?.name)
+    }
+    
     private func setUp() {
         addSubviews()
         prepareStyles()
@@ -54,8 +59,6 @@ final class OperatorSelectionView: UIView {
         operatorTextField.setRightAccessory(.uiImage(Images.Form.rightChevronIcon, action: { [weak self] in
             self?.delegate?.didTouchOperatorSelectionButton()
         }))
-        #warning("remove mock data")
-        operatorTextField.setText("Plus (+Mix)")
     }
     
     private func setUpLayout() {

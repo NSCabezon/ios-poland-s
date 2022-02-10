@@ -5,13 +5,13 @@
 //  Created by 185167 on 13/12/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import UI
 import PLUI
 
 protocol TaxTransferFormContainerViewDelegate: AnyObject {
     func scrollToBottom()
-    func didUpdateFields(withData data: TaxTransferFormFieldsData)
+    func didUpdateFields(withFields fields: TaxTransferFormFields)
 }
 
 final class TaxTransferFormContainerView: UIView {
@@ -44,9 +44,9 @@ final class TaxTransferFormContainerView: UIView {
     required init?(coder: NSCoder) {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
-
-    func getFormFieldsData() -> TaxTransferFormFieldsData {
-        return TaxTransferFormFieldsData(
+    
+    func getFormFields() -> TaxTransferFormFields {
+        return TaxTransferFormFields(
             amount: amountField.getAmount(),
             obligationIdentifier: obligationIdentifierField.getIdentifier(),
             date: dateSelector.getSelectedDate()
@@ -140,13 +140,13 @@ private extension TaxTransferFormContainerView {
 
 extension TaxTransferFormContainerView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        delegate?.didUpdateFields(withData: getFormFieldsData())
+        delegate?.didUpdateFields(withFields: getFormFields())
     }
 }
 
 extension TaxTransferFormContainerView: TransferDateSelectorDelegate {
     func didSelectDate(date: Date, withOption option: DateTransferOption) {
-        delegate?.didUpdateFields(withData: getFormFieldsData())
+        delegate?.didUpdateFields(withFields: getFormFields())
         if option == .anotherDay {
             delegate?.scrollToBottom()
         }

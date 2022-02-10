@@ -5,7 +5,7 @@
 //  Created by Piotr Mielcarzewicz on 14/07/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol ChequeFormValidating {
     func validate(_ form: ChequeForm) -> ChequeFormValidationResult

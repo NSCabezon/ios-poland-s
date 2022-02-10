@@ -1,0 +1,9 @@
+use_frameworks!
+platform :ios, '12.3'
+source 'https://cdn.cocoapods.org/'
+
+target 'PLScenes_Tests' do
+  pod 'PLScenes', :path => '../'
+  
+  
+end

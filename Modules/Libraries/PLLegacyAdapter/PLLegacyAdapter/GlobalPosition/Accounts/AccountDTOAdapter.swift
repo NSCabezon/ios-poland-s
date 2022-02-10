@@ -20,7 +20,7 @@ public final class AccountDTOAdapter {
         accountDTO.countervalueAvailableNoAutAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plAccount.availableFunds)
         
         if plAccount.productId != nil {
-            accountDTO.productId = SANLegacyLibrary.AccountDTO.ProductIDAccountDTO(id: plAccount.productId?.id, systemId: plAccount.productId?.systemId ?? nil)
+            accountDTO.productId = SANLegacyLibrary.AccountDTO.ProductID(id: plAccount.productId?.id, systemId: plAccount.productId?.systemId ?? nil)
         }
         
         accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.number)

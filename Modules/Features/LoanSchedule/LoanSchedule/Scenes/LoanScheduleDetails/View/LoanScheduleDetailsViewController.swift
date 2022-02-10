@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 import Foundation
 
 protocol LoanScheduleDetailsViewProtocol: AnyObject {

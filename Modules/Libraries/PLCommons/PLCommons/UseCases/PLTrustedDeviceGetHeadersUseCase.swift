@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 public final class PLTrustedDeviceGetHeadersUseCase<Error>: UseCase<Void, PLTrustedDeviceGetHeadersUseCaseOutput, PLUseCaseErrorOutput<Error>> {

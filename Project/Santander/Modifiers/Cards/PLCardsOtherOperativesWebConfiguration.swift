@@ -5,7 +5,6 @@
 //  Created by Julio Nieto Santiago on 14/10/21.
 //
 
-import Commons
 import CoreFoundationLib
 
 public struct PLCardsOtherOperativesWebConfiguration: WebViewConfiguration {

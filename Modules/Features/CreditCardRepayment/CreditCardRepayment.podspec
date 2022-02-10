@@ -26,11 +26,9 @@ Pod::Spec.new do |s|
     'CreditCardRepayment' => ['CreditCardRepayment/**/*{xib,xcassets}']
   }
 
-  s.dependency "Commons"
   s.dependency "PLCommons"
   s.dependency "UI"
   s.dependency "PLUI"
-  s.dependency "CommonUseCase"
   s.dependency "LoginCommon"
   s.dependency "CoreFoundationLib"
   s.dependency "SANPLLibrary"

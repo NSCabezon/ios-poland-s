@@ -5,12 +5,10 @@
 //  Created by Juan Sánchez Marín on 28/5/21.
 //
 
-import Commons
-import UI
 import CoreFoundationLib
+import UI
 import SANLegacyLibrary
 import LoginCommon
-import CommonUseCase
 
 final class PLSmsAuthCoordinator: ModuleCoordinator, PLScaAuthCoordinatorProtocol {
     weak var navigationController: UINavigationController?

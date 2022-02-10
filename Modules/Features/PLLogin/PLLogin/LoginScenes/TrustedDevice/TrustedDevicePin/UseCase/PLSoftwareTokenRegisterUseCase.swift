@@ -5,9 +5,8 @@
 //  Created by Marcos Álvarez Mesa on 30/6/21.
 //
 
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 final class PLSoftwareTokenRegisterUseCase: UseCase<PLSoftwareTokenRegisterUseCaseInput, PLSoftwareTokenRegisterUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {

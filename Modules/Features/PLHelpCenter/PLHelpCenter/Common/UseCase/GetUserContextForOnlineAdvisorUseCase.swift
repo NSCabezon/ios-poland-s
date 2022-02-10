@@ -1,6 +1,5 @@
 import Foundation
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 protocol GetUserContextForOnlineAdvisorUseCaseProtocol: UseCase<GetUserContextForOnlineAdvisorUseCaseOkInput, GetUserContextForOnlineAdvisorUseCaseOkOutput, StringErrorOutput> {}

@@ -5,11 +5,9 @@
 //  Created by 188216 on 24/11/2021.
 //
 
-import Commons
-import PLCommons
-import Commons
-import PLUI
 import CoreFoundationLib
+import PLCommons
+import PLUI
 import SANPLLibrary
 import SANLegacyLibrary
 
@@ -23,6 +21,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
     func didTouchContactsButton()
     func didInputPartialPhoneNumber(_ number: String)
     func didInputFullPhoneNumber(_ number: String)
+    func didSelectTopUpAmount(_ value: TopUpValue?)
     func didTouchContinueButton()
     func didTouchOperatorSelectionButton()
 }
@@ -51,6 +50,7 @@ final class PhoneTopUpFormPresenter {
     private let operators: [Operator]
     private let gsmOperators: [GSMOperator]
     private let internetContacts: [MobileContact]
+    private let settings: TopUpSettings
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
@@ -59,18 +59,7 @@ final class PhoneTopUpFormPresenter {
     private let polishContactsFilter: PolishContactsFiltering
     
     private var selectedAccountNumber: String?
-    private var selectedGsmOperator: GSMOperator? {
-        didSet {
-            let matchingOperator = operators.first(where: { $0.id == selectedGsmOperator?.id })
-            selectedOperator = matchingOperator
-        }
-    }
-    private var selectedOperator: Operator? {
-        didSet {
-            view?.showOperatorSelection(with: selectedOperator)
-        }
-    }
-        
+    
     private var phoneNumber: InputPhoneNumber = .partial(number: "") {
         didSet {
             view?.updatePhoneInput(with: phoneNumber.number)
@@ -79,6 +68,28 @@ final class PhoneTopUpFormPresenter {
             updateOperator()
         }
     }
+    
+    private var selectedGsmOperator: GSMOperator? {
+        didSet {
+            view?.updateOperatorSelection(with: selectedGsmOperator)
+            let matchingOperator = operators.first(where: { $0.id == selectedGsmOperator?.id })
+            selectedOperator = matchingOperator
+        }
+    }
+    
+    private var selectedOperator: Operator? {
+        didSet {
+            selectedTopUpValue = matchDefaultTopUpValue(with: selectedOperator)
+            view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
+        }
+    }
+    
+    private var selectedTopUpValue: TopUpValue? {
+        didSet {
+            view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
+        }
+    }
+        
     private var recipientName: String = "" {
         didSet {
             view?.updateRecipientName(with: recipientName)
@@ -91,12 +102,14 @@ final class PhoneTopUpFormPresenter {
          accounts: [AccountForDebit],
          operators: [Operator],
          gsmOperators: [GSMOperator],
-         internetContacts: [MobileContact]) {
+         internetContacts: [MobileContact],
+         settings: TopUpSettings) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.operators = operators
         self.gsmOperators = gsmOperators
         self.internetContacts = internetContacts
+        self.settings = settings
         coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
@@ -161,6 +174,10 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
         phoneNumber = .full(number: contact.phoneNumber)
         recipientName = contact.fullName
+    }
+    
+    func didSelectTopUpAmount(_ value: TopUpValue?) {
+        selectedTopUpValue = value
     }
     
     func mobileContactDidSelectCloseProcess() {
@@ -254,5 +271,15 @@ private extension PhoneTopUpFormPresenter {
             }.onError { error in
                 success([])
             }
+    }
+    
+    func matchDefaultTopUpValue(with mobileOperator: Operator?) -> TopUpValue? {
+        guard let mobileOperator = mobileOperator else {
+            return nil
+        }
+    
+        let matchingOperatorSetting = settings.first(where: { $0.operatorId == mobileOperator.id })
+        let matchingTopUpValue = mobileOperator.topupValues.values.first(where: { $0.value == matchingOperatorSetting?.defaultTopUpValue })
+        return matchingTopUpValue
     }
 }

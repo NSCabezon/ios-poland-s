@@ -6,7 +6,7 @@
 //
 
 import RetailLegacy
-import Commons
+import CoreFoundationLib
 import GlobalPosition
 import Transfer
 import Cards
@@ -15,7 +15,6 @@ import PLCommons
 import Loans
 import PersonalArea
 import SANLegacyLibrary
-import CoreFoundationLib
 import TransferOperatives
 import UI
 

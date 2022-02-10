@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 private enum Constants {
     // Separator

@@ -8,6 +8,7 @@
 import SANLegacyLibrary
 import SANPLLibrary
 
+
 final class DepositDTOAdapter {
     static func adaptPLDepositToDeposit(_ plDeposit: SANPLLibrary.DepositDTO) -> SANLegacyLibrary.DepositDTO {
         var depositDTO = SANLegacyLibrary.DepositDTO()
@@ -18,8 +19,8 @@ final class DepositDTOAdapter {
         depositDTO.balance = AmountAdapter.adaptBalanceToAmount(plDeposit.currentBalance)
         depositDTO.countervalueCurrentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plDeposit.currentBalance)
         depositDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plDeposit.accountId?.id)
-        depositDTO.accountId = SANLegacyLibrary.DepositAccountIdDTO(id: plDeposit.accountId?.id, systemId: plDeposit.accountId?.systemId)
-        depositDTO.productId = SANLegacyLibrary.DepositAccountIdDTO(id: plDeposit.productId?.id, systemId: plDeposit.productId?.systemId)
+        depositDTO.accountId = SANLegacyLibrary.DepositDTO.ProductID(id: plDeposit.accountId?.id, systemId: plDeposit.accountId?.systemId)
+        depositDTO.productId = SANLegacyLibrary.DepositDTO.ProductID(id: plDeposit.productId?.id, systemId: plDeposit.productId?.systemId)
         return depositDTO
     }
 }

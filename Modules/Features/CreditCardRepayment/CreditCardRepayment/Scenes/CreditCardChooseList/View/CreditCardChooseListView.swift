@@ -7,7 +7,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import Foundation
 
 final class CreditCardChooseListView: UIView {

@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import TaxTransfer
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 class TaxTransferFormPresenterTests: XCTestCase {
@@ -84,15 +84,15 @@ class TaxTransferFormPresenterTests: XCTestCase {
         dependenciesContainer.register(for: TaxTransferFormValidating.self) { _ in
             return validatorMock
         }
-        let formData = TaxTransferFormFieldsData(
+        let formFields = TaxTransferFormFields(
             amount: "100,00",
             obligationIdentifier: "example identifier",
             date: Date()
         )
         
         let validationExpectation = expectation(description: "Did call validator")
-        validatorMock.validationBlock = { data -> TaxTransferFormValidity in
-            XCTAssertEqual(data, formData)
+        validatorMock.validationBlock = { fields -> TaxTransferFormValidity in
+            XCTAssertEqual(fields, formFields)
             validationExpectation.fulfill()
             return .valid
         }
@@ -103,7 +103,7 @@ class TaxTransferFormPresenterTests: XCTestCase {
         }
         
         // when
-        sut.didUpdateFields(with: formData)
+        sut.didUpdateFields(with: formFields)
         
         // then
         wait(for: [validationExpectation, enableDoneButtonExpectation], timeout: 0.1)
@@ -119,7 +119,7 @@ class TaxTransferFormPresenterTests: XCTestCase {
         dependenciesContainer.register(for: TaxTransferFormValidating.self) { _ in
             return validatorMock
         }
-        let formData = TaxTransferFormFieldsData(
+        let formFields = TaxTransferFormFields(
             amount: "0,0",
             obligationIdentifier: "@#$%^&*(",
             date: Date()
@@ -130,20 +130,20 @@ class TaxTransferFormPresenterTests: XCTestCase {
             obligationIdentifierMessage: "Message 2"
         )
         let validationExpectation = expectation(description: "Did call validator")
-        validatorMock.validationBlock = { data -> TaxTransferFormValidity in
-            XCTAssertEqual(data, formData)
+        validatorMock.validationBlock = { fields -> TaxTransferFormValidity in
+            XCTAssertEqual(fields, formFields)
             validationExpectation.fulfill()
             return .invalid(invalidFormMessages)
         }
         
         let disableDoneButtonExpectation = expectation(description: "Did disable done button")
-        viewMock.disableDoneButtionBlock = { data in
+        viewMock.disableDoneButtonBlock = { messages in
             disableDoneButtonExpectation.fulfill()
-            XCTAssertEqual(data, invalidFormMessages)
+            XCTAssertEqual(messages, invalidFormMessages)
         }
         
         // when
-        sut.didUpdateFields(with: formData)
+        sut.didUpdateFields(with: formFields)
         
         // then
         wait(for: [validationExpectation, disableDoneButtonExpectation], timeout: 0.1)

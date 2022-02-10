@@ -5,7 +5,7 @@
 //  Created by 185167 on 14/10/2021.
 //
 
-import Commons
+import CoreFoundationLib
 
 enum BlikCustomerLabelValidationResult {
     case valid

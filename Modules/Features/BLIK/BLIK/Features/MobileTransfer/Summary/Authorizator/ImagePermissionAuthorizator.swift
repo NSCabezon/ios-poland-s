@@ -2,7 +2,7 @@ import Foundation
 import Photos
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol ImagePermissionAuthorizatorProtocol {
     func authorizeImagePermission(in view: UIViewController,
