@@ -1,7 +1,6 @@
 import Foundation
 import CoreFoundationLib
 import OpenCombine
-import Commons
 
 final class PLHomeTipsRepository: HomeTipsRepository {
     private let dependenciesResolver: DependenciesResolver

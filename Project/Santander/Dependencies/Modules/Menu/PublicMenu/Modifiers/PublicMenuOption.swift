@@ -11,6 +11,7 @@ struct PublicMenuOption: PublicMenuOptionRepresentable {
     var titleKey: String
     var iconKey: String
     var action: PublicMenuAction
+    var event: String
     var accessibilityIdentifier: String?
     var type: PublicMenuOptionType
     
@@ -25,6 +26,7 @@ struct PublicMenuOption: PublicMenuOptionRepresentable {
         self.iconKey = iconKey
         self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
+        self.event = ""
         self.type = type
     }
 }

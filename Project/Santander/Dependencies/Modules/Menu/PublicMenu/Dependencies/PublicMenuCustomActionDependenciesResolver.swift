@@ -6,7 +6,7 @@
 //
 import Menu
 import UI
-import Commons
+import CoreFoundationLib
 
 protocol PublicMenuCustomActionDependenciesResolver {
     var externalDependencies: PublicMenuCustomActionExternalDependenciesResolver { get }

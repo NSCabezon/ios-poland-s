@@ -9,6 +9,7 @@ import CoreFoundationLib
 struct SelectOptionButtonModel: SelectOptionButtonModelRepresentable {
     public var titleKey: String
     public var action: PublicMenuAction
+    public var event: String
     public var node: KindOfPublicMenuNode
     public var accessibilityIdentifier: String?
 }
