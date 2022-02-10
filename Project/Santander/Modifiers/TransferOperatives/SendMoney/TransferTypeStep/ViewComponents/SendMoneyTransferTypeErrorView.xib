@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyTransferTypeAmountHighView" customModule="PL_DEV_0_0_96" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyTransferTypeErrorView" customModule="PL_DEV_0_4_9" customModuleProvider="target">
             <connections>
-                <outlet property="actionButton" destination="BPd-yC-Gtb" id="8bO-ao-9Xp"/>
+                <outlet property="actionButton" destination="gmF-Dt-dJz" id="AxM-fu-ejg"/>
                 <outlet property="descriptionLabel" destination="mcd-fl-YsV" id="gz6-Fn-fyE"/>
                 <outlet property="iconImageView" destination="mKM-7M-glo" id="gFJ-M8-MR1"/>
                 <outlet property="titleLabel" destination="93X-1i-Sfz" id="yUx-V1-RSz"/>
@@ -38,33 +40,32 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPd-yC-Gtb" customClass="OneFloatingButton" customModule="UIOneComponents">
-                            <rect key="frame" x="125" y="238" width="164" height="48"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="krk-uG-X9D"/>
-                            </constraints>
-                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="100" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="1000" text="aslkjaklsajlksakanlkanksan,smanLsnlnslanlknslknslkNakslaknsaslkjaklsajlksakanlkanksan,smanLsnlnslanlknslknslkNakslaknsaaaaaa" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcd-fl-YsV">
                             <rect key="frame" x="20" y="145" width="374" height="69"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmF-Dt-dJz" customClass="OneFloatingButton" customModule="UIOneComponents">
+                            <rect key="frame" x="184" y="238" width="46" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="M1R-9k-fi5"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Button"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="BPd-yC-Gtb" firstAttribute="top" secondItem="mcd-fl-YsV" secondAttribute="bottom" constant="24" id="4Yb-qM-wQF"/>
+                        <constraint firstItem="gmF-Dt-dJz" firstAttribute="centerX" secondItem="aKd-7h-bOt" secondAttribute="centerX" id="1QV-fR-SME"/>
                         <constraint firstAttribute="trailing" secondItem="mcd-fl-YsV" secondAttribute="trailing" constant="20" id="CIH-Oy-bkQ"/>
                         <constraint firstItem="mKM-7M-glo" firstAttribute="top" secondItem="aKd-7h-bOt" secondAttribute="top" constant="14" id="EcY-RI-hvK"/>
-                        <constraint firstAttribute="bottom" secondItem="BPd-yC-Gtb" secondAttribute="bottom" id="IOq-wh-ZRQ"/>
                         <constraint firstItem="mcd-fl-YsV" firstAttribute="top" secondItem="93X-1i-Sfz" secondAttribute="bottom" constant="16" id="Pue-Mm-ZTG"/>
+                        <constraint firstAttribute="bottom" secondItem="gmF-Dt-dJz" secondAttribute="bottom" id="Qev-K2-3Fc"/>
+                        <constraint firstItem="gmF-Dt-dJz" firstAttribute="top" secondItem="mcd-fl-YsV" secondAttribute="bottom" constant="24" id="R4I-Z9-Pak"/>
                         <constraint firstItem="mcd-fl-YsV" firstAttribute="leading" secondItem="aKd-7h-bOt" secondAttribute="leading" constant="20" id="aXc-Da-kXU"/>
                         <constraint firstAttribute="trailing" secondItem="93X-1i-Sfz" secondAttribute="trailing" constant="24" id="aif-L8-xaw"/>
-                        <constraint firstItem="BPd-yC-Gtb" firstAttribute="leading" secondItem="aKd-7h-bOt" secondAttribute="leading" constant="125" id="eY8-g1-Gwq"/>
-                        <constraint firstItem="BPd-yC-Gtb" firstAttribute="centerX" secondItem="aKd-7h-bOt" secondAttribute="centerX" id="ja9-st-p49"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="286" id="jxZ-ta-MP9"/>
-                        <constraint firstAttribute="trailing" secondItem="BPd-yC-Gtb" secondAttribute="trailing" constant="125" id="oEO-x2-NSd"/>
                         <constraint firstItem="mKM-7M-glo" firstAttribute="centerX" secondItem="aKd-7h-bOt" secondAttribute="centerX" id="oeC-z1-Mk3"/>
                         <constraint firstItem="93X-1i-Sfz" firstAttribute="leading" secondItem="aKd-7h-bOt" secondAttribute="leading" constant="24" id="qO1-a2-szI"/>
                         <constraint firstItem="93X-1i-Sfz" firstAttribute="top" secondItem="mKM-7M-glo" secondAttribute="bottom" constant="20" id="ts9-iW-bag"/>

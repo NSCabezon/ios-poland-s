@@ -12,6 +12,10 @@ import CoreDomain
 import SANLegacyLibrary
 import SANPLLibrary
 
+enum SendMoneyTransferTypeBottomSheet {
+    case amountToHigh, invalidDate
+}
+
 protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol {
     var view: SendMoneyTransferTypeView? { get set }
     func viewDidLoad()
@@ -19,7 +23,6 @@ protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol 
     func didSelectClose()
     func didSelectTransferType(at index: Int)
     func didPressedFloatingButton()
-    func didTapCloseAmountHigh()
     func didTapTooltip()
     func getSubtitleInfo() -> String
 }
@@ -85,17 +88,14 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
               let limitAmount = transferType.limitAmount.value
         else { return }
         guard self.isValidDate else {
+            self.view?.showBottomSheet(type: .invalidDate)
             return
         }
         if limitAmount.isZero || amount.isLessThanOrEqualTo(limitAmount) {
             self.container?.stepFinished(presenter: self)
         } else {
-            self.view?.showAmountTooHighView()
+            self.view?.showBottomSheet(type: .amountToHigh)
         }
-    }
-    
-    func didTapCloseAmountHigh() {
-        self.view?.closeAmountTooHighView()
     }
     
     func getSubtitleInfo() -> String {
