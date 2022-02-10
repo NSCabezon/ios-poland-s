@@ -21,7 +21,7 @@ final class LoanDTOAdapter {
         counterValueAmount?.value?.negate()
         loanDTO.counterValueCurrentBalanceAmount = counterValueAmount
         loanDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plLoan.accountId?.id)
-        loanDTO.productId = .init(id: plLoan.accountId?.id, systemId: plLoan.accountId?.systemId)
+        loanDTO.productId = .init(id: plLoan.productId?.id, systemId: plLoan.productId?.systemId)
         return loanDTO
     }
 }

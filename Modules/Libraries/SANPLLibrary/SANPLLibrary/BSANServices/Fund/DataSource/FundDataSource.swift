@@ -38,8 +38,8 @@ private extension FundDataSource {
 extension FundDataSource: FundDataSourceProtocol {
 	func changeAlias(fundDTO: SANLegacyLibrary.FundDTO, newAlias: String) throws -> Result<FundChangeAliasDTO, NetworkProviderError> {
 		guard let baseUrl = self.getBaseUrl(),
-			  let accountNumber = fundDTO.accountId?.id,
-			  let systemId = fundDTO.accountId?.systemId else {
+			  let accountNumber = fundDTO.productId?.id,
+			  let systemId = fundDTO.productId?.systemId else {
 			return .failure(NetworkProviderError.other)
 		}
 

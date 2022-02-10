@@ -11,6 +11,7 @@ public struct DepositDTO: Codable {
     public let number: String?
     public let name: DepositNameDTO?
     public let accountId: DepositIdDTO?
+    public let productId: DepositIdDTO?
     public let type: String?
     public let currentBalance: BalanceDTO?
     public let currencyCode: String?
