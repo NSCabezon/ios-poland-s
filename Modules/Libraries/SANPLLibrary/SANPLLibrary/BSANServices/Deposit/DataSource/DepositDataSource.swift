@@ -38,8 +38,8 @@ private extension DepositDataSource {
 extension DepositDataSource: DepositDataSourceProtocol {
 	func changeAlias(depositDTO: SANLegacyLibrary.DepositDTO, newAlias: String) throws -> Result<DepositChangeAliasDTO, NetworkProviderError> {
 		guard let baseUrl = self.getBaseUrl(),
-			  let accountNumber = depositDTO.accountId?.id,
-			  let systemId = depositDTO.accountId?.systemId else {
+			  let accountNumber = depositDTO.productId?.id,
+			  let systemId = depositDTO.productId?.systemId else {
 			return .failure(NetworkProviderError.other)
 		}
 
