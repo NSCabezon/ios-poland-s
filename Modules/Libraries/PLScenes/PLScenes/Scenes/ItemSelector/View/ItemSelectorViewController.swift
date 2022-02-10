@@ -5,8 +5,8 @@
 //  Created by 185167 on 04/02/2022.
 //
 
+import CoreFoundationLib
 import UI
-import Commons
 
 final class ItemSelectorViewController<Item>: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let coordinator: ItemSelectorCoordinator<Item>
