@@ -7,20 +7,20 @@
 
 import CoreFoundationLib
 import OpenCombine
-import Transfer
+import RetailLegacy
 
 final class PaymentsPGFrequentOperativeOption {
     let trackName: String? = "enviar_dinero"
     let rawValue: String = "paymentsPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnPayments.rawValue
     private let dependenciesResolver: DependenciesResolver
-    private let dependencies: OneTransferHomeExternalDependenciesResolver
+    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
-        self.dependencies = dependenciesResolver.resolve()
+        self.coreDependenciesResolver = coreDependenciesResolver
     }
 }
 
@@ -33,7 +33,7 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
                 .receive(on: Schedulers.main)
                 .sink { [unowned self] isEnabled in
                     if isEnabled {
-                        self.dependencies.oneTransferHomeCoordinator().start()
+                        self.coreDependenciesResolver.oneTransferHomeCoordinator().start()
                     } else {
                         self.sendMoneyCoordinator.start()
                     }
