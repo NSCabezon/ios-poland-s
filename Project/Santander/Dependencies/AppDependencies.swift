@@ -22,7 +22,6 @@ import Menu
 import Cards
 import PLNotifications
 import Loans
-import CoreFoundationLib
 import CoreDomain
 import PLCryptography
 import UI
@@ -41,7 +40,6 @@ final class AppDependencies {
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
     private let compilation: PLCompilationProtocol
-    private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
     private lazy var netClient = NetClientImplementation()
 
@@ -78,9 +76,6 @@ final class AppDependencies {
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
                                          demoInterpreter: self.demoInterpreter)
-    }()
-    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
-        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
     }()
     private lazy var productIdDelegate: ProductIdDelegateProtocol = {
         return ProductIdDelegateModifier()
@@ -131,9 +126,6 @@ final class AppDependencies {
         return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
     }()
     // MARK: Features
-//    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
-//        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
-//    }()
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
         return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
     }()
@@ -148,7 +140,6 @@ final class AppDependencies {
         )
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
-        appModifiers = AppModifiers(dependenciesEngine: dependencieEngine)
         self.ibanFormatter = ShareIbanFormatter()
         registerDependencies()
     }
@@ -190,9 +181,6 @@ private extension AppDependencies {
         }
         dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
             return self.managersProviderAdapter
-        }
-        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
-            return self.getPGFrequentOperativeOption
         }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
@@ -331,9 +319,6 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
             PLPrivateSideMenuModifier()
-        }
-        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
-            PLPrivateMenuModifier(resolver: resolver)
         }
         self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
             PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)

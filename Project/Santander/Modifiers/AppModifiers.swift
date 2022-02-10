@@ -20,6 +20,7 @@ import UI
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
+    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
         let depositModifier = PLDepositModifier(dependenciesResolver: self.dependencieEngine)
         return depositModifier
@@ -41,9 +42,6 @@ final class AppModifiers {
     private lazy var cardDetailModifier: CardDetailModifierProtocol = {
         return PLCardDetailModifier(dependenciesEngine: dependencieEngine)
     }()
-//    private lazy var loansModifier: LoansModifierProtocol = {
-//        return PLLoanModifier(dependenciesEngine: dependencieEngine)
-//    }()
     private lazy var loanDetailModifier: LoanDetailModifierProtocol = {
         return PLLoanDetailModifier(dependenciesEngine: dependencieEngine)
     }()
@@ -77,8 +75,12 @@ final class AppModifiers {
     private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
     }()
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
+    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
+        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine, coreDependenciesResolver: coreDependenciesResolver)
+    }()
+    init(dependenciesEngine: DependenciesResolver & DependenciesInjector, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
         self.dependencieEngine = dependenciesEngine
+        self.coreDependenciesResolver = coreDependenciesResolver
         self.registerDependencies()
     }
 }
@@ -112,9 +114,6 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
-//        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
-//            return self.loansModifier
-//        }
         self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { _ in
             return self.loanDetailModifier
         }
@@ -199,6 +198,12 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
             PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
+        }
+        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
+            return self.getPGFrequentOperativeOption
+        }
+        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
+            PLPrivateMenuModifier(resolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
         }
     }
 }
