@@ -8,6 +8,7 @@ import Foundation
 public struct InvestmentFundsDTO: Codable {
     public let number: String?
     public let accountId: InvestmentFundsAccountIdDTO?
+    public let productId: InvestmentFundsAccountIdDTO?
     public let currencyCode: String?
     public let name: InvestmentFundsNameDTO?
     public let role: String?
