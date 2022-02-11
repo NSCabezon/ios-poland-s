@@ -169,7 +169,7 @@ private extension AppModifiers {
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
         self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { resolver in
-            return PLAccountHomeActionModifier(dependenciesResolver: resolver)
+            return PLAccountHomeActionModifier(dependenciesResolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
         }
         self.dependencieEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
             return PLAccountTransactionDetailShareableInfo()

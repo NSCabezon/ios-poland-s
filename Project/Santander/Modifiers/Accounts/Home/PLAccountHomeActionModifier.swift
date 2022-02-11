@@ -4,6 +4,7 @@
 //
 
 import CoreFoundationLib
+import RetailLegacy
 import OpenCombine
 import CoreDomain
 import Transfer
@@ -12,13 +13,13 @@ import UI
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     private let dependenciesResolver: DependenciesResolver
-    private let transferHomeDependencies: OneTransferHomeExternalDependenciesResolver
+    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    public init(dependenciesResolver: DependenciesResolver) {
+    public init(dependenciesResolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
-        self.transferHomeDependencies = dependenciesResolver.resolve()
+        self.coreDependenciesResolver = coreDependenciesResolver
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
@@ -73,16 +74,14 @@ extension PLAccountHomeActionModifier {
     private func goToSendMoney(with account: AccountRepresentable) {
         useCase
             .fetchEnabled()
-            .receive(on: Schedulers.global)
+            .receive(on: Schedulers.main)
             .sink { [unowned self] isEnabled in
-                Async.main {
-                    if isEnabled {
-                        self.transferHomeDependencies.oneTransferHomeCoordinator()
-                            .set(account)
-                            .start()
-                    } else {
-                        self.sendMoneyCoordinator.start()
-                    }
+                if isEnabled {
+                    self.coreDependenciesResolver.oneTransferHomeCoordinator()
+                        .set(account)
+                        .start()
+                } else {
+                    self.sendMoneyCoordinator.start()
                 }
             }
             .store(in: &subscriptions)
