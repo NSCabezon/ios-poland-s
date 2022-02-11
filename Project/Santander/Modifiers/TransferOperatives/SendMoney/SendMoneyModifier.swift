@@ -52,4 +52,12 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
             return nil
         }
     }
+    
+    var giveUpOpinator: String {
+        return "app-transf-nacional-abandono-PL"
+    }
+    
+    var favoriteGiveUpOpinator: String {
+        return "app-envio-favorito-abandono-PL"
+    }
 }
