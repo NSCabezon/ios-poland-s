@@ -10,6 +10,8 @@ protocol ZusTransferValidating {
         with currentActivefield: TransferFormCurrentActiveField,
         maskAccount: String
     ) -> InvalidZusTransferFormData
+    
+    func getAccountRequiredLength() -> Int
 }
 
 struct ZusTransferValidator: ZusTransferValidating {
@@ -41,6 +43,10 @@ struct ZusTransferValidator: ZusTransferValidating {
             invalidTitleMessages: validateText(form.title),
             currentActiveField: currentActiveField
         )
+    }
+    
+    func getAccountRequiredLength() -> Int {
+        accountRequiredLength
     }
 }
 

@@ -368,6 +368,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
             PLUserSegmentProtocol(dependenciesResolver: resolver)
         }
+        self.dependencieEngine.register(for: OpinatorManagerModifier.self) { _ in
+            PLOpinatorManagerModifier()
+        }
     }
 }
 
