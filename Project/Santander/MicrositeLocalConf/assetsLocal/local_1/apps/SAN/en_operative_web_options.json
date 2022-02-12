@@ -86,9 +86,9 @@
         },
         {
             "id": "MEMBER_GET_MEMBER",
-            "url": null,
-            "isAvailable": false,
-            "method": "GET",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mgm"
+            "isAvailable": true,
+            "method": "POST",
             "isFullScreen": true
         },
         {
