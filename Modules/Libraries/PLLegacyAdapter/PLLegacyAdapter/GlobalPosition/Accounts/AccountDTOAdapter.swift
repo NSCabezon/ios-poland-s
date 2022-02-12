@@ -18,7 +18,11 @@ public final class AccountDTOAdapter {
         accountDTO.countervalueCurrentBalanceAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plAccount.balance)
         accountDTO.availableNoAutAmount = AmountAdapter.adaptBalanceToAmount(plAccount.availableFunds)
         accountDTO.countervalueAvailableNoAutAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plAccount.availableFunds)
-
+        
+        if plAccount.productId != nil {
+            accountDTO.productId = SANLegacyLibrary.AccountDTO.ProductID(id: plAccount.productId?.id, systemId: plAccount.productId?.systemId ?? nil)
+        }
+        
         accountDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plAccount.number)
         accountDTO.isMainAccount = plAccount.defaultForPayments
 

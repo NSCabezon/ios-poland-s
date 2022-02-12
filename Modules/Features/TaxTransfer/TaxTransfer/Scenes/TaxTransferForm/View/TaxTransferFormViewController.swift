@@ -5,12 +5,17 @@
 //  Created by 185167 on 06/12/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommons
 import UI
 import PLUI
 
-protocol TaxTransferFormView: AnyObject, LoaderPresentable {}
+protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
+    func setViewModel(_ viewModel: TaxTransferFormViewModel)
+    func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
+    func enableDoneButton()
+    func getCurrentFormFields() -> TaxTransferFormFields
+}
 
 final class TaxTransferFormViewController: UIViewController {
     private let presenter: TaxTransferFormPresenterProtocol
@@ -18,11 +23,10 @@ final class TaxTransferFormViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let bottomButtonView = BottomButtonView()
     private lazy var formView = TaxTransferFormContainerView(
-        configuration: presenter.getDateSelectorConfiguration(),
+        configuration: presenter.getTaxFormConfiguration(),
         delegate: self
     )
-    
-    
+
     init(presenter: TaxTransferFormPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -36,10 +40,44 @@ final class TaxTransferFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        presenter.viewDidLoad()
     }
 }
 
-extension TaxTransferFormViewController: TaxTransferFormView {}
+extension TaxTransferFormViewController: TaxTransferFormView {
+    func setViewModel(_ viewModel: TaxTransferFormViewModel) {
+        DispatchQueue.main.async {
+            self.formView.configureAccountSelector(with: viewModel.account) { [weak self] in
+                self?.presenter.didTapAccountSelector()
+            }
+            
+            self.formView.configureTaxPayerSelector(with: viewModel.taxPayer) { [weak self] in
+                self?.presenter.didTapTaxPayer()
+            }
+            
+            self.formView.configureTaxAuthoritySelector(with: viewModel.taxAuthority) { [weak self] in
+                self?.presenter.didTapTaxAuthority()
+            }
+            
+            self.formView.configureAmountField(with: viewModel.sendAmount)
+            self.formView.configureObligationIdentifierField(with: viewModel)
+        }
+    }
+    
+    func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages) {
+        bottomButtonView.disableButton()
+        formView.setInvalidFormMessages(messages)
+    }
+    
+    func enableDoneButton() {
+        bottomButtonView.enableButton()
+        formView.clearInvalidFormMessages()
+    }
+    
+    func getCurrentFormFields() -> TaxTransferFormFields {
+        return formView.getFormFields()
+    }
+}
 
 private extension TaxTransferFormViewController {
     func setUp() {
@@ -55,10 +93,6 @@ private extension TaxTransferFormViewController {
             .setLeftAction(.back(action: #selector(back)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
-    }
-    
-    @objc func back() {
-         presenter.didTapBack()
     }
     
     func configureSubviews() {
@@ -94,13 +128,19 @@ private extension TaxTransferFormViewController {
     }
     
     func configureBottomView() {
+        bottomButtonView.disableButton()
         bottomButtonView.configure(title: "#Gotowe") { [weak self] in
-             self?.presenter.didTapDone()
+            guard let data = self?.formView.getFormFields() else { return }
+            self?.presenter.didTapDone(with: data)
         }
     }
     
     func configureStyling() {
         view.backgroundColor = .white
+    }
+    
+    @objc func back() {
+         presenter.didTapBack()
     }
 }
 
@@ -119,5 +159,9 @@ extension TaxTransferFormViewController: TaxTransferFormContainerViewDelegate {
         if (bottomOffset.y > 0) {
             scrollView.setContentOffset(bottomOffset, animated: true)
         }
+    }
+    
+    func didUpdateFields(withFields fields: TaxTransferFormFields) {
+        presenter.didUpdateFields(with: fields)
     }
 }

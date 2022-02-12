@@ -6,21 +6,20 @@
 //
 
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 public final class GetGPLoanOperativeModifier: GetGPLoanOperativeOptionProtocol {
     private var shortcutsOperativesAvailable: [LoanActionType] = [.partialAmortization, .changeAccount]
 
     public func getAllLoanOperativeActionType() -> [LoanActionType] {
-        return self.shortcutsOperativesAvailable
+        return [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType(), PLLoansAliasOperative().getActionType()]
     }
 
     public func getCountryLoanOperativeActionType(loans: [LoanEntity]) -> [LoanActionType] {
-        return self.shortcutsOperativesAvailable
+        return [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType(), PLLoansAliasOperative().getActionType()]
     }
 
     public func isOtherOperativeEnabled(_ option: LoanActionType) -> Bool {
-        return self.shortcutsOperativesAvailable.contains(option)
+        return [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType(), PLLoansAliasOperative().getActionType()].contains(option)
     }
 }

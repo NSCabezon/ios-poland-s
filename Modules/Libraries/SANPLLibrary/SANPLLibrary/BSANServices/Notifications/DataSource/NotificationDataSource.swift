@@ -62,7 +62,7 @@ private struct NotificationRegisterRequest: NetworkProviderRequest {
     let jsonBody: NotificationRegisterParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -73,7 +73,7 @@ private struct NotificationRegisterRequest: NetworkProviderRequest {
          jsonBody: NotificationRegisterParameters,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
         self.serviceName = serviceName

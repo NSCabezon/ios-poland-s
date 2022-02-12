@@ -54,7 +54,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let serviceName = PhoneTopUpServiceType.accounts.rawValue
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
-                                        method: .get)
+                                        method: .get,
+                                        contentType: nil)
         return networkProvider.request(request)
     }
     
@@ -66,7 +67,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let serviceName = PhoneTopUpServiceType.operators.rawValue
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
-                                        method: .get)
+                                        method: .get,
+                                        contentType: nil)
         return networkProvider.request(request)
     }
     
@@ -78,7 +80,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let serviceName = PhoneTopUpServiceType.gsmOperators.rawValue
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
-                                        method: .get)
+                                        method: .get,
+                                        contentType: nil)
         return networkProvider.request(request)
     }
     
@@ -90,7 +93,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let serviceName = PhoneTopUpServiceType.internetContacts.rawValue
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
-                                        method: .get)
+                                        method: .get,
+                                        contentType: nil)
         return networkProvider.request(request)
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import RetailLegacy
-import Commons
+import CoreFoundationLib
 import GlobalPosition
 import Transfer
 import Cards
@@ -15,12 +15,12 @@ import PLCommons
 import Loans
 import PersonalArea
 import SANLegacyLibrary
-import CoreFoundationLib
 import TransferOperatives
 import UI
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
+    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
         let depositModifier = PLDepositModifier(dependenciesResolver: self.dependencieEngine)
         return depositModifier
@@ -29,8 +29,8 @@ final class AppModifiers {
         let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
     }()
-    private lazy var cardHomeActionModifier: Cards.CardHomeActionModifier = {
-        let modifier = CardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
+    private lazy var cardHomeActionModifier: PLCardHomeActionModifier = {
+        let modifier = PLCardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
         modifier.setCompletion { resolver in
             modifier.add(PLCardHomeActionModifier(dependenciesResolver: resolver))
         }
@@ -41,9 +41,6 @@ final class AppModifiers {
     }()
     private lazy var cardDetailModifier: CardDetailModifierProtocol = {
         return PLCardDetailModifier(dependenciesEngine: dependencieEngine)
-    }()
-    private lazy var loansModifier: LoansModifierProtocol = {
-        return PLLoanModifier(dependenciesEngine: dependencieEngine)
     }()
     private lazy var loanDetailModifier: LoanDetailModifierProtocol = {
         return PLLoanDetailModifier(dependenciesEngine: dependencieEngine)
@@ -78,8 +75,12 @@ final class AppModifiers {
     private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependencieEngine)
     }()
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
+    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
+        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine, coreDependenciesResolver: coreDependenciesResolver)
+    }()
+    init(dependenciesEngine: DependenciesResolver & DependenciesInjector, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
         self.dependencieEngine = dependenciesEngine
+        self.coreDependenciesResolver = coreDependenciesResolver
         self.registerDependencies()
     }
 }
@@ -98,6 +99,9 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: CardHomeActionModifier.self) { _ in
             return self.cardHomeActionModifier
         }
+        self.dependencieEngine.register(for: CardBoardingActionModifierProtocol.self) { _ in
+            return self.cardHomeActionModifier
+        }
         self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
             return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
         }
@@ -109,9 +113,6 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
-        }
-        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
-            return self.loansModifier
         }
         self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { _ in
             return self.loanDetailModifier
@@ -161,9 +162,6 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: AccountTransactionDetailProtocol.self) { _ in
             return PLAccountTransactionDetail()
         }
-        self.dependencieEngine.register(for: AccountTransactionDetailActionProtocol.self) { _ in
-            return PLAccountTransactionDetailAction()
-        }
         self.dependencieEngine.register(for: GetAccountHomeActionUseCaseProtocol.self) { resolver in
             return GetPLAccountHomeActionUseCase(dependenciesResolver: resolver)
         }
@@ -197,6 +195,15 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: GenericDialogAddBranchLocatorActionCapable.self) { _ in
             GenericDialogActionsModifier()
+        }
+        self.dependencieEngine.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
+            PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
+        }
+        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
+            return self.getPGFrequentOperativeOption
+        }
+        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
+            PLPrivateMenuModifier(resolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
         }
     }
 }

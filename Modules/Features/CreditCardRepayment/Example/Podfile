@@ -6,7 +6,6 @@ source 'https://cdn.cocoapods.org/'
 
 def example_app_common
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
-  pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
 end
@@ -19,7 +18,6 @@ def core_dependencies
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'SANLibraryV3', :path => '../../../../santander-one/Modules/Libraries/SANLibraryV3'
   pod 'UI', :path => '../../../../santander-one/UI'
-  pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
 end

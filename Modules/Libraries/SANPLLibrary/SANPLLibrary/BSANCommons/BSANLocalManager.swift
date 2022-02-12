@@ -151,9 +151,3 @@ private extension BSANLocalManager {
         return try? JSONSerialization.data(withJSONObject: element, options: .prettyPrinted)
     }
 }
-
-extension String {
-    public func split(_ value: String) -> [String] {
-        return self.components(separatedBy: value)
-    }
-}

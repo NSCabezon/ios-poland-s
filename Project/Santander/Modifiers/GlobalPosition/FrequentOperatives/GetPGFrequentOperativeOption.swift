@@ -6,13 +6,16 @@
 //
 
 import CoreFoundationLib
-import Commons
+import CoreDomain
+import RetailLegacy
 
 final class GetPGFrequentOperativeOption {
     private let dependenciesResolver: DependenciesResolver
+    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
 
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
+        self.coreDependenciesResolver = coreDependenciesResolver
     }
 }
 
@@ -29,7 +32,8 @@ extension GetPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol {
 private extension GetPGFrequentOperativeOption {
     func getPGFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
         var options: [PGFrequentOperativeOptionProtocol] = [PGFrequentOperativeOption.operate,
-                                                            PaymentsPGFrequentOperativeOption(dependenciesResolver: self.dependenciesResolver),
+                                                            PaymentsPGFrequentOperativeOption(dependenciesResolver: self.dependenciesResolver,
+                                                                                              coreDependenciesResolver: self.coreDependenciesResolver),
                                                             TransactionHistoryPGFrequentOperativeOption(),
                                                             BLIKPGFrequentOperativeOption(dependencyResolver: dependenciesResolver),
                                                             PLHelpCenterFrequentOperativeOption(dependencyResolver: dependenciesResolver),

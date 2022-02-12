@@ -1,7 +1,8 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol CharityTransferFormViewProtocol: AnyObject,
                                           ConfirmationDialogPresentable {
@@ -17,7 +18,8 @@ final class CharityTransferFormViewController: UIViewController {
     
     init(presenter: CharityTransferFormPresenterProtocol) {
         self.presenter = presenter
-        self.formView = CharityTransferFormView(language: presenter.getLanguage())
+        self.formView = CharityTransferFormView(language: presenter.getLanguage(),
+                                                charityTransferSettings: presenter.getCharityTransferSettings())
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,10 +30,13 @@ final class CharityTransferFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        configureKeyboardDismissGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
+        IQKeyboardManager.shared.enableAutoToolbar = false
         view.layoutIfNeeded()
     }
 }
@@ -128,5 +133,15 @@ extension CharityTransferFormViewController: CharityTransferFormViewDelegate {
     
     func changeAccountTapped() {
         presenter.showAccountSelector()
+    }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
     }
 }

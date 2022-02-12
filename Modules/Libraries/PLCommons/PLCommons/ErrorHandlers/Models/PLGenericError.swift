@@ -5,7 +5,7 @@
 //  Created by Mario Rosales Maillo on 27/7/21.
 //
 
-import Commons
+import CoreFoundationLib
 
 public enum PLGenericError {
     
@@ -22,7 +22,7 @@ public enum PLGenericError {
     func getErrorDesc() -> String {
         switch self {
         case .noConnection:
-            return localized("generic_error_internetConnection")
+            return localized("pl_login_alert_applicationNotWorking")
         case .unknown:
             return localized("generic_error_txt")
         case .other(_):

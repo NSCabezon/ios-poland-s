@@ -1,36 +1,46 @@
 import UI
-import Commons
+import CoreFoundationLib
 import PLUI
 import SANLegacyLibrary
 import PLCommons
 
 protocol ZusTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
-    func didChangeForm()
+    func didChangeForm(with field: TransferFormCurrentActiveField)
+    func didTapRecipientButton()
+    func scrollToBottom()
 }
 
 final class ZusTransferFormView: UIView {
     private let accountSelectorLabel = UILabel()
     private let selectedAccountView = SelectedAccountView()
     private let recipientFieldName = UILabel()
-    private let recipientTextField = LisboaTextField()
+    private let recipientView = LisboaTextFieldWithErrorView()
+    private var recipientTextField: LisboaTextField { return recipientView.textField }
     private let accountNumberFieldName = UILabel()
-    private let accountNumberTextField = LisboaTextField()
+    private let accountView = LisboaTextFieldWithErrorView()
+    private var accountNumberTextField: LisboaTextField { return accountView.textField }
     private let amountFieldName = UILabel()
     private let amountView = LisboaTextFieldWithErrorView()
     private var amountTextField: LisboaTextField { return amountView.textField }
     private let currencyAccessoryView = CurrencyAccessoryView()
     private let titleFieldName = UILabel()
     private let titleDescriptionLabel = UILabel()
-    private let titleTextField = LisboaTextField()
+    private let titleView = LisboaTextFieldWithErrorView()
+    private var titleTextField: LisboaTextField { return titleView.textField }
     private let dateFieldName = UILabel()
     private let transferDateSelector: TransferDateSelector
     private let textFieldsMainContainer = UIStackView()
     private let views: [UIView]
     private var selectedDate = Date()
-    
+    private var currentActiveField = TransferFormCurrentActiveField.none
+    private let recipientTextFieldDelegate = TextFieldDelegate()
+    private let accountNumberTextFieldDelegate = TextFieldDelegate()
+    private let titleTextFieldDelegate = TextFieldDelegate()
+    private let amountTextFieldDelegate = TextFieldDelegate()
+    private var accountNumberWasEditing = false
     weak var delegate: ZusTransferFormViewDelegate?
-    
+
     init(language: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
@@ -56,17 +66,41 @@ final class ZusTransferFormView: UIView {
     
     func getCurrentFormViewModel() -> ZusTransferFormViewModel {
         ZusTransferFormViewModel(
-            amount: Decimal(string: amountTextField.text ?? ""),
+            recipient: recipientTextField.text ?? "",
+            amount: Decimal(string: amountTextField.text ?? "") ?? 0,
+            title: titleTextField.text ?? "",
             date: selectedDate,
-            recipientAccountNumberUnformatted: recipientTextField.text?.replace(" ", "") ?? ""
+            recipientAccountNumber: accountNumberTextField.text?.replace(" ", "") ?? ""
         )
     }
     
-    func showInvalidFormMessages(_ messages: InvalidZusTransferFormMessages) {
-        if messages.tooLowAmount != nil || messages.tooMuchAmount != nil {
-            amountView.showError(messages.tooLowAmount ?? messages.tooMuchAmount)
-        } else {
-            amountView.hideError()
+    func setCurrentActiveFieldType(_ type: TransferFormCurrentActiveField) {
+        currentActiveField = type
+    }
+    
+    func showInvalidFormMessages(with data: InvalidZusTransferFormData) {
+        switch data.currentActiveField {
+        case .recipient:
+            showError(for: recipientView, with: data.invalidRecieptMessages)
+        case .accountNumber(_):
+            showError(for: accountView, with: data.invalidAccountMessages)
+        case .amount:
+            showError(for: amountView, with: data.invalidAmountMessages)
+        case .title:
+            showError(for: titleView, with: data.invalidTitleMessages)
+        default: break
+        }
+    }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        recipientTextField.setText(name)
+        accountNumberTextField.setText(accountNumber)
+        let fieldsChanged: [TransferFormCurrentActiveField] = [
+            .recipient,
+            .accountNumber(controlEvent: .endEditing)
+        ]
+        fieldsChanged.forEach {
+            delegate?.didChangeForm(with: $0)
         }
     }
 }
@@ -82,10 +116,10 @@ private extension ZusTransferFormView {
         views.forEach {
             self.addSubview($0)
         }
-        [createTextFieldContainer(with: recipientFieldName, textFieldView: recipientTextField),
-         createTextFieldContainer(with: accountNumberFieldName, textFieldView: accountNumberTextField),
+        [createTextFieldContainer(with: recipientFieldName, textFieldView: recipientView),
+         createTextFieldContainer(with: accountNumberFieldName, textFieldView: accountView),
          createTextFieldContainer(with: amountFieldName, textFieldView: amountView),
-         createTextFieldContainer(with: titleFieldName, textFieldView: titleTextField)
+         createTextFieldContainer(with: titleFieldName, textFieldView: titleView)
         ]
         .forEach {
             textFieldsMainContainer.addArrangedSubview($0)
@@ -94,11 +128,11 @@ private extension ZusTransferFormView {
     
     func configureView() {
         backgroundColor = .white
-        accountSelectorLabel.text = localized("#Konto, z którego robisz przelew")
+        accountSelectorLabel.text = localized("pl_taxTransfer_label_account")
         selectedAccountView.setChangeAction { [weak self] in
             self?.delegate?.changeAccountTapped()
         }
-        configureRecipienField()
+        configureRecipientField()
         configureAccountNumberField()
         configureAmountField()
         configureTitleField()
@@ -119,18 +153,58 @@ private extension ZusTransferFormView {
         textFieldsMainContainer.axis = .vertical
     }
     
-    func configureRecipienField() {
-        recipientFieldName.text = localized("#Odbiorca")
-        recipientTextField.setText("#ZUS")
-        recipientTextField.setRightAccessory(.image("icnUser", action: {}))
+    func configureRecipientField() {
+        recipientFieldName.text = localized("sendMoney_label_recipients")
+        recipientTextField.setPlaceholder(localized("pl_zusTransfer_text_zus"))
+        recipientTextField.setRightAccessory(
+            .uiImage(PLAssets.image(named: "contacts_icon"), action: { [weak self] in
+                self?.delegate?.didTapRecipientButton()
+            })
+        )
+        
+        let formatter = UIFormattedCustomTextField()
+        formatter.setMaxLength(maxLength: 127)
+        formatter.setAllowOnlyCharacters(.operative)
+        let configuration = LisboaTextField.WritableTextField(type: .simple,
+                                                              formatter: formatter,
+                                                              disabledActions: [],
+                                                              keyboardReturnAction: nil)
+        recipientTextField.setEditingStyle(.writable(configuration: configuration))
+        recipientTextField.updatableDelegate = self
+        recipientTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
+            guard let self = self else { return }
+            self.currentActiveField = .recipient
+        }
+        formatter.delegate = recipientTextFieldDelegate
     }
     
     func configureAccountNumberField() {
-        accountNumberFieldName.text = localized("#Numer konta")
+        accountNumberFieldName.text = localized("transaction_label_recipientAccount")
+        let accountFormatter = PLAccountTextFieldFormatter()
+        let configuration = LisboaTextField.WritableTextField(
+            type: .simple,
+            formatter: accountFormatter,
+            disabledActions: [],
+            keyboardReturnAction: nil,
+            textFieldDelegate: nil) { component in
+            component.textField.keyboardType = .numberPad
+        }
+        accountNumberTextField.setPlaceholder(localized("transaction_label_recipientAccount"))
+        accountNumberTextField.setEditingStyle(.writable(configuration: configuration))
+        accountNumberTextField.updatableDelegate = self
+        accountNumberTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
+            guard let self = self else { return }
+            self.currentActiveField = .accountNumber(controlEvent: .beginEditing)
+        }
+        accountNumberTextFieldDelegate.textFieldDidEndEditing = { [weak self] in
+            guard let self = self, self.accountNumberWasEditing else { return }
+            self.delegate?.didChangeForm(with: .accountNumber(controlEvent: .endEditing))
+        }
+        accountFormatter.delegate = accountNumberTextFieldDelegate
     }
     
     func configureAmountField() {
-        amountFieldName.text = localized("#Kwota")
+        amountFieldName.text = localized("sendMoney_label_amount")
         let amountFormatter = PLAmountTextFieldFormatter()
         let configuration = LisboaTextField.WritableTextField(type: .simple,
                                                               formatter: amountFormatter,
@@ -140,17 +214,41 @@ private extension ZusTransferFormView {
         amountTextField.setEditingStyle(.writable(configuration: configuration))
         currencyAccessoryView.setText(CurrencyType.złoty.name)
         amountTextField.setRightAccessory(.view(currencyAccessoryView))
-        amountTextField.setPlaceholder(localized("#Kwota"))
+        amountTextField.setPlaceholder(localized("sendMoney_label_amount"))
         amountTextField.updatableDelegate = self
+        amountTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
+            guard let self = self else { return }
+            self.currentActiveField = .amount
+        }
+        amountFormatter.delegate = amountTextFieldDelegate
     }
     
     func configureTitleField() {
-        titleFieldName.text = localized("#Tytuł")
-        titleTextField.setText("#Przelew")
+        let formatter = UIFormattedCustomTextField()
+        formatter.setMaxLength(maxLength: 127)
+        formatter.setAllowOnlyCharacters(.operative)
+        let configuration = LisboaTextField.WritableTextField(type: .simple,
+                                                              formatter: formatter,
+                                                              disabledActions: [],
+                                                              keyboardReturnAction: nil)
+        titleFieldName.text = localized("sendMoney_label_description")
+        titleTextField.setText(localized("pl_zusTransfer_text_zusTransfer"))
+        titleTextField.setPlaceholder(localized("pl_zusTransfer_text_zusTransfer"))
+        titleTextField.setEditingStyle(.writable(configuration: configuration))
+        titleTextField.updatableDelegate = self
+        titleTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
+            guard let self = self else { return }
+            self.titleTextField.setText(nil)
+            self.currentActiveField = .title
+        }
+        titleTextFieldDelegate.textFieldDidEndEditing = { [weak self] in
+            self?.delegate?.didChangeForm(with: .title)
+        }
+        formatter.delegate = titleTextFieldDelegate
     }
-    
+
     func configureTitleDescriptionLabel() {
-        titleDescriptionLabel.text = localized("#Nadaj tytuł przelewu, który pozwoli Ci go łatwo zidentyfikować, np. ZUS marzec 2018 Jan Kowalski")
+        titleDescriptionLabel.text = localized("pl_zusTransfer_text_nameTransferHint")
         titleDescriptionLabel.applyStyle(LabelStylist(textColor: .brownishGray,
                                             font: .santander(family: .micro,
                                                              type: .regular,
@@ -160,7 +258,7 @@ private extension ZusTransferFormView {
     }
     
     func configureDateField() {
-        dateFieldName.text = localized("#Kiedy mamy wysłać ten przelew?")
+        dateFieldName.text = localized("transfer_label_periodicity")
     }
     
     func setUpAmountTextField(_ component: LisboaTextField.CustomizableComponents) {
@@ -183,8 +281,8 @@ private extension ZusTransferFormView {
             selectedAccountView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             textFieldsMainContainer.topAnchor.constraint(equalTo: selectedAccountView.bottomAnchor, constant: 25),
-            textFieldsMainContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            textFieldsMainContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            textFieldsMainContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            textFieldsMainContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             recipientTextField.heightAnchor.constraint(equalToConstant: 48),
             accountNumberTextField.heightAnchor.constraint(equalToConstant: 48),
@@ -192,21 +290,21 @@ private extension ZusTransferFormView {
             titleTextField.heightAnchor.constraint(equalToConstant: 48),
 
             titleDescriptionLabel.topAnchor.constraint(equalTo: textFieldsMainContainer.bottomAnchor, constant: 8),
-            titleDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            titleDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            titleDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 18),
+            titleDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -18),
             
             dateFieldName.topAnchor.constraint(equalTo: titleDescriptionLabel.bottomAnchor, constant: 16),
             dateFieldName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             dateFieldName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
             transferDateSelector.topAnchor.constraint(equalTo: dateFieldName.bottomAnchor, constant: 8),
-            transferDateSelector.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            transferDateSelector.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            transferDateSelector.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            transferDateSelector.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             transferDateSelector.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16),
         ])
     }
     
-    private func createTextFieldContainer(with headerView: UIView, textFieldView: UIView) -> UIView {
+    func createTextFieldContainer(with headerView: UIView, textFieldView: UIView) -> UIView {
         let stackView = UIStackView()
         stackView.spacing = 8
         stackView.axis = .vertical
@@ -214,17 +312,35 @@ private extension ZusTransferFormView {
         stackView.addArrangedSubview(textFieldView)
         return stackView
     }
+    
+    func showError(
+        for view: LisboaTextFieldWithErrorView,
+        with message: String?
+    ) {
+        if let message = message {
+            view.showError(message)
+            return
+        }
+        view.hideError()
+    }
 }
 
 extension ZusTransferFormView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        delegate?.didChangeForm()
+        if case .accountNumber(_) = currentActiveField {
+            accountNumberWasEditing = true
+        }
+        delegate?.didChangeForm(with: currentActiveField)
     }
 }
 
 extension ZusTransferFormView: TransferDateSelectorDelegate {
     func didSelectDate(date: Date, withOption option: DateTransferOption) {
         selectedDate = date
-        delegate?.didChangeForm()
+        currentActiveField = .date
+        delegate?.didChangeForm(with: currentActiveField)
+        if option == .anotherDay {
+            delegate?.scrollToBottom()
+        }
     }
 }

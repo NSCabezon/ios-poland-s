@@ -87,7 +87,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -100,7 +101,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -113,7 +115,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
 
@@ -126,7 +129,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -139,7 +143,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -152,7 +157,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -239,7 +245,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -252,7 +259,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -284,7 +292,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .get,
                         queryParams: queryParams,
-                        contentType: .queryString)
+                        contentType: nil)
         )
     }
 
@@ -355,7 +363,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
     
@@ -420,7 +429,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         return networkProvider.request(
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
-                        method: .get)
+                        method: .get,
+                        contentType: nil)
         )
     }
 }
@@ -434,7 +444,7 @@ private struct BlikRequest: NetworkProviderRequest {
     let jsonBody: AuthenticateInitParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -446,7 +456,7 @@ private struct BlikRequest: NetworkProviderRequest {
          jsonBody: AuthenticateInitParameters? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
          headers: [String: String]? = [:],
-         contentType: NetworkProviderContentType = .json,
+         contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName = .authenticateInit,
          authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName

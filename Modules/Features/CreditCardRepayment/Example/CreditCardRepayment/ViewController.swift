@@ -1,6 +1,5 @@
 import UIKit
 import CreditCardRepayment
-import Commons
 import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary

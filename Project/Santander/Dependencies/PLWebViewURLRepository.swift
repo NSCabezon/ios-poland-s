@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreFoundationLib
-import Commons
 import PLCommons
 
 struct PLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {
@@ -19,7 +18,7 @@ struct PLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {
     }
     
     func getWebViewLink(forIdentifier identifier: String) -> PLWebViewLink? {
-        getWebViewLink(forIdentifier: identifier, fromGroups: [.cards, .accounts])
+        getWebViewLink(forIdentifier: identifier, fromGroups: [.cards, .accounts, .helpCenter])
     }
     
     func getWebViewLink(forIdentifier identifier: String, fromGroups groups: [PLWebViewLinkRepositoryGroup]) -> PLWebViewLink? {
@@ -30,6 +29,7 @@ struct PLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {
                 switch group {
                 case .cards: return repositoryGetter.cardsOptions
                 case .accounts: return repositoryGetter.accountsOptions
+                case .helpCenter: return repositoryGetter.helpCenterOptions
                 }
             }.joined())
         guard let option = options.first(where: { $0.id == identifier }) else { return nil }

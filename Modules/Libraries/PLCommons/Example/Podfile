@@ -5,7 +5,6 @@ platform :ios, '12.3'
 source 'https://cdn.cocoapods.org/'
 
 def example_app_common
-  pod 'Commons', :path => '../../../../santander-one/Commons'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
 end
 
@@ -15,7 +14,6 @@ def core_dependencies
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
   pod 'UI', :path => '../../../../santander-one/UI'
-  pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
 end
 
 def pl_dependencies

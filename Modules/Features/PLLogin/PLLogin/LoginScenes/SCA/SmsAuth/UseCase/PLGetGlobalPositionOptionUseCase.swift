@@ -6,8 +6,8 @@
 //
 
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
+import CoreDomain
 import PLCommons
 
 final class PLGetGlobalPositionOptionUseCase: UseCase<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {

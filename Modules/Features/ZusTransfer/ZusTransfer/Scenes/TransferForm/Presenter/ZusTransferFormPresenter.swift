@@ -1,8 +1,8 @@
-import Commons
+import CoreFoundationLib
 import PLUI
 import PLCommons
 
-protocol ZusTransferFormPresenterProtocol {
+protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransferFormAccountSelectable {
     var view: ZusTransferFormViewProtocol? { get set }
     func getLanguage() -> String
     func didSelectClose()
@@ -11,6 +11,10 @@ protocol ZusTransferFormPresenterProtocol {
     func getSelectedAccountNumber() -> String
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
+    func showConfirmation()
+    func startValidation(with field: TransferFormCurrentActiveField)
+    func showRecipientSelection()
+    func getAccountRequiredLength() -> Int
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -26,15 +30,18 @@ final class ZusTransferFormPresenter {
     private var confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
-
+    private let maskAccount: String
+    
     init(
         dependenciesResolver: DependenciesResolver,
         accounts: [AccountForDebit],
-        selectedAccountNumber: String
+        selectedAccountNumber: String,
+        maskAccount: String
     ) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
+        self.maskAccount = maskAccount
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
@@ -43,6 +50,7 @@ final class ZusTransferFormPresenter {
 }
 
 extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
+    
     func getLanguage() -> String {
         dependenciesResolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode
     }
@@ -74,6 +82,56 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel) {
         transferFormViewModel = viewModel
+    }
+    
+    func showConfirmation() {
+        guard let account = getSelectedAccountViewModel(),
+              let transferFormViewModel = transferFormViewModel else { return }
+        let model = ZusTransferModel(
+            amount: transferFormViewModel.amount ?? 0,
+            title: transferFormViewModel.title,
+            account: account,
+            recipientName: transferFormViewModel.recipient,
+            recipientAccountNumber: transferFormViewModel.recipientAccountNumber,
+            transactionType: .zusTransfer,
+            date: transferFormViewModel.date
+        )
+        coordinator.showConfiramtion(model: model)
+    }
+        
+    func startValidation(with field: TransferFormCurrentActiveField) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.validationAction(with: field)
+        }
+    }
+    
+    func validationAction(with field: TransferFormCurrentActiveField) {
+        guard let form = transferFormViewModel else { return }
+        let invalidMessages = formValidator.validateForm(
+            form: form,
+            with: field,
+            maskAccount: maskAccount
+        )
+        view?.showValidationMessages(with: invalidMessages)
+    }
+    
+    func showRecipientSelection() {
+        coordinator.showRecipientSelection(with: maskAccount)
+    }
+    
+    func getAccountRequiredLength() -> Int {
+        formValidator.getAccountRequiredLength()
+    }
+}
+
+extension ZusTransferFormPresenter: RecipientSelectorDelegate {
+    func didSelectRecipient(_ recipient: Recipient) {
+        view?.updateRecipient(
+            name: recipient.name,
+            accountNumber: IBANFormatter.format(
+                iban: IBANFormatter.formatIbanToNrb(for: recipient.accountNumber)
+            )
+        )
     }
 }
 

@@ -1,9 +1,10 @@
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import Foundation
 import SANLegacyLibrary
 import PLCommons
+import IQKeyboardManagerSwift
 
 protocol MobileTransferFormViewControllerProtocol: AnyObject,
                                                    ErrorPresentable,
@@ -11,7 +12,7 @@ protocol MobileTransferFormViewControllerProtocol: AnyObject,
                                                    ConfirmationDialogPresentable {
     func setAccountViewModel()
     func showValidationMessages(messages: InvalidMobileTransferFormMessages)
-    func fillWithContact(contact: Contact?)
+    func fillWithContact(contact: MobileContact?)
 }
 
 final class MobileTransferFormViewController: UIViewController {
@@ -40,6 +41,7 @@ final class MobileTransferFormViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        IQKeyboardManager.shared.enableAutoToolbar = false
         prepareNavigationBar()
     }
 }
@@ -170,7 +172,7 @@ extension MobileTransferFormViewController: MobileTransferFormViewControllerProt
         }
     }
     
-    func fillWithContact(contact: Contact?) {
+    func fillWithContact(contact: MobileContact?) {
         formView.fillWith(contact: contact)
         let form = formView.getCurrentForm()
         if contact != nil {

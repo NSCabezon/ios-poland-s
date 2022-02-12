@@ -8,7 +8,6 @@
 import Cards
 import CoreFoundationLib
 import UI
-import Commons
 import CreditCardRepayment
 import PLCommons
 import PLCommonOperatives
@@ -37,7 +36,7 @@ enum PLCardHomeActionIdentifier: String {
     case cardActivatePL = "CARD_ACTIVATION"
 }
 
-final class PLCardHomeActionModifier: CardHomeActionModifier {
+final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingActionModifierProtocol {
     private let sendMoneyPL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.sendMoneyPL.rawValue,
                                localizedKey: "accountOption_button_transfer",
@@ -117,7 +116,7 @@ final class PLCardHomeActionModifier: CardHomeActionModifier {
 
     private let customerServicePL: CardActionType = .custome(
         CustomCardActionValues(identifier: PLCardHomeActionIdentifier.customerServicePL.rawValue,
-                               localizedKey: "accountOption_button_customerService",
+                               localizedKey: "frequentOperative_button_customerService",
                                icon: "icnCustomerService",
                                section: "otherOperatives",
                                location: "",

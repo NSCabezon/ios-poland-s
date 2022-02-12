@@ -1,5 +1,4 @@
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 import PLUI
 import PLCommons
@@ -19,14 +18,14 @@ protocol MobileTransferFormPresenterProtocol {
 
 protocol MobileTransferFormAccountAndContactSelectable: AnyObject {
     func updateSelectedAccountNumber(with number: String)
-    func updateViewModel(with updatedViewModel: Contact?)
+    func updateViewModel(with updatedViewModel: MobileContact?)
 }
 
 final class MobileTransferFormPresenter {
     weak var view: MobileTransferFormViewControllerProtocol?
     let dependenciesResolver: DependenciesResolver
     private var accounts: [AccountForDebit]
-    private var contact: Contact?
+    private var contact: MobileContact?
     private var currentForm: MobileTransferForm?
     private var formValidator: MobileTransferFormValidator
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
@@ -41,7 +40,7 @@ final class MobileTransferFormPresenter {
 
     init(dependenciesResolver: DependenciesResolver,
          accounts: [AccountForDebit],
-         contact: Contact?,
+         contact: MobileContact?,
          selectedAccountNumber: String,
          formValidator: MobileTransferFormValidator) {
         self.dependenciesResolver = dependenciesResolver
@@ -99,7 +98,7 @@ extension MobileTransferFormPresenter: MobileTransferFormPresenterProtocol, Mobi
         view?.setAccountViewModel()
     }
     
-    func updateViewModel(with updatedViewModel: Contact?) {
+    func updateViewModel(with updatedViewModel: MobileContact?) {
         contact = updatedViewModel
         view?.fillWithContact(contact: contact)
     }

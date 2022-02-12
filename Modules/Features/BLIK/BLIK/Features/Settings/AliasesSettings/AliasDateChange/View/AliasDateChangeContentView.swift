@@ -8,7 +8,7 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol AliasDateChangeContentViewDelegate: AnyObject {
     func didUpdateDate()
@@ -37,7 +37,6 @@ final class AliasDateChangeContentView: UIView {
             self?.selectedPeriod = period
             self?.delegate?.didUpdateDate()
         }
-        periodSelector.selectElement(viewModel.selectedPeriod)
     }
 }
 

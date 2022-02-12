@@ -7,7 +7,6 @@
 
 import OpenCombine
 import CoreDomain
-import Commons
 import Transfer
 import CoreFoundationLib
 
@@ -23,6 +22,11 @@ enum PLSendMoneyActionTypeIdentifier: String {
 }
 
 struct PLGetSendMoneyActionsUseCase {
+    var candidateOfferUseCase: GetCandidateOfferUseCase
+    public init(candidateOfferUseCase: GetCandidateOfferUseCase) {
+        self.candidateOfferUseCase = candidateOfferUseCase
+    }
+    
     private let blik: SendMoneyActionType = .custome(
         identifier: PLSendMoneyActionTypeIdentifier.blik.rawValue,
         title: "pl_transferOption_button_blik",
@@ -81,14 +85,51 @@ struct PLGetSendMoneyActionsUseCase {
 }
 
 extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
-    func fetchSendMoneyActions() -> AnyPublisher<[SendMoneyActionType], Never> {
-        return CurrentValueSubject<[SendMoneyActionType], Never>(getHomeSendMoneyActions())
+    func fetchSendMoneyAction(_ location: PullOfferLocation) -> AnyPublisher<SendMoneyActionType, Error> {
+        offersPublisher(location)
+            .compactMap { offer -> SendMoneyActionType? in
+                switch location.stringTag {
+                case TransferPullOffers.fxpayTransferHomeOffer:
+                    return SendMoneyActionType.onePayFX(offer)
+                case TransferPullOffers.donationTransferOffer:
+                    return SendMoneyActionType.donations(offer)
+                case TransferPullOffers.correosCashOffer:
+                    return SendMoneyActionType.correosCash(offer)
+                default: return nil
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    public func fetchSendMoneyActions(_ locations: [PullOfferLocation]) -> AnyPublisher<[SendMoneyActionType], Never> {
+        let actions = locations.map {fetchSendMoneyAction($0)}
+        return Publishers.MergeMany(actions)
+            .collect(locations.count)
+            .replaceError(with: [])
+            .map { sendMoneyActions in
+                return getHomeSendMoneyActions(sendMoneyActions)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func offersPublisher(_ location: PullOfferLocationRepresentable) -> AnyPublisher<OfferRepresentable, Error> {
+        return candidateOfferUseCase
+            .fetchCandidateOfferPublisher(location: location)
+            .receive(on: Schedulers.main)
             .eraseToAnyPublisher()
     }
 }
 
 private extension PLGetSendMoneyActionsUseCase {
-    func getHomeSendMoneyActions() -> [SendMoneyActionType] {
-        return [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, .donations(nil), creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+    func getHomeSendMoneyActions(_ offerActions: [SendMoneyActionType]) -> [SendMoneyActionType] {
+        var actions = [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+        for action in offerActions {
+            switch action {
+            case .donations:
+                actions.insert(action, at: 5)
+            default: break
+            }
+        }
+        return actions
     }
 }

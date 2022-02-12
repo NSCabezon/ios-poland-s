@@ -6,11 +6,11 @@
 //
 
 import CoreFoundationLib
-import Commons
-import PLCommons
-import LoginCommon
-import SANPLLibrary
 import PLLegacyAdapter
+import SANPLLibrary
+import LoginCommon
+import CoreDomain
+import PLCommons
 import Security
 import os
 
@@ -120,7 +120,7 @@ private extension  PLSmsAuthPresenter {
         
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
-                               completion: nil)
+                               completion: {})
 
         let authProcessInput = PLAuthProcessGroupInput(scaCode: smscode,
                                                        password: password,
@@ -141,7 +141,7 @@ private extension  PLSmsAuthPresenter {
             case .failure(let error):
                 let httpErrorCode = self.getHttpErrorCode(error.useCaseError) ?? ""
                 self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.useCaseError.getErrorDesc() ?? ""])
-                self.handleError(error.useCaseError)
+                self.handleError(error.useCaseError, showCloseButton: true)
             }
         }
     }

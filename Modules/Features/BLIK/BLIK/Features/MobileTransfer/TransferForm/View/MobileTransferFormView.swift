@@ -1,10 +1,9 @@
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import SANLegacyLibrary
 import IQKeyboardManagerSwift
-import CoreFoundationLib
 
 protocol MobileTransferFormViewProtocol: AnyObject {
     func didChangeForm(phoneNumberStartedEdited: Bool)
@@ -65,7 +64,7 @@ final class MobileTransferFormView: UIView {
         }
     }
     
-    func fillWith(contact: Contact?) {
+    func fillWith(contact: MobileContact?) {
         if let contact = contact {
             let formatter = PLPhoneNumberTextFieldFormatter()
             phoneNumberTextField.setText(formatter.formatStrnig(numberInString: contact.phoneNumber))

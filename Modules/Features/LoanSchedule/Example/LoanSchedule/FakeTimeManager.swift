@@ -1,6 +1,6 @@
 import Foundation
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 
 //Note, formats may vary as TimeManager doesn't have locale set.
 final class FakeTimeManager: TimeManager {

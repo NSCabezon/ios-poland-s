@@ -1,6 +1,6 @@
 
 import UI
-import Commons
+import CoreFoundationLib
 import PLUI
 import SANLegacyLibrary
 import PLCommons
@@ -8,6 +8,7 @@ import PLCommons
 protocol CharityTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
     func didChangeForm()
+    func scrollToBottom()
 }
 
 class CharityTransferFormView: UIView {
@@ -29,15 +30,17 @@ class CharityTransferFormView: UIView {
     private let transfrDateSelector: TransferDateSelector
     private let views: [UIView]
     private var selectedDate = Date()
-    private let accountNumber = "48 1910 1048 2408 0009 7068 0001" //TODO: change this value to value from configuration file - TAP-2014
+    private let charityTransferSettings: CharityTransferSettings
     
     weak var delegate: CharityTransferFormViewDelegate?
     
-    init(language: String) {
+    init(language: String,
+         charityTransferSettings: CharityTransferSettings) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         self.transfrDateSelector = TransferDateSelector(language: language,
                                                         dateFormatter: dateFormatter)
+        self.charityTransferSettings = charityTransferSettings
         views = [headerLabel,
                  accountSelectorLabel, selectedAccountView,
                  recipientFieldName, recipientTextField,
@@ -61,7 +64,7 @@ class CharityTransferFormView: UIView {
         CharityTransferFormViewModel(
             amount: Decimal(string: amountTextField.text ?? ""),
             date: selectedDate,
-            recipientAccountNumberUnformatted: accountNumber.replace(" ", "")
+            recipientAccountNumberUnformatted: charityTransferSettings.transferAccountNumber ?? ""
         )
     }
     
@@ -117,13 +120,14 @@ private extension CharityTransferFormView {
     
     func prepareStylesForRecipienField() {
         recipientFieldName.text = localized("pl_foundtrans_text_recipientTransfer")
-        recipientTextField.setText("pl_foundtrans_text_RecipFoudSant") //TODO: change this value to value from configuration file - TAP-2014
+        recipientTextField.setText(charityTransferSettings.transferRecipientName ?? "")
         recipientTextField.setRightAccessoryView(.image(Assets.image(named: "icnUser")))
     }
     
     func prepareStylesForAccountNumberField() {
         accountNumberFieldName.text = localized("pl_foundtrans_text_accountNumb")
-        accountNumberTextField.setText(accountNumber)
+        
+        accountNumberTextField.setText(IBANFormatter.format(iban: charityTransferSettings.transferAccountNumber))
     }
     
     func prepareStylesForAmountField() {
@@ -142,8 +146,8 @@ private extension CharityTransferFormView {
     }
     
     func prepareStylesForTitleField() {
-        titleFieldName.text = localized("pl_foundtrans_text_transfTitle") //TODO: change this value to value from configuration file - TAP-2014
-        titleTextField.setText("pl_foundtrans_text_titleTransFound")
+        titleFieldName.text = localized("pl_foundtrans_text_titleTransfer")
+        titleTextField.setText(charityTransferSettings.transferTitle ?? "")
     }
     
     func prepareStylesForDateField() {
@@ -231,5 +235,8 @@ extension CharityTransferFormView: TransferDateSelectorDelegate {
     func didSelectDate(date: Date, withOption option: DateTransferOption) {
         selectedDate = date
         delegate?.didChangeForm()
+        if option == .anotherDay {
+            delegate?.scrollToBottom()
+        }
     }
 }

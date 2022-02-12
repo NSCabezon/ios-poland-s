@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 enum AliasDateValidityPeriod: Int, CaseIterable {
     case month1 = 1

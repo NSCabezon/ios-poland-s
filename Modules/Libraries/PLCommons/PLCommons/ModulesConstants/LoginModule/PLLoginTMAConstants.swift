@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 
 public struct PLLoginTrustedDeviceDeviceDataPage: PageWithActionTrackable {
     public typealias ActionType = Action

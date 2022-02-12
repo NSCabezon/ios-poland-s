@@ -10,7 +10,6 @@ import SANLegacyLibrary
 import SANPLLibrary
 import CoreFoundationLib
 import CoreDomain
-import Commons
 
 final class SendMoneyTransferTypeUseCase: UseCase<SendMoneyTransferTypeUseCaseInputProtocol, SendMoneyTransferTypeUseCaseOkOutputProtocol, StringErrorOutput>, SendMoneyTransferTypeUseCaseProtocol {
     let transfersRepository: PLTransfersRepository
@@ -42,7 +41,11 @@ final class SendMoneyTransferTypeUseCase: UseCase<SendMoneyTransferTypeUseCaseIn
         if matrixTransferType == .oneWithOptional {
             availableTransferTypes.append(contentsOf: (try? getAvailableTransferTypes(requestValues: requestValues)) ?? [])
         }
-        let feesResponse = (try? getFinalFees(requestValues: requestValues, availableServices: availableTransferTypes)) ?? [:]
+        var feesResponse: [PolandTransferType: AmountRepresentable] = [:]
+        if !isCreditCard,
+           let finalFees = try? getFinalFees(requestValues: requestValues, availableServices: availableTransferTypes) {
+            feesResponse = finalFees
+        }
         fees += availableTransferTypes.map { type in
             return SendMoneyTransferTypeFee(
                 type: type,

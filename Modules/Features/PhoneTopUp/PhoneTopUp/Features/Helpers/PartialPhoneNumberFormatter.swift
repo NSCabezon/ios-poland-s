@@ -9,11 +9,6 @@ import Foundation
 import PLCommons
 
 final class PartialPhoneNumberFormatter {
-    // MARK: Lifecycle
-    
-    init() {
-    }
-    
     // MARK: Methods
 
     func formatPhoneNumberText(_ text: String) -> String {

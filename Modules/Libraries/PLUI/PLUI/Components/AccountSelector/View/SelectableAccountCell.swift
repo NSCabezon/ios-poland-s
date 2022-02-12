@@ -4,10 +4,9 @@
 //
 //  Created by Piotr Mielcarzewicz on 05/08/2021.
 //
-import Commons
-import PLUI
+import CoreFoundationLib
 
-final class SelectableAccountCell: UITableViewCell {
+public final class SelectableAccountCell: UITableViewCell {
     static let identifier = "BLIK.SelectableAccountCell"
     private let accountName = UILabel()
     private let accountNumber = UILabel()

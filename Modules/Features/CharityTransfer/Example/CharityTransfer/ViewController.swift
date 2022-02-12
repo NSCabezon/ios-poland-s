@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import Commons
+import CoreFoundationLib
 import CharityTransfer
 import SANPLLibrary
-import CoreFoundationLib
 import PLCommonOperatives
+import PLCommons
 
 class ViewController: UIViewController {
 
@@ -55,16 +55,22 @@ class ViewController: UIViewController {
             .execute(on: self.dependenciesResolver.resolve(for: UseCaseHandler.self))
             .onSuccess { [weak self] accounts in
                 guard let self = self else { return }
-                let coordinator = AccountSelectorCoordinator(dependenciesResolver: self.dependenciesResolver,
-                                                             navigationController: navigationController,
-                                                             accounts: accounts,
-                                                             selectedAccountNumber: "",
-                                                             sourceView: .sendMoney)
+                let coordinator = CharityTransferAccountSelectorCoordinator(
+                    dependenciesResolver: self.dependenciesResolver,
+                    navigationController: navigationController,
+                    accounts: accounts,
+                    selectedAccountNumber: "",
+                    sourceView: .sendMoney,
+                    charityTransferSettings: CharityTransferSettings(
+                        transferRecipientName: "Fundacja Santander",
+                        transferAccountNumber: "26 1090 0088 0000 0001 4223 0553",
+                        transferTitle: "Darowizna dla Fundacji Santander"
+                    )
+                )
                 coordinator.start()
             }
         
         self.present(navigationController, animated: true, completion: nil)
     }
-
 }
 

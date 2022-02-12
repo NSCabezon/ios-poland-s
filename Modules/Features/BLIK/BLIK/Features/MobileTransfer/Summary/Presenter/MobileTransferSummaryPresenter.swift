@@ -1,5 +1,4 @@
 import CoreFoundationLib
-import Commons
 import PLCommons
 import Operative
 
@@ -17,6 +16,7 @@ final class MobileTransferSummaryPresenter {
     var isBackButtonEnabled: Bool = false
     var isBackable: Bool = false
     var isCancelButtonEnabled: Bool = true
+    private let imagePermission: ImagePermissionAuthorizatorProtocol
     
     private var useCaseHandler: UseCaseHandler {
         dependenciesResolver.resolve()
@@ -32,6 +32,7 @@ final class MobileTransferSummaryPresenter {
     init(dependenciesResolver: DependenciesResolver, summary: MobileTransferSummary) {
         self.dependenciesResolver = dependenciesResolver
         self.summary = summary
+        self.imagePermission = ImagePermissionAuthorizator()
     }
 }
 
@@ -81,7 +82,10 @@ private extension MobileTransferSummaryPresenter {
                 image: "icnShareBostonRedLight",
                 title: "pl_topup_button_shareConfirm",
                 action: { [weak self] in
-                    self?.coordinator.shareSummary()
+                    guard let viewController = self?.view?.associatedDialogView as? MobileTransferSummaryViewController else { return }
+                    self?.imagePermission.authorizeImagePermission(in: viewController) { [weak self] in
+                        self?.coordinator.shareSummary()
+                    }
                 }
             )
         ]

@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import Commons
 import CoreFoundationLib
 
 public struct PLWebViewLink {
@@ -24,6 +23,7 @@ public struct PLWebViewLink {
 public enum PLWebViewLinkRepositoryGroup {
     case accounts
     case cards
+    case helpCenter
 }
 
 public protocol PLWebViewLinkRepositoryProtocol {

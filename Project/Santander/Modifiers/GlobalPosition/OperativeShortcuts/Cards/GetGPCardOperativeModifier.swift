@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 
 public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol {
     var shortcutsOperativesAvailable: [CardOperativeActionType] = []
@@ -19,9 +18,8 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
         }
         self.shortcutsOperativesAvailable.append(contentsOf: [PLRepaymentOperative().getActionType(),
                                                              PLApplePayOperative().getActionType(),
-                                                             PLSetUpAlertsOperative().getAtionType(),
                                                              PLPostponeBuyOperative().getAtionType(),
-                                                             .changeAlias])
+                                                              .changeAlias, PLMobilePaymentsOperative().getActionType()])
         return self.shortcutsOperativesAvailable
     }
 
@@ -35,9 +33,8 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
         }
         actionTypes.append(contentsOf: [PLRepaymentOperative().getActionType(),
                                         PLApplePayOperative().getActionType(),
-                                        PLSetUpAlertsOperative().getAtionType(),
                                         PLPostponeBuyOperative().getAtionType(),
-                                        .changeAlias])
+                                        .changeAlias, PLMobilePaymentsOperative().getActionType()])
         return actionTypes
     }
 

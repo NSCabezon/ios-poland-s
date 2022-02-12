@@ -5,7 +5,7 @@
 //  Created by 188216 on 07/12/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommons
 import UIKit
 import PLUI
@@ -56,5 +56,11 @@ final class RecipientNameView: UIView {
         NSLayoutConstraint.activate([
             nameTextField.heightAnchor.constraint(equalToConstant: 48.0)
         ])
+    }
+    
+    // MARK: Methods
+    
+    func setUp(with name: String) {
+        nameTextField.setText(name)
     }
 }

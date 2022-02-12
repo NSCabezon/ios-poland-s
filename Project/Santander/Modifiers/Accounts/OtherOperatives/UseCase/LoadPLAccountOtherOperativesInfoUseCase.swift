@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import RetailLegacy
 
 class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOutput> {
@@ -14,10 +13,10 @@ class LoadPLAccountOtherOperativesInfoUseCase: UseCase<Void, Void, StringErrorOu
     private let plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository
     private let appRepository: AppRepositoryProtocol
     
-    init(dependencies: DependenciesResolver, plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository, appRepository: AppRepositoryProtocol) {
+    init(dependencies: DependenciesResolver) {
         self.dependencies = dependencies
-        self.plAccountOtherOperativesInfoRepository = plAccountOtherOperativesInfoRepository
-        self.appRepository = appRepository
+        self.plAccountOtherOperativesInfoRepository = dependencies.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        self.appRepository = dependencies.resolve(for: AppRepositoryProtocol.self)
     }
     
     override public func executeUseCase(requestValues: Void) throws -> UseCaseResponse<Void, StringErrorOutput> {

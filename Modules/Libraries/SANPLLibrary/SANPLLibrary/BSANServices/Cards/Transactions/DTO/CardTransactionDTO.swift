@@ -50,5 +50,5 @@ public struct CardTransactionDTO: Codable {
     public let employee: String?
     public let state: String?
     public let custName: String?
-    
+    public let receiptId: String?
 }

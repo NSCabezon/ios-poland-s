@@ -36,6 +36,14 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
         
     // MARK: Configuration
     
+    func setUp(with topUpValue: TopUpValue, isSelected: Bool) {
+        amountLabel.text = "\(topUpValue.value)"
+        bonusLabel.text = "+\(topUpValue.bonus)"
+        bonusLabel.isHidden = topUpValue.bonus == 0
+        let style: Style = isSelected ? .selected : .unselected
+        setStyle(style)
+    }
+    
     private func setUp() {
         addSubviews()
         prepareStyles()

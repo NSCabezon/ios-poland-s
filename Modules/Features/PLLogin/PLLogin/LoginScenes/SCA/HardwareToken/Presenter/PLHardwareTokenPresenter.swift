@@ -6,9 +6,9 @@
 //
 
 import CoreFoundationLib
-import Commons
-import PLCommons
 import LoginCommon
+import CoreDomain
+import PLCommons
 import os
 
 protocol PLHardwareTokenPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
@@ -91,7 +91,7 @@ extension PLHardwareTokenPresenter: PLHardwareTokenPresenterProtocol {
             case .failure(let error):
                 let httpErrorCode = self.getHttpErrorCode(error.useCaseError) ?? ""
                 self.trackEvent(.apiError, parameters: [PLLoginTrackConstants.errorCode : httpErrorCode, PLLoginTrackConstants.errorDescription : error.useCaseError.getErrorDesc() ?? ""])
-                self.handleError(error.useCaseError)
+                self.handleError(error.useCaseError, showTitle: false)
             }
 
         }

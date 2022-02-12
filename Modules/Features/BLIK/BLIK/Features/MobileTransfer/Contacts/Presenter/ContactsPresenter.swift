@@ -1,5 +1,4 @@
 import CoreFoundationLib
-import Commons
 import PLUI
 import PLCommons
 import PLCommonOperatives
@@ -9,7 +8,7 @@ protocol ContactsPresenterProtocol: MenuTextWrapperProtocol {
     func viewDidLoad()
     func didSelectClose()
     func showTransferForm()
-    func didSelectContact(_ contact: Contact)
+    func didSelectContact(_ contact: MobileContact)
 }
 
 final class ContactsPresenter {
@@ -17,7 +16,7 @@ final class ContactsPresenter {
     let dependenciesResolver: DependenciesResolver
     private let viewModelMapper = ContactViewModelMapper()
     private let accountsViewModelMapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-    private var contact: Contact?
+    private var contact: MobileContact?
     weak var selectableContactDelegate: FormContactSelectable?
     
     private var getContactsUseCase: GetContactsUseCaseProtocol {
@@ -68,7 +67,7 @@ extension ContactsPresenter: ContactsPresenterProtocol {
         }
     }
     
-    func didSelectContact(_ contact: Contact) {
+    func didSelectContact(_ contact: MobileContact) {
         if let selectableContactDelegate = selectableContactDelegate {
             coordinator.pop()
             selectableContactDelegate.updateViewModel(with: contact)
@@ -96,7 +95,7 @@ private extension ContactsPresenter {
         
     }
     
-    func verifyContacts(_ contacts: [Contact]) {
+    func verifyContacts(_ contacts: [MobileContact]) {
         let phoneNumbers = contacts.map { $0.phoneNumber }
         
         Scenario(useCase: verifyContactsUseCase, input: .init(phoneNumbers: phoneNumbers))
@@ -120,7 +119,7 @@ private extension ContactsPresenter {
             }
     }
     
-    func getAccountsAndHandleContact(_ contact: Contact?) {
+    func getAccountsAndHandleContact(_ contact: MobileContact?) {
         view?.showLoader()
         self.contact = contact
 

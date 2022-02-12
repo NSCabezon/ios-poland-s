@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "atoms_icons_06_system_sys_004_info_information_circled.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

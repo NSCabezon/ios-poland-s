@@ -1,7 +1,7 @@
 import Foundation
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
+import SANLegacyLibrary
 
 protocol GetHelpCenterConfigUseCaseProtocol: UseCase<Void, GetHelpCenterConfigUseCaseOkOutput, StringErrorOutput> {}
 
@@ -21,9 +21,9 @@ final class GetHelpCenterConfigUseCase: UseCase<Void, GetHelpCenterConfigUseCase
         
         let callElements: [HelpCenterConfig.Element] = [.call(phoneNumber: "+48 61 811 99 99")]
         let advisorElements: [HelpCenterConfig.Element]
-        
-        if case let .success(onlineAdvisor) = try manager.getOnlineAdvisorConfig() {
-            advisorElements = makeAdvisorElements(from: onlineAdvisor, for: clientProfile)
+    
+        if let onlineAdvisorDTO = dependenciesResolver.resolve(for: PLHelpCenterOnlineAdvisorRepository.self).get() {
+            advisorElements = makeAdvisorElements(from: onlineAdvisorDTO, for: clientProfile)
         } else {
             advisorElements = []
         }
@@ -35,7 +35,7 @@ final class GetHelpCenterConfigUseCase: UseCase<Void, GetHelpCenterConfigUseCase
                 elements: callElements + advisorElements
             ))
         case .individual, .company:
-            if case let .success(helpQuestions) = try manager.getHelpQuestionsConfig(),
+            if let helpQuestions = dependenciesResolver.resolve(for: PLHelpQuestionsRepository.self).get(),
                let section = makeExpandableHintSection(from: helpQuestions, for: clientProfile) {
                 sections.append(section)
             }
@@ -53,6 +53,10 @@ final class GetHelpCenterConfigUseCase: UseCase<Void, GetHelpCenterConfigUseCase
                     elements: advisorElements
                 ))
             }
+            sections.append(HelpCenterConfig.Section(
+                section: .mail,
+                elements: [.mailContact]
+            ))
         }
         
         let config = HelpCenterConfig(sections: sections)
@@ -111,12 +115,8 @@ private extension GetHelpCenterConfigUseCase {
         from helpQuestions: HelpQuestionsDTO,
         for clientProfile: HelpCenterClientProfile
     ) -> HelpCenterConfig.Section? {
-        guard let currentLanguage = getCurrentLanguage(),
-              let category = helpQuestions.categoryByLanguage[currentLanguage]
-        else { return nil }
-        
-        let elements = category.sections
-            .filter { $0.profiles.contains(clientProfile) }
+        let elements = helpQuestions.sections
+            .filter { $0.profiles.contains(clientProfile.rawValue) }
             .flatMap {
                 $0.questions.map { question in
                     HelpCenterConfig.Element.expandableHint(
@@ -127,7 +127,7 @@ private extension GetHelpCenterConfigUseCase {
             }
         
         return HelpCenterConfig.Section(
-            section: .hints(title: category.mainWindowCategoryTitle),
+            section: .hints(title: helpQuestions.mainWindowCategoryTitle),
             elements: elements
         )
     }

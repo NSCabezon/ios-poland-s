@@ -11,6 +11,7 @@ public protocol PLLoanManagerProtocol {
     func getTransactions(withAccountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getTransactions(withAccountId: String, accountNumber: String, parameters: LoanTransactionParameters?) throws -> Result<LoanOperationListDTO, NetworkProviderError>
     func getInstallments(accountId: String, parameters: LoanInstallmentsParameters?) throws -> Result<LoanInstallmentsListDTO, NetworkProviderError>
+	func changeAlias(loanDTO: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> Result<LoanChangeAliasDTO, NetworkProviderError>
 }
 
 final class PLLoanManager {
@@ -54,6 +55,10 @@ extension PLLoanManager: PLLoanManagerProtocol {
         let result = try self.loanDataSource.getInstallments(accountId: accountId, parameters: parameters)
         return result
     }
+	
+	func changeAlias(loanDTO: SANLegacyLibrary.LoanDTO, newAlias: String) throws -> Result<LoanChangeAliasDTO, NetworkProviderError> {
+		try self.loanDataSource.changeAlias(loanDTO: loanDTO, newAlias: newAlias)
+	}
 }
 
 private extension PLLoanManager {

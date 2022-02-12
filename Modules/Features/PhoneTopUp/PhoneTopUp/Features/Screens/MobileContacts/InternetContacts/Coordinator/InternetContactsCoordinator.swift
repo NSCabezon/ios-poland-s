@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import PLUI
 import PLCommonOperatives
@@ -14,27 +14,27 @@ import PLCommonOperatives
 protocol InternetContactsCoordinatorProtocol: AnyObject {
     func back()
     func didSelectContact(_ contact: MobileContact)
+    func showPhoneContacts(_ contacts: [MobileContact])
 }
 
-protocol InternetContactsDelegate: AnyObject {
-    func internetContactsDidSelectContact(_ contact: MobileContact)
+protocol MobileContactsSelectorDelegate: AnyObject {
+    func mobileContactsDidSelectContact(_ contact: MobileContact)
+    func mobileContactDidSelectCloseProcess()
 }
 
 final class InternetContactsCoordinator: ModuleCoordinator {
     // MARK: Properties
     
     var navigationController: UINavigationController?
-    private weak var delegate: InternetContactsDelegate?
+    private weak var delegate: MobileContactsSelectorDelegate?
     private let dependenciesEngine: DependenciesDefault
     private let contacts: [MobileContact]
-    private lazy var internetContactsController = {
-        return dependenciesEngine.resolve(for: InternetContactsViewController.self)
-    }()
+    private lazy var internetContactsController = dependenciesEngine.resolve(for: InternetContactsViewController.self)
     
     // MARK: Lifecycle
     
     public init(dependenciesResolver: DependenciesResolver,
-                delegate: InternetContactsDelegate?,
+                delegate: MobileContactsSelectorDelegate?,
                 navigationController: UINavigationController?,
                 contacts: [MobileContact]) {
         self.navigationController = navigationController
@@ -80,6 +80,23 @@ extension InternetContactsCoordinator: InternetContactsCoordinatorProtocol {
     }
     
     func didSelectContact(_ contact: MobileContact) {
-        delegate?.internetContactsDidSelectContact(contact)
+        delegate?.mobileContactsDidSelectContact(contact)
+    }
+    
+    func showPhoneContacts(_ contacts: [MobileContact]) {
+        let phoneContactsCoordinator = PhoneContactsCoordinator(dependenciesResolver: dependenciesEngine,
+                                                                delegate: delegate,
+                                                                navigationController: navigationController,
+                                                                contacts: contacts)
+        phoneContactsCoordinator.start()
+    }
+    
+    private func showContactsPermissionDeniedDialog() {
+        guard let navigationController = navigationController else {
+            return
+        }
+
+        let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
+        dialog.showIn(navigationController)
     }
 }

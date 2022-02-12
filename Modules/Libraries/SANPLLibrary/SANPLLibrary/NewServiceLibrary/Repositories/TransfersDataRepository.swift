@@ -10,6 +10,7 @@ import OpenCombine
 import CoreDomain
 
 struct TransfersDataRepository: PLTransfersRepository {
+
     let bsanTransferManager: PLTransfersManagerProtocol
     
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
@@ -112,7 +113,7 @@ struct TransfersDataRepository: PLTransfersRepository {
         return .failure(ServiceError.unknown)
     }
     
-    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<Void, Error> {
         return .failure(ServiceError.unknown)
     }
     

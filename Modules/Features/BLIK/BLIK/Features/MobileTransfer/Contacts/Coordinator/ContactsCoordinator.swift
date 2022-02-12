@@ -1,15 +1,14 @@
 import UI
 import CoreFoundationLib
-import Commons
 import Contacts
 import PLUI
 import PLCommonOperatives
 import PLCommons
 
 protocol ContactsCoordinatorProtocol {
-    func showForm(with accounts: [AccountForDebit], contact: Contact?)
+    func showForm(with accounts: [AccountForDebit], contact: MobileContact?)
     func pop()
-    func showAccountSelector(with accounts: [AccountForDebit], contact: Contact?)
+    func showAccountSelector(with accounts: [AccountForDebit], contact: MobileContact?)
 }
 
 final class ContactsCoordinator: ModuleCoordinator {
@@ -37,7 +36,7 @@ extension ContactsCoordinator: ContactsCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    func showAccountSelector(with accounts: [AccountForDebit], contact: Contact?) {
+    func showAccountSelector(with accounts: [AccountForDebit], contact: MobileContact?) {
         let selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
         let coordinator = AccountsForDebitCoordinator(dependenciesResolver: dependenciesEngine,
                                                       navigationController: navigationController,
@@ -50,7 +49,7 @@ extension ContactsCoordinator: ContactsCoordinatorProtocol {
         coordinator.start()
     }
 
-    func showForm(with accounts: [AccountForDebit], contact: Contact?) {
+    func showForm(with accounts: [AccountForDebit], contact: MobileContact?) {
         let selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
         let coordinator = MobileTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                         navigationController: navigationController,

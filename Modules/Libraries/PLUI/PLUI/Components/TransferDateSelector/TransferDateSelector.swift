@@ -21,6 +21,15 @@ public class TransferDateSelector: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public func getSelectedDate() -> Date {
+        switch segmentView.getCurrentOption() {
+        case .today:
+            return Date()
+        case .anotherDay:
+            return anotherDateView.getSelectedDate()
+        }
+    }
 }
 
 private extension TransferDateSelector {

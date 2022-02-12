@@ -54,6 +54,38 @@ struct TransactionMaskDTO: Codable {
 }
 
 extension AccountForDebitDTO: AccountRepresentable {
+    var availableAmountRepresentable: AmountRepresentable? {
+        return availableAmount
+    }
+    
+    var availableNoAutAmountRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var overdraftRemainingRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var earningsAmountRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var productSubtypeRepresentable: ProductSubtypeRepresentable? {
+        return nil
+    }
+    
+    var countervalueCurrentBalanceAmountRepresentable: AmountRepresentable? {
+        return nil
+    }
+    
+    var ownershipTypeDesc: OwnershipTypeDesc? {
+        return nil
+    }
+    
+    var tipoSituacionCto: String? {
+        return situationType
+    }
+    
     var currencyName: String? {
         self.currencyCode
     }
@@ -109,6 +141,10 @@ extension AccountForDebitDTO: AccountRepresentable {
         guard let ibanString = ibanRepresentable?.ibanString else { return "****" }
         return ibanString
     }
+    
+    var appIdentifier: String {
+        return id ?? ""
+    }
 }
 
 extension AccountForDebitDTO: PolandAccountRepresentable {
@@ -122,18 +158,18 @@ extension AccountForDebitDTO: PolandAccountRepresentable {
 }
 
 private extension AccountForDebitDTO {
-    func adaptBalanceToAmount(_ balance: BalanceDTO?) -> AmountDTO? {
+    func adaptBalanceToAmount(_ balance: BalanceDTO?) -> SANLegacyLibrary.AmountDTO? {
         return self.makeAmountDTO(value: balance?.value, currencyCode: balance?.currencyCode)
     }
     
-    func makeAmountDTO(value: Double?, currencyCode: String?) -> AmountDTO? {
+    func makeAmountDTO(value: Double?, currencyCode: String?) -> SANLegacyLibrary.AmountDTO? {
         guard let amount = value,
               let currencyCode = currencyCode else {
             return nil
         }
         let currencyType: CurrencyType = CurrencyType.parse(currencyCode)
         let balanceAmount = Decimal(amount)
-        let currencyDTO = CurrencyDTO(currencyName: currencyCode, currencyType: currencyType)
-        return AmountDTO(value: balanceAmount, currency: currencyDTO)
+        let currencyDTO = SANLegacyLibrary.CurrencyDTO(currencyName: currencyCode, currencyType: currencyType)
+        return SANLegacyLibrary.AmountDTO(value: balanceAmount, currency: currencyDTO)
     }
 }

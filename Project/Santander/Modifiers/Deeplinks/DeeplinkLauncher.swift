@@ -5,10 +5,11 @@
 //  Created by Francisco del Real Escudero on 13/4/21.
 //
 
-import Commons
-import RetailLegacy
 import CoreFoundationLib
-
+import RetailLegacy
+import PLCommons
+import PLCommonOperatives
+import UI
 import PLHelpCenter
 import BLIK
 
@@ -41,6 +42,47 @@ private extension DeeplinkLauncher {
             dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
         case .blikTransaction:
             dependenciesResolver.resolve(for: DeeplinkedBLIKConfirmationCoordinator.self).start()
+        case .ourOffer:
+            openOurOffer()
+        case .alertsNotification:
+            openAlertsNotification()
         }
+    }
+    
+    func openOurOffer(){
+        openWebViewByType(.exploreProducts)        
+    }
+    
+    func openAlertsNotification() {
+        openWebViewByType(.alerts24)
+    }
+    
+    func openWebViewByType(_ type: PLAccountOtherOperativesIdentifier ){
+        let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+
+        guard let options = repository.get()?.accountsOptions,
+              let option = options.first(where: { $0.id == type.rawValue }),
+              option.isAvailable ?? true,
+              let url = option.url,
+              let method = option.method,
+              let methodType = HTTPMethodType(rawValue: method)
+        else {
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+            return
+        }
+
+        let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url, method: methodType, isFullScreenEnabled: option.isFullScreen)
+        let webViewCoordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
+        let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
+        
+        Scenario(useCase: useCase, input: input)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { result in
+                let handler = PLWebviewCustomLinkHandler(configuration: result.configuration)
+                webViewCoordinator.showWebView(handler: handler)
+            }
+            .onError { error in
+                Toast.show(error.getErrorDesc() ?? "")
+            }
     }
 }

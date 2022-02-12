@@ -5,9 +5,8 @@
 //  Created by 186490 on 31/08/2021.
 //
 
-import Commons
-import Foundation
-import CoreFoundationLib // for AmountEntity
+import CoreFoundationLib
+import Foundation // for AmountEntity
 import SANLegacyLibrary // for currencyType
 import SANPLLibrary
 
@@ -24,14 +23,11 @@ final class GetLoanScheduleUseCase: UseCase<GetLoanScheduleUseCaseInput, GetLoan
 
     override func executeUseCase(requestValues: GetLoanScheduleUseCaseInput) throws -> UseCaseResponse<GetLoanScheduleUseCaseOkOutput, StringErrorOutput> {
         let manager = plManagersProvider.getLoanScheduleManager()
-        
-        // TODO: < REMOVE WHEN ENTRY POINT WILL BE READY AND ACCOUNT NUMBER WILL BE AVAILABLE [MOBILE-8943]
-         let globalPositionManager = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self).getGlobalPositionManager()
-        guard case let .success(result) = try globalPositionManager.getLoans() else { return .error(StringErrorOutput(localized("generic_alert_notAvailableOperation"))) }
-        let loanAccountId = result.loans?.first?.number ?? "1234"
-        let requestValues = GetLoanScheduleUseCaseInput(accountNumber: loanAccountId)
-        // TODO: Also remove FakeGlobalPositionManager />
-        
+        let accountNumber = requestValues.accountNumber
+            .components(separatedBy: .decimalDigits.inverted)
+            .joined()
+        let requestValues = GetLoanScheduleUseCaseInput(accountNumber: accountNumber)
+
         guard !requestValues.accountNumber.isEmpty else {
             return .error(.init("Account number can't be empty"))
         }

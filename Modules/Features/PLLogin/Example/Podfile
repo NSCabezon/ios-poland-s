@@ -6,10 +6,6 @@ use_frameworks!
 source 'https://cdn.cocoapods.org/'
 
 
-def example_app_common
-  pod 'Commons', :path => '../../../../santander-one/Commons'
-end
-
 def core_dependencies
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'RetailLegacy', :path => '../../../../santander-one/RetailLegacy'
@@ -36,7 +32,6 @@ def core_dependencies
   pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
   pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
   pod 'UI', :path => '../../../../santander-one/UI'
-  pod 'CommonUseCase', :path => '../../../../santander-one/CommonUseCase'
   pod 'LoginCommon', :path => '../../../../santander-one/Modules/Features/LoginCommon'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
   pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
@@ -48,11 +43,12 @@ def core_dependencies
   pod 'Cards', :path => '../../../../santander-one/Cards'
   pod 'Menu', :path => '../../../../santander-one/Menu'
   pod 'Localization', :path => '../../../../santander-one/Localization'
-
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
 end
 
 def core_thirdparty_dependencies
   pod 'Kingfisher', '5.15.8'
+  pod 'RxSwift', '6.2.0'
 end
 
 def pl_dependencies
@@ -66,14 +62,12 @@ def pl_dependencies
 end
 
 target 'PLLogin_Example' do
-  example_app_common
   core_dependencies
   core_thirdparty_dependencies
   pl_dependencies
 end
 
 target 'PLLogin_ExampleTests' do
-  example_app_common
   core_dependencies
   core_thirdparty_dependencies
   pl_dependencies

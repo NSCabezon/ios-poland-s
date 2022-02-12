@@ -1,11 +1,13 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 protocol TransactionLimitViewProtocol: LoaderPresentable, ErrorPresentable, SnackbarPresentable, DialogViewPresentationCapable {
     func setViewModel(viewModel: TransactionLimitViewModel)
+    func showInvalidFormMessage(_ error: InvalidLimitFormMessages)
+    func clearValidationMessages()
 }
 
 final class TransactionLimitViewController: UIViewController, TransactionLimitViewProtocol {
@@ -40,6 +42,14 @@ final class TransactionLimitViewController: UIViewController, TransactionLimitVi
     
     func setIsSaveButtonEnabled(_ isEnabled: Bool) {
         footerView.setIsSaveButtonEnabled(isEnabled)
+    }
+    
+    func showInvalidFormMessage(_ error: InvalidLimitFormMessages) {
+        contentView.showInvalidFormMessage(error)
+    }
+    
+    func clearValidationMessages() {
+        contentView.clearValidationMessages()
     }
 }
 

@@ -1,10 +1,10 @@
-import Commons
+import CoreFoundationLib
 import PLCommons
 import Operative
-import CoreFoundationLib
 
 protocol CharityTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToCharityTransfer()
+    func goToGlobalPosition()
 }
 
 final class CharityTransferSummaryPresenter {
@@ -44,6 +44,10 @@ extension CharityTransferSummaryPresenter: CharityTransferSummaryPresenterProtoc
     func goToCharityTransfer() {
         coordinator.goToMakeAnotherPayment()
     }
+    
+    func goToGlobalPosition() {
+        coordinator.goToGlobalPosition()
+    }
 }
 
 private extension CharityTransferSummaryPresenter {
@@ -59,11 +63,11 @@ private extension CharityTransferSummaryPresenter {
             .init(title: localized("pl_foundtrans_label_summ_accountNumb"),
                   subTitle: summary.accountName,
                   info: summary.accountNumber),
-            .init(title: localized("pl_foundtrans_label_date"),
+            .init(title: localized("pl_foundtrans_label_recipientTransfer"),
                   subTitle: summary.recipientName),
             .init(title: localized("pl_foundtrans_label_transType"),
                   subTitle: localized("pl_foundtrans_label_internalTransfer")),
-            .init(title: localized("confirmation_item_date"),
+            .init(title: localized("pl_foundtrans_label_date"),
                   subTitle: summary.dateString)
         ]
         

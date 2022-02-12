@@ -9,7 +9,7 @@ import CoreDomain
 
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
-    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<PayeeListDTO, NetworkProviderError>
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
     func checkFinalFee(_ parameters: CheckFinalFeeParameters, destinationAccount: String) throws -> Result<CheckFinalFeeDTO, NetworkProviderError>
@@ -28,7 +28,7 @@ private extension TransfersDataSource {
 final class TransfersDataSource {
     private enum TransferServiceType: String {
         case accountForDebit = "/accounts/for-debit"
-        case payees = "/payees/account"
+        case payees = "/payees/account/all"
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
         case checkFinalFee = "/transactions/domestic/final-fee/"
@@ -80,26 +80,26 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                 method: .get,
                 headers: self.headers,
                 queryParams: nil,
-                contentType: .urlEncoded,
+                contentType: nil,
                 localServiceName: .accountsForDebit
             )
         )
         return result
     }
     
-    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<PayeeListDTO, NetworkProviderError> {
+    func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(),
               let queryParameters = try? parameters.asDictionary() else {
             return .failure(NetworkProviderError.other)
         }
         let serviceName: TransferServiceType = .payees
         let absoluteUrl = baseUrl + self.basePath
-        let result: Result<PayeeListDTO, NetworkProviderError> = self.networkProvider.request(TransferRequest(serviceName: serviceName.rawValue,
+        let result: Result<[PayeeDTO], NetworkProviderError> = self.networkProvider.request(TransferRequest(serviceName: serviceName.rawValue,
                                                                                                            serviceUrl: absoluteUrl,
                                                                                                            method: .get,
                                                                                                            headers: self.headers,
                                                                                                            queryParams: queryParameters,
-                                                                                                           contentType: .queryString,
+                                                                                                           contentType: nil,
                                                                                                            localServiceName: .getPayees)
         )
         return result
@@ -115,7 +115,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                            serviceUrl: absoluteUrl,
                                                                                                            method: .get,
                                                                                                            headers: self.headers,
-                                                                                                           contentType: .urlEncoded,
+                                                                                                           contentType: nil,
                                                                                                            localServiceName: .recentRecipients)
         )
         return result
@@ -132,7 +132,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                            method: .get,
                                                                                                            headers: self.headers,
                                                                                                            queryParams: nil,
-                                                                                                           contentType: .queryString,
+                                                                                                           contentType: nil,
                                                                                                            localServiceName: .ibanValidation)
         )
         return result
@@ -150,7 +150,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
                                                                                                                 queryParams: queryParameters,
-                                                                                                                contentType: .urlEncoded,
+                                                                                                                contentType: nil,
                                                                                                                 localServiceName: .checkFinalFee)
         )
         return result
@@ -191,7 +191,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                     method: .get,
                                                                                                                     headers: self.headers,
                                                                                                                     queryParams: queryParameters,
-                                                                                                                    contentType: .queryString,
+                                                                                                                    contentType: nil,
                                                                                                                     localServiceName: .checkTransaction)
         )
         return result
@@ -225,7 +225,7 @@ private struct TransferRequest: NetworkProviderRequest {
     let jsonBody: GenericSendMoneyConfirmationInput?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
 
@@ -237,7 +237,7 @@ private struct TransferRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName
@@ -263,7 +263,7 @@ private struct ChallengeRequest: NetworkProviderRequest {
     let jsonBody: GenericSendMoneyConfirmationInput?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
 
@@ -275,7 +275,7 @@ private struct ChallengeRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
@@ -299,7 +299,7 @@ private struct NotifiyDeviceRequest: NetworkProviderRequest {
     let jsonBody: NotifyDeviceParameters?
     let formData: Data?
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType
+    let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
     init(serviceName: String,
@@ -310,7 +310,7 @@ private struct NotifiyDeviceRequest: NetworkProviderRequest {
          headers: [String: String]?,
          queryParams: [String: Any]? = nil,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
-         contentType: NetworkProviderContentType,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

@@ -1,16 +1,7 @@
 import SANLegacyLibrary
 import CoreFoundationLib
-import Commons
 import Account
 import RetailLegacy
-
-struct LoadPLAccountOtherOperativesInfoUseCaseImpl: AdditionalUseCasesProviderProtocol {
-    let dependencies: DependenciesResolver
-
-    func getAdditionalPublicFilesUseCases() -> [(useCase: UseCase<Void, Void, StringErrorOutput>, isMandatory: Bool)] {
-        return [(LoadPLAccountOtherOperativesInfoUseCase(dependencies: dependencies, plAccountOtherOperativesInfoRepository: dependencies.resolve(for: PLAccountOtherOperativesInfoRepository.self), appRepository: dependencies.resolve(for: AppRepositoryProtocol.self)), isMandatory: true)]
-    }
-}
 
 final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOperativesActionUseCaseInput, GetAccountOtherOperativesActionUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
@@ -115,7 +106,7 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
         identifier: PLAccountOtherOperativesIdentifier.customerService.rawValue,
         accesibilityIdentifier: "",
         trackName: "",
-        localizedKey: "accountOption_button_customerService",
+        localizedKey: "frequentOperative_button_customerService",
         icon: "icnCustomerService"
     )
 

@@ -1,4 +1,3 @@
-import Commons
 import CoreFoundationLib
 import PLCommons
 import PLUI
@@ -118,11 +117,33 @@ final class TransactionLimitPresenter: TransactionLimitPresenterProtocol {
                 purchaseLimit: purchaseLimitValue
             )
         )
+                
+        switch state {
+        case .valid:
+            view?.clearValidationMessages()
+        case .invalid:
+            let purchaseLimitValidation = getLimitValidationMessage(purchaseLimitValue)
+            let withdrawLimitValidation = getLimitValidationMessage(withdrawLimitValue)
+            
+            let invalidFormMessage = InvalidLimitFormMessages(invalidPurchaseLimitMessage: purchaseLimitValidation,
+                                                              invalidWithdrawLimitMessage: withdrawLimitValidation)
+            
+            view?.showInvalidFormMessage(invalidFormMessage)
+        }
+        
         view?.setIsSaveButtonEnabled(state.isAllowed)
     }
 }
 
 private extension TransactionLimitPresenter {
+    func getLimitValidationMessage(_ amount: Decimal) -> String? {
+        if amount <= 0 {
+            return localized("pl_blik_text_validAmount")
+        } else {
+            return nil
+        }
+    }
+    
     func validateAndSaveTransactionLimit(oldModel: TransactionLimitModel, newModel: TransactionLimitModel) {
         guard let view = view else { return }
         
@@ -147,14 +168,14 @@ private extension TransactionLimitPresenter {
             
         case .invalid(let reason):
             switch reason {
-            case .limitsNotGreaterThanZero:
-                view.showErrorMessage("#Błąd zmiany limitów tranzakcji", onConfirm: nil)
             case .illegalLimitDecrease:
                 confirmationDialogFactory.createLimitIncreasingDialog { [weak self] in
                     self?.saveTransactionLimit(model: newModel)
                 } declineAction: {
                     
                 }.showIn(view)
+            default:
+                break
             }
         }
     }

@@ -6,7 +6,7 @@
 //
 
 import PLCommons
-import Commons
+import CoreFoundationLib
 
 protocol PhoneTransferRegistrationFormViewModelMapping {
     func map(_ account: BlikCustomerAccount) -> PhoneTransferRegistrationFormViewModel
@@ -43,7 +43,8 @@ final class PhoneTransferRegistrationFormViewModelMapper: PhoneTransferRegistrat
         let phoneViewNumber: String = localized("pl_blik_text_numbSameAs")
         
         let statementTitle: String = localized("pl_blik_text_declarationRegist")
-        let statementDescription: String =  localized("pl_blik_text_declarationMeaning")
+        let statementDescription: LocalizedStylableText = localized("pl_blik_text_declarationMeaning",
+                                                                    [StringPlaceholder(.value, accountNumber)])
         
         return PhoneTransferRegistrationFormViewModel(
             hintMessage: hintMessage,

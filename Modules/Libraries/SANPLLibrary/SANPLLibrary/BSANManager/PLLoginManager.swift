@@ -19,6 +19,7 @@ public protocol PLLoginManagerProtocol {
     func getAppInfo() -> AppInfo?
     func setAppInfo(_ appInfo: AppInfo)
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError>
 }
 
 public final class PLLoginManager {
@@ -81,14 +82,25 @@ extension PLLoginManager: PLLoginManagerProtocol {
     }
 
     public func setDemoModeIfNeeded(for user: String) -> Bool {
-        guard self.demoInterpreter.isDemoModeAvailable,
-            self.demoInterpreter.isDemoUser(userName: user) else { return false }
-        self.bsanDataProvider.setDemoMode(true, user)
-        return true
+        guard self.demoInterpreter.isDemoModeAvailable else { return false }
+        let isDemoUser = self.demoInterpreter.isDemoUser(userName: user)
+        self.bsanDataProvider.setDemoMode(isDemoUser, user)
+        return isDemoUser
     }
 
     public func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
         let result = try loginDataSource.doLogout()
+        return result
+    }
+    
+    public func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        if let cached = self.getCachedLoginInfo() {
+            return .success(cached)
+        }
+        let result = try loginDataSource.getLoginInfo()
+        if case .success(let loginInfo) = result {
+            self.bsanDataProvider.storeLoginInfo(dto: loginInfo)
+        }
         return result
     }
 }
@@ -118,5 +130,9 @@ private extension PLLoginManager {
             let authCredentials = AuthCredentials(login: login, userId: authenticate.userId, userCif: authenticate.userCif, companyContext: authenticate.companyContext, accessTokenCredentials: accessTokenCredentials, trustedDeviceTokenCredentials: trustedDeviceTokenCredentials)
             self.bsanDataProvider.storeAuthCredentials(authCredentials)
         }
+    }
+
+    func getCachedLoginInfo() -> LoginInfoDTO? {
+        return self.bsanDataProvider.getLoginInfo()
     }
 }

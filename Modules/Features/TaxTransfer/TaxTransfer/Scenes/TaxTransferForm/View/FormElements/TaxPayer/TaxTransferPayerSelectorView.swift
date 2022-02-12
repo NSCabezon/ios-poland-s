@@ -11,12 +11,11 @@ final class TaxTransferPayerSelectorView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let subviewsContainer = UIView()
     private let selectorView = TaxTransferElementSelectorView()
-    private let selectedPayerView = UIView() // TODO:- Implementation in other TAP story
+    private let selectedPayerView = TaxTransferSelectedPayerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
-        configure(with: .unselected, onTap: {}) // TODO:- Remove this line. Implementation of config in other TAP story
     }
     
     @available(*, unavailable)
@@ -25,23 +24,27 @@ final class TaxTransferPayerSelectorView: UIView {
     }
     
     func configure(
-        with viewModel: TaxTransferFormViewModel.TaxPayer,
+        with viewModel: Selectable<TaxTransferFormViewModel.TaxPayerViewModel>,
         onTap: @escaping () -> Void
     ) {
         switch viewModel {
-        case .selected:
+        case let .selected(taxPayer):
             selectorView.isHidden = true
             selectedPayerView.isHidden = false
-            // TODO:- Further view implementation in another TAP story
+            selectedPayerView.configure(with: taxPayer, onTap: onTap)
         case .unselected:
-            selectorView.isHidden = false
-            selectedPayerView.isHidden = true
-            selectorView.configure(onTap: onTap)
+            showSelector(onTap: onTap)
         }
     }
 }
 
 private extension TaxTransferPayerSelectorView {
+    func showSelector(onTap: @escaping () -> Void) {
+        selectorView.isHidden = false
+        selectedPayerView.isHidden = true
+        selectorView.configure(onTap: onTap)
+    }
+    
     func setUp() {
         configureSubviews()
     }

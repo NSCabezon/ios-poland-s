@@ -6,7 +6,6 @@
 //
 
 import UI
-import Commons
 import CoreFoundationLib
 
 protocol ChequeListPresenterProtocol {

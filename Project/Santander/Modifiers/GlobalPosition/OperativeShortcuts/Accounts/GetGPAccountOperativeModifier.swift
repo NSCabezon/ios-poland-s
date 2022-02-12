@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionProtocol {
@@ -22,11 +21,14 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 self.getSwitchBetweenAccount(),
                 PLSendMoneyFavouriteOperative(),
                 PLBlikOperative(),
-                PLMakeDonationOperative(),
-                PLPayTaxOperative(),
+                PLMakeDonationOperative(dependenciesResolver: self.dependenciesEngine),
+                PLPayTaxOperative(dependenciesResolver: self.dependenciesEngine),
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
-                PLAccountNotificationsOperative()
+                PLAccountNotificationsOperative(),
+                PLTransportTicketsServicesOperative(),
+                PLPhoneTopUpOperative(dependenciesResolver: self.dependenciesEngine),
+                PLTransferZusOperative(dependenciesResolver: dependenciesEngine)
         ].compactMap { $0 }
     }
     
@@ -36,11 +38,14 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 self.getSwitchBetweenAccount(),
                 PLSendMoneyFavouriteOperative(),
                 PLBlikOperative(),
-                PLMakeDonationOperative(),
-                PLPayTaxOperative(),
+                PLMakeDonationOperative(dependenciesResolver: self.dependenciesEngine),
+                PLPayTaxOperative(dependenciesResolver: self.dependenciesEngine),
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
-                PLAccountNotificationsOperative()
+                PLAccountNotificationsOperative(),
+                PLTransportTicketsServicesOperative(),
+                PLPhoneTopUpOperative(dependenciesResolver: self.dependenciesEngine),
+                PLTransferZusOperative(dependenciesResolver: dependenciesEngine)
         ].compactMap { $0 }
     }
 }

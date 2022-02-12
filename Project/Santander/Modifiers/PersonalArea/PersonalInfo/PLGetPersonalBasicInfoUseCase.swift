@@ -7,7 +7,6 @@
 
 import PersonalArea
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 import SANLegacyLibrary
 
@@ -36,7 +35,6 @@ extension PLGetPersonalBasicInfoUseCase: GetPersonalBasicInfoUseCaseProtocol { }
 
 private extension PLGetPersonalBasicInfoUseCase {
     func basicInfoRepresentableToEntity(_ representable: PersonalBasicInfoRepresentable) -> PersonalInformationEntity {
-        let email = (representable.email ?? "").isEmpty ? localized("personalArea_text_uninformed") : representable.email
         var dto = PersonBasicDataDTO(mainAddress: representable.mainAddress,
                                      addressNodes: representable.addressNodes,
                                      documentType: representable.documentType,
@@ -46,7 +44,8 @@ private extension PLGetPersonalBasicInfoUseCase {
                                      phoneNumber: representable.phoneNumber,
                                      contactHourFrom: representable.contactHourFrom,
                                      contactHourTo: representable.contactHourTo,
-                                     email: email)
+                                     email: representable.email,
+                                     emailAlternative: localized("personalArea_text_uninformed"))
         dto.correspondenceAddressNodes = representable.correspondenceAddressNodes
         return PersonalInformationEntity(dto)
     }

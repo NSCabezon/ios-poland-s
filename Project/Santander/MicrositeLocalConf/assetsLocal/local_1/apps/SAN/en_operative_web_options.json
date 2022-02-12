@@ -86,9 +86,9 @@
         },
         {
             "id": "MEMBER_GET_MEMBER",
-            "url": null,
-            "isAvailable": false,
-            "method": "GET",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mgm"
+            "isAvailable": true,
+            "method": "POST",
             "isFullScreen": true
         },
         {
@@ -99,7 +99,7 @@
             "isFullScreen": true
         },
         {
-            "id": "NEW_BBC",
+            "id": "NEW_BBC_OFFER",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer",
             "isAvailable": true,
             "method": "POST",

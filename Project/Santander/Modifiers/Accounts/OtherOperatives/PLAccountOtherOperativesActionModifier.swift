@@ -9,7 +9,6 @@ import Foundation
 import Account
 import CoreFoundationLib
 import UI
-import Commons
 import PersonalArea
 import RetailLegacy
 
@@ -29,14 +28,14 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
                  PLAccountOtherOperativesIdentifier.editGoal.rawValue,
                  PLAccountOtherOperativesIdentifier.accountStatement.rawValue,
                  PLAccountOtherOperativesIdentifier.customerService.rawValue,
-                 PLAccountOtherOperativesIdentifier.fxExchange.rawValue:
+                 PLAccountOtherOperativesIdentifier.fxExchange.rawValue,
+                 PLAccountOtherOperativesIdentifier.memberGetMember.rawValue:
                 showWebView(identifier: identifier, entity: entity)
             case PLAccountOtherOperativesIdentifier.changeAliases.rawValue:
                 goToPGProductsCustomization()
             case PLAccountOtherOperativesIdentifier.generateQRCode.rawValue, PLAccountOtherOperativesIdentifier.creditCardRepayment.rawValue,
                  PLAccountOtherOperativesIdentifier.history.rawValue,
-                 PLAccountOtherOperativesIdentifier.openDeposit.rawValue,
-                 PLAccountOtherOperativesIdentifier.memberGetMember.rawValue:
+                 PLAccountOtherOperativesIdentifier.openDeposit.rawValue:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))

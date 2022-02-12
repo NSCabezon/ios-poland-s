@@ -1,11 +1,14 @@
 import UI
 import PLUI
-import Commons
+import IQKeyboardManagerSwift
+import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol ZusTransferFormViewProtocol: AnyObject,
                                       ConfirmationDialogPresentable {
     func setAccountViewModel()
-    func showValidationMessages(messages: InvalidZusTransferFormMessages)
+    func showValidationMessages(with data: InvalidZusTransferFormData)
+    func updateRecipient(name: String, accountNumber: String)
 }
 
 final class ZusTransferFormViewController: UIViewController {
@@ -27,10 +30,14 @@ final class ZusTransferFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        configureKeyboardDismissGesture()
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.addNavigationBarShadow()
+        IQKeyboardManager.shared.enableAutoToolbar = false
         view.layoutIfNeeded()
     }
 }
@@ -50,6 +57,7 @@ private extension ZusTransferFormViewController {
         configureView()
         prepareNavigationBar()
         setUpLayout()
+        addKeyboardObserver()
     }
     
     func addSubviews() {
@@ -59,17 +67,20 @@ private extension ZusTransferFormViewController {
     }
     
     func prepareNavigationBar() {
-        NavigationBarBuilder(style: .white,
-                             title: .title(key: localized("#Przelew ZUS")))
-            .setLeftAction(.back(action: #selector(goBack))) //TODO: need to change back action to back send money screen
-            .setRightActions(.close(action: #selector(closeProcess)))
-            .build(on: self, with: nil)
+        NavigationBarBuilder(
+            style: .white,
+            title: .title(key: localized("pl_zusTransfer_toolbar")
+            )
+        )
+        .setLeftAction(.back(action: .closure(goBack)))
+        .setRightActions(.close(action: .closure(closeProcess)))
+        .build(on: self, with: nil)
     }
     
     func configureView() {
         view.backgroundColor = .white
-        bottomView.configure(title: localized("#Gotowe")) {
-            // TODO: Add ready botton action
+        bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
+            self?.presenter.showConfirmation()
         }
         bottomView.disableButton()
         formView.configure(with: presenter.getSelectedAccountViewModels())
@@ -98,6 +109,18 @@ private extension ZusTransferFormViewController {
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+        
+    @objc func keyboardWillHide(notification: NSNotification) {
+        formView.setCurrentActiveFieldType(.none)
+    }
 }
 
 extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
@@ -105,21 +128,44 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
         formView.configure(with: presenter.getSelectedAccountViewModels())
     }
     
-    func showValidationMessages(messages: InvalidZusTransferFormMessages) {
+    func showValidationMessages(with data: InvalidZusTransferFormData) {
         let form = formView.getCurrentFormViewModel()
-        formView.showInvalidFormMessages(messages)
-        if messages.shouldContinueButtonBeEnabled,
-           form.amount != nil {
+        formView.showInvalidFormMessages(with: data)
+        if data.shouldContinueButtonBeEnabled,
+           form.amount != nil,
+           form.recipientAccountNumber.count == presenter.getAccountRequiredLength() {
             bottomView.enableButton()
         } else {
             bottomView.disableButton()
         }
     }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        formView.updateRecipient(name: name, accountNumber: accountNumber)
+    }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
 }
 
 extension ZusTransferFormViewController: ZusTransferFormViewDelegate {
-    func didChangeForm() {
-      //TODO: Implemented form
+
+    func didChangeForm(with field: TransferFormCurrentActiveField) {
+        presenter.updateTransferFormViewModel(
+            with: formView.getCurrentFormViewModel()
+        )
+        presenter.startValidation(with: field)
+    }
+    
+    func didTapRecipientButton() {
+        presenter.showRecipientSelection()
     }
     
     func changeAccountTapped() {

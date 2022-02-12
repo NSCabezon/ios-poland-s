@@ -5,7 +5,7 @@
 //  Created by 186484 on 02/11/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import SANPLLibrary
 
 public protocol PLTransactionParametersProviderProtocol {
@@ -36,7 +36,8 @@ public class PLTransactionParametersProvider: PLTransactionParametersProviderPro
              .foreignTransfer(let transactionParameters),
              .blikP2PR(let transactionParameters),
              .mCommerceBelow(let transactionParameters),
-             .mCommerceUnder(let transactionParameters):
+             .mCommerceUnder(let transactionParameters),
+             .zusTransfer(let transactionParameters):
             let joinedParameters = transactionProvider.getParameters(
                 transactionParametersInput: transactionParameters,
                 type: type

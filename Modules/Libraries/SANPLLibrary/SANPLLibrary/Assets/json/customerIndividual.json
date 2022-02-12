@@ -34,7 +34,51 @@
             "dateOfBirth": "1980-02-14",
             "pesel": "80021414107",
             "citizenship": "616",
-            "multipleContexts": true
+            "multipleContexts": true,
+            "customerContexts": [
+                {
+                    "name": "ANNA T KOWALCZYK",
+                    "type": "INDIVIDUAL",
+                    "ownerId": 32896506,
+                    "selected": true
+                },
+                {
+                    "name": "PROXY 1",
+                    "type": "PROXY",
+                    "ownerId": 33366563,
+                    "selected": false
+                },
+                {
+                    "name": "MINI_COMPANY 1",
+                    "type": "MINI_COMPANY",
+                    "ownerId": 31150688,
+                    "selected": false
+                },
+                {
+                    "name": "COMPANY 1",
+                    "type": "COMPANY",
+                    "ownerId": 33193241,
+                    "selected": false
+                },
+                {
+                    "name": "PROXY 1",
+                    "type": "PROXY",
+                    "ownerId": 33366543,
+                    "selected": false
+                },
+                {
+                    "name": "MINI_COMPANY 2",
+                    "type": "MINI_COMPANY",
+                    "ownerId": 31124688,
+                    "selected": false
+                },
+                {
+                    "name": "COMPANY 2",
+                    "type": "COMPANY",
+                    "ownerId": 36793241,
+                    "selected": false
+                }
+            ]
         }
     }
 }

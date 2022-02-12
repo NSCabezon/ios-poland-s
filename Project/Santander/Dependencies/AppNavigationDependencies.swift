@@ -7,7 +7,7 @@
 
 import LoginCommon
 import PLLogin
-import Commons
+import CoreFoundationLib
 import PLCommons
 import RetailLegacy
 import PersonalArea
@@ -16,13 +16,21 @@ import PLHelpCenter
 import CreditCardRepayment
 import OneAuthorizationProcessor
 import LoanSchedule
+import TaxTransfer
+import CharityTransfer
+import PhoneTopUp
+import Account
+import Loans
+import Cards
+import ZusTransfer
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    private lazy var sendMoneyCoordinator =
-    SendMoneyCoordinator(dependenciesResolver: self.dependenciesEngine,
-                         drawer: self.drawer)
+    private lazy var sendMoneyCoordinator = SendMoneyCoordinator(
+        dependenciesResolver: self.dependenciesEngine,
+        drawer: self.drawer
+    )
     private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: (self.drawer.currentRootViewController as? UINavigationController)!)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
     private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
@@ -55,6 +63,13 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: BLIKHomeCoordinator.self) { resolver in
             return BLIKHomeCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
+        dependenciesEngine.register(for: TaxTransferFormCoordinatorProtocol.self) { _ in
+            return TaxTransferFormCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        dependenciesEngine.register(for: CharityTransferModuleCoordinator.self) { resolver in
+            return CharityTransferModuleCoordinator(dependenciesResolver: resolver,
+                                                    navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in
             return PLHelpCenterModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
@@ -82,6 +97,32 @@ final class AppNavigationDependencies {
         
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
             return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            let settingsDto = repository.get()?.topup ?? []
+            let topUpSettings = settingsDto
+                .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
+            return TopUpDataLoaderCoordinator(dependenciesResolver: resolver,
+                                              navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                                              settings: topUpSettings)
+        }
+        dependenciesEngine.register(for: ZusTransferModuleCoordinatorProtocol.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            return ZusTransferModuleCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                validationMask: repository.get()?.zusTransfer?.mask
+            )
+        }
+        dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
+            return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: LoanTransactionActionsModifier.self) { resolver in
+            return PLLoanTransactionActionsModifier(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+        dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
+            return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()

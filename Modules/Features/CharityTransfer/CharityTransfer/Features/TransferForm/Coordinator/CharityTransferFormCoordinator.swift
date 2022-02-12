@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import PLUI
 
@@ -20,17 +20,20 @@ public final class CharityTransferFormCoordinator: ModuleCoordinator {
     private let accounts: [AccountForDebit]
     private let selectedAccountNumber: String
     weak var delegate: CharityTransferFormAccountSelectable?
+    private let charityTransferSettings: CharityTransferSettings
     
     private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
     
     public init(dependenciesResolver: DependenciesResolver,
                 navigationController: UINavigationController?,
                 accounts: [AccountForDebit],
-                selectedAccountNumber: String) {
+                selectedAccountNumber: String,
+                charityTransferSettings: CharityTransferSettings) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
+        self.charityTransferSettings = charityTransferSettings
         self.setupDependencies()
     }
     
@@ -52,11 +55,12 @@ extension CharityTransferFormCoordinator: CharityTransferFormCoordinatorProtocol
     }
     
     func showAccountSelector(selectedAccountNumber: String) {
-        let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
+        let coordinator = CharityTransferAccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
                                                      navigationController: navigationController,
                                                      accounts: accounts,
                                                      selectedAccountNumber: selectedAccountNumber,
-                                                     sourceView: .form, selectableAccountDelegate: self)
+                                                     sourceView: .form, selectableAccountDelegate: self,
+                                                     charityTransferSettings: charityTransferSettings)
         coordinator.start()
     }
     
@@ -76,14 +80,12 @@ private extension CharityTransferFormCoordinator {
             self
         }
         
-        let accounts = accounts
-        let selectedAccountNumber = selectedAccountNumber
-        
-        self.dependenciesEngine.register(for: CharityTransferFormPresenterProtocol.self) { resolver in
+        self.dependenciesEngine.register(for: CharityTransferFormPresenterProtocol.self) { [accounts, selectedAccountNumber, charityTransferSettings] resolver in
             return CharityTransferFormPresenter(dependenciesResolver: resolver,
                                                 accounts: accounts,
                                                 selectedAccountNumber: selectedAccountNumber,
-                                                formValidator: CharityTransferValidator())
+                                                formValidator: CharityTransferValidator(),
+                                                charityTransferSettings: charityTransferSettings)
         }
         
         self.dependenciesEngine.register(for: CharityTransferFormViewController.self) { [weak self] resolver in

@@ -1,7 +1,7 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol TransactionLimitViewDelegate: AnyObject {
     func didUpdateLimit()
@@ -9,10 +9,10 @@ protocol TransactionLimitViewDelegate: AnyObject {
 
 final class TransactionLimitView: UIView {
     private let limitsTitleLabel = UILabel()
-    private let withdrawLimitTextField = LisboaTextField()
+    private let withdrawLimitTextField = LisboaTextFieldWithErrorView()
     private let withdrawLimitAccessoryView = CurrencyLabel()
     private let withdrawLimitHintLabel = UILabel()
-    private let purchaseLimitTextField = LisboaTextField()
+    private let purchaseLimitTextField = LisboaTextFieldWithErrorView()
     private let purchaseLimitAccessoryView = CurrencyLabel()
     private let purchaseLimitHintLabel = UILabel()
     private let chequeBlikTitleLabel = UILabel()
@@ -21,11 +21,11 @@ final class TransactionLimitView: UIView {
     public weak var delegate: TransactionLimitViewDelegate?
     
     public var withdrawLimit: String? {
-        withdrawLimitTextField.fieldValue
+        withdrawLimitTextField.textField.text
     }
     
     public var purchaseLimit: String? {
-        purchaseLimitTextField.fieldValue
+        purchaseLimitTextField.textField.text
     }
     
     public init() {
@@ -46,8 +46,27 @@ final class TransactionLimitView: UIView {
         purchaseLimitAccessoryView.setText(viewModel.limitCurrency)
         withdrawLimitHintLabel.text = viewModel.withdrawLimitText
         purchaseLimitHintLabel.text = viewModel.purchaseLimitText
-        purchaseLimitTextField.setText(viewModel.purchaseLimitValue)
-        withdrawLimitTextField.setText(viewModel.withdrawLimitValue)
+        purchaseLimitTextField.textField.setText(viewModel.purchaseLimitValue)
+        withdrawLimitTextField.textField.setText(viewModel.withdrawLimitValue)
+    }
+    
+    func showInvalidFormMessage(_ error: InvalidLimitFormMessages) {
+        if error.invalidPurchaseLimitMessage == nil {
+            purchaseLimitTextField.hideError()
+        } else {
+            purchaseLimitTextField.showError(error.invalidPurchaseLimitMessage)
+        }
+        
+        if error.invalidWithdrawLimitMessage == nil {
+            withdrawLimitTextField.hideError()
+        } else {
+            withdrawLimitTextField.showError(error.invalidWithdrawLimitMessage)
+        }
+    }
+    
+    func clearValidationMessages() {
+        purchaseLimitTextField.hideError()
+        withdrawLimitTextField.hideError()
     }
 }
 
@@ -55,36 +74,30 @@ private extension TransactionLimitView {
     
     func configureContent() {
         limitsTitleLabel.text = localized("pl_blik_text_limitDaily")
-        withdrawLimitTextField.setPlaceholder(localized("pl_blik_label_limitCash"))
-        purchaseLimitTextField.setPlaceholder(localized("pl_blik_label_limitStores"))
+        withdrawLimitTextField.textField.setPlaceholder(localized("pl_blik_label_limitCash"))
+        purchaseLimitTextField.textField.setPlaceholder(localized("pl_blik_label_limitStores"))
         chequeBlikTitleLabel.text = localized("pl_blik_text_chequeLimit")
         chequeBlikLimitLabel.text = localized("pl_blik_text_oneChequeLimit")
     }
     
     func configureDelegates() {
-        withdrawLimitTextField.updatableDelegate = self
-        purchaseLimitTextField.updatableDelegate = self
+        withdrawLimitTextField.textField.updatableDelegate = self
+        purchaseLimitTextField.textField.updatableDelegate = self
     }
     
     func configureSubviews() {
-        addSubview(limitsTitleLabel)
-        addSubview(withdrawLimitTextField)
-        addSubview(withdrawLimitHintLabel)
-        addSubview(purchaseLimitTextField)
-        addSubview(purchaseLimitHintLabel)
-        
-        addSubview(chequeBlikTitleLabel)
-        addSubview(chequeBlikLimitLabel)
-        addSubview(chequeBlikLimitValueLabel)
-        
-        limitsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        withdrawLimitTextField.translatesAutoresizingMaskIntoConstraints = false
-        withdrawLimitHintLabel.translatesAutoresizingMaskIntoConstraints = false
-        purchaseLimitTextField.translatesAutoresizingMaskIntoConstraints = false
-        purchaseLimitHintLabel.translatesAutoresizingMaskIntoConstraints = false
-        chequeBlikTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        chequeBlikLimitLabel.translatesAutoresizingMaskIntoConstraints = false
-        chequeBlikLimitValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        [limitsTitleLabel,
+         withdrawLimitTextField,
+         withdrawLimitHintLabel,
+         purchaseLimitTextField,
+         purchaseLimitHintLabel,
+         chequeBlikTitleLabel,
+         chequeBlikLimitLabel,
+         chequeBlikLimitValueLabel
+        ].forEach {
+            addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             limitsTitleLabel.topAnchor.constraint(equalTo: topAnchor),
@@ -94,7 +107,6 @@ private extension TransactionLimitView {
             withdrawLimitTextField.topAnchor.constraint(equalTo: limitsTitleLabel.bottomAnchor, constant: 16),
             withdrawLimitTextField.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
             withdrawLimitTextField.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
-            withdrawLimitTextField.heightAnchor.constraint(equalToConstant: 48),
             
             withdrawLimitHintLabel.topAnchor.constraint(equalTo: withdrawLimitTextField.bottomAnchor, constant: 8),
             withdrawLimitHintLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
@@ -103,7 +115,6 @@ private extension TransactionLimitView {
             purchaseLimitTextField.topAnchor.constraint(equalTo: withdrawLimitHintLabel.bottomAnchor, constant: 16),
             purchaseLimitTextField.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
             purchaseLimitTextField.trailingAnchor.constraint(equalTo: limitsTitleLabel.trailingAnchor),
-            purchaseLimitTextField.heightAnchor.constraint(equalToConstant: 48),
             
             purchaseLimitHintLabel.topAnchor.constraint(equalTo: purchaseLimitTextField.bottomAnchor, constant: 8),
             purchaseLimitHintLabel.leadingAnchor.constraint(equalTo: limitsTitleLabel.leadingAnchor),
@@ -133,8 +144,8 @@ private extension TransactionLimitView {
             size: 17
         )
         
-        withdrawLimitTextField.setRightAccessory(.view(withdrawLimitAccessoryView))
-        withdrawLimitTextField.setEditingStyle(
+        withdrawLimitTextField.textField.setRightAccessory(.view(withdrawLimitAccessoryView))
+        withdrawLimitTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
                     type: .floatingTitle,
@@ -156,8 +167,8 @@ private extension TransactionLimitView {
             size: 14
         )
         
-        purchaseLimitTextField.setRightAccessory(.view(purchaseLimitAccessoryView))
-        purchaseLimitTextField.setEditingStyle(
+        purchaseLimitTextField.textField.setRightAccessory(.view(purchaseLimitAccessoryView))
+        purchaseLimitTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
                     type: .floatingTitle,

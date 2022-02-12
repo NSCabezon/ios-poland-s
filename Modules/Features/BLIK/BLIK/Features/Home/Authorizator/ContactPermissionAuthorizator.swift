@@ -2,7 +2,7 @@ import Foundation
 import Contacts
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol ContactPermissionAuthorizatorProtocol {
     func authorizeContactPermission(in view: UIViewController,
@@ -35,9 +35,9 @@ class ContactPermissionAuthorizator: ContactPermissionAuthorizatorProtocol {
 
 private extension ContactPermissionAuthorizator {
     func showDialog(in view: UIViewController) {
-        let title: LocalizedStylableText = localized("#Nadaj potrzebne uprawnienia")
-        let info: LocalizedStylableText = localized("#Aby wybrać odbiorcę przelewu z listy kontaktów, zezwól aplikacji na dostęp do nich.")
-        let boldInfo: LocalizedStylableText = localized("#Przejdź do ustawień swojego telefonu i nadaj potrzebne uprawnienia.")
+        let title: LocalizedStylableText = localized("pl_blikP2P_title_permissionsNeeded")
+        let info: LocalizedStylableText = localized("pl_blikP2P_text_contactsPermissionsNeededText")
+        let boldInfo: LocalizedStylableText = localized("pl_blikP2P_text_contactsPermissionsNeededText2")
         
         let items: [LisboaDialogItem] = [
             .image(.init(image: PLAssets.image(named: "grayInfoIcon"), size: (51, 51))),
@@ -66,7 +66,7 @@ private extension ContactPermissionAuthorizator {
                       margins: (left: 32.0, right: 32.0))
             ),
             .margin(24),
-            .verticalAction(VerticalLisboaDialogAction(title: localized("genericAlert_buttom_settings"), type: .red, margins: (left: 16, right: 16), action: {[weak self] in
+            .verticalAction(VerticalLisboaDialogAction(title: localized("pl_blikP2P_button_goToSettings"), type: .red, margins: (left: 16, right: 16), action: {[weak self] in
                 self?.goToSettings()
             })),
             .margin(16.0)

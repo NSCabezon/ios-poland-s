@@ -7,7 +7,7 @@
 
 import Foundation
 import SANPLLibrary
-import Commons
+import CoreFoundationLib
 import PersonalArea
 
 final class PLPersonalAreaSectionsSecurityModifier {
@@ -20,7 +20,7 @@ final class PLPersonalAreaSectionsSecurityModifier {
     }
 }
 
-extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol {
+extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol {    
     var isDisabledUser: Bool {
         return false
     }
@@ -33,13 +33,16 @@ extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityMo
     var isEnabledDataPrivacy: Bool {
         return false
     }
-    var isDisabledLastAccess: Bool {
-        return false
+    var isEnabledLastAccess: Bool {
+        return true
     }
     var isESignatureFunctionalityEnabled: Bool {
         return false
     }
     var isBiometryFunctionalityEnabled: Bool {
         return false
+    }
+    var isEnabledQuickerBalance: Bool {
+        return true
     }
 }

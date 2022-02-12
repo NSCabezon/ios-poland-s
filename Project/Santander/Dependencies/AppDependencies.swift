@@ -5,7 +5,7 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import RetailLegacy
 import SANLegacyLibrary
@@ -22,11 +22,10 @@ import Menu
 import Cards
 import PLNotifications
 import Loans
-import CoreFoundationLib
 import CoreDomain
-import CommonUseCase
 import PLCryptography
 import UI
+import PLHelpCenter
 
 final class AppDependencies {
     #if DEBUG
@@ -41,8 +40,8 @@ final class AppDependencies {
     private let versionInfo: VersionInfoDTO
     private let hostModule: HostsModuleProtocol
     private let compilation: PLCompilationProtocol
-    private let appModifiers: AppModifiers
     private let ibanFormatter: ShareIbanFormatterProtocol
+    private lazy var netClient = NetClientImplementation()
 
     // MARK: - Dependecies definitions
 
@@ -77,10 +76,6 @@ final class AppDependencies {
                                          hostProvider: hostProvider,
                                          networkProvider: networkProvider,
                                          demoInterpreter: self.demoInterpreter)
-
-    }()
-    private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
-        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine)
     }()
     private lazy var productIdDelegate: ProductIdDelegateProtocol = {
         return ProductIdDelegateModifier()
@@ -102,20 +97,35 @@ final class AppDependencies {
     }()
     private lazy var plAccountOtherOperativesInfoRepository: PLAccountOtherOperativesInfoRepository = {
         let assetsClient = AssetsClient()
-        let netClient = NetClientImplementation()
         let fileClient = FileClient()
         return PLAccountOtherOperativesInfoRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
+    private lazy var plHelpCenterOnlineAdvisorRepository: PLHelpCenterOnlineAdvisorRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLHelpCenterOnlineAdvisorRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plHelpQuestionsRepository: PLHelpQuestionsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLHelpQuestionsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
+    private lazy var plTransferSettingsRepository: PLTransferSettingsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLTransferSettingsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
     private lazy var servicesLibrary: ServicesLibrary = {
-        return ServicesLibrary(bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider())
+        return ServicesLibrary(
+            bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider(),
+            bsanDataProvider: self.bsanDataProvider,
+            networkProvider: networkProvider
+        )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
         return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
     }()
     // MARK: Features
-//    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
-//        return OnboardingPermissionOptions(dependenciesResolver: dependencieEngine)
-//    }()
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
         return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
     }()
@@ -130,7 +140,6 @@ final class AppDependencies {
         )
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
-        appModifiers = AppModifiers(dependenciesEngine: dependencieEngine)
         self.ibanFormatter = ShareIbanFormatter()
         registerDependencies()
     }
@@ -154,6 +163,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: VersionInfoDTO.self) { _ in
             return self.versionInfo
         }
+        self.dependencieEngine.register(for: AppStoreInformationUseCase.self) { resolver in
+            return PLAppStoreInformationUseCase()
+        }
         // Data layer and country data adapters
         self.dependencieEngine.register(for: BSANManagersProvider.self) { _ in
             return self.managersProviderAdapter
@@ -169,9 +181,6 @@ private extension AppDependencies {
         }
         dependencieEngine.register(for: PLManagersProviderAdapterProtocol.self) { _ in
             return self.managersProviderAdapter
-        }
-        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
-            return self.getPGFrequentOperativeOption
         }
         // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
@@ -189,6 +198,15 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PLAccountOtherOperativesInfoRepository.self) { _ in
             return self.plAccountOtherOperativesInfoRepository
         }
+        self.dependencieEngine.register(for: PLHelpCenterOnlineAdvisorRepository.self) { _ in
+            return self.plHelpCenterOnlineAdvisorRepository
+        }
+        self.dependencieEngine.register(for: PLHelpQuestionsRepository.self) { _ in
+            return self.plHelpQuestionsRepository
+        }
+        self.dependencieEngine.register(for: PLTransferSettingsRepository.self) { _ in
+            return self.plTransferSettingsRepository
+        }
         self.dependencieEngine.register(for: PLWebViewLinkRepositoryProtocol.self) { resolver in
             return PLWebViewLinkRepository(dependenciesResolver: resolver)
         }
@@ -205,7 +223,7 @@ private extension AppDependencies {
             return self.productIdDelegate
         }
         self.dependencieEngine.register(for: AdditionalUseCasesProviderProtocol.self) { resolver in
-            return LoadPLAccountOtherOperativesInfoUseCaseImpl(dependencies: resolver)
+            return AdditionalUseCasesProviderImpl(dependencies: resolver)
         }
         self.dependencieEngine.register(for: ShareIbanFormatterProtocol.self) { _ in
             return self.ibanFormatter
@@ -271,13 +289,17 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: LoadGlobalPositionUseCase.self) { resolver in
             return DefaultLoadGlobalPositionUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
-            let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
-            let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
+        self.dependencieEngine.register(for: SessionConfiguration.self) { _ in
             return SessionConfiguration(timeToExpireSession: self.timeToExpireSession,
                                         timeToRefreshToken: self.timeToRefreshToken,
-                                        sessionStartedActions: [loadPfm],
-                                        sessionFinishedActions: [stopPfm])
+                                        sessionStartedActions: [],
+                                        sessionFinishedActions: [])
+        }
+        self.dependencieEngine.register(for: PfmHelperProtocol.self) { _ in
+            return DefaultPFMHelper()
+        }
+        self.dependencieEngine.register(for: PfmControllerProtocol.self) { _ in
+            return DefaultPFMController()
         }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
@@ -298,9 +320,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PrivateSideMenuModifier.self) { _ in
             PLPrivateSideMenuModifier()
         }
-        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
-            PLPrivateMenuModifier(resolver: resolver)
-        }
         self.dependencieEngine.register(for: PersonalAreaMainModuleModifier.self) { resolver in
             PLPersonalAreaMainModuleModifier(dependenciesResolver: resolver)
         }
@@ -316,20 +335,29 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
             return PLPublicMenuViewContainer(resolver: resolver)
         }
-        self.dependencieEngine.register(for: GetLoanTransactionsUseCaseProtocol.self) { resolver in
-            return PLGetLoanTransactionsUseCase(dependenciesResolver: resolver)
-        }
-        self.dependencieEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { _ in
-            PLCardTransactionDetailActionFactoryModifier()
-        }
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
         }
+        self.dependencieEngine.register(for: ContextSelectorModifierProtocol.self) { resolver in
+            PLContextSelectorModifier(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
+        }
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
+        }
+        self.dependencieEngine.register(for: LoanReactiveRepository.self) { _ in
+            return self.servicesLibrary.loanReactiveDataRepository
+        }
+		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+			PLChangeAliasManager()
+		}
+        self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
+            PLUserSegmentProtocol(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: OpinatorManagerModifier.self) { _ in
+            PLOpinatorManagerModifier()
         }
     }
 }

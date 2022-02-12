@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Commons
 import CoreFoundationLib
 import SANLegacyLibrary
 import SANPLLibrary
@@ -101,7 +100,7 @@ extension GetPLAccountOtherOperativesWebConfigurationUseCase {
                                                                                                                serviceUrl: absoluteUrl,
                                                                                                                method: .get,
                                                                                                                headers: nil,
-                                                                                                               contentType: .urlEncoded,
+                                                                                                               contentType: nil,
                                                                                                                localServiceName: .authenticate)
         )
         return result

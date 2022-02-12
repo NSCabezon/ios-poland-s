@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Commons
+import CoreFoundationLib
 import BLIK
 import TaxTransfer
 import CreditCardRepayment
@@ -56,8 +56,6 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
     func selectCharityTransfer(accounts: [AccountForDebit])
-    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput)
-    func selectZusTransfer(accounts: [AccountForDebit])
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -73,25 +71,6 @@ final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector, navigationController: UINavigationController?) {
         self.dependenciesEngine = dependenciesEngine
         self.navigationController = navigationController
-        self.registerDependencies()
-    }
-    
-    private func registerDependencies() {
-        self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
-            return AccountForDebitMapper()
-        }
-        
-        self.dependenciesEngine.register(for: OperatorMapping.self) { _ in
-            return OperatorMapper()
-        }
-        
-        self.dependenciesEngine.register(for: GSMOperatorMapping.self) { _ in
-            return GSMOperatorMapper()
-        }
-        
-        self.dependenciesEngine.register(for: MobileContactMapping.self) { _ in
-            return MobileContactMapper()
-        }
     }
     
     func start() {
@@ -200,18 +179,23 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 navigationController: navigationController
             )
             coordinator.start()
+        case .phoneTopUp:
+            let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
+            let settingsDto = repository.get()?.topup ?? []
+            let topUpSettings = settingsDto
+                .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
+            let coordinator = TopUpDataLoaderCoordinator(dependenciesResolver: dependenciesEngine,
+                                                         navigationController: navigationController,
+                                                         settings: topUpSettings)
+            coordinator.start()
+        case .zusTransfer:
+            let coordinator = dependenciesEngine.resolve(
+                for: ZusTransferModuleCoordinatorProtocol.self
+            )
+            coordinator.start()
         default:
             break
         }
-    }
-    
-    func selectPhoneTopUp(formData: GetPhoneTopUpFormDataOutput) {
-        let coordinator = PhoneTopUpFormCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            navigationController: navigationController,
-            formData: formData
-        )
-        coordinator.start()
     }
     
     func selectCharityTransfer(accounts: [AccountForDebit]) {
@@ -219,37 +203,14 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             view?.showError()
             return
         }
-        if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
-            var selectedAccountNumber = ""
-            if accounts.count > 1 {
-                selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
-            } else {
-                selectedAccountNumber = accounts.first?.number ?? ""
-            }
-            let coordinator = CharityTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
-                                                             navigationController: navigationController,
-                                                             accounts: accounts,
-                                                             selectedAccountNumber: selectedAccountNumber)
-            coordinator.start()
-        } else {
-            let coordinator = AccountSelectorCoordinator(dependenciesResolver: dependenciesEngine,
-                                                         navigationController: navigationController,
-                                                         accounts: accounts,
-                                                         selectedAccountNumber: "",
-                                                         sourceView: .sendMoney)
-            coordinator.start()
-        }
-    }
-    
-    func selectZusTransfer(accounts: [AccountForDebit]) {
-        guard !accounts.isEmpty else {
-            view?.showError()
-            return
-        }
-        let coordinator = ZusTransferModuleCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            navigationController: navigationController,
-            accounts: accounts)
+        let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
+        let settings = repository.get()?.charityTransfer
+        let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
+                                                              transferAccountNumber: settings?.transferAccountNumber,
+                                                              transferTitle: settings?.transferTitle)
+        let coordinator: CharityTransferModuleCoordinator = dependenciesEngine.resolve()
+        coordinator.setProperties(accounts: accounts,
+                                  charityTransferSettings: charityTransferSettings)
         coordinator.start()
     }
 }

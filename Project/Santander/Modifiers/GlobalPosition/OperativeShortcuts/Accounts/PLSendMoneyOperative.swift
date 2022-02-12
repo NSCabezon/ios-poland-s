@@ -4,9 +4,9 @@
 //
 
 import CoreFoundationLib
+import OpenCombine
+import Transfer
 import UI
-import Commons
-import UIKit
 
 final class PLSendMoneyOperative: AccountOperativeActionTypeProtocol {
     let dependenciesResolver: DependenciesResolver
@@ -33,18 +33,9 @@ final class PLSendMoneyOperative: AccountOperativeActionTypeProtocol {
 
     func getAction() -> AccountOperativeAction {
         return .custom {
-            let useCase = CheckNewSendMoneyEnabledUseCase(dependenciesResolver: self.dependenciesResolver)
-            Scenario(useCase: useCase)
-                .execute(on: self.dependenciesResolver.resolve())
-                .onSuccess { [weak self] enabled in
-                    if enabled {
-                        UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: {
-                            self?.dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
-                        })
-                    } else {
-                        Toast.show(localized("generic_alert_notAvailableOperation"))
-                    }
-                }
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: {
+                self.dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+            })
         }
     }
 }

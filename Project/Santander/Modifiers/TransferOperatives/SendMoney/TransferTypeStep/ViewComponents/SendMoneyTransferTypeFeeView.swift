@@ -76,6 +76,7 @@ final class SendMoneyTransferTypeFeeView: UIView {
         self.setAmountLabelText(viewModel)
         self.index = index
         self.status = viewModel.status
+        self.setAccessibilityIdentifiers(viewModel.accessibilitySuffix)
     }
     
     func changeStatus(to status: OneStatus) {
@@ -87,6 +88,7 @@ private extension SendMoneyTransferTypeFeeView {
     func setupView() {
         self.configureView()
         self.configureStackView()
+        self.setAccessibilityIdentifiers()
     }
     
     func configureView() {
@@ -135,5 +137,10 @@ private extension SendMoneyTransferTypeFeeView {
         guard self.status != .activated else { return }
         self.changeStatus(to: .activated)
         self.delegate?.didSelectFeeView(at: self.index)
+    }
+
+    func setAccessibilityIdentifiers(_ suffix: String? = nil) {
+        self.descriptionLabel.accessibilityIdentifier = AccessibilityOneComponents.oneRadioButtonFee + (suffix ?? "")
+        self.amountLabel.accessibilityIdentifier = AccessibilityOneComponents.oneRadioButtonAmount + (suffix ?? "")
     }
 }
