@@ -13,6 +13,7 @@ import Foundation
 import Onboarding
 import RetailLegacy
 import SANPLLibrary
+import Menu
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
@@ -52,6 +53,10 @@ struct ModuleDependencies {
     func loanHomeCoordinator() -> BindableCoordinator {
         return ToastCoordinator()
     }
+    
+    func resolve() -> SegmentedUserRepository {
+        return oldResolver.resolve(for: SegmentedUserRepository.self)
+    }
 }
 
 // MARK: - Private
@@ -77,10 +82,6 @@ extension ModuleDependencies: CoreDependenciesResolver {
 extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     func resolve() -> CoreFoundationLib.OnboardingPermissionOptionsProtocol? {
         return OnboardingPermissionOptions()
-    }
-    
-    func resolve() -> BiometryRepository {
-        fatalError()
     }
     
     func resolveOnBoardingCustomStepView(for identifier: String, coordinator: StepsCoordinator<OnboardingStep>) -> StepIdentifiable {

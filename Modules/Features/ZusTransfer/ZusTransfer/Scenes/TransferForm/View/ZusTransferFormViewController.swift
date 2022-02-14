@@ -2,6 +2,7 @@ import UI
 import PLUI
 import IQKeyboardManagerSwift
 import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol ZusTransferFormViewProtocol: AnyObject,
                                       ConfirmationDialogPresentable {
@@ -30,6 +31,7 @@ final class ZusTransferFormViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         configureKeyboardDismissGesture()
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -130,7 +132,8 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
         let form = formView.getCurrentFormViewModel()
         formView.showInvalidFormMessages(with: data)
         if data.shouldContinueButtonBeEnabled,
-           form.amount != nil {
+           form.amount != nil,
+           form.recipientAccountNumber.count == presenter.getAccountRequiredLength() {
             bottomView.enableButton()
         } else {
             bottomView.disableButton()

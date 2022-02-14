@@ -101,12 +101,16 @@ target 'Santander' do
   pl_features
   pl_libraries
   pl_thirdparty_dependencies
+
+  target 'SantanderTests' do
+        inherit! :search_paths
+  end
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
 	target.build_configurations.each do |config|
-	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug", "Regression-Debug", "Uat-Debug", "Preprod-Debug"].include? config.name
+	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug", "Regression-Debug", "Uat-Debug", "Preprod-Debug", "Test"].include? config.name
 		config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
 		config.build_settings['GCC_OPTIMIZATION_LEVEL'] = '0'
 		config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'

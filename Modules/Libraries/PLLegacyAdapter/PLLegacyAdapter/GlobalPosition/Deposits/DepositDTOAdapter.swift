@@ -20,6 +20,7 @@ final class DepositDTOAdapter {
         depositDTO.countervalueCurrentBalance = AmountAdapter.adaptBalanceToCounterValueAmount(plDeposit.currentBalance)
         depositDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plDeposit.accountId?.id)
         depositDTO.accountId = SANLegacyLibrary.DepositDTO.ProductID(id: plDeposit.accountId?.id, systemId: plDeposit.accountId?.systemId)
+        depositDTO.productId = SANLegacyLibrary.DepositDTO.ProductID(id: plDeposit.productId?.id, systemId: plDeposit.productId?.systemId)
         return depositDTO
     }
 }
