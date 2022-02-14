@@ -1,7 +1,7 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol TransactionLimitViewDelegate: AnyObject {
     func didUpdateLimit()

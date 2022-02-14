@@ -5,7 +5,7 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import RetailLegacy
 import SANLegacyLibrary
@@ -24,7 +24,6 @@ import PLNotifications
 import Loans
 import CoreFoundationLib
 import CoreDomain
-import CommonUseCase
 import PLCryptography
 import UI
 import PLHelpCenter
@@ -302,13 +301,17 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: LoadGlobalPositionUseCase.self) { resolver in
             return DefaultLoadGlobalPositionUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
-            let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
-            let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
+        self.dependencieEngine.register(for: SessionConfiguration.self) { _ in
             return SessionConfiguration(timeToExpireSession: self.timeToExpireSession,
                                         timeToRefreshToken: self.timeToRefreshToken,
-                                        sessionStartedActions: [loadPfm],
-                                        sessionFinishedActions: [stopPfm])
+                                        sessionStartedActions: [],
+                                        sessionFinishedActions: [])
+        }
+        self.dependencieEngine.register(for: PfmHelperProtocol.self) { _ in
+            return DefaultPFMHelper()
+        }
+        self.dependencieEngine.register(for: PfmControllerProtocol.self) { _ in
+            return DefaultPFMController()
         }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
@@ -344,9 +347,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
         }
-        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
-            return PLPublicMenuViewContainer(resolver: resolver)
-        }
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }
@@ -367,6 +367,9 @@ private extension AppDependencies {
 		}
         self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
             PLUserSegmentProtocol(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: OpinatorManagerModifier.self) { _ in
+            PLOpinatorManagerModifier()
         }
     }
 }

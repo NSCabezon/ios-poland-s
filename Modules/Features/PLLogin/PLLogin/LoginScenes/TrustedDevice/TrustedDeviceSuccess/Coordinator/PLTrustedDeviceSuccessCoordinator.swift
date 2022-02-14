@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import Commons
 import CoreDomain
 
 protocol PLTrustedDeviceSuccessCoordinatorProtocol: PLLoginCoordinatorProtocol {

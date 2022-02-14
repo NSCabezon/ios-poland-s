@@ -8,7 +8,6 @@
 import UI
 import UIOneComponents
 import CoreFoundationLib
-import Commons
 
 protocol SendMoneyTransferTypeFeeViewDelegate: AnyObject {
     func didSelectFeeView(at index: Int)

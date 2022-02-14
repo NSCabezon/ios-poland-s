@@ -4,7 +4,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 
 public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionProtocol {
@@ -27,7 +26,9 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
                 PLAccountNotificationsOperative(),
-                PLTransportTicketsServicesOperative()
+                PLTransportTicketsServicesOperative(),
+                PLPhoneTopUpOperative(dependenciesResolver: self.dependenciesEngine),
+                PLTransferZusOperative(dependenciesResolver: dependenciesEngine)
         ].compactMap { $0 }
     }
     
@@ -42,7 +43,9 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
                 PLCurrencyExchangeOperative(),
                 AccountOperativeActionType.changeAlias,
                 PLAccountNotificationsOperative(),
-                PLTransportTicketsServicesOperative()
+                PLTransportTicketsServicesOperative(),
+                PLPhoneTopUpOperative(dependenciesResolver: self.dependenciesEngine),
+                PLTransferZusOperative(dependenciesResolver: dependenciesEngine)
         ].compactMap { $0 }
     }
 }

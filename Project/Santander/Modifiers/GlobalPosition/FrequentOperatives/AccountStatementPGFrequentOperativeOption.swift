@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import Commons
 
 final class AccountStatementPGFrequentOperativeOption {
     let trackName: String? = "accountStatement"

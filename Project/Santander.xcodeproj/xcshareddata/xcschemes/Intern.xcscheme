@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-               BuildableName = "PL-INTERN-0.4.5.app"
+               BuildableName = "PL-INTERN-0.4.13.app"
                BlueprintName = "Santander"
                ReferencedContainer = "container:Santander.xcodeproj">
             </BuildableReference>
@@ -23,11 +23,21 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Intern-Debug"
+      buildConfiguration = "Test"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4215A56F27B538D800879EB1"
+               BuildableName = "SantanderTests.xctest"
+               BlueprintName = "SantanderTests"
+               ReferencedContainer = "container:Santander.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -45,14 +55,14 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-0.4.5.app"
+            BuildableName = "PL-INTERN-0.4.13.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Pro-Release"
+      buildConfiguration = "Intern-Debug"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -62,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-0.4.5.app"
+            BuildableName = "PL-INTERN-0.4.13.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>

@@ -5,9 +5,8 @@
 //  Created by Piotr Mielcarzewicz on 13/09/2021.
 //
 
-import Commons
-import Foundation
 import CoreFoundationLib
+import Foundation
 import SANPLLibrary
 
 protocol UpdateAliasUseCaseProtocol: UseCase<BlikAlias, Void, StringErrorOutput> {}

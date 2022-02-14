@@ -339,11 +339,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SANPLLibrary_Example/Pods-SANPLLibrary_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Commons/Commons.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
 				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
@@ -358,11 +358,11 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Commons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",

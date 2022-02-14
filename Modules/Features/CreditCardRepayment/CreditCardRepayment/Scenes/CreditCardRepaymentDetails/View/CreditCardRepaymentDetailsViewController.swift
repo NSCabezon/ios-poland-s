@@ -5,7 +5,7 @@
 //  Created by 186490 on 01/06/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import UI
 import Operative

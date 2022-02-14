@@ -8,7 +8,6 @@
 import UIKit
 import Operative
 import UI
-import Commons
 import CoreFoundationLib
 
 protocol CreditCardRepaymentConfirmationViewProtocol: OperativeConfirmationViewProtocol {

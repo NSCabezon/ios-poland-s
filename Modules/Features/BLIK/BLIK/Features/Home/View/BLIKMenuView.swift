@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Commons
+import CoreFoundationLib
 
 typealias BLIKMenuView = MenuView<BLIKMenuViewModel>
 

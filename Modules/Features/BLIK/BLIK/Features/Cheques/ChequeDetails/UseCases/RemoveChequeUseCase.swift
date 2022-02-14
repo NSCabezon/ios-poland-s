@@ -5,9 +5,8 @@
 //  Created by 186491 on 17/06/2021.
 //
 
-import Commons
-import Foundation
 import CoreFoundationLib
+import Foundation
 import SANPLLibrary
 
 protocol RemoveChequeUseCaseProtocol: UseCase<RemoveChequeUseCaseInput, Void, StringErrorOutput> {}

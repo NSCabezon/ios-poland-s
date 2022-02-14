@@ -1,6 +1,6 @@
 import Operative
 import UI
-import Commons
+import CoreFoundationLib
 
 final class BLIKSummaryViewController: OperativeSummaryViewController {
     private let presenter: BLIKSummaryPresenterProtocol

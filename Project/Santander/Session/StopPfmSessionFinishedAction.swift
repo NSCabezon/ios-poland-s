@@ -5,7 +5,7 @@
 //  Created by Hernán Villamil on 25/10/21.
 //
 
-import Commons
+import CoreFoundationLib
 
 final class StopPfmSessionFinishedAction: SessionFinishedAction {
     let dependenciesResolver: DependenciesResolver
