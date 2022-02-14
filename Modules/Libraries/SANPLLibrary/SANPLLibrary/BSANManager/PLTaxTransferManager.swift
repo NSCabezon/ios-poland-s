@@ -9,6 +9,7 @@ import Foundation
 
 public protocol PLTaxTransferManagerProtocol {
     func getPayers() throws -> Result<[TaxPayerDTO], NetworkProviderError>
+    func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
 }
 
 public final class PLTaxTransferManager {
@@ -24,5 +25,9 @@ public final class PLTaxTransferManager {
 extension PLTaxTransferManager: PLTaxTransferManagerProtocol {
     public func getPayers() throws -> Result<[TaxPayerDTO], NetworkProviderError> {
         try dataSource.getTaxPayers()
+    }
+    
+    public func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError> {
+        try dataSource.getPredefinedTaxAuthorities()
     }
 }

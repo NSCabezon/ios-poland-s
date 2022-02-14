@@ -42,7 +42,9 @@ extension TaxTransferFormViewModel {
     }
     
     struct TaxAuthorityViewModel {
-        // TODO: Add TaxAuthorityViewModel as associated value in TAP-2517
+        let taxAuthorityName: String
+        let taxFormSymbol: String
+        let destinationAccountNumber: String
     }
     
     struct AmountViewModel {
