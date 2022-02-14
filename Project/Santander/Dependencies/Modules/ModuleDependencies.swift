@@ -5,13 +5,14 @@
 //  Created by Juan Carlos López Robles on 12/30/21.
 //
 
+import UI
+import Loans
 import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
+import Menu
 import Transfer
-import Loans
-import UI
 
 struct ModuleDependencies {
     
@@ -44,12 +45,17 @@ struct ModuleDependencies {
         UINavigationController ?? UINavigationController()
     }
     
-    func resolve() -> AppRepositoryProtocol {
-        return oldResolver.resolve()
+    func resolve() -> SegmentedUserRepository {
+        return oldResolver.resolve(for: SegmentedUserRepository.self)
     }
 }
 
-extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {}
+extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+    func resolve() -> PullOffersInterpreter {
+        let oldResolver: DependenciesResolver = resolve()
+        return oldResolver.resolve()
+    }
+}
 extension ModuleDependencies: CoreDependenciesResolver {
     func resolve() -> CoreDependencies {
         return coreDependencies
