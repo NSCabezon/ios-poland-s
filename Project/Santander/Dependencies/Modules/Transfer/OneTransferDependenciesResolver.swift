@@ -10,7 +10,7 @@ import CoreDomain
 import Transfer
 import UI
 
-extension ModuleDependencies: TransferExternalDependenciesResolver {
+extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
         oldResolver.resolve()
     }
@@ -29,13 +29,5 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     
     func resolveCustomSendMoneyActionCoordinator() -> BindableCoordinator {
         return PLOneTransferHomeActionsCoordinator()
-    }
-    
-    func resolve() -> AppRepositoryProtocol {
-        return oldResolver.resolve()
-    }
-    
-    func resolve() -> GlobalPositionRepresentable {
-        return oldResolver.resolve()
     }
 }

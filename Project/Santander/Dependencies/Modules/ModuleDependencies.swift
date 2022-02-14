@@ -43,6 +43,10 @@ struct ModuleDependencies {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
     }
+    
+    func resolve() -> AppRepositoryProtocol {
+        return oldResolver.resolve()
+    }
 }
 
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {}
