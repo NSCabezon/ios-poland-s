@@ -347,9 +347,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
         }
-        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
-            return PLPublicMenuViewContainer(resolver: resolver)
-        }
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }
