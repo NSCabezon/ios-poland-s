@@ -161,7 +161,9 @@ private extension TaxTransferFormCoordinator {
         }
         
         dependenciesEngine.register(for: TaxAuthorityMapping.self) { _ in
-            return TaxAuthorityMapper()
+            return TaxAuthorityMapper(
+                taxAccountTypeRecognizer: TaxAccountTypeRecognizer()
+            )
         }
         
         dependenciesEngine.register(for: GetPredefinedTaxAuthoritiesUseCaseProtocol.self) { resolver in
