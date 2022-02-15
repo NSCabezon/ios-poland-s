@@ -29,6 +29,7 @@
 		0D603D6626C679A60035C671 /* GetPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */; };
 		0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */; };
 		0D6E289B26BAAC8700F50A18 /* GetGPCardOperativeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6E289A26BAAC8700F50A18 /* GetGPCardOperativeModifier.swift */; };
+		0D7A923927B3F05200C2BEC6 /* PLShortcutItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7A923827B3F05200C2BEC6 /* PLShortcutItems.swift */; };
 		0D7CA2CD26B8079C007E0C10 /* PLInboxActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7CA2CC26B8079C007E0C10 /* PLInboxActionBuilder.swift */; };
 		0D8746CA26E61CB10041C9FA /* OnboardingPermissionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8746C926E61CB10041C9FA /* OnboardingPermissionOptions.swift */; };
 		0D9ACF2D27352416001D6D51 /* GetGPLoanOperativeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9ACF2C27352416001D6D51 /* GetGPLoanOperativeModifier.swift */; };
@@ -285,6 +286,7 @@
 		0D603D6526C679A60035C671 /* GetPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLDepositModifier.swift; sourceTree = "<group>"; };
 		0D6E289A26BAAC8700F50A18 /* GetGPCardOperativeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGPCardOperativeModifier.swift; sourceTree = "<group>"; };
+		0D7A923827B3F05200C2BEC6 /* PLShortcutItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLShortcutItems.swift; sourceTree = "<group>"; };
 		0D7CA2CC26B8079C007E0C10 /* PLInboxActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInboxActionBuilder.swift; sourceTree = "<group>"; };
 		0D8746C926E61CB10041C9FA /* OnboardingPermissionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionOptions.swift; sourceTree = "<group>"; };
 		0D9ACF2C27352416001D6D51 /* GetGPLoanOperativeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGPLoanOperativeModifier.swift; sourceTree = "<group>"; };
@@ -640,6 +642,14 @@
 			path = Cards;
 			sourceTree = "<group>";
 		};
+		0D7A923727B3F02600C2BEC6 /* ShortcutItems */ = {
+			isa = PBXGroup;
+			children = (
+				0D7A923827B3F05200C2BEC6 /* PLShortcutItems.swift */,
+			);
+			path = ShortcutItems;
+			sourceTree = "<group>";
+		};
 		0D7CA2CB26B8077D007E0C10 /* Inbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -993,6 +1003,7 @@
 				0D59D636272017EC007BF898 /* Opinator */,
 				BB29664E26CFB38B0012599D /* PersonalArea */,
 				5FBDB730273BB47D00FB6DAF /* Session */,
+				0D7A923727B3F02600C2BEC6 /* ShortcutItems */,
 				1C8B3EE8270DEF1F00868449 /* TransferOperatives */,
 				B0D77A4A276B4AE300766705 /* TransferSettings */,
 			);
@@ -1899,6 +1910,7 @@
 				BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */,
 				CCE45A9C2732AC5400691E91 /* PLAuthorizationViewController.swift in Sources */,
 				B01155F3271581BD00A4C175 /* CreditCardRepaymentMockInjector.swift in Sources */,
+				0D7A923927B3F05200C2BEC6 /* PLShortcutItems.swift in Sources */,
 				82AED78A2796F81C00E6133D /* PLPublicMenuRepository.swift in Sources */,
 				85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */,
 				B7BF53D527A7E95000EDDE88 /* PublicMenuCustomActionCoordinator.swift in Sources */,

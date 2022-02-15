@@ -46,6 +46,12 @@ private extension DeeplinkLauncher {
             openOurOffer()
         case .alertsNotification:
             openAlertsNotification()
+        case .sendMoney:
+            dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+        case .services:
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+        case .blik:
+            dependenciesResolver.resolve(for: BLIKHomeCoordinator.self).start()
         }
     }
     
