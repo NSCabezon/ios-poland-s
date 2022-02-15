@@ -1,5 +1,5 @@
 //
-//  SendMoneyTransferTypeAmountHighView.swift
+//  SendMoneyTransferTypeErrorView.swift
 //  Santander
 //
 //  Created by Angel Abad Perez on 19/10/21.
@@ -8,25 +8,26 @@
 import UI
 import UIOneComponents
 import CoreFoundationLib
+import UIKit
 
-protocol SendMoneyTransferTypeAmountHighViewDelegate: AnyObject {
-    func didTapActionButton()
+protocol SendMoneyTransferTypeErrorViewDelegate: AnyObject {
+    func didTapActionButton(viewController: UIViewController?)
 }
 
-final class SendMoneyTransferTypeAmountHighView: UIView {
+struct SendMoneyTransferTypeErrorViewModel {
+    let titleKey: String
+    let subtitleKey: String
+    let buttonKey: String
+    var imageColor: UIColor = .oneBlack
+}
+
+final class SendMoneyTransferTypeErrorView: UIView {
     private enum Constants {
         enum Icon {
             static let name: String = "oneIcnAlert"
         }
         enum TitleLabel {
-            static let textKey: String = "sendMoney_title_amountHigh"
             static let bottomSpace: CGFloat = 20.0
-        }
-        enum DescriptionLabel {
-            static let textKey: String = "sendMoney_text_amountHigh"
-        }
-        enum AcceptButton {
-            static let titleKey: String = "generic_button_accept"
         }
     }
     
@@ -35,8 +36,9 @@ final class SendMoneyTransferTypeAmountHighView: UIView {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var actionButton: OneFloatingButton!
     
-    weak var delegate: SendMoneyTransferTypeAmountHighViewDelegate?
+    weak var delegate: SendMoneyTransferTypeErrorViewDelegate?
     private var view: UIView?
+    private var viewModel: SendMoneyTransferTypeErrorViewModel?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,15 +53,21 @@ final class SendMoneyTransferTypeAmountHighView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    func setupViewModel(_ viewModel: SendMoneyTransferTypeErrorViewModel) {
+        self.titleLabel.configureText(withKey: viewModel.titleKey)
+        self.descriptionLabel.configureText(withKey: viewModel.subtitleKey)
+        self.iconImageView.tintColor = viewModel.imageColor
+        self.configureActionButton(viewModel: viewModel)
+        self.setAccessibilityIdentifiers(viewModel: viewModel)
+    }
 }
 
-private extension SendMoneyTransferTypeAmountHighView {
+private extension SendMoneyTransferTypeErrorView {
     func setupView() {
         self.xibSetup()
         self.configureIconImageView()
-        self.configureActionButton()
         self.configureLabels()
-        self.setAccessibilityIdentifiers()
     }
     
     func xibSetup() {
@@ -82,20 +90,18 @@ private extension SendMoneyTransferTypeAmountHighView {
     func configureLabels() {
         self.titleLabel.font = .typography(fontName: .oneH300Bold)
         self.titleLabel.textColor = .oneLisboaGray
-        self.titleLabel.configureText(withKey: Constants.TitleLabel.textKey)
         self.titleLabel.sizeToFit()
         self.descriptionLabel.font = .typography(fontName: .oneB400Regular)
         self.descriptionLabel.textColor = .oneLisboaGray
-        self.descriptionLabel.configureText(withKey: Constants.DescriptionLabel.textKey)
         self.descriptionLabel.sizeToFit()
     }
     
-    func configureActionButton() {
+    func configureActionButton(viewModel: SendMoneyTransferTypeErrorViewModel) {
         self.actionButton.isEnabled = true
         self.actionButton.configureWith(type: .primary,
                                         size: .medium(
                                             OneFloatingButton.ButtonSize.MediumButtonConfig(
-                                                title: localized(Constants.AcceptButton.titleKey),
+                                                title: localized(viewModel.buttonKey),
                                                 icons: .none,
                                                 fullWidth: false
                                             )
@@ -104,12 +110,12 @@ private extension SendMoneyTransferTypeAmountHighView {
         self.actionButton.addTarget(self, action: #selector(didTapActionButton), for: .touchUpInside)
     }
 
-    func setAccessibilityIdentifiers() {
-        self.titleLabel.accessibilityIdentifier = Constants.TitleLabel.textKey
-        self.descriptionLabel.accessibilityIdentifier = Constants.DescriptionLabel.textKey
+    func setAccessibilityIdentifiers(viewModel: SendMoneyTransferTypeErrorViewModel) {
+        self.titleLabel.accessibilityIdentifier = viewModel.titleKey
+        self.descriptionLabel.accessibilityIdentifier = viewModel.subtitleKey
     }
     
     @objc func didTapActionButton() {
-        self.delegate?.didTapActionButton()
+        self.delegate?.didTapActionButton(viewController: self.viewContainingController())
     }
 }
