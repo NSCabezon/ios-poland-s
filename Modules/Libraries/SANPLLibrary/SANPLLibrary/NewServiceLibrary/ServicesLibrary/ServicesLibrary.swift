@@ -33,5 +33,10 @@ public final class ServicesLibrary {
     public var loanReactiveDataRepository: LoanReactiveRepository {
         return LoanReactiveDataRepository(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
     }
+    
+    public var onboardingDataRepository: OnboardingRepository {
+        return OnboardingDataRepository(customerManager: bsanManagersProvider.getCustomerManager(),
+                                        bsanDataProvider: bsanDataProvider)
+    }
 }
 
