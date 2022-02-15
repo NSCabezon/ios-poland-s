@@ -16,8 +16,9 @@ protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updateRecipientName(with name: String)
     func updateContact(with contact: MobileContact)
     func updateOperatorSelection(with gsmOperator: GSMOperator?)
-    func updatePaymentAmounts(with values: TopUpValues?, selectedValue: TopUpValue?)
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?)
     func showInvalidPhoneNumberError(_ showError: Bool)
+    func showInvalidCustomAmountError(_ error: String?)
     func showContactsPermissionsDeniedDialog()
 }
 
@@ -88,6 +89,7 @@ final class PhoneTopUpFormViewController: UIViewController {
         bottomButtonView.configure(title: localized("generic_button_continue")) { [weak self] in
             self?.presenter.didTouchContinueButton()
         }
+        bottomButtonView.disableButton()
     }
     
     // MARK: Actions
@@ -123,8 +125,12 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         formView.updateRecipientName(with: name)
     }
     
-    func updatePaymentAmounts(with values: TopUpValues?, selectedValue: TopUpValue?) {
-        formView.updatePaymentAmounts(with: values, selectedValue: selectedValue)
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?) {
+        formView.updatePaymentAmounts(with: cellModels, selectedAmount: selectedAmount)
+    }
+    
+    func showInvalidCustomAmountError(_ error: String?) {
+        formView.showInvalidCustomAmountError(error)
     }
 }
 
@@ -145,8 +151,8 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         presenter.didInputFullPhoneNumber(number)
     }
     
-    func topUpFormDidSelectTopUpAmount(_ value: TopUpValue?) {
-        presenter.didSelectTopUpAmount(value)
+    func topUpFormDidSelectTopUpAmount(_ amount: TopUpAmount) {
+        presenter.didSelectTopUpAmount(amount)
     }
     
     func updatePhoneInput(with phoneNumber: String) {

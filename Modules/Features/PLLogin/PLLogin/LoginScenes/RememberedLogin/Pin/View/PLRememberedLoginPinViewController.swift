@@ -328,3 +328,9 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
         }
     }
 }
+
+extension PLRememberedLoginPinViewController: RootMenuController {
+    var isSideMenuAvailable: Bool {
+        return true
+    }
+}

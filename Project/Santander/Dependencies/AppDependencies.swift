@@ -128,7 +128,7 @@ final class AppDependencies {
         )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
-        return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
+        return PLSessionDataManagerModifier(dependenciesEngine: dependencieEngine)
     }()
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
@@ -346,9 +346,6 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
-        }
-        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
-            return PLPublicMenuViewContainer(resolver: resolver)
         }
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()

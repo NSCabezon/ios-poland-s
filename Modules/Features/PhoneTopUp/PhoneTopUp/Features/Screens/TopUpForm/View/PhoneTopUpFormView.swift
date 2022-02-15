@@ -16,7 +16,7 @@ protocol PhoneTopUpFormViewDelegate: AnyObject {
     func didTouchOperatorSelectionButton()
     func topUpFormDidInputPartialPhoneNumber(_ number: String)
     func topUpFormDidInputFullPhoneNumber(_ number: String)
-    func topUpFormDidSelectTopUpAmount(_ value: TopUpValue?)
+    func topUpFormDidSelectTopUpAmount(_ amount: TopUpAmount)
 }
 
 final class PhoneTopUpFormView: UIView {
@@ -126,8 +126,12 @@ final class PhoneTopUpFormView: UIView {
         recipientNameView.isHidden = name.isEmpty
     }
     
-    func updatePaymentAmounts(with values: TopUpValues?, selectedValue: TopUpValue?) {
-        amountSelectionView.setUp(with: values, selectedValue: selectedValue)
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?) {
+        amountSelectionView.setUp(with: cellModels, selectedAmount: selectedAmount)
+    }
+    
+    func showInvalidCustomAmountError(_ error: String?) {
+        amountSelectionView.showInvalidCustomAmountError(error)
     }
 }
 
@@ -152,7 +156,7 @@ extension PhoneTopUpFormView: OperatorSelectionViewDelegate {
 }
 
 extension PhoneTopUpFormView: PaymentAmontSelectionViewDelegate {
-    func didSelectTopUpValue(_ value: TopUpValue?) {
-        delegate?.topUpFormDidSelectTopUpAmount(value)
+    func didSelectTopUpAmount(_ amount: TopUpAmount) {
+        delegate?.topUpFormDidSelectTopUpAmount(amount)
     }
 }

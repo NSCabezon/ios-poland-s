@@ -1,32 +1,34 @@
 //
 //  ItemSelectorCoordinator.swift
-//  PLUI
+//  PLScenes
 //
 //  Created by 185167 on 04/02/2022.
 //
 
 import UI
 
-public final class ItemSelectorCoordinator<Item>: ModuleCoordinator {
+public final class ItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
-    private let viewModel: ItemSelectorViewModel<Item>
+    private let configuration: ItemSelectorConfiguration<Item>
     private let itemSelectionHandler: (Item) -> ()
     
     public init(
         navigationController: UINavigationController?,
-        viewModel: ItemSelectorViewModel<Item>,
+        configuration: ItemSelectorConfiguration<Item>,
         itemSelectionHandler: @escaping (Item) -> ()
     ) {
         self.navigationController = navigationController
-        self.viewModel = viewModel
+        self.configuration = configuration
         self.itemSelectionHandler = itemSelectionHandler
     }
     
     public func start() {
-        let controller = ItemSelectorViewController(
+        let presenter = ItemSelectorPresenter(
             coordinator: self,
-            viewModel: viewModel
+            configuration: configuration,
+            viewModelMapper: SelectableItemSectionViewModelMapper<Item>()
         )
+        let controller = ItemSelectorViewController(presenter: presenter)
         navigationController?.pushViewController(controller, animated: true)
     }
     

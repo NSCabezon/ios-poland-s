@@ -16,7 +16,7 @@ final class AccountDetailsDTOAdapter {
         accountDetailDTO.balance = AmountAdapter.adaptBalanceToAmount(plAccountDetail.balance)
         accountDetailDTO.availableAmount = AmountAdapter.adaptBalanceToAmount(plAccountDetail.availableFunds)
         accountDetailDTO.productName = plAccountDetail.name?.description
-        accountDetailDTO.overdraftAmount = AmountAdapter.adaptBalanceToAmount(plAccountDetail.accountDetails?.overDraftLimit)
+        accountDetailDTO.overdraftAmount = AmountAdapter.adaptBalanceToAmount(account.overDraftLimit)
         accountDetailDTO.withholdingAmount = AmountAdapter.adaptBalanceToAmount(account.withholdingBalance)
         accountDetailDTO.interestRate = PercentAdapter.adaptValueToPercentPresentation(plAccountDetail.accountDetails?.interestRate)
         return accountDetailDTO

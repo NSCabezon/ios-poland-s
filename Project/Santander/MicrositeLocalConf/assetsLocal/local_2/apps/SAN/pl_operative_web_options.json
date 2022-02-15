@@ -20,7 +20,7 @@
             "method": "GET"
         },
         {
-            "id":"ALERTS_NOTIFICATION",
+            "id":"ALERTS_24",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
             "isAvailable": true,
             "method": "GET"
@@ -44,7 +44,7 @@
             "method": "GET"
         },
         {
-            "id": "ACCOUNT_STATEMENT",
+            "id": "VIEW_STATEMENTS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
             "method": "GET"
@@ -81,6 +81,7 @@
             "method": "POST"
         }
     ],
+    
     "cards_options" : [
         {
             "id": "MULTICURRENCY",

@@ -47,6 +47,14 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     // MARK: Dependencies
     
     private func setUpDependencies() {
+        self.dependenciesEngine.register(for: PaymentAmountCellViewModelMapping.self) { _ in
+            return PaymentAmountCellViewModelMapper()
+        }
+
+        self.dependenciesEngine.register(for: CustomTopUpAmountValidating.self) { _ in
+            return CustomTopUpAmountValidator()
+        }
+
         self.dependenciesEngine.register(for: ContactsPermissionHelperProtocol.self) { _ in
             return ContactsPermissionHelper()
         }

@@ -11,6 +11,7 @@ import CoreFoundationLib
 import CoreDomain
 import Foundation
 import RetailLegacy
+import Menu
 
 struct ModuleDependencies {
     
@@ -41,6 +42,10 @@ struct ModuleDependencies {
     func resolve() -> UINavigationController {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
+    }
+    
+    func resolve() -> SegmentedUserRepository {
+        return oldResolver.resolve(for: SegmentedUserRepository.self)
     }
 }
 

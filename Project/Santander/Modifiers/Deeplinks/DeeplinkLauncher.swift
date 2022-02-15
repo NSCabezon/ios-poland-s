@@ -46,18 +46,24 @@ private extension DeeplinkLauncher {
             openOurOffer()
         case .alertsNotification:
             openAlertsNotification()
+        case .sendMoney:
+            dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+        case .services:
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+        case .blik:
+            dependenciesResolver.resolve(for: BLIKHomeCoordinator.self).start()
         }
     }
     
     func openOurOffer(){
-        openWebViewByType(.exploreProducts)        
+        openWebViewByType(.ourOffer)        
     }
     
     func openAlertsNotification() {
         openWebViewByType(.alerts24)
     }
     
-    func openWebViewByType(_ type: PLAccountOtherOperativesIdentifier ){
+    func openWebViewByType(_ type: PLAccountOperativeIdentifier ){
         let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
 
         guard let options = repository.get()?.accountsOptions,
