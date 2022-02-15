@@ -5,7 +5,7 @@
 //  Created by 188216 on 18/01/2022.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import Operative
 import PLCommons
@@ -83,10 +83,9 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
     }
     
     private func transactionTypeItemViewModel() -> OperativeSummaryStandardBodyItemViewModel {
-        #warning("todo: update translation for transaction type once its available")
         return OperativeSummaryStandardBodyItemViewModel(
             title: localized("pl_topup_label_transType"),
-            subTitle: "#Doładowanie telefonu"
+            subTitle: localized("pl_topup_label_transTypeText")
         )
     }
 }

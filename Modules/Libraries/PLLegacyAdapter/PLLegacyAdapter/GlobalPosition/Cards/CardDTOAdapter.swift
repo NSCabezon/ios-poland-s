@@ -40,9 +40,8 @@ final class CardDTOAdapter {
         cardDTO.cardTypeDescription = plCard.type
         
         if plCard.productId != nil {
-            cardDTO.productId = SANLegacyLibrary.CardDTO.ProductIDCardDTO(id: plCard.productId?.id, systemId: plCard.productId?.systemId ?? nil)
+            cardDTO.productId = SANLegacyLibrary.CardDTO.ProductID(id: plCard.productId?.id, systemId: plCard.productId?.systemId ?? nil)
         }
-        
         return cardDTO
     }
 

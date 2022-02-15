@@ -8,9 +8,8 @@
 import UI
 import Foundation
 import Cards
-import Commons
-import SANPLLibrary
 import CoreFoundationLib
+import SANPLLibrary
 
 final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol

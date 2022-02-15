@@ -6,7 +6,6 @@
 import UI
 import CoreFoundationLib
 import Account
-import Commons
 import Foundation
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
@@ -18,16 +17,20 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
         if case .custome(let identifier, _, _, _, _, _) = action {
-            switch identifier {
-            case PLAccountOtherOperativesIdentifier.savingGoals.rawValue:
-                showWebView(identifier: identifier, entity: entity)
-            case PLAccountOtherOperativesIdentifier.externalTransfer.rawValue:
+            guard let actionKey = PLAccountOperativeIdentifier(rawValue: identifier) else {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
+                return
+            }
+            switch actionKey {
+            case .savingGoals:
+                showWebView(identifier: identifier, entity: entity)
+            case .externalTransfer:
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+            case .transfer:
+                goToSendMoney()
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
-        } else if case .transfer = action {
-            goToSendMoney()
         }
     }
     
@@ -42,7 +45,7 @@ extension PLAccountHomeActionModifier {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
-        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue { 
+        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue { 
             data.parameter = entity.productIdentifier
         }
         if let isAvailable = data.isAvailable, !isAvailable {
@@ -58,10 +61,10 @@ extension PLAccountHomeActionModifier {
             }
     }
     
-    private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
-        var entity: PLAccountOtherOperativesData?
+    private func getAccountOtherOperativesEntity(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
+        var entity: PLProductOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
+            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }

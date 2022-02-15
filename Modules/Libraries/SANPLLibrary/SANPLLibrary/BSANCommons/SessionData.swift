@@ -17,6 +17,7 @@ public class SessionData: Codable {
     public var cardsTransactions: [String : CardTransactionListDTO] = [:]
     public var cardTransactionsPagination: [String : TransactionsLinksDTO] = [:]
     public var customer: CustomerDTO?
+    public var loginInfo: LoginInfoDTO?
 
     public init(_ userDTO: UserDTO) {
         self.loggedUserDTO = userDTO

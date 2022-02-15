@@ -7,7 +7,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 protocol BlikSettingsView: AnyObject, LoaderPresentable, ErrorPresentable {}
@@ -19,9 +19,7 @@ final class BlikSettingsViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     private let menuView = BlikSettingsMenuView()
-    
-   
-    
+
     init(
         presenter: BlikSettingsPresenterProtocol,
         viewModels: [BlikSettingsViewModel]

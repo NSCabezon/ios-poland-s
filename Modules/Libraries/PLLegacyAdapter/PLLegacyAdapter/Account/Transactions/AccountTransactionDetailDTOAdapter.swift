@@ -6,7 +6,7 @@
 import SANPLLibrary
 import SANLegacyLibrary
 import PLCommons
-import Commons
+import CoreFoundationLib
 
 public final class AccountTransactionDetailDTOAdapter {
     public static func adaptPLAccountTransactionToAccountTransactionDetail(_ accountTransaction: SANLegacyLibrary.AccountTransactionDTO) -> SANLegacyLibrary.AccountTransactionDetailDTO {
@@ -50,7 +50,7 @@ public final class AccountTransactionDetailDTOAdapter {
     }
 }
 
-private enum AccountTransactionState: String {
+public enum AccountTransactionState: String {
     case cardAuthorisation = "CARD_AUTHORISATION"
     case executed = "EXECUTED"
     case processingToBeSent = "PROCESSING_TO_BE_SENT"

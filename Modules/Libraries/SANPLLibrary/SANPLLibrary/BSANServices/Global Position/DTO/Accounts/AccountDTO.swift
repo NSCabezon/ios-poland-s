@@ -27,7 +27,7 @@ public struct AccountDTO: Codable {
     public let balance: BalanceDTO?
     public let availableFunds: BalanceDTO?
     public let withholdingBalance: BalanceDTO?
-    public let overdraftLimit: BalanceDTO?
+    public let overDraftLimit: BalanceDTO?
     public let currencyCode: String?
     public let role: String?
     public let lastUpdate: String?

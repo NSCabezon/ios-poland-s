@@ -24,11 +24,27 @@ extension TaxTransferFormViewModel {
     }
     
     struct TaxPayerViewModel {
-        // TODO:- Add TaxPayerViewModel as associated value in TAP-2492
+        enum TaxPayerSecondaryIdentifier {
+            case available(id: String)
+            case notAvailable
+        }
+        
+        let taxPayer: TaxPayer
+        let taxPayerSecondaryIdentifier: TaxPayerSecondaryIdentifier
+        let selectedInfo: SelectedTaxPayerInfo
+        
+        var hasDifferentTaxIdentifiers: Bool {
+            guard let identifier = taxPayer.taxIdentifier else {
+                return false
+            }
+            return identifier != taxPayer.secondaryTaxIdentifierNumber
+        }
     }
     
     struct TaxAuthorityViewModel {
-        // TODO: Add TaxAuthorityViewModel as associated value in TAP-2517
+        let taxAuthorityName: String
+        let taxFormSymbol: String
+        let destinationAccountNumber: String
     }
     
     struct AmountViewModel {

@@ -1,6 +1,6 @@
 import Foundation
 import UI
-import Commons
+import CoreFoundationLib
 
 public final class ContactsEmptyView: UIView {
     public enum `Type` {

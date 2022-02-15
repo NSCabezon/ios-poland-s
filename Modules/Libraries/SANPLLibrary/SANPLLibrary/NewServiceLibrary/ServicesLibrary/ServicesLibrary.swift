@@ -11,9 +11,15 @@ import SANLegacyLibrary
 public final class ServicesLibrary {
     
     var bsanManagersProvider: PLManagersProviderProtocol
-
-    public init(bsanManagersProvider: PLManagersProviderProtocol) {
+    private let bsanDataProvider: BSANDataProvider
+    private let networkProvider: NetworkProvider
+    
+    public init(bsanManagersProvider: PLManagersProviderProtocol,
+                bsanDataProvider: BSANDataProvider,
+                networkProvider: NetworkProvider) {
         self.bsanManagersProvider = bsanManagersProvider
+        self.bsanDataProvider = bsanDataProvider
+        self.networkProvider = networkProvider
     }
     
     public var transfersRepository: PLTransfersRepository {
@@ -23,4 +29,9 @@ public final class ServicesLibrary {
     public var oneAuthorizationProcessorRepository: PLOneAuthorizationProcessorRepository {
         return OneAuthorizationProcessorDataRepository(bsanAuthorizationProcessorManager: self.bsanManagersProvider.getAuthorizationProcessorManager())
     }
+    
+    public var loanReactiveDataRepository: LoanReactiveRepository {
+        return LoanReactiveDataRepository(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+    }
 }
+

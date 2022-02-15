@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 import PLCommons
 import LoginCommon
 import SANPLLibrary
@@ -121,7 +120,7 @@ private extension  PLSmsAuthPresenter {
         
         self.view?.showLoading(title: localized("generic_popup_loading"),
                                subTitle: localized("loading_label_moment"),
-                               completion: nil)
+                               completion: {})
 
         let authProcessInput = PLAuthProcessGroupInput(scaCode: smscode,
                                                        password: password,

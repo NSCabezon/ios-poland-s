@@ -8,46 +8,48 @@
 import SANLegacyLibrary
 import SANPLLibrary
 import CoreDomain
-import Commons
+import CoreFoundationLib
+
+public protocol PLLoansManagerAdapterProtocol {
+    func getLoanTransactionDetail(contractDescription: String?, transactionNumber: String?) throws -> BSANResponse<LoanTransactionDetailDTO>
+}
 
 final class PLLoansManagerAdapter {
 
-    private let loanManager: PLLoanManagerProtocol
     private let bsanDataProvider: BSANDataProvider
-
+    private let loanManager: PLLoanManagerProtocol
+    
     init(loanManager: PLLoanManagerProtocol, bsanDataProvider: BSANDataProvider) {
         self.bsanDataProvider = bsanDataProvider
         self.loanManager = loanManager
     }
 }
- 
-extension PLLoansManagerAdapter: BSANLoansManager {
-    func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
-        BSANErrorResponse(nil)
-    }
-    
-    func getLoanDetail(forLoan loan: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<SANLegacyLibrary.LoanDetailDTO> {
-        guard let accountNumber = loan.contractDescription?.replace(" ", "") else {
-            return BSANErrorResponse(nil)
-        }
 
-        let loanDetailsParameters = LoanDetailsParameters(includeDetails: true, includePermissions: true, includeFunctionalities: true)
-        let loanDetails = try self.loanManager.getDetails(accountNumber: accountNumber, parameters: loanDetailsParameters).get()
-        let loanInstallments = try self.loanManager.getInstallments(accountId: loanDetails.id!, parameters: nil).get()
-
-        let adaptedLoanDetail = LoanDetailsDTOAdapter.adaptPLLoanDetailsToLoanDetails(loanDetails, plLoanInstallments: loanInstallments)
-        return BSANOkResponse(adaptedLoanDetail)
-    }
-    
-    func getLoanTransactionDetail(forLoan loan: SANLegacyLibrary.LoanDTO, loanTransaction: SANLegacyLibrary.LoanTransactionDTO) throws -> BSANResponse<LoanTransactionDetailDTO> {
-        guard let accountNumber = loan.contractDescription?.replace(" ", ""),
+extension PLLoansManagerAdapter: PLLoansManagerAdapterProtocol {
+    func getLoanTransactionDetail(contractDescription: String?, transactionNumber: String?) throws -> BSANResponse<LoanTransactionDetailDTO> {
+        guard let accountNumber = contractDescription?.replace(" ", ""),
               let loanOperationList = self.bsanDataProvider.getLoanOperationList(withLoanId: accountNumber)?.operationList,
-              let loanOperation = loanOperationList.first(where: { loanTransaction.transactionNumber == "\($0.operationId?.postingDate ?? "")/\($0.operationId?.operationLP ?? 0)" }) else {
+              let loanOperation = loanOperationList.first(where: { transactionNumber == "\($0.operationId?.postingDate ?? "")/\($0.operationId?.operationLP ?? 0)" }) else {
             return BSANErrorResponse(nil)
         }
 
         let adaptedLoanTransactionDetail = LoanTransactionDetailDTOAdapter.adaptPLLoanTransactionToLoanTransactionDetail(loanOperation)
         return BSANOkResponse(adaptedLoanTransactionDetail)
+    }
+}
+ 
+extension PLLoansManagerAdapter: BSANLoansManager {
+
+    func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
+        BSANErrorResponse(nil)
+    }
+    
+    func getLoanDetail(forLoan loan: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<SANLegacyLibrary.LoanDetailDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
+    func getLoanTransactionDetail(forLoan loan: SANLegacyLibrary.LoanDTO, loanTransaction: SANLegacyLibrary.LoanTransactionDTO) throws -> BSANResponse<LoanTransactionDetailDTO> {
+        return BSANErrorResponse(nil)
     }
     
     func removeLoanDetail(loanDTO: SANLegacyLibrary.LoanDTO) throws -> BSANResponse<Void> {

@@ -5,9 +5,8 @@
 //  Created by Piotr Mielcarzewicz on 14/06/2021.
 //
 
-import Commons
-import Foundation
 import CoreFoundationLib
+import Foundation
 import SANPLLibrary
 
 protocol LoadChequesUseCaseProtocol: UseCase<LoadChequesUseCaseInput, LoadChequesUseCaseOutput, StringErrorOutput> {}

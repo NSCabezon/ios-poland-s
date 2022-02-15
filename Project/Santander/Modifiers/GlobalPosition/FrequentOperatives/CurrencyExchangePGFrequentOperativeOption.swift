@@ -7,7 +7,6 @@
 
 import CoreFoundationLib
 import UI
-import Commons
 import PLCommons
 import PLCommonOperatives
 
@@ -15,7 +14,7 @@ final class CurrencyExchangePGFrequentOperativeOption {
     let trackName: String? = "currencyExchange"
     let rawValue: String = "currencyExchangePoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.currencyExchange.rawValue
-    private let optionId: String = PLAccountOtherOperativesIdentifier.fxExchange.rawValue
+    private let optionId: String = PLAccountOperativeIdentifier.fxExchange.rawValue
     
     private let dependenciesResolver: DependenciesResolver
     

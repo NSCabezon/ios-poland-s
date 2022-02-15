@@ -5,9 +5,8 @@
 //  Created by Francisco del Real Escudero on 13/4/21.
 //
 
-import Commons
-import RetailLegacy
 import CoreFoundationLib
+import RetailLegacy
 import PLCommons
 import PLCommonOperatives
 import UI
@@ -45,14 +44,24 @@ private extension DeeplinkLauncher {
             dependenciesResolver.resolve(for: DeeplinkedBLIKConfirmationCoordinator.self).start()
         case .ourOffer:
             openOurOffer()
+        case .alertsNotification:
+            openAlertsNotification()
         }
     }
     
     func openOurOffer(){
+        openWebViewByType(.ourOffer)        
+    }
+    
+    func openAlertsNotification() {
+        openWebViewByType(.alerts24)
+    }
+    
+    func openWebViewByType(_ type: PLAccountOperativeIdentifier ){
         let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
 
         guard let options = repository.get()?.accountsOptions,
-              let option = options.first(where: { $0.id == PLAccountOtherOperativesIdentifier.exploreProducts.rawValue }),
+              let option = options.first(where: { $0.id == type.rawValue }),
               option.isAvailable ?? true,
               let url = option.url,
               let method = option.method,

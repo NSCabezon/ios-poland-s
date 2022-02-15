@@ -6,7 +6,7 @@
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
 
-import Commons
+import CoreFoundationLib
 import Operative
 @testable import CreditCardRepayment
 

@@ -1,174 +1,51 @@
 import SANLegacyLibrary
 import CoreFoundationLib
-import Commons
 import Account
 import RetailLegacy
 
 final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOperativesActionUseCaseInput, GetAccountOtherOperativesActionUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
- 
-    private let addBanks: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.addBanks.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_label_addBanks",
-        icon: "icnBanks"
-    )
+    private let defaultIds: [String] = [PLAccountOperativeIdentifier.details.rawValue,
+                                        PLAccountOperativeIdentifier.changeAliases.rawValue,
+                                        PLAccountOperativeIdentifier.customerService.rawValue,
+                                        PLAccountOperativeIdentifier.generateQRCode.rawValue,
+                                        PLAccountOperativeIdentifier.history.rawValue]
     
-    private let changeAlias: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.changeAliases.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "productOption_button_changeAlias",
-        icon: "icnChangeAlias"
-    )
-    
-    private let changeAccount: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.changeAccount.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_changeAccount",
-        icon: "icnChangeAccountPL"
-    )
-
-    private let qrCode: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.generateQRCode.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_generateQR",
-        icon: "icnQr"
-    )
-
-    private let alerts24: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.alerts24.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_alerts24",
-        icon: "icnAlertConfig"
-    )
-
-    private let cardRepayment: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.creditCardRepayment.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "cardsOption_button_cardEntry",
-        icon: "icnDepositCard"
-    )
-
-    private let editGoal: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.editGoal.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_editGoal",
-        icon: "icnEditGoal"
-    )
-
-    private let moneyBack: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.moneyBack.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_moneyBack",
-        icon: "icnMoneyBack"
-    )
-
-    private let multicurrency: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.multicurrency.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "frequentOperative_button_multicurrency",
-        icon: "icnMulticurrency"
-    )
-
-    private let atmPackage: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.atmPackage.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "frequentOperative_button_atmPackage",
-        icon: "icnAtmPackage"
-    )
-
-    private lazy var transactionHistory: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.history.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_transHistory",
-        icon: "icnTransHistory"
-    )
-
-    private let accountStatements: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.accountStatement.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_statements",
-        icon: "icnAccountStatements"
-    )
-
-    private let customerService: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.customerService.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "frequentOperative_button_customerService",
-        icon: "icnCustomerService"
-    )
-
-    private let ourOffer: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.ourOffer.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "frequentOperative_button_contract",
-        icon: "icnOffer"
-    )
-
-    private let openDeposit: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.openDeposit.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_openDeposit",
-        icon: "icnOpenDeposit"
-    )
-
-    private let currencyExchange: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.fxExchange.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_currencyExchange",
-        icon: "icnCurrencyExchange"
-    )
-
-    private let memberGetMember: AccountActionType = .custome(
-        identifier: PLAccountOtherOperativesIdentifier.memberGetMember.rawValue,
-        accesibilityIdentifier: "",
-        trackName: "",
-        localizedKey: "accountOption_button_friendPlan",
-        icon: "icnMemberGetMember"
-    )
-
-    private lazy var everyDayOperatives: [AccountActionType] = {
-        [addBanks, changeAlias, changeAccount, qrCode, alerts24]
-    }()
-
-    private lazy var otherOperativeActions: [AccountActionType] = {
-        [addBanks, changeAlias, changeAccount, qrCode, alerts24, cardRepayment, editGoal, moneyBack, multicurrency, atmPackage, transactionHistory, accountStatements, customerService, ourOffer, openDeposit, currencyExchange, memberGetMember]
-    }()
-
-    private lazy var adjustAccounts: [AccountActionType] = {
-        [moneyBack, multicurrency, atmPackage]
-    }()
-
-    private lazy var queriesActions: [AccountActionType] = {
-        [transactionHistory, accountStatements, customerService]
-    }()
-
-    private lazy var contractActions: [AccountActionType] = {
-        [ourOffer, openDeposit, currencyExchange, memberGetMember]
-    }()
-       
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
     
     override func executeUseCase(requestValues: GetAccountOtherOperativesActionUseCaseInput) throws -> UseCaseResponse<GetAccountOtherOperativesActionUseCaseOkOutput, StringErrorOutput> {
-        return .ok(GetAccountOtherOperativesActionUseCaseOkOutput(everyDayOperatives: everyDayOperatives, otherOperativeActions: otherOperativeActions, adjustAccounts: adjustAccounts, queriesActions: queriesActions, contractActions: contractActions, officeArrangementActions: []))
+        guard let entityCode = requestValues.accounts.first?.dto.contractNumber else { return .error(StringErrorOutput(nil)) }
+        return .ok(getUseCaseOkOutput(contract: entityCode))
+    }
+    
+    private func getUseCaseOkOutput(contract: String) -> GetAccountOtherOperativesActionUseCaseOkOutput {
+        
+        let productActionMatrix = self.dependenciesResolver.resolve(forOptionalType: ProductActionsShortcutsMatrix.self)
+        let actions = productActionMatrix?.getEnabledOperationsIdentifiers(type: .accounts, contract: contract) ?? defaultIds
+
+        let everyDay = actionTypes(operatives: [.addBanks, .changeAliases, .changeAccount, .generateQRCode, .alerts24], available: actions)
+        let other = actionTypes(operatives: [.addBanks, .changeAliases, .changeAccount, .generateQRCode, .alerts24, .editGoal, .moneyBack, .multicurrency, .atmPackage, .history, .accountStatement, .customerService, .ourOffer, .openDeposit, .fxExchange, .memberGetMember], available: actions)
+        let adjustAccounts = actionTypes(operatives: [.moneyBack, .multicurrency, .atmPackage], available: actions)
+        let queries = actionTypes(operatives: [.history, .accountStatement, .customerService], available: actions)
+        let contract = actionTypes(operatives: [.ourOffer, .openDeposit, .fxExchange, .memberGetMember], available: actions)
+        
+        return GetAccountOtherOperativesActionUseCaseOkOutput(everyDayOperatives: everyDay, otherOperativeActions: other, adjustAccounts: adjustAccounts, queriesActions: queries, contractActions: contract, officeArrangementActions: [])
+    }
+    
+    private func actionTypes(operatives: [PLAccountOperativeIdentifier], available: [String]) -> [AccountActionType] {
+        return operatives.filter { operative in available.contains(operative.rawValue) }.map { operative in
+            actionType(operative: operative)
+        }
+    }
+    
+    private func actionType(operative: PLAccountOperativeIdentifier) -> AccountActionType {
+        return AccountActionType.custome(identifier: operative.rawValue,
+                                         accesibilityIdentifier: operative.rawValue,
+                                         trackName: operative.rawValue,
+                                         localizedKey: operative.textKey,
+                                         icon: operative.icon)
     }
 }
 

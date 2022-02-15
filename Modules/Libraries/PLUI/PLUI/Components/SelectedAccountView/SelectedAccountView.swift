@@ -1,6 +1,6 @@
 
 import UI
-import Commons
+import CoreFoundationLib
 
 public final class SelectedAccountView: UIView {
     

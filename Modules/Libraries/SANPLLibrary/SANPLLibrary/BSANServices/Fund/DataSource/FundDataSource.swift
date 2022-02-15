@@ -16,13 +16,13 @@ final class FundDataSource {
 	private enum FundServiceType: String {
 		case changeAlias = "/accounts/productaliases"
 	}
-	
+
 	private let networkProvider: NetworkProvider
 	private let dataProvider: BSANDataProvider
 	private let basePath = "/api"
 	private var headers: [String: String] = [:]
 	private var queryParams: [String: Any]? = nil
-	
+
 	init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
 		self.networkProvider = networkProvider
 		self.dataProvider = dataProvider
@@ -38,15 +38,15 @@ private extension FundDataSource {
 extension FundDataSource: FundDataSourceProtocol {
 	func changeAlias(fundDTO: SANLegacyLibrary.FundDTO, newAlias: String) throws -> Result<FundChangeAliasDTO, NetworkProviderError> {
 		guard let baseUrl = self.getBaseUrl(),
-			  let accountNumber = fundDTO.accountId?.id,
-			  let systemId = fundDTO.accountId?.systemId else {
+			  let accountNumber = fundDTO.productId?.id,
+			  let systemId = fundDTO.productId?.systemId else {
 			return .failure(NetworkProviderError.other)
 		}
 
 		let serviceName = "\(FundServiceType.changeAlias.rawValue)/\(systemId)/\(accountNumber)"
 		let absoluteUrl = baseUrl + self.basePath
 		let parameters = ChangeAliasParameters(userDefined: newAlias)
-		
+
 		let result: Result<FundChangeAliasDTO, NetworkProviderError> = self.networkProvider.request(FundChangeAliasRequest(serviceName: serviceName,
 																												serviceUrl: absoluteUrl,
 																												method: .post,

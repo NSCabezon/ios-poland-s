@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 enum ChequeValidityPeriod: Int, CaseIterable {
     case hours24 = 24

@@ -5,10 +5,8 @@
 //  Created by Juan Sánchez Marín on 16/6/21.
 //
 
-import Commons
-import UI
 import CoreFoundationLib
-import CommonUseCase
+import UI
 
 protocol PLDeviceDataCoordinatorProtocol {
     func goToTrustedDevicePIN(with trustedDeviceConfiguration: TrustedDeviceConfiguration)

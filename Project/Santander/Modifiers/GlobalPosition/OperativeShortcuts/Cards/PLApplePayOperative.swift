@@ -6,7 +6,6 @@
 //
 
 import CoreFoundationLib
-import Commons
 
 final class PLApplePayOperative {
     private let identifier: String = "operateBtnApplePayOperativePoland"

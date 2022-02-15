@@ -17,6 +17,8 @@ public enum BSANDatabaseKey : String {
 
 public class BSANDataProvider {
     
+    public typealias OperationsProductsDTOArray = [OperationsProductsDTO]
+    
     public var isTrustedDevice: Bool {
         return getTrustedDeviceHeaders() != nil
     }
@@ -32,6 +34,17 @@ public class BSANDataProvider {
         objc_sync_enter(dataRepository)
         dataRepository.store(appInfo, .createPersistentPolicy())
         objc_sync_exit(dataRepository)
+    }
+    
+    //MARK: - Operations Products
+    public func storeOperationsProducts(_ operations: OperationsProductsDTOArray) {
+        objc_sync_enter(dataRepository)
+        dataRepository.store(operations, .createPersistentPolicy())
+        objc_sync_exit(dataRepository)
+    }
+    
+    public func getOperationsProducts() -> OperationsProductsDTOArray? {
+        return dataRepository.get(OperationsProductsDTOArray.self, .createPersistentPolicy())
     }
     
     public func getAppInfo() -> AppInfo? {
@@ -449,6 +462,23 @@ public class BSANDataProvider {
                  .createPersistentPolicy()
              )
          }
+
+    // MARK: - Login Info
+    public func storeLoginInfo(dto: LoginInfoDTO) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.loginInfo = dto
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(self.dataRepository)
+    }
+
+    public func getLoginInfo() -> LoginInfoDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.loginInfo
+    }
 }
 
 //MARK: -

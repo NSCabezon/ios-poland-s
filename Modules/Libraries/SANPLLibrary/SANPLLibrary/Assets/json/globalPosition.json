@@ -35,9 +35,9 @@
                   "valueInBaseCurrency": 0
                 },
                 "overDraftLimit": {
-                  "value": 0,
+                  "value": 20,
                   "currencyCode": "PLN",
-                  "valueInBaseCurrency": 0
+                  "valueInBaseCurrency": 20
                 },
                 "lastUpdate": "2021-12-06",
                 "bankId": 0,

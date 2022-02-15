@@ -5,7 +5,7 @@
 //  Created by 187452 on 23/08/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import PLUI
 import UI
 
@@ -54,7 +54,7 @@ extension HelpCenterConfig.Element {
     var webViewIdentifier: String? {
         switch self {
         case .yourCases:
-            return "CUSTOMER_SERVICE" // TODO: Maybe move PLAccountOtherOperativesIdentifier to PLCommon and use it here?
+            return "CUSTOMER_SERVICE" // TODO: Maybe move PLAccountOperativeIdentifier to PLCommon and use it here?
         case .mailContact:
             return "MAILBOX"
         default: // TODO: Add rest of the cases in separate tasks

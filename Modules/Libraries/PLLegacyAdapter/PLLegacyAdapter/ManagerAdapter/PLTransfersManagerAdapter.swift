@@ -18,7 +18,7 @@ final class PLTransfersManagerAdapter {
 }
  
 extension PLTransfersManagerAdapter: BSANTransfersManager {
-    
+
     func confirmRemoveSepaPayee(payeeId: String?, signatureWithTokenDTO: SignatureWithTokenDTO?) throws -> BSANResponse<SignatureWithTokenDTO?> {
         return BSANErrorResponse(nil)
     }

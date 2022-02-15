@@ -7,8 +7,18 @@
 
 import Foundation
 import SANLegacyLibrary
+import SANPLLibrary
+import CoreFoundationLib
 
-final class PLLastLogonManagerAdapter {}
+final class PLLastLogonManagerAdapter {
+    private let loginManager: PLLoginManagerProtocol
+    private let bsanDataProvider: BSANDataProvider
+
+    init(loginManager: PLLoginManagerProtocol, bsanDataProvider: BSANDataProvider) {
+        self.bsanDataProvider = bsanDataProvider
+        self.loginManager = loginManager
+    }
+}
  
 extension PLLastLogonManagerAdapter: BSANLastLogonManager {
     func insertDateUpdate() throws -> BSANResponse<Void> {
@@ -16,6 +26,9 @@ extension PLLastLogonManagerAdapter: BSANLastLogonManager {
     }
     
     func getLastLogonInfo() throws -> BSANResponse<LastLogonDTO> {
-        return BSANErrorResponse(nil)
+        let loginInfo = try self.loginManager.getLoginInfo().get()
+        var lastLogon = LastLogonDTO()
+        lastLogon.lastConnection = dateToString(input: loginInfo.lastLogin, inputFormat: .yyyy_MM_ddTHHmmssSSSSSS, outputFormat: .yyyyMMddHHmmss)
+        return BSANOkResponse(lastLogon)
     }
 }

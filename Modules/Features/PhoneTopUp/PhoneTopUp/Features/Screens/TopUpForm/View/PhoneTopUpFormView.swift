@@ -8,13 +8,15 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol PhoneTopUpFormViewDelegate: AnyObject {
     func topUpFormDidSelectChangeAccount()
     func didTouchContactsButton()
+    func didTouchOperatorSelectionButton()
     func topUpFormDidInputPartialPhoneNumber(_ number: String)
     func topUpFormDidInputFullPhoneNumber(_ number: String)
+    func topUpFormDidSelectTopUpAmount(_ amount: TopUpAmount)
 }
 
 final class PhoneTopUpFormView: UIView {
@@ -51,6 +53,8 @@ final class PhoneTopUpFormView: UIView {
         prepareStyles()
         prepareSelectAccountView()
         phoneNumberInputView.delegate = self
+        operatorSelectionView.delegate = self
+        amountSelectionView.delegate = self
     }
 
     private func addSubviews() {
@@ -106,13 +110,11 @@ final class PhoneTopUpFormView: UIView {
     
     func showInvalidPhoneNumberError(_ showError: Bool) {
         phoneNumberInputView.showInvalidPhoneNumberError(showError)
-        showOperatorSelection(with: nil)
+        updateOperatorSelection(with: nil)
     }
     
-    func showOperatorSelection(with mobileOperator: Operator?) {
-        operatorSelectionView.isHidden = mobileOperator == nil
-        amountSelectionView.isHidden = mobileOperator == nil
-        termsAndConditionsView.isHidden = mobileOperator == nil
+    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+        operatorSelectionView.setUp(with: gsmOperator)
     }
     
     func updatePhoneInput(with phoneNumber: String) {
@@ -122,6 +124,14 @@ final class PhoneTopUpFormView: UIView {
     func updateRecipientName(with name: String) {
         recipientNameView.setUp(with: name)
         recipientNameView.isHidden = name.isEmpty
+    }
+    
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?) {
+        amountSelectionView.setUp(with: cellModels, selectedAmount: selectedAmount)
+    }
+    
+    func showInvalidCustomAmountError(_ error: String?) {
+        amountSelectionView.showInvalidCustomAmountError(error)
     }
 }
 
@@ -136,5 +146,17 @@ extension PhoneTopUpFormView: PhoneNumberInputViewDelegate {
     
     func didTouchContactsButton() {
         delegate?.didTouchContactsButton()
+    }
+}
+
+extension PhoneTopUpFormView: OperatorSelectionViewDelegate {
+    func didTouchOperatorSelectionButton() {
+        delegate?.didTouchOperatorSelectionButton()
+    }
+}
+
+extension PhoneTopUpFormView: PaymentAmontSelectionViewDelegate {
+    func didSelectTopUpAmount(_ amount: TopUpAmount) {
+        delegate?.topUpFormDidSelectTopUpAmount(amount)
     }
 }

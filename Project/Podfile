@@ -9,9 +9,7 @@ def core_dependencies
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
   pod 'Operative', :path => '../santander-one/Operative'
   pod 'WebViews', :path => '../santander-one/Modules/Libraries/WebViews'
-  pod 'CommonUseCase', :path => '../santander-one/CommonUseCase'
   pod 'UI', :path => '../santander-one/UI'
-  pod 'Commons', :path => '../santander-one/Commons'
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
   pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
@@ -24,7 +22,6 @@ def core_dependencies
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
   pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'PFM', :path => '../santander-one/Modules/Libraries/PFM'
   pod 'Loans', :path => '../santander-one/Loans'
   pod 'Account', :path => '../santander-one/Accounts'
   pod 'Cards', :path => '../santander-one/Cards'
@@ -84,6 +81,7 @@ def pl_libraries
   pod 'PLNotifications', :path => '../Modules/Libraries/PLNotifications'
   pod 'PLCommonOperatives', :path => '../Modules/Libraries/PLCommonOperatives'
   pod 'PLCryptography', :path => '../Modules/Libraries/PLCryptography'
+  pod 'PLScenes', :path => '../Modules/Libraries/PLScenes'
 end
 
 def pl_thirdparty_dependencies
@@ -102,12 +100,16 @@ target 'Santander' do
   pl_features
   pl_libraries
   pl_thirdparty_dependencies
+
+  target 'SantanderTests' do
+        inherit! :search_paths
+  end
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
 	target.build_configurations.each do |config|
-	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug", "Regression-Debug", "Uat-Debug", "Preprod-Debug"].include? config.name
+	  if ["Intern-Debug", "Pre-Debug", "Dev-Debug", "Pro-Debug", "Regression-Debug", "Uat-Debug", "Preprod-Debug", "Test"].include? config.name
 		config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
 		config.build_settings['GCC_OPTIMIZATION_LEVEL'] = '0'
 		config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'

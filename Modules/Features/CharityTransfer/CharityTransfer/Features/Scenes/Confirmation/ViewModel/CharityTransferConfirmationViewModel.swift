@@ -5,11 +5,10 @@
 //  Created by 187830 on 08/11/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommons
 import PLUI
 import Operative
-import CoreFoundationLib
 import SANLegacyLibrary
 
 struct CharityTransferConfirmationViewModel {

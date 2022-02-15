@@ -5,7 +5,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 final class NotificationsInboxListView: UIView {
     

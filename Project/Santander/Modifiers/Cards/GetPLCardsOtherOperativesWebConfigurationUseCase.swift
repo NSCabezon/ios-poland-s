@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Commons
 import CoreFoundationLib
 import SANLegacyLibrary
 import SANPLLibrary
@@ -49,8 +48,8 @@ class GetPLCardsOtherOperativesWebConfigurationUseCase: UseCase<GetPLCardsOtherO
     }
 }
 
-extension GetPLCardsOtherOperativesWebConfigurationUseCase {
-    func generateParameters(with type: PLCardWebViewType, cardEntity: CardEntity) throws -> [String: String] {
+private extension GetPLCardsOtherOperativesWebConfigurationUseCase {
+    func generateParameters(with type: PLCardActionIdentifier, cardEntity: CardEntity) throws -> [String: String] {
         var parameters = [String: String]()
         let result = try getContext()
         var ownerId = ""
@@ -91,7 +90,7 @@ extension GetPLCardsOtherOperativesWebConfigurationUseCase {
         return try? self.dataProvider.getEnvironment().urlBase
     }
     
-    private func isOwnerIdNeeded(type: PLCardWebViewType, profileId: String) -> Bool {
+    private func isOwnerIdNeeded(type: PLCardActionIdentifier, profileId: String) -> Bool {
         if isSMECustomer(profileId: profileId) || type == .multicurrency {
             return true
         }
@@ -112,13 +111,9 @@ extension GetPLCardsOtherOperativesWebConfigurationUseCase {
 }
 
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseInput {
-    let type: PLCardWebViewType
+    let type: PLCardActionIdentifier
     let cardEntity: CardEntity
-    let cardData: PLAccountOtherOperativesData
-}
-
-public enum PLCardWebViewType {
-    case cancel, multicurrency, pin, useAbroad, changeLimits, viewStatements, enable, repayInInstallments, customerService, atmPackage, alerts24
+    let cardData: PLProductOperativesData
 }
 
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput {

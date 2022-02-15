@@ -7,7 +7,7 @@
 
 import Foundation
 import PLCommons
-import Commons
+import CoreFoundationLib
 import UI
 
 protocol PLUnrememberedLoginOnboardingProtocol: PLGenericErrorPresentableCapable {

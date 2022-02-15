@@ -8,7 +8,7 @@
 import UI
 import UIKit
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 protocol PhoneNumberInputViewDelegate: AnyObject {

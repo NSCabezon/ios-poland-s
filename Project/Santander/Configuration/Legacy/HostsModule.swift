@@ -8,7 +8,7 @@
 /// Note that this struct is maintained for compatibility with legacy code and will be removed in some point in the furure
 
 import SANLegacyLibrary
-import Commons
+import CoreFoundationLib
 
 final class HostsModule: HostsModuleProtocol {
     func providesBSANHostProvider() -> BSANHostProviderProtocol {

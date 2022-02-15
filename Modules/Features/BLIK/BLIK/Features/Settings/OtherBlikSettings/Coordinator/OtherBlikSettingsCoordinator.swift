@@ -8,7 +8,6 @@
 import UI
 import PLUI
 import CoreFoundationLib
-import Commons
 import SANPLLibrary
 import PLCommons
 
@@ -67,15 +66,15 @@ extension OtherBlikSettingsCoordinator: OtherBlikSettingsCoordinatorProtocol {
 
 private extension OtherBlikSettingsCoordinator {
     func setUpDependencies() {
-        dependenciesEngine.register(for: OtherBlikSettingsCoordinatorProtocol.self) { resolver in
+        dependenciesEngine.register(for: OtherBlikSettingsCoordinatorProtocol.self) { _ in
             return self
         }
         
-        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { resolver in
+        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
             return ConfirmationDialogFactory()
         }
         
-        dependenciesEngine.register(for: BlikCustomerLabelValidating.self) { resolver in
+        dependenciesEngine.register(for: BlikCustomerLabelValidating.self) { _ in
             return BlikCustomerLabelValidator()
         }
         

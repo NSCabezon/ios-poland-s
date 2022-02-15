@@ -8,14 +8,17 @@
 import UI
 import PLUI
 import PLCommons
-import Commons
+import CoreFoundationLib
 
 protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
     func updatePhoneInput(with phoneNumber: String)
+    func updateRecipientName(with name: String)
     func updateContact(with contact: MobileContact)
+    func updateOperatorSelection(with gsmOperator: GSMOperator?)
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?)
     func showInvalidPhoneNumberError(_ showError: Bool)
-    func showOperatorSelection(with operator: Operator?)
+    func showInvalidCustomAmountError(_ error: String?)
     func showContactsPermissionsDeniedDialog()
 }
 
@@ -109,13 +112,25 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         formView.showInvalidPhoneNumberError(showError)
     }
     
-    func showOperatorSelection(with mobileOperator: Operator?) {
-        formView.showOperatorSelection(with: mobileOperator)
+    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+        formView.updateOperatorSelection(with: gsmOperator)
     }
     
     func showContactsPermissionsDeniedDialog() {
         let dialog = ContactsPermissionDeniedDialogBuilder().buildDialog()
         dialog.showIn(self)
+    }
+    
+    func updateRecipientName(with name: String) {
+        formView.updateRecipientName(with: name)
+    }
+    
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?) {
+        formView.updatePaymentAmounts(with: cellModels, selectedAmount: selectedAmount)
+    }
+    
+    func showInvalidCustomAmountError(_ error: String?) {
+        formView.showInvalidCustomAmountError(error)
     }
 }
 
@@ -136,6 +151,10 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         presenter.didInputFullPhoneNumber(number)
     }
     
+    func topUpFormDidSelectTopUpAmount(_ amount: TopUpAmount) {
+        presenter.didSelectTopUpAmount(amount)
+    }
+    
     func updatePhoneInput(with phoneNumber: String) {
         formView.updatePhoneInput(with: phoneNumber)
     }
@@ -143,5 +162,9 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
     func updateContact(with contact: MobileContact) {
         formView.updatePhoneInput(with: contact.phoneNumber)
         formView.updateRecipientName(with: contact.fullName)
+    }
+    
+    func didTouchOperatorSelectionButton() {
+        presenter.didTouchOperatorSelectionButton()
     }
 }

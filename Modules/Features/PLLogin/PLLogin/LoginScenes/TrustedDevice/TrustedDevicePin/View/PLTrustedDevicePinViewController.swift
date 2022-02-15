@@ -4,7 +4,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import Foundation
 
@@ -176,6 +176,7 @@ private extension PLTrustedDevicePinViewController {
         self.pinDescriptionLabel.accessibilityIdentifier = "pl_onboarding_text_PINExpl"
         self.pinTitleLabel.accessibilityIdentifier = "pl_onboarding_text_enterPIN"
         self.repeatPinTitleLabel.accessibilityIdentifier = "pl_onboarding_text_repeatPIN"
+        self.biometryInfoView?.accessibilityIdentifier = "deviceTrustPinBtnSwitchBiometrics"
     }
 
     // MARK: Button actions
