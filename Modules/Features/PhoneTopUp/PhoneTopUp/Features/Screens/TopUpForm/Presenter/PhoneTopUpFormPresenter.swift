@@ -21,7 +21,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
     func didTouchContactsButton()
     func didInputPartialPhoneNumber(_ number: String)
     func didInputFullPhoneNumber(_ number: String)
-    func didSelectTopUpAmount(_ value: TopUpValue?)
+    func didSelectTopUpAmount(_ amount: TopUpAmount)
     func didTouchContinueButton()
     func didTouchOperatorSelectionButton()
 }
@@ -57,8 +57,16 @@ final class PhoneTopUpFormPresenter {
     private let useCaseHandler: UseCaseHandler
     private let contactsPermissionHelper: ContactsPermissionHelperProtocol
     private let polishContactsFilter: PolishContactsFiltering
+    private let customTopUpAmountValidator: CustomTopUpAmountValidating
+    private let amountCellViewModelMapper: PaymentAmountCellViewModelMapping
     
-    private var selectedAccountNumber: String?
+    private var selectedAccount: AccountForDebit? {
+        didSet {
+            let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccount?.number) })
+            view?.updateSelectedAccount(with: viewModels)
+            validateCustomTopUpAmount()
+        }
+    }
     
     private var phoneNumber: InputPhoneNumber = .partial(number: "") {
         didSet {
@@ -79,14 +87,17 @@ final class PhoneTopUpFormPresenter {
     
     private var selectedOperator: Operator? {
         didSet {
-            selectedTopUpValue = matchDefaultTopUpValue(with: selectedOperator)
-            view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
+            selectedTopUpAmount = matchDefaultTopUpAmount(with: selectedOperator)
+            let amountViewModels = amountCellViewModelMapper.map(topUpValues: selectedOperator?.topupValues, selectedAmount: selectedTopUpAmount)
+            view?.updatePaymentAmounts(with: amountViewModels, selectedAmount: selectedTopUpAmount)
         }
     }
     
-    private var selectedTopUpValue: TopUpValue? {
+    private var selectedTopUpAmount: TopUpAmount? {
         didSet {
-            view?.updatePaymentAmounts(with: selectedOperator?.topupValues, selectedValue: selectedTopUpValue)
+            let amountViewModels = amountCellViewModelMapper.map(topUpValues: selectedOperator?.topupValues, selectedAmount: selectedTopUpAmount)
+            view?.updatePaymentAmounts(with: amountViewModels, selectedAmount: selectedTopUpAmount)
+            validateCustomTopUpAmount()
         }
     }
         
@@ -110,21 +121,23 @@ final class PhoneTopUpFormPresenter {
         self.gsmOperators = gsmOperators
         self.internetContacts = internetContacts
         self.settings = settings
-        coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
-        confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
-        accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
-        selectedAccountNumber = accounts.first(where: \.defaultForPayments)?.number
+        self.coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
+        self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
+        self.accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
+        self.selectedAccount = accounts.first(where: \.defaultForPayments)
         self.getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
         self.useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
         self.contactsPermissionHelper = dependenciesResolver.resolve(for: ContactsPermissionHelperProtocol.self)
         self.polishContactsFilter = dependenciesResolver.resolve(for: PolishContactsFiltering.self)
+        self.customTopUpAmountValidator = dependenciesResolver.resolve(for: CustomTopUpAmountValidating.self)
+        self.amountCellViewModelMapper = dependenciesResolver.resolve(for: PaymentAmountCellViewModelMapping.self)
     }
 }
 
 // MARK: PhoneTopUpFormPresenterProtocol
 extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     func viewDidLoad() {
-        let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
+        let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccount?.number) })
         view?.updateSelectedAccount(with: viewModels)
     }
     
@@ -140,13 +153,11 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func didSelectAccount(withAccountNumber accountNumber: String) {
-        selectedAccountNumber = accountNumber
-        let viewModels = accounts.compactMap({ try? accountMapper.map($0, selectedAccountNumber: selectedAccountNumber) })
-        view?.updateSelectedAccount(with: viewModels)
+        selectedAccount = accounts.first(where: { $0.number == accountNumber })
     }
     
     func didSelectChangeAccount() {
-        coordinator?.didSelectChangeAccount(availableAccounts: accounts, selectedAccountNumber: selectedAccountNumber)
+        coordinator?.didSelectChangeAccount(availableAccounts: accounts, selectedAccountNumber: selectedAccount?.number)
     }
     
     func didTouchContactsButton() {
@@ -176,8 +187,8 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
         recipientName = contact.fullName
     }
     
-    func didSelectTopUpAmount(_ value: TopUpValue?) {
-        selectedTopUpValue = value
+    func didSelectTopUpAmount(_ amount: TopUpAmount) {
+        selectedTopUpAmount = amount
     }
     
     func mobileContactDidSelectCloseProcess() {
@@ -219,6 +230,22 @@ private extension PhoneTopUpFormPresenter {
         case .full(let number):
             let showError = matchGSMOperator(with: number) == nil
             view?.showInvalidPhoneNumberError(showError)
+        }
+    }
+    
+    func validateCustomTopUpAmount() {
+        let minValue = selectedOperator?.topupValues.min
+        let maxValue = selectedOperator?.topupValues.max
+        let availableFunds = selectedAccount?.availableFunds.amount
+        let validationResults = customTopUpAmountValidator.validate(amount: selectedTopUpAmount,
+                                                                    minAmount: minValue,
+                                                                    maxAmount: maxValue,
+                                                                    availableFunds: availableFunds)
+        switch validationResults {
+        case .valid:
+            view?.showInvalidCustomAmountError(nil)
+        case .error(let message):
+            view?.showInvalidCustomAmountError(message)
         }
     }
     
@@ -273,13 +300,16 @@ private extension PhoneTopUpFormPresenter {
             }
     }
     
-    func matchDefaultTopUpValue(with mobileOperator: Operator?) -> TopUpValue? {
+    func matchDefaultTopUpAmount(with mobileOperator: Operator?) -> TopUpAmount? {
         guard let mobileOperator = mobileOperator else {
             return nil
         }
     
         let matchingOperatorSetting = settings.first(where: { $0.operatorId == mobileOperator.id })
-        let matchingTopUpValue = mobileOperator.topupValues.values.first(where: { $0.value == matchingOperatorSetting?.defaultTopUpValue })
-        return matchingTopUpValue
+        guard let matchingTopUpValue = mobileOperator.topupValues.values.first(where: { $0.value == matchingOperatorSetting?.defaultTopUpValue }) else {
+            return nil
+        }
+        
+        return .fixed(matchingTopUpValue)
     }
 }

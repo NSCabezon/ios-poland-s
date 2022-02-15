@@ -50,14 +50,14 @@ private extension DeeplinkLauncher {
     }
     
     func openOurOffer(){
-        openWebViewByType(.exploreProducts)        
+        openWebViewByType(.ourOffer)        
     }
     
     func openAlertsNotification() {
         openWebViewByType(.alerts24)
     }
     
-    func openWebViewByType(_ type: PLAccountOtherOperativesIdentifier ){
+    func openWebViewByType(_ type: PLAccountOperativeIdentifier ){
         let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
 
         guard let options = repository.get()?.accountsOptions,

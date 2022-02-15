@@ -142,7 +142,7 @@
         "enabledEnvioDineroPGSmartNew": "true",
         "mulMovUrls": "['click2callapp.pru.bsch', 'sanesp-pre.pru.bsch']",
         "insurancePASS2": "true",
-        "enableTrusteerTransfersDeferred": "true"
+        "enableTrusteerTransfersDeferred": "true",
     },
     "versions": {
         "4.0.60": {
