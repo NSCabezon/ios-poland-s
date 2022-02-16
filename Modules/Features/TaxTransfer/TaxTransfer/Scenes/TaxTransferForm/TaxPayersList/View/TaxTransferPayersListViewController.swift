@@ -11,7 +11,6 @@ import CoreFoundationLib
 
 protocol TaxTransferPayersListView: AnyObject,
                                     ConfirmationDialogPresentable,
-                                    LoaderPresentable,
                                     ErrorPresentable {
 
     func set(selectedTaxPayer: TaxPayer?)
@@ -22,7 +21,7 @@ final class TaxTransferPayersListViewController: UIViewController {
     private let viewModel: TaxTransferPayersListViewModelProtocol
     
     private let payersTableView = UITableView()
-    private let choosePayerButton = LisboaButton()
+    private let addPayerButton = LisboaButton()
     private let infoLabel = UILabel()
     
     init(presenter: TaxTransferPayersListPresenterProtocol,
@@ -76,8 +75,11 @@ final class TaxTransferPayersListViewController: UIViewController {
     }
     
     private func configureButton() {
-        choosePayerButton.setTitle(localized("pl_taxTransfer_button_choosePayee"), for: .normal)
-        choosePayerButton.configureAsWhiteButton()
+        addPayerButton.addAction { [weak self] in
+            self?.presenter.didPressAddPayer()
+        }
+        addPayerButton.setTitle(localized("pl_taxTransfer_button_choosePayee"), for: .normal)
+        addPayerButton.configureAsWhiteButton()
     }
     
     private func configureTableView() {
@@ -89,7 +91,7 @@ final class TaxTransferPayersListViewController: UIViewController {
     }
     
     private func configureSubviews() {
-        [infoLabel, payersTableView, choosePayerButton].forEach {
+        [infoLabel, payersTableView, addPayerButton].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -102,12 +104,12 @@ final class TaxTransferPayersListViewController: UIViewController {
             payersTableView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 8),
             payersTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             payersTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            payersTableView.bottomAnchor.constraint(equalTo: choosePayerButton.topAnchor, constant: -10),
+            payersTableView.bottomAnchor.constraint(equalTo: addPayerButton.topAnchor, constant: -10),
             
-            choosePayerButton.heightAnchor.constraint(equalToConstant: 48),
-            choosePayerButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            choosePayerButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            choosePayerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -23),
+            addPayerButton.heightAnchor.constraint(equalToConstant: 48),
+            addPayerButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            addPayerButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            addPayerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -23),
         ])
     }
     
@@ -126,8 +128,7 @@ extension TaxTransferPayersListViewController: UITableViewDataSource {
               let taxPayerViewModel = viewModel.payer(for: indexPath.row) else {
             return UITableViewCell()
         }
-        
-        
+
         cell.setUp(with: taxPayerViewModel, isSelected: viewModel.isSelected(index: indexPath.row))
         return cell
     }

@@ -9,4 +9,5 @@ struct TaxAuthority {
     let id: String
     let name: String
     let accountNumber: String
+    let taxAccountType: TaxAccountType
 }

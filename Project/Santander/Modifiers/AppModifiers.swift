@@ -204,5 +204,8 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
             PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
         }
+        self.dependencieEngine.register(for: ShortcutItemsProviderProtocol.self) { _ in
+            return PLShortcutItems()
+        }
     }
 }

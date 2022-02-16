@@ -16,6 +16,12 @@ final class TaxAuthorityMapper: TaxAuthorityMapping {
         case missingData
     }
     
+    private let taxAccountTypeRecognizer: TaxAccountTypeRecognizing
+    
+    init(taxAccountTypeRecognizer: TaxAccountTypeRecognizing) {
+        self.taxAccountTypeRecognizer = taxAccountTypeRecognizer
+    }
+    
     func map(_ payee: PayeeDTO) throws -> TaxAuthority {
         guard
             let identifier = payee.payeeId,
@@ -29,7 +35,8 @@ final class TaxAuthorityMapper: TaxAuthorityMapping {
         return TaxAuthority(
             id: identifier,
             name: name,
-            accountNumber: accountNumber
+            accountNumber: accountNumber,
+            taxAccountType: try taxAccountTypeRecognizer.recognizeType(of: accountNumber)
         )
     }
 }

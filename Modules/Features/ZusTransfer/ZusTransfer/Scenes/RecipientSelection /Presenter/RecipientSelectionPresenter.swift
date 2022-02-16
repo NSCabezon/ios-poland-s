@@ -48,7 +48,7 @@ final class RecipientSelectionPresenter {
                 .empty(
                     EmptyCellViewModel(
                         title: localized("generic_label_empty").text,
-                        description: localized("toolbar_text_noReceipents").text
+                        description: localized("toolbar_zusTransfer_text_noReceipents").text
                     )
                 )
             )
