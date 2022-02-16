@@ -20,6 +20,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func viewDidLoad()
     func viewWillAppear()
     func viewDidAppear()
+    func viewWillDissappear()
     func doLogin(with accessType: AccessType)
     func didSelectBalance()
     func didSelectBlik()
@@ -87,6 +88,9 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
 }
 
 extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol {
+    func viewWillDissappear() {
+        self.publicFilesManager.remove(subscriptor: PLRememberedLoginPinPresenter.self)
+    }
     
     func didSelectChangeUser() {
         Scenario(useCase: self.rememberedLoginChangeUserUseCase)
@@ -313,9 +317,10 @@ private extension PLRememberedLoginPinPresenter {
     }
     
     func loadData() {
-        self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
+        self.publicFilesManager.addAlways(subscriptor: PLRememberedLoginPinPresenter.self) { [weak self] in
             self?.loginPullOfferLoader.loadPullOffers()
         }
+        self.loginPullOfferLoader.loadPullOffersSuperUseCase.delegate = self
     }
     
     @objc func didBecomeActive() {
@@ -371,5 +376,11 @@ extension PLRememberedLoginPinPresenter: AutomaticScreenActionTrackable {
         else {
             return PLRememberedLoginPage(PLRememberedLoginPage.biometric)
         }
+    }
+}
+
+extension PLRememberedLoginPinPresenter: SetupPublicPullOffersSuperUseCaseDelegate {
+    func onSuccess() {
+        self.coordinatorDelegate.reloadSideMenu()
     }
 }
