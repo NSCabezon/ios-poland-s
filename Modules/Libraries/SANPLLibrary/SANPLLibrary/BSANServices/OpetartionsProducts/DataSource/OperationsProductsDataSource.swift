@@ -20,7 +20,7 @@ private extension OperationsProductsDataSource {
 class OperationsProductsDataSource: OperationsProductsDataSourceProtocol {
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    private let basePath = "/api/operations"
+    private let basePath = "/api/v2/operations"
     private var headers: [String: String] = ["X-Execution-Timestamp" : "\(Int(Date().timeIntervalSince1970))",
                                              "X-Application-Version" : Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""]
     private enum OperationsProductsServiceType: String {
