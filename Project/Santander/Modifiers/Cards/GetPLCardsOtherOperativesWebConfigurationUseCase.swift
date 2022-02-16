@@ -113,7 +113,7 @@ private extension GetPLCardsOtherOperativesWebConfigurationUseCase {
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseInput {
     let type: PLCardActionIdentifier
     let cardEntity: CardEntity
-    let cardData: PLAccountOtherOperativesData
+    let cardData: PLProductOperativesData
 }
 
 public enum PLCardWebViewType {
