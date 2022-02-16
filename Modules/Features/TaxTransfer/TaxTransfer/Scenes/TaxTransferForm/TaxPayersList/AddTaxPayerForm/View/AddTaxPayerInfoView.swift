@@ -7,7 +7,7 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 
 protocol AddTaxPayerInfoViewDelegate: AnyObject {
     func didEndEditing()

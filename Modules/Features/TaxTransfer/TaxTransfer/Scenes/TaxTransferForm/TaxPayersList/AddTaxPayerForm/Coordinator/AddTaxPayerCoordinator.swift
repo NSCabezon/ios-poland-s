@@ -5,7 +5,7 @@
 //  Created by 187831 on 02/02/2022.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol AddTaxPayerFormCoordinatorProtocol {
     var navigationController: UINavigationController? { get }

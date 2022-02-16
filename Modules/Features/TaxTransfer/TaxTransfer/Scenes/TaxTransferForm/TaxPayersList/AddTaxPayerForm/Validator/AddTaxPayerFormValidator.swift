@@ -5,7 +5,7 @@
 //  Created by 187831 on 03/02/2022.
 //
 
-import Commons
+import CoreFoundationLib
 
 protocol AddTaxPayerFormValidating {
     func validate(_ form: AddTaxPayerForm) -> AddTaxPayerFormValidationResult
