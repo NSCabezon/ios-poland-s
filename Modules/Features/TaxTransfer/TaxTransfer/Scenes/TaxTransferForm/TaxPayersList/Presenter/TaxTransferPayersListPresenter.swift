@@ -14,6 +14,7 @@ protocol TaxTransferPayersListPresenterProtocol {
     
     func didPressClose()
     func didPressBack()
+    func didPressAddPayer()
     func didSelectTaxPayer(_ taxPayer: TaxPayer,
                            selectedPayerInfo: SelectedTaxPayerInfo)
 }
@@ -76,5 +77,9 @@ extension TaxTransferPayersListPresenter: TaxTransferPayersListPresenterProtocol
         case .notAvailable:
             coordinator.didSelectTaxPayer(viewModel.taxPayer, selectedPayerInfo: selectedPayerInfo)
         }
+    }
+    
+    func didPressAddPayer() {
+        coordinator.showAddPayerView()
     }
 }

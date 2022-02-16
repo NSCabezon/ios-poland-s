@@ -8,10 +8,13 @@
 import CoreFoundationLib
 
 protocol TaxPayersListCoordinatorProtocol {
+    var navigationController: UINavigationController? { get }
+    
     func back()
     func backToForm()
     func goToGlobalPosition()
     
+    func showAddPayerView()
     func showPayerIdentifiers(for: TaxPayer)
     func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
 }
@@ -39,6 +42,11 @@ final class TaxPayersListCoordinator {
     }
     
     func start() {
+        guard !taxPayers.isEmpty else {
+            showAddPayerView()
+            return
+        }
+        
         let mapper = dependenciesEngine.resolve(for: TaxPayerViewModelMapping.self)
 
         let presenter = TaxTransferPayersListPresenter(
@@ -95,8 +103,18 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    public func showTaxPayerSelector(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
+    func showTaxPayerSelector(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
         taxPayerSelectorDelegate?.didSelectTaxPayer(taxPayer, selectedPayerInfo: selectedPayerInfo)
         backToForm()
+    }
+    
+    func showAddPayerView() {
+        let coordinator = AddTaxPayerFormCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            taxPayers: taxPayers,
+            navigationController: navigationController
+        )
+        
+        coordinator.start()
     }
 }

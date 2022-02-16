@@ -122,3 +122,9 @@ private extension PLUnrememberedLoginOnboardingViewController {
 extension PLUnrememberedLoginOnboardingViewController : PLUnrememberedLoginOnboardingProtocol {
     
 }
+
+extension PLUnrememberedLoginOnboardingViewController: RootMenuController {
+    var isSideMenuAvailable: Bool {
+        return true
+    }
+}

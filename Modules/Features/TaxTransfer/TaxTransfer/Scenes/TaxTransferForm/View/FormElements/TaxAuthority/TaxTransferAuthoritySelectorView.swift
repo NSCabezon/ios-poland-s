@@ -8,10 +8,10 @@
 import PLUI
 
 final class TaxTransferAuthoritySelectorView: UIView {
-    private lazy var sectionContainer = getSectionContainer()
-    private let subviewsContainer = UIView()
+    private lazy var taxAuthoritySection = getSectionContainer(with: taxAuthorityView)
+    private lazy var selectorSection = getSectionContainer(with: selectorView)
+    private let taxAuthorityView = TaxTransferSelectedTaxAuthorityView()
     private let selectorView = TaxTransferElementSelectorView()
-    private let selectedAuthorityView = UIView() // TODO: Implement in TAP-2517
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,10 +28,11 @@ final class TaxTransferAuthoritySelectorView: UIView {
         onTap: @escaping () -> Void
     ) {
         switch viewModel {
-        case .selected:
-            selectorView.isHidden = true
-            selectedAuthorityView.isHidden = false
-        // TODO: Implement in TAP-2517
+        case let .selected(viewModel):
+            showSelectedTaxAuthority(
+                viewModel: viewModel,
+                onTap: onTap
+            )
         case .unselected:
             showSelector(onTap: onTap)
         }
@@ -39,9 +40,18 @@ final class TaxTransferAuthoritySelectorView: UIView {
 }
 
 private extension TaxTransferAuthoritySelectorView {
+    func showSelectedTaxAuthority(
+        viewModel: TaxTransferFormViewModel.TaxAuthorityViewModel,
+        onTap: @escaping () -> Void
+    ) {
+        selectorSection.isHidden = true
+        taxAuthoritySection.isHidden = false
+        taxAuthorityView.configure(with: viewModel, onTap: onTap)
+    }
+    
     func showSelector(onTap: @escaping () -> Void) {
-        selectorView.isHidden = false
-        selectedAuthorityView.isHidden = true
+        taxAuthoritySection.isHidden = true
+        selectorSection.isHidden = false
         selectorView.configure(onTap: onTap)
     }
     
@@ -51,37 +61,28 @@ private extension TaxTransferAuthoritySelectorView {
     }
     
     func configureSubviews() {
-        [selectorView, selectedAuthorityView].forEach {
-            subviewsContainer.addSubview($0)
+        [taxAuthoritySection, selectorSection].forEach {
+            addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-         
-        addSubview(sectionContainer)
-        sectionContainer.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            sectionContainer.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            sectionContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            sectionContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            sectionContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            taxAuthoritySection.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            taxAuthoritySection.bottomAnchor.constraint(equalTo: bottomAnchor),
+            taxAuthoritySection.leadingAnchor.constraint(equalTo: leadingAnchor),
+            taxAuthoritySection.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            selectorView.topAnchor.constraint(equalTo: subviewsContainer.topAnchor),
-            selectorView.bottomAnchor.constraint(equalTo: subviewsContainer.bottomAnchor),
-            selectorView.leadingAnchor.constraint(equalTo: subviewsContainer.leadingAnchor),
-            selectorView.trailingAnchor.constraint(equalTo: subviewsContainer.trailingAnchor),
-            
-            selectedAuthorityView.topAnchor.constraint(equalTo: subviewsContainer.topAnchor),
-            selectedAuthorityView.bottomAnchor.constraint(equalTo: subviewsContainer.bottomAnchor),
-            selectedAuthorityView.leadingAnchor.constraint(equalTo: subviewsContainer.leadingAnchor),
-            selectedAuthorityView.trailingAnchor.constraint(equalTo: subviewsContainer.trailingAnchor),
+            selectorSection.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            selectorSection.bottomAnchor.constraint(equalTo: bottomAnchor),
+            selectorSection.leadingAnchor.constraint(equalTo: leadingAnchor),
+            selectorSection.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
     
-    func getSectionContainer() -> FormSectionContainer {
+    func getSectionContainer(with view: UIView) -> FormSectionContainer {
         return FormSectionContainer(
-            containedView: subviewsContainer,
+            containedView: view,
             sectionTitle: "#Organ podatkowy"
         )
     }
 }
-

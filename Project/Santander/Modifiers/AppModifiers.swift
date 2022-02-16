@@ -28,6 +28,7 @@ final class AppModifiers {
         let fundModifier = PLFundModifier(dependenciesResolver: self.dependencieEngine)
         return fundModifier
     }()
+
     private lazy var cardHomeActionModifier: PLCardHomeActionModifier = {
         let modifier = PLCardHomeActionModifier(dependenciesResolver: self.dependencieEngine)
         modifier.setCompletion { resolver in
@@ -102,6 +103,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: SetupActivateCardUseCaseProtocol.self) { resolver in
             return PLSetupActivateCardUseCase(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: CardActionFactoryProtocol.self) { dependenciesResolver in
+            return PLCardActionFactory(dependenciesResolver: dependenciesResolver)
         }
         self.dependencieEngine.register(for: CardHomeModifierProtocol.self) { _ in
             return self.cardHomeModifier
@@ -199,6 +203,9 @@ private extension AppModifiers {
         }
         self.dependencieEngine.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
             PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
+        }
+        self.dependencieEngine.register(for: ShortcutItemsProviderProtocol.self) { _ in
+            return PLShortcutItems()
         }
     }
 }

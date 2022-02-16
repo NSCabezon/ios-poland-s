@@ -66,7 +66,13 @@ final class AppNavigationDependencies {
             return TaxTransferFormCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: CharityTransferModuleCoordinator.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            let charityTransfer = repository.get()?.charityTransfer
+            let charityTransferSettings = CharityTransferSettings(transferRecipientName: charityTransfer?.transferRecipientName,
+                                                                  transferAccountNumber: charityTransfer?.transferAccountNumber,
+                                                                  transferTitle: charityTransfer?.transferTitle)
             return CharityTransferModuleCoordinator(dependenciesResolver: resolver,
+                                                    charityTransferSettings: charityTransferSettings,
                                                     navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in

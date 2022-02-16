@@ -54,7 +54,7 @@ extension HelpCenterConfig.Element {
     var webViewIdentifier: String? {
         switch self {
         case .yourCases:
-            return "CUSTOMER_SERVICE" // TODO: Maybe move PLAccountOtherOperativesIdentifier to PLCommon and use it here?
+            return "CUSTOMER_SERVICE" // TODO: Maybe move PLAccountOperativeIdentifier to PLCommon and use it here?
         case .mailContact:
             return "MAILBOX"
         default: // TODO: Add rest of the cases in separate tasks

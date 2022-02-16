@@ -150,7 +150,7 @@
         "mulMovUrls": "['click2callapp.pru.bsch', 'sanesp-pre.pru.bsch']",
         "insurancePASS2": "true",
         "enableTrusteerTransfersDeferred": "true",
-        "enabledNewSendMoney": "true"
+        "enabledNewSendMoney": "true",
     },
     "versions": {
         "4.0.60": {

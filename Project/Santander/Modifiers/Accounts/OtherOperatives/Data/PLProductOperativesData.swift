@@ -8,7 +8,7 @@
 import Foundation
 import CoreFoundationLib
 
-struct PLAccountOtherOperativesData {
+struct PLProductOperativesData {
     var identifier: String?
     var link: String?
     var isAvailable: Bool?
