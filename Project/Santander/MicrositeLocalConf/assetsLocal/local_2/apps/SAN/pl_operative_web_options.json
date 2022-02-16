@@ -94,6 +94,13 @@
             "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
             "isAvailable": true,
             "method": "POST"
+        },
+        {
+            "id": "CARD_CREDIT_LIMIT_INCREASE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer#/pages/product-details/increaseCreditCardLimit",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
     "help_center_options" : [

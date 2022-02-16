@@ -113,7 +113,11 @@ private extension GetPLCardsOtherOperativesWebConfigurationUseCase {
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseInput {
     let type: PLCardActionIdentifier
     let cardEntity: CardEntity
-    let cardData: PLProductOperativesData
+    let cardData: PLAccountOtherOperativesData
+}
+
+public enum PLCardWebViewType {
+    case cancel, multicurrency, pin, useAbroad, changeLimits, viewStatements, enable, repayInInstallments, customerService, atmPackage, alerts24, creditLimitIncreasePL
 }
 
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput {
