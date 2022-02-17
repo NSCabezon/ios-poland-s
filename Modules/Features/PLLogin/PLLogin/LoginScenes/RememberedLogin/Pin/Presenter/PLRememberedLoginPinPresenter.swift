@@ -317,7 +317,7 @@ private extension PLRememberedLoginPinPresenter {
     }
     
     func loadData() {
-        self.publicFilesManager.addAlways(subscriptor: PLRememberedLoginPinPresenter.self) { [weak self] in
+        self.publicFilesManager.add(subscriptor: PLRememberedLoginPinPresenter.self) { [weak self] in
             self?.loginPullOfferLoader.loadPullOffers()
         }
         self.loginPullOfferLoader.loadPullOffersSuperUseCase.delegate = self

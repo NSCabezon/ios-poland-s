@@ -150,7 +150,7 @@ private extension  PLUnrememberedLoginIdPresenter {
     
     func loadData() {
         self.loginPullOfferLoader.loadPullOffersSuperUseCase.delegate = self
-        self.publicFilesManager.addAlways(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
+        self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
             self?.loginPullOfferLoader.loadPullOffers()
         }
     }
