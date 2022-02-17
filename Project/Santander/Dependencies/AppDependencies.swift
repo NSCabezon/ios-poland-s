@@ -137,6 +137,9 @@ final class AppDependencies {
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
         return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
     }()
+    private lazy var pfmController: PfmControllerProtocol = {
+       return DefaultPFMController()
+    }()
 
     // MARK: Dependencies init
     init() {
@@ -311,7 +314,7 @@ private extension AppDependencies {
             return DefaultPFMHelper()
         }
         self.dependencieEngine.register(for: PfmControllerProtocol.self) { _ in
-            return DefaultPFMController()
+            return self.pfmController
         }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
