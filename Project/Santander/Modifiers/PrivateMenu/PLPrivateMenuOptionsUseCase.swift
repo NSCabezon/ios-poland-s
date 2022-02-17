@@ -69,60 +69,61 @@ private extension PLPrivateMenuOptionsUseCase {
                                            accesibilityIdentifier: item.accessibilityIdentifier)
         }
     }
-}
+    
+    struct PrivateMenuMainOption: PrivateMenuOptionRepresentable, Hashable {
+        let imageKey: String
+        let titleKey: String
+        let extraMessageKey: String?
+        let newMessageKey: String?
+        let imageURL: String?
+        let showArrow: Bool
+        let isHighlighted: Bool
+        let type: PrivateMenuOptions
+        let isFeatured: Bool
+        let accesibilityIdentifier: String?
+        
+        init(item: PrivateMenuOptionRepresentable) {
+            self.imageKey = item.imageKey
+            self.titleKey = item.titleKey
+            self.extraMessageKey = item.extraMessageKey
+            self.newMessageKey = item.newMessageKey
+            self.imageURL = item.imageURL
+            self.showArrow = item.showArrow
+            self.isHighlighted = item.isHighlighted
+            self.type = item.type
+            self.isFeatured = item.isFeatured
+            self.accesibilityIdentifier = item.accesibilityIdentifier
+        }
+        
+        init(imageKey: String,
+             titleKey: String,
+             extraMessageKey: String?,
+             newMessageKey: String?,
+             imageURL: String?,
+             showArrow: Bool,
+             isHighlighted: Bool,
+             type: PrivateMenuOptions,
+             isFeatured: Bool,
+             accesibilityIdentifier: String?) {
+            self.imageKey = imageKey
+            self.titleKey = titleKey
+            self.extraMessageKey = extraMessageKey
+            self.newMessageKey = newMessageKey
+            self.imageURL = imageURL
+            self.showArrow = showArrow
+            self.isHighlighted = isHighlighted
+            self.type = type
+            self.isFeatured = isFeatured
+            self.accesibilityIdentifier = accesibilityIdentifier
+        }
+        
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(imageKey)
+            hasher.combine(accesibilityIdentifier)
+        }
+        static func == (lhs: PrivateMenuMainOption, rhs: PrivateMenuMainOption) -> Bool {
+            return lhs.imageKey == rhs.imageKey
+        }
+    }
 
-struct PrivateMenuMainOption: PrivateMenuOptionRepresentable, Hashable {
-    let imageKey: String
-    let titleKey: String
-    let extraMessageKey: String?
-    let newMessageKey: String?
-    let imageURL: String?
-    let showArrow: Bool
-    let isHighlighted: Bool
-    let type: PrivateMenuOptions
-    let isFeatured: Bool
-    let accesibilityIdentifier: String?
-    
-    init(item: PrivateMenuOptionRepresentable) {
-        self.imageKey = item.imageKey
-        self.titleKey = item.titleKey
-        self.extraMessageKey = item.extraMessageKey
-        self.newMessageKey = item.newMessageKey
-        self.imageURL = item.imageURL
-        self.showArrow = item.showArrow
-        self.isHighlighted = item.isHighlighted
-        self.type = item.type
-        self.isFeatured = item.isFeatured
-        self.accesibilityIdentifier = item.accesibilityIdentifier
-    }
-    
-    init(imageKey: String,
-         titleKey: String,
-         extraMessageKey: String?,
-         newMessageKey: String?,
-         imageURL: String?,
-         showArrow: Bool,
-         isHighlighted: Bool,
-         type: PrivateMenuOptions,
-         isFeatured: Bool,
-         accesibilityIdentifier: String?) {
-        self.imageKey = imageKey
-        self.titleKey = titleKey
-        self.extraMessageKey = extraMessageKey
-        self.newMessageKey = newMessageKey
-        self.imageURL = imageURL
-        self.showArrow = showArrow
-        self.isHighlighted = isHighlighted
-        self.type = type
-        self.isFeatured = isFeatured
-        self.accesibilityIdentifier = accesibilityIdentifier
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(imageKey)
-        hasher.combine(accesibilityIdentifier)
-    }
-    static func == (lhs: PrivateMenuMainOption, rhs: PrivateMenuMainOption) -> Bool {
-        return lhs.imageKey == rhs.imageKey
-    }
 }
