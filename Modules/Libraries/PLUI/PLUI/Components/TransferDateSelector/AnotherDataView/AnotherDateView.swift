@@ -39,6 +39,11 @@ class AnotherDateView: UIView {
     func getSelectedDate() -> Date {
         datePicker.date
     }
+    
+    func reset() {
+        datePicker.date = Date()
+        selectedDate = datePicker.date
+    }
 }
 
 private extension AnotherDateView {
