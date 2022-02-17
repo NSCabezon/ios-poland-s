@@ -113,7 +113,7 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: CardDetailModifierProtocol.self) { _ in
             return self.cardDetailModifier
         }
-        self.dependencieEngine.register(for: MonthlyBalanceUseCaseProtocol.self) { resolver in
+        self.dependencieEngine.register(for: GetMonthlyBalanceUseCase.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
 //        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
