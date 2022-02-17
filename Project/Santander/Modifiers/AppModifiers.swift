@@ -205,8 +205,5 @@ private extension AppModifiers {
         self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
             PLPrivateMenuModifier(resolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
         }
-        self.dependencieEngine.register(for: InternalTransferPreSetupUseCase.self) { resolver in
-            PLInternalTransferPreSetupUseCase(dependencies: resolver.resolve())
-        }
     }
 }
