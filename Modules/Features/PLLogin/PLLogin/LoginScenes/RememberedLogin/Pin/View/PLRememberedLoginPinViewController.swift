@@ -89,6 +89,11 @@ final class PLRememberedLoginPinViewController: UIViewController {
         self.presenter.viewDidAppear()
         self.tryBiometricAuth()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter.viewWillDissappear()
+    }
 }
 
 private extension PLRememberedLoginPinViewController {
