@@ -1,5 +1,5 @@
 //
-//  PLPrivateMenuFooterModifier.swift
+//  PLPrivateMenuFooterOptionsUseCase.swift
 //  Santander
 //
 //  Created by Daniel Gómez Barroso on 3/2/22.
@@ -9,7 +9,7 @@ import PrivateMenu
 import OpenCombine
 import CoreDomain
 
-struct PLPrivateMenuFooterModifier: GetPrivateMenuFooterOptionsUseCase {
+struct PLPrivateMenuFooterOptionsUseCase: GetPrivateMenuFooterOptionsUseCase {
     struct PLPrivateMenuFooterOptions: PrivateMenuFooterOptionRepresentable {
         let title: String
         let imageName: String
