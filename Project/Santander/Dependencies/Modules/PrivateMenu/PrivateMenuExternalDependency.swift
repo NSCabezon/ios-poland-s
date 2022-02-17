@@ -28,4 +28,8 @@ extension ModuleDependencies: PrivateMenuExternalDependenciesResolver {
     func resolve() -> PersonalManagerReactiveRepository {
         oldResolver.resolve()
     }
+    
+    func resolve() -> PersonalManagerNotificationReactiveRepository {
+        oldResolver.resolve()
+    }
 }
