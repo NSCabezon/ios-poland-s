@@ -23,6 +23,7 @@ import Account
 import Loans
 import Cards
 import ZusTransfer
+import GlobalPosition
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -66,7 +67,13 @@ final class AppNavigationDependencies {
             return TaxTransferFormCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: CharityTransferModuleCoordinator.self) { resolver in
+            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
+            let charityTransfer = repository.get()?.charityTransfer
+            let charityTransferSettings = CharityTransferSettings(transferRecipientName: charityTransfer?.transferRecipientName,
+                                                                  transferAccountNumber: charityTransfer?.transferAccountNumber,
+                                                                  transferTitle: charityTransfer?.transferTitle)
             return CharityTransferModuleCoordinator(dependenciesResolver: resolver,
+                                                    charityTransferSettings: charityTransferSettings,
                                                     navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in
@@ -125,6 +132,9 @@ final class AppNavigationDependencies {
         }
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
+        self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in
+            PLInsuranceProtectionModifier(dependenciesResolver: resolver, drawer: self.drawer)
+        }
     }
 }
 

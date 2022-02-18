@@ -51,6 +51,9 @@ extension DefaultPublicMenuCustomActionCoordinator: BindableCoordinator {
             coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
         case .mobileAuthorization:
             coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
+        case .contactMenu:
+            //TODO: Add here the poland corrdinator to custom contact menu.
+            coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
         }
         coordinator.start()
         append(child: coordinator)

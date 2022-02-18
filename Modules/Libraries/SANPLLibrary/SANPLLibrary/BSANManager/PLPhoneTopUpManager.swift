@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SANLegacyLibrary
 
 public protocol PLPhoneTopUpManagerProtocol {
     func getFormData() throws -> Result<
@@ -30,7 +31,8 @@ extension PLPhoneTopUpManager: PLPhoneTopUpManagerProtocol {
         let internetContactsResults = try dataSource.getInternetContacts()
         switch (accountsResult, operatorsResult, gsmOperatorsResult, internetContactsResults) {
         case (.success(let accounts), .success(let operators), .success(let gsmOperators), .success(let contacts)):
-            return .success(TopUpFormDataDTO(accounts: accounts, operators: operators, gsmOperators: gsmOperators, internetContacts: contacts))
+            let plnAccounts = accounts.filter({ $0.currencyCode == CurrencyType.złoty.name })
+            return .success(TopUpFormDataDTO(accounts: plnAccounts, operators: operators, gsmOperators: gsmOperators, internetContacts: contacts))
         case (.failure(let accountsFetchError), _, _, _):
             return .failure(accountsFetchError)
         case (_, .failure(let operatorsFetchError), _, _):

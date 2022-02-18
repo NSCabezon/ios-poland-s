@@ -149,7 +149,7 @@
         "enableClick2call": "false",
         "enableNextSettlementCreditCard": "false",
         "mulMovUrls": "['click2callapp.pru.bsch', 'sanesp-pre.pru.bsch']",
-        "enabledNewSendMoney": "true"
+        "enabledNewSendMoney": "true",
 		},
     "versions": {
         "5.0.108": {

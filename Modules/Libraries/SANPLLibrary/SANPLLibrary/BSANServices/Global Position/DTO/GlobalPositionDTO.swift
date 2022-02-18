@@ -13,4 +13,5 @@ public struct GlobalPositionDTO: Codable {
     public let loans: [LoanDTO]?
     public let deposits: [DepositDTO]?
     public let investmentFunds: [InvestmentFundsDTO]?
+    public let insurances: [InsuranceDTO]?
 }

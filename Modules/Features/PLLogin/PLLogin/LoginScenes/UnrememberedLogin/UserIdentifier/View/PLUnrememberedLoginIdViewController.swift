@@ -90,6 +90,11 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     @objc func didSelectMenu() {
         self.presenter.didSelectMenu()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter.viewWillDissappear()
+    }
 }
 
 extension PLUnrememberedLoginIdViewController: PLUnrememberedLoginIdViewProtocol {

@@ -25,7 +25,7 @@ final class GlobalPositionDataSource {
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-    private let basePath = "/api"
+    private let basePath = "/api/v2"
     private var headers: [String: String] = [:]
     private var queryParams: [String: Any]? = nil
     

@@ -103,6 +103,15 @@ final class ZusTransferFormView: UIView {
             delegate?.didChangeForm(with: $0)
         }
     }
+    
+    func clearForm() {
+        recipientTextField.setText("")
+        accountNumberTextField.setText("")
+        amountTextField.setText("")
+        titleTextField.setText(localized("pl_zusTransfer_text_zusTransfer"))
+        selectedDate = Date()
+        transferDateSelector.resetToToday()
+    }
 }
 
 private extension ZusTransferFormView {
