@@ -53,6 +53,14 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         }
     }
     
+    var giveUpOpinator: String {
+        return "app-transf-nacional-abandono"
+    }
+    
+    var favoriteGiveUpOpinator: String {
+        return "app-envio-favorito-abandono"
+    }
+    
     var selectionIssueDateViewModel: SelectionIssueDateViewModel {
         return SelectionIssueDateViewModel(minDate: Date(), maxDate: Date().adding(.year, value: 1))
     }

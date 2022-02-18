@@ -30,6 +30,11 @@ public class TransferDateSelector: UIView {
             return anotherDateView.getSelectedDate()
         }
     }
+    
+    public func resetToToday() {
+        segmentView.didSelectOption(.today)
+        anotherDateView.reset()
+    }
 }
 
 private extension TransferDateSelector {

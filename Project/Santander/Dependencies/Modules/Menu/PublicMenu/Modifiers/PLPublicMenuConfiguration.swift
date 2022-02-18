@@ -64,12 +64,12 @@ struct PLPublicMenuConfiguration {
                               accessibilityIdentifier: KindOfPublicMenuNode.offerViewModel.accessibility,
                               type: .bigButton(style: PLBigButtonType(fontSize: 20.0))),
         bottom: nil)
-    // TODO: - Replace the action with .callPhone(number: contactNumber) when will be available
+    
     private lazy var contactItem = PublicMenuElement(
         top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                               titleKey: KindOfPublicMenuNode.contactViewModel.titleKey,
                               iconKey: KindOfPublicMenuNode.contactViewModel.iconKey,
-                              action: .comingSoon,
+                              action: .custom(action: PLCustomActions.contactMenu.rawValue),
                               accessibilityIdentifier: KindOfPublicMenuNode.contactViewModel.accessibility,
                               type: .bigButton(style: PLBigButtonType(fontSize: 20.0))),
         bottom: nil
