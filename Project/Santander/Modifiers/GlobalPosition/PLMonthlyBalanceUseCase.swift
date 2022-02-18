@@ -16,6 +16,9 @@ final class MonthlyBalanceUseCase: UseCase<Void, GetMonthlyBalanceUseCaseOkOutpu
     lazy private var expensesChartManager: PLExpensesChartManagerProtocol = {
         return self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self).getExpensesChartManager()
     }()
+    private var pfmController: PfmControllerProtocol {
+        return dependenciesResolver.resolve()
+    }
 
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
@@ -39,6 +42,7 @@ final class MonthlyBalanceUseCase: UseCase<Void, GetMonthlyBalanceUseCaseOkOutpu
                 monthlyBalance.sort {
                     $0.date < $1.date
                 }
+                pfmController.monthsHistory = monthlyBalance
                 return .ok(GetMonthlyBalanceUseCaseOkOutput(data: monthlyBalance))
             }
         case .failure(let error):
