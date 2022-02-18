@@ -17,6 +17,7 @@ protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func updateContact(with contact: MobileContact)
     func updateOperatorSelection(with gsmOperator: GSMOperator?)
     func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?)
+    func updateTermsView(isAcceptanceRequired: Bool, isAccepted: Bool)
     func showInvalidPhoneNumberError(_ showError: Bool)
     func showInvalidCustomAmountError(_ error: String?)
     func showContactsPermissionsDeniedDialog()
@@ -129,6 +130,10 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         formView.updatePaymentAmounts(with: cellModels, selectedAmount: selectedAmount)
     }
     
+    func updateTermsView(isAcceptanceRequired: Bool, isAccepted: Bool) {
+        formView.updateTermsView(isAcceptanceRequired: isAcceptanceRequired, isAccepted: isAccepted)
+    }
+    
     func showInvalidCustomAmountError(_ error: String?) {
         formView.showInvalidCustomAmountError(error)
     }
@@ -139,7 +144,7 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         presenter.didSelectChangeAccount()
     }
     
-    func didTouchContactsButton() {
+    func topUpFormDidTouchContactsButton() {
         presenter.didTouchContactsButton()
     }
     
@@ -164,7 +169,11 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         formView.updateRecipientName(with: contact.fullName)
     }
     
-    func didTouchOperatorSelectionButton() {
+    func topUpFormDidTouchOperatorSelectionButton() {
         presenter.didTouchOperatorSelectionButton()
+    }
+    
+    func topUpFormDidTouchTermsAndConditionsCheckBox() {
+        presenter.didTouchTermsAndConditionsCheckBox()
     }
 }

@@ -14,15 +14,15 @@ import PLCommonOperatives
 import PersonalArea
 
 final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingActionModifierProtocol {
-
+    
     override func getCreditCardHomeActions() -> [CardActionType] {
         return []
     }
-
+    
     override func getDebitCardHomeActions() -> [CardActionType] {
         return []
     }
-
+    
     override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
         
         switch action {
@@ -47,41 +47,42 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
                     .atmPackage,
                     .alerts24,
                     .viewStatements,
-                    .cancelCard:
+                    .cancelCard,
+                    .creditLimitIncrease:
                 self.openWebViewIfProceeds(for: identifier,
-                                      entity: entity)
+                                              entity: entity)
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
                 return
             }
-
+            
         default:
             Toast.show(localized("generic_alert_notAvailableOperation"))
         }
     }
-
+    
     override func rearrangeApplePayAction() -> Bool {
         return false
     }
 }
 
 private extension PLCardHomeActionModifier {
-
+    
     func getCardOperativesData(identifier: PLCardActionIdentifier) -> PLProductOperativesData? {
-
+        
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.cardsOptions,
               let dto = (list.first { $0.id == identifier.rawValue }) else { return nil }
-              return PLProductOperativesData(identifier: identifier.rawValue,
-                                                  link: dto.url,
-                                                  isAvailable: dto.isAvailable,
-                                                  httpMethod: dto.getHTTPMethod,
-                                                  isFullScreen: dto.isFullScreen)
+        return PLProductOperativesData(identifier: identifier.rawValue,
+                                       link: dto.url,
+                                       isAvailable: dto.isAvailable,
+                                       httpMethod: dto.getHTTPMethod,
+                                       isFullScreen: dto.isFullScreen)
     }
-
+    
     func openWebViewIfProceeds(for identifier: PLCardActionIdentifier,
                                entity: CardEntity) {
-
+        
         guard let cardData = self.getCardOperativesData(identifier: identifier),
               let isAvailable = cardData.isAvailable, isAvailable == true else {
                   Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -90,24 +91,24 @@ private extension PLCardHomeActionModifier {
         self.showWebView(identifier: identifier,
                          entity: entity,
                          cardData: cardData)
-
+        
     }
-
+    
     func showWebView(identifier: PLCardActionIdentifier, entity: CardEntity, cardData: PLProductOperativesData) {
         switch identifier {
-
+            
         case .managePin,
-            .modifyLimits,
-            .useAbroad,
-            .activate,
-            .customerService,
-            .multicurrency:
-
+                .modifyLimits,
+                .useAbroad,
+                .activate,
+                .customerService,
+                .multicurrency:
+            
             guard let url = cardData.link,
                   let vpan = entity.dto.contract?.contractNumber else {
-                Toast.show(localized("generic_alert_notAvailableOperation"))
-                return
-            }
+                      Toast.show(localized("generic_alert_notAvailableOperation"))
+                      return
+                  }
             let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
             let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url.replace("{$VPAN}", vpan), method: cardData.httpMethod ?? .get, isFullScreenEnabled: cardData.isFullScreen)
             Scenario(useCase: useCase, input: input)
@@ -127,22 +128,22 @@ private extension PLCardHomeActionModifier {
                 }
         }
     }
-
+    
     func openCreditCardRepayment(creditCardEntity: CardEntity) {
         let coordinator = self.dependenciesResolver.resolve(for: CreditCardRepaymentModuleCoordinator.self)
         coordinator.start(with: creditCardEntity)
     }
-
+    
     func goToCardBlock(_ card: CardEntity) {
         let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
         coordinator.didSelectAction(.offCard, card)
     }
-
+    
     func goToCardUnblock(_ card: CardEntity) {
         let coordinator = self.dependenciesResolver.resolve(for: CardsHomeModuleCoordinatorDelegate.self)
         coordinator.didSelectAction(.onCard, card)
     }
-
+    
     func goToPGProductsCustomization() {
         let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
         coordinator.goToGPProductsCustomization()

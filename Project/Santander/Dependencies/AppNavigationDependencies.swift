@@ -23,6 +23,7 @@ import Account
 import Loans
 import Cards
 import ZusTransfer
+import GlobalPosition
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -131,6 +132,9 @@ final class AppNavigationDependencies {
         }
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
+        self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in
+            PLInsuranceProtectionModifier(dependenciesResolver: resolver, drawer: self.drawer)
+        }
     }
 }
 

@@ -822,6 +822,18 @@
                         "valueInBaseCurrency": 15450.94
                     }
                 }
+            ],
+            "insurances": [
+                {
+                    "policyName": "Pakiet Ubezpieczeń Bezpieczne Pieniądze",
+                    "policyNumber": null,
+                    "detailsUrl": "/view360/details/P0511423400000"
+                },
+                {
+                    "policyName": "Opiekun Rodziny",
+                    "policyNumber": "0549258",
+                    "detailsUrl": "/view360/details/I00000549258"
+                }
             ]
         }
     }

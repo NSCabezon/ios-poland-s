@@ -129,7 +129,7 @@ extension TaxTransferPayersListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.setUp(with: taxPayerViewModel, isSelected: viewModel.isSelected(index: indexPath.row))
+        cell.setUp(with: taxPayerViewModel, isSelected: viewModel.isSelected(index: indexPath.row), onTap: {})
         return cell
     }
     

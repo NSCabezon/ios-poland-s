@@ -13,6 +13,7 @@ protocol PLUnrememberedLoginIdPresenterProtocol: MenuTextWrapperProtocol, PLPubl
     var view: PLUnrememberedLoginIdViewProtocol? { get set }
     func viewDidLoad()
     func viewWillAppear()
+    func viewWillDissappear()
     func login(identification: String)
     func didSelectChooseEnvironment()
     func goToPasswordScene(_ configuration: UnrememberedLoginConfiguration)
@@ -56,6 +57,9 @@ final class PLUnrememberedLoginIdPresenter {
 }
 
 extension PLUnrememberedLoginIdPresenter: PLUnrememberedLoginIdPresenterProtocol {
+    func viewWillDissappear() {
+        self.publicFilesManager.remove(subscriptor: PLUnrememberedLoginIdPresenter.self)
+    }
     
     func setAllowLoginBlockedUsers() {
         self.allowLoginBlockedUsers = true
@@ -145,6 +149,7 @@ private extension  PLUnrememberedLoginIdPresenter {
     }
     
     func loadData() {
+        self.loginPullOfferLoader.loadPullOffersSuperUseCase.delegate = self
         self.publicFilesManager.add(subscriptor: PLUnrememberedLoginIdPresenter.self) { [weak self] in
             self?.loginPullOfferLoader.loadPullOffers()
         }
@@ -219,5 +224,11 @@ extension PLUnrememberedLoginIdPresenter: AutomaticScreenActionTrackable {
 
     var trackerPage: PLUnrememberedLoginPage {
         return PLUnrememberedLoginPage()
+    }
+}
+
+extension PLUnrememberedLoginIdPresenter: SetupPublicPullOffersSuperUseCaseDelegate {
+    func onSuccess() {
+        self.coordinatorDelegate.reloadSideMenu()
     }
 }

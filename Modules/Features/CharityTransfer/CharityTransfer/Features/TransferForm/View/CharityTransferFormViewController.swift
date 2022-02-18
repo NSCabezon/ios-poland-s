@@ -8,6 +8,7 @@ protocol CharityTransferFormViewProtocol: AnyObject,
                                           ConfirmationDialogPresentable {
     func setAccountViewModel()
     func showValidationMessages(messages: InvalidCharityTransferFormMessages)
+    func clearForm()
 }
 
 final class CharityTransferFormViewController: UIViewController {
@@ -120,6 +121,12 @@ extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
         } else {
             bottomView.disableButton()
         }
+    }
+    
+    func clearForm() {
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
     }
 }
 

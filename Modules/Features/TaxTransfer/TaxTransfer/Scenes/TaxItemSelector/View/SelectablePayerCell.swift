@@ -18,6 +18,7 @@ final class SelectablePayerCell: UITableViewCell {
     private let extraTaxIdentifierLabel = UILabel()
     private let extraTaxNameLabel = UILabel()
     private let container = UIView()
+    private let tappableCard = TappableControl()
     private let checkImageView = UIImageView(image: PLAssets.image(named: "checkIcon"))
     
     private let leftStackView = UIStackView()
@@ -42,10 +43,16 @@ final class SelectablePayerCell: UITableViewCell {
         extraTaxNameLabel.text = ""
     }
     
-    func setUp(with viewModel: TaxTransferFormViewModel.TaxPayerViewModel, isSelected: Bool) {
+    func setUp(
+        with viewModel: TaxTransferFormViewModel.TaxPayerViewModel,
+        isSelected: Bool,
+        onTap: @escaping () -> ()
+    ) {
         payerNameLabel.text = viewModel.taxPayer.name
         payerShortNameLabel.text = viewModel.taxPayer.shortName
         
+        tappableCard.onTap = onTap
+         
         configureStyling(isSelected: isSelected)
 
         if let taxIdentifier = viewModel.taxPayer.taxIdentifier {
@@ -73,10 +80,10 @@ final class SelectablePayerCell: UITableViewCell {
     
     private func configureSubviews() {
         contentView.addSubview(container)
-        container.addSubview(leftStackView)
-        
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        container.addSubview(leftStackView)
+                
         [leftStackView,
         rightStackView,
         checkImageView].forEach {
@@ -98,11 +105,21 @@ final class SelectablePayerCell: UITableViewCell {
             $0.distribution = .fillEqually
          }
         
+        contentView.addSubview(tappableCard)
+        tappableCard.translatesAutoresizingMaskIntoConstraints = false
+        
+        bringSubviewToFront(tappableCard)
+        
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            tappableCard.topAnchor.constraint(equalTo: contentView.topAnchor),
+            tappableCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            tappableCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            tappableCard.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            container.topAnchor.constraint(equalTo: tappableCard.topAnchor, constant: 10),
+            container.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 16),
+            container.trailingAnchor.constraint(equalTo: tappableCard.trailingAnchor, constant: -16),
+            container.bottomAnchor.constraint(equalTo: tappableCard.bottomAnchor),
             
             leftStackView.topAnchor.constraint(equalTo: container.topAnchor, constant: 12),
             leftStackView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),

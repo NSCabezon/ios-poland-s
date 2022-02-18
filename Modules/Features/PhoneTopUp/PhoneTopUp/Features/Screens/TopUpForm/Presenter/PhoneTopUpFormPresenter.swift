@@ -24,6 +24,7 @@ protocol PhoneTopUpFormPresenterProtocol: AccountForDebitSelectorDelegate, Mobil
     func didSelectTopUpAmount(_ amount: TopUpAmount)
     func didTouchContinueButton()
     func didTouchOperatorSelectionButton()
+    func didTouchTermsAndConditionsCheckBox()
 }
 
 final class PhoneTopUpFormPresenter {
@@ -88,6 +89,7 @@ final class PhoneTopUpFormPresenter {
     private var selectedOperator: Operator? {
         didSet {
             selectedTopUpAmount = matchDefaultTopUpAmount(with: selectedOperator)
+            termsAccepted = false
             let amountViewModels = amountCellViewModelMapper.map(topUpValues: selectedOperator?.topupValues, selectedAmount: selectedTopUpAmount)
             view?.updatePaymentAmounts(with: amountViewModels, selectedAmount: selectedTopUpAmount)
         }
@@ -98,6 +100,18 @@ final class PhoneTopUpFormPresenter {
             let amountViewModels = amountCellViewModelMapper.map(topUpValues: selectedOperator?.topupValues, selectedAmount: selectedTopUpAmount)
             view?.updatePaymentAmounts(with: amountViewModels, selectedAmount: selectedTopUpAmount)
             validateCustomTopUpAmount()
+        }
+    }
+    
+    private var isTermsAcceptanceRequired: Bool {
+        get {
+            return settings.first(where: { $0.operatorId == selectedOperator?.id })?.requestAcceptance ?? false
+        }
+    }
+    
+    private var termsAccepted: Bool = false {
+        didSet {
+            view?.updateTermsView(isAcceptanceRequired: isTermsAcceptanceRequired, isAccepted: termsAccepted)
         }
     }
         
@@ -219,6 +233,10 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     
     func didSelectOperator(_ gsmOperator: GSMOperator) {
         selectedGsmOperator = gsmOperator
+    }
+    
+    func didTouchTermsAndConditionsCheckBox() {
+        termsAccepted = !termsAccepted
     }
 }
 
