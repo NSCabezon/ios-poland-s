@@ -9,13 +9,8 @@ import CoreFoundationLib
 import CoreDomain
 import Transfer
 import UI
-import SANPLLibrary
 
 extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
-    func resolve() -> PLTransfersRepository {
-        oldResolver.resolve()
-    }
-    
     func resolve() -> FaqsRepositoryProtocol {
         oldResolver.resolve()
     }

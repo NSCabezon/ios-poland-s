@@ -13,31 +13,43 @@ import CoreFoundationLib
 import TransferOperatives
 import SANPLLibrary
 
+protocol PLInternalTransferOperativeExternalDependenciesResolver {
+    func resolve() -> PLTransfersRepository
+    func resolve() -> GlobalPositionDataRepository
+}
+
 struct PLInternalTransferPreSetupUseCase {
-    let dependencies: InternalTransferOperativeExternalDependenciesResolver
     let transfersRepository: PLTransfersRepository
+    let globalPositionRepository: GlobalPositionDataRepository
     
-    init(dependencies: InternalTransferOperativeExternalDependenciesResolver) {
-        self.dependencies = dependencies
-        self.transfersRepository = dependencies.resolve().resolve()
+    init(dependencies: PLInternalTransferOperativeExternalDependenciesResolver) {
+        self.transfersRepository = dependencies.resolve()
+        self.globalPositionRepository = dependencies.resolve()
     }
 }
 
 extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
     func fetchPreSetup() -> AnyPublisher<PreSetupData, Error> {
-        let gpNotVisibleAccounts = dependencies.resolve().resolve(for: GlobalPositionWithUserPrefsRepresentable.self).accountsNotVisiblesWithoutPiggy
-        return transfersRepository.getAccountForDebit()
-            .tryMap { accounts in
-            var visibles: [AccountRepresentable] = []
-            var notVisibles: [AccountRepresentable] = []
+        Publishers.Zip(
+            globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
+            transfersRepository.getAccountForDebit()
+        )
+            .tryMap { response -> PreSetupData in
+                var visibles: [AccountRepresentable] = []
+                var notVisibles: [AccountRepresentable] = []
                 var notCreditCardAccount: [AccountRepresentable] = []
+                let accounts = response.1
+                let notVisiblesPGAccounts = response.0.accounts.filter { $0.isVisible == false }
+                let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
+                    return account.product
+                }
                 accounts.forEach { account in
                     let polandAccount = account as? PolandAccountRepresentable
                     if polandAccount?.type != .creditCard {
                         notCreditCardAccount.append(account)
                     }
                     let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
-                        return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.representable.ibanRepresentable?.codBban ?? "") ?? false
+                        return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
                     }
                     guard containsAccountNotVisible else {
                         visibles.append(account)
@@ -51,9 +63,9 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
                 if creditCardAccountConditions(notCreditCardAccount) == false {
                     throw NSError(description: "sendMoney_text_notCompatibleOperation")
                 }
-            return PreSetupData(accountsVisibles: visibles, accountsNotVisibles: notVisibles)
-        }
-        .eraseToAnyPublisher()
+                return PreSetupData(accountsVisibles: visibles, accountsNotVisibles: notVisibles)
+            }
+            .eraseToAnyPublisher()
     }
     
     func isMinimunAccounts(accounts: [AccountRepresentable]) -> Bool {

@@ -7,8 +7,13 @@
 
 import Foundation
 import TransferOperatives
+import SANPLLibrary
 
-extension ModuleDependencies: TransferOperativesExternalDependenciesResolver {
+extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {
+    func resolve() -> PLTransfersRepository {
+        return oldResolver.resolve()
+    }
+    
     func resolve() -> InternalTransferPreSetupUseCase {
         return PLInternalTransferPreSetupUseCase(dependencies: self)
     }
