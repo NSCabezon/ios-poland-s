@@ -7,6 +7,7 @@ import UI
 import CoreFoundationLib
 import Account
 import Foundation
+import PersonalArea
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     private let dependenciesResolver: DependenciesResolver
@@ -22,12 +23,14 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
                 return
             }
             switch actionKey {
-            case .savingGoals:
+            case .savingGoals, .addBanks:
                 showWebView(identifier: identifier, entity: entity)
             case .externalTransfer:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             case .transfer:
                 goToSendMoney()
+            case .changeAliases:
+                goToPGProductsCustomization()
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
@@ -80,5 +83,10 @@ extension PLAccountHomeActionModifier {
                     Toast.show(localized("generic_alert_notAvailableOperation"))
                 }
             }
+    }
+    
+    private func goToPGProductsCustomization() {
+        let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
+        coordinator.goToGPProductsCustomization()
     }
 }
