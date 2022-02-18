@@ -139,6 +139,7 @@
 		7E2CCA8B26B80CF500CBDB11 /* BuyInsurancePGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8A26B80CF500CBDB11 /* BuyInsurancePGFrequentOperativeOption.swift */; };
 		7E2CCA8D26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8C26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift */; };
 		7E2CCA8F26B80D1700CBDB11 /* AccountStatementPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2CCA8E26B80D1700CBDB11 /* AccountStatementPGFrequentOperativeOption.swift */; };
+		7E50345627BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E50345527BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift */; };
 		7E8AD11D26F0C13B00FC54D0 /* PLApplePayOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD11C26F0C13A00FC54D0 /* PLApplePayOperative.swift */; };
 		7E8AD11F26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD11E26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift */; };
 		7E8AD12126F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8AD12026F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift */; };
@@ -169,7 +170,7 @@
 		A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */; };
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
@@ -417,6 +418,7 @@
 		7E2CCA8A26B80CF500CBDB11 /* BuyInsurancePGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInsurancePGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E2CCA8C26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerServicePGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		7E2CCA8E26B80D1700CBDB11 /* AccountStatementPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatementPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
+		7E50345527BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInsuranceProtectionModifier.swift; sourceTree = "<group>"; };
 		7E8AD11C26F0C13A00FC54D0 /* PLApplePayOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLApplePayOperative.swift; sourceTree = "<group>"; };
 		7E8AD11E26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPLAccountOtherOperativesUseCase.swift; sourceTree = "<group>"; };
 		7E8AD12026F0C20100FC54D0 /* GetPLAccountHomeActionUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPLAccountHomeActionUseCase.swift; sourceTree = "<group>"; };
@@ -1018,6 +1020,7 @@
 				0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */,
 				669A37DF2717508300C0F272 /* PLEditBudgetHelperModifier.swift */,
 				0D9E176426B96A9B00781A95 /* PLFundModifier.swift */,
+				7E50345527BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift */,
 				BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */,
 				0DBF736F2666157E00E9A9EE /* ProductIdDelegateModifier.swift */,
 				9C0BFBE426F8C5B0000F2C8E /* SendMoneyCoordinator.swift */,
@@ -1895,7 +1898,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -1919,6 +1922,7 @@
 				669A37D8270F573F00C0F272 /* PLAccountOtherOperativesWebConfiguration.swift in Sources */,
 				900EECE0273E784E00B7AD95 /* ConfirmPinUseCase.swift in Sources */,
 				446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */,
+				7E50345627BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift in Sources */,
 				B0D77A55276B4CB500766705 /* PLCharityTransferSettingsDTO.swift in Sources */,
 				9CDAE3B42743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift in Sources */,
 				7E9FD51227A3FA2300B36D7C /* PLUserSegmentProtocol.swift in Sources */,
