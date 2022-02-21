@@ -42,7 +42,7 @@ final class TaxTransferPayersListViewModel: TaxTransferPayersListViewModelProtoc
     init(mapper: TaxPayerViewModelMapping,
          taxPayers: [TaxPayer]) {
         self.mapper = mapper
-        self.taxPayers = mapper.map(taxPayers) // TODO: handle empty tax payers list: TAP-2105
+        self.taxPayers = mapper.map(taxPayers)
     }
     
     func selectPayer(index: Int) {

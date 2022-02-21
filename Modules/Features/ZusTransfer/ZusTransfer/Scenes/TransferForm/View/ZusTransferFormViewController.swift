@@ -9,6 +9,7 @@ protocol ZusTransferFormViewProtocol: AnyObject,
     func setAccountViewModel()
     func showValidationMessages(with data: InvalidZusTransferFormData)
     func updateRecipient(name: String, accountNumber: String)
+    func clearForm()
 }
 
 final class ZusTransferFormViewController: UIViewController {
@@ -152,6 +153,12 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
         if (bottomOffset.y > 0) {
             scrollView.setContentOffset(bottomOffset, animated: true)
         }
+    }
+    
+    func clearForm() {
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
     }
 }
 

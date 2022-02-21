@@ -123,7 +123,7 @@ final class AppDependencies {
         )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
-        return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
+        return PLSessionDataManagerModifier(dependenciesEngine: dependencieEngine)
     }()
     // MARK: Features
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {

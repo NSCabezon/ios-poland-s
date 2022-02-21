@@ -35,9 +35,9 @@
                   "valueInBaseCurrency": 0
                 },
                 "overDraftLimit": {
-                  "value": 0,
+                  "value": 20,
                   "currencyCode": "PLN",
-                  "valueInBaseCurrency": 0
+                  "valueInBaseCurrency": 20
                 },
                 "lastUpdate": "2021-12-06",
                 "bankId": 0,
@@ -821,6 +821,18 @@
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 15450.94
                     }
+                }
+            ],
+            "insurances": [
+                {
+                    "policyName": "Pakiet Ubezpieczeń Bezpieczne Pieniądze",
+                    "policyNumber": null,
+                    "detailsUrl": "/view360/details/P0511423400000"
+                },
+                {
+                    "policyName": "Opiekun Rodziny",
+                    "policyNumber": "0549258",
+                    "detailsUrl": "/view360/details/I00000549258"
                 }
             ]
         }

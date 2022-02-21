@@ -25,7 +25,7 @@ struct PLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {
         let repository = self.dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let repositoryGetter = repository.get() else { return nil }
         let options = Array(
-            groups.compactMap { group -> [PLAccountOtherOperativesDTO]? in
+            groups.compactMap { group -> [PLProductOperativesDTO]? in
                 switch group {
                 case .cards: return repositoryGetter.cardsOptions
                 case .accounts: return repositoryGetter.accountsOptions
@@ -36,7 +36,7 @@ struct PLWebViewLinkRepository: PLWebViewLinkRepositoryProtocol {
         return map(otherOperative: option)
     }
     
-    private func map(otherOperative: PLAccountOtherOperativesDTO) -> PLWebViewLink? {
+    private func map(otherOperative: PLProductOperativesDTO) -> PLWebViewLink? {
         guard let id = otherOperative.id,
               let url = otherOperative.url,
               let methodString = otherOperative.method,
