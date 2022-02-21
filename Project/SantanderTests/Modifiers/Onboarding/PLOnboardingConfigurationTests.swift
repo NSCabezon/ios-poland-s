@@ -14,7 +14,7 @@ class PLOnboardingConfigurationTests: XCTestCase {
     func test_onboardingConfiguration_success() {
         let configuration = PLOnboardingConfiguration()
         XCTAssertTrue(configuration.allowAbort)
-        XCTAssertEqual(configuration.numCountableSteps, 4)
+        XCTAssertEqual(configuration.countableSteps.count, 4)
         XCTAssertEqual(configuration.steps, [StepsCoordinator<OnboardingStep>.Step(type: .welcome),
                                             StepsCoordinator<OnboardingStep>.Step(type: .changeAlias, state: .disabled),
                                             StepsCoordinator<OnboardingStep>.Step(type: .languages),
