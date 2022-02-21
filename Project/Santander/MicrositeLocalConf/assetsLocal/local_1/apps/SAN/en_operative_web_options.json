@@ -29,7 +29,7 @@
             "isFullScreen": true
         },
         {
-            "id":"ALERTS_NOTIFICATION",
+            "id":"ALERTS_24",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
             "isAvailable": true,
             "method": "GET",
@@ -57,7 +57,7 @@
             "isFullScreen": true
         },
         {
-            "id": "ACCOUNT_STATEMENT",
+            "id": "VIEW_STATEMENTS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
             "method": "GET",
@@ -86,9 +86,9 @@
         },
         {
             "id": "MEMBER_GET_MEMBER",
-            "url": null,
-            "isAvailable": false,
-            "method": "GET",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mgm"
+            "isAvailable": true,
+            "method": "POST",
             "isFullScreen": true
         },
         {
@@ -106,6 +106,7 @@
             "isFullScreen": true
         }
     ],
+
     "cards_options" : [
         {
             "id": "MODIFY_LIMITS",
@@ -115,7 +116,7 @@
             "isFullScreen": true
         },
         {
-            "id": "STATEMENT_HISTORY",
+            "id": "VIEW_STATEMENTS",
             "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/multi/mailbox#/mailbox/threads/inbox;messageType=zestawienia",
             "isAvailable": true,
             "method": "POST",
@@ -164,7 +165,7 @@
             "isFullScreen": true
         },
         {
-            "id": "CARD_ACTIVATION",
+            "id": "ACTIVATE",
             "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_activation/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
@@ -176,7 +177,14 @@
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
-        }            
+        },
+        {
+            "id": "CARD_CREDIT_LIMIT_INCREASE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer#/pages/product-details/increaseCreditCardLimit",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
     ],
     "help_center_options" : [
         {

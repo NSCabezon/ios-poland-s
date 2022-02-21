@@ -89,6 +89,11 @@ final class PLRememberedLoginPinViewController: UIViewController {
         self.presenter.viewDidAppear()
         self.tryBiometricAuth()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter.viewWillDissappear()
+    }
 }
 
 private extension PLRememberedLoginPinViewController {
@@ -326,5 +331,11 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
                 PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
             }
         }
+    }
+}
+
+extension PLRememberedLoginPinViewController: RootMenuController {
+    var isSideMenuAvailable: Bool {
+        return true
     }
 }

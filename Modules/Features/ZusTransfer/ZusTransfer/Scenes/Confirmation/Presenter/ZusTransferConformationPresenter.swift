@@ -1,7 +1,9 @@
-
+import SANLegacyLibrary
 import CoreFoundationLib
 import CoreDomain
 import PLCommons
+import SANPLLibrary
+import PLCommonOperatives
 
 protocol ZusTransferConfirmationPresenterProtocol {
     var view: ZusTransferConfirmationViewControllerProtocol? { get set }
@@ -15,10 +17,25 @@ final class ZusTransferConfirmationPresenter {
     var view: ZusTransferConfirmationViewControllerProtocol?
     private let dependenciesResolver: DependenciesResolver
     private let model: ZusTransferModel?
+    private var coordinator: ZusTransferConfirmationCoordinatorProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var authorizationHandler: ChallengesHandlerDelegate {
+        dependenciesResolver.resolve()
+    }
     private var useCaseHandler: UseCaseHandler {
-        dependenciesResolver.resolve(for: UseCaseHandler.self)
+        dependenciesResolver.resolve()
     }
     private var acceptZusTransactionUseCase: AcceptZusTransactionProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var penndingChallengeUseCase: PenndingChallengeUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var prepareChallengeUseCase: ZusPrepareChallengeUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var notifyDeviceUseCase: NotifyDeviceUseCaseProtocol {
         dependenciesResolver.resolve()
     }
     
@@ -44,6 +61,73 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
     }
     
     func confirmTapped() {
+        guard let model = model else { return }
+        view?.showLoader()
+        let input = ZusPrepareChallengeUseCaseInput(model: model)
+        var notifyDeviceUseCaseOutput: NotifyDeviceUseCaseOutput?
+        
+        Scenario(useCase: prepareChallengeUseCase, input: input)
+            .execute(on: useCaseHandler)
+            .then(scenario: { [weak self] output -> Scenario<NotifyDeviceUseCaseInput, NotifyDeviceUseCaseOutput, StringErrorOutput>? in
+                guard let self = self else { return nil }
+                let amount = AmountDTO(
+                    value: model.amount,
+                    currency: CurrencyDTO(currencyName: CurrencyType.złoty.name, currencyType: .złoty)
+                )
+                let destinationAccountNumber = IBANRepresented(
+                    ibanString: model.recipientAccountNumber
+                )
+                let input = NotifyDeviceUseCaseInput(
+                    challenge: output.challenge,
+                    softwareTokenType: nil,
+                    alias: model.recipientName ?? "",
+                    iban: destinationAccountNumber,
+                    amount: amount)
+                return Scenario(useCase: self.notifyDeviceUseCase, input: input)
+            })
+            .then(scenario: { [weak self] output -> Scenario<Void, PenndingChallengeUseCaseOutput, StringErrorOutput>? in
+                guard let self = self else { return nil }
+                notifyDeviceUseCaseOutput = output
+                return Scenario(useCase: self.penndingChallengeUseCase)
+            })
+            .onSuccess { [weak self] penndingChallengeOutput in
+                self?.view?.hideLoader {
+                    guard let authorizationId = notifyDeviceUseCaseOutput?.authorizationId else {
+                        self?.handleServiceInaccessible()
+                        return
+                    }
+                    self?.showAuthorization(
+                        with: AuthorizationModel(
+                            authorizationId: authorizationId,
+                            penndingChallenge: penndingChallengeOutput.penndingChallenge
+                        )
+                    )
+                }
+            }
+            .onError { [weak self] _ in
+                self?.view?.hideLoader {
+                    self?.handleServiceInaccessible()
+                }
+            }
+    }
+    
+    func viewDidLoad() {
+        prepareViewModel()
+    }
+
+    func showError(with key: String, nameImage: String = "icnAlertError") {
+        view?.showErrorMessage(localized(key), image: nameImage, onConfirm: { [weak self] in
+            self?.coordinator.pop()
+        })
+    }
+    
+    func handleServiceInaccessible() {
+        view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), image: "icnAlertError", onConfirm: { [weak self] in
+            self?.coordinator.backToTransfer()
+        })
+    }
+    
+    func startAcceptTransaction() {
         guard let model = model else { return }
         self.view?.showLoader()
         Scenario(useCase: acceptZusTransactionUseCase,
@@ -74,26 +158,14 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
             }
     }
     
-    func viewDidLoad() {
-        prepareViewModel()
-    }
-
-    func showError(with key: String, nameImage: String = "icnAlertError") {
-        view?.showErrorMessage(localized(key), image: nameImage, onConfirm: { [weak self] in
-            self?.coordinator.pop()
-        })
-    }
-    
-    func handleServiceInaccessible() {
-        view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), image: "icnAlertError", onConfirm: { [weak self] in
-            self?.coordinator.backToTransfer()
-        })
+    func showAuthorization(with model: AuthorizationModel) {
+        authorizationHandler.handle(model.penndingChallenge, authorizationId: "\(model.authorizationId)") { [weak self] challengeResult in
+            switch(challengeResult) {
+            case .handled(_):
+                self?.startAcceptTransaction()
+            default:
+                self?.handleServiceInaccessible()
+            }
+        }
     }
 }
-
-private extension ZusTransferConfirmationPresenter {
-    var coordinator: ZusTransferConfirmationCoordinatorProtocol {
-        dependenciesResolver.resolve(for: ZusTransferConfirmationCoordinatorProtocol.self)
-    }
-}
-

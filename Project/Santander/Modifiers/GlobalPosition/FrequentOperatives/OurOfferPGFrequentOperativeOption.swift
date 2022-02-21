@@ -14,7 +14,7 @@ final class OurOfferPGFrequentOperativeOption {
     let trackName: String? = "ourOffer"
     let rawValue: String = "ourOfferPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.exploreProducts.rawValue
-    private let optionId: String = PLAccountOtherOperativesIdentifier.exploreProducts.rawValue
+    private let optionId: String = PLAccountOperativeIdentifier.ourOffer.rawValue
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
