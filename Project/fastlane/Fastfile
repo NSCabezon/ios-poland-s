@@ -393,7 +393,13 @@ end
     UI.message("Current version " + versionName)
     Dir.chdir("..") do
       major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
-      branch = git_branch == "master" ? "release" : "dev"
+      if git_branch == "master"
+        branch = "master"
+      elsif git_branch.include? "release"
+        branch = "release"
+      else 
+        branch = "dev"
+      end
       tag = "#{branch}/#{major}.#{minor}/#{versionName}"
       if !git_tag_exists(tag: tag)
         UI.message("NOT Found it 🚀 tag " + tag)
