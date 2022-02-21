@@ -447,13 +447,11 @@ end
     project.save
   end
 
-# Consider in the project paths that code in Fastfile is executed in [root]/Fastlane, 
-# while external def update_schemes is executed in [root].
-# See https://docs.fastlane.tools/advanced/#directory-behavior
   private_lane :update_xcschemes do
+    puts "CURRENT DIR: " + Dir.pwd
     UI.message "Start lane update xcshemes"
-    project_path = "./Santander.xcodeproj"
-    xcConfigFilesPath = "./Santander/Configuration/"
+    project_path = "../Santander.xcodeproj"
+    xcConfigFilesPath = "../Santander/Configuration/"
     version = get_version_number(target: "Santander")
     update_schemes(xcConfigFilesPath, project_path, version)
   end
