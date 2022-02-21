@@ -26,4 +26,5 @@ Pod::Spec.new do |s|
   s.dependency "PLCommons"
   s.dependency "Operative"
   s.dependency "PLCryptography"
+  s.dependency "PLCommonOperatives"
 end

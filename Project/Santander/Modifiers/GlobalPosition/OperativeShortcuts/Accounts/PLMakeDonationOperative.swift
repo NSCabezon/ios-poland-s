@@ -33,27 +33,14 @@ final class PLMakeDonationOperative: AccountOperativeActionTypeProtocol {
 
     func getAction() -> AccountOperativeAction {
         return .custom {
-            Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .charityTransfer, dependenciesResolver: self.dependenciesResolver))
-                .execute(on: self.dependenciesResolver.resolve())
-                .onSuccess { [weak self] accounts in
-                    guard let self = self, !accounts.isEmpty else {
-                        Toast.show(localized("generic_alert_notAvailableOperation"))
-                        return
-                    }
-                    let repository = self.dependenciesResolver.resolve(for: PLTransferSettingsRepository.self)
-                    let settings = repository.get()?.charityTransfer
-                    let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
-                                                                          transferAccountNumber: settings?.transferAccountNumber,
-                                                                          transferTitle: settings?.transferTitle)
-                    let coordinator: CharityTransferModuleCoordinator = self.dependenciesResolver.resolve()
-                    coordinator.setProperties(accounts: accounts, charityTransferSettings: charityTransferSettings)
-                    UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: {
-                        coordinator.start()
-                    })
-                }
-                .onError { _ in
-                    Toast.show(localized("generic_alert_notAvailableOperation"))
-                }
+            let coordinator = self.dependenciesResolver.resolve(
+                for: CharityTransferModuleCoordinator.self
+            )
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(
+                animated: true,
+                completion: {
+                    coordinator.start()
+                })
         }
     }
 }

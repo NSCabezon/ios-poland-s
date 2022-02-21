@@ -1,25 +1,31 @@
 //
 //  ItemSelectorViewController.swift
-//  PLUI
+//  PLScenes
 //
 //  Created by 185167 on 04/02/2022.
 //
 
-import CoreFoundationLib
 import UI
+import CoreFoundationLib
 
-final class ItemSelectorViewController<Item>: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    private let coordinator: ItemSelectorCoordinator<Item>
-    private let viewModel: ItemSelectorViewModel<Item>
-    private let headerLabel = UILabel()
-    private let tableView = UITableView()
+final class ItemSelectorViewController<Item: SelectableItem>: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    private let presenter: ItemSelectorPresenter<Item>
     
-    init(
-        coordinator: ItemSelectorCoordinator<Item>,
-        viewModel: ItemSelectorViewModel<Item>
-    ) {
-        self.coordinator = coordinator
-        self.viewModel = viewModel
+    private let searchView = ItemSearchView()
+    private let tableView = UITableView()
+    private lazy var searchZeroHeightConstraint = searchView.heightAnchor.constraint(
+        equalToConstant: 0
+    )
+    
+    private var sectionViewModels: [SelectableItemSectionViewModel<Item>] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    init(presenter: ItemSelectorPresenter<Item>) {
+        self.presenter = presenter
+        self.sectionViewModels = []
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,6 +36,11 @@ final class ItemSelectorViewController<Item>: UIViewController, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        sectionViewModels = presenter.getViewModels(filteredBy: .unfiltered)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionViewModels.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -37,7 +48,21 @@ final class ItemSelectorViewController<Item>: UIViewController, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.itemViewModels.count
+        guard let section = sectionViewModels[safe: section] else {
+            assertionFailure("Section shouldn't be empty here!")
+            return 0
+        }
+        return section.itemViewModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let section = sectionViewModels[safe: section] else {
+            assertionFailure("Section shouldn't be empty here!")
+            return nil
+        }
+        let view = ItemSelectorSectionHeader()
+        view.configure(with: section.sectionTitle)
+        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +73,8 @@ final class ItemSelectorViewController<Item>: UIViewController, UITableViewDeleg
         
         guard
             let cell = dequeuedCell,
-            let viewModel = viewModel.itemViewModels[safe: indexPath.row]
+            let section = sectionViewModels[safe: indexPath.section],
+            let viewModel = section.itemViewModels[safe: indexPath.row]
         else {
             return UITableViewCell()
         }
@@ -57,7 +83,7 @@ final class ItemSelectorViewController<Item>: UIViewController, UITableViewDeleg
             title: viewModel.itemName,
             isSelected: viewModel.isSelected,
             onTap: { [weak self] in
-                self?.coordinator.handleItemSelection(viewModel.item)
+                self?.presenter.didSelectItem(viewModel.item)
             }
         )
         
@@ -66,15 +92,16 @@ final class ItemSelectorViewController<Item>: UIViewController, UITableViewDeleg
     
     private func setUp() {
         configureNavigationItem()
-        configureHeaderLabel()
-        configureStyling()
-        configureSubviews()
+        configureLayout()
+        configureSearchView()
         configureTableView()
+        configureStyling()
+        configureKeyboardDismissGesture()
     }
     
     private func configureNavigationItem() {
         NavigationBarBuilder(style: .white,
-                             title: .title(key: viewModel.navigationTitle))
+                             title: .title(key: presenter.getNavigationTitle()))
             .setLeftAction(.back(action: .selector(#selector(back))))
             .setRightActions(.close(action: .selector(#selector(close))))
             .build(on: self, with: nil)
@@ -82,48 +109,63 @@ final class ItemSelectorViewController<Item>: UIViewController, UITableViewDeleg
     }
     
     @objc private func back() {
-        coordinator.back()
+        presenter.didTapBack()
     }
     
     @objc private func close() {
-        coordinator.close()
+        presenter.didTapClose()
     }
     
     private func configureStyling() {
         view.backgroundColor = .white
     }
     
-    private func configureHeaderLabel() {
-        headerLabel.font = .santander(family: .text, type: .regular, size: 16)
-        headerLabel.textColor = .greyishBrown
-        headerLabel.text = viewModel.headerText
+    private func configureSearchView() {
+        searchZeroHeightConstraint.priority = .required
+        searchZeroHeightConstraint.isActive = presenter.shouldDisableSearch()
+        searchView.setUpdateDelegate(self)
     }
     
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
-        tableView.register(ItemSelectorCell.self, forCellReuseIdentifier: ItemSelectorCell.identifier)
+        tableView.register(
+            ItemSelectorCell.self,
+            forCellReuseIdentifier: ItemSelectorCell.identifier
+        )
         
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
     }
     
-    private func configureSubviews() {
-        [headerLabel, tableView].forEach {
+    private func configureLayout() {
+        [searchView, tableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
-            headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            headerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            headerLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
-            tableView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: searchView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+extension ItemSelectorViewController: UpdatableTextFieldDelegate {
+    func updatableTextFieldDidUpdate() {
+        let searchText = searchView.getSearchText()
+        
+        if searchText.isEmpty {
+            sectionViewModels = presenter.getViewModels(filteredBy: .unfiltered)
+        } else {
+            sectionViewModels = presenter.getViewModels(filteredBy: .text(searchText))
+        }
     }
 }

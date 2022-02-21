@@ -1,0 +1,372 @@
+{
+    "12345678Z": {
+        "0":
+            [
+                {
+                    "type": "accounts",
+                    "contracts": [
+                        {
+                            "id": "PL77109010430000000142742919",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL79109010140000000142753799",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL54109018380000000142760100",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL70109018380000000142760103",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL43109018380000000142760104",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL62109018380000000142760150",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL63109010140000000142753796",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "cards",
+                    "contracts": [
+                        {
+                            "id": "412281P002925860",
+                            "operations": [
+                                {
+                                    "id": "ADD_TO_PAY",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ACTIVATE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "UNBLOCK",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "BLOCK",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "MODIFY_LIMITS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CHANGE_ALIAS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "GENERATE_QR",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CUSTOMER_SERVICE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CARD_DETAILS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "BLOCKED_FUNDS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "VIEW_STATEMENTS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "HISTORY",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "OFFER",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CREDIT_LIMIT_INCREASE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "MANAGE_PIN",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CANCEL_CARD",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "VIEW_CVV",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "USE_ABROAD",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "SEND_MONEY_FROM_SRC",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ATM_PACKAGE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CREDIT_CARD_REPAYMENT",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "REPAYMENT",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "MULTICURRENCY",
+                                    "state": "enabled"
+                                },
+                            ]
+                        },
+                        {
+                            "id": "421352I036827548",
+                            "operations": [
+                                {
+                                    "id": "ADD_TO_PAY",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ACTIVATE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "UNBLOCK",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "BLOCK",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "MODIFY_LIMITS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CHANGE_ALIAS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "GENERATE_QR",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CUSTOMER_SERVICE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CARD_DETAILS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "BLOCKED_FUNDS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "VIEW_STATEMENTS",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "HISTORY",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "OFFER",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CREDIT_LIMIT_INCREASE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "MANAGE_PIN",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CANCEL_CARD",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "VIEW_CVV",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "USE_ABROAD",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "SEND_MONEY_FROM_SRC",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ATM_PACKAGE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "CREDIT_CARD_REPAYMENT",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "REPAYMENT",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "MULTICURRENCY",
+                                    "state": "enabled"
+                                },
+                            ]
+                        },
+                        {
+                            "id": "421352I036827547",
+                            "operations": [
+                                {
+                                    "id": "ACTIVATE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "421352I036827546",
+                            "operations": [
+                                {
+                                    "id": "ACTIVATE",
+                                    "state": "enabled"
+                                },
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "421352I036827545",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "loans",
+                    "contracts": [
+                        {
+                            "id": "PL92109010430000000142752252",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "disabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL65109010430000000142752253",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "disabled"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "savings",
+                    "contracts": [
+                        {
+                            "id": "PL36109010140000000142753797",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "enabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL15109010430000000142753832",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "disabled"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "PL55109010430000000142753791",
+                            "operations": [
+                                {
+                                    "id": "ALERTS_24",
+                                    "state": "disabled"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+    }
+}

@@ -9,12 +9,14 @@ import Foundation
 
 protocol TaxTransferDataSourceProtocol {
     func getTaxPayers() throws -> Result<[TaxPayerDTO], NetworkProviderError>
+    func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
 }
 
 final class TaxTransferDataSource {
     
     private enum TaxTransferServiceType: String {
         case payers = "/payers"
+        case payees = "/payees/account/tax"
     }
     
     // MARK: Properties
@@ -49,6 +51,22 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .get,
                         contentType: nil)
+        )
+    }
+    
+    func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = TaxTransferServiceType.payees.rawValue
+        return networkProvider.request(
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                contentType: nil
+            )
         )
     }
 }

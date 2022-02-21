@@ -66,24 +66,7 @@ final class OneAppInitViewController: UIViewController, ErrorPresentable, Loader
             
             button.addAction { [weak self] in
                 guard let self = self else { return }
-                
-                switch module {
-                case .charityTransfer:
-                    Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .charityTransfer, dependenciesResolver: self.dependencyResolver))
-                        .execute(on: self.useCaseHandler)
-                        .onSuccess { accounts in
-                            if accounts.isEmpty {
-                                self.showServiceInaccessibleMessage(onConfirm: nil)
-                                return
-                            }
-                            self.delegate?.selectCharityTransfer(accounts: accounts)
-                        }
-                        .onError { _ in
-                            self.showServiceInaccessibleMessage(onConfirm: nil)
-                        }
-                default:
-                    self.delegate?.selectModule(module)
-                }
+                self.delegate?.selectModule(module)
             }
             button.setTitle(module.rawValue, for: .normal)
             stackView.addArrangedSubview(button)

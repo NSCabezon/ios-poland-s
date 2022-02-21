@@ -15,6 +15,7 @@ protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransfe
     func startValidation(with field: TransferFormCurrentActiveField)
     func showRecipientSelection()
     func getAccountRequiredLength() -> Int
+    func clearForm()
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -121,6 +122,10 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     
     func getAccountRequiredLength() -> Int {
         formValidator.getAccountRequiredLength()
+    }
+    
+    func clearForm() {
+        transferFormViewModel = nil
     }
 }
 
