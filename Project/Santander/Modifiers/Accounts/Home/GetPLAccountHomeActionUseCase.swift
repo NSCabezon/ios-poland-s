@@ -44,12 +44,16 @@ private extension GetPLAccountHomeActionUseCase {
     }
     
     private func actionType(operative: PLAccountOperativeIdentifier) -> AccountActionType {
-        return AccountActionType.custome(identifier: operative.rawValue,
-                                         accesibilityIdentifier: operative.rawValue,
-                                         trackName: operative.rawValue,
-                                         localizedKey: operative.textKey,
-                                         icon: operative.icon,
-                                         renderingMode: operative.rendering)
+        switch operative {
+        case .details: return .accountDetail
+        default:
+            return AccountActionType.custome(identifier: operative.rawValue,
+                                             accesibilityIdentifier: operative.rawValue,
+                                             trackName: operative.rawValue,
+                                             localizedKey: operative.textKey,
+                                             icon: operative.icon,
+                                             renderingMode: operative.rendering)
+        }
     }
 }
 
