@@ -29,8 +29,8 @@ final class AccountDetailsDTOAdapter {
         for element in withholdingList.withholdingDTO {
             
             let sourceDate = DateFormats.toDate(string: element.sourceDate ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
-            let operTime = DateFormats.toDate(string: element.operTime ?? "", output: DateFormats.TimeFormat.YYYYMMDD)
-            
+            let operTime = DateFormats.toDate(string: element.operTime ?? "", output: DateFormats.TimeFormat.YYYYMMDD_HHmmss)
+
             var newAmount = element.amount ?? 0.0
             if element.isDebit() {
                 newAmount.negate()
