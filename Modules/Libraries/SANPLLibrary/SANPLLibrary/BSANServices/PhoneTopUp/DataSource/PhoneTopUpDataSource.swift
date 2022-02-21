@@ -12,6 +12,7 @@ protocol PhoneTopUpDataSourceProtocol {
     func getOperators() throws -> Result<[OperatorDTO], NetworkProviderError>
     func getGSMOperators() throws -> Result<[GSMOperatorDTO], NetworkProviderError>
     func getInternetContacts() throws -> Result<[PayeeDTO], NetworkProviderError>
+    func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError>
 }
 
 final class PhoneTopUpDataSource {
@@ -23,6 +24,7 @@ final class PhoneTopUpDataSource {
         case operators = "/topup/ws/operators"
         case gsmOperators = "/topup/gsm-operator"
         case internetContacts = "/payees/phone"
+        case checkPhone = "/topup/ws/check-phone"
     }
     
     // MARK: Properties
@@ -95,6 +97,20 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
                                         serviceUrl: serviceUrl,
                                         method: .get,
                                         contentType: nil)
+        return networkProvider.request(request)
+    }
+    
+    func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(request) else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = PhoneTopUpServiceType.checkPhone.rawValue
+        let request = PhoneTopUpRequest(serviceName: serviceName,
+                                        serviceUrl: serviceUrl,
+                                        method: .post,
+                                        request: data,
+                                        bodyEncoding: .form)
         return networkProvider.request(request)
     }
 }
