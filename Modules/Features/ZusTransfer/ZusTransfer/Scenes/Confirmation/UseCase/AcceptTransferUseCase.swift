@@ -29,7 +29,7 @@ final class AcceptZusTransactionUseCase: UseCase<AcceptZusTransactionUseCaseInpu
         guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
             return .error(.init("userId not exists"))
         }
-        let sendMoneyConfirmationInput = zusTransferSendMoneyInputMapper.map(with: requestValues, userId: userId)
+        let sendMoneyConfirmationInput = zusTransferSendMoneyInputMapper.map(with: requestValues.model, userId: userId)
         let result = try managersProvider.getTransferManager().sendConfirmation(sendMoneyConfirmationInput)
         
         switch result {

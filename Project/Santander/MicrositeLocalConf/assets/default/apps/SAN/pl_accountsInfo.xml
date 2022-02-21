@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<accounts_info>	
-	<credit_accounts>
-		<item>
+<accounts_info>
+    <credit_accounts>
+        <item>
             <type>100</type>
             <subtype>001</subtype>
         </item>
@@ -42,10 +42,6 @@
             <subtype>517</subtype>
         </item>
         <item>
-            <type>100</type>
-            <subtype>544</subtype>
-        </item>		
-		 <item>
             <type>110</type>
             <subtype>013</subtype>
         </item>
@@ -65,8 +61,134 @@
             <type>305</type>
             <subtype>942</subtype>
         </item>
-	</credit_accounts>
-	<CardsColor>
+        <item>
+            <type>110</type>
+            <subtype>013</subtype>
+        </item>
+    </credit_accounts>
+
+    <!-- Limitar operativas planes y fondos -->
+    <plansAllianz>
+        <productAllianz>
+            <type>325</type>
+            <subtype_from>0</subtype_from>
+            <subtype_to>999</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>369</subtype_from>
+            <subtype_to>395</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>397</subtype_from>
+            <subtype_to>553</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>555</subtype_from>
+            <subtype_to>571</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>573</subtype_from>
+            <subtype_to>612</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>614</subtype_from>
+            <subtype_to>679</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>681</subtype_from>
+            <subtype_to>908</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>681</subtype_from>
+            <subtype_to>908</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>918</subtype_from>
+            <subtype_to>934</subtype_to>
+        </productAllianz>
+        <productAllianz>
+            <type>312</type>
+            <subtype_from>292</subtype_from>
+            <subtype_to>292</subtype_to>
+        </productAllianz>
+    </plansAllianz>
+
+    <!-- Productos One: One Chat, Proteccion online, Atencion VIP -->
+    <productsOne>
+        <productOneChat>
+            <type>788</type>
+            <subtype_from>001</subtype_from>
+            <subtype_to>003</subtype_to>
+        </productOneChat>
+        <productOneSecurity>
+            <type>788</type>
+            <subtype_from>002</subtype_from>
+            <subtype_to>002</subtype_to>
+        </productOneSecurity>
+        <productOneVIP>
+            <type>788</type>
+            <subtype_from>003</subtype_from>
+            <subtype_to>003</subtype_to>
+        </productOneVIP>
+        <productOnePayment>
+            <type>788</type>
+            <subtype_from>001</subtype_from>
+            <subtype_to>001</subtype_to>
+        </productOnePayment>
+        <productOneSafe>
+            <type>788</type>
+            <subtype_from>002</subtype_from>
+            <subtype_to>002</subtype_to>
+        </productOneSafe>
+    </productsOne>
+
+    <!--rura de imagenes de tarjetas-->
+    <!-- /webserver/public_html/movilidad/files_qa/RWD/tarjetas-->
+    <CardsColor>
+        <CardColor>
+            <CardCode>VELI</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>HCEV</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>HCEM</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>VHCE</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>MHCE</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>04180100PM</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>1902010NCD</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>02020110VG</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>0217011NC2</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>13040100CF</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>02080110VN</CardCode>
+        </CardColor>
+        <CardColor>
+            <CardCode>4602010YE1</CardCode>
+        </CardColor>
         <CardColor>
             <CardCode>049049</CardCode>
         </CardColor>
@@ -81,8 +203,39 @@
         </CardColor>
         <CardColor>
             <CardCode>049410</CardCode>
-        </CardColor>		
-	</CardsColor>
+        </CardColor>
+        <CardColor>
+            <CardCode>13090100RC</CardCode>
+        </CardColor>
+    </CardsColor>
+
+
+    <!-- Icono adaptativo-->
+
+    <AppIcon>
+        <IconInfo>
+            <StartDate>30-01-2020 00:00</StartDate>
+            <EndDate>30-06-2020 23:59</EndDate>
+            <IconName>breastcancer</IconName>
+        </IconInfo>
+        <IconInfo>
+            <StartDate>01-11-2020 00:00</StartDate>
+            <EndDate>15-11-2020 23:59</EndDate>
+            <IconName>blackfriday</IconName>
+        </IconInfo>
+        <IconInfo>
+            <StartDate>23-12-2020 07:00</StartDate>
+            <EndDate>31-12-2020 12:30</EndDate>
+            <IconName>christmas</IconName>
+        </IconInfo>
+    </AppIcon>
+
+
+
+
+
+    <!--No muestra opción de Urgentes entre cuentas del grupo -->
+
     <GroupEntities>
         <GroupEntityCode>
             <EntityCode>0049</EntityCode>
@@ -106,16 +259,7 @@
             <EntityCode>0238</EntityCode>
         </GroupEntityCode>
     </GroupEntities>
-    <AppIcon>
-        <IconInfo>
-            <StartDate>20-11-2020 00:00</StartDate>
-            <EndDate>30-11-2020 23:59</EndDate>
-            <IconName>blackfriday</IconName>
-        </IconInfo>
-        <IconInfo>
-            <StartDate>22-12-2020 00:00</StartDate>
-            <EndDate>07-01-2021 23:59</EndDate>
-            <IconName>christmas</IconName>
-        </IconInfo>
-    </AppIcon>
+
+
+
 </accounts_info>

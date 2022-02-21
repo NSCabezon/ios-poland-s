@@ -116,6 +116,10 @@ struct GetPLCardsOtherOperativesWebConfigurationUseCaseInput {
     let cardData: PLProductOperativesData
 }
 
+public enum PLCardWebViewType {
+    case cancel, multicurrency, pin, useAbroad, changeLimits, viewStatements, enable, repayInInstallments, customerService, atmPackage, alerts24, creditLimitIncreasePL
+}
+
 struct GetPLCardsOtherOperativesWebConfigurationUseCaseOkOutput {
     let configuration: WebViewConfiguration
 }
