@@ -19,7 +19,7 @@ import TransferOperatives
 import UI
 
 final class AppModifiers {
-    private let dependencieEngine: DependenciesResolver & DependenciesInjector
+    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
     private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
         let depositModifier = PLDepositModifier(dependenciesResolver: self.dependenciesEngine)
@@ -76,10 +76,10 @@ final class AppModifiers {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependenciesEngine)
     }()
     private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
-        return GetPGFrequentOperativeOption(dependenciesResolver: dependencieEngine, coreDependenciesResolver: coreDependenciesResolver)
+        return GetPGFrequentOperativeOption(dependenciesResolver: dependenciesEngine, coreDependenciesResolver: coreDependenciesResolver)
     }()
     init(dependenciesEngine: DependenciesResolver & DependenciesInjector, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
-        self.dependencieEngine = dependenciesEngine
+        self.dependenciesEngine = dependenciesEngine
         self.coreDependenciesResolver = coreDependenciesResolver
         self.registerDependencies()
     }
@@ -118,7 +118,7 @@ private extension AppModifiers {
         self.dependenciesEngine.register(for: GetMonthlyBalanceUseCase.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: LoanDetailModifierProtocol.self) { _ in
+        self.dependenciesEngine.register(for: LoanDetailModifierProtocol.self) { _ in
             return self.loanDetailModifier
         }
         self.dependenciesEngine.register(for: AmountFormatterProvider.self) { _ in
@@ -172,7 +172,7 @@ private extension AppModifiers {
         self.dependenciesEngine.register(for: GetAccountOtherOperativesActionUseCaseProtocol.self) { resolver in
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: AccountHomeActionModifierProtocol.self) { resolver in
+        self.dependenciesEngine.register(for: AccountHomeActionModifierProtocol.self) { resolver in
             return PLAccountHomeActionModifier(dependenciesResolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
         }
         self.dependenciesEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
@@ -203,10 +203,10 @@ private extension AppModifiers {
         self.dependenciesEngine.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
             PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
         }
-        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
+        self.dependenciesEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
             return self.getPGFrequentOperativeOption
         }
-        self.dependencieEngine.register(for: PrivateMenuProtocol.self) { resolver in
+        self.dependenciesEngine.register(for: PrivateMenuProtocol.self) { resolver in
             PLPrivateMenuModifier(resolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
         }
         self.dependenciesEngine.register(for: ShortcutItemsProviderProtocol.self) { _ in

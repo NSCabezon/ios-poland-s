@@ -35,14 +35,14 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
             case .externalTransfer:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             case .transfer:
-                goToSendMoney()
+                goToSendMoney(with: entity.representable)
             case .changeAliases:
                 goToPGProductsCustomization()
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
         } else if case .transfer = action {
-            goToSendMoney(with: entity.dto)
+            goToSendMoney(with: entity.representable)
         }
     }
     
