@@ -41,6 +41,13 @@ public class GlobileCheckBox: UIControl {
 
     /// The current text that is displayed by the button.
     public var text: String?
+    
+    public var checkboxSize = 30.0 {
+        didSet {
+            setupLayout()
+        }
+    }
+    public var fontSize = 16.0
 
     // MARK: Subviews
 
@@ -56,7 +63,6 @@ public class GlobileCheckBox: UIControl {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = .santander(size: 16.0)
         return label
     }()
 
@@ -96,9 +102,9 @@ public class GlobileCheckBox: UIControl {
         NSLayoutConstraint.activate([
             checkboxButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             checkboxButton.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -12),
-            checkboxButton.heightAnchor.constraint(equalToConstant: 30.0),
+            checkboxButton.heightAnchor.constraint(equalToConstant: self.checkboxSize),
             checkboxButton.widthAnchor.constraint(equalTo: checkboxButton.heightAnchor),
-            checkboxButton.topAnchor.constraint(equalTo: topAnchor, constant: -3),
+            checkboxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
 
         NSLayoutConstraint.activate([
@@ -119,6 +125,7 @@ public class GlobileCheckBox: UIControl {
         backgroundColor = .clear
 
         label.textColor = textColor
+        label.font = .santander(size: self.fontSize)
         infoButton.tintColor = infoButtonColor
 
         label.text = text
