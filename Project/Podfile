@@ -27,6 +27,7 @@ def core_dependencies
   pod 'Cards', :path => '../santander-one/Cards'
   pod 'PersonalArea', :path => '../santander-one/PersonalArea'
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
+  pod 'PrivateMenu', :path => '../santander-one/PrivateMenu'
   pod 'Transfer', :path => '../santander-one/Transfer'
   pod 'Inbox', :path => '../santander-one/Inbox'
   pod 'Bills', :path => '../santander-one/Bills'
