@@ -30,4 +30,8 @@ extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
     func resolveCustomSendMoneyActionCoordinator() -> BindableCoordinator {
         return PLOneTransferHomeActionsCoordinator()
     }
+    
+    func resolve() -> AccountNumberFormatterProtocol {
+        return oldResolver.resolve()
+    }
 }
