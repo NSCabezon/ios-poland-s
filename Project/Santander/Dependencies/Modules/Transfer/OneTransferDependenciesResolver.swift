@@ -10,7 +10,7 @@ import CoreDomain
 import Transfer
 import UI
 
-extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
+extension ModuleDependencies: TransferExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
         oldResolver.resolve()
     }
