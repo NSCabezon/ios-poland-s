@@ -140,7 +140,7 @@ private extension TaxTransferFormViewController {
     }
     
     @objc func back() {
-         presenter.didTapBack()
+        presenter.didTapBack()
     }
 }
 

@@ -1,4 +1,5 @@
 import Foundation
+import CoreFoundationLib
 
 struct MobileTransferFormValidator {
     
@@ -8,16 +9,16 @@ struct MobileTransferFormValidator {
         var tooMuchAmount: String?
         if validateNumber, let phoneNumber = form.phoneNumber, phoneNumber.count < 9 {
             if phoneNumber.isEmpty {
-                toShortNumberMessage = "#Pole nie może być puste"
+                toShortNumberMessage = localized("pl_generic_validationText_thisFieldCannotBeEmpty")
             } else {
-                toShortNumberMessage = "#Minimalna liczba znaków wynosi 9"
+                toShortNumberMessage = localized("pl_generic_validationText_upTo9Characters")
             }
         }
         if let amount = form.amount, amount < 0.02 {
-            tooLowAmount = "#Kwota minimalna przelewu na telefon wynosi 0,02 PLN"
+            tooLowAmount = localized("pl_blikP2P_validationText_minimalTransfer")
         }
         if let amount = form.amount, amount > 100000 {
-            tooMuchAmount = "#Podana kwota jest większa od maksymalnej dopuszczalnej kwoty"
+            tooMuchAmount = localized("pl_generic_validationText_amountLessThan100000")
         }
         return InvalidMobileTransferFormMessages(tooShortPhoneNumberMessage: toShortNumberMessage, tooLowAmount: tooLowAmount, tooMuchAmount: tooMuchAmount)
     }

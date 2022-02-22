@@ -38,14 +38,7 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
         Scenario(useCase: GetPhoneTopUpFormDataUseCase(dependenciesResolver: self.dependenciesResolver))
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
-                let formData = TopUpPreloadedFormData(accounts: output.accounts,
-                                                      operators: output.operators,
-                                                      gsmOperators: output.gsmOperators,
-                                                      internetContacts: output.internetContacts,
-                                                      settings: self?.settings ?? [])
-                self?.view?.hideLoader(completion: {
-                    self?.coordinator?.showForm(with: formData)
-                })
+                self?.handleSuccessfulDataFetch(with: output)
             }
             .onError { [weak self] _ in
                 self?.view?.hideLoader(completion: {
@@ -55,5 +48,29 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
                 })
             }
 
+    }
+    
+    private func handleSuccessfulDataFetch(with fetchedData: GetPhoneTopUpFormDataOutput) {
+        guard !fetchedData.accounts.isEmpty else {
+            view?.hideLoader(completion: { [weak self] in
+                #warning("todo: update translations once they are available")
+                self?.view?.showErrorMessage(title: localized("#Informacja"),
+                                            message: localized("#Brak rachunków źródłowych"),
+                                            image: "icnInfoGray",
+                                            onConfirm: {
+                    self?.coordinator?.close()
+                })
+            })
+            return
+        }
+        
+        let formData = TopUpPreloadedFormData(accounts: fetchedData.accounts,
+                                              operators: fetchedData.operators,
+                                              gsmOperators: fetchedData.gsmOperators,
+                                              internetContacts: fetchedData.internetContacts,
+                                              settings: settings)
+        view?.hideLoader(completion: { [weak self] in
+            self?.coordinator?.showForm(with: formData)
+        })
     }
 }

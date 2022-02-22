@@ -36,7 +36,7 @@ class GetPLAccountOtherOperativesWebConfigurationUseCase: UseCase<GetPLAccountOt
             webToolbarTitleKey: " ",
             httpMethod: httpMethod,
             pdfToolbarTitleKey: " ",
-            isFullScreenEnabled: requestValues.type.isFullScreen ?? true
+            isFullScreenEnabled: requestValues.type.isFullScreen
         )
         return UseCaseResponse.ok(GetPLAccountOtherOperativesWebConfigurationUseCaseOkOutput(configuration: configuration))
     }
@@ -112,7 +112,7 @@ extension GetPLAccountOtherOperativesWebConfigurationUseCase {
 }
 
 struct GetPLAccountOtherOperativesWebConfigurationUseCaseInput {
-    let type: PLAccountOtherOperativesData
+    let type: PLProductOperativesData
 }
 
 struct GetPLAccountOtherOperativesWebConfigurationUseCaseOkOutput {

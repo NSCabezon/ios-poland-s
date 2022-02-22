@@ -10,17 +10,17 @@ import CoreDomain
 import Transfer
 import UI
 
-extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
+extension ModuleDependencies: TransferExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> TransfersRepository {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> DependenciesInjector {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> GetSendMoneyActionsUseCase {

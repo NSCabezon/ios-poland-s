@@ -26,6 +26,14 @@ final class TaxTransferFormCoordinatorMock: TaxTransferFormCoordinatorProtocol {
         XCTFail("Empty implementation")
     }
     
+    var goToGlobalPositionBlock: () -> Void = {
+        XCTFail("Empty implementation")
+    }
+    
+    var showTaxPayerSelectorBlock: ([TaxPayer], TaxPayer?) -> Void = { (_, _) in
+        XCTFail("Empty implementation")
+    }
+    
     func start() {
         startBlock()
     }
@@ -36,5 +44,13 @@ final class TaxTransferFormCoordinatorMock: TaxTransferFormCoordinatorProtocol {
     
     func back() {
         backBlock()
+    }
+    
+    func goToGlobalPosition() {
+        goToGlobalPositionBlock()
+    }
+    
+    func showTaxPayerSelector(with taxPayers: [TaxPayer], selectedTaxPayer: TaxPayer?) {
+        showTaxPayerSelectorBlock(taxPayers, selectedTaxPayer)
     }
 }

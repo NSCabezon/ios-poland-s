@@ -47,6 +47,7 @@ private extension TaxTransferPayerSelectorView {
     
     func setUp() {
         configureSubviews()
+        hideSelectedPayerView()
     }
     
     func configureSubviews() {
@@ -81,5 +82,9 @@ private extension TaxTransferPayerSelectorView {
             containedView: subviewsContainer,
             sectionTitle: "#Płatnik"
         )
+    }
+    
+    private func hideSelectedPayerView() {
+        selectedPayerView.isHidden = true
     }
 }

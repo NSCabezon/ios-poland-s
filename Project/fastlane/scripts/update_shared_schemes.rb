@@ -81,6 +81,7 @@ end
 
 # Loops all schemes in shared xcshareddata/xcschemes
 def update_schemes(configPath, projectPath, version)
+    puts "update_schemes DIR: " + Dir.pwd
     begin
         project = Xcodeproj::Project.open(projectPath)
     rescue

@@ -1,5 +1,6 @@
 
 import Foundation
+import CoreFoundationLib
 
 struct CharityTransferValidator {
     
@@ -7,10 +8,10 @@ struct CharityTransferValidator {
         var tooLowAmount: String?
         var tooMuchAmount: String?
         if let amount = form.amount, amount <= 0 {
-            tooLowAmount = "#Wprowadzona kwota musi być większa od zera"
+            tooLowAmount = localized("charity_transfer_form_amount_min_error")
         }
         if let amount = form.amount, amount > 100_000 {
-            tooMuchAmount = "Podana kwota jest większa od maksymalnej dopuszczalnej kwoty"
+            tooMuchAmount = localized("charity_transfer_form_amount_max_error")
         }
         return InvalidCharityTransferFormMessages(tooLowAmount: tooLowAmount,
                                                   tooMuchAmount: tooMuchAmount)

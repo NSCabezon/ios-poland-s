@@ -75,6 +75,12 @@ class CharityTransferFormView: UIView {
             amountView.hideError()
         }
     }
+    
+    func clearForm() {
+        amountTextField.setText("")
+        selectedDate = Date()
+        transfrDateSelector.resetToToday()
+    }
 }
 
 private extension CharityTransferFormView {
