@@ -12,15 +12,15 @@ import UI
 
 extension ModuleDependencies: TransferExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> TransfersRepository {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> DependenciesInjector {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> GetSendMoneyActionsUseCase {
@@ -29,9 +29,5 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     
     func resolveCustomSendMoneyActionCoordinator() -> BindableCoordinator {
         return PLOneTransferHomeActionsCoordinator()
-    }
-    
-    func resolve() -> AccountNumberFormatterProtocol {
-        return oldResolver.resolve()
     }
 }

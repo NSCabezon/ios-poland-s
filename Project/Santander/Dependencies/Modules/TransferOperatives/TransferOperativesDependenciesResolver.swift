@@ -20,6 +20,6 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     }
     
     func resolve() -> AccountNumberFormatterProtocol {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
 }

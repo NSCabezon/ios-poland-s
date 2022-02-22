@@ -63,7 +63,7 @@ final class PaymentAmountSelectionView: UIView {
         adjustCollectionViewHeight()
         amountCollectionView.reloadData()
         adjustOtherAmountVisibility()
-        //updateOtherAmountTextField()
+        updateOtherAmountTextField()
     }
     
     func showInvalidCustomAmountError(_ error: String?) {
@@ -170,13 +170,13 @@ final class PaymentAmountSelectionView: UIView {
         }
     }
     
-//    private func updateOtherAmountTextField() {
-//        if case .custom(let amount) = selectedAmount, let amount = amount {
-//            otherAmountTextField.textField.setText("\(amount)")
-//        } else {
-//            otherAmountTextField.textField.setText(nil)
-//        }
-//    }
+    private func updateOtherAmountTextField() {
+        if case .custom(let amount) = selectedAmount, let amount = amount {
+            otherAmountTextField.textField.setText("\(amount)")
+        } else {
+            otherAmountTextField.textField.setText(nil)
+        }
+    }
 }
 
 extension PaymentAmountSelectionView: UICollectionViewDataSource {
