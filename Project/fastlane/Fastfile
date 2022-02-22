@@ -393,7 +393,12 @@ end
     UI.message("Current version " + versionName)
     Dir.chdir("..") do
       major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
-      branch = git_branch == "master" ? "release" : "dev"
+      branch = "dev"
+      if git_branch == "master"
+        branch = "master"
+      elsif git_branch.include? "release"
+        branch = "release"
+      end
       tag = "#{branch}/#{major}.#{minor}/#{versionName}"
       if !git_tag_exists(tag: tag)
         UI.message("NOT Found it 🚀 tag " + tag)
@@ -443,6 +448,7 @@ end
   end
 
   private_lane :update_xcschemes do
+    puts "CURRENT DIR: " + Dir.pwd
     UI.message "Start lane update xcshemes"
     project_path = "../Santander.xcodeproj"
     xcConfigFilesPath = "../Santander/Configuration/"
