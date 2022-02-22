@@ -10,4 +10,13 @@ import Foundation
 enum TopUpAmount {
     case fixed(TopUpValue)
     case custom(amount: Int?)
+    
+    var amount: Int? {
+        switch self {
+        case .fixed(let topUpValue):
+            return topUpValue.value
+        case .custom(let amount):
+            return amount
+        }
+    }
 }

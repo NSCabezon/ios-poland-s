@@ -11,6 +11,7 @@ import SANLegacyLibrary
 public protocol PLPhoneTopUpManagerProtocol {
     func getFormData() throws -> Result<
         TopUpFormDataDTO, NetworkProviderError>
+    func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError>
 }
 
 public final class PLPhoneTopUpManager {
@@ -42,5 +43,9 @@ extension PLPhoneTopUpManager: PLPhoneTopUpManagerProtocol {
         case (_, _, _, .failure(let internetContactsFetchError)):
             return .failure(internetContactsFetchError)
         }
+    }
+    
+    public func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError> {
+        return try dataSource.checkPhone(request: request)
     }
 }

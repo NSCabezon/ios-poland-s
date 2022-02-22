@@ -54,6 +54,10 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
         self.dependenciesEngine.register(for: CustomTopUpAmountValidating.self) { _ in
             return CustomTopUpAmountValidator()
         }
+        
+        self.dependenciesEngine.register(for: PartialPhoneNumberValidating.self) { _ in
+            return PartialPhoneNumberValidator()
+        }
 
         self.dependenciesEngine.register(for: ContactsPermissionHelperProtocol.self) { _ in
             return ContactsPermissionHelper()
@@ -65,6 +69,12 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
         
         self.dependenciesEngine.register(for: ContactMapping.self) { _ in
             return ContactMapper()
+        }
+        
+        self.dependenciesEngine.register(for: TopUpFormValidating.self) { resolver in
+            let customAmountValidator = resolver.resolve(for: CustomTopUpAmountValidating.self)
+            let phoneNumberValidator = resolver.resolve(for: PartialPhoneNumberValidating.self)
+            return TopUpFormValidator(customAmountValidator: customAmountValidator, numberValidator: phoneNumberValidator)
         }
         
         self.dependenciesEngine.register(for: GetContactsUseCaseProtocol.self) { resolver in
