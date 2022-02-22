@@ -55,7 +55,6 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
-    func selectCharityTransfer(accounts: [AccountForDebit])
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -193,24 +192,13 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 for: ZusTransferModuleCoordinatorProtocol.self
             )
             coordinator.start()
+        case .charityTransfer:
+            let coordinator = dependenciesEngine.resolve(
+                for: CharityTransferModuleCoordinator.self
+            )
+            coordinator.start()
         default:
             break
         }
-    }
-    
-    func selectCharityTransfer(accounts: [AccountForDebit]) {
-        guard !accounts.isEmpty else {
-            view?.showError()
-            return
-        }
-        let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
-        let settings = repository.get()?.charityTransfer
-        let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
-                                                              transferAccountNumber: settings?.transferAccountNumber,
-                                                              transferTitle: settings?.transferTitle)
-        let coordinator: CharityTransferModuleCoordinator = dependenciesEngine.resolve()
-        coordinator.setProperties(accounts: accounts,
-                                  charityTransferSettings: charityTransferSettings)
-        coordinator.start()
     }
 }

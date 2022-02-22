@@ -15,7 +15,7 @@ final class CustomerServicePGFrequentOperativeOption {
     let rawValue: String = "customerServicePoland"
     
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.customerService.rawValue
-    private let optionId: String = PLAccountOtherOperativesIdentifier.customerService.rawValue
+    private let optionId: String = PLAccountOperativeIdentifier.customerService.rawValue
     private let dependenciesResolver: DependenciesResolver
    
     init(dependenciesResolver: DependenciesResolver) {

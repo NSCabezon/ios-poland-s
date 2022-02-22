@@ -21,21 +21,25 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
         if case .custome(let identifier, _, _, _, _, _) = action {
-            switch identifier {
-            case PLAccountOtherOperativesIdentifier.addBanks.rawValue,
-                 PLAccountOtherOperativesIdentifier.changeAccount.rawValue,
-                 PLAccountOtherOperativesIdentifier.alerts24.rawValue,
-                 PLAccountOtherOperativesIdentifier.editGoal.rawValue,
-                 PLAccountOtherOperativesIdentifier.accountStatement.rawValue,
-                 PLAccountOtherOperativesIdentifier.customerService.rawValue,
-                 PLAccountOtherOperativesIdentifier.fxExchange.rawValue,
-                 PLAccountOtherOperativesIdentifier.memberGetMember.rawValue:
+            guard let actionKey = PLAccountOperativeIdentifier(rawValue: identifier) else {
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+                return
+            }
+            switch actionKey {
+            case .addBanks,
+                 .changeAccount,
+                 .alerts24,
+                 .editGoal,
+                 .accountStatement,
+                 .customerService,
+                 .fxExchange:
                 showWebView(identifier: identifier, entity: entity)
-            case PLAccountOtherOperativesIdentifier.changeAliases.rawValue:
+            case .changeAliases:
                 goToPGProductsCustomization()
-            case PLAccountOtherOperativesIdentifier.generateQRCode.rawValue, PLAccountOtherOperativesIdentifier.creditCardRepayment.rawValue,
-                 PLAccountOtherOperativesIdentifier.history.rawValue,
-                 PLAccountOtherOperativesIdentifier.openDeposit.rawValue:
+            case .generateQRCode,
+                 .history,
+                 .openDeposit,
+                 .memberGetMember:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -54,7 +58,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
         guard let list = repository.get()?.accountsOptions,
               var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
         
-        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
+        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
             if let contractNumber = entity.dto.contractNumber, let url = data.link?.replace(StringPlaceholder.Placeholder.number.rawValue, contractNumber) {
                 data.link = url
@@ -73,10 +77,10 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
             }
     }
     
-    private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
-        var entity: PLAccountOtherOperativesData?
+    private func getAccountOtherOperativesEntity(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
+        var entity: PLProductOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
+            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }
