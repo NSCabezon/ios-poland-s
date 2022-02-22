@@ -58,10 +58,10 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
                     notVisibles.append(account)
                 }
                 if isMinimunAccounts(accounts: visibles + notVisibles) == false {
-                    throw NSError(description: "sendMoney_title_cannotOperation")
+                    throw NSError()
                 }
                 if creditCardAccountConditions(notCreditCardAccount) == false {
-                    throw NSError(description: "sendMoney_text_notCompatibleOperation")
+                    throw NSError()
                 }
                 return PreSetupData(accountsVisibles: visibles, accountsNotVisibles: notVisibles)
             }
@@ -69,7 +69,7 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
     }
     
     func isMinimunAccounts(accounts: [AccountRepresentable]) -> Bool {
-        if accounts.count > 1 {
+        if accounts.count > 100 {
             return true
         } else {
             return false
