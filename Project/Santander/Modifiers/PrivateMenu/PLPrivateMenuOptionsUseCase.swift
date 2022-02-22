@@ -11,13 +11,15 @@ import CoreDomain
 
 struct PLPrivateMenuOptionsUseCase: GetPrivateMenuOptionsUseCase {
     private let featuredOptionsUseCase: GetFeaturedOptionsUseCase
-    
-    func fetchMenuOptions() -> AnyPublisher<[PrivateMenuOptionRepresentable], Never> {
-        return menuOptionPublisher()
-    }
+    private let enabledOptionsUseCase: GetPrivateMenuOptionEnabledUseCase
     
     init(dependencies: PrivateMenuExternalDependenciesResolver) {
         featuredOptionsUseCase = dependencies.resolve()
+        enabledOptionsUseCase = dependencies.resolve()
+    }
+    
+    func fetchMenuOptions() -> AnyPublisher<[PrivateMenuOptionRepresentable], Never> {
+        return availableOptionsPublisher()
     }
 }
  
@@ -46,8 +48,33 @@ private extension PLPrivateMenuOptionsUseCase {
             .map(buildOptions)
             .eraseToAnyPublisher()
     }
+
+    func enabledOptionsPublisher() -> AnyPublisher<[PrivateMenuOptions], Never> {
+        return enabledOptionsUseCase
+            .fetchOptionsEnabledVisible()
+            .map {$0}
+            .eraseToAnyPublisher()
+    }
     
-    func evaluate(featuredOptions: [PrivateMenuOptions: String], with option: PrivateMenuOptions) -> (isFeatured: Bool, message: String) {
+    func availableOptionsPublisher() -> AnyPublisher<[PrivateMenuOptionRepresentable], Never> {
+        return Publishers.Zip(
+            menuOptionPublisher(),
+            enabledOptionsPublisher()
+        )
+        .map(buildEnabledOptions)
+        .eraseToAnyPublisher()
+    }
+    
+    func buildEnabledOptions(_ optionsRepresentable: [PrivateMenuOptionRepresentable],
+                             _ enabled: [PrivateMenuOptions]) -> [PrivateMenuOptionRepresentable] {
+        var availableOption = [PrivateMenuOptionRepresentable]()
+        _ = optionsRepresentable.reduce(into: availableOption) { _, candidateOption in
+            availableOption.append(candidateOption, conditionedBy: enabled.contains(candidateOption.type))
+        }
+        return availableOption
+    }
+    
+    func evaluateFeaturedOptions(_ featuredOptions: [PrivateMenuOptions: String], with option: PrivateMenuOptions) -> (isFeatured: Bool, message: String) {
         guard let fOption = featuredOptions.filter({$0.key == option}).first else {
             return (false, "")
         }
@@ -56,7 +83,7 @@ private extension PLPrivateMenuOptionsUseCase {
     
     func buildOptions(featuredOptions: [PrivateMenuOptions: String]) -> [PrivateMenuOptionRepresentable] {
          PLPrivateMenuOptionsUseCase.options.map { item in
-            let optionEvaluator = evaluate(featuredOptions: featuredOptions, with: item)
+            let optionEvaluator = evaluateFeaturedOptions(featuredOptions, with: item)
             return PrivateMenuMainOption(imageKey: item.iconKey,
                                            titleKey: item.titleKey,
                                            extraMessageKey: optionEvaluator.isFeatured ? optionEvaluator.message : "",
