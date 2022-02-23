@@ -21,16 +21,32 @@ final class PLInsuranceProtectionModifier: InsuranceProtectionModifier {
         self.drawer = drawer
         super.init(dependenciesResolver: dependenciesResolver)
     }
-
+    
     override func didSelectInsuranceProtection(insurance: InsuranceProtectionEntity) {
-        if let detailsUrl = insurance.dto.detailsUrl, let url = URL(string: detailsUrl), let parameters = generateParameters(with: insurance) {
-            let configuration = PLInsuranceProtectionWebConfiguration(initialURL: url.absoluteString, bodyParameters: parameters, closingURLs: [], webToolbarTitleKey: nil, httpMethod: .post, pdfToolbarTitleKey: nil, isFullScreenEnabled: false)
-            let linkHandler = PLWebviewCustomLinkHandler(configuration: configuration)
-            let coordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
-            coordinator.showWebView(handler: linkHandler)
-        } else {
-            self.showGenericErrorDialog(withDependenciesResolver: self.dependenciesResolver, action: nil, closeAction: nil)
+        let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        guard let list = repository.get()?.insuranceOptions,
+              let insuranceWebConfiguration = getInsuranceProtectionWebConfiguration(list: list, identifier: "PROTECTION_INSURANCE" ),
+              let url = insuranceWebConfiguration.link,
+              let parameters = generateParameters(with: insurance),
+              let httpMethod = insuranceWebConfiguration.httpMethod,
+              let path = insurance.dto.detailsUrl  else {
+                  self.showGenericErrorDialog(withDependenciesResolver: self.dependenciesResolver, action: nil, closeAction: nil)
+                  return
+              }
+        let configuration = PLInsuranceProtectionWebConfiguration(initialURL: url.replacingOccurrences(of: "{$INSURANCE_URL}", with: path), bodyParameters: parameters, closingURLs: ["www.bancosantander.com", "app://close"], webToolbarTitleKey: nil, httpMethod: httpMethod, pdfToolbarTitleKey: nil, isFullScreenEnabled: insuranceWebConfiguration.isFullScreen)
+        let linkHandler = PLWebviewCustomLinkHandler(configuration: configuration)
+        let coordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
+        coordinator.showWebView(handler: linkHandler)
+    }
+}
+
+private extension PLInsuranceProtectionModifier {
+    func getInsuranceProtectionWebConfiguration(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
+        var entity: PLProductOperativesData?
+        for dto in list where dto.id == identifier {
+            entity = PLProductOperativesData(identifier: dto.id, link: dto.url, isAvailable: dto.isAvailable, httpMethod: dto.getHTTPMethod, parameter: nil, isFullScreen: dto.isFullScreen)
         }
+        return entity
     }
 
     func generateParameters(with insuranceEntity: InsuranceProtectionEntity) -> [String: String]? {
@@ -44,7 +60,7 @@ final class PLInsuranceProtectionModifier: InsuranceProtectionModifier {
         return parameters
     }
 
-    private func getLanguage() -> String {
+    func getLanguage() -> String {
         return dependenciesResolver.resolve(forOptionalType: StringLoader.self)?.getCurrentLanguage().languageType.rawValue ?? "en"
     }
 }
