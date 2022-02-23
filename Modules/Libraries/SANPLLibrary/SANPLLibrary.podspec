@@ -36,6 +36,5 @@ TODO: Add long description of the pod here.
   
   s.dependency 'CoreFoundationLib'
   s.dependency "SANLegacyLibrary"
-  s.dependency "Commons"  
 end
 
