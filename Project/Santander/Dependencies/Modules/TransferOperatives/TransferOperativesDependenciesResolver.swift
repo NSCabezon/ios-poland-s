@@ -8,6 +8,7 @@
 import Foundation
 import TransferOperatives
 import SANPLLibrary
+import CoreFoundationLib
 
 extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {
     func resolve() -> PLTransfersRepository {
@@ -16,5 +17,13 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     
     func resolve() -> InternalTransferPreSetupUseCase {
         return PLInternalTransferPreSetupUseCase(dependencies: self)
+    }
+    
+    func resolve() -> AccountNumberFormatterProtocol {
+        return oldResolver.resolve()
+    }
+    
+    func resolve() -> GetInternalTransferDestinationAccountsUseCase {
+        return PLGetInternalTransferDestAccountsUseCase()
     }
 }
