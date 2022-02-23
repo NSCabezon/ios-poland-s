@@ -11,6 +11,7 @@
 		04304E2B276773C900AF0A99 /* PLPrivateMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */; };
 		04741875279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */; };
 		04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */; };
+		04D14CA5277C60F7005A2307 /* PLInboxNotificationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D14CA4277C60F7005A2307 /* PLInboxNotificationCoordinator.swift */; };
 		04BAA0CE27AA9B4300AFDC2E /* PLCardActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0CD27AA9B4200AFDC2E /* PLCardActionFactory.swift */; };
 		04BAA0D227AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0D027AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift */; };
 		04BAA0D327AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0D127AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift */; };
@@ -267,6 +268,8 @@
 		04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuModifier.swift; sourceTree = "<group>"; };
 		04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAppStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLWebViewCoordinatorNavigator.swift; sourceTree = "<group>"; };
+		04D14CA4277C60F7005A2307 /* PLInboxNotificationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInboxNotificationCoordinator.swift; sourceTree = "<group>"; };
+		07CEA947B9EB23B3F40EFD48 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
 		04BAA0CD27AA9B4200AFDC2E /* PLCardActionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardActionFactory.swift; sourceTree = "<group>"; };
 		04BAA0D027AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProductActionsShortcutsUseCase.swift; sourceTree = "<group>"; };
 		04BAA0D127AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductActionsShortcutsMatrix.swift; sourceTree = "<group>"; };
@@ -644,6 +647,7 @@
 			isa = PBXGroup;
 			children = (
 				0D7CA2CC26B8079C007E0C10 /* PLInboxActionBuilder.swift */,
+				04D14CA4277C60F7005A2307 /* PLInboxNotificationCoordinator.swift */,
 			);
 			path = Inbox;
 			sourceTree = "<group>";
@@ -2068,6 +2072,7 @@
 				EF446B0E271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift in Sources */,
 				B01155EF271581BD00A4C175 /* FakeLoginTokenInjector.swift in Sources */,
 				EF430D5F271DD855001DC4B9 /* TranferTypeMatrixEvaluator.swift in Sources */,
+				04D14CA5277C60F7005A2307 /* PLInboxNotificationCoordinator.swift in Sources */,
 				7EDB3AE3273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift in Sources */,
 				7E2CCA8926B80CE700CBDB11 /* OpenDepositPGFrequentOperativeOption.swift in Sources */,
 				26328A8B27070CD500D1318D /* PLCardDetailModifier.swift in Sources */,

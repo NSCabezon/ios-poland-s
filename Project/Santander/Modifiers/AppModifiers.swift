@@ -17,6 +17,7 @@ import PersonalArea
 import SANLegacyLibrary
 import TransferOperatives
 import UI
+import PLNotificationsInbox
 
 final class AppModifiers {
     private let dependencieEngine: DependenciesResolver & DependenciesInjector
