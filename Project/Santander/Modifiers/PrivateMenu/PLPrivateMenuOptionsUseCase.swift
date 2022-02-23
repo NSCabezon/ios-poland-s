@@ -52,7 +52,7 @@ private extension PLPrivateMenuOptionsUseCase {
     func enabledOptionsPublisher() -> AnyPublisher<[PrivateMenuOptions], Never> {
         return enabledOptionsUseCase
             .fetchOptionsEnabledVisible()
-            .map {$0}
+            .map(\.data)
             .eraseToAnyPublisher()
     }
     

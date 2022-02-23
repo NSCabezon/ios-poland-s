@@ -12,7 +12,7 @@ import RetailLegacy
 import CoreFoundationLib
 import PrivateMenu
 
-extension ModuleDependencies: PrivateMenuExternalDependenciesResolver {
+extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     func resolve() -> LocalAppConfig {
         oldResolver.resolve()
     }
@@ -32,4 +32,10 @@ extension ModuleDependencies: PrivateMenuExternalDependenciesResolver {
     func resolve() -> PersonalManagerNotificationReactiveRepository {
         oldResolver.resolve()
     }
+    
+    func resolve() -> PrivateMenuToggleOutsider {
+        self.drawer
+    }
 }
+
+extension BaseMenuViewController: PrivateMenuToggleOutsider { }
