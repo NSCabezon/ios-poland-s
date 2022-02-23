@@ -102,7 +102,7 @@ public class GlobileCheckBox: UIControl {
         NSLayoutConstraint.activate([
             checkboxButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             checkboxButton.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -12),
-            checkboxButton.heightAnchor.constraint(equalToConstant: self.checkboxSize),
+            checkboxButton.heightAnchor.constraint(equalToConstant: CGFloat(self.checkboxSize)),
             checkboxButton.widthAnchor.constraint(equalTo: checkboxButton.heightAnchor),
             checkboxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
@@ -125,7 +125,7 @@ public class GlobileCheckBox: UIControl {
         backgroundColor = .clear
 
         label.textColor = textColor
-        label.font = .santander(size: self.fontSize)
+        label.font = .santander(size: CGFloat(self.fontSize))
         infoButton.tintColor = infoButtonColor
 
         label.text = text
