@@ -171,8 +171,8 @@ final class PaymentAmountSelectionView: UIView {
     }
     
     private func updateOtherAmountTextField() {
-        if case .custom(let amount) = selectedAmount, let amount = amount {
-            otherAmountTextField.textField.setText("\(amount)")
+        if case .custom(let amount) = selectedAmount, let amountText = amount {
+            otherAmountTextField.textField.setText("\(amountText)")
         } else {
             otherAmountTextField.textField.setText(nil)
         }
