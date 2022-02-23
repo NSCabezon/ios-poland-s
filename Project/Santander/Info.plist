@@ -21,9 +21,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.5.4</string>
+	<string>0.5.5</string>
 	<key>CFBundleVersion</key>
-	<string>5004</string>
+	<string>5005</string>
 	<key>DEFAULT_DEMO_USER</key>
 	<string>$(DEFAULT_DEMO_USER)</string>
 	<key>DEFAULT_MAGIC</key>
