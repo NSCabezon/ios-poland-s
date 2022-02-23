@@ -69,7 +69,7 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
     }
     
     func isMinimunAccounts(accounts: [AccountRepresentable]) -> Bool {
-        if accounts.count > 100 {
+        if accounts.count > 1 {
             return true
         } else {
             return false
