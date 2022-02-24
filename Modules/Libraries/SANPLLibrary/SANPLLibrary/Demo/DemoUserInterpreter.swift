@@ -100,4 +100,6 @@ public enum PLLocalServiceName: String {
     case loginInfo = "loginInfo"
     case getReceipt = "getReceipt"
     case expensesChart = "expensesChart"
+    case notificationPushqueryUnreadedCount = "notificationPushqueryUnreadedCount"
+    case notificationPushqueryList = "notificationPushqueryList"
 }

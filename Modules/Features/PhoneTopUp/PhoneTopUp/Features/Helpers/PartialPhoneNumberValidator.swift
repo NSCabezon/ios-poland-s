@@ -7,12 +7,17 @@
 
 import Foundation
 
-final class PartialPhoneNumberValidator {
-    enum ValidationResults {
-        case invalid
-        case partiallyValid(number: String)
-        case valid(number: String)
-    }
+enum ValidationResults {
+    case invalid
+    case partiallyValid(number: String)
+    case valid(number: String)
+}
+
+protocol PartialPhoneNumberValidating {
+    func validatePhoneNumberText(_ text: String) -> ValidationResults
+}
+
+final class PartialPhoneNumberValidator: PartialPhoneNumberValidating {
     
     // MARK: Properties
     
@@ -20,11 +25,6 @@ final class PartialPhoneNumberValidator {
     private let maxNumberOfWhitespace = 2
     private var maxNumberOfCharacters: Int {
         return maxNumberOfDigits + maxNumberOfWhitespace
-    }
-    
-    // MARK: Lifecycle
-    
-    init() {
     }
     
     // MARK: Methods

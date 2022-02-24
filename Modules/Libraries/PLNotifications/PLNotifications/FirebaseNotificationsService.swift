@@ -54,6 +54,7 @@ extension FirebaseNotificationsService: NotificationResponseCapable {
 
     public func didReceiveNotification (_ pushNotification: PLNotification, with completionHandler: @escaping () -> Void) {
         Messaging.messaging().appDidReceiveMessage(pushNotification.userInfo)
+        dependenciesResolver.resolve(firstOptionalTypeOf: CorePushNotificationsManagerProtocol.self)?.didReceivePushRequest(pushNotification)
         completionHandler()
     }
 }

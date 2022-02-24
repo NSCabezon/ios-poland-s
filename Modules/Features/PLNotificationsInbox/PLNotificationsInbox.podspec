@@ -32,4 +32,6 @@ Pod::Spec.new do |s|
   s.dependency "LoginCommon"
   s.dependency "CoreFoundationLib"
   s.dependency "SANPLLibrary"
+  s.dependency "PLNotifications"
+  s.dependency "UIOneComponents"
 end

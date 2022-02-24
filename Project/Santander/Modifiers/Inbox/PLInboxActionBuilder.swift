@@ -80,7 +80,7 @@ private extension PLInboxActionBuilder {
             extras: InboxActionExtras(action: ()),
             accessibilityIdentifier: AccesibilityInbox.notifications,
             action: { _ in
-                self.showToast()
+                self.delegate?.gotoInboxNotification(nil)
             }
         )
         self.inboxActions.append(viewModel)
