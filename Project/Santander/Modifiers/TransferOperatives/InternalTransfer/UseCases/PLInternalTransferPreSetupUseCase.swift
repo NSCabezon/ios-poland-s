@@ -30,40 +30,59 @@ struct PLInternalTransferPreSetupUseCase {
 
 extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
     func fetchPreSetup() -> AnyPublisher<PreSetupData, Error> {
-        Publishers.Zip(
+        Publishers.Zip3(
             globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
-            transfersRepository.getAccountForDebit()
+            transfersRepository.getAccountForDebit(),
+            transfersRepository.getAccountForCredit()
         )
             .tryMap { response -> PreSetupData in
-                var visibles: [AccountRepresentable] = []
-                var notVisibles: [AccountRepresentable] = []
-                var notCreditCardAccount: [AccountRepresentable] = []
-                let accounts = response.1
+                var originAccountsVisibles: [AccountRepresentable] = []
+                var originAccountsNotVisibles: [AccountRepresentable] = []
+                var destinationAccountsVisibles: [AccountRepresentable] = []
+                var destinationAccountsNotVisibles: [AccountRepresentable] = []
+                var notOriginCreditCardAccount: [AccountRepresentable] = []
+                var notDestinationCreditCardAccount: [AccountRepresentable] = []
+                let debitAccounts = response.1
+                let creditAccounts = response.2
                 let notVisiblesPGAccounts = response.0.accounts.filter { $0.isVisible == false }
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                accounts.forEach { account in
+                debitAccounts.forEach { account in
                     let polandAccount = account as? PolandAccountRepresentable
                     if polandAccount?.type != .creditCard {
-                        notCreditCardAccount.append(account)
+                        notOriginCreditCardAccount.append(account)
                     }
                     let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
                         return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
                     }
                     guard containsAccountNotVisible else {
-                        visibles.append(account)
+                        originAccountsVisibles.append(account)
                         return
                     }
-                    notVisibles.append(account)
+                    originAccountsNotVisibles.append(account)
                 }
-                if isMinimunAccounts(accounts: visibles + notVisibles) == false {
+                creditAccounts.forEach { account in
+                    let polandAccount = account as? PolandAccountRepresentable
+                    if polandAccount?.type != .creditCard {
+                        notDestinationCreditCardAccount.append(account)
+                    }
+                    let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
+                        return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
+                    }
+                    guard containsAccountNotVisible else {
+                        destinationAccountsVisibles.append(account)
+                        return
+                    }
+                    destinationAccountsNotVisibles.append(account)
+                }
+                if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
                     throw NSError()
                 }
-                if creditCardAccountConditions(notCreditCardAccount) == false {
+                if creditCardAccountConditions(notOriginCreditCardAccount) == false {
                     throw NSError()
                 }
-                return PreSetupData(accountsVisibles: visibles, accountsNotVisibles: notVisibles)
+                return PreSetupData(originAccountsVisibles: originAccountsVisibles, originAccountsNotVisibles: originAccountsNotVisibles, destinationAccountsVisibles: destinationAccountsVisibles, destinationAccountsNotVisibles: destinationAccountsNotVisibles)
             }
             .eraseToAnyPublisher()
     }

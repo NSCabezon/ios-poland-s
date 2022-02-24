@@ -9,6 +9,7 @@ import CoreDomain
 
 public protocol PLTransfersManagerProtocol {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
@@ -41,6 +42,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
         let result = try self.transferDataSource.getAccountsForDebit()
+        switch result {
+        case .success(let accountForDebitDTO):
+            return .success(accountForDebitDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountsForCredit()
         switch result {
         case .success(let accountForDebitDTO):
             return .success(accountForDebitDTO)
