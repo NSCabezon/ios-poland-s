@@ -12,18 +12,11 @@ import SANPLLibrary
 
 struct PLGetInternalTransferDestAccountsUseCase {}
 
-struct PLGetInternalTransferDestinationAccountsUseCaseOutput: GetInternalTransferDestinationAccountsUseCaseOutput {
-    let visibleAccounts: [AccountRepresentable]
-    let notVisibleAccounts: [AccountRepresentable]
-}
-
 extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinationAccountsUseCase {
-    func fetchAccounts(visibleAccounts: [AccountRepresentable],
-                       notVisibleAccounts: [AccountRepresentable],
-                       originAccount: AccountRepresentable) -> AnyPublisher<GetInternalTransferDestinationAccountsUseCaseOutput, Never> {
-        return Just(filterDestinationAccounts(visibleAccounts: filterPolandAccounts(visibleAccounts),
-                                              notVisibleAccounts: filterPolandAccounts(notVisibleAccounts),
-                                              originAccount: originAccount)
+    func fetchAccounts(input: GetInternalTransferDestinationAccountsInput) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, Never> {
+        return Just(filterDestinationAccounts(visibleAccounts: filterPolandAccounts(input.visibleAccounts),
+                                              notVisibleAccounts: filterPolandAccounts(input.notVisibleAccounts),
+                                              originAccount: input.originAccount)
         ).eraseToAnyPublisher()
     }
 }
@@ -36,14 +29,11 @@ private extension PLGetInternalTransferDestAccountsUseCase {
     
     func filterDestinationAccounts(visibleAccounts: [PolandAccountRepresentable],
                                    notVisibleAccounts: [PolandAccountRepresentable],
-                                   originAccount: AccountRepresentable) -> GetInternalTransferDestinationAccountsUseCaseOutput {
-        guard let originAccount = originAccount as? PolandAccountRepresentable else {
-            return PLGetInternalTransferDestinationAccountsUseCaseOutput(visibleAccounts: [],
+                                   originAccount: AccountRepresentable) -> GetInternalTransferDestinationAccountsOutput {
+        guard let originAccount = originAccount as? PolandAccountRepresentable,
+            originAccount.type == .creditCard else {
+            return GetInternalTransferDestinationAccountsOutput(visibleAccounts: [],
                                                                          notVisibleAccounts: [])
-        }
-        guard originAccount.type == .creditCard else {
-            return PLGetInternalTransferDestinationAccountsUseCaseOutput(visibleAccounts: visibleAccounts,
-                                                                         notVisibleAccounts: notVisibleAccounts)
         }
         let visiblesFiltered = visibleAccounts.filter {
             $0.currencyRepresentable?.currencyType == .złoty || $0.equalsTo(other: originAccount)
@@ -51,7 +41,7 @@ private extension PLGetInternalTransferDestAccountsUseCase {
         let notVisiblesFiltered = notVisibleAccounts.filter {
             $0.currencyRepresentable?.currencyType == .złoty || $0.equalsTo(other: originAccount)
         }
-        return PLGetInternalTransferDestinationAccountsUseCaseOutput(visibleAccounts: visiblesFiltered,
+        return GetInternalTransferDestinationAccountsOutput(visibleAccounts: visiblesFiltered,
                                                                      notVisibleAccounts: notVisiblesFiltered)
     }
 }
