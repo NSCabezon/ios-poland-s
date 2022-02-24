@@ -9,7 +9,7 @@ import CoreDomain
 
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
-    func getAccountsForCredit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
+    func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
@@ -89,13 +89,13 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         return result
     }
     
-    func getAccountsForCredit() throws -> Result<[AccountForDebitDTO], NetworkProviderError> {
+    func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
         let serviceName = TransferServiceType.accountForCredit.rawValue
         let absoluteUrl = baseUrl + self.basePath
-        let result: Result<[AccountForDebitDTO], NetworkProviderError> = self.networkProvider.request(
+        let result: Result<[AccountForCreditDTO], NetworkProviderError> = self.networkProvider.request(
             TransferRequest(
                 serviceName: serviceName,
                 serviceUrl: absoluteUrl,

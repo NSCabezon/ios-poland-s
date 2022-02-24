@@ -53,8 +53,8 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
         let result = try self.transferDataSource.getAccountsForCredit()
         switch result {
-        case .success(let accountForDebitDTO):
-            return .success(accountForDebitDTO)
+        case .success(let accountForCreditDTO):
+            return .success(accountForCreditDTO)
         case .failure(let error):
             return .failure(error)
         }

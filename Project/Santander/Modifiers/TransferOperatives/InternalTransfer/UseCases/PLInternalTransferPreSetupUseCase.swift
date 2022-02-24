@@ -36,52 +36,14 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
             transfersRepository.getAccountForCredit()
         )
             .tryMap { response -> PreSetupData in
-                var originAccountsVisibles: [AccountRepresentable] = []
-                var originAccountsNotVisibles: [AccountRepresentable] = []
-                var destinationAccountsVisibles: [AccountRepresentable] = []
-                var destinationAccountsNotVisibles: [AccountRepresentable] = []
-                var notOriginCreditCardAccount: [AccountRepresentable] = []
-                var notDestinationCreditCardAccount: [AccountRepresentable] = []
                 let debitAccounts = response.1
                 let creditAccounts = response.2
                 let notVisiblesPGAccounts = response.0.accounts.filter { $0.isVisible == false }
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                debitAccounts.forEach { account in
-                    let polandAccount = account as? PolandAccountRepresentable
-                    if polandAccount?.type != .creditCard {
-                        notOriginCreditCardAccount.append(account)
-                    }
-                    let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
-                        return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
-                    }
-                    guard containsAccountNotVisible else {
-                        originAccountsVisibles.append(account)
-                        return
-                    }
-                    originAccountsNotVisibles.append(account)
-                }
-                creditAccounts.forEach { account in
-                    let polandAccount = account as? PolandAccountRepresentable
-                    if polandAccount?.type != .creditCard {
-                        notDestinationCreditCardAccount.append(account)
-                    }
-                    let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
-                        return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
-                    }
-                    guard containsAccountNotVisible else {
-                        destinationAccountsVisibles.append(account)
-                        return
-                    }
-                    destinationAccountsNotVisibles.append(account)
-                }
-                if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
-                    throw NSError()
-                }
-                if creditCardAccountConditions(notOriginCreditCardAccount) == false {
-                    throw NSError()
-                }
+                let (originAccountsVisibles, originAccountsNotVisibles) = try originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                let (destinationAccountsVisibles, destinationAccountsNotVisibles) = destinationAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
                 return PreSetupData(originAccountsVisibles: originAccountsVisibles, originAccountsNotVisibles: originAccountsNotVisibles, destinationAccountsVisibles: destinationAccountsVisibles, destinationAccountsNotVisibles: destinationAccountsNotVisibles)
             }
             .eraseToAnyPublisher()
@@ -103,5 +65,53 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
         } else {
             return true
         }
+    }
+    
+    func originAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) throws -> ([AccountRepresentable], [AccountRepresentable]) {
+        var originAccountsVisibles: [AccountRepresentable] = []
+        var originAccountsNotVisibles: [AccountRepresentable] = []
+        var notOriginCreditCardAccount: [AccountRepresentable] = []
+        accounts.forEach { account in
+            let polandAccount = account as? PolandAccountRepresentable
+            if polandAccount?.type != .creditCard {
+                notOriginCreditCardAccount.append(account)
+            }
+            let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
+                return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
+            }
+            guard containsAccountNotVisible else {
+                originAccountsVisibles.append(account)
+                return
+            }
+            originAccountsNotVisibles.append(account)
+        }
+        if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
+            throw NSError()
+        }
+        if creditCardAccountConditions(notOriginCreditCardAccount) == false {
+            throw NSError()
+        }
+        return (originAccountsVisibles, originAccountsNotVisibles)
+    }
+    
+    func destinationAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable]) {
+        var destinationAccountsVisibles: [AccountRepresentable] = []
+        var destinationAccountsNotVisibles: [AccountRepresentable] = []
+        var notDestinationCreditCardAccount: [AccountRepresentable] = []
+        accounts.forEach { account in
+            let polandAccount = account as? PolandAccountRepresentable
+            if polandAccount?.type != .creditCard {
+                notDestinationCreditCardAccount.append(account)
+            }
+            let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
+                return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
+            }
+            guard containsAccountNotVisible else {
+                destinationAccountsVisibles.append(account)
+                return
+            }
+            destinationAccountsNotVisibles.append(account)
+        }
+        return (destinationAccountsVisibles, destinationAccountsNotVisibles)
     }
 }

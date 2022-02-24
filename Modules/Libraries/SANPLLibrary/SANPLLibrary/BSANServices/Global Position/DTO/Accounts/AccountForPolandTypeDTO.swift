@@ -1,4 +1,4 @@
-public enum AccountForDebitTypeDTO: String, Codable {
+public enum AccountForPolandTypeDTO: String, Codable {
     case avista = "AVISTA"
     case savings = "SAVINGS"
     case deposit = "DEPOSIT"
