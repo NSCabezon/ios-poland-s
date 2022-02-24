@@ -200,9 +200,6 @@ private extension AppDependencies {
             return self.managersProviderAdapter
         }
         // Legacy compatibility dependencies
-        self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
-            return self.getPGFrequentOperativeOption
-        }
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
             return self.compilation
         }
