@@ -27,11 +27,7 @@ struct ModuleDependencies {
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
-    
-    func resolve() -> AppConfigRepositoryProtocol {
-        oldResolver.resolve()
-    }
-    
+        
     func resolve() -> TrackerManager {
         oldResolver.resolve()
     }
@@ -43,10 +39,6 @@ struct ModuleDependencies {
     func resolve() -> UINavigationController {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
-    }
-    
-    func resolve() -> SegmentedUserRepository {
-        return oldResolver.resolve(for: SegmentedUserRepository.self)
     }
 }
 

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let localAppConfig = dependenciesEngine.resolve(for: LocalAppConfig.self)
         let drawer = BaseMenuViewController(isPrivateSideMenuEnabled: localAppConfig.privateMenu)
         let moduleDependencies = ModuleDependencies(oldResolver: dependenciesEngine, drawer: drawer)
-        _ = AppModifiers(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: moduleDependencies)
+        _ = AppModifiers(dependenciesEngine: dependenciesEngine, moduleDependencies: moduleDependencies)
         self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: moduleDependencies)
         application.applicationSupportsShakeToEdit = false
         self.window = UIWindow()

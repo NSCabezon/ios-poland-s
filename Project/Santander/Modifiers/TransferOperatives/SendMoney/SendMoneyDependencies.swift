@@ -26,8 +26,5 @@ struct SendMoneyDependencies {
         self.dependenciesEngine.register(for: ValidateScheduledSendMoneyUseCaseProtocol.self) { resolver in
             return PLValidateGenericSendMoneyUseCase(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: CheckNewSendMoneyHomeEnabledUseCase.self) { resolver in
-            return DefaultCheckNewSendMoneyHomeEnabledUseCase(appConfigRepository: resolver.resolve())
-        }
     }
 }

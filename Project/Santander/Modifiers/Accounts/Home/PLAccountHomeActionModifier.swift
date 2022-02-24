@@ -14,13 +14,13 @@ import UI
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     private let dependenciesResolver: DependenciesResolver
-    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
+    private let moduleDependencies: ModuleDependencies
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    public init(dependenciesResolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
-        self.coreDependenciesResolver = coreDependenciesResolver
+    public init(moduleDependencies: ModuleDependencies) {
+        self.dependenciesResolver = moduleDependencies.resolve()
+        self.moduleDependencies = moduleDependencies
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
@@ -86,7 +86,7 @@ extension PLAccountHomeActionModifier {
             .receive(on: Schedulers.main)
             .sink { [unowned self] isEnabled in
                 if isEnabled {
-                    self.coreDependenciesResolver.oneTransferHomeCoordinator()
+                    self.moduleDependencies.oneTransferHomeCoordinator()
                         .set(account)
                         .start()
                 } else {
@@ -99,7 +99,7 @@ extension PLAccountHomeActionModifier {
 
 private extension PLAccountHomeActionModifier {
     var useCase: CheckNewSendMoneyHomeEnabledUseCase {
-        return dependenciesResolver.resolve()
+        return moduleDependencies.resolve()
     }
     
     var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {

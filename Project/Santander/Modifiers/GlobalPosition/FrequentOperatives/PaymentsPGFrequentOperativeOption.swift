@@ -14,13 +14,13 @@ final class PaymentsPGFrequentOperativeOption {
     let rawValue: String = "paymentsPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnPayments.rawValue
     private let dependenciesResolver: DependenciesResolver
-    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
+    private let dependencies: ModuleDependencies
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    init(dependenciesResolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
-        self.coreDependenciesResolver = coreDependenciesResolver
+    init(dependencies: ModuleDependencies) {
+        self.dependencies = dependencies
+        self.dependenciesResolver = dependencies.resolve()
     }
 }
 
@@ -33,7 +33,7 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
                 .receive(on: Schedulers.main)
                 .sink { [unowned self] isEnabled in
                     if isEnabled {
-                        self.coreDependenciesResolver.oneTransferHomeCoordinator().start()
+                        self.dependencies.oneTransferHomeCoordinator().start()
                     } else {
                         self.sendMoneyCoordinator.start()
                     }
@@ -66,7 +66,7 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
 
 private extension PaymentsPGFrequentOperativeOption {
     var useCase: CheckNewSendMoneyHomeEnabledUseCase {
-        return dependenciesResolver.resolve()
+        return dependencies.resolve()
     }
     
     var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {

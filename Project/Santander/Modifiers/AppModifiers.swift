@@ -21,7 +21,7 @@ import PLNotificationsInbox
 
 final class AppModifiers {
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
+    private let moduleDependencies: ModuleDependencies
     private lazy var depositModifiers: GlobalPosition.DepositModifier = {
         let depositModifier = PLDepositModifier(dependenciesResolver: self.dependenciesEngine)
         return depositModifier
@@ -53,7 +53,7 @@ final class AppModifiers {
         return GetGPCardOperativeModifier()
     }()
     private lazy var getGPAccountsOperativeOptionProtocol: GetGPAccountOperativeModifier = {
-        return GetGPAccountOperativeModifier(dependenciesEngine: self.dependenciesEngine)
+        return GetGPAccountOperativeModifier(moduleDependencies: moduleDependencies)
     }()
     private lazy var getGPLoanOperativeOptionProtocol: GetGPLoanOperativeModifier = {
         return GetGPLoanOperativeModifier()
@@ -77,11 +77,11 @@ final class AppModifiers {
         return PLPersonalAreaSectionsSecurityModifier(dependenciesEngine: dependenciesEngine)
     }()
     private lazy var getPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol = {
-        return GetPGFrequentOperativeOption(dependenciesResolver: dependenciesEngine, coreDependenciesResolver: coreDependenciesResolver)
+        return GetPGFrequentOperativeOption(moduleDependencies: moduleDependencies)
     }()
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
+    init(dependenciesEngine: DependenciesResolver & DependenciesInjector, moduleDependencies: ModuleDependencies) {
         self.dependenciesEngine = dependenciesEngine
-        self.coreDependenciesResolver = coreDependenciesResolver
+        self.moduleDependencies = moduleDependencies
         self.registerDependencies()
     }
 }
@@ -173,8 +173,8 @@ private extension AppModifiers {
         self.dependenciesEngine.register(for: GetAccountOtherOperativesActionUseCaseProtocol.self) { resolver in
             return GetPLAccountOtherOperativesActionUseCase(dependenciesResolver: resolver)
         }
-        self.dependenciesEngine.register(for: AccountHomeActionModifierProtocol.self) { resolver in
-            return PLAccountHomeActionModifier(dependenciesResolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
+        self.dependenciesEngine.register(for: AccountHomeActionModifierProtocol.self) { _ in
+            return PLAccountHomeActionModifier(moduleDependencies: self.moduleDependencies)
         }
         self.dependenciesEngine.register(for: AccountTransactionDetailShareableInfoProtocol.self) { _ in
             return PLAccountTransactionDetailShareableInfo()
@@ -208,7 +208,7 @@ private extension AppModifiers {
             return self.getPGFrequentOperativeOption
         }
         self.dependenciesEngine.register(for: PrivateMenuProtocol.self) { resolver in
-            PLPrivateMenuModifier(resolver: resolver, coreDependenciesResolver: self.coreDependenciesResolver)
+            PLPrivateMenuModifier(moduleDependencies: self.moduleDependencies)
         }
         self.dependenciesEngine.register(for: ShortcutItemsProviderProtocol.self) { _ in
             return PLShortcutItems()
