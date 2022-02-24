@@ -24,7 +24,7 @@ final class PLNotificationTokenRegisterProcessGroup: ProcessGroup<Void, Void, PL
     private var notificationRegisterUseCase: PLNotificationRegisterUseCase {
         return self.dependenciesEngine.resolve(for: PLNotificationRegisterUseCase.self)
     }
-
+    
     override func registerDependencies() {
         self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
             return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
