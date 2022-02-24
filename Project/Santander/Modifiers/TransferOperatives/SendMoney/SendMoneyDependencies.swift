@@ -32,5 +32,8 @@ struct SendMoneyDependencies {
         self.dependenciesEngine.register(for: SendMoneyAmountUseCaseProtocol.self) { resolver in
             return PLSendMoneyAmountUseCase(dependenciesResolver: resolver)
         }
+        self.dependenciesEngine.register(for: SendMoneyConfirmationUseCaseProtocol.self) { resolver in
+            return PLSendMoneyConfirmationUseCase(dependenciesResolver: resolver)
+        }
     }
 }
