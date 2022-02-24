@@ -21,10 +21,8 @@ public extension SendMoneyValidationProtocol {
     
     func validateTransfer(requestValues: SendMoneyOperativeData) throws -> UseCaseResponse<SendMoneyOperativeData, StringErrorOutput> {
         switch requestValues.transferDateType {
-        case .now:
-            return try self.validateGenericTransfer(requestValues: requestValues)
-        case .day:
-            return UseCaseResponse.error(StringErrorOutput(nil))
+        case .now, .day:
+            return try self.performValidation(requestValues: requestValues)
         case .periodic, .none:
             return UseCaseResponse.error(StringErrorOutput(nil))
         }
@@ -36,7 +34,7 @@ private extension SendMoneyValidationProtocol {
         return dependenciesResolver.resolve()
     }
     
-    func validateGenericTransfer(requestValues: SendMoneyOperativeData) throws -> UseCaseResponse<SendMoneyOperativeData, StringErrorOutput> {
+    func performValidation(requestValues: SendMoneyOperativeData) throws -> UseCaseResponse<SendMoneyOperativeData, StringErrorOutput> {
         guard let originAccount = requestValues.selectedAccount as? PolandAccountRepresentable,
               let originIbanRepresentable = requestValues.selectedAccount?.ibanRepresentable,
               let destinationIbanRepresentable = requestValues.destinationIBANRepresentable,
