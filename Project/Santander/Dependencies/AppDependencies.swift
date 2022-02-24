@@ -92,6 +92,9 @@ final class AppDependencies {
     private lazy var accountTransactionsPDFModifier: AccountTransactionsPDFGeneratorProtocol = {
         return PLAccountTransactionsPDFGeneratorProtocol(dependenciesResolver: dependencieEngine)
     }()
+    private lazy var cardsTransactionsPDFModifier: CardsTransactionsPDFGeneratorProtocol = {
+        return PLCardsTransactionsPDFGeneratorProtocol(dependenciesResolver: dependencieEngine)
+    }()
     private lazy var notificationPermissionManager: NotificationPermissionsManager = {
         return NotificationPermissionsManager(dependencies: self.dependencieEngine)
     }()
@@ -247,6 +250,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountTransactionsPDFGeneratorProtocol.self) { _ in
             return self.accountTransactionsPDFModifier
         }
+        self.dependencieEngine.register(for: CardsTransactionsPDFGeneratorProtocol.self) { _ in
+            return self.cardsTransactionsPDFModifier
+        }
         self.dependencieEngine.register(for: PushNotificationPermissionsManagerProtocol.self) { _ in
             return self.notificationPermissionManager
         }
@@ -259,6 +265,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: GetFilteredAccountTransactionsUseCaseProtocol.self) { resolver in
             return PLGetFilteredAccountTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
+        }
+        self.dependencieEngine.register(for: GetFilteredCardTransactionsUseCaseProtocol.self) { resolver in
+            return PLGetFilteredCardTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
         }
         self.dependencieEngine.register(for: GetAccountTransactionsUseCaseProtocol.self) { resolver in
             return PLGetAccountTransactionsUseCase(dependenciesResolver: resolver, bsanDataProvider: self.bsanDataProvider)
