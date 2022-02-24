@@ -5,7 +5,6 @@
 //  Created by Cristobal Ramos Laina on 17/2/22.
 //
 
-import Foundation
 import TransferOperatives
 import SANPLLibrary
 import CoreFoundationLib
@@ -19,7 +18,7 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
         return PLInternalTransferPreSetupUseCase(dependencies: self)
     }
     
-    func resolve() -> AccountNumberFormatterProtocol {
-        return oldResolver.resolve()
+    func resolve() -> GetInternalTransferOriginAccountsFilteredUseCase {
+        return PLGetInternalTransferOriginAccountsUseCase(dependencies: self)
     }
 }
