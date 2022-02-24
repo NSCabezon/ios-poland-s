@@ -22,7 +22,7 @@ public enum PLAccountOperativeIdentifier: String, Codable {
     case atmPackage = "ATM_PACKAGE"
     case editGoal = "EDIT_GOAL"
     case history = "HISTORY"
-    case accountStatement = "VIEW_STATEMENTS"
+    case accountStatement = "STATEMENT_HISTORY"
     case customerService = "CUSTOMER_SERVICE"
     case ourOffer = "OFFER"
     case openDeposit = "OPEN_DEPOSIT"
