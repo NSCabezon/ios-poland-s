@@ -32,8 +32,8 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
     func fetchPreSetup() -> AnyPublisher<PreSetupData, Error> {
         Publishers.Zip3(
             globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
-            transfersRepository.getAccountForDebit(),
-            transfersRepository.getAccountForCredit()
+            transfersRepository.getAccountsForDebit(),
+            transfersRepository.getAccountsForCredit()
         )
             .tryMap { response -> PreSetupData in
                 let debitAccounts = response.1
