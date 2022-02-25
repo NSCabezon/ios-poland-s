@@ -14,13 +14,16 @@ import RetailLegacy
 import Menu
 
 struct ModuleDependencies {
-    
     let oldResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
     
     func resolve() -> TimeManager {
         oldResolver.resolve()
+    }
+    
+    func resolve() -> DependenciesInjector {
+        return oldResolver
     }
 
     func resolve() -> DependenciesResolver {
