@@ -34,6 +34,10 @@ public class GlobileCheckBox: UIControl {
             updateLabel()
         }
     }
+    
+    private lazy var checkboxHeightConstraint = checkboxButton.heightAnchor.constraint(
+        equalToConstant: self.checkboxSize
+    )
 
     /// The tint color to apply to the checkbox button.
     public var color: GlobileCheckboxTintColor = .red
@@ -42,12 +46,18 @@ public class GlobileCheckBox: UIControl {
     /// The current text that is displayed by the button.
     public var text: String?
     
-    public var checkboxSize = 30.0 {
+    public var checkboxSize: CGFloat = 30.0 {
         didSet {
-            setupLayout()
+            checkboxHeightConstraint.constant = checkboxSize
+            layoutIfNeeded()
         }
     }
-    public var fontSize = 16.0
+    public var fontSize: CGFloat = 16.0 {
+        didSet {
+            label.font = .santander(size: self.fontSize)
+            layoutIfNeeded()
+        }
+    }
 
     // MARK: Subviews
 
@@ -102,7 +112,7 @@ public class GlobileCheckBox: UIControl {
         NSLayoutConstraint.activate([
             checkboxButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             checkboxButton.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -12),
-            checkboxButton.heightAnchor.constraint(equalToConstant: CGFloat(self.checkboxSize)),
+            checkboxHeightConstraint,
             checkboxButton.widthAnchor.constraint(equalTo: checkboxButton.heightAnchor),
             checkboxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
@@ -125,7 +135,7 @@ public class GlobileCheckBox: UIControl {
         backgroundColor = .clear
 
         label.textColor = textColor
-        label.font = .santander(size: CGFloat(self.fontSize))
+        label.font = .santander(size: self.fontSize)
         infoButton.tintColor = infoButtonColor
 
         label.text = text

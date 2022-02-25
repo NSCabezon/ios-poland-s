@@ -11,7 +11,7 @@ import CoreFoundationLib
 import PLUI
 import PLCommons
 
-protocol ChequeListViewProtocol: LoadingViewPresentationCapable, DialogViewPresentationCapable {
+protocol ChequeListViewProtocol: LoadingViewPresentationCapable, DialogViewPresentationCapable, ErrorPresentable {
     func setViewModel(_ viewModel: ChequeViewModelType)
     func showDialog(title: LocalizedStylableText, text: LocalizedStylableText)
     func enableCreateChequeButton()
