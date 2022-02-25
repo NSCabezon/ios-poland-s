@@ -28,7 +28,7 @@ extension ModuleDependencies: PublicMenuExternalDependenciesResolver {
     }
     
     func publicMenuCustomCoordinatorForAction() -> BindableCoordinator {
-        return DefaultPublicMenuCustomActionCoordinator(navigationController: resolveSideMenuNavigationController())
+        return DefaultPublicMenuCustomActionCoordinator(dependenciesResolver: oldResolver, navigationController: resolveSideMenuNavigationController())
     }
 }
 

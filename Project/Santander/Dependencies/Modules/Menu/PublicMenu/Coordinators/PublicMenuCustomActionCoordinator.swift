@@ -10,9 +10,11 @@ import UI
 import CoreFoundationLib
 import Menu
 import UIKit
+import PLHelpCenter
 
 public final class DefaultPublicMenuCustomActionCoordinator {
     weak public var navigationController: UINavigationController?
+    private let dependenciesResolver: DependenciesResolver
     public var childCoordinators: [Coordinator] = []
     lazy public var dataBinding: DataBinding = dependencies.resolve()
     public var onFinish: (() -> Void)?
@@ -21,7 +23,8 @@ public final class DefaultPublicMenuCustomActionCoordinator {
         return Dependency()
     }()
     
-    public init(navigationController: UINavigationController?) {
+    public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
+        self.dependenciesResolver = dependenciesResolver
         self.navigationController = navigationController
     }
 }
@@ -52,8 +55,7 @@ extension DefaultPublicMenuCustomActionCoordinator: BindableCoordinator {
         case .mobileAuthorization:
             coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
         case .contactMenu:
-            //TODO: Add here the poland corrdinator to custom contact menu.
-            coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
+            coordinator = PLPublicMenuHelpCenterCoordinator(dependenciesResolver: dependenciesResolver, navigationController: navigationController)
         }
         coordinator.start()
         append(child: coordinator)
