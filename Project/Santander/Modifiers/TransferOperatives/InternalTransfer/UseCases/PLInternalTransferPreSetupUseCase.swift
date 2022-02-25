@@ -44,7 +44,10 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
                 }
                 let (originAccountsVisibles, originAccountsNotVisibles) = try originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
                 let (destinationAccountsVisibles, destinationAccountsNotVisibles) = destinationAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
-                return PreSetupData(originAccountsVisibles: originAccountsVisibles, originAccountsNotVisibles: originAccountsNotVisibles, destinationAccountsVisibles: destinationAccountsVisibles, destinationAccountsNotVisibles: destinationAccountsNotVisibles)
+                return PreSetupData(originAccountsVisibles: originAccountsVisibles,
+                                    originAccountsNotVisibles: originAccountsNotVisibles,
+                                    destinationAccountsVisibles: destinationAccountsVisibles,
+                                    destinationAccountsNotVisibles: destinationAccountsNotVisibles)
             }
             .eraseToAnyPublisher()
     }
