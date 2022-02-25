@@ -15,6 +15,8 @@ import BLIK
 import PLHelpCenter
 import CreditCardRepayment
 import OneAuthorizationProcessor
+import PLNotificationsInbox
+import Inbox
 import LoanSchedule
 import TaxTransfer
 import CharityTransfer
@@ -97,8 +99,18 @@ final class AppNavigationDependencies {
         self.dependenciesEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self.authorizationCoordinator
         }
+        
+        dependenciesEngine.register(for: CustomPushNotificationCoordinator.self) { resolver in
+            return CustomPushNotificationCoordinator(dependenciesResolver: resolver,
+                                     navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        
         dependenciesEngine.register(for: PLWebViewCoordinatorDelegate.self) { [unowned self] resolver in
             return PLWebViewCoordinatorNavigator(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+
+        dependenciesEngine.register(for: InboxNotificationCoordinatorDelegate.self) { _ in
+            return PLInboxNotificationCoordinator(dependenciesResolver: self.dependenciesEngine)
         }
         
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
