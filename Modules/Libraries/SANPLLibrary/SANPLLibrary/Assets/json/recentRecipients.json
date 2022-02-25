@@ -34,6 +34,14 @@
                     "currency": "EUR",
                     "title": "Invoice No. 23423",
                     "postingDate": "2021-08-15"
+                },
+                {
+                    "accountNo": "PL05105001037737934454627744",
+                    "accountName": "Pedro de las Fuentes García",
+                    "amount": -1.0,
+                    "currency": "EUR",
+                    "title": "Invoice No. 23423",
+                    "postingDate": "2021-08-3"
                 }
             ]
         }
