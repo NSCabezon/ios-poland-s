@@ -5,22 +5,19 @@
 //  Created by 188216 on 08/12/2021.
 //
 
+import CoreFoundationLib
 import UIKit
 import UI
 import PLUI
 
 final class PaymentAmountCollectionViewCell: UICollectionViewCell {
-    enum Style {
-        case selected
-        case unselected
-    }
     // MARK: Views
     
     private let decorativeView = UIView()
     private let mainContainer = UIView()
     private let contentStackView = UIStackView()
-    private let amountLabel = UILabel()
-    private let bonusLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let subtitleLabel = UILabel()
     private let tickView = TickView()
     
     // MARK: Lifecycle
@@ -36,6 +33,21 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
         
     // MARK: Configuration
     
+    func setUp(with cellModel: PaymentAmountCellViewModel) {
+        switch cellModel {
+        case .custom(let minAmount, let maxAmount, let isSelected):
+            titleLabel.text = localized("pl_topup_button_otherAmount")
+            subtitleLabel.text = "(\(minAmount)-\(maxAmount))"
+            subtitleLabel.isHidden = false
+            setStyle(isSelected: isSelected)
+        case .fixed(let topUpValue, let isSelected):
+            titleLabel.text = "\(topUpValue.value)"
+            subtitleLabel.text = "+\(topUpValue.bonus)"
+            subtitleLabel.isHidden = topUpValue.bonus == 0
+            setStyle(isSelected: isSelected)
+        }
+    }
+    
     private func setUp() {
         addSubviews()
         prepareStyles()
@@ -49,24 +61,21 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
         mainContainer.addSubview(tickView)
         mainContainer.addSubview(contentStackView)
         
-        contentStackView.addArrangedSubview(amountLabel)
-        contentStackView.addArrangedSubview(bonusLabel)
+        contentStackView.addArrangedSubview(titleLabel)
+        contentStackView.addArrangedSubview(subtitleLabel)
     }
     
     private func prepareStyles() {
-        setStyle(.unselected)
-        amountLabel.font = .santander(family: .micro, type: .bold, size: 16.0)
-        bonusLabel.font = .santander(family: .micro, type: .regular, size: 12.0)
-        #warning("todo: remove mock values")
-        amountLabel.text = "30"
-        bonusLabel.text = "(+10)"
+        setStyle(isSelected: false)
+        titleLabel.font = .santander(family: .micro, type: .bold, size: 16.0)
+        subtitleLabel.font = .santander(family: .micro, type: .regular, size: 12.0)
     }
     
     private func setUpLayout() {
         contentStackView.axis = .vertical
         
-        amountLabel.textAlignment = .center
-        bonusLabel.textAlignment = .center
+        titleLabel.textAlignment = .center
+        subtitleLabel.textAlignment = .center
         
         tickView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +87,7 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func setStyle(_ style: Style) {
+    func setStyle(isSelected: Bool) {
         let decorativeViewShadowConfiguration = ShadowConfiguration(
             color: .lightSanGray.withAlphaComponent(0.6),
             opacity: 1.0,
@@ -87,8 +96,7 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
             heightOffset: 2
         )
         
-        switch style {
-        case .selected:
+        if isSelected {
             decorativeView.backgroundColor = .sky
             decorativeView.drawRoundedBorderAndShadow(
                 with: decorativeViewShadowConfiguration,
@@ -97,10 +105,10 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
                 borderWith: 1.0
             )
             tickView.isHidden = false
-            [amountLabel, bonusLabel].forEach { label in
+            [titleLabel, subtitleLabel].forEach { label in
                 label.textColor = .darkTorquoise
             }
-        case .unselected:
+        } else {
             decorativeView.backgroundColor = .white
             decorativeView.drawRoundedBorderAndShadow(
                 with: decorativeViewShadowConfiguration,
@@ -109,7 +117,7 @@ final class PaymentAmountCollectionViewCell: UICollectionViewCell {
                 borderWith: 1.0
             )
             tickView.isHidden = true
-            [amountLabel, bonusLabel].forEach { label in
+            [titleLabel, subtitleLabel].forEach { label in
                 label.textColor = .lisboaGray
             }
         }

@@ -8,8 +8,12 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
+
+protocol TermsAndConditionsViewDelegate: AnyObject {
+    func didTouchTermsAndConditionsCheckBox()
+}
 
 final class TermsAndConditionsView: UIView {
     // MARK: Views
@@ -21,7 +25,10 @@ final class TermsAndConditionsView: UIView {
     private let termsLabel = UILabel()
     private let checkBoxButton = UIButton()
     private var isExpanded = false
-    private var isChecked = false
+    
+    // MARK: Delegate
+    
+    weak var delegate: TermsAndConditionsViewDelegate?
     
     // MARK: Lifecycle
     
@@ -35,6 +42,11 @@ final class TermsAndConditionsView: UIView {
     }
         
     // MARK: Configuration
+    
+    func setUp(isAcceptanceRequired: Bool, isAccepted: Bool) {
+        isHidden = !isAcceptanceRequired
+        setStyle(isChecked: isAccepted)
+    }
     
     private func setUp() {
         addSubviews()
@@ -90,7 +102,9 @@ final class TermsAndConditionsView: UIView {
             expandOrFoldButton.setTitle(localized("pl_topup_link_fullTextRegulations"), for: .normal)
             termsLabel.numberOfLines = 2
         }
-        
+    }
+    
+    private func setStyle(isChecked: Bool) {
         let checkBoxShadowConfiguration = ShadowConfiguration(
             color: .lightSanGray.withAlphaComponent(0.6),
             opacity: 1.0,
@@ -133,7 +147,6 @@ final class TermsAndConditionsView: UIView {
     
     @objc
     private func didTouchCheckBoxButton() {
-        isChecked.toggle()
-        prepareStyles()
+        delegate?.didTouchTermsAndConditionsCheckBox()
     }
 }

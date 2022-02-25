@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 final class TransactionLimitFooterView: UIView {
     var saveButtonTap: (() -> Void)?

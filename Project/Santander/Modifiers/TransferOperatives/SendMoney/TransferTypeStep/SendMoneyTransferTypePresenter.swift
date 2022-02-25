@@ -7,10 +7,14 @@
 
 import Operative
 import CoreFoundationLib
-import Commons
 import TransferOperatives
 import CoreDomain
 import SANLegacyLibrary
+import SANPLLibrary
+
+enum SendMoneyTransferTypeBottomSheet {
+    case amountToHigh, invalidDate
+}
 
 protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol {
     var view: SendMoneyTransferTypeView? { get set }
@@ -19,7 +23,6 @@ protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol 
     func didSelectClose()
     func didSelectTransferType(at index: Int)
     func didPressedFloatingButton()
-    func didTapCloseAmountHigh()
     func didTapTooltip()
     func getSubtitleInfo() -> String
 }
@@ -84,15 +87,15 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
               let transferType = self.operativeData.selectedTransferType?.type as? PolandTransferType,
               let limitAmount = transferType.limitAmount.value
         else { return }
+        guard self.isValidDate else {
+            self.view?.showBottomSheet(type: .invalidDate)
+            return
+        }
         if limitAmount.isZero || amount.isLessThanOrEqualTo(limitAmount) {
             self.container?.stepFinished(presenter: self)
         } else {
-            self.view?.showAmountTooHighView()
+            self.view?.showBottomSheet(type: .amountToHigh)
         }
-    }
-    
-    func didTapCloseAmountHigh() {
-        self.view?.closeAmountTooHighView()
     }
     
     func getSubtitleInfo() -> String {
@@ -105,6 +108,10 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
 }
 
 private extension SendMoneyTransferTypePresenter {
+    enum ValidTransferRangeType {
+        case aYearFromToday, onlyToday
+    }
+    
     func mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from transferTypes: [SendMoneyTransferTypeFee]) -> SendMoneyTransferTypeRadioButtonsContainerViewModel {
         let radioButtonViewModels = transferTypes.compactMap { self.mapToSendMoneyTransferTypeRadioButtonViewModel(from: $0) }
         return SendMoneyTransferTypeRadioButtonsContainerViewModel(selectedIndex: self.getSelectedIndex(),
@@ -142,43 +149,41 @@ private extension SendMoneyTransferTypePresenter {
             return type == selectedType && fee == selectedFee
         }) ?? .zero
     }
-}
-
-extension PolandTransferType {
-    var title: String? {
-        switch self {
-        case .one:
-            return "sendMoney_label_standardSent"
-        case .eight:
-            return "sendMoney_label_immediateSend"
-        case .a:
-            return "sendMoney_label_expressDelivery"
-        case .four, .zero:
-            return nil
+    
+    var isValidDate: Bool {
+        guard let transactionTypeString = self.operativeData.specialPricesOutput?.transactionTypeString,
+              let matrixTransactionType = MatrixTransactionTypeDTO(rawValue: transactionTypeString),
+              let transferType = self.operativeData.selectedTransferType?.type as? PolandTransferType
+        else {
+            return false
+        }
+        let transactionType = PolandTransactionType(dto: matrixTransactionType)
+        switch transactionType {
+        case .sixtyThree, .fiftyNine, .fiftyEight:
+            return self.validateTransferType(transferType)
+        default:
+            return true
         }
     }
     
-    var subtitle: String? {
-        switch self {
-        case .one:
-            return "sendType_text_standar"
-        case .eight:
-            return "sendType_text_inmediate"
-        case .a:
-            return "sendType_text_express"
-        case .four, .zero:
-            return nil
+    func validateTransferType(_ transferType: PolandTransferType) -> Bool {
+        switch transferType {
+        case .one, .zero:
+            return self.isDateInValidRange(validDateRange: .aYearFromToday)
+        case .eight, .a:
+            return self.isDateInValidRange(validDateRange: .onlyToday)
+        case .four:
+            return true
         }
     }
     
-    var limitAmount: AmountRepresentable {
-        switch self {
-        case .eight:
-            return AmountDTO(value: Decimal(5000), currency: .create(.złoty))
-        case .a:
-            return AmountDTO(value: Decimal(20000), currency: .create(.złoty))
-        case .zero, .one, .four:
-            return AmountDTO(value: .zero, currency: .create(.złoty))
+    func isDateInValidRange(validDateRange: ValidTransferRangeType) -> Bool {
+        let dateComponents = Calendar.current.dateComponents([.day], from: Date(), to: self.operativeData.issueDate)
+        switch validDateRange {
+        case .aYearFromToday:
+            return dateComponents.day ?? 0 <= 365
+        case .onlyToday:
+            return dateComponents.day ?? 0 == 0
         }
     }
 }

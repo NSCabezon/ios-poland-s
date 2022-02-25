@@ -1,6 +1,6 @@
 
 import UI
-import Commons
+import CoreFoundationLib
 
 protocol AnotherDayViewDelegate: AnyObject {
     func didSelectDate()
@@ -38,6 +38,11 @@ class AnotherDateView: UIView {
     
     func getSelectedDate() -> Date {
         datePicker.date
+    }
+    
+    func reset() {
+        datePicker.date = Date()
+        selectedDate = datePicker.date
     }
 }
 
@@ -98,7 +103,7 @@ private extension AnotherDateView {
         toolbar.isTranslucent = true
         toolbar.tintColor = UIColor.santanderRed
         toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: localized("generic_button_accept"), style: UIBarButtonItem.Style.done, target: self, action: #selector(donePicker))
+        let doneButton = UIBarButtonItem(title: localized("generic_button_validate"), style: UIBarButtonItem.Style.done, target: self, action: #selector(donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: localized("generic_button_cancel"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(cancelPicker))
         toolbar.setItems([cancelButton, spaceButton, doneButton], animated: false)

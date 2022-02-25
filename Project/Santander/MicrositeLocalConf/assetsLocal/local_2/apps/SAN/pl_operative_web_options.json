@@ -20,7 +20,7 @@
             "method": "GET"
         },
         {
-            "id":"ALERTS_NOTIFICATION",
+            "id":"ALERTS_24",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
             "isAvailable": true,
             "method": "GET"
@@ -44,7 +44,7 @@
             "method": "GET"
         },
         {
-            "id": "ACCOUNT_STATEMENT",
+            "id": "VIEW_STATEMENTS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
             "method": "GET"
@@ -69,9 +69,10 @@
         },
         {
             "id": "MEMBER_GET_MEMBER",
-            "url": null,
-            "isAvailable": false,
-            "method": "GET"
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true,
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mgm"
         },
         {
             "id": "SAVING_GOALS",
@@ -80,6 +81,7 @@
             "method": "POST"
         }
     ],
+    
     "cards_options" : [
         {
             "id": "MULTICURRENCY",
@@ -92,6 +94,13 @@
             "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
             "isAvailable": true,
             "method": "POST"
+        },
+        {
+            "id": "CARD_CREDIT_LIMIT_INCREASE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer#/pages/product-details/increaseCreditCardLimit",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
     "help_center_options" : [
@@ -105,6 +114,15 @@
         {
             "id": "MAILBOX",
             "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/newMessage;fresh=true",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
+    ],
+    "insurance_options" : [
+        {
+            "id": "PROTECTION_INSURANCE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/omni/oneapp{$INSURANCE_URL}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true

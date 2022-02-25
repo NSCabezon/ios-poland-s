@@ -6,7 +6,7 @@
 //
 
 protocol TaxTransferFormValidating {
-    func validateData(_ data: TaxTransferFormFieldsData) -> TaxTransferFormValidity
+    func validateFields(_ fields: TaxTransferFormFields) -> TaxTransferFormValidity
 }
 
 final class TaxTransferFormValidator: TaxTransferFormValidating {
@@ -21,9 +21,9 @@ final class TaxTransferFormValidator: TaxTransferFormValidating {
         case illegalCharacters
     }
     
-    func validateData(_ data: TaxTransferFormFieldsData) -> TaxTransferFormValidity {
-        let invalidObligationIdentifierMessage = validateObligationIdentifier(data.obligationIdentifier)
-        let invalidAmountMessage = validateAmount(data.amount)
+    func validateFields(_ fields: TaxTransferFormFields) -> TaxTransferFormValidity {
+        let invalidObligationIdentifierMessage = validateObligationIdentifier(fields.obligationIdentifier)
+        let invalidAmountMessage = validateAmount(fields.amount)
         
         if invalidObligationIdentifierMessage != nil || invalidAmountMessage != nil {
             let invalidStateMessages = TaxTransferFormValidity.InvalidFormMessages(
@@ -33,7 +33,7 @@ final class TaxTransferFormValidator: TaxTransferFormValidating {
             return .invalid(invalidStateMessages)
         }
         
-        if data.obligationIdentifier.isEmpty || data.amount.isEmpty {
+        if fields.obligationIdentifier.isEmpty || fields.amount.isEmpty {
             let emptyMessages = TaxTransferFormValidity.InvalidFormMessages(
                 amountMessage: nil,
                 obligationIdentifierMessage: nil

@@ -26,12 +26,12 @@ Pod::Spec.new do |s|
     'PLNotificationsInbox' => ['PLNotificationsInbox/**/*{xib,xcassets,json}']
   }
 
-  s.dependency "Commons"
   s.dependency "PLCommons"
   s.dependency "UI"
   s.dependency "PLUI"
-  s.dependency "CommonUseCase"
   s.dependency "LoginCommon"
   s.dependency "CoreFoundationLib"
   s.dependency "SANPLLibrary"
+  s.dependency "PLNotifications"
+  s.dependency "UIOneComponents"
 end

@@ -6,7 +6,7 @@
 import SANPLLibrary
 import SANLegacyLibrary
 import PLCommons
-import Commons
+import CoreFoundationLib
 
 public final class AccountTransactionDetailDTOAdapter {
     public static func adaptPLAccountTransactionToAccountTransactionDetail(_ accountTransaction: SANLegacyLibrary.AccountTransactionDTO) -> SANLegacyLibrary.AccountTransactionDetailDTO {

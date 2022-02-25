@@ -1,6 +1,6 @@
 
 import UI
-import Commons
+import CoreFoundationLib
 import PLUI
 import SANLegacyLibrary
 import PLCommons
@@ -74,6 +74,12 @@ class CharityTransferFormView: UIView {
         } else {
             amountView.hideError()
         }
+    }
+    
+    func clearForm() {
+        amountTextField.setText("")
+        selectedDate = Date()
+        transfrDateSelector.resetToToday()
     }
 }
 

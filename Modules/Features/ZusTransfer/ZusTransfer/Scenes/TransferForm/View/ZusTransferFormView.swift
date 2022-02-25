@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 import PLUI
 import SANLegacyLibrary
 import PLCommons
@@ -7,6 +7,7 @@ import PLCommons
 protocol ZusTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
     func didChangeForm(with field: TransferFormCurrentActiveField)
+    func didTapRecipientButton()
     func scrollToBottom()
 }
 
@@ -90,6 +91,27 @@ final class ZusTransferFormView: UIView {
         default: break
         }
     }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        recipientTextField.setText(name)
+        accountNumberTextField.setText(accountNumber)
+        let fieldsChanged: [TransferFormCurrentActiveField] = [
+            .recipient,
+            .accountNumber(controlEvent: .endEditing)
+        ]
+        fieldsChanged.forEach {
+            delegate?.didChangeForm(with: $0)
+        }
+    }
+    
+    func clearForm() {
+        recipientTextField.setText("")
+        accountNumberTextField.setText("")
+        amountTextField.setText("")
+        titleTextField.setText(localized("pl_zusTransfer_text_zusTransfer"))
+        selectedDate = Date()
+        transferDateSelector.resetToToday()
+    }
 }
 
 private extension ZusTransferFormView {
@@ -115,7 +137,7 @@ private extension ZusTransferFormView {
     
     func configureView() {
         backgroundColor = .white
-        accountSelectorLabel.text = localized("#Konto, z którego robisz przelew")
+        accountSelectorLabel.text = localized("pl_taxTransfer_label_account")
         selectedAccountView.setChangeAction { [weak self] in
             self?.delegate?.changeAccountTapped()
         }
@@ -141,10 +163,12 @@ private extension ZusTransferFormView {
     }
     
     func configureRecipientField() {
-        recipientFieldName.text = localized("#Odbiorca")
-        recipientTextField.setPlaceholder(localized("#ZUS"))
+        recipientFieldName.text = localized("sendMoney_label_recipients")
+        recipientTextField.setPlaceholder(localized("pl_zusTransfer_text_zus"))
         recipientTextField.setRightAccessory(
-            .uiImage(PLAssets.image(named: "contacts_icon"), action: {})
+            .uiImage(PLAssets.image(named: "contacts_icon"), action: { [weak self] in
+                self?.delegate?.didTapRecipientButton()
+            })
         )
         
         let formatter = UIFormattedCustomTextField()
@@ -164,7 +188,7 @@ private extension ZusTransferFormView {
     }
     
     func configureAccountNumberField() {
-        accountNumberFieldName.text = localized("#Numer konta")
+        accountNumberFieldName.text = localized("transaction_label_recipientAccount")
         let accountFormatter = PLAccountTextFieldFormatter()
         let configuration = LisboaTextField.WritableTextField(
             type: .simple,
@@ -174,7 +198,7 @@ private extension ZusTransferFormView {
             textFieldDelegate: nil) { component in
             component.textField.keyboardType = .numberPad
         }
-        accountNumberTextField.setPlaceholder(localized("#Numer konta"))
+        accountNumberTextField.setPlaceholder(localized("transaction_label_recipientAccount"))
         accountNumberTextField.setEditingStyle(.writable(configuration: configuration))
         accountNumberTextField.updatableDelegate = self
         accountNumberTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
@@ -189,7 +213,7 @@ private extension ZusTransferFormView {
     }
     
     func configureAmountField() {
-        amountFieldName.text = localized("#Kwota")
+        amountFieldName.text = localized("sendMoney_label_amount")
         let amountFormatter = PLAmountTextFieldFormatter()
         let configuration = LisboaTextField.WritableTextField(type: .simple,
                                                               formatter: amountFormatter,
@@ -199,7 +223,7 @@ private extension ZusTransferFormView {
         amountTextField.setEditingStyle(.writable(configuration: configuration))
         currencyAccessoryView.setText(CurrencyType.złoty.name)
         amountTextField.setRightAccessory(.view(currencyAccessoryView))
-        amountTextField.setPlaceholder(localized("#Kwota"))
+        amountTextField.setPlaceholder(localized("sendMoney_label_amount"))
         amountTextField.updatableDelegate = self
         amountTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
             guard let self = self else { return }
@@ -216,9 +240,9 @@ private extension ZusTransferFormView {
                                                               formatter: formatter,
                                                               disabledActions: [],
                                                               keyboardReturnAction: nil)
-        titleFieldName.text = localized("#Tytuł")
-        titleTextField.setText(localized("#Przelew"))
-        titleTextField.setPlaceholder(localized("#Przelew"))
+        titleFieldName.text = localized("sendMoney_label_description")
+        titleTextField.setText(localized("pl_zusTransfer_text_zusTransfer"))
+        titleTextField.setPlaceholder(localized("pl_zusTransfer_text_zusTransfer"))
         titleTextField.setEditingStyle(.writable(configuration: configuration))
         titleTextField.updatableDelegate = self
         titleTextFieldDelegate.textFieldDidBeginEditing = { [weak self] in
@@ -233,7 +257,7 @@ private extension ZusTransferFormView {
     }
 
     func configureTitleDescriptionLabel() {
-        titleDescriptionLabel.text = localized("#Nadaj tytuł przelewu, który pozwoli Ci go łatwo zidentyfikować, np. ZUS marzec 2018 Jan Kowalski")
+        titleDescriptionLabel.text = localized("pl_zusTransfer_text_nameTransferHint")
         titleDescriptionLabel.applyStyle(LabelStylist(textColor: .brownishGray,
                                             font: .santander(family: .micro,
                                                              type: .regular,
@@ -243,7 +267,7 @@ private extension ZusTransferFormView {
     }
     
     func configureDateField() {
-        dateFieldName.text = localized("#Kiedy mamy wysłać ten przelew?")
+        dateFieldName.text = localized("transfer_label_periodicity")
     }
     
     func setUpAmountTextField(_ component: LisboaTextField.CustomizableComponents) {

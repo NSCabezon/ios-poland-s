@@ -1,5 +1,5 @@
 import Foundation
-import Commons
+import CoreFoundationLib
 
 extension AccountSelectorViewController {
     
@@ -15,8 +15,7 @@ extension AccountSelectorViewController {
             case .charityTransfer:
                 return localized("pl_foundtrans_text_infoSelectAccount")
             case .zusTransfer:
-                #warning("should be changed")
-                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+                return localized("pl_taxTransfer_text_infoSelectAccount")
             case .phoneTopUp:
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz doładować telefon:"

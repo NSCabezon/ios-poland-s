@@ -1,7 +1,6 @@
 import TransferOperatives
 import CoreFoundationLib
 import Operative
-import Commons
 
 final class SendMoneyModifier: SendMoneyModifierProtocol {
     private let dependenciesEngine: DependenciesResolver & DependenciesInjector
@@ -40,7 +39,6 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     }
     
     var isEditConfirmationEnabled: Bool = false
-    var isConfirmationEmailEnabled: Bool = false
     
     func addSendType(operativeData: SendMoneyOperativeData) -> String? {
         let isCreditCardAccount: Bool? = {
@@ -53,5 +51,17 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         } else {
             return nil
         }
+    }
+    
+    var giveUpOpinator: String {
+        return "app-transf-nacional-abandono"
+    }
+    
+    var favoriteGiveUpOpinator: String {
+        return "app-envio-favorito-abandono"
+    }
+    
+    var selectionIssueDateViewModel: SelectionIssueDateViewModel {
+        return SelectionIssueDateViewModel(minDate: Date(), maxDate: Date().adding(.year, value: 1))
     }
 }

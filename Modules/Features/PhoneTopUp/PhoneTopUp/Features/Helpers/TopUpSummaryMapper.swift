@@ -5,7 +5,7 @@
 //  Created by 188216 on 18/01/2022.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import Operative
 import PLCommons
@@ -76,7 +76,7 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
     
     private func amountValueString(withAmountSize size: CGFloat, model: TopUpModel) -> NSAttributedString {
         return PLAmountFormatter.amountString(
-            amount: model.amount,
+            amount: Decimal(model.amount),
             currency: .złoty,
             withAmountSize: size
         )

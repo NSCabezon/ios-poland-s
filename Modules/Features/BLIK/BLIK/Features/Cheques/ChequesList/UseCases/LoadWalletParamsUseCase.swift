@@ -5,9 +5,8 @@
 //  Created by Piotr Mielcarzewicz on 16/06/2021.
 //
 
-import Commons
-import Foundation
 import CoreFoundationLib
+import Foundation
 import SANPLLibrary
 
 protocol LoadWalletParamsUseCaseProtocol: UseCase<Void, LoadWalletParamsUseCaseOutput, StringErrorOutput> {}

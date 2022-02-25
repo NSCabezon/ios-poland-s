@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import PLNotifications
 import os
 
@@ -25,7 +24,7 @@ final class PLNotificationTokenRegisterProcessGroup: ProcessGroup<Void, Void, PL
     private var notificationRegisterUseCase: PLNotificationRegisterUseCase {
         return self.dependenciesEngine.resolve(for: PLNotificationRegisterUseCase.self)
     }
-
+    
     override func registerDependencies() {
         self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
             return PLNotificationRegisterUseCase(dependenciesResolver: resolver)

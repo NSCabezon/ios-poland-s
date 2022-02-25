@@ -6,7 +6,6 @@
 import Foundation
 import Inbox
 import CoreFoundationLib
-import Commons
 import UI
 
 final class PLInboxActionBuilder {
@@ -81,7 +80,7 @@ private extension PLInboxActionBuilder {
             extras: InboxActionExtras(action: ()),
             accessibilityIdentifier: AccesibilityInbox.notifications,
             action: { _ in
-                self.showToast()
+                self.delegate?.gotoInboxNotification(nil)
             }
         )
         self.inboxActions.append(viewModel)

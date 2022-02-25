@@ -1,9 +1,10 @@
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import Foundation
 import SANLegacyLibrary
 import PLCommons
+import IQKeyboardManagerSwift
 
 protocol MobileTransferFormViewControllerProtocol: AnyObject,
                                                    ErrorPresentable,
@@ -40,6 +41,7 @@ final class MobileTransferFormViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        IQKeyboardManager.shared.enableAutoToolbar = false
         prepareNavigationBar()
     }
 }

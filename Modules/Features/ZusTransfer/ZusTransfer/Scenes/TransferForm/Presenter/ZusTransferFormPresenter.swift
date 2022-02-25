@@ -1,8 +1,8 @@
-import Commons
+import CoreFoundationLib
 import PLUI
 import PLCommons
 
-protocol ZusTransferFormPresenterProtocol {
+protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransferFormAccountSelectable {
     var view: ZusTransferFormViewProtocol? { get set }
     func getLanguage() -> String
     func didSelectClose()
@@ -13,6 +13,9 @@ protocol ZusTransferFormPresenterProtocol {
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
     func showConfirmation()
     func startValidation(with field: TransferFormCurrentActiveField)
+    func showRecipientSelection()
+    func getAccountRequiredLength() -> Int
+    func clearForm()
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -28,18 +31,18 @@ final class ZusTransferFormPresenter {
     private var confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
-    #warning("maskAccount should be changed")
-    //TODO: get maskAccount from Api
-    private let maskAccount = "60000002026"
+    private let maskAccount: String
     
     init(
         dependenciesResolver: DependenciesResolver,
         accounts: [AccountForDebit],
-        selectedAccountNumber: String
+        selectedAccountNumber: String,
+        maskAccount: String
     ) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
+        self.maskAccount = maskAccount
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
@@ -111,6 +114,29 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
             maskAccount: maskAccount
         )
         view?.showValidationMessages(with: invalidMessages)
+    }
+    
+    func showRecipientSelection() {
+        coordinator.showRecipientSelection(with: maskAccount)
+    }
+    
+    func getAccountRequiredLength() -> Int {
+        formValidator.getAccountRequiredLength()
+    }
+    
+    func clearForm() {
+        transferFormViewModel = nil
+    }
+}
+
+extension ZusTransferFormPresenter: RecipientSelectorDelegate {
+    func didSelectRecipient(_ recipient: Recipient) {
+        view?.updateRecipient(
+            name: recipient.name,
+            accountNumber: IBANFormatter.format(
+                iban: IBANFormatter.formatIbanToNrb(for: recipient.accountNumber)
+            )
+        )
     }
 }
 

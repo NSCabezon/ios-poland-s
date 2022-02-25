@@ -1,12 +1,14 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol CharityTransferFormViewProtocol: AnyObject,
                                           ConfirmationDialogPresentable {
     func setAccountViewModel()
     func showValidationMessages(messages: InvalidCharityTransferFormMessages)
+    func clearForm()
 }
 
 final class CharityTransferFormViewController: UIViewController {
@@ -35,6 +37,7 @@ final class CharityTransferFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.addNavigationBarShadow()
+        IQKeyboardManager.shared.enableAutoToolbar = false
         view.layoutIfNeeded()
     }
 }
@@ -118,6 +121,12 @@ extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
         } else {
             bottomView.disableButton()
         }
+    }
+    
+    func clearForm() {
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
     }
 }
 

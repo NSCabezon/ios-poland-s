@@ -1,6 +1,6 @@
 import Operative
 import UI
-import Commons
+import CoreFoundationLib
 import PLCommons
 
 final class AliasRegistrationSummaryViewController: OperativeSummaryViewController {

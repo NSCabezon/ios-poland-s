@@ -47,7 +47,7 @@ extension LoanOperationDTO: LoanTransactionRepresentable {
     }
     
     public var description: String? {
-        return title
+        return title?.trimed.camelCasedString
     }
     
     public var bankOperationRepresentable: BankOperationRepresentable? {

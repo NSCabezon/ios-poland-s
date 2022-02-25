@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import UI
-import Commons
+import CoreFoundationLib
 
 @IBDesignable
 public final class PLLoginButton: UIButton {

@@ -7,7 +7,7 @@
 
 import Foundation
 import PLCommons
-import Commons
+import CoreFoundationLib
 import UI
 
 protocol PLUnrememberedLoginOnboardingProtocol: PLGenericErrorPresentableCapable {
@@ -121,4 +121,10 @@ private extension PLUnrememberedLoginOnboardingViewController {
 
 extension PLUnrememberedLoginOnboardingViewController : PLUnrememberedLoginOnboardingProtocol {
     
+}
+
+extension PLUnrememberedLoginOnboardingViewController: RootMenuController {
+    var isSideMenuAvailable: Bool {
+        return true
+    }
 }

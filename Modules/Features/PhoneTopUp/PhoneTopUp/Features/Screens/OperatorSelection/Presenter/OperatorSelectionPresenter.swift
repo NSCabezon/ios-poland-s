@@ -5,9 +5,8 @@
 //  Created by 188216 on 19/01/2022.
 //
 
-import Commons
+import CoreFoundationLib
 import PLCommons
-import Commons
 import PLUI
 
 protocol OperatorSelectionPresenterProtocol: AnyObject {

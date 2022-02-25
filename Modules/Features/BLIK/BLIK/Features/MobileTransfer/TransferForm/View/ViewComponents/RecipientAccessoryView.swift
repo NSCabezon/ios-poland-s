@@ -1,5 +1,5 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 extension MobileTransferFormView {
     final class RecipientAccessoryView: UIView {

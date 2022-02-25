@@ -5,7 +5,6 @@
 //  Created by Marcos Álvarez Mesa on 9/9/21.
 //
 
-import Commons
 import CoreFoundationLib
 import CorePushNotificationsService
 import FirebaseCore
@@ -55,6 +54,7 @@ extension FirebaseNotificationsService: NotificationResponseCapable {
 
     public func didReceiveNotification (_ pushNotification: PLNotification, with completionHandler: @escaping () -> Void) {
         Messaging.messaging().appDidReceiveMessage(pushNotification.userInfo)
+        dependenciesResolver.resolve(firstOptionalTypeOf: CorePushNotificationsManagerProtocol.self)?.didReceivePushRequest(pushNotification)
         completionHandler()
     }
 }

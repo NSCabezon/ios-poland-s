@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SANLegacyLibrary
 
 public protocol PLPhoneTopUpManagerProtocol {
-    func getFormData() throws -> Result<
-        TopUpFormDataDTO, NetworkProviderError>
+    func getFormData() throws -> Result<TopUpFormDataDTO, NetworkProviderError>
+    func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError>
+    func reloadPhone(request: ReloadPhoneRequestDTO) throws -> Result<ReloadPhoneResponseDTO, NetworkProviderError>
 }
 
 public final class PLPhoneTopUpManager {
@@ -30,7 +32,8 @@ extension PLPhoneTopUpManager: PLPhoneTopUpManagerProtocol {
         let internetContactsResults = try dataSource.getInternetContacts()
         switch (accountsResult, operatorsResult, gsmOperatorsResult, internetContactsResults) {
         case (.success(let accounts), .success(let operators), .success(let gsmOperators), .success(let contacts)):
-            return .success(TopUpFormDataDTO(accounts: accounts, operators: operators, gsmOperators: gsmOperators, internetContacts: contacts))
+            let plnAccounts = accounts.filter({ $0.currencyCode == CurrencyType.złoty.name })
+            return .success(TopUpFormDataDTO(accounts: plnAccounts, operators: operators, gsmOperators: gsmOperators, internetContacts: contacts))
         case (.failure(let accountsFetchError), _, _, _):
             return .failure(accountsFetchError)
         case (_, .failure(let operatorsFetchError), _, _):
@@ -40,5 +43,13 @@ extension PLPhoneTopUpManager: PLPhoneTopUpManagerProtocol {
         case (_, _, _, .failure(let internetContactsFetchError)):
             return .failure(internetContactsFetchError)
         }
+    }
+    
+    public func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError> {
+        return try dataSource.checkPhone(request: request)
+    }
+    
+    public func reloadPhone(request: ReloadPhoneRequestDTO) throws -> Result<ReloadPhoneResponseDTO, NetworkProviderError> {
+        return try dataSource.reloadPhone(request: request)
     }
 }

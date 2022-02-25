@@ -7,7 +7,6 @@
 
 import UI
 import CoreFoundationLib
-import Commons
 import CoreDomain
 
 protocol PLTrustedDeviceSuccessCoordinatorProtocol: PLLoginCoordinatorProtocol {
@@ -54,7 +53,7 @@ private extension PLTrustedDeviceSuccessCoordinator {
         self.dependenciesEngine.register(for: PLNotificationRegisterUseCase.self) { resolver in
             return PLNotificationRegisterUseCase(dependenciesResolver: resolver)
         }
-
+        
         self.dependenciesEngine.register(for: PLNotificationTokenRegisterProcessGroup.self) { resolver in
             return notificationTokenRegisterProcessGroup
         }

@@ -6,14 +6,14 @@
 //
 import UI
 import Loans
-import Commons
+import CoreFoundationLib
 import CoreDomain
 import Foundation
 
 extension ModuleDependencies: LoanExternalDependenciesResolver {
     func resolve() -> LoanReactiveRepository {
-        let dependenciesResolver: DependenciesResolver = resolve()
-        return dependenciesResolver.resolve()
+        let oldResolver: DependenciesResolver = resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> LoansModifierProtocol? {

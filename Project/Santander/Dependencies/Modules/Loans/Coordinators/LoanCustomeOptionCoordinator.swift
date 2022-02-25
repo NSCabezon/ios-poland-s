@@ -7,12 +7,11 @@
 
 import UI
 import Loans
-import Commons
+import CoreFoundationLib
 import Foundation
 import CoreDomain
 import LoanSchedule
 import RetailLegacy
-import CoreFoundationLib
 
 final class LoanCustomeOptionCoordinator: BindableCoordinator {
     var onFinish: (() -> Void)?
@@ -47,7 +46,7 @@ private extension LoanCustomeOptionCoordinator {
     func didSelectCustomerService() {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = legacyDependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-        let identifier = PLAccountOtherOperativesIdentifier.customerService.rawValue
+        let identifier = PLAccountOperativeIdentifier.customerService.rawValue
 
         guard let list = repository.get()?.accountsOptions,
                 let data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
@@ -63,9 +62,9 @@ private extension LoanCustomeOptionCoordinator {
             }
     }
 
-    func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
+    func getAccountOtherOperativesEntity(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
         let dto = list.filter { $0.id == identifier }.first
-        return PLAccountOtherOperativesData(identifier: identifier, link: dto?.url, isAvailable: dto?.isAvailable, parameter: nil)
+        return PLProductOperativesData(identifier: identifier, link: dto?.url, isAvailable: dto?.isAvailable, parameter: nil)
     }
 
     func didSelectLoanSchedule() {

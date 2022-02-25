@@ -7,11 +7,10 @@
 
 import Foundation
 import PLCommons
-import Commons
+import CoreFoundationLib
 import UI
 import SANLegacyLibrary
 import PLUI
-import CoreFoundationLib
 
 protocol PLRememberedLoginPinViewControllerProtocol: PLGenericErrorPresentableCapable, ChangeEnvironmentViewCapable {
     func showDialog(_ type: PLRememberedLoginDialogType)
@@ -89,6 +88,11 @@ final class PLRememberedLoginPinViewController: UIViewController {
         super.viewDidAppear(animated)
         self.presenter.viewDidAppear()
         self.tryBiometricAuth()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter.viewWillDissappear()
     }
 }
 
@@ -327,5 +331,11 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
                 PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
             }
         }
+    }
+}
+
+extension PLRememberedLoginPinViewController: RootMenuController {
+    var isSideMenuAvailable: Bool {
+        return true
     }
 }

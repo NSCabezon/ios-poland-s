@@ -1,4 +1,4 @@
-import Commons
+import CoreFoundationLib
 import PLUI
 import PLCommons
 
@@ -14,6 +14,7 @@ protocol CharityTransferFormPresenterProtocol {
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel)
     func confirmTransfer()
     func startValidation()
+    func clearForm()
 }
 
 public protocol CharityTransferFormAccountSelectable: AnyObject {
@@ -109,6 +110,10 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
         guard let form = transferFormViewModel else { return }
         let invalidMessages = formValidator.validateForm(form: form)
         view?.showValidationMessages(messages: invalidMessages)
+    }
+    
+    func clearForm() {
+        transferFormViewModel = nil
     }
 }
 

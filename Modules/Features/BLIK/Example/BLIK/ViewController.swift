@@ -8,7 +8,6 @@
 
 import UIKit
 import BLIK
-import Commons
 import CoreFoundationLib
 import SANPLLibrary
 

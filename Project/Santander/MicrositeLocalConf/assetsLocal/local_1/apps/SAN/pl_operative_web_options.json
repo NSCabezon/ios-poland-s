@@ -1,38 +1,38 @@
 {
     "accounts_options":[
         {
-            "id": "ADD_BANKS",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/ps-aggregator",
+            "id": "NEW_BBC_OFFER",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/new-bbc-offer",
             "isAvailable": true,
-            "method": "GET",
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "ADD_BANKS",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/ps-aggregator",
+            "isAvailable": true,
+            "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "ADD_BANKS_SETTINGS",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/ps-aggregator#/ais/settings",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/ps-aggregator#/ais/settings",
             "isAvailable": true,
             "method": "GET",
             "isFullScreen": true
         },
         {
             "id": "CHANGE_ACCOUNT",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/contact-form",
-            "isAvailable": true,
-            "method": "GET",
-            "isFullScreen": true
-        },
-        {
-            "id": "EDIT_GOAL",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/goal/{{NUMBER}}",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/tiles#/contact-form",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id":"ALERTS_NOTIFICATION",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/notification-settings",
             "isAvailable": true,
-            "method": "GET",
+            "method": "POST",
             "isFullScreen": true
         },
         {
@@ -40,34 +40,28 @@
             "url": null,
             "isAvailable": false,
             "method": "GET",
-            "isFullScreen": true
+            "isFullScreen": false
         },
-        {
-            "id":"CREDIT_CARD_REPAYMENT",
-            "url": null,
-            "isAvailable": false,
-            "method": "GET",
-            "isFullScreen": true
-        },
+        
         {
             "id": "HISTORY",
             "url": null,
             "isAvailable": false,
             "method": "GET",
-            "isFullScreen": true
+            "isFullScreen": false
         },
         {
             "id": "ACCOUNT_STATEMENT",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
-            "method": "GET",
+            "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "CUSTOMER_SERVICE",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/customer-service",
             "isAvailable": true,
-            "method": "GET",
+            "method": "POST",
             "isFullScreen": true
         },
         {
@@ -75,111 +69,132 @@
             "url": null,
             "isAvailable": false,
             "method": "GET",
-            "isFullScreen": true
+            "isFullScreen": false
         },
         {
             "id": "FX_EXCHANGE",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/kantor",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/kantor",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "MEMBER_GET_MEMBER",
-            "url": null,
-            "isAvailable": false,
-            "method": "GET",
-            "isFullScreen": true
+              "url": "https://pluton2.centrum24.pl/centrum24-web/native/mgm",
+                 "isAvailable": true,
+             "method": "POST",
+             "isFullScreen": true
         },
         {
             "id": "SAVING_GOALS",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/start-saving",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/savings-goals#/my-goals",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
-        {
-            "id": "NEW_BBC_OFFER",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        }
-    ],
-    "cards_options" : [
-        {
-            "id": "MODIFY_LIMITS",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_limits_types/{$VPAN}",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id":"ALERTS_NOTIFICATION",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
-            "isAvailable": true,
-            "method": "GET",
-            "isFullScreen": true
-        },
-        {
-            "id": "STATEMENT_HISTORY",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/multi/mailbox#/mailbox/threads/inbox;messageType=zestawienia",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id": "USE_ABROAD",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_emv/{$VPAN}",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": false
-        },
-        {
-            "id": "CUSTOMER_SERVICE",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id": "REPAYMENT",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/bbc#/app/bbc_info_slider/bbc.ratio",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id": "MANAGE_PIN",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_pin/{$VPAN}",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id": "MULTICURRENCY",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard/{$VPAN}",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
-            "id": "CANCEL_CARD",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
-            "isAvailable": true,
-            "method": "POST",
-            "isFullScreen": true
-        },
-        {
+                {
             "id": "CARD_ACTIVATION",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_activation/{$VPAN}",
+            "url" : "https://pluton2.centrum24.pl/centrum24-mobile-web/cards#/app/cards_activation/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "ATM_PACKAGE",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/free-withdrawal-atm/domestic",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/tiles#/free-withdrawal-atm/domestic",
+            "isAvailable": false,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "MONEY_BACK",
+            "url" : null,
+            "isAvailable": false,
+            "method": "GET",
+            "isFullScreen": false
+        },
+        {
+            "id": "MULTICURRENCY",
+            "url" : null,
+            "isAvailable": false,
+            "method": "GET",
+            "isFullScreen": false
+        },
+        {
+            "id": "OFFER",
+            "url" : null,
+            "isAvailable": false,
+            "method": "GET",
+            "isFullScreen": false
+        }
+    ],
+    "cards_options" : [
+        {
+            "id": "CARD_ACTIVATION",
+            "url" : "https://pluton2.centrum24.pl/centrum24-mobile-web/cards#/app/cards_activation/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id":"ALERTS_NOTIFICATION",
+            "url": "https://pluton2.centrum24.pl/centrum24-web/native/notification-settings",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "MODIFY_LIMITS",
+            "url" : "https://pluton2.centrum24.pl/centrum24-mobile-web/cards#/app/cards_limits_types/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "STATEMENT_HISTORY",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;messageType=zestawienia",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "USE_ABROAD",
+            "url" : "https://pluton2.centrum24.pl/centrum24-mobile-web/cards#/app/cards_emv/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "CUSTOMER_SERVICE",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/customer-service",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "REPAYMENT",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/new-bbc-offer#/pages/product-details/ratio",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "MANAGE_PIN",
+            "url" : "https://pluton2.centrum24.pl/centrum24-mobile-web/cards#/app/cards_pin/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "MULTICURRENCY",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/tiles#/multiCurrencyCard/{$VPAN}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "CANCEL_CARD",
+            "url" : "https://pluton2.centrum24.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
@@ -188,14 +203,55 @@
     "help_center_options" : [
         {
             "id": "YOUR_AFFAIRS",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/customer-service",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "MAILBOX",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/newMessage;fresh=true",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/mailbox#/mailbox/newMessage;fresh=true",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
+    ],
+    "offer_options" : [
+        {
+            "id": "NEW_BBC_OFFER",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/new-bbc-offer",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
+    ],
+    "personal_options" : [
+        {
+            "id": "CHANGE_ADDRESS",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/address-data#/address-data",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "FORMS_OF_CORRESPONDENCE",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/ekk#/ekk",
+            "isAvailable": false,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
+            "id": "E_SIGNATURE",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/e-signature#/e-signature",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
+    ],
+    "insurance_options" : [
+        {
+            "id": "PROTECTION_INSURANCE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/omni/oneapp{$INSURANCE_URL}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true

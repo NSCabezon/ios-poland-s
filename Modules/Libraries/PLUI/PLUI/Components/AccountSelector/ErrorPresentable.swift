@@ -1,10 +1,11 @@
 import UI
-import Commons
+import CoreFoundationLib
 
 public protocol ErrorPresentable {
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?)
     func showErrorMessage(_ message: String, onConfirm: (() -> Void)?)
     func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?)
+    func showErrorMessage(title: String, message: String, image: String, onConfirm: (() -> Void)?)
     func showErrorMessage(
         title: String,
         message: String,
@@ -48,8 +49,12 @@ extension ErrorPresentable where Self: UIViewController {
     }
     
     public func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {
+        showErrorMessage(title: localized("pl_generic_alert_titleError"), message: message, image: image, onConfirm: onConfirm)
+    }
+    
+    public func showErrorMessage(title: String, message: String, image: String, onConfirm: (() -> Void)?) {
         let dialog = Dialog(
-            title: localized("pl_generic_alert_titleError"),
+            title: title,
             items: [
                 .styledConfiguredText(
                     .plain(text: message),

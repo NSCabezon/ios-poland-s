@@ -1,6 +1,5 @@
-import Commons
-import PLUI
 import CoreFoundationLib
+import PLUI
 
 protocol MobileTransferConfirmationPresenterProtocol {
     var view: MobileTransferConfirmationViewControllerProtocol? { get set }

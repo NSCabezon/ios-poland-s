@@ -20,30 +20,28 @@ pipeline {
 	parameters {
 		booleanParam(name: "DEPLOY_TO_INTERN", defaultValue: "${is_develop_branch}", description: "Mark this check to build and deploy in app center Intern schema version")
 		booleanParam(name: "DEPLOY_TO_PRE", defaultValue: "${is_master_branch}", description: "Mark this check to build and deploy in app center PRE schema version")
-		booleanParam(name: "RUN_APPIUM", defaultValue: "${is_develop_branch}", description: "Mark this check to build a version for Appium tests ")
+		booleanParam(name: "RUN_APPIUM", defaultValue: "${is_develop_or_master}", description: "Mark this check to build a version for Appium tests ")
 		booleanParam(name: "RUN_TESTS", defaultValue: false, description: "Mark this check to execute unit and snapshot tests")
 		booleanParam(name: "INCREMENT_VERSION", defaultValue: true, description: "Mark this check to commit a version tag and bump version release nuber C (A.B.C)")
 		choice(name: 'NODE_LABEL', choices: ['poland', 'ios', 'hub'], description: '')
     }
-    agent { label params.NODE_LABEL ?: 'poland' }  
-
+	agent { label params.NODE_LABEL ?: 'poland' }  
 	triggers { cron(cron_string) }
 
 	stages {
 
 		stage('install dependencies') {
-            steps {
-			   sh "git checkout $BRANCH_NAME"
-               echo "Installing dependencies"
-			   sh "bundle install"
-               sh "cd Project && bundle exec fastlane ios update_pods"
-            }
-         }
-
+       		steps {
+				sh "git checkout $BRANCH_NAME"
+       			echo "Installing dependencies"
+				sh "bundle install"
+       			sh "cd Project && bundle exec fastlane ios update_pods"
+       		}
+        }
 		stage('Distribute Intern') {
 			when {
 				branch 'develop'
-                expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
+        		expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 				expression { return params.DEPLOY_TO_INTERN }
             }
 			steps {
@@ -66,10 +64,10 @@ pipeline {
 
 		stage('Compile Intern to Appium') {
 			when {
-				branch 'develop'
+				anyOf { branch 'master'; branch 'develop' }	
 				expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 				expression { return params.RUN_APPIUM }
-            }
+    		}
 			steps {
 				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 					echo "Distributing iOS app"
@@ -101,7 +99,7 @@ pipeline {
 			steps {
 				sh "cd Project && bundle exec fastlane ios increment_version"
 			}
-         }
+        }
 	}
 	post {
 		success {

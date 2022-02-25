@@ -1,7 +1,7 @@
 import UIKit
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import IQKeyboardManagerSwift
 
@@ -89,6 +89,11 @@ final class PLUnrememberedLoginIdViewController: UIViewController {
     
     @objc func didSelectMenu() {
         self.presenter.didSelectMenu()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.presenter.viewWillDissappear()
     }
 }
 

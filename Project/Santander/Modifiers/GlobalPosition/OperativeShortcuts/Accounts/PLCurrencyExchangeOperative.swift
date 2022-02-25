@@ -5,7 +5,6 @@
 
 import CoreFoundationLib
 import UI
-import Commons
 
 final class PLCurrencyExchangeOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "currencyExchangePoland"

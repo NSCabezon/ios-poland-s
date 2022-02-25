@@ -5,7 +5,7 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
-import Commons
+import CoreFoundationLib
 import Foundation
 import RetailLegacy
 import SANLegacyLibrary
@@ -24,9 +24,12 @@ import PLNotifications
 import Loans
 import CoreFoundationLib
 import CoreDomain
-import CommonUseCase
 import PLCryptography
 import UI
+import CorePushNotificationsService
+import BLIK
+import WebKit
+import PLNotificationsInbox
 import PLHelpCenter
 
 final class AppDependencies {
@@ -132,7 +135,7 @@ final class AppDependencies {
         )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
-        return PLSessionDataManagerModifier(dependenciesResolver: dependencieEngine)
+        return PLSessionDataManagerModifier(dependenciesEngine: dependencieEngine)
     }()
     // MARK: Features
 //    private lazy var onboardingPermissionOptions: OnboardingPermissionOptions = {
@@ -141,7 +144,19 @@ final class AppDependencies {
     private lazy var personalAreaSections: PersonalAreaSectionsProvider = {
         return PersonalAreaSectionsProvider(dependenciesResolver: dependencieEngine)
     }()
-
+    
+    private lazy var coreNotificationsService: CorePushNotificationsManagerProtocol = {
+        return CorePushNotificationsManager(dependenciesResolver: dependencieEngine)
+    }()
+    
+    private lazy var corePushNavigatorProvider: CorePushNavigatorProviderDelegate = {
+        return CorePushNavigatorProvider(dependenciesResolver: dependencieEngine)
+    }()
+    
+    private lazy var customPushLauncher: CustomPushLauncherProtocol = {
+        return CustomPushLauncher(dependenciesResolver: dependencieEngine)
+    }()
+    
     // MARK: Dependencies init
     init() {
         self.dependencieEngine = DependenciesDefault()
@@ -160,6 +175,7 @@ final class AppDependencies {
 
 private extension AppDependencies {
     // MARK: Dependencies registration
+    // swiftlint:disable:next function_body_length
     func registerDependencies() {
         self.dependencieEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
             PLTrustedHeadersProvider(dependenciesResolver: resolver)
@@ -198,7 +214,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
             return self.getPGFrequentOperativeOption
         }
-        // Legacy compatibility dependencies
         self.dependencieEngine.register(for: CompilationProtocol.self) { _ in
             return self.compilation
         }
@@ -311,13 +326,17 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: LoadGlobalPositionUseCase.self) { resolver in
             return DefaultLoadGlobalPositionUseCase(dependenciesResolver: resolver)
         }
-        self.dependencieEngine.register(for: SessionConfiguration.self) { resolver in
-            let loadPfm = LoadPfmSessionStartedAction(dependenciesResolver: resolver)
-            let stopPfm = StopPfmSessionFinishedAction(dependenciesResolver: resolver)
+        self.dependencieEngine.register(for: SessionConfiguration.self) { _ in
             return SessionConfiguration(timeToExpireSession: self.timeToExpireSession,
                                         timeToRefreshToken: self.timeToRefreshToken,
-                                        sessionStartedActions: [loadPfm],
-                                        sessionFinishedActions: [stopPfm])
+                                        sessionStartedActions: [],
+                                        sessionFinishedActions: [])
+        }
+        self.dependencieEngine.register(for: PfmHelperProtocol.self) { _ in
+            return DefaultPFMHelper()
+        }
+        self.dependencieEngine.register(for: PfmControllerProtocol.self) { _ in
+            return DefaultPFMController()
         }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
@@ -353,9 +372,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetPLCardsOtherOperativesWebConfigurationUseCase.self) { resolver in
             return GetPLCardsOtherOperativesWebConfigurationUseCase(dependenciesResolver: resolver, dataProvider: self.bsanDataProvider, networkProvider: self.networkProvider)
         }
-        self.dependencieEngine.register(for: PublicMenuViewContainerProtocol.self) { resolver in
-            return PLPublicMenuViewContainer(resolver: resolver)
-        }
         self.dependencieEngine.register(for: CardTransactionDetailViewConfigurationProtocol.self) { _ in
             PLCardTransactionDetailViewConfiguration()
         }
@@ -368,14 +384,32 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
         }
+        
+        self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
+            PLEditBudgetHelperModifier()
+        }
+        self.dependencieEngine.register(for: CorePushNavigatorProviderDelegate.self) { _ in
+            return self.corePushNavigatorProvider
+        }
+        self.dependencieEngine.register(for: CorePushNotificationsManagerProtocol.self) { _ in
+            return self.coreNotificationsService
+        }
+        
+        self.dependencieEngine.register(for: CustomPushLauncherProtocol.self) { _ in
+            return self.customPushLauncher
+        }
+        
         self.dependencieEngine.register(for: LoanReactiveRepository.self) { _ in
             return self.servicesLibrary.loanReactiveDataRepository
         }
-		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
-			PLChangeAliasManager()
-		}
+        self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+            PLChangeAliasManager()
+        }
         self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
             PLUserSegmentProtocol(dependenciesResolver: resolver)
+        }
+        self.dependencieEngine.register(for: OpinatorManagerModifier.self) { _ in
+            PLOpinatorManagerModifier()
         }
     }
 }
@@ -388,5 +422,70 @@ extension AppDependencies: SharedDependenciesDelegate {
 extension AppDependencies: ChallengesHandlerDelegate {
     func handle(_ challenge: ChallengeRepresentable, authorizationId: String, completion: @escaping (ChallengeResult) -> Void) {
         print(challenge)
+    }
+}
+
+public class CorePushNavigatorProvider: CorePushNavigatorProviderDelegate {
+    
+    let dependenciesResolver: DependenciesResolver
+    
+    public init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
+    }
+    
+    public func goToShowDialog(title: String?, message: String?, completion: (() -> Void)?) {
+        debugPrint("goToShowDialog")
+    }
+    public func goToExternalURL(url: String) {
+        debugPrint("goToExternalURL")
+    }
+    public func goToWebView(with url: String, title: String) {
+        debugPrint("goToWebView")
+    }
+    public func goToLandingPush(cardTransactionInfo: CardTransactionPush?, cardAlert: CardAlertPush?) {
+        debugPrint("goToLandingPush")
+    }
+    public func goToGenericLandingPush(accountTransactionInfo: AccountLandingPushDataBridge) {
+        debugPrint("goToGenericLandingPush")
+    }
+}
+
+class CustomPushLauncher: CustomPushLauncherProtocol {
+    
+    let dependenciesResolver: DependenciesResolver
+    public init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
+    }
+    
+    func executeActionForType(actionType: CustomPushLaunchActionTypeCapable) {
+        if let actionType = actionType as? CustomPushLaunchActionTypeInfo {
+            launchActionTypeInfo(actionType)
+        } else if let actionType = actionType as? CustomPushLaunchActionTypeBlik {
+            launchActionTypeBlik(actionType)
+        } else if let actionType = actionType as? CustomPushLaunchActionTypeAlert {
+            launchActionTypeAlert(actionType)
+        } else if let actionType = actionType as? CustomPushLaunchActionTypeAuth {
+            launchActionTypeAuth(actionType)
+        } else {
+            fatalError("not implemented")
+        }
+    }
+    
+    private func launchActionTypeInfo(_ actionType: CustomPushLaunchActionTypeInfo) {
+        let coordinator = dependenciesResolver.resolve(for: CustomPushNotificationCoordinator.self)
+        coordinator.start(actionType: actionType)
+    }
+    
+    private func launchActionTypeBlik(_: CustomPushLaunchActionTypeBlik) {
+        let coordinator = dependenciesResolver.resolve(for: BLIKHomeCoordinator.self)
+        coordinator.start()
+    }
+    
+    private func launchActionTypeAlert(_: CustomPushLaunchActionTypeAlert) {
+        Toast.show("launchActionTypeAlert")
+    }
+    
+    private func launchActionTypeAuth(_: CustomPushLaunchActionTypeAuth) {
+        Toast.show("launchActionTypeAuth")
     }
 }

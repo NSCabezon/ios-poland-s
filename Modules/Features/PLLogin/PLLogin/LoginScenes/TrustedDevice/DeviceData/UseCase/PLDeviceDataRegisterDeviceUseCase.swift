@@ -5,9 +5,8 @@
 //  Created by Marcos Álvarez Mesa on 23/6/21.
 //
 
-import Commons
-import PLCommons
 import CoreFoundationLib
+import PLCommons
 import SANPLLibrary
 
 final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDeviceUseCaseInput, PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol{
@@ -19,11 +18,25 @@ final class PLDeviceDataRegisterDeviceUseCase: UseCase<PLDeviceDataRegisterDevic
 
     public override func executeUseCase(requestValues: PLDeviceDataRegisterDeviceUseCaseInput) throws -> UseCaseResponse<PLDeviceDataRegisterDeviceUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>> {
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+        
+        let languageType: LanguageType
+        if let response = try dependenciesResolver.resolve(for: AppRepositoryProtocol.self).getLanguage().getResponseData(), let type = response {
+            languageType = type
+        } else {
+            let defaultLanguage = self.dependenciesResolver.resolve(for: LocalAppConfig.self).language
+            let languageList = self.dependenciesResolver.resolve(for: LocalAppConfig.self).languageList
+            languageType = Language.createDefault(isPb: nil, defaultLanguage: defaultLanguage, availableLanguageList: languageList).languageType
+        }
+        
         let parameters = RegisterDeviceParameters(transportKey: requestValues.transportKey,
                                                   deviceParameters: requestValues.deviceParameters,
                                                   deviceTime: requestValues.deviceTime,
                                                   certificate: requestValues.certificate,
-                                                  appId: requestValues.appId)
+                                                  appId: requestValues.appId,
+                                                  pushDefinition: PushDefinition(categories: ["INFORMATION", "BLIK"], status: "ON"),
+                                                  platform: Platform(name: UIDevice.current.systemName.uppercased(), osVersion: UIDevice.current.systemVersion),
+                                                  applicationLanguage: languageType.rawValue)
+
         let result = try managerProvider.getTrustedDeviceManager().doRegisterDevice(parameters)
         switch result {
         case .success(let registerDeviceData):

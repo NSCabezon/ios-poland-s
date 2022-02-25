@@ -1,10 +1,11 @@
 
 import UI
 import PLUI
-import Commons
+import CoreFoundationLib
 import PLCommons
 import SANPLLibrary
 import PLCryptography
+import PLCommonOperatives
 
 public protocol ZusTransferConfirmationCoordinatorProtocol {
     func pop()
@@ -65,6 +66,15 @@ private extension ZusTransferConfirmationCoordinator {
         }
         dependenciesEngine.register(for: ZusTransferSendMoneyInputMapping.self) { resolver in
             ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PenndingChallengeUseCaseProtocol.self) { resolver in
+            PenndingChallengeUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: ZusPrepareChallengeUseCaseProtocol.self) { resolver in
+            ZusPrepareChallengeUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: NotifyDeviceUseCaseProtocol.self) { resolver in
+            NotifyDeviceUseCase(dependenciesResolver: resolver)
         }
     }
 }

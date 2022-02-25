@@ -8,16 +8,20 @@
 import UI
 import PLUI
 import PLCommons
-import Commons
+import CoreFoundationLib
 
-protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable {
+protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable, LoaderPresentable, ErrorPresentable {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
     func updatePhoneInput(with phoneNumber: String)
-    func updateContact(with contact: MobileContact)
-    func showInvalidPhoneNumberError(_ showError: Bool)
-    func showOperatorSelection(with operator: Operator?)
-    func showContactsPermissionsDeniedDialog()
     func updateRecipientName(with name: String)
+    func updateContact(with contact: MobileContact)
+    func updateOperatorSelection(with gsmOperator: GSMOperator?)
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?)
+    func updateTermsView(isAcceptanceRequired: Bool, isAccepted: Bool)
+    func updateContinueButton(isEnabled: Bool)
+    func showInvalidPhoneNumberError(_ showError: Bool)
+    func showInvalidCustomAmountError(_ error: String?)
+    func showContactsPermissionsDeniedDialog()
 }
 
 final class PhoneTopUpFormViewController: UIViewController {
@@ -27,7 +31,7 @@ final class PhoneTopUpFormViewController: UIViewController {
     private let mainStackView = UIStackView()
     private let formView = PhoneTopUpFormView()
     private let navigationBarSeparator = UIView()
-    private let bottomButtonView = BottomButtonView(style: .red)
+    private let continueButtonView = BottomButtonView(style: .red)
     
     // MARK: Lifecycle
     
@@ -68,12 +72,12 @@ final class PhoneTopUpFormViewController: UIViewController {
         view.addSubviewsConstraintToSafeAreaEdges(mainStackView)
         mainStackView.addArrangedSubview(navigationBarSeparator)
         mainStackView.addArrangedSubview(formView)
-        mainStackView.addArrangedSubview(bottomButtonView)
+        mainStackView.addArrangedSubview(continueButtonView)
     }
     
     private func setUpLayout() {
         mainStackView.axis = .vertical
-        bottomButtonView.translatesAutoresizingMaskIntoConstraints = false
+        continueButtonView.translatesAutoresizingMaskIntoConstraints = false
         navigationBarSeparator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -84,7 +88,7 @@ final class PhoneTopUpFormViewController: UIViewController {
     private func prepareStyles() {
         view.backgroundColor = .white
         navigationBarSeparator.backgroundColor = .lightSanGray
-        bottomButtonView.configure(title: localized("generic_button_continue")) { [weak self] in
+        continueButtonView.configure(title: localized("generic_button_continue")) { [weak self] in
             self?.presenter.didTouchContinueButton()
         }
     }
@@ -109,8 +113,8 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         formView.showInvalidPhoneNumberError(showError)
     }
     
-    func showOperatorSelection(with mobileOperator: Operator?) {
-        formView.showOperatorSelection(with: mobileOperator)
+    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+        formView.updateOperatorSelection(with: gsmOperator)
     }
     
     func showContactsPermissionsDeniedDialog() {
@@ -121,6 +125,26 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
     func updateRecipientName(with name: String) {
         formView.updateRecipientName(with: name)
     }
+    
+    func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?) {
+        formView.updatePaymentAmounts(with: cellModels, selectedAmount: selectedAmount)
+    }
+    
+    func updateTermsView(isAcceptanceRequired: Bool, isAccepted: Bool) {
+        formView.updateTermsView(isAcceptanceRequired: isAcceptanceRequired, isAccepted: isAccepted)
+    }
+    
+    func updateContinueButton(isEnabled: Bool) {
+        if isEnabled {
+            continueButtonView.enableButton()
+        } else {
+            continueButtonView.disableButton()
+        }
+    }
+    
+    func showInvalidCustomAmountError(_ error: String?) {
+        formView.showInvalidCustomAmountError(error)
+    }
 }
 
 extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
@@ -128,7 +152,7 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         presenter.didSelectChangeAccount()
     }
     
-    func didTouchContactsButton() {
+    func topUpFormDidTouchContactsButton() {
         presenter.didTouchContactsButton()
     }
     
@@ -140,6 +164,10 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         presenter.didInputFullPhoneNumber(number)
     }
     
+    func topUpFormDidSelectTopUpAmount(_ amount: TopUpAmount) {
+        presenter.didSelectTopUpAmount(amount)
+    }
+    
     func updatePhoneInput(with phoneNumber: String) {
         formView.updatePhoneInput(with: phoneNumber)
     }
@@ -149,7 +177,11 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewDelegate {
         formView.updateRecipientName(with: contact.fullName)
     }
     
-    func didTouchOperatorSelectionButton() {
+    func topUpFormDidTouchOperatorSelectionButton() {
         presenter.didTouchOperatorSelectionButton()
+    }
+    
+    func topUpFormDidTouchTermsAndConditionsCheckBox() {
+        presenter.didTouchTermsAndConditionsCheckBox()
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import UI
-import Commons
+import CoreFoundationLib
 
 private enum Constants {
     static let textFont = UIFont.santander(family: .headline, type: .bold, size: 18.0)

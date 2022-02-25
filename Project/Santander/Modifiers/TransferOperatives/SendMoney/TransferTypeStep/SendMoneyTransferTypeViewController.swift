@@ -7,7 +7,6 @@
 
 import UIOneComponents
 import Operative
-import Commons
 import CoreFoundationLib
 import UIKit
 import UI
@@ -15,8 +14,7 @@ import UI
 protocol SendMoneyTransferTypeView: OperativeView {
     func showTransferTypes(viewModel: SendMoneyTransferTypeRadioButtonsContainerViewModel)
     func setBottomInformationTextKey(_ key: String)
-    func showAmountTooHighView()
-    func closeAmountTooHighView()
+    func showBottomSheet(type: SendMoneyTransferTypeBottomSheet)
 }
 
 final class SendMoneyTransferTypeViewController: UIViewController {
@@ -69,8 +67,8 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         bottomLabel.textColor = .oneLisboaGray
         return bottomLabel
     }()
-    private lazy var amountHighView: SendMoneyTransferTypeAmountHighView = {
-        let amountHighView = SendMoneyTransferTypeAmountHighView()
+    private lazy var errorView: SendMoneyTransferTypeErrorView = {
+        let amountHighView = SendMoneyTransferTypeErrorView()
         amountHighView.delegate = self
         return amountHighView
     }()
@@ -157,12 +155,25 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
         self.radioButtonsContainer.setViewModel(viewModel)
     }
     
-    func showAmountTooHighView() {
+    func showBottomSheet(type: SendMoneyTransferTypeBottomSheet) {
+        let viewModel: SendMoneyTransferTypeErrorViewModel
+        switch type {
+        case .amountToHigh:
+            viewModel = SendMoneyTransferTypeErrorViewModel(titleKey: "sendMoney_title_amountHigh",
+                                                            subtitleKey: "sendMoney_text_amountHigh",
+                                                            buttonKey: "generic_button_accept")
+        case .invalidDate:
+            viewModel = SendMoneyTransferTypeErrorViewModel(titleKey: "pl_sendMoney_title_dateNotValid",
+                                                            subtitleKey: "pl_sendMoney_text_changeDate",
+                                                            buttonKey: "generic_button_understand",
+                                                            imageColor: .oneBostonRed)
+        }
+        self.errorView.setupViewModel(viewModel)
         self.bottomSheet.show(
             in: self,
             type: .custom(height: nil, isPan: true, bottomVisible: true),
             component: .all,
-            view: self.amountHighView
+            view: self.errorView
         )
     }
     
@@ -170,10 +181,6 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
         self.bottomLabel.configureText(withKey: key)
         self.bottomLabel.accessibilityIdentifier = key
         self.mainStackView.addArrangedSubview(self.bottomLabel)
-    }
-    
-    func closeAmountTooHighView() {
-        self.presentedViewController?.dismiss(animated: true)
     }
 }
 
@@ -183,8 +190,8 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeRadioButtons
     }
 }
 
-extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeAmountHighViewDelegate {
-    func didTapActionButton() {
-        self.presenter.didTapCloseAmountHigh()
+extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeErrorViewDelegate {
+    func didTapActionButton(viewController: UIViewController?) {
+        viewController?.dismiss(animated: true)
     }
 }
