@@ -14,6 +14,7 @@ protocol TaxPayersMapping {
 final class TaxPayersMapper: TaxPayersMapping {
     func map(_ payer: TaxPayerDTO) -> TaxPayer {
         return TaxPayer(
+            identifier: payer.sequenceNumber,
             shortName: payer.shortName,
             name: payer.name,
             taxIdentifier: payer.taxNumber,

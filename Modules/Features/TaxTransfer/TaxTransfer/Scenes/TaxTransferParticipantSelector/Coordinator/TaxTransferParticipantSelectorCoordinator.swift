@@ -10,14 +10,14 @@ import PLUI
 import CoreFoundationLib
 import PLScenes
 
-final class TaxItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator {
+final class TaxTransferParticipantSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator {
     private let itemSelectionHandler: (Item) -> ()
-    private let configuration: TaxItemSelectorConfiguration<Item>
+    private let configuration: TaxTransferParticipantConfiguration<Item>
     private let dependenciesResolver: DependenciesResolver
     
     internal var navigationController: UINavigationController?
     
-    init(configuration: TaxItemSelectorConfiguration<Item>,
+    init(configuration: TaxTransferParticipantConfiguration<Item>,
          itemSelectionHandler: @escaping (Item) -> (),
          dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?) {
@@ -28,9 +28,9 @@ final class TaxItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator 
     }
     
     func start() {
-        let mapper = TaxItemSelectorViewModelMapper<Item>()
+        let mapper = TaxTransferParticipantSelectorMapper<Item>()
         let viewModel = mapper.map(configuration)
-        let viewController = TaxItemSelectorViewController(
+        let viewController = TaxTransferParticipantSelectorViewController(
             taxItemSelectorType: configuration.taxItemSelectorType,
             viewModel: viewModel,
             coordinator: self,
@@ -41,7 +41,10 @@ final class TaxItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator 
     
     func handleItemSelection(_ item: Item) {
         itemSelectionHandler(item)
-        navigationController?.popViewController(animated: true)
+        
+        if configuration.shouldBackAfterSelectItem {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     func back() {
@@ -53,7 +56,7 @@ final class TaxItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator 
     }
 }
 
-private extension TaxItemSelectorCoordinator {
+private extension TaxTransferParticipantSelectorCoordinator {
     var confirmationDialogFactory: ConfirmationDialogProducing {
         return dependenciesResolver.resolve()
     }
