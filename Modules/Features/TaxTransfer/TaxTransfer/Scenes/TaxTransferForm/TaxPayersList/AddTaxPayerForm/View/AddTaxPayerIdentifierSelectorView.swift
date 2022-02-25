@@ -11,7 +11,7 @@ import PLUI
 final class AddTaxPayerIdentifierSelectorView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let subviewsContainer = UIView()
-    private let selectorView = TaxTransferElementSelectorView()
+    private let selectorView = TaxTransferSelectorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +33,7 @@ final class AddTaxPayerIdentifierSelectorView: UIView {
             selectorView.isHidden = true
         case .unselected:
             selectorView.isHidden = false
-            selectorView.configure(onTap: onTap)
+            selectorView.configure(selectionState: .unselected, onTap: onTap)
         }
     }
     
