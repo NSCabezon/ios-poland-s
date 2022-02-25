@@ -1,7 +1,8 @@
-@testable import BLIK
 import UI
+import PLCommons
+@testable import BLIK
 
-class MobileTransferFormViewMock: MobileTransferFormViewControllerProtocol {
+final class MobileTransferFormViewMock: UIViewController, MobileTransferFormViewControllerProtocol {
   
     var showLoaderCalled = false
     
@@ -11,7 +12,7 @@ class MobileTransferFormViewMock: MobileTransferFormViewControllerProtocol {
     
     func showValidationMessages(messages: InvalidMobileTransferFormMessages) {}
     
-    func fillWithContact(contact: Contact?) {}
+    func fillWithContact(contact: MobileContact?) {}
     
     func showLoader() {
         showLoaderCalled = true

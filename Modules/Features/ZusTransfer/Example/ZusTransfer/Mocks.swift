@@ -14,6 +14,13 @@ struct MockHostProvider: PLHostProviderProtocol {
 }
 
 struct MockManager: PLManagersProviderProtocol {
+    func getHistoryManager() -> PLHistoryManagerProtocol {
+        fatalError()
+    }
+    
+    func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
+        fatalError()
+    }
     
     let resolver: DependenciesResolver
 
@@ -83,6 +90,10 @@ struct MockManager: PLManagersProviderProtocol {
     
     func getFundsManager() -> PLFundManagerProtocol {
         fatalError()
+    }
+    
+    func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
+        PLAuthorizationProcessorManagerMock()
     }
 }
 
@@ -173,7 +184,33 @@ struct MockTransferManager: PLTransfersManagerProtocol {
     }
     
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[SANPLLibrary.PayeeDTO], NetworkProviderError> {
-        .failure(.noConnection)
+        let jsonData = """
+         [
+         {
+         "payeeId": {
+            "contractType":"ACCOUNT",
+            "id":"1000"
+         },
+         "alias":"ZUS",
+         "stamp":953319531,
+         "account": {
+            "accountType": {
+                "code":90
+            },
+            "currencyCode":"PLN",
+            "accountNo":"PL02600000020260006109165886",
+            "payeeName":"ZUS",
+            "branchInfo": {
+                "branchCode":"60000002"
+            },
+            "transferType":"ELIXIR"
+         },
+         "recipientType":"DOMESTIC_BENEFICIARY"
+         }
+         ]
+         """.data(using: .utf8)!
+        let response = try! JSONDecoder().decode([SANPLLibrary.PayeeDTO].self, from: jsonData)
+        return .success(response)
     }
     
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError> {
@@ -363,5 +400,83 @@ struct MockLoginManeger: PLLoginManagerProtocol {
     
     func doLogout() throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError> {
         fatalError()
+    }
+}
+
+final class PLTransfersRepositoryMock: PLTransfersRepository {
+    func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
+    func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
+        fatalError()
+    }
+    
+    func getFinalFee(input: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], Error> {
+        fatalError()
+    }
+    
+    func checkInternalAccount(input: CheckInternalAccountInput) throws -> Result<CheckInternalAccountRepresentable, Error> {
+        fatalError()
+    }
+    
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {
+        .success(SendMoneyChallengeMock())
+    }
+    
+    func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
+        .success(AuthorizationIdMock())
+    }
+    
+    func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
+        fatalError()
+    }
+    
+    func validateGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput) throws -> Result<ValidateAccountTransferRepresentable, Error> {
+        fatalError()
+    }
+    
+    func validateDeferredTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+        fatalError()
+    }
+    
+    func validatePeriodicTransfer(originAcount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput) throws -> Result<ValidateScheduledTransferRepresentable, Error> {
+        fatalError()
+    }
+    
+    func validateGenericTransferOTP(originAccount: AccountRepresentable, nationalTransferInput: NationalTransferInputRepresentable, signature: SignatureRepresentable) throws -> Result<OTPValidationRepresentable, Error> {
+        fatalError()
+    }
+    
+    func validatePeriodicTransferOTP(signature: SignatureRepresentable, dataToken: String) throws -> Result<OTPValidationRepresentable, Error> {
+        fatalError()
+    }
+    
+    func validateDeferredTransferOTP(signature: SignatureRepresentable, dataToken: String) throws -> Result<OTPValidationRepresentable, Error> {
+        fatalError()
+    }
+    
+    func confirmGenericTransfer(originAccount: AccountRepresentable, nationalTransferInput: SendMoneyGenericTransferInput, otpValidation: OTPValidationRepresentable?, otpCode: String?) throws -> Result<TransferConfirmAccountRepresentable, Error> {
+        fatalError()
+    }
+    
+    func confirmDeferredTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<Void, Error> {
+        fatalError()
+    }
+    
+    func confirmPeriodicTransfer(originAccount: AccountRepresentable, scheduledTransferInput: SendMoneyScheduledTransferInput, otpValidation: OTPValidationRepresentable, otpCode: String) throws -> Result<Void, Error> {
+        fatalError()
+    }
+}
+
+struct SendMoneyChallengeMock: SendMoneyChallengeRepresentable {
+    var challengeRepresentable: String? {
+        "97216838"
+    }
+}
+
+struct AuthorizationIdMock: AuthorizationIdRepresentable {
+    var authorizationId: Int? {
+        587
     }
 }
