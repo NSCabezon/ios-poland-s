@@ -1,61 +1,38 @@
-//
-//  AccountForDebitDTO.swift
-//  SANPLLibrary
-//
 
 import Foundation
 import CoreDomain
 import SANLegacyLibrary
 
-public protocol PolandAccountRepresentable: AccountRepresentable {
-    var type: AccountForPolandTypeDTO? { get }
-    var sequencerNo: Int? { get }
-    var accountType: Int? { get }
-}
-
-struct AccountForDebitDTO: Codable {
+struct AccountForCreditDTO: Codable {
     let number: String?
     let id: String?
     let currencyCode: String?
-    let name: AccountForDebitNameDTO?
+    let name: AccountForCreditNameDTO?
     let type: AccountForPolandTypeDTO?
     let balance: BalanceDTO?
     let availableFunds: BalanceDTO?
     let systemId: Int?
     let defaultForPayments: Bool?
     let role: String?
-    let accountDetails: AccountDetailsAccountForDebitDTO?
+    let accountDetails: AccountDetailsAccountForCreditDTO?
     let creditCardAccountDetails: CreditCardAccountDetailsDTO?
     let transactionMask: TransactionMaskDTO?
     let lastUpdate: String?
 }
 
-struct AccountForDebitNameDTO: Codable {
+struct AccountForCreditNameDTO: Codable {
     let source: String?
     let description: String?
     let userDefined: String?
 }
 
-
-
-struct AccountDetailsAccountForDebitDTO: Codable {
+struct AccountDetailsAccountForCreditDTO: Codable {
     let interestRateIndicator: String?
     let sequenceNumber: Int?
     let accountType: Int?
 }
 
-struct CreditCardAccountDetailsDTO: Codable {
-    let paymentDate: String?
-    let totalPaymentAmount: BalanceDTO?
-    let minimalPaymentAmount: BalanceDTO?
-}
-
-struct TransactionMaskDTO: Codable {
-    let debit: String?
-    let credit: String?
-}
-
-extension AccountForDebitDTO: AccountRepresentable {
+extension AccountForCreditDTO: AccountRepresentable {
     var availableAmountRepresentable: AmountRepresentable? {
         return availableAmount
     }
@@ -149,7 +126,7 @@ extension AccountForDebitDTO: AccountRepresentable {
     }
 }
 
-extension AccountForDebitDTO: PolandAccountRepresentable {
+extension AccountForCreditDTO: PolandAccountRepresentable {
     var sequencerNo: Int? {
         self.accountDetails?.sequenceNumber
     }
@@ -159,7 +136,7 @@ extension AccountForDebitDTO: PolandAccountRepresentable {
     }
 }
 
-private extension AccountForDebitDTO {
+private extension AccountForCreditDTO {
     func adaptBalanceToAmount(_ balance: BalanceDTO?) -> SANLegacyLibrary.AmountDTO? {
         return self.makeAmountDTO(value: balance?.value, currencyCode: balance?.currencyCode)
     }
