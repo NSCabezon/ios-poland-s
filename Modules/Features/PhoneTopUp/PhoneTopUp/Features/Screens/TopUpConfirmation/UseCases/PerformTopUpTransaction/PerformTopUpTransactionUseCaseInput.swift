@@ -1,18 +1,17 @@
 //
-//  File.swift
+//  AcceptTopUpTransactionUseCaseInput.swift
 //  PhoneTopUp
 //
-//  Created by 188216 on 17/01/2022.
+//  Created by 188216 on 21/02/2022.
 //
 
 import Foundation
 import PLCommons
 
-struct TopUpModel {
-    let amount: Int
+struct PerformTopUpTransactionUseCaseInput {
     let account: AccountForDebit
+    let amount: Int
     let recipientNumber: String
-    let recipientName: String?
     let operatorId: Int
     let date: Date
 }

@@ -9,9 +9,9 @@ import Foundation
 import SANLegacyLibrary
 
 public protocol PLPhoneTopUpManagerProtocol {
-    func getFormData() throws -> Result<
-        TopUpFormDataDTO, NetworkProviderError>
+    func getFormData() throws -> Result<TopUpFormDataDTO, NetworkProviderError>
     func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError>
+    func reloadPhone(request: ReloadPhoneRequestDTO) throws -> Result<ReloadPhoneResponseDTO, NetworkProviderError>
 }
 
 public final class PLPhoneTopUpManager {
@@ -47,5 +47,9 @@ extension PLPhoneTopUpManager: PLPhoneTopUpManagerProtocol {
     
     public func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError> {
         return try dataSource.checkPhone(request: request)
+    }
+    
+    public func reloadPhone(request: ReloadPhoneRequestDTO) throws -> Result<ReloadPhoneResponseDTO, NetworkProviderError> {
+        return try dataSource.reloadPhone(request: request)
     }
 }

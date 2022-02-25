@@ -52,7 +52,29 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
     }
     
     func didSelectSubmit() {
-        #warning("todo: API call will be implemented in another PR")
+        view?.showLoader()
+        let input = PerformTopUpTransactionUseCaseInput(
+            account: summary.account,
+            amount: summary.amount,
+            recipientNumber: summary.recipientNumber,
+            operatorId: summary.operatorId,
+            date: summary.date
+        )
+        Scenario(useCase: PerformTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: input)
+            .execute(on: dependenciesResolver.resolve())
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    guard let self = self, output.reloadSuccessful else {
+                        self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                        return
+                    }
+                    self.coordinator?.showSummary(with: self.summary)
+                })
+            }.onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                })
+            }
         coordinator?.showSummary(with: summary)
     }
     
