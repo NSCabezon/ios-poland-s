@@ -7,7 +7,7 @@
 
 import CoreFoundationLib
 
-enum TaxItemSelectorType {
+enum TaxTransferParticipantSelectorType {
     case payer
     case payee
     

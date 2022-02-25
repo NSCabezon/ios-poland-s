@@ -10,7 +10,7 @@ import Operative
 import UI
 import PLUI
 
-protocol TopUpConfirmationViewProtocol: AnyObject, ConfirmationDialogPresentable {
+protocol TopUpConfirmationViewProtocol: AnyObject, ConfirmationDialogPresentable, LoaderPresentable, ErrorPresentable {
 }
 
 final class TopUpConfirmationViewController: UIViewController {
