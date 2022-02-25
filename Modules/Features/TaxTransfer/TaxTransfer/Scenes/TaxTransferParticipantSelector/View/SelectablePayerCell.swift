@@ -55,7 +55,7 @@ final class SelectablePayerCell: UITableViewCell {
          
         configureStyling(isSelected: isSelected)
 
-        if let taxIdentifier = viewModel.taxPayer.taxIdentifier {
+        if let taxIdentifier = viewModel.taxPayer.taxIdentifier, !taxIdentifier.isEmpty {
             payerTaxIdentifierLabel.text = localized("#NIP: ") + taxIdentifier
         }
         
