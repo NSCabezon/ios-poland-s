@@ -13,7 +13,7 @@ struct TransfersDataRepository: PLTransfersRepository {
 
     let bsanTransferManager: PLTransfersManagerProtocol
     
-    func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
+    func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
         let response = try bsanTransferManager.getAccountsForDebit()
         switch response {
         case .success(let accounts):
@@ -22,6 +22,17 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
+        let response = try bsanTransferManager.getAccountsForCredit()
+        switch response {
+        case .success(let accounts):
+            return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
         let iban = input.destinationAccount
         let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban

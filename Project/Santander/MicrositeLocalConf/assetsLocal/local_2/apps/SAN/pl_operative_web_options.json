@@ -118,5 +118,14 @@
             "method": "POST",
             "isFullScreen": true
         }
+    ],
+    "insurance_options" : [
+        {
+            "id": "PROTECTION_INSURANCE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/omni/oneapp{$INSURANCE_URL}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
     ]
 }

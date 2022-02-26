@@ -20,7 +20,7 @@ pipeline {
 	parameters {
 		booleanParam(name: "DEPLOY_TO_INTERN", defaultValue: "${is_develop_branch}", description: "Mark this check to build and deploy in app center Intern schema version")
 		booleanParam(name: "DEPLOY_TO_PRE", defaultValue: "${is_master_branch}", description: "Mark this check to build and deploy in app center PRE schema version")
-		booleanParam(name: "RUN_APPIUM", defaultValue: "${is_develop_branch}", description: "Mark this check to build a version for Appium tests ")
+		booleanParam(name: "RUN_APPIUM", defaultValue: "${is_develop_or_master}", description: "Mark this check to build a version for Appium tests ")
 		booleanParam(name: "RUN_TESTS", defaultValue: false, description: "Mark this check to execute unit and snapshot tests")
 		booleanParam(name: "INCREMENT_VERSION", defaultValue: true, description: "Mark this check to commit a version tag and bump version release nuber C (A.B.C)")
 		choice(name: 'NODE_LABEL', choices: ['poland', 'ios', 'hub'], description: '')
@@ -38,7 +38,6 @@ pipeline {
        			sh "cd Project && bundle exec fastlane ios update_pods"
        		}
         }
-
 		stage('Distribute Intern') {
 			when {
 				branch 'develop'

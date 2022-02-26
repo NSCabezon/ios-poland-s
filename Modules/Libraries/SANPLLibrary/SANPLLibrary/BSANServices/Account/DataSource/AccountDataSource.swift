@@ -28,6 +28,7 @@ final class AccountDataSource {
         case cardwithholdings = "/history/cardwithholdings"
         case transactions = "/history/search"
         case accountForDebit = "/accounts/for-debit"
+        case accountForCredit = "/accounts/for-credit"
         case changeAlias = "/accounts/productaliases"
         
     }

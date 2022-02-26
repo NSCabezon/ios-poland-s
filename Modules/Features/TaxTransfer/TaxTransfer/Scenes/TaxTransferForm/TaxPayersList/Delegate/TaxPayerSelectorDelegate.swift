@@ -6,5 +6,5 @@
 //
 
 protocol TaxPayerSelectorDelegate: AnyObject {
-    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?)
 }
