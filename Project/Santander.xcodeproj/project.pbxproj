@@ -76,6 +76,7 @@
 		3A4B64E92796DDC5003FFE00 /* ModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */; };
 		3AEC673E277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */; };
 		4215A57327B538D800879EB1 /* SantanderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215A57227B538D800879EB1 /* SantanderTests.swift */; };
+		423DB2FF27CA387200BA5989 /* PLInternalTransferAmountModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423DB2FE27CA387200BA5989 /* PLInternalTransferAmountModifier.swift */; };
 		42BF471526495D3400136E8D /* HostModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF471426495D3400136E8D /* HostModule.swift */; };
 		42BF484426497C9200136E8D /* BSANEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF484326497C9200136E8D /* BSANEnvironments.swift */; };
 		42BF4869264A87CE00136E8D /* EmptySiriAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */; };
@@ -345,6 +346,7 @@
 		3AEC673D277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanTransactionDetailUseCase.swift; sourceTree = "<group>"; };
 		4215A57027B538D800879EB1 /* SantanderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SantanderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4215A57227B538D800879EB1 /* SantanderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantanderTests.swift; sourceTree = "<group>"; };
+		423DB2FE27CA387200BA5989 /* PLInternalTransferAmountModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLInternalTransferAmountModifier.swift; sourceTree = "<group>"; };
 		42BF471426495D3400136E8D /* HostModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostModule.swift; sourceTree = "<group>"; };
 		42BF484326497C9200136E8D /* BSANEnvironments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSANEnvironments.swift; sourceTree = "<group>"; };
 		42BF4868264A87CE00136E8D /* EmptySiriAssistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySiriAssistant.swift; sourceTree = "<group>"; };
@@ -927,6 +929,13 @@
 			path = SantanderTests;
 			sourceTree = "<group>";
 		};
+		423DB2FD27CA384400BA5989 /* InternalTransfer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = InternalTransfer;
+			sourceTree = "<group>";
+		};
 		42BF586F264D13BA00136E8D /* Strings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1001,6 +1010,7 @@
 		446E0C1C265FE42400847FCA /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				423DB2FD27CA384400BA5989 /* InternalTransfer */,
 				04BAA0CF27AA9B8400AFDC2E /* ProductActionsShortcuts */,
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
 				0DCED399268B0B16001D38CC /* Accounts */,
@@ -1370,6 +1380,7 @@
 		904F5DD627BD350D00FDA40B /* InternalTransfer */ = {
 			isa = PBXGroup;
 			children = (
+				423DB2FE27CA387200BA5989 /* PLInternalTransferAmountModifier.swift */,
 				904F5DD727BD351B00FDA40B /* UseCases */,
 			);
 			path = InternalTransfer;
@@ -2127,6 +2138,7 @@
 				7E1B7DDF27216100002CC226 /* PLValidateCardOnOffUseCase.swift in Sources */,
 				A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */,
 				0DCD893426C547FA00275A90 /* PLSetUpAlertsOperative.swift in Sources */,
+				423DB2FF27CA387200BA5989 /* PLInternalTransferAmountModifier.swift in Sources */,
 				7E2CCA8226B7F69D00CBDB11 /* TransactionHistoryPGFrequentOperativeOption.swift in Sources */,
 				B01155F2271581BD00A4C175 /* OneAppInitWelcomeViewController.swift in Sources */,
 				0DC3C54126C29DD100F90591 /* GetGPInsuranceProtectionOperativeModifier.swift in Sources */,
