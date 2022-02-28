@@ -5,19 +5,16 @@
 //  Created by Julio Nieto Santiago on 18/8/21.
 //
 
-import Foundation
 import CoreFoundationLib
-import SANPLLibrary
 import PLLegacyAdapter
+import SANPLLibrary
 import Loans
 
 final class PLLoanDetailModifier {
     private let managersProvider: PLManagersProviderProtocol
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
-        self.dependenciesEngine = dependenciesEngine
+    
+    init(dependencies: ModuleDependencies) {
+        self.managersProvider = dependencies.resolve()
     }
 }
 

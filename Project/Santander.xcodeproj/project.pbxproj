@@ -255,6 +255,7 @@
 		EF446B0C271DCA770074813A /* SendMoneyDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */; };
 		EF446B0E271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */; };
 		EFE0419127B5705800FB8BF3 /* OneTransferDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE0419027B5705800FB8BF3 /* OneTransferDependenciesResolver.swift */; };
+		EFE9103E27CD40B1006D8FF7 /* OtherOperativesModifierDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE9103D27CD40B1006D8FF7 /* OtherOperativesModifierDependenciesResolver.swift */; };
 		EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF13010273177F500ECE22E /* PolandTransferType.swift */; };
 		EFF1301327317B1400ECE22E /* PolandTransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF1301227317B1400ECE22E /* PolandTransactionType.swift */; };
 		EFFDC0CA27355DE800978668 /* IbanValidationSendMoneyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFDC0C927355DE800978668 /* IbanValidationSendMoneyUseCase.swift */; };
@@ -557,6 +558,7 @@
 		EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyDependencies.swift; sourceTree = "<group>"; };
 		EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeUseCaseInputAdapter.swift; sourceTree = "<group>"; };
 		EFE0419027B5705800FB8BF3 /* OneTransferDependenciesResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTransferDependenciesResolver.swift; sourceTree = "<group>"; };
+		EFE9103D27CD40B1006D8FF7 /* OtherOperativesModifierDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOperativesModifierDependenciesResolver.swift; sourceTree = "<group>"; };
 		EFF13010273177F500ECE22E /* PolandTransferType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolandTransferType.swift; sourceTree = "<group>"; };
 		EFF1301227317B1400ECE22E /* PolandTransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolandTransactionType.swift; sourceTree = "<group>"; };
 		EFFDC0C927355DE800978668 /* IbanValidationSendMoneyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IbanValidationSendMoneyUseCase.swift; sourceTree = "<group>"; };
@@ -867,6 +869,7 @@
 		3A4B64D82796DDC4003FFE00 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				EFE9103C27CD4098006D8FF7 /* GlobalPosition */,
 				B7BF53CF27A7E27200EDDE88 /* Menu */,
 				EFE0418F27B5705800FB8BF3 /* Transfer */,
 				3A4B64D92796DDC5003FFE00 /* Loans */,
@@ -1704,6 +1707,14 @@
 			path = Transfer;
 			sourceTree = "<group>";
 		};
+		EFE9103C27CD4098006D8FF7 /* GlobalPosition */ = {
+			isa = PBXGroup;
+			children = (
+				EFE9103D27CD40B1006D8FF7 /* OtherOperativesModifierDependenciesResolver.swift */,
+			);
+			path = GlobalPosition;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2079,6 +2090,7 @@
 				A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */,
 				B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */,
 				7E9939C726B9589C00F1040D /* OurOfferPGFrequentOperativeOption.swift in Sources */,
+				EFE9103E27CD40B1006D8FF7 /* OtherOperativesModifierDependenciesResolver.swift in Sources */,
 				0DBF73702666157E00E9A9EE /* ProductIdDelegateModifier.swift in Sources */,
 				0DAA4D5B26C3ECC0005A921C /* PLPayTaxOperative.swift in Sources */,
 				EF0CDC0527C803D800FDA289 /* ModuleDependencies+Repository.swift in Sources */,

@@ -5,14 +5,14 @@ import Transfer
 import UI
 
 final class PLSendMoneyHomeOperativeShortcut {
+    private let legacyDependenciesResolver: DependenciesResolver
     private let dependencies: ModuleDependencies
-    private let dependenciesResolver: DependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
 
     var trackName: String? = "accountOptionButtonTransferPoland"
     
     init(dependencies: ModuleDependencies) {
-        self.dependenciesResolver = dependencies.resolve()
+        self.legacyDependenciesResolver = dependencies.resolve()
         self.dependencies = dependencies
     }
 }
@@ -52,7 +52,7 @@ extension PLSendMoneyHomeOperativeShortcut: AccountOperativeActionTypeProtocol {
     func getAction() -> AccountOperativeAction {
         return .custom { [weak self] in
             guard let self = self else { return }
-            self.useCase
+            self.checkNewSendMoneyHomeIsEnabled
                 .fetchEnabled()
                 .receive(on: Schedulers.main)
                 .sink { [unowned self] isEnabled in
@@ -70,11 +70,11 @@ extension PLSendMoneyHomeOperativeShortcut: AccountOperativeActionTypeProtocol {
 }
 
 private extension PLSendMoneyHomeOperativeShortcut {
-    var useCase: CheckNewSendMoneyHomeEnabledUseCase {
+    var checkNewSendMoneyHomeIsEnabled: CheckNewSendMoneyHomeEnabledUseCase {
         return dependencies.resolve()
     }
     
     var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {
-        return dependenciesResolver.resolve()
+        return legacyDependenciesResolver.resolve()
     }
 }

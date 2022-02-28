@@ -10,12 +10,12 @@ import CoreDomain
 import RetailLegacy
 
 final class GetPGFrequentOperativeOption {
-    private let dependenciesResolver: DependenciesResolver
-    private let moduleDependencies: ModuleDependencies
+    private let legacyDependenciesResolver: DependenciesResolver
+    private let dependencies: ModuleDependencies
     
-    init(moduleDependencies: ModuleDependencies) {
-        self.moduleDependencies = moduleDependencies
-        self.dependenciesResolver = moduleDependencies.resolve()
+    init(dependencies: ModuleDependencies) {
+        self.dependencies = dependencies
+        self.legacyDependenciesResolver = dependencies.resolve()
     }
 }
 
@@ -33,24 +33,24 @@ private extension GetPGFrequentOperativeOption {
     func getPGFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
         var options: [PGFrequentOperativeOptionProtocol] = [
             PGFrequentOperativeOption.operate,
-            PaymentsPGFrequentOperativeOption(dependencies: moduleDependencies),
+            PaymentsPGFrequentOperativeOption(dependencies: dependencies),
             TransactionHistoryPGFrequentOperativeOption(),
-            BLIKPGFrequentOperativeOption(dependencyResolver: dependenciesResolver),
-            PLHelpCenterFrequentOperativeOption(dependencyResolver: dependenciesResolver),
-            OurOfferPGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
+            BLIKPGFrequentOperativeOption(dependencyResolver: legacyDependenciesResolver),
+            PLHelpCenterFrequentOperativeOption(dependencyResolver: legacyDependenciesResolver),
+            OurOfferPGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             PGFrequentOperativeOption.impruve,
             AtmsAndBranchesPGFrequentOperativeOption(),
             PGFrequentOperativeOption.personalArea,
-            AddBanksPGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
-            CurrencyExchangePGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
+            AddBanksPGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
+            CurrencyExchangePGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             OpenGoalPGFrequentOperativeOption(),
             OpenDepositPGFrequentOperativeOption(),
             BuyInsurancePGFrequentOperativeOption(),
-            CustomerServicePGFrequentOperativeOption(dependenciesResolver: dependenciesResolver),
+            CustomerServicePGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             AccountStatementPGFrequentOperativeOption()
         ]
         #if DEBUG
-        options.append(PLDebugMenuFrequentOperativeOption(dependencyResolver: dependenciesResolver))
+        options.append(PLDebugMenuFrequentOperativeOption(dependencyResolver: legacyDependenciesResolver))
         #endif
         return options
     }

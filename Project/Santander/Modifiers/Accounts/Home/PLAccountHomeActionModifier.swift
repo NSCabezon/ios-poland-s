@@ -13,14 +13,14 @@ import Account
 import UI
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
-    private let dependenciesResolver: DependenciesResolver
-    private let moduleDependencies: ModuleDependencies
+    private let legacyDependenciesResolver: DependenciesResolver
+    private let dependencies: ModuleDependencies
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    public init(moduleDependencies: ModuleDependencies) {
-        self.dependenciesResolver = moduleDependencies.resolve()
-        self.moduleDependencies = moduleDependencies
+    public init(dependencies: ModuleDependencies) {
+        self.legacyDependenciesResolver = dependencies.resolve()
+        self.dependencies = dependencies
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
@@ -54,7 +54,7 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
 extension PLAccountHomeActionModifier {
     private func showWebView(identifier: String, entity: AccountEntity) {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
-        let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        let repository = legacyDependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
         if identifier == PLAccountOperativeIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
@@ -64,11 +64,11 @@ extension PLAccountHomeActionModifier {
             return
         }
         input = GetPLAccountOtherOperativesWebConfigurationUseCaseInput(type: data)
-        let useCase = self.dependenciesResolver.resolve(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self)
+        let useCase = legacyDependenciesResolver.resolve(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self)
         Scenario(useCase: useCase, input: input)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { result in
-                self.dependenciesResolver.resolve(for: AccountsHomeCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
+            .execute(on: legacyDependenciesResolver.resolve())
+            .onSuccess { [weak self] result in
+                self?.legacyDependenciesResolver.resolve(for: AccountsHomeCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
             }
     }
     
@@ -81,12 +81,12 @@ extension PLAccountHomeActionModifier {
     }
     
     private func goToSendMoney(with account: AccountRepresentable) {
-        useCase
+        checkNewSendMoneyHomeIsEnabled
             .fetchEnabled()
             .receive(on: Schedulers.main)
             .sink { [unowned self] isEnabled in
                 if isEnabled {
-                    self.moduleDependencies.oneTransferHomeCoordinator()
+                    self.dependencies.oneTransferHomeCoordinator()
                         .set(account)
                         .start()
                 } else {
@@ -98,16 +98,16 @@ extension PLAccountHomeActionModifier {
 }
 
 private extension PLAccountHomeActionModifier {
-    var useCase: CheckNewSendMoneyHomeEnabledUseCase {
-        return moduleDependencies.resolve()
+    var checkNewSendMoneyHomeIsEnabled: CheckNewSendMoneyHomeEnabledUseCase {
+        return dependencies.resolve()
     }
     
     var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {
-        return dependenciesResolver.resolve()
+        return legacyDependenciesResolver.resolve()
     }
     
     private func goToPGProductsCustomization() {
-        let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
+        let coordinator = legacyDependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
         coordinator.goToGPProductsCustomization()
     }
 }
