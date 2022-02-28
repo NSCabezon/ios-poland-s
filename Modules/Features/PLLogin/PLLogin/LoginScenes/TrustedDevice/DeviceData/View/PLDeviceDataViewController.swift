@@ -13,6 +13,7 @@ import PLCommons
 
 protocol PLDeviceDataViewProtocol: PLGenericErrorPresentableCapable {
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration)
+    func enableContinue()
 }
 
 final class PLDeviceDataViewController: UIViewController {
@@ -63,7 +64,10 @@ final class PLDeviceDataViewController: UIViewController {
 }
 
 extension PLDeviceDataViewController: PLDeviceDataViewProtocol {
-
+    func enableContinue() {
+        self.continueButton.isUserInteractionEnabled = true
+    }
+    
     func addDeviceConfiguration(_ deviceConfiguration: TrustedDeviceConfiguration) {
         guard let deviceData = deviceConfiguration.deviceData else { return }
         modelDeviceValueLabel.text = deviceData.model
@@ -124,6 +128,7 @@ private extension PLDeviceDataViewController {
         continueButton.layer.cornerRadius = (continueButton?.frame.height ?? 0.0) / 2.0
         continueButton.titleLabel?.font = UIFont.santander(family: .text, type: .bold, size: 18.0)
         continueButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(continueButtonDidPressed)))
+        continueButton.isUserInteractionEnabled = false
     }
 
     func configureAccessibilityIdentifiers() {

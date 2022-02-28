@@ -1,5 +1,6 @@
 import RetailLegacy
 import CoreFoundationLib
+import PLLogin
 
 struct AdditionalUseCasesProviderImpl: AdditionalUseCasesProviderProtocol {
     let dependencies: DependenciesResolver
@@ -12,6 +13,8 @@ struct AdditionalUseCasesProviderImpl: AdditionalUseCasesProviderProtocol {
                 (LoadPLHelpCenterOnlineAdvisorUseCase(dependencies: dependencies),
                  isMandatory: true),
                 (LoadPLHelpHelpQuestionsUseCase(dependencies: dependencies),
+                 isMandatory: true),
+                (LoadPLTermsAndConditionsUseCase(dependencies: dependencies),
                  isMandatory: true)
         ]
     }
