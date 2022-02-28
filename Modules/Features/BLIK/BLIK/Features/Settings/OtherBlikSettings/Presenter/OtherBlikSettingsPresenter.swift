@@ -12,41 +12,16 @@ import PLUI
 
 protocol OtherBlikSettingsPresenterProtocol {
     func viewDidLoad()
-    func didPressSave(with newViewModel: OtherBlikSettingsViewModel)
-    func didPressClose(with newViewModel: OtherBlikSettingsViewModel)
-    func didUpdateForm(with newViewModel: OtherBlikSettingsViewModel)
+    func didToggleTransactionVisibilitySwitch(isOn: Bool)
+    func didPressBlikLabelEdit()
+    func didPressBack()
 }
 
 final class OtherBlikSettingsPresenter {
     private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
     private var viewModel: OtherBlikSettingsViewModel
     private let dependenciesResolver: DependenciesResolver
-
-    weak var view: OtherBlikSettingsViewController?
-    
-    private var coordinator: OtherBlikSettingsCoordinatorProtocol {
-        dependenciesResolver.resolve()
-    }
-    
-    private var confirmationDialogFactory: ConfirmationDialogProducing {
-        dependenciesResolver.resolve()
-    }
-    
-    private var labelValidator: BlikCustomerLabelValidating {
-        dependenciesResolver.resolve()
-    }
-    
-    private var saveBlikCustomerLabelUseCase: SaveBlikCustomerLabelUseCaseProtocol {
-        dependenciesResolver.resolve()
-    }
-    
-    private var loadWalletUseCase: GetWalletsActiveUseCase {
-        dependenciesResolver.resolve()
-    }
-    
-    private var useCaseHandler: UseCaseHandler {
-        return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
-    }
+    weak var view: OtherBlikSettingsViewProtocol?
     
     init(
         wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>,
@@ -67,84 +42,97 @@ extension OtherBlikSettingsPresenter: OtherBlikSettingsPresenterProtocol {
         view?.setViewModel(viewModel: viewModel)
     }
     
-    func didPressSave(with newViewModel: OtherBlikSettingsViewModel) {
+    func didToggleTransactionVisibilitySwitch(isOn shouldTransactionDataBeVisible: Bool) {
+        let input = SaveBlikTransactionVisibilityInput(
+            isBlikTransactionDataVisibleBeforeSignIn: shouldTransactionDataBeVisible
+        )
+        
         view?.showLoader()
-        let input = SaveBlikCustomerLabelInput(chequePin: newViewModel.blikCustomerLabel)
-        Scenario(useCase: saveBlikCustomerLabelUseCase, input: input)
-            .execute(on: useCaseHandler)
-            .onSuccess { [weak self] in
-                self?.tryToUpdateWallet()
-            }
-            .onError { [weak self] error in
-                self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
-                })
-            }
-
-    }
-
-    func didPressClose(with newViewModel: OtherBlikSettingsViewModel) {
-        guard let view = view else { return }
-        
-        let viewModelDidNotChange = viewModel == newViewModel
-        guard viewModelDidNotChange else {
-            confirmationDialogFactory.createEndProcessDialog {[weak self] in
-                self?.coordinator.close()
-            } declineAction: {
-            }.showIn(view)
-            return
+        Scenario(useCase: saveTransactionVisibilityUseCase, input: input)
+        .execute(on: useCaseHandler)
+        .onSuccess { [weak self] _ in
+            self?.tryToUpdateWalletAndShowSuccessAlert()
         }
-        
-        coordinator.close()
-    }
-    
-    func didUpdateForm(with newViewModel: OtherBlikSettingsViewModel) {
-        let isLabelValid = validateCustomerLabel(newViewModel.blikCustomerLabel)
-        let viewModelDidChange = newViewModel != viewModel
-        let isSaveButonEnabled = isLabelValid && viewModelDidChange
-        view?.setIsSaveButtonEnabled(isSaveButonEnabled)
-    }
-    
-    private func validateCustomerLabel(_ label: String) -> Bool {
-        switch labelValidator.validate(label) {
-        case .valid:
-            view?.setLabelValidationError(nil)
-            return true
-        case let .invalid(reason):
-            view?.setLabelValidationError(reason.localizedString)
-            return false
+        .onError { [weak self] error in
+            self?.view?.hideLoader(completion: {
+                guard let strongSelf = self else { return }
+                strongSelf.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                strongSelf.view?.setViewModel(viewModel: strongSelf.viewModel)
+            })
         }
     }
     
-    private func tryToUpdateWallet() {
+    func didPressBlikLabelEdit() {
+        coordinator.showBlikLabelSettings()
+    }
+    
+    func didPressBack() {
+        coordinator.back()
+    }
+}
+
+extension OtherBlikSettingsPresenter: BlikCustomerLabelUpdateDelegate {
+    func didUpdateBlikCustomerLabel(with newBlikLabel: String) {
+        let newViewModel = OtherBlikSettingsViewModel(
+            blikCustomerLabel: newBlikLabel,
+            isTransactionVisible: viewModel.isTransactionVisible
+        )
+        self.viewModel = newViewModel
+        view?.setViewModel(viewModel: newViewModel)
+    }
+}
+    
+private extension OtherBlikSettingsPresenter{
+    func tryToUpdateWalletAndShowSuccessAlert() {
         Scenario(useCase: loadWalletUseCase)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] response in
                 self?.view?.hideLoader(completion: {
-                    self?.handleUpdatedWallet(with: response)
+                    switch response.serviceStatus {
+                    case let .available(newWallet):
+                        self?.updateWalletAndShowSuccessAlert(with: newWallet)
+                    case .unavailable:
+                        self?.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                            self?.coordinator.close()
+                        })
+                    }
                 })
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                    self?.view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+                        self?.coordinator.close()
+                    })
                 })
             }
     }
     
-    private func handleUpdatedWallet(with response: GetWalletUseCaseOkOutput) {
-        switch response.serviceStatus {
-        case let .available(newWallet):
-            self.wallet.setValue(newWallet)
-            self.viewModel = OtherBlikSettingsViewModel(
-                blikCustomerLabel: newWallet.alias.label,
-                isTransactionVisible: newWallet.noPinTrnVisible
-            )
-            view?.setIsSaveButtonEnabled(false)
-            coordinator.showSaveSettingsSuccessAlert()
-        case .unavailable:
-            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
-                self?.coordinator.goBackToRoot()
-            })
-        }
+    func updateWalletAndShowSuccessAlert(with newWallet: GetWalletUseCaseOkOutput.Wallet) {
+        wallet.setValue(newWallet)
+        let newViewModel = OtherBlikSettingsViewModel(
+            blikCustomerLabel: newWallet.alias.label,
+            isTransactionVisible: newWallet.noPinTrnVisible
+        )
+        viewModel = newViewModel
+        view?.setViewModel(viewModel: newViewModel)
+        coordinator.showSaveSettingsSuccessAlert()
+    }
+}
+
+extension OtherBlikSettingsPresenter {
+    var coordinator: OtherBlikSettingsCoordinatorProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var saveTransactionVisibilityUseCase: SaveBlikTransactionDataVisibilityUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var loadWalletUseCase: GetWalletsActiveUseCase {
+        dependenciesResolver.resolve()
+    }
+    
+    var useCaseHandler: UseCaseHandler {
+        dependenciesResolver.resolve()
     }
 }

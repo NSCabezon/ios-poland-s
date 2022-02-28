@@ -1,5 +1,5 @@
 //
-//  TaxTransferAccountSelectorView.swift
+//  TaxTransferAccountSectionView.swift
 //  TaxTransfer
 //
 //  Created by 185167 on 13/12/2021.
@@ -7,11 +7,11 @@
 
 import PLUI
 
-final class TaxTransferAccountSelectorView: UIView {
+final class TaxTransferAccountSectionView: UIView {
     private lazy var accountSection = getSectionContainer(with: accountView)
     private lazy var selectorSection = getSectionContainer(with: selectorView)
     private let accountView = SelectedAccountView()
-    private let selectorView = TaxTransferElementSelectorView()
+    private let selectorView = TaxTransferSelectorView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +39,7 @@ final class TaxTransferAccountSelectorView: UIView {
     }
 }
 
-private extension TaxTransferAccountSelectorView {
+private extension TaxTransferAccountSectionView {
     func showSelectedAccount(
         viewModel: TaxTransferFormViewModel.AccountViewModel,
         onTap: @escaping () -> Void
@@ -53,7 +53,7 @@ private extension TaxTransferAccountSelectorView {
     func showSelector(onTap: @escaping () -> Void) {
         accountSection.isHidden = true
         selectorSection.isHidden = false
-        selectorView.configure(onTap: onTap)
+        selectorView.configure(selectionState: .unselected, onTap: onTap)
     }
     
     func setUp() {

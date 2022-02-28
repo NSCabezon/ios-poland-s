@@ -6,7 +6,7 @@ import CoreFoundationLib
     navigation between the module scene and so on.
 */
 protocol BLIKConfirmationCoordinatorProtocol {
-    func cancelTransfer(type: CancelType)
+    func cancelTransfer(withData: TransactionCancelationData)
     func goToSummary(with viewModel: BLIKTransactionViewModel)
     func goToGlobalPosition()
 }
@@ -33,10 +33,12 @@ final class BLIKConfirmationCoordinator: ModuleCoordinator {
 }
 
 extension BLIKConfirmationCoordinator: BLIKConfirmationCoordinatorProtocol {
-    func cancelTransfer(type: CancelType) {
-        let coordinator = CancelTransactionCoordinator(dependenciesResolver: dependenciesEngine,
-                                                       navigationController: navigationController,
-                                                       cancelType: type)
+    func cancelTransfer(withData cancelationData: TransactionCancelationData) {
+        let coordinator = CancelTransactionCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            cancelationData: cancelationData
+        )
         coordinator.start()
     }
     

@@ -1,10 +1,10 @@
 import CoreFoundationLib
-@testable import BLIK
-import CoreFoundationLib
 import SANPLLibrary
 import XCTest
+import PLCommons
+@testable import BLIK
 
-class ContactsPresenterTests: XCTestCase {
+final class ContactsPresenterTests: XCTestCase {
     
     private var SUT: ContactsPresenterProtocol!
     private var dependencies: (DependenciesResolver & DependenciesInjector)!

@@ -39,6 +39,7 @@ class ViewController: UIViewController {
         newComponents.append(self.datePickerSelector())
         newComponents.append(self.formSectionContainer())
         newComponents.append(self.tappableControl())
+        newComponents.append(self.warningBubbleView())
         return newComponents
     }()
 

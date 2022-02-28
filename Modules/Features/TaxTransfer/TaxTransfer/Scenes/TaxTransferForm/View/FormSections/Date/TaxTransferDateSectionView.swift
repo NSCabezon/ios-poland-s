@@ -1,5 +1,5 @@
 //
-//  TaxTransferDateSelectorView.swift
+//  TaxTransferDateSectionView.swift
 //  PLUI
 //
 //  Created by 185167 on 03/01/2022.
@@ -7,7 +7,7 @@
 
 import PLUI
 
-final class TaxTransferDateSelectorView: UIView {
+final class TaxTransferDateSectionView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let dateSelector: TransferDateSelector
     weak var delegate: TransferDateSelectorDelegate? {
@@ -35,7 +35,7 @@ final class TaxTransferDateSelectorView: UIView {
     }
 }
 
-private extension TaxTransferDateSelectorView {
+private extension TaxTransferDateSectionView {
     func setUp() {
         configureSubviews()
     }

@@ -1,7 +1,7 @@
 @testable import BLIK
 import UI
 
-class BLIKConfirmationViewMock: BLIKConfirmationViewProtocol {
+final class BLIKConfirmationViewMock: UIViewController, BLIKConfirmationViewProtocol {
     
     var viewModel: BLIKTransactionViewModel?
     var updateCounterCalled = false

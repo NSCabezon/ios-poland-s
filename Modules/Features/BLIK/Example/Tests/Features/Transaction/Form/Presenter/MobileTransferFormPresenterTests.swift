@@ -65,8 +65,8 @@ private extension MobileTransferFormPresenterTests {
         dependencies.register(for: MobileTransferFormPresenterProtocol.self) { resolver in
             return MobileTransferFormPresenter(dependenciesResolver: resolver,
                                                accounts: [account],
-                                               contact: Contact(fullName: "Jan Nowak",
-                                                                phoneNumber: "123 456 789"),
+                                               contact: MobileContact(fullName: "Jan Nowak",
+                                                                      phoneNumber: "123 456 789"),
                                                selectedAccountNumber: "",
                                                formValidator: MobileTransferFormValidator())
         }

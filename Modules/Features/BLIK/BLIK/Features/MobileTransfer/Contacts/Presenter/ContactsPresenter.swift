@@ -136,11 +136,6 @@ private extension ContactsPresenter {
                 }
             }
     }
-    
-    private func showErrorMessage() {
-        let message = "#Nie udało się pobrać listy kont. Spróbuj pononownie później."
-        view?.showErrorMessage(message, onConfirm: nil)
-    }
 
     func showNextScreen(with accounts: [AccountForDebit]) {
         let defaultForPayments = accounts.first(where: { $0.defaultForPayments == true })

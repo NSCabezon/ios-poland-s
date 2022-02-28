@@ -1,10 +1,10 @@
 import CoreFoundationLib
-@testable import BLIK
-import CoreFoundationLib
 import SANPLLibrary
+import PLCommons
 import XCTest
+@testable import BLIK
 
-class GetContactsUseCaseTests: XCTestCase {
+final class GetContactsUseCaseTests: XCTestCase {
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
     private var queue: DispatchQueue!
     private var SUT: GetContactsUseCase!

@@ -16,6 +16,7 @@ protocol BLIKDataSourceProtocol {
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
+    func setTransactionDataVisibility(_ parameters: SetNoPinTrnVisibleParameters) throws -> Result<Void, NetworkProviderError>
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError>
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
     func getAliases() throws -> Result<[BlikAliasDTO], NetworkProviderError>
@@ -54,6 +55,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         case phoneVerification = "/e-wallet/phone-verification"
         case p2pAlias = "/e-wallet/p2p-alias"
         case pspAliasLabel = "/e-wallet/psp-alias-label"
+        case noPinTrnVisibileParameters = "/e-wallet/no-pin-trn-visible"
         case pspAlias = "/e-wallet/psp-alias"
         case transactionLimit = "/e-wallet/limits"
         case aliases = "/oc/aliases/active"
@@ -308,6 +310,23 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         method: .post,
                         request: data,
                         bodyEncoding: .form)
+        )
+    }
+    
+    func setTransactionDataVisibility(_ parameters: SetNoPinTrnVisibleParameters) throws -> Result<Void, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(parameters) else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + blikPath
+        let serviceName = BlikServiceType.noPinTrnVisibileParameters.rawValue
+        return networkProvider.request(
+            BlikRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .post,
+                request: data,
+                bodyEncoding: .form
+            )
         )
     }
     
