@@ -9,6 +9,7 @@ import CoreDomain
 
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
+    func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
@@ -28,6 +29,7 @@ private extension TransfersDataSource {
 final class TransfersDataSource {
     private enum TransferServiceType: String {
         case accountForDebit = "/accounts/for-debit"
+        case accountForCredit = "/accounts/for-credit/1"
         case payees = "/payees/account/all"
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
@@ -82,6 +84,26 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                 queryParams: nil,
                 contentType: nil,
                 localServiceName: .accountsForDebit
+            )
+        )
+        return result
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName = TransferServiceType.accountForCredit.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<[AccountForCreditDTO], NetworkProviderError> = self.networkProvider.request(
+            TransferRequest(
+                serviceName: serviceName,
+                serviceUrl: absoluteUrl,
+                method: .get,
+                headers: self.headers,
+                queryParams: nil,
+                contentType: nil,
+                localServiceName: .accountsForCredit
             )
         )
         return result

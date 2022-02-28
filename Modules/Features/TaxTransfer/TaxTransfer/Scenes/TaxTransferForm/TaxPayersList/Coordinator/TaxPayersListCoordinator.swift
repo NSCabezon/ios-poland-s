@@ -16,7 +16,7 @@ protocol TaxPayersListCoordinatorProtocol {
     
     func showAddPayerView()
     func showPayerIdentifiers(for: TaxPayer)
-    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?)
 }
 
 final class TaxPayersListCoordinator {
@@ -47,25 +47,40 @@ final class TaxPayersListCoordinator {
             return
         }
         
-        let mapper = dependenciesEngine.resolve(for: TaxPayerViewModelMapping.self)
-
-        let presenter = TaxTransferPayersListPresenter(
+        if let selectedTaxPayer = selectedTaxPayer {
+            showTaxItemSelector(with: mapper.map(selectedTaxPayer))
+        } else {
+            showTaxItemSelector(with: nil)
+        }
+    }
+    
+    private func handleSelectionItem(_ taxPayerViewModel: TaxTransferFormViewModel.TaxPayerViewModel) {
+        switch taxPayerViewModel.taxPayerSecondaryIdentifier {
+        case .available:
+            if taxPayerViewModel.hasDifferentTaxIdentifiers {
+                showPayerIdentifiers(for: taxPayerViewModel.taxPayer)
+            } else {
+                didSelectTaxPayer(taxPayerViewModel.taxPayer, selectedPayerInfo: nil)
+            }
+        case .notAvailable:
+            didSelectTaxPayer(taxPayerViewModel.taxPayer, selectedPayerInfo: nil)
+        }
+    }
+    
+    private func showTaxItemSelector(with selectedTaxPayer: TaxTransferFormViewModel.TaxPayerViewModel?) {
+        let configuration = TaxTransferParticipantConfiguration<TaxTransferFormViewModel.TaxPayerViewModel>(
+            shouldBackAfterSelectItem: false,
+            taxItemSelectorType: .payer,
+            items: mapper.map(taxPayers),
+            selectedItem: selectedTaxPayer
+        )
+        let taxItemSelectorCoordinator = TaxTransferParticipantSelectorCoordinator<TaxTransferFormViewModel.TaxPayerViewModel>(
+            configuration: configuration,
+            itemSelectionHandler: handleSelectionItem,
             dependenciesResolver: dependenciesEngine,
-            coordinator: self
+            navigationController: navigationController
         )
-        let viewModel = TaxTransferPayersListViewModel(
-            mapper: mapper,
-            taxPayers: taxPayers
-        )
-        let viewController = TaxTransferPayersListViewController(
-           presenter: presenter,
-           viewModel: viewModel
-        )
-        
-        presenter.view = viewController
-        viewController.set(selectedTaxPayer: selectedTaxPayer)
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        taxItemSelectorCoordinator.start()
     }
 }
 
@@ -83,7 +98,7 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
         navigationController?.popToRootViewController(animated: true)
     }
 
-    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?) {
         taxPayerSelectorDelegate?.didSelectTaxPayer(taxPayer, selectedPayerInfo: selectedPayerInfo)
         backToForm()
     }
@@ -116,5 +131,11 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
         )
         
         coordinator.start()
+    }
+}
+
+private extension TaxPayersListCoordinator {
+    var mapper: TaxPayerViewModelMapping {
+        dependenciesEngine.resolve()
     }
 }

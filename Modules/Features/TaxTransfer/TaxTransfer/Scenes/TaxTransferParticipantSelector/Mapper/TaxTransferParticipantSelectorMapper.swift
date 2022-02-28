@@ -7,16 +7,19 @@
 
 import PLScenes
 
-final class TaxItemSelectorViewModelMapper<Item: SelectableItem> {
-    func map(_ configuration: TaxItemSelectorConfiguration<Item>) -> TaxItemSelectorViewModel<Item> {
+final class TaxTransferParticipantSelectorMapper<Item: SelectableItem> {
+    func map(_ configuration: TaxTransferParticipantConfiguration<Item>) -> TaxTransferParticipantSelectorViewModel<Item> {
         let taxItemViewModels = configuration.items.map {
-            return TaxItemViewModel(
+            return TaxTransferParticipantViewModel(
                 isSelected: isSelected(item: $0, selectedItem: configuration.selectedItem),
                 item: $0
             )
         }
         
-        return TaxItemSelectorViewModel(viewModels: taxItemViewModels)
+        return TaxTransferParticipantSelectorViewModel(
+            shouldBackAfterSelectItem: configuration.shouldBackAfterSelectItem,
+            viewModels: taxItemViewModels
+        )
     }
     
     private func isSelected(item: Item, selectedItem: Item?) -> Bool {

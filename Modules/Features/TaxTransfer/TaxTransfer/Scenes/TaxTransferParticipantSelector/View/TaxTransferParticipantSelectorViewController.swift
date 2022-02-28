@@ -11,7 +11,7 @@ import PLCommons
 import CoreFoundationLib
 import PLScenes
 
-final class TaxItemSelectorViewController<Item: SelectableItem>: UIViewController,
+final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: UIViewController,
                                                                  UITableViewDataSource,
                                                                  UITableViewDelegate,
                                                                  ConfirmationDialogPresentable {
@@ -19,14 +19,14 @@ final class TaxItemSelectorViewController<Item: SelectableItem>: UIViewControlle
     private let button = LisboaButton()
     private let infoLabel = UILabel()
     
-    private let taxItemSelectorType: TaxItemSelectorType
-    private let viewModel: TaxItemSelectorViewModel<Item>
-    private let coordinator: TaxItemSelectorCoordinator<Item>
+    private let taxItemSelectorType: TaxTransferParticipantSelectorType
+    private let viewModel: TaxTransferParticipantSelectorViewModel<Item>
+    private let coordinator: TaxTransferParticipantSelectorCoordinator<Item>
     private let confirmationDialogFactory: ConfirmationDialogProducing
     
-    init(taxItemSelectorType: TaxItemSelectorType,
-         viewModel: TaxItemSelectorViewModel<Item>,
-         coordinator: TaxItemSelectorCoordinator<Item>,
+    init(taxItemSelectorType: TaxTransferParticipantSelectorType,
+         viewModel: TaxTransferParticipantSelectorViewModel<Item>,
+         coordinator: TaxTransferParticipantSelectorCoordinator<Item>,
          confirmationDialogFactory: ConfirmationDialogProducing) {
         self.taxItemSelectorType = taxItemSelectorType
         self.viewModel = viewModel

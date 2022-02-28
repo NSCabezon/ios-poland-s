@@ -36,6 +36,10 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     // MARK: SetUp
     
     private func setupDependencies(with summary: TopUpModel) {
+        self.dependenciesEngine.register(for: AcceptTopUpTransactionInputMapping.self) { _ in
+            return AcceptTopUpTransactionInputMapper()
+        }
+        
         self.dependenciesEngine.register(for: TopUpSummaryMapping.self) { _ in
             return TopUpSummaryMapper()
         }
