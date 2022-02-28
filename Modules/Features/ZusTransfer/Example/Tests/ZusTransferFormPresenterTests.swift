@@ -84,7 +84,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     }
     
     func test_setAccountViewModel_called() throws {
-        var sut = try XCTUnwrap(sut)
+        let sut = try XCTUnwrap(sut)
         let view = try XCTUnwrap(view)
         sut.view = view
         XCTAssertFalse(view.setAccountViewModelCalled)
@@ -95,7 +95,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     }
     
     func test_showValidationMessages_called_when_validation_title_is_performing() throws {
-        var sut = try XCTUnwrap(sut)
+        let sut = try XCTUnwrap(sut)
         let view = try XCTUnwrap(view)
         sut.view = view
         XCTAssertFalse(view.showValidationMessagesCalled)
@@ -109,7 +109,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     }
     
     func test_showValidationMessages_called_when_validation_recipient_is_performing() throws {
-        var sut = try XCTUnwrap(sut)
+        let sut = try XCTUnwrap(sut)
         let view = try XCTUnwrap(view)
         sut.view = view
         XCTAssertFalse(view.showValidationMessagesCalled)
@@ -123,7 +123,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     }
     
     func test_showValidationMessages_called_when_validation_amount_is_performing() throws {
-        var sut = try XCTUnwrap(sut)
+        let sut = try XCTUnwrap(sut)
         let view = try XCTUnwrap(view)
         sut.view = view
         XCTAssertFalse(view.showValidationMessagesCalled)
@@ -137,7 +137,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     }
     
     func test_showValidationMessages_called_when_validation_accountNumber_is_performing() throws {
-        var sut = try XCTUnwrap(sut)
+        let sut = try XCTUnwrap(sut)
         let view = try XCTUnwrap(view)
         sut.view = view
         XCTAssertFalse(view.showValidationMessagesCalled)
@@ -147,6 +147,40 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         sut.startValidation(with: .accountNumber(controlEvent: .endEditing))
         TestHelper.delay {
             XCTAssertTrue(view.showValidationMessagesCalled)
+        }
+    }
+    
+    func test_showRecipientSelection_called_should_start_showRecipient_coordinator_function() throws {
+        let sut = try XCTUnwrap(sut)
+        let coordinator = try XCTUnwrap(coordinator)
+        sut.showRecipientSelection()
+        TestHelper.delay {
+            XCTAssertTrue(coordinator.showRecipientSelectionCalled)
+        }
+    }
+    
+    func test_didSelectRecipient_called_should_start_updateRecipientCalled_on_view() throws {
+        let sut = try XCTUnwrap(sut)
+        let view = try XCTUnwrap(view)
+        sut.view = view
+        XCTAssertFalse(view.updateRecipientCalled)
+        sut.didSelectRecipient(
+            Recipient(
+                name: "ZUS",
+                accountNumber: "82600000020260017772273629"
+            )
+        )
+        XCTAssertTrue(view.updateRecipientCalled)
+    }
+    
+    func test_clearForm_called_should_start_clearForm_on_view() throws {
+        let sut = try XCTUnwrap(sut)
+        let view = try XCTUnwrap(view)
+        sut.view = view
+        XCTAssertFalse(view.clearFormCalled)
+        sut.clearForm()
+        TestHelper.delay {
+            XCTAssertTrue(view.clearFormCalled)
         }
     }
 }
@@ -177,7 +211,8 @@ private extension ZusTransferFormPresenterTests {
             ZusTransferFormPresenter(
                 dependenciesResolver: resolver,
                 accounts: AccountForDebitMockBuilder.getAccountForDebitMock(),
-                selectedAccountNumber: "12123412341234123412341234"
+                selectedAccountNumber: "12123412341234123412341234",
+                maskAccount: "60000002026"
             )
         }
         

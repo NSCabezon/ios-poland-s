@@ -2,11 +2,19 @@ import SANPLLibrary
 import CoreFoundationLib
 
 final class PLManagersProviderMock: PLManagersProviderProtocol {
- 
+    
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
+    }
+    
+    func getHistoryManager() -> PLHistoryManagerProtocol {
+        fatalError()
+    }
+    
+    func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
+        fatalError()
     }
     
     func getHelpCenterManager() -> PLHelpCenterManagerProtocol {

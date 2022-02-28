@@ -9,6 +9,22 @@ final class PLManagersProviderMock: PLManagersProviderProtocol {
         self.dependenciesResolver = dependenciesResolver
     }
     
+    func getDepositsManager() -> PLDepositManagerProtocol {
+        fatalError()
+    }
+    
+    func getFundsManager() -> PLFundManagerProtocol {
+        fatalError()
+    }
+    
+    func getHistoryManager() -> PLHistoryManagerProtocol {
+        fatalError()
+    }
+    
+    func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
+        fatalError()
+    }
+    
     func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
         fatalError()
     }

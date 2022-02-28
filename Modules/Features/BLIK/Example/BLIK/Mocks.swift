@@ -2,6 +2,7 @@ import UI
 import CoreFoundationLib
 import SANPLLibrary
 import PLCryptography
+import SANLegacyLibrary
 
 struct MockHostProvider: PLHostProviderProtocol {
     var environmentDefault: BSANPLEnvironmentDTO {
@@ -19,6 +20,22 @@ struct MockManager: PLManagersProviderProtocol {
 
     func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
         resolver.resolve()
+    }
+    
+    func getDepositsManager() -> PLDepositManagerProtocol {
+        fatalError()
+    }
+    
+    func getFundsManager() -> PLFundManagerProtocol {
+        fatalError()
+    }
+    
+    func getHistoryManager() -> PLHistoryManagerProtocol {
+        fatalError()
+    }
+    
+    func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
+        fatalError()
     }
     
     func getLoanScheduleManager() -> PLLoanScheduleManagerProtocol {
@@ -424,7 +441,13 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
 }
 
 struct MockAccountManeger: PLAccountManagerProtocol {
-    func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError> {
+    
+    func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
+    
+    func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<SANPLLibrary.AccountDetailDTO, NetworkProviderError> {
         fatalError()
     }
     
@@ -432,7 +455,7 @@ struct MockAccountManeger: PLAccountManagerProtocol {
         fatalError()
     }
     
-    func getWithholdingList(accountNumber: String) throws -> Result<WithholdingListDTO, NetworkProviderError> {
+    func getWithholdingList(accountNumber: String) throws -> Result<SANPLLibrary.WithholdingListDTO, NetworkProviderError> {
         fatalError()
     }
     
@@ -500,6 +523,11 @@ struct MockAccountManeger: PLAccountManagerProtocol {
 }
 
 struct MockLoginManeger: PLLoginManagerProtocol {
+   
+    func getLoginInfo() throws -> Result<LoginInfoDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
     func setDemoModeIfNeeded(for user: String) -> Bool {
         fatalError()
     }
@@ -528,7 +556,7 @@ struct MockLoginManeger: PLLoginManagerProtocol {
         fatalError()
     }
     
-    func getAuthCredentials() throws -> AuthCredentials {
+    func getAuthCredentials() throws -> SANPLLibrary.AuthCredentials {
         AuthCredentials(login: "123456789",
                         userId: 1,
                         userCif: 1,
@@ -551,6 +579,11 @@ struct MockLoginManeger: PLLoginManagerProtocol {
 }
 
 struct MockCustomerManager: PLCustomerManagerProtocol {
+    
+    func putActiveContext(ownerId: String) throws -> Result<Void, NetworkProviderError> {
+        fatalError()
+    }
+    
     func getIndividual() throws -> Result<CustomerDTO, NetworkProviderError> {
         let jsonData = """
                 {

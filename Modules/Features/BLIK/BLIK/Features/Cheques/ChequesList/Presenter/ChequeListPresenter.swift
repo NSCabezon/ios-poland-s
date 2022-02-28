@@ -76,11 +76,7 @@ final class ChequeListPresenter: ChequeListPresenterProtocol {
     
     func didPressCreateCheque() {
         guard let params = walletParams else {
-            // TODO: temporal fix to build the project. Please consider if you need to change the localization keys. showDialog parameters must be of type LocalizedStylableText
-            showDialog(
-                title: localized("generic_title_alertError"),
-                text: localized("#Nie można utworzyć nowego czeku BLIK. Spróbuj ponownie później")
-            )
+            view?.showServiceInaccessibleMessage(onConfirm: nil)
             return
         }
         if fetchedCheques.count >= params.activeChequesLimit {

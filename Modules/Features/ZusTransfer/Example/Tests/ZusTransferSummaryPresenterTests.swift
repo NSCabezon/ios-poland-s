@@ -75,7 +75,7 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         }
     }
     
-    func test_goToCharityTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
+    func test_goToZusTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
         SUT.goToZusTransfer()
         TestHelper.delay {
             XCTAssertTrue(self.coordinator?.goToMakeAnotherPaymentCalled == true)
