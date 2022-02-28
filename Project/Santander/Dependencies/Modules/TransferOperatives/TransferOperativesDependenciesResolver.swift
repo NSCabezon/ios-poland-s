@@ -20,6 +20,10 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     }
     
     func resolve() -> AccountNumberFormatterProtocol {
-        return oldResolver.resolve()
+        return PLAccountNumberFormatter()
+    }
+    
+    func resolve() -> InternalTransferAmountModifierProtocol? {
+        return PLInternalTransferAmountModifier()
     }
 }
