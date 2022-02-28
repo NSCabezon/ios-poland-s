@@ -32,7 +32,8 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
                  .editGoal,
                  .accountStatement,
                  .customerService,
-                 .fxExchange:
+                 .fxExchange,
+                 .atmPackage:
                 showWebView(identifier: identifier, entity: entity)
             case .changeAliases:
                 goToPGProductsCustomization()
@@ -80,7 +81,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     private func getAccountOtherOperativesEntity(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
         var entity: PLProductOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
+            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, httpMethod: dto.getHTTPMethod, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }
