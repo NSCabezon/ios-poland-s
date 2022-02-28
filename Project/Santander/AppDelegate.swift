@@ -41,4 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         self.notificationsHandler.didFailToRegisterForRemoteNotificationsWithError(error)
     }
+
+    public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        self.legacyAppDelegate?.application(application, performActionFor: shortcutItem, completionHandler: completionHandler)
+    }
 }

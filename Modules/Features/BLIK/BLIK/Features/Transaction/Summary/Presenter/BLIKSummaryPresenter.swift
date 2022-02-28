@@ -79,7 +79,7 @@ private extension BLIKSummaryPresenter {
                                subTitle: viewModel.dateString,
                                accessibilityIdentifier: AccessibilityBLIK.SummaryOperativeSummary.itemDate.id))
         
-        if let aliasLabel = viewModel.aliasLabelUsedInTransaction {
+        if let aliasLabel = viewModel.aliasUsedInTransaction?.label {
             bodyItems.append(
                 .init(
                     title: localized("pl_blik_text_withoutCode"),

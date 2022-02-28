@@ -39,7 +39,7 @@ extension CancelBLIKTransactionUseCase: CancelBLIKTransactionProtocol {}
 struct CancelBLIKTransactionUseCaseInput {
     let trnId: Int
     let trnDate: String
-    let cancelType: CancelType
+    let cancelType: TransactionCancelationData.CancelType
     
     var confirmFlag: CancelBLIKTransactionRequestDTO.ConfirmFlag {
         switch cancelType {
