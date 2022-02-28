@@ -5,7 +5,6 @@
 //  Created by Cristobal Ramos Laina on 17/2/22.
 //
 
-import Foundation
 import TransferOperatives
 import SANPLLibrary
 import CoreFoundationLib
