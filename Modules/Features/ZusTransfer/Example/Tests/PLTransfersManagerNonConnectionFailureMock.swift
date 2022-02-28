@@ -20,7 +20,7 @@ final class PLTransfersManagerNonConnectionFailureMock: PLTransfersManagerProtoc
     }
     
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
-        fatalError()
+        .failure(.noConnection)
     }
     
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError> {

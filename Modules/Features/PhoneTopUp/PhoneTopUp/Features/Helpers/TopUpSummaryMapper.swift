@@ -76,7 +76,7 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
     
     private func amountValueString(withAmountSize size: CGFloat, model: TopUpModel) -> NSAttributedString {
         return PLAmountFormatter.amountString(
-            amount: model.amount,
+            amount: Decimal(model.amount),
             currency: .złoty,
             withAmountSize: size
         )

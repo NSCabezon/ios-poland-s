@@ -28,6 +28,10 @@ struct ModuleDependencies {
     func resolve() -> TimeManager {
         return oldResolver.resolve()
     }
+    
+    func resolve() -> DependenciesInjector {
+        return oldResolver
+    }
 
     func resolve() -> DependenciesResolver {
         return oldResolver

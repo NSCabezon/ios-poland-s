@@ -15,6 +15,7 @@ public protocol PLBLIKManagerProtocol {
     func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
+    func setTransactionDataVisibility(_ parameters: SetNoPinTrnVisibleParameters) throws -> Result<Void, NetworkProviderError>
     func unregisterPhoneNumber() throws -> Result<Void, NetworkProviderError>
     func registerPhoneNumber(_ request: RegisterPhoneNumberRequestDTO) throws -> Result<Void, NetworkProviderError>
     func setTransactionLimits(_ request: TransactionLimitRequestDTO) throws -> Result<Void, NetworkProviderError>
@@ -102,6 +103,10 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
 
     public func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
         try dataSource.setPSPAliasLabel(parameters)
+    }
+    
+    public func setTransactionDataVisibility(_ parameters: SetNoPinTrnVisibleParameters) throws -> Result<Void, NetworkProviderError> {
+        try dataSource.setTransactionDataVisibility(parameters)
     }
     
     public func unregisterPhoneNumber() throws -> Result<Void, NetworkProviderError> {

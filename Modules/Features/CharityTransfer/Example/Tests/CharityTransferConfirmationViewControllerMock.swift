@@ -1,7 +1,7 @@
 import UI
 @testable import CharityTransfer
 
-final class CharityTransferConfirmationViewControllerMock: CharityTransferConfirmationViewControllerProtocol {
+final class CharityTransferConfirmationViewControllerMock: UIViewController, CharityTransferConfirmationViewControllerProtocol {
     
     var viewModel: CharityTransferConfirmationViewModel?
     var showDialogCalled = false
