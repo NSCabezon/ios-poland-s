@@ -22,7 +22,7 @@ struct PLPrivateMenuOptionsUseCase: GetPrivateMenuOptionsUseCase {
         return availableOptionsPublisher()
     }
 }
- 
+
 extension PLPrivateMenuOptionsUseCase {
     private static var options: [PrivateMenuOptions] {
         let defaultOptions: [PrivateMenuOptions] =
@@ -48,11 +48,11 @@ private extension PLPrivateMenuOptionsUseCase {
             .map(buildOptions)
             .eraseToAnyPublisher()
     }
-
+    
     func enabledOptionsPublisher() -> AnyPublisher<[PrivateMenuOptions], Never> {
         return enabledOptionsUseCase
             .fetchOptionsEnabledVisible()
-            .map {$0}
+            .map(\.data)
             .eraseToAnyPublisher()
     }
     
@@ -61,16 +61,14 @@ private extension PLPrivateMenuOptionsUseCase {
             menuOptionPublisher(),
             enabledOptionsPublisher()
         )
-        .map(buildEnabledOptions)
-        .eraseToAnyPublisher()
+            .map(buildEnabledOptions)
+            .eraseToAnyPublisher()
     }
     
     func buildEnabledOptions(_ optionsRepresentable: [PrivateMenuOptionRepresentable],
-                             _ enabled: [PrivateMenuOptions]) -> [PrivateMenuOptionRepresentable] {
-        var availableOption = [PrivateMenuOptionRepresentable]()
-        _ = optionsRepresentable.reduce(into: availableOption) { _, candidateOption in
-            availableOption.append(candidateOption, conditionedBy: enabled.contains(candidateOption.type))
-        }
+                             _ notEnabled: [PrivateMenuOptions]) -> [PrivateMenuOptionRepresentable] {
+        var availableOption = optionsRepresentable
+        availableOption.removeIfFound { notEnabled.contains($0.type) }
         return availableOption
     }
     
@@ -82,18 +80,20 @@ private extension PLPrivateMenuOptionsUseCase {
     }
     
     func buildOptions(featuredOptions: [PrivateMenuOptions: String]) -> [PrivateMenuOptionRepresentable] {
-         PLPrivateMenuOptionsUseCase.options.map { item in
+        PLPrivateMenuOptionsUseCase.options.map { item in
             let optionEvaluator = evaluateFeaturedOptions(featuredOptions, with: item)
-            return PrivateMenuMainOption(imageKey: item.iconKey,
-                                           titleKey: item.titleKey,
-                                           extraMessageKey: optionEvaluator.isFeatured ? optionEvaluator.message : "",
-                                           newMessageKey: optionEvaluator.isFeatured ? "menu_label_newProminent" : "",
-                                           imageURL: nil,
-                                           showArrow: item.submenuArrow,
-                                           isHighlighted: item == .globalPosition ? true : false,
-                                           type: item,
-                                           isFeatured: optionEvaluator.isFeatured,
-                                           accesibilityIdentifier: item.accessibilityIdentifier)
+            return PrivateMenuMainOption(
+                imageKey: item.iconKey,
+                titleKey: item.titleKey,
+                extraMessageKey: optionEvaluator.isFeatured ? optionEvaluator.message : "",
+                newMessageKey: optionEvaluator.isFeatured ? "menu_label_newProminent" : "",
+                imageURL: nil,
+                showArrow: item.submenuArrow,
+                isHighlighted: item == .globalPosition ? true : false,
+                type: item,
+                isFeatured: optionEvaluator.isFeatured,
+                accesibilityIdentifier: item.accessibilityIdentifier
+            )
         }
     }
     
@@ -152,5 +152,4 @@ private extension PLPrivateMenuOptionsUseCase {
             return lhs.imageKey == rhs.imageKey
         }
     }
-
 }
