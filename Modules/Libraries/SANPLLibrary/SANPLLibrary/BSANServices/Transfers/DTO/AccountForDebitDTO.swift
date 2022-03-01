@@ -11,6 +11,7 @@ public protocol PolandAccountRepresentable: AccountRepresentable {
     var type: AccountForPolandTypeDTO? { get }
     var sequencerNo: Int? { get }
     var accountType: Int? { get }
+    var currencyCode: String? { get }
 }
 
 struct AccountForDebitDTO: Codable {

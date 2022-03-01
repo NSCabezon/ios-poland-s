@@ -77,7 +77,7 @@ extension BLIKConfirmationViewController: BLIKConfirmationViewProtocol {
                                     subTitle: viewModel.dateString,
                                     accessibilityIdentifier: AccessibilityBLIK.ConfirmationOperativeSummary.itemDate.id))
         
-        if let aliasLabel = viewModel.aliasLabelUsedInTransaction {
+        if let aliasLabel = viewModel.aliasUsedInTransaction?.label {
             viewModelItems.append(
                 .init(title: localized("pl_blik_text_withoutCode"),
                       subTitle: aliasLabel,

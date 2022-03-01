@@ -16,12 +16,12 @@ protocol TaxTransferFormContainerViewDelegate: AnyObject {
 
 final class TaxTransferFormContainerView: UIView {
     private let stackView = UIStackView()
-    private let accountSelector = TaxTransferAccountSelectorView()
-    private let taxPayerSelector = TaxTransferPayerSelectorView()
-    private let taxAuthoritySelector = TaxTransferAuthoritySelectorView()
-    private let amountField: TaxTransferAmountFieldView
-    private let obligationIdentifierField = TaxTransferObligationIdentifierFieldView()
-    private let dateSelector: TaxTransferDateSelectorView
+    private let accountSection = TaxTransferAccountSectionView()
+    private let taxPayerSection = TaxTransferPayerSectionView()
+    private let taxAuthoritySection = TaxTransferAuthoritySectionView()
+    private let amountSection: TaxTransferAmountSectionView
+    private let obligationIdentifierSection = TaxTransferObligationIdentifierSectionView()
+    private let dateSection: TaxTransferDateSectionView
     
     private weak var delegate: TaxTransferFormContainerViewDelegate?
     
@@ -29,10 +29,10 @@ final class TaxTransferFormContainerView: UIView {
         configuration: TaxFormConfiguration,
         delegate: TaxTransferFormContainerViewDelegate
     ) {
-        self.amountField = TaxTransferAmountFieldView(
+        self.amountSection = TaxTransferAmountSectionView(
             configuration: configuration.amountField
         )
-        self.dateSelector = TaxTransferDateSelectorView(
+        self.dateSection = TaxTransferDateSectionView(
             configuration: configuration.dateSelector
         )
         self.delegate = delegate
@@ -47,49 +47,49 @@ final class TaxTransferFormContainerView: UIView {
     
     func getFormFields() -> TaxTransferFormFields {
         return TaxTransferFormFields(
-            amount: amountField.getAmount(),
-            obligationIdentifier: obligationIdentifierField.getIdentifier(),
-            date: dateSelector.getSelectedDate()
+            amount: amountSection.getAmount(),
+            obligationIdentifier: obligationIdentifierSection.getIdentifier(),
+            date: dateSection.getSelectedDate()
         )
     }
     
     func setInvalidFormMessages(_ messages: TaxTransferFormValidity.InvalidFormMessages) {
-        amountField.setInvalidFieldMessage(messages.amountMessage)
-        obligationIdentifierField.setInvalidFieldMessage(messages.obligationIdentifierMessage)
+        amountSection.setInvalidFieldMessage(messages.amountMessage)
+        obligationIdentifierSection.setInvalidFieldMessage(messages.obligationIdentifierMessage)
     }
     
     func clearInvalidFormMessages() {
-        amountField.setInvalidFieldMessage(nil)
-        obligationIdentifierField.setInvalidFieldMessage(nil)
+        amountSection.setInvalidFieldMessage(nil)
+        obligationIdentifierSection.setInvalidFieldMessage(nil)
     }
     
     func configureAccountSelector(
         with viewModel: Selectable<TaxTransferFormViewModel.AccountViewModel>,
         onTap: @escaping () -> Void
     ) {
-        accountSelector.configure(with: viewModel, onTap: onTap)
+        accountSection.configure(with: viewModel, onTap: onTap)
     }
     
     func configureTaxPayerSelector(
         with viewModel: Selectable<TaxTransferFormViewModel.TaxPayerViewModel>,
         onTap: @escaping () -> Void
     ) {
-        taxPayerSelector.configure(with: viewModel, onTap: onTap)
+        taxPayerSection.configure(with: viewModel, onTap: onTap)
     }
     
     func configureTaxAuthoritySelector(
         with viewModel: Selectable<TaxTransferFormViewModel.TaxAuthorityViewModel>,
         onTap: @escaping () -> Void
     ) {
-        taxAuthoritySelector.configure(with: viewModel, onTap: onTap)
+        taxAuthoritySection.configure(with: viewModel, onTap: onTap)
     }
     
     func configureAmountField(with viewModel: TaxTransferFormViewModel.AmountViewModel) {
-        amountField.configure(with: viewModel)
+        amountSection.configure(with: viewModel)
     }
     
     func configureObligationIdentifierField(with viewModel: TaxTransferFormViewModel) {
-        obligationIdentifierField.configure(with: viewModel)
+        obligationIdentifierSection.configure(with: viewModel)
     }
 }
 
@@ -112,12 +112,12 @@ private extension TaxTransferFormContainerView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         [
-            accountSelector,
-            taxPayerSelector,
-            taxAuthoritySelector,
-            amountField,
-            obligationIdentifierField,
-            dateSelector
+            accountSection,
+            taxPayerSection,
+            taxAuthoritySection,
+            amountSection,
+            obligationIdentifierSection,
+            dateSection
         ].forEach {
             stackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -132,9 +132,9 @@ private extension TaxTransferFormContainerView {
     }
     
     func configureDelegates() {
-        amountField.textFieldDelegate = self
-        obligationIdentifierField.textFieldDelegate = self
-        dateSelector.delegate = self
+        amountSection.textFieldDelegate = self
+        obligationIdentifierSection.textFieldDelegate = self
+        dateSection.delegate = self
     }
 }
 

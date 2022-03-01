@@ -1,5 +1,5 @@
 //
-//  TaxTransferElementSelectorView.swift
+//  TaxTransferSelectorView.swift
 //  TaxTransfer
 //
 //  Created by 185167 on 28/12/2021.
@@ -7,9 +7,10 @@
 
 import PLUI
 
-final class TaxTransferElementSelectorView: UIView {
+final class TaxTransferSelectorView: UIView {
+    typealias SelectableItemName = String
     private let tappableCard = TappableControl()
-    private let selectLabel = UILabel()
+    private let label = UILabel()
     private let selectImage = UIImageView()
     
     override init(frame: CGRect) {
@@ -22,12 +23,18 @@ final class TaxTransferElementSelectorView: UIView {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     
-    func configure(onTap: @escaping () -> Void) {
+    func configure(selectionState: Selectable<SelectableItemName>, onTap: @escaping () -> Void) {
+        switch selectionState {
+        case let .selected(elementName):
+            label.text = elementName
+        case .unselected:
+            label.text = "#Wybierz"
+        }
         tappableCard.onTap = onTap
     }
 }
 
-private extension TaxTransferElementSelectorView {
+private extension TaxTransferSelectorView {
     func setUp() {
         configureSubviews()
         configureStyling()
@@ -37,7 +44,7 @@ private extension TaxTransferElementSelectorView {
         addSubview(tappableCard)
         tappableCard.translatesAutoresizingMaskIntoConstraints = false
         
-        [selectLabel, selectImage].forEach {
+        [label, selectImage].forEach {
             tappableCard.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -48,9 +55,9 @@ private extension TaxTransferElementSelectorView {
             tappableCard.leadingAnchor.constraint(equalTo: leadingAnchor),
             tappableCard.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            selectLabel.centerYAnchor.constraint(equalTo: selectImage.centerYAnchor),
-            selectLabel.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 16),
-            selectLabel.trailingAnchor.constraint(equalTo: selectImage.leadingAnchor, constant: -16),
+            label.centerYAnchor.constraint(equalTo: selectImage.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: selectImage.leadingAnchor, constant: -16),
             
             selectImage.topAnchor.constraint(equalTo: tappableCard.topAnchor, constant: 20),
             selectImage.centerYAnchor.constraint(equalTo: tappableCard.centerYAnchor),
@@ -72,11 +79,9 @@ private extension TaxTransferElementSelectorView {
         )
         
         selectImage.image = Images.Common.chevron
-        
-        selectLabel.text = "#Wybierz"
-        selectLabel.numberOfLines = 1
-        selectLabel.textColor = .lisboaGray
-        selectLabel.font = .santander(
+        label.numberOfLines = 1
+        label.textColor = .lisboaGray
+        label.font = .santander(
             family: .micro,
             type: .bold,
             size: 14

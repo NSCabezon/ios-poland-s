@@ -10,7 +10,7 @@ import UI
 import PLUI
 import PLCommons
 
-protocol ChequeDetailsViewProtocol: AnyObject, SnackbarPresentable, LoaderPresentable {
+protocol ChequeDetailsViewProtocol: AnyObject, SnackbarPresentable, LoaderPresentable, ErrorPresentable {
     func displayErrorMessage(_ message: String)
     func showSuccessNotification(_ message: String)
 }

@@ -5,7 +5,6 @@
 //  Created by Cristobal Ramos Laina on 17/2/22.
 //
 
-import Foundation
 import TransferOperatives
 import SANPLLibrary
 import CoreFoundationLib
@@ -25,5 +24,9 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     
     func resolve() -> InternalTransferAmountModifierProtocol? {
         return PLInternalTransferAmountModifier()
+    }
+
+    func resolve() -> GetInternalTransferDestinationAccountsUseCase {
+        return PLGetInternalTransferDestAccountsUseCase()
     }
 }

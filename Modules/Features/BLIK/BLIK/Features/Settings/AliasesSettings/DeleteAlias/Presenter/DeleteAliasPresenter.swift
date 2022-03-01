@@ -68,6 +68,6 @@ final class DeleteAliasPresenter: DeleteAliasPresenterProtocol {
                 alertType: .info,
                 position: .top
             )
-        coordinator.goBackToAliasListAndRefreshIt()
+        coordinator.goBackAfterAliasDeletion()
     }
 }
