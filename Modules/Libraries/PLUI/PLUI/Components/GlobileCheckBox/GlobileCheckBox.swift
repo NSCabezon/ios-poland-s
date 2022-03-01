@@ -46,7 +46,7 @@ public class GlobileCheckBox: UIControl {
     /// The current text that is displayed by the button.
     public var text: String?
 
-    public var checkboxSize = 30.0 {
+    public var checkboxSize: CGFloat = 30.0 {
         didSet {
             self.checkBoxHeightConstraint?.constant = checkboxSize
             self.checkBoxWidthConstraint?.constant = checkboxSize
