@@ -10,27 +10,31 @@ import Operative
 import TransferOperatives
 
 final class SendMoneyTransferTypeStep: OperativeStep {
-    let dependencies: DependenciesResolver & DependenciesInjector
+    private let legacyDependenciesInjector: DependenciesInjector
+    private let legacyDependenciesResolver: DependenciesResolver
+    
     var presentationType: OperativeStepPresentationType {
         return .inNavigation(showsBack: true, showsCancel: true)
     }
     var view: OperativeView? {
-        self.dependencies.resolve(for: SendMoneyTransferTypeView.self)
+        self.legacyDependenciesResolver.resolve(for: SendMoneyTransferTypeView.self)
     }
     
     var floatingButtonTitleKey = "sendMoney_button_sendType"
     
-    init(dependencies: DependenciesResolver & DependenciesInjector) {
-        self.dependencies = dependencies
-        setup(dependencies: dependencies)
+    init(legacyDependenciesResolver: DependenciesResolver) {
+        let legacyDependencies = DependenciesDefault(father: legacyDependenciesResolver)
+        self.legacyDependenciesInjector = legacyDependencies
+        self.legacyDependenciesResolver = legacyDependencies
+        setup(dependencies: legacyDependencies)
     }
     
-    private func setup(dependencies: DependenciesResolver & DependenciesInjector) {
-        self.dependencies.register(for: SendMoneyTransferTypePresenterProtocol.self) { dependenciesResolver in
-            return SendMoneyTransferTypePresenter(dependenciesResolver: dependenciesResolver)
+    private func setup(dependencies: DependenciesInjector) {
+        self.legacyDependenciesInjector.register(for: SendMoneyTransferTypePresenterProtocol.self) { resolver in
+            return SendMoneyTransferTypePresenter(dependenciesResolver: resolver)
         }
-        self.dependencies.register(for: SendMoneyTransferTypeView.self) { dependenciesResolver in
-            let presenter = dependenciesResolver.resolve(for: SendMoneyTransferTypePresenterProtocol.self)
+        self.legacyDependenciesInjector.register(for: SendMoneyTransferTypeView.self) { resolver in
+            let presenter = resolver.resolve(for: SendMoneyTransferTypePresenterProtocol.self)
             let viewController = SendMoneyTransferTypeViewController(presenter: presenter)
             presenter.view = viewController
             return viewController

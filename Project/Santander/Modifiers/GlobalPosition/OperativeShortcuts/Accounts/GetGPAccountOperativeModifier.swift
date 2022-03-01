@@ -5,45 +5,50 @@
 
 import CoreFoundationLib
 import SANPLLibrary
+import RetailLegacy
 
 public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionProtocol {
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let dependencies: ModuleDependencies
+    private let legacyDependenciesResolver: DependenciesResolver
     private let managersProvider: PLManagersProviderProtocol
-
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.dependenciesEngine = dependenciesEngine
-        self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
+    
+    init(dependencies: ModuleDependencies) {
+        self.dependencies = dependencies
+        self.legacyDependenciesResolver = dependencies.resolve()
+        self.managersProvider = dependencies.resolve()
     }
-
+    
     public func getAllAccountOperativeActionType() -> [AccountOperativeActionTypeProtocol] {
-        return [PLSendMoneyOperative(dependenciesResolver: self.dependenciesEngine),
-                PLDomesticTransferOperative(),
-                self.getSwitchBetweenAccount(),
-                PLSendMoneyFavouriteOperative(),
-                PLBlikOperative(),
-                PLMakeDonationOperative(dependenciesResolver: self.dependenciesEngine),
-                PLPayTaxOperative(dependenciesResolver: self.dependenciesEngine),
-                PLCurrencyExchangeOperative(),
-                AccountOperativeActionType.changeAlias,
-                PLAccountNotificationsOperative(),
-                PLTransportTicketsServicesOperative(),
-                PLTransferZusOperative(dependenciesResolver: dependenciesEngine)
+        return [
+            PLSendMoneyHomeOperativeShortcut(dependencies: dependencies),
+            PLDomesticTransferOperative(),
+            self.getSwitchBetweenAccount(),
+            PLSendMoneyFavouriteOperative(),
+            PLBlikOperative(),
+            PLMakeDonationOperative(dependenciesResolver: legacyDependenciesResolver),
+            PLPayTaxOperative(dependenciesResolver: legacyDependenciesResolver),
+            PLCurrencyExchangeOperative(),
+            AccountOperativeActionType.changeAlias,
+            PLAccountNotificationsOperative(),
+            PLTransportTicketsServicesOperative(),
+            PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver)
         ].compactMap { $0 }
     }
     
     public func getCountryAccountOperativeActionType(accounts: [AccountEntity]) -> [AccountOperativeActionTypeProtocol] {
-        return [PLSendMoneyOperative(dependenciesResolver: self.dependenciesEngine),
-                PLDomesticTransferOperative(),
-                self.getSwitchBetweenAccount(),
-                PLSendMoneyFavouriteOperative(),
-                PLBlikOperative(),
-                PLMakeDonationOperative(dependenciesResolver: self.dependenciesEngine),
-                PLPayTaxOperative(dependenciesResolver: self.dependenciesEngine),
-                PLCurrencyExchangeOperative(),
-                AccountOperativeActionType.changeAlias,
-                PLAccountNotificationsOperative(),
-                PLTransportTicketsServicesOperative(),
-                PLTransferZusOperative(dependenciesResolver: dependenciesEngine)
+        return [
+            PLSendMoneyHomeOperativeShortcut(dependencies: dependencies),
+            PLDomesticTransferOperative(),
+            self.getSwitchBetweenAccount(),
+            PLSendMoneyFavouriteOperative(),
+            PLBlikOperative(),
+            PLMakeDonationOperative(dependenciesResolver: legacyDependenciesResolver),
+            PLPayTaxOperative(dependenciesResolver: legacyDependenciesResolver),
+            PLCurrencyExchangeOperative(),
+            AccountOperativeActionType.changeAlias,
+            PLAccountNotificationsOperative(),
+            PLTransportTicketsServicesOperative(),
+            PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver)
         ].compactMap { $0 }
     }
 }

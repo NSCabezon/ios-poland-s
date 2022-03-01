@@ -5,23 +5,20 @@
 //  Created by Rodrigo Jurado on 2/7/21.
 //
 
-import UI
-import Cards
 import CoreFoundationLib
 import SANPLLibrary
+import Cards
+import UI
 
 final class PLCardHomeModifier {
     private let managersProvider: PLManagersProviderProtocol
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
     
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
-        self.dependenciesEngine = dependenciesEngine
+    init(dependencies: ModuleDependencies) {
+        self.managersProvider = dependencies.resolve()
     }
 }
 
 extension PLCardHomeModifier: CardHomeModifierProtocol {
-
     func isPANAlwaysSharable() -> Bool {
         return false
     }

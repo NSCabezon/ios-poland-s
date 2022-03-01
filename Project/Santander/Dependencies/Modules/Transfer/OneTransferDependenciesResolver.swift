@@ -19,10 +19,6 @@ extension ModuleDependencies: OneTransferHomeExternalDependenciesResolver {
         oldResolver.resolve()
     }
     
-    func resolve() -> DependenciesInjector {
-        oldResolver.resolve()
-    }
-    
     func resolve() -> GetSendMoneyActionsUseCase {
         return PLGetSendMoneyActionsUseCase(candidateOfferUseCase: resolve())
     }

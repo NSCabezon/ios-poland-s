@@ -11,12 +11,12 @@ import RetailLegacy
 import UI
 
 final class PLPrivateMenuModifier: PrivateMenuProtocol {
-    private var dependenciesResolver: DependenciesResolver
-    private var coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
+    private var legacyDependenciesResolver: DependenciesResolver
+    private var dependencies: ModuleDependencies
     
-    public init(resolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
-        self.dependenciesResolver = resolver
-        self.coreDependenciesResolver = coreDependenciesResolver
+    public init(dependencies: ModuleDependencies) {
+        self.legacyDependenciesResolver = dependencies.resolve()
+        self.dependencies = dependencies
     }
     
     func goToPaymentsLandingPage() {
@@ -32,11 +32,11 @@ final class PLPrivateMenuModifier: PrivateMenuProtocol {
     }
     
     func goToHelpCenterPage() {
-        dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
+        legacyDependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
     }
     
     func goToOneTransferHome() {
-        coreDependenciesResolver.oneTransferHomeCoordinator().start()
+        dependencies.oneTransferHomeCoordinator().start()
     }
 }
 
