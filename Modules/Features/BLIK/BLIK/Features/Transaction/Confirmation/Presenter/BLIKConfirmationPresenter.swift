@@ -96,7 +96,7 @@ private extension BLIKConfirmationPresenter {
         timer.startTimer(duration: remainingDuration)
     }
     
-    func cancelTransaction(type: CancelType) {
+    func cancelTransaction(type: TransactionCancelationData.CancelType) {
         guard let viewModel = viewModel else { return }
         timer.stopTimer()
         view?.showLoader()
@@ -108,7 +108,9 @@ private extension BLIKConfirmationPresenter {
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 self?.view?.hideLoader() {
-                    self?.coordinator.cancelTransfer(type: type)
+                    guard let strongSelf = self else { return }
+                    let cancelationData = strongSelf.getTransactionCancelationData(with: type)
+                    self?.coordinator.cancelTransfer(withData: cancelationData)
                 }
             }
             .onError {[weak self] _ in
@@ -166,5 +168,19 @@ private extension BLIKConfirmationPresenter {
         view?.showErrorMessage(localized(key), image: image) {[weak self] in
             self?.coordinator.goToGlobalPosition()
         }
+    }
+    
+    func getTransactionCancelationData(with type: TransactionCancelationData.CancelType) -> TransactionCancelationData {
+        guard let alias = viewModel?.aliasUsedInTransaction else {
+            return TransactionCancelationData(
+                cancelType: type,
+                aliasContext: .transactionPerformedWithoutAlias
+            )
+        }
+        
+        return TransactionCancelationData(
+            cancelType: type,
+            aliasContext: .transactionPerformedWithAlias(alias)
+        )
     }
 }

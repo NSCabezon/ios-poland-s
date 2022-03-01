@@ -97,5 +97,11 @@ private extension ZusTransferConfirmationPresenterTests {
         dependencies.register(for: PLTransfersManagerProtocol.self) { resolver in
             PLTransfersManagerSuccessMock(dependenciesResolver: resolver)
         }
+        dependencies.register(for: ZusPrepareChallengeUseCaseProtocol.self) { resolver in
+            ZusPrepareChallengeUseCase(dependenciesResolver: resolver)
+        }
+        dependencies.register(for: PLTransfersRepository.self) { resolver in
+            PLTransfersRepositoryMock()
+        }
     }
 }

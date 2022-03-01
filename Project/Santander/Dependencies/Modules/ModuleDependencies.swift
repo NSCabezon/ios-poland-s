@@ -15,7 +15,6 @@ import Menu
 import Transfer
 
 struct ModuleDependencies {
-    
     let oldResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()

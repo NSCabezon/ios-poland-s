@@ -1,5 +1,5 @@
 //
-//  TaxTransferObligationIdentifierFieldView.swift
+//  TaxTransferObligationIdentifierSectionView.swift
 //  TaxTransfer
 //
 //  Created by 185167 on 29/12/2021.
@@ -9,7 +9,7 @@ import CoreFoundationLib
 import UI
 import PLUI
 
-final class TaxTransferObligationIdentifierFieldView: UIView {
+final class TaxTransferObligationIdentifierSectionView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let containerView = UIView()
     private let obligationIdentifier = LisboaTextFieldWithErrorView()
@@ -47,7 +47,7 @@ final class TaxTransferObligationIdentifierFieldView: UIView {
     }
 }
 
-private extension TaxTransferObligationIdentifierFieldView {
+private extension TaxTransferObligationIdentifierSectionView {
     func setUp() {
         configureSubviews()
         configureStyling()

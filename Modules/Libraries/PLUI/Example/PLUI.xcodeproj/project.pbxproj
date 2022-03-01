@@ -21,6 +21,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		94CA54C815FF778FC78A3975 /* Pods_PLUI_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95829A1DB89B88204B0277BC /* Pods_PLUI_Example.framework */; };
 		B0327EAF27621678006BF39A /* ViewController+DatePickerSelectorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0327EAE27621678006BF39A /* ViewController+DatePickerSelectorDelegate.swift */; };
+		D4117D0C27C51C9700AE7272 /* ViewController+WarningBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4117D0B27C51C9700AE7272 /* ViewController+WarningBubbleView.swift */; };
 		D42B70E42784905C009DF3D4 /* ViewController+FormSectionContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B70E32784905C009DF3D4 /* ViewController+FormSectionContainer.swift */; };
 		D42B70E62784909E009DF3D4 /* ViewController+TappableControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B70E52784909E009DF3D4 /* ViewController+TappableControl.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		AD789912FA0381FA0CCFCEA8 /* PLUI.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PLUI.podspec; path = ../PLUI.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B0327EAE27621678006BF39A /* ViewController+DatePickerSelectorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+DatePickerSelectorDelegate.swift"; sourceTree = "<group>"; };
 		B1166444F91AC8898E769931 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D4117D0B27C51C9700AE7272 /* ViewController+WarningBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+WarningBubbleView.swift"; sourceTree = "<group>"; };
 		D42B70E32784905C009DF3D4 /* ViewController+FormSectionContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+FormSectionContainer.swift"; sourceTree = "<group>"; };
 		D42B70E52784909E009DF3D4 /* ViewController+TappableControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TappableControl.swift"; sourceTree = "<group>"; };
 		D942DB3BCB22C05296D82E3F /* Pods-PLUI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLUI_Tests.debug.xcconfig"; path = "Target Support Files/Pods-PLUI_Tests/Pods-PLUI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				D4117D0B27C51C9700AE7272 /* ViewController+WarningBubbleView.swift */,
 			);
 			name = "Example for PLUI";
 			path = PLUI;
@@ -411,6 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4117D0C27C51C9700AE7272 /* ViewController+WarningBubbleView.swift in Sources */,
 				42DCA4AE2695F45600D11400 /* ViewController+InteractiveInfoView.swift in Sources */,
 				B0327EAF27621678006BF39A /* ViewController+DatePickerSelectorDelegate.swift in Sources */,
 				D42B70E42784905C009DF3D4 /* ViewController+FormSectionContainer.swift in Sources */,

@@ -18,13 +18,6 @@ final class ChequeModelMapper {
     enum Error: LocalizedError {
         case wrongDateFormat
         case unexpectedStatus
-
-        var errorDescription: String? {
-            switch self {
-            case .wrongDateFormat, .unexpectedStatus:
-                return "#Bląd przetwarzania danych"
-            }
-        }
     }
     
     private var dateFormatter: DateFormatter

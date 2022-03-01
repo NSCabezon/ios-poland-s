@@ -1,5 +1,5 @@
 //
-//  TaxTransferAmountFieldView.swift
+//  TaxTransferAmountSectionView.swift
 //  TaxTransfer
 //
 //  Created by 185167 on 29/12/2021.
@@ -9,7 +9,7 @@ import CoreFoundationLib
 import UI
 import PLUI
 
-final class TaxTransferAmountFieldView: UIView {
+final class TaxTransferAmountSectionView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let amount = LisboaTextFieldWithErrorView()
     private let currency = CurrencyLabel()
@@ -49,7 +49,7 @@ final class TaxTransferAmountFieldView: UIView {
     }
 }
 
-private extension TaxTransferAmountFieldView {
+private extension TaxTransferAmountSectionView {
     func setUp() {
         configureSubviews()
         configureAmountField()
@@ -94,7 +94,7 @@ private extension TaxTransferAmountFieldView {
     }
 }
 
-extension TaxTransferAmountFieldView: FloatingTitleLisboaTextFieldDelegate {
+extension TaxTransferAmountSectionView: FloatingTitleLisboaTextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // empty implementation, required by protocol
     }
