@@ -20,7 +20,7 @@ final class PLTransfersManagerSuccessMock: PLTransfersManagerProtocol {
     }
     
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
-        fatalError()
+        return .success(RecipientsMockBuilder.getPayeeListDtoMock() ?? [])
     }
     
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError> {

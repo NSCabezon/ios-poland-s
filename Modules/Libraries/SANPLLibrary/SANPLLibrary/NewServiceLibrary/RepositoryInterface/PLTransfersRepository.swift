@@ -5,8 +5,8 @@
 //  Created by Jose Javier Montes Romero on 6/10/21.
 //
 
-import CoreDomain
 import OpenCombine
+import CoreDomain
 
 public protocol PLTransfersRepository: TransfersRepository {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error>
