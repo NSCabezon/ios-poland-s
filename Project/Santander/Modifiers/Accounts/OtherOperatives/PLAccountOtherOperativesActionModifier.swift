@@ -33,14 +33,14 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
                  .accountStatement,
                  .customerService,
                  .fxExchange,
-                 .multicurrency,
-                 .atmPackage:
+                 .atmPackage,
+                 .openDeposit,
+                 .multicurrency:
                 showWebView(identifier: identifier, entity: entity)
             case .changeAliases:
                 goToPGProductsCustomization()
             case .generateQRCode,
                  .history,
-                 .openDeposit,
                  .memberGetMember:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             default:
@@ -60,7 +60,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
         guard let list = repository.get()?.accountsOptions,
               var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
         
-        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue {
+        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue || identifier == PLAccountOperativeIdentifier.openDeposit.rawValue {
             data.parameter = entity.productIdentifier
             if let contractNumber = entity.dto.contractNumber, let url = data.link?.replace(StringPlaceholder.Placeholder.number.rawValue, contractNumber) {
                 data.link = url
