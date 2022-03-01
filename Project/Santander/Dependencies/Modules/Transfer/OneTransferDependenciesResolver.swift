@@ -8,7 +8,6 @@
 import CoreFoundationLib
 import CoreDomain
 import Transfer
-import TransferOperatives
 import UI
 
 extension ModuleDependencies: TransferExternalDependenciesResolver {
@@ -17,10 +16,6 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     }
     
     func resolve() -> TransfersRepository {
-        return oldResolver.resolve()
-    }
-    
-    func resolve() -> DependenciesInjector {
         return oldResolver.resolve()
     }
     
