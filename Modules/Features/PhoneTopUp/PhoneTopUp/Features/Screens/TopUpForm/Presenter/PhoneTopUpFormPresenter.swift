@@ -221,7 +221,7 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {
                     if output.reloadPossible {
-                        #warning("todo: implement in another PR")
+                        self?.showConfirmation()
                     } else {
                         self?.view?.showErrorMessage(title: localized("pl_topup_title_alert_error"),
                                                      message: localized("pl_topup_text_alert_error"),
@@ -365,5 +365,23 @@ private extension PhoneTopUpFormPresenter {
         }
         
         return CheckPhoneUseCaseInput(operatorId: operatorId, topUpNumber: phoneNumber.number, reloadAmount: reloadAmount)
+    }
+    
+    func collectFormData() -> TopUpModel? {
+        guard let account = selectedAccount,
+              case .full(let recipientNumber) = phoneNumber,
+              let amount = selectedTopUpAmount?.amount,
+              let operatorId = selectedOperator?.id else {
+            return nil
+        }
+        
+        return TopUpModel(amount: amount, account: account, recipientNumber: recipientNumber, recipientName: recipientName, operatorId: operatorId, date: Date())
+    }
+    
+    func showConfirmation() {
+        guard let formData = collectFormData() else {
+            return
+        }
+        coordinator?.showTopUpConfirmation(with: formData)
     }
 }

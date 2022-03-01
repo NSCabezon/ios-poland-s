@@ -90,7 +90,7 @@ final class ChequeFormPresenter: ChequeFormPresenterProtocol {
             .onError { [weak self] error in
                 guard let strongSelf = self else { return }
                 strongSelf.view?.hideLoader(completion: {
-                    strongSelf.view?.showErrorMessage("#Nie udało się utworzyć czeku. Spróbuj ponownie później.", onConfirm: nil)
+                    strongSelf.view?.showServiceInaccessibleMessage(onConfirm: nil)
                 })
             }
     }

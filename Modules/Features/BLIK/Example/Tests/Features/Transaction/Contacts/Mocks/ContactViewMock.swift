@@ -1,7 +1,7 @@
 @testable import BLIK
 import UI
 
-class ContactsViewMock: ContactsViewProtocol {
+final class ContactsViewMock: UIViewController, ContactsViewProtocol {
 
     var onSetupWithViewModel: (([ContactViewModel]) -> Void)?
     var showEmptyView = false

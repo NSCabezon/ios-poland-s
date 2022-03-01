@@ -4,26 +4,26 @@ import PLUI
 import CoreFoundationLib
 
 protocol OtherBlikSettingsViewDelegate: AnyObject {
-    func didUpdateBlikLabel()
     func didUpdateVisibility()
+    func didTapBlikLabelEditButton()
 }
 
 final class OtherBlikSettingsView: UIView {
-    private let detailsLabelTitle = UILabel()
-    private let detailsLabel = UILabel()
-    private let separatorView = UIView()
-    private let detailsButton = UIButton()
-    private let blikLabelTitle = UILabel()
-    private let blikLabelTextField = LisboaTextFieldWithErrorView()
+    private let transactionVisibilityTitle = UILabel()
+    private let transactionVisibilityDescription = UILabel()
+    private let transactionVisibilityToggle = UIButton()
+    
+    private let blikLabelHeaderContainer = UIView()
+    private let blikLabelHeaderTitle = UILabel()
     private let blikLabelInfoButton = UIButton()
+    private let blikLabelEditButton = UIButton()
+    
+    private let blikLabelContainer = UIView()
+    private let blikLabel = UILabel()
+    
     public weak var delegate: OtherBlikSettingsViewDelegate?
-    
-    public var blikCustomerLabel: String {
-        blikLabelTextField.textField.text ?? ""
-    }
-    
     public var isTransactionVisible: Bool {
-        detailsButton.isSelected
+        transactionVisibilityToggle.isSelected
     }
     
     public init() {
@@ -32,7 +32,6 @@ final class OtherBlikSettingsView: UIView {
         configureStyling()
         configureContent()
         configureTargets()
-        configureDelegates()
     }
     
     required init?(coder: NSCoder) {
@@ -40,119 +39,137 @@ final class OtherBlikSettingsView: UIView {
     }
 
     func set(viewModel: OtherBlikSettingsViewModel) {
-        blikLabelTextField.textField.setText(viewModel.blikCustomerLabel)
-        detailsButton.isSelected = viewModel.isTransactionVisible
-    }
-    
-    func setLabelError(_ errorText: String?) {
-        if let error = errorText {
-            blikLabelTextField.showError(error)
-        } else {
-            blikLabelTextField.hideError()
-        }
+        transactionVisibilityToggle.isSelected = viewModel.isTransactionVisible
+        blikLabel.text = viewModel.blikCustomerLabel
     }
 }
 
 private extension OtherBlikSettingsView {
     func configureContent() {
-        detailsLabelTitle.text = localized("pl_blik_title_detailsBeforeLogin")
-        detailsLabel.text = localized("pl_blik_text_detailsVisibInfo")
-        blikLabelTitle.text = localized("pl_blik_label_clientLabel")
-        blikLabelTextField.textField.setPlaceholder(localized("pl_blik_text_nameField"))
+        transactionVisibilityTitle.text = localized("pl_blik_title_detailsBeforeLogin")
+        transactionVisibilityDescription.text = localized("pl_blik_text_detailsVisibInfo")
+        blikLabelHeaderTitle.text = localized("pl_blik_label_clientLabel")
+        blikLabelEditButton.setTitle(localized("generic_button_change"), for: .normal)
+        blikLabelEditButton.setImage(PLAssets.image(named: "editIcon"), for: .normal)
         blikLabelInfoButton.setImage(Images.info_blueGreen, for: .normal)
     }
     
     func configureSubviews() {
-        addSubview(detailsLabelTitle)
-        addSubview(separatorView)
-        addSubview(detailsLabel)
-        addSubview(detailsButton)
-        addSubview(blikLabelTitle)
-        addSubview(blikLabelTextField)
-        addSubview(blikLabelInfoButton)
-        
-        detailsLabelTitle.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        detailsLabel.translatesAutoresizingMaskIntoConstraints = false
-        detailsButton.translatesAutoresizingMaskIntoConstraints = false
-        blikLabelTitle.translatesAutoresizingMaskIntoConstraints = false
-        blikLabelTextField.translatesAutoresizingMaskIntoConstraints = false
-        blikLabelInfoButton.translatesAutoresizingMaskIntoConstraints = false
+        [
+            transactionVisibilityTitle,
+            transactionVisibilityDescription,
+            transactionVisibilityToggle,
+            blikLabelHeaderContainer,
+            blikLabelContainer,
+            blikLabelHeaderTitle,
+            blikLabelInfoButton,
+            blikLabelEditButton,
+            blikLabel
+        ].forEach {
+            addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
 
         NSLayoutConstraint.activate([
-            detailsLabelTitle.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            detailsLabelTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            detailsLabelTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            transactionVisibilityTitle.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            transactionVisibilityTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
-            detailsLabel.topAnchor.constraint(equalTo: detailsLabelTitle.bottomAnchor, constant: 16),
-            detailsLabel.leadingAnchor.constraint(equalTo: detailsLabelTitle.leadingAnchor),
+            transactionVisibilityToggle.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            transactionVisibilityToggle.leadingAnchor.constraint(equalTo: transactionVisibilityTitle.trailingAnchor, constant: 24),
+            transactionVisibilityToggle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            transactionVisibilityToggle.heightAnchor.constraint(equalToConstant: 28),
+            transactionVisibilityToggle.widthAnchor.constraint(equalToConstant: 43),
             
-            detailsButton.centerYAnchor.constraint(equalTo: detailsLabel.centerYAnchor),
-            detailsButton.leadingAnchor.constraint(equalTo: detailsLabel.trailingAnchor, constant: 16),
-            detailsButton.trailingAnchor.constraint(equalTo: detailsLabelTitle.trailingAnchor),
-            detailsButton.widthAnchor.constraint(equalToConstant: 43),
-            detailsButton.heightAnchor.constraint(equalToConstant: 28),
+            transactionVisibilityDescription.topAnchor.constraint(equalTo: transactionVisibilityTitle.bottomAnchor, constant: 4),
+            transactionVisibilityDescription.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            transactionVisibilityDescription.trailingAnchor.constraint(equalTo: transactionVisibilityToggle.leadingAnchor, constant: -24),
             
-            separatorView.topAnchor.constraint(equalTo: detailsLabel.bottomAnchor, constant: 32),
-            separatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            separatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            separatorView.heightAnchor.constraint(equalToConstant: 2),
+            blikLabelHeaderContainer.topAnchor.constraint(equalTo: transactionVisibilityDescription.bottomAnchor, constant: 32),
+            blikLabelHeaderContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            blikLabelHeaderContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            blikLabelTitle.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 24),
-            blikLabelTitle.leadingAnchor.constraint(equalTo: detailsLabelTitle.leadingAnchor),
+            blikLabelHeaderTitle.topAnchor.constraint(equalTo: blikLabelHeaderContainer.topAnchor, constant: 8),
+            blikLabelHeaderTitle.leadingAnchor.constraint(equalTo: blikLabelHeaderContainer.leadingAnchor, constant: 24),
+            blikLabelHeaderTitle.bottomAnchor.constraint(equalTo: blikLabelHeaderContainer.bottomAnchor, constant: -8),
             
-            blikLabelInfoButton.centerYAnchor.constraint(equalTo: blikLabelTitle.centerYAnchor),
-            blikLabelInfoButton.leadingAnchor.constraint(equalTo: blikLabelTitle.trailingAnchor, constant: 8),
-            blikLabelInfoButton.widthAnchor.constraint(equalToConstant: 20),
+            blikLabelInfoButton.leadingAnchor.constraint(equalTo: blikLabelHeaderTitle.trailingAnchor, constant: 8),
+            blikLabelInfoButton.centerYAnchor.constraint(equalTo: blikLabelHeaderTitle.centerYAnchor),
             blikLabelInfoButton.heightAnchor.constraint(equalToConstant: 20),
+            blikLabelInfoButton.widthAnchor.constraint(equalToConstant: 20),
             
-            blikLabelTextField.topAnchor.constraint(equalTo: blikLabelInfoButton.bottomAnchor, constant: 8),
-            blikLabelTextField.leadingAnchor.constraint(equalTo: detailsLabelTitle.leadingAnchor),
-            blikLabelTextField.trailingAnchor.constraint(equalTo: detailsLabelTitle.trailingAnchor),
-            blikLabelTextField.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0)
+            blikLabelEditButton.trailingAnchor.constraint(equalTo: blikLabelHeaderContainer.trailingAnchor, constant: -24),
+            blikLabelEditButton.centerYAnchor.constraint(equalTo: blikLabelHeaderTitle.centerYAnchor),
+            
+            blikLabelContainer.topAnchor.constraint(equalTo: blikLabelHeaderContainer.bottomAnchor, constant: 16),
+            blikLabelContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            blikLabelContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            blikLabelContainer.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16),
+            
+            blikLabel.topAnchor.constraint(equalTo: blikLabelContainer.topAnchor, constant: 12),
+            blikLabel.leadingAnchor.constraint(equalTo: blikLabelContainer.leadingAnchor, constant: 16),
+            blikLabel.trailingAnchor.constraint(equalTo: blikLabelContainer.trailingAnchor, constant: -16),
+            blikLabel.bottomAnchor.constraint(equalTo: blikLabelContainer.bottomAnchor, constant: -12)
         ])
     }
     
     func configureStyling() {
-        detailsLabelTitle.textColor = .lisboaGray
-        detailsLabelTitle.font = .santander(
+        transactionVisibilityTitle.numberOfLines = 0
+        transactionVisibilityTitle.textColor = .lisboaGray
+        transactionVisibilityTitle.font = .santander(
             family: .text,
             type: .bold,
             size: 16
         )
         
-        detailsLabel.numberOfLines = 0
-        detailsLabel.textColor = .lisboaGray
-        detailsLabel.font = .santander(
+        transactionVisibilityDescription.numberOfLines = 0
+        transactionVisibilityDescription.textColor = .lisboaGray
+        transactionVisibilityDescription.font = .santander(
             family: .micro,
             type: .regular,
             size: 12
         )
         
-        blikLabelTitle.textColor = .lisboaGray
-        blikLabelTitle.font = .santander(
+        transactionVisibilityToggle.setImage(Assets.image(named: "icnOnSwich"), for: .selected)
+        transactionVisibilityToggle.setImage(Assets.image(named: "icnOffSwich"), for: .normal)
+        
+        blikLabelEditButton.imageView?.contentMode = .scaleAspectFit
+        blikLabelEditButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: -4, bottom: 2, right: 0)
+        blikLabelEditButton.setTitleColor(.darkTorquoise, for: .normal)
+        blikLabelEditButton.titleLabel?.font = .santander(
+            family: .micro,
+            type: .bold,
+            size: 14
+        )
+        
+        blikLabelHeaderContainer.backgroundColor = .skyGray
+        
+        blikLabelHeaderTitle.numberOfLines = 1
+        blikLabelHeaderTitle.textColor = .lisboaGray
+        blikLabelHeaderTitle.font = .santander(
             family: .micro,
             type: .regular,
             size: 14
         )
         
-        separatorView.backgroundColor = .mediumSkyGray
+        blikLabelContainer.backgroundColor = .lightSanGray
         
-        detailsButton.setImage(Assets.image(named: "icnOnSwich"), for: .selected)
-        detailsButton.setImage(Assets.image(named: "icnOffSwich"), for: .normal)
+        blikLabel.numberOfLines = 1
+        blikLabel.textColor = .brownishGray
+        blikLabel.font = .santander(
+            family: .micro,
+            type: .regular,
+            size: 16
+        )
     }
     
     func configureTargets() {
-        detailsButton.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
+        transactionVisibilityToggle.addTarget(self, action: #selector(didTaptransactionVisibilityToggle), for: .touchUpInside)
         blikLabelInfoButton.addTarget(self, action: #selector(didTapLabelInfoButton), for: .touchUpInside)
-    }
-    
-    func configureDelegates() {
-        blikLabelTextField.textField.updatableDelegate = self
+        blikLabelEditButton.addTarget(self, action: #selector(didTapLabelEditButton), for: .touchUpInside)
     }
 
-    @objc func didTapDetailsButton() {
-        detailsButton.isSelected.toggle()
+    @objc func didTaptransactionVisibilityToggle() {
+        transactionVisibilityToggle.isSelected.toggle()
         delegate?.didUpdateVisibility()
     }
     
@@ -164,10 +181,8 @@ private extension OtherBlikSettingsView {
             position: .bottom
         )
     }
-}
-
-extension OtherBlikSettingsView: UpdatableTextFieldDelegate {
-    func updatableTextFieldDidUpdate() {
-        delegate?.didUpdateBlikLabel()
+    
+    @objc func didTapLabelEditButton() {
+        delegate?.didTapBlikLabelEditButton()
     }
 }

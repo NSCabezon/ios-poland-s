@@ -43,13 +43,6 @@ final class LoadWalletParamsUseCase: UseCase<Void, LoadWalletParamsUseCaseOutput
 extension LoadWalletParamsUseCase: LoadWalletParamsUseCaseProtocol {
     enum Error: LocalizedError {
         case missingWallet
-        
-        var errorDescription: String? {
-            switch self {
-            case .missingWallet:
-                return "#Brak aktywnego portfela BLIK"
-            }
-        }
     }
 }
 
