@@ -19,8 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let dependenciesEngine = appDependencies.dependencieEngine
-        let localAppConfig = dependenciesEngine.resolve(for: LocalAppConfig.self)
-        let drawer = BaseMenuViewController(isPrivateSideMenuEnabled: localAppConfig.privateMenu)
+        let drawer = BaseMenuViewController(legacyResolver: dependenciesEngine)
         let moduleDependencies = ModuleDependencies(oldResolver: dependenciesEngine, drawer: drawer)
         self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: moduleDependencies)
         application.applicationSupportsShakeToEdit = false
