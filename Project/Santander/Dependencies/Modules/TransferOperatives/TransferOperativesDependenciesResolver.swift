@@ -18,7 +18,7 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
         return PLInternalTransferPreSetupUseCase(dependencies: self)
     }
     
-    func resolve() -> AccountNumberFormatterProtocol {
+    func resolve() -> AccountNumberFormatterProtocol? {
         return PLAccountNumberFormatter()
     }
     

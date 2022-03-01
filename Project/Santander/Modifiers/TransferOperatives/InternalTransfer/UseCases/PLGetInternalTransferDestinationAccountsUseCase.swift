@@ -14,15 +14,22 @@ struct PLGetInternalTransferDestAccountsUseCase {}
 
 extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinationAccountsUseCase {
     func fetchAccounts(input: GetInternalTransferDestinationAccountsInput) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, Never> {
-        return Just(filterDestinationAccounts(visibleAccounts: filterPolandAccounts(input.visibleAccounts),
-                                              notVisibleAccounts: filterPolandAccounts(input.notVisibleAccounts),
+        let visibleAccounts = getFilteredAccounts(from: input.visibleAccounts, originAccount: input.originAccount)
+        let notVisibleAccounts = getFilteredAccounts(from: input.notVisibleAccounts, originAccount: input.originAccount)
+        return Just(filterDestinationAccounts(visibleAccounts: visibleAccounts,
+                                              notVisibleAccounts: notVisibleAccounts,
                                               originAccount: input.originAccount)
         ).eraseToAnyPublisher()
     }
 }
 
 private extension PLGetInternalTransferDestAccountsUseCase {
-    func filterPolandAccounts(_ accounts: [AccountRepresentable]) -> [PolandAccountRepresentable] {
+    func getFilteredAccounts(from accounts: [AccountRepresentable], originAccount: AccountRepresentable) -> [PolandAccountRepresentable] {
+        let accounts = accounts.filter { !$0.equalsTo(other: originAccount) }
+        return filterCreditCardAccounts(from: accounts)
+    }
+    
+    func filterCreditCardAccounts(from accounts: [AccountRepresentable]) -> [PolandAccountRepresentable] {
         guard let polandAccounts: [PolandAccountRepresentable] = accounts as? [PolandAccountRepresentable] else { return [] }
         return polandAccounts.filter { $0.type != .creditCard }
     }
@@ -32,15 +39,11 @@ private extension PLGetInternalTransferDestAccountsUseCase {
                                    originAccount: AccountRepresentable) -> GetInternalTransferDestinationAccountsOutput {
         guard let originAccount = originAccount as? PolandAccountRepresentable,
             originAccount.type == .creditCard else {
-            return GetInternalTransferDestinationAccountsOutput(visibleAccounts: [],
-                                                                         notVisibleAccounts: [])
+            return GetInternalTransferDestinationAccountsOutput(visibleAccounts: visibleAccounts,
+                                                                         notVisibleAccounts: notVisibleAccounts)
         }
-        let visiblesFiltered = visibleAccounts.filter {
-            $0.currencyRepresentable?.currencyType == .złoty || $0.equalsTo(other: originAccount)
-        }
-        let notVisiblesFiltered = notVisibleAccounts.filter {
-            $0.currencyRepresentable?.currencyType == .złoty || $0.equalsTo(other: originAccount)
-        }
+        let visiblesFiltered = visibleAccounts.filter { $0.currencyRepresentable?.currencyType == .złoty }
+        let notVisiblesFiltered = notVisibleAccounts.filter { $0.currencyRepresentable?.currencyType == .złoty }
         return GetInternalTransferDestinationAccountsOutput(visibleAccounts: visiblesFiltered,
                                                                      notVisibleAccounts: notVisiblesFiltered)
     }
