@@ -23,6 +23,10 @@ struct ModuleDependencies {
         oldResolver.resolve()
     }
     
+    func resolve() -> DependenciesInjector {
+        return oldResolver
+    }
+
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
