@@ -8,6 +8,7 @@
 import CoreFoundationLib
 import CoreDomain
 import Transfer
+import TransferOperatives
 import UI
 
 extension ModuleDependencies: TransferExternalDependenciesResolver {
