@@ -104,6 +104,13 @@
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
+        },
+        {
+            "id": "MULTICURRENCY",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
 

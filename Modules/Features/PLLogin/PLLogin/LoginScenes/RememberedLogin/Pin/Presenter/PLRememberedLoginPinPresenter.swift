@@ -20,7 +20,8 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func viewDidLoad()
     func viewWillAppear()
     func viewDidAppear()
-    func doLogin(with accessType: AccessType)
+    func tryToLogin(with accessType: AccessType)
+    func continueLogin()
     func didSelectBalance()
     func didSelectBlik()
     func didSelectMenu()
@@ -37,6 +38,7 @@ final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
     weak var view: PLRememberedLoginPinViewControllerProtocol?
     public var loginConfiguration:RememberedLoginConfiguration
     public var currentBiometryType: BiometryTypeEntity = .none
+    private var accessType: AccessType = .biometrics
     private let localAuth: LocalAuthenticationPermissionsManagerProtocol
     private var allowLoginBlockedUsers = true
 
@@ -208,20 +210,15 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         self.trackEvent(.clickBlik)
     }
 
-    func doLogin(with accessType: AccessType) {
-        self.view?.showLoading(completion: { [weak self] in
-            guard let self = self else { return }
-            let config = self.coordinator.loginConfiguration
-            self.rememberedLoginProcessGroup.execute(input: PLRememberedLoginProcessGroupInput(configuration: config,
-                                                                                          accessType: accessType)) { result in
-                switch result {
-                case .success(let output):
-                    self.evaluateLoginResult(configuration: output.configuration, error: nil)
-                case .failure(let outputError):
-                    self.evaluateLoginResult(configuration: outputError.configuration, error: outputError.error)
-                }
-            }
-        })
+    func tryToLogin(with accessType: AccessType) {
+        self.accessType = accessType
+        self.checkTermsAndConditions { [weak self] in
+            self?.login(with: accessType)
+        }
+    }
+    
+    func continueLogin() {
+        self.login(with: self.accessType)
     }
     
     func viewDidLoad() {
@@ -245,6 +242,23 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
 }
 
 private extension PLRememberedLoginPinPresenter {
+    
+    func login(with accessType: AccessType) {
+        self.view?.showLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            let config = self.coordinator.loginConfiguration
+            self.rememberedLoginProcessGroup.execute(input: PLRememberedLoginProcessGroupInput(configuration: config,
+                                                                                          accessType: accessType)) { result in
+                switch result {
+                case .success(let output):
+                    self.evaluateLoginResult(configuration: output.configuration, error: nil)
+                case .failure(let outputError):
+                    self.evaluateLoginResult(configuration: outputError.configuration, error: outputError.error)
+                }
+            }
+        })
+    }
+    
     func openSessionAndNavigateToGlobalPosition() {
         openSessionProcessGroup.execute { [weak self] result in
             switch result {
@@ -289,7 +303,7 @@ private extension PLRememberedLoginPinPresenter {
     func biometrySuccess() {
         safetyCurtainSafeguardEventDidFinish()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.doLogin(with: .biometrics)
+            self?.tryToLogin(with: .biometrics)
         }
     }
     
@@ -323,6 +337,21 @@ private extension PLRememberedLoginPinPresenter {
         guard currentBiometryType != biometryType else { return }
         self.currentBiometryType = biometryType
         view?.applicationDidBecomeActive()
+    }
+    
+    func checkTermsAndConditions(onContinueLogin: @escaping (() -> Void)) {
+        let termsUseCase = PLTermsAndConditionsUseCase(dependenciesResolver: self.dependenciesResolver)
+        let input = PLTermsAndConditionsUseCaseInput(acceptCurrentVersion: false)
+        Scenario(useCase: termsUseCase, input: input).execute(on: self.dependenciesResolver.resolve()).onSuccess({ [weak self] result in
+            if result.shouldPresentTerms {
+                let config = PLTermsAndConditionsConfiguration(title: result.title, description: result.description)
+                self?.coordinator.presentTermsAndConditions(configuration: config)
+            } else {
+                onContinueLogin()
+            }
+        }).onError { _ in
+            onContinueLogin()
+        }
     }
 }
 

@@ -8,8 +8,10 @@
 import Foundation
 public struct AppInfo: Codable {
     public var isFirstLaunch: Bool?
+    public var acceptedTermsVersion: Int
     
-    public init(isFirstLaunch: Bool?) {
+    public init(isFirstLaunch: Bool?, acceptedTermsVersion: Int = 0) {
         self.isFirstLaunch = isFirstLaunch
+        self.acceptedTermsVersion = acceptedTermsVersion
     }
 }
