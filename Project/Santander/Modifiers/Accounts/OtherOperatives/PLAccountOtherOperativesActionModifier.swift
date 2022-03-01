@@ -33,6 +33,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
                  .accountStatement,
                  .customerService,
                  .fxExchange,
+                 .multicurrency,
                  .atmPackage:
                 showWebView(identifier: identifier, entity: entity)
             case .changeAliases:
