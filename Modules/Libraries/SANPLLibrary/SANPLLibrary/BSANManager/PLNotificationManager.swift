@@ -11,6 +11,7 @@ public protocol PLNotificationManagerProtocol {
     func doRegisterToken(_ parameters: NotificationRegisterParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func getPushList(_ parameters: NotificationGetPushListParameters) throws -> Result<PLNotificationListDTO, NetworkProviderError>
     func getPushDetails(_ parameters: NotificationGetPushDetailsParameters) throws -> Result<PLNotificationDTO, NetworkProviderError>
+    func getPushDetailsBeforeLogin(pushId: Int, parameters: NotificationGetPushDetailsBeforeLoginParameters) throws -> Result<PLNotificationDTO, NetworkProviderError>
     func getPushUnreadedCount(_ parameters: NotificationGetPushListParameters) throws -> Result<PLUnreadedPushCountDTO, NetworkProviderError>
     func getEnabledPushCategoriesByDevice(_ parameters: NotificationGetPushListParameters) throws -> Result<PLEnabledPushCategoriesDTO, NetworkProviderError>
     func postPushStatus(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
@@ -43,6 +44,11 @@ extension PLNotificationManager: PLNotificationManagerProtocol {
     
     public func getPushDetails(_ parameters: NotificationGetPushDetailsParameters) throws -> Result<PLNotificationDTO, NetworkProviderError> {
         let result = try notificationDataSource.getPushDetails(parameters)
+        return result
+    }
+    
+    public func getPushDetailsBeforeLogin(pushId: Int, parameters: NotificationGetPushDetailsBeforeLoginParameters) throws -> Result<PLNotificationDTO, NetworkProviderError> {
+        let result = try notificationDataSource.getPushDetailsBeforeLogin(pushId: pushId, parameters: parameters)
         return result
     }
     

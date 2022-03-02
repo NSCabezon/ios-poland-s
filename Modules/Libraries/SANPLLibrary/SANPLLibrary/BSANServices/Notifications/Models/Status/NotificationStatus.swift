@@ -11,10 +11,11 @@ public enum NotificationStatus: String, Codable, CaseIterable {
     case delivered = "delivered"
     case read = "read"
     case deleted = "deleted"
+    case sent = "sent"
     
     public func getLabel() -> String{
         switch self {
-        case .delivered:
+        case .delivered, .sent:
             return localized("pl_alerts_text_unreadCheckBox")
         case .read:
             return localized("pl_alerts_text_readCheckBox")

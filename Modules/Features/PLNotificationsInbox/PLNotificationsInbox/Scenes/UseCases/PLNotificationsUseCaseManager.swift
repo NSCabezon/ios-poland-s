@@ -13,6 +13,7 @@ import SANPLLibrary
 public protocol PLNotificationsUseCaseManagerProtocol {
     func getList(completion: @escaping (PLNotificationListEntity?) -> Void)
     func getPushById(pushId: Int, completion: @escaping (PLNotificationEntity?) -> Void)
+    func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void)
     func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void)
     func getEnabledPushCategories(completion: ((PLEnabledPushCategoriesListEntity?) -> Void)?)
     func postPushStatus(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void)
@@ -29,6 +30,10 @@ public class PLNotificationsUseCaseManager {
     
     private var notificationGetPushDetailsUseCase: PLNotificationGetPushDetailsUseCase {
         return self.dependenciesEngine.resolve(for: PLNotificationGetPushDetailsUseCase.self)
+    }
+    
+    private var notificationGetPushDetailsBeforeLoginUseCase: PLNotificationGetPushDetailsBeforeLoginUseCase {
+        return self.dependenciesEngine.resolve(for: PLNotificationGetPushDetailsBeforeLoginUseCase.self)
     }
     
     private var notificationGetUnreadedPushCountUseCase: PLNotificationGetUnreadedPushCountUseCase {
@@ -88,6 +93,19 @@ extension PLNotificationsUseCaseManager: PLNotificationsUseCaseManagerProtocol {
                 completion(nil)
             }
     }
+    
+    
+    public func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void) {
+        let input = GetPushDetailsBeforeLoginUseCaseInput(pushId: pushId, loginId: loginId)
+        Scenario(useCase: self.notificationGetPushDetailsBeforeLoginUseCase, input: input)
+            .execute(on: self.dependenciesEngine.resolve())
+            .onSuccess { response in
+                completion(response.entity)
+            }.onError { error in
+                completion(nil)
+            }
+    }
+    
     
     public func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
         Scenario(useCase: self.notificationGetUnreadedPushCountUseCase)

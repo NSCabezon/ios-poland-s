@@ -42,6 +42,8 @@ private extension NotificationsInboxListPresenter {
 }
 
 extension NotificationsInboxListPresenter: NotificationsInboxListPresenterProtocol {
+    func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void) {}
+    
     func backButtonSelected() {
         coordinator.goBack()
     }
