@@ -86,17 +86,19 @@ extension CustomPushNotificationPresenter: CustomPushNotificationPresenterProtoc
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess { response in
                 self.getPushFor(userId: response.userId)
+                self.markAsRead(userId: response.userId)
             }
             .onError { error in
                 Toast.show(error.localizedDescription)
             }
     }
     
-    private func markAsRead(){
+    private func markAsRead(userId: Int){
         guard let notificationId = actionType?.messageId else { return }
         let notificationUseCase = dependenciesResolver.resolve(for: PLNotificationsUseCaseManagerProtocol.self)
-        let input = PLPushStatusUseCaseInput(pushList: [PLPushStatus(id: notificationId, status: NotificationStatus.read.rawValue)])
-        notificationUseCase.postPushStatus(pushStatus: input, completion: { _ in })
+        let input = PLPushStatusUseCaseInput(pushList: [PLPushStatus(id: notificationId, status: NotificationStatus.read.rawValue)],
+                                             loginId: userId)
+        notificationUseCase.postPushStatusBeforeLogin(pushStatus: input, completion: { _ in })
     }
 }
 

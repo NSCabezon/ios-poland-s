@@ -15,6 +15,7 @@ public protocol PLNotificationManagerProtocol {
     func getPushUnreadedCount(_ parameters: NotificationGetPushListParameters) throws -> Result<PLUnreadedPushCountDTO, NetworkProviderError>
     func getEnabledPushCategoriesByDevice(_ parameters: NotificationGetPushListParameters) throws -> Result<PLEnabledPushCategoriesDTO, NetworkProviderError>
     func postPushStatus(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
+    func postPushStatusBeforeLogin(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
     func postPushListPageSize(_ parameters: NotificationPostPushListPageSizeParameters) throws -> Result<PLNotificationListDTO, NetworkProviderError>
     func postPostSetAllPushStatus(_ parameters: PLPushSetAllStatusUseCaseInput) throws -> Result<Void, NetworkProviderError>
 }
@@ -64,6 +65,11 @@ extension PLNotificationManager: PLNotificationManagerProtocol {
     
     public func postPushStatus(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError> {
         let result = try notificationDataSource.postPushStatus(parameters)
+        return result
+    }
+    
+    public func postPushStatusBeforeLogin(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError> {
+        let result = try notificationDataSource.postPushStatusBeforeLogin(parameters)
         return result
     }
     

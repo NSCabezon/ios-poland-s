@@ -108,6 +108,10 @@ extension NotificationsInboxListPresenter {
         notificationsUseCaseManager?.postPushStatus(pushStatus: pushStatus, completion: completion)
     }
     
+    func postPushStatusBeforeLogin(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void) {
+        notificationsUseCaseManager?.postPushStatusBeforeLogin(pushStatus: pushStatus, completion: completion)
+    }
+    
     func getPushById(pushId: Int, completion: @escaping (PLNotificationEntity?) -> Void) {
         notificationsUseCaseManager?.getPushById(pushId: pushId, completion: completion)
     }

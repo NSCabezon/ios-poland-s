@@ -81,6 +81,10 @@ extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorPr
             return PLNotificationPostPushStatusUseCase(dependenciesResolver: resolver)
         }
         
+        self.dependenciesEngine.register(for: PLNotificationPostPushStatusBeforeLoginUseCase.self) { resolver in
+            return PLNotificationPostPushStatusBeforeLoginUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PLNotificationsUseCaseManagerProtocol.self) { _ in
             return PLNotificationsUseCaseManager(dependenciesEngine: self.dependenciesEngine)
         }

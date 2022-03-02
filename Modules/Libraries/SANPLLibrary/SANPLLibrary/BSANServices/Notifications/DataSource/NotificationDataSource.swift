@@ -16,6 +16,7 @@ protocol NotificationDataSourceProtocol {
     func getEnabledPushCategoriesByDevice(_ parameters: NotificationGetPushListParameters) throws -> Result<PLEnabledPushCategoriesDTO, NetworkProviderError>
     
     func postPushStatus(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
+    func postPushStatusBeforeLogin(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
     func postPushListPageSize(_ parameters: NotificationPostPushListPageSizeParameters) throws -> Result<PLNotificationListDTO, NetworkProviderError>
     func postSetAllPushStatus(_ parameters: PLPushSetAllStatusUseCaseInput) throws -> Result<Void, NetworkProviderError>
 }
@@ -194,6 +195,28 @@ class NotificationDataSource: NotificationDataSourceProtocol {
                                                     headers: self.headers,
                                                     localServiceName: .notificationTokenRegister,
                                                     authorization: .oauth)
+        
+        let result: Result<PLPushStatusResponseDTO, NetworkProviderError> = self.networkProvider.request(request)
+        return result
+    }
+    
+    func postPushStatusBeforeLogin(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError> {
+        guard
+            let baseUrl = self.getBaseUrl()
+        else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let absoluteUrl = baseUrl + "/api/notification/pushstatus"
+        let serviceName =  NotificationsServiceType.set.rawValue
+        
+        let request = NotificationPushStatusRequest(serviceName: serviceName,
+                                                        serviceUrl: absoluteUrl,
+                                                        method: .post,
+                                                        jsonBody: parameters,
+                                                        headers: headers,
+                                                        localServiceName: .notificationPushStatusBeforeLogin,
+                                                        authorization: .trustedDeviceOnly)
         
         let result: Result<PLPushStatusResponseDTO, NetworkProviderError> = self.networkProvider.request(request)
         return result
