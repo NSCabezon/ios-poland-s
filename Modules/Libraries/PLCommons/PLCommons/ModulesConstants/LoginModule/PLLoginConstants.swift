@@ -107,3 +107,14 @@ public struct PLRememberedLoginPage: PageWithActionTrackable {
         self.page = page
     }
 }
+
+public struct PLTermsAndConditionsPage: PageWithActionTrackable {
+    public typealias ActionType = Action
+    public let page = "/login/term_and_condition"
+    public enum Action: String {
+        case scrollDown = "scroll_down"
+        case clickAccept = "click_accept"
+        case clickCancel = "click_cancel"
+    }
+    public init() {}
+}

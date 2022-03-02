@@ -45,13 +45,16 @@ public class GlobileCheckBox: UIControl {
 
     /// The current text that is displayed by the button.
     public var text: String?
-    
+
     public var checkboxSize: CGFloat = 30.0 {
         didSet {
-            checkboxHeightConstraint.constant = checkboxSize
-            layoutIfNeeded()
+            self.checkBoxHeightConstraint?.constant = checkboxSize
+            self.checkBoxWidthConstraint?.constant = checkboxSize
+            self.layoutIfNeeded()
         }
     }
+    private var checkBoxHeightConstraint: NSLayoutConstraint?
+    private var checkBoxWidthConstraint: NSLayoutConstraint?
     public var fontSize: CGFloat = 16.0 {
         didSet {
             label.font = .santander(size: self.fontSize)
@@ -109,26 +112,31 @@ public class GlobileCheckBox: UIControl {
     }
 
     private func setupLayout() {
+        checkBoxHeightConstraint = checkboxButton.heightAnchor.constraint(equalToConstant: self.checkboxSize)
+        checkBoxWidthConstraint = checkboxButton.widthAnchor.constraint(equalToConstant: self.checkboxSize)
+        guard let checkBoxHeightConstraint = checkBoxHeightConstraint, let checkBoxWidthConstraint = checkBoxWidthConstraint else {
+            return
+        }
         NSLayoutConstraint.activate([
             checkboxButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             checkboxButton.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -12),
-            checkboxHeightConstraint,
-            checkboxButton.widthAnchor.constraint(equalTo: checkboxButton.heightAnchor),
-            checkboxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-            ])
-
+            checkboxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            checkBoxHeightConstraint,
+            checkBoxWidthConstraint
+        ])
+        
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: topAnchor),
             label.bottomAnchor.constraint(equalTo: bottomAnchor),
-            ])
-
+        ])
+        
         NSLayoutConstraint.activate([
             infoButton.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 12),
             infoButton.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -4),
             infoButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             infoButton.heightAnchor.constraint(equalToConstant: 18.0),
             infoButton.widthAnchor.constraint(equalTo: infoButton.heightAnchor),
-            ])
+        ])
     }
     
     private func setupViews() {

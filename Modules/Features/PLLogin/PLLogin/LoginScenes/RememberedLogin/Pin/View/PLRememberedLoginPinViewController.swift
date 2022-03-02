@@ -89,11 +89,6 @@ final class PLRememberedLoginPinViewController: UIViewController {
         self.presenter.viewDidAppear()
         self.tryBiometricAuth()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.presenter.viewWillDissappear()
-    }
 }
 
 private extension PLRememberedLoginPinViewController {
@@ -263,12 +258,12 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
     
     func didTapOnOK() {
         guard let pin = pinTextField.text else { return }
-        presenter.doLogin(with: .pin(value: pin))
+        presenter.tryToLogin(with: .pin(value: pin))
     }
 }
 
 extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewControllerProtocol {
-
+    
     func didUpdateEnvironments() {
     }
     

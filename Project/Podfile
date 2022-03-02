@@ -69,6 +69,7 @@ def pl_features
   pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
   pod 'PhoneTopUp', :path => '../Modules/Features/PhoneTopUp'
   pod 'ZusTransfer', :path => '../Modules/Features/ZusTransfer'
+  pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
 end
 
