@@ -3,7 +3,7 @@ import PLCommons
 import Operative
 
 protocol ZusTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
-    func goToZusTransfer()
+    func close()
 }
 
 final class ZusTransferSummaryPresenter {
@@ -40,8 +40,8 @@ extension ZusTransferSummaryPresenter: ZusTransferSummaryPresenterProtocol {
         prepareViewModel()
     }
     
-    func goToZusTransfer() {
-        coordinator.goToMakeAnotherPayment()
+    func close() {
+        coordinator.goToGlobalPosition()
     }
 }
 
