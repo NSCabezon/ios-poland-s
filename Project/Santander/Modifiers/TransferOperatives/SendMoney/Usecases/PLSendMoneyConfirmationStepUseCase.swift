@@ -73,7 +73,7 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
             else {
                 return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
             }
-            return .ok(.success(title: parsedError.0, subtitle: parsedError.1))
+            return .ok(.error(title: parsedError.0, subtitle: parsedError.1))
         }
     }
 }
