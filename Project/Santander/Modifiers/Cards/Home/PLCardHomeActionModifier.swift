@@ -30,6 +30,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
             goToCardBlock(entity)
         case .onCard:
             goToCardUnblock(entity)
+        case .applePay:
+            goToApplePay(entity)
         case .custome(let values):
             guard let identifier = PLCardActionIdentifier.mapped(values.identifier) else { return }
             switch identifier {
@@ -37,6 +39,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
                 openCreditCardRepayment(creditCardEntity: entity)
             case .changeAlias:
                 goToPGProductsCustomization()
+            case .addToPay:
+                goToApplePay(entity)
             case .activate,
                     .multicurrency,
                     .managePin,
@@ -147,5 +151,10 @@ private extension PLCardHomeActionModifier {
     func goToPGProductsCustomization() {
         let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
         coordinator.goToGPProductsCustomization()
+    }
+
+    func goToApplePay(_ card: CardEntity) {
+        let cardHomeCoordinator = dependenciesResolver.resolve(for: PLCardsHomeModuleCoordinatorApplePayProtocol.self)
+        cardHomeCoordinator.didSelectAddToApplePay(card: card)
     }
 }
