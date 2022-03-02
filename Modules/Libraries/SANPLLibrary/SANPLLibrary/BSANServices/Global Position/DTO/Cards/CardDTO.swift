@@ -37,6 +37,7 @@ public struct CardNameDTO: Codable {
 }
 
 public struct CardRelatedAccountData: Codable {
+    public let accountNo: String?
     public let creditLimit: BalanceDTO?
 }
 
