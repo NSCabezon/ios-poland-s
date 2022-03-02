@@ -14,6 +14,10 @@ protocol CheckNewSendMoneyHomeEnabledUseCase {
 
 struct DefaultCheckNewSendMoneyHomeEnabledUseCase {
     let appConfigRepository: AppConfigRepositoryProtocol
+    
+    init(dependencies: CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver) {
+        self.appConfigRepository = dependencies.resolve()
+    }
 }
 
 extension DefaultCheckNewSendMoneyHomeEnabledUseCase: CheckNewSendMoneyHomeEnabledUseCase {

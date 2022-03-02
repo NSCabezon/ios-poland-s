@@ -119,6 +119,11 @@ final class AppDependencies {
         let fileClient = FileClient()
         return PLTransferSettingsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
     }()
+    private lazy var plTermsAndConditionsRepository: PLTermsAndConditionsRepository = {
+        let assetsClient = AssetsClient()
+        let fileClient = FileClient()
+        return PLTermsAndConditionsRepository(netClient: netClient, assetsClient: assetsClient, fileClient: fileClient)
+    }()
     private lazy var servicesLibrary: ServicesLibrary = {
         return ServicesLibrary(
             bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider(),
@@ -145,7 +150,10 @@ final class AppDependencies {
     private lazy var customPushLauncher: CustomPushLauncherProtocol = {
         return CustomPushLauncher(dependenciesResolver: dependencieEngine)
     }()
-    
+    private lazy var pfmController: PfmControllerProtocol = {
+       return DefaultPFMController()
+    }()
+
     // MARK: Dependencies init
     init() {
         self.dependencieEngine = DependenciesDefault()
@@ -223,6 +231,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: PLTransferSettingsRepository.self) { _ in
             return self.plTransferSettingsRepository
+        }
+        self.dependencieEngine.register(for: PLTermsAndConditionsRepository.self) { _ in
+            return self.plTermsAndConditionsRepository
         }
         self.dependencieEngine.register(for: PLWebViewLinkRepositoryProtocol.self) { resolver in
             return PLWebViewLinkRepository(dependenciesResolver: resolver)
@@ -316,7 +327,7 @@ private extension AppDependencies {
             return DefaultPFMHelper()
         }
         self.dependencieEngine.register(for: PfmControllerProtocol.self) { _ in
-            return DefaultPFMController()
+            return self.pfmController
         }
         self.dependencieEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self
