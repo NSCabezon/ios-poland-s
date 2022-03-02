@@ -23,6 +23,11 @@ final class CharityTransferAccountSelectorPresenter {
         self.selectableDelegate = selectableDelegate
         self.selectedAccountNumber = selectedAccountNumber
     }
+    
+    func updateAccounts(accounts: [AccountForDebit]) {
+        self.accounts = accounts
+    }
+
 }
 
 private extension CharityTransferAccountSelectorPresenter {

@@ -9,6 +9,10 @@ public protocol CharityTransferAccountSelectorCoordinatorProtocol {
     func closeProcess()
 }
 
+public protocol CharityTransferAccountSelectorCoordinatorUpdatable: AnyObject {
+    func updateAccounts(with accounts: [AccountForDebit])
+}
+
 public enum SourceView {
     case sendMoney, form
 }
@@ -16,11 +20,12 @@ public enum SourceView {
 public final class CharityTransferAccountSelectorCoordinator: ModuleCoordinator {
     weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let accounts: [AccountForDebit]
+    private var accounts: [AccountForDebit]
     private let selectedAccountNumber: String
     private let sourceView: SourceView
     private let charityTransferSettings: CharityTransferSettings
     weak var selectableAccountDelegate: FormAccountSelectable?
+    private var presenter: CharityTransferAccountSelectorPresenter?
 
     public init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
@@ -48,6 +53,7 @@ public final class CharityTransferAccountSelectorCoordinator: ModuleCoordinator 
         let controller = AccountSelectorViewController(presenter: presenter,
                                                        screenLocationConfiguration: .charityTransfer)
         presenter.view = controller
+        self.presenter = presenter
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -63,6 +69,7 @@ extension CharityTransferAccountSelectorCoordinator: CharityTransferAccountSelec
                                                          accounts: accounts,
                                                          selectedAccountNumber: selectedAccountNumber,
                                                          charityTransferSettings: charityTransferSettings)
+        coordinator.accountUpdateDelegate = self
         coordinator.start()
     }
     
@@ -80,5 +87,12 @@ private extension CharityTransferAccountSelectorCoordinator {
         self.dependenciesEngine.register(for: CharityTransferAccountSelectorCoordinatorProtocol.self) { _ in
             return self
         }
+    }
+}
+
+extension CharityTransferAccountSelectorCoordinator: CharityTransferAccountSelectorCoordinatorUpdatable {
+    public func updateAccounts(with accounts: [AccountForDebit]) {
+        self.accounts = accounts
+        presenter?.updateAccounts(accounts: accounts)
     }
 }
