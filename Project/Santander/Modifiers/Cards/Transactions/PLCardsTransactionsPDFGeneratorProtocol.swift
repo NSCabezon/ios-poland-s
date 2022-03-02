@@ -9,7 +9,6 @@ import Foundation
 import Cards
 import CoreFoundationLib
 import SANPLLibrary
-import Commons
 import PLLegacyAdapter
 
 final class PLCardsTransactionsPDFGeneratorProtocol: CardsTransactionsPDFGeneratorProtocol {
