@@ -172,7 +172,7 @@
 		A3DBFBDA27CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBFBD927CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift */; };
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A9717A6626D3C459008E8C45 /* PLLoanDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9717A6526D3C458008E8C45 /* PLLoanDetailModifier.swift */; };
@@ -1693,6 +1693,7 @@
 				4215A56C27B538D800879EB1 /* Sources */,
 				4215A56D27B538D800879EB1 /* Frameworks */,
 				4215A56E27B538D800879EB1 /* Resources */,
+				DA04E623A1D92947DD8CC523 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1882,6 +1883,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Santander/Pods-Santander-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DA04E623A1D92947DD8CC523 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SantanderTests/Pods-SantanderTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SantanderTests/Pods-SantanderTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SantanderTests/Pods-SantanderTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F2AB3F65A0DE6790C8AFFF1C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1920,7 +1938,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -2691,7 +2709,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/$(PRODUCT_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Santander.app/Santander";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "Intern-Debug";
