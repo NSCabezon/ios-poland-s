@@ -126,6 +126,7 @@ public extension AcceptDomesticTransactionParameters {
         case TRANSACTION_3D
         case BLIK_P2P_TRANSACTION
         case PREPAID_MOBILE_TRANSACTION
+        case ONEAPP_PREPAID_MOBILE_TRANSACTION
         case SWIFT_PIN_TRANSCTION
         case PAYROLL_PIN_TRANSFER
         case MULTICURRENCY_BZWBK_PIN_TRANSACTION

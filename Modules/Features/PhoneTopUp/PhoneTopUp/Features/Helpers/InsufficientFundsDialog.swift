@@ -12,9 +12,8 @@ import PLUI
 
 final class InsufficientFundsDialogBuilder {
     func buildDialog() -> LisboaDialog {
-        #warning("todo: add translations when available")
-        let title: LocalizedStylableText = localized("#Nie posiadasz wystarczającej ilości środków")
-        let info: LocalizedStylableText = localized("#Wybierz mniejszą kwotę")
+        let title: LocalizedStylableText = localized("pl_topup_title_alert_error")
+        let info: LocalizedStylableText = localized("pl_topup_text_valid_fundsNoAvailb")
         
         let items: [LisboaDialogItem] = [
             .image(.init(image: Images.PhoneContacts.redInfoIcon, size: (50, 50))),
@@ -37,7 +36,7 @@ final class InsufficientFundsDialogBuilder {
             .margin(32),
             .verticalAction(
                 VerticalLisboaDialogAction(
-                    title: localized("generic_link_ok"),
+                    title: localized("generic_button_understand"),
                     type: .red, margins: (left: 16, right: 16),
                     action: {}
                 )
