@@ -217,7 +217,7 @@ private extension AppModifiers {
         self.legacyDependenciesInjector.register(for: ShortcutItemsProviderProtocol.self) { _ in
             return PLShortcutItems()
         }
-        self.dependenciesEngine.register(for: InternalTransferAmountModifierProtocol.self) { _ in
+        self.legacyDependenciesInjector.register(for: InternalTransferAmountModifierProtocol.self) { _ in
             return PLInternalTransferAmountModifier()
         }
     }
