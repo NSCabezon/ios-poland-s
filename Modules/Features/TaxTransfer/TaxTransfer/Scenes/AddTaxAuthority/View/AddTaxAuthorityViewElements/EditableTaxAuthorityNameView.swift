@@ -1,21 +1,21 @@
 //
-//  EditableTaxAccountView.swift
+//  EditableTaxAuthorityNameView.swift
 //  TaxTransfer
 //
-//  Created by 185167 on 16/02/2022.
+//  Created by 185167 on 03/03/2022.
 //
 
 import CoreFoundationLib
 import UI
 import PLUI
 
-final class EditableTaxAccountView: UIView {
+final class EditableTaxAuthorityNameView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let containerView = UIView()
-    private let accountTextField = LisboaTextFieldWithErrorView()
+    private let authorityNameTextField = LisboaTextFieldWithErrorView()
     weak var textFieldDelegate: UpdatableTextFieldDelegate? {
         didSet {
-            accountTextField.textField.updatableDelegate = textFieldDelegate
+            authorityNameTextField.textField.updatableDelegate = textFieldDelegate
         }
     }
     
@@ -29,28 +29,28 @@ final class EditableTaxAccountView: UIView {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     
-    func setAccountNumber(_ number: String?) {
-        accountTextField.textField.setText(number)
+    func setTaxAuthorityName(_ name: String?) {
+        authorityNameTextField.textField.setText(name)
     }
     
     func setInvalidFieldMessage(_ message: String?) {
         if let message = message {
-            accountTextField.showError(message)
+            authorityNameTextField.showError(message)
         } else {
-            accountTextField.hideError()
+            authorityNameTextField.hideError()
         }
     }
 }
 
-private extension EditableTaxAccountView {
+private extension EditableTaxAuthorityNameView {
     func setUp() {
         configureSubviews()
         configureStyling()
     }
     
     func configureSubviews() {
-        containerView.addSubview(accountTextField)
-        accountTextField.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(authorityNameTextField)
+        authorityNameTextField.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(sectionContainer)
         sectionContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -61,22 +61,22 @@ private extension EditableTaxAccountView {
             sectionContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             sectionContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            accountTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
-            accountTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            accountTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            accountTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            authorityNameTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
+            authorityNameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            authorityNameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            authorityNameTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: "#Numer rachunku/ aka Konto"
+            sectionTitle: "#Nazwa Organu"
         )
     }
     
     func configureStyling() {
-        accountTextField.textField.setEditingStyle(
+        authorityNameTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
                     type: .simple,
@@ -85,7 +85,7 @@ private extension EditableTaxAccountView {
                     keyboardReturnAction: nil,
                     textFieldDelegate: nil,
                     textfieldCustomizationBlock: { components in
-                        components.textField.keyboardType = .numberPad
+                        components.textField.keyboardType = .asciiCapable
                     }
                 )
             )
