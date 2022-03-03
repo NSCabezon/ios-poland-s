@@ -18,7 +18,7 @@ final class PerformTopUpTransactionUseCase: UseCase<PerformTopUpTransactionUseCa
     private let managersProvider: PLManagersProviderProtocol
     private let transfersManager: PLTransfersManagerProtocol
     private let topUpManager: PLPhoneTopUpManagerProtocol
-    private let inputMapper: AcceptTopUpTransactionInputMapping
+    private let inputMapper: PerformTopUpTransactionInputMapping
     private let topUpSuccessStatus = "RELOAD_SUCCESSFUL"
     
     // MARK: Lifecycle
@@ -27,24 +27,38 @@ final class PerformTopUpTransactionUseCase: UseCase<PerformTopUpTransactionUseCa
         self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         self.transfersManager = managersProvider.getTransferManager()
         self.topUpManager = managersProvider.getPhoneTopUpManager()
-        self.inputMapper = dependenciesResolver.resolve(for: AcceptTopUpTransactionInputMapping.self)
+        self.inputMapper = dependenciesResolver.resolve(for: PerformTopUpTransactionInputMapping.self)
     }
     
     // MARK: Methods
     
     override func executeUseCase(requestValues: PerformTopUpTransactionUseCaseInput) throws -> UseCaseResponse<PerformTopUpTransactionUseCaseOutput, StringErrorOutput> {
-        let transferParameters = inputMapper.map(with: requestValues)
+        guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
+            return .error(.init("userId not exists"))
+        }
+        let transferParameters = inputMapper.mapSendMoneyConfirmationInput(with: requestValues, userId: userId)
         let reloadParameters = ReloadPhoneRequestDTO(operatorId: requestValues.operatorId, topUpNumber: requestValues.recipientNumber, reloadAmount: requestValues.amount)
-        let transferResults = try transfersManager.sendConfirmation(transferParameters)
-        let reloadResults = try topUpManager.reloadPhone(request: reloadParameters)
+        
+        let topupResults = try transfersManager.sendConfirmation(transferParameters)
+            .flatMap({ [weak self] _ -> Result<ReloadPhoneResponseDTO, NetworkProviderError> in
+                guard let self = self else {
+                    return .failure(NetworkProviderError.other)
+                }
+                
+                do {
+                    return try self.topUpManager.reloadPhone(request: reloadParameters)
+                } catch let error as NetworkProviderError {
+                    return .failure(error)
+                } catch {
+                    return .failure(NetworkProviderError.other)
+                }
+            })
 
-        switch (transferResults, reloadResults) {
-        case (.success(_), .success(let reloadResponse)):
+        switch topupResults {
+        case .success(let reloadResponse):
             return .ok(PerformTopUpTransactionUseCaseOutput(reloadSuccessful: reloadResponse.result == topUpSuccessStatus))
-        case (_, .failure(let reloadError)):
-            return .error(.init(reloadError.localizedDescription))
-        case (.failure(let transferError), _):
-            return .error(.init(transferError.localizedDescription))
+        case .failure(let error):
+            return .error(.init(error.localizedDescription))
         }
     }
 }
