@@ -141,8 +141,8 @@ extension NotificationsInboxListPresenter {
                 } else if !response.enabledCategories.contains(.alert) {
                     state = .disableAlerts
                 } else if !response.enabledCategories.contains(.notice) {
-                    state = .disableAlerts
-                }else{
+                    state = .disbleDisableNotice
+                } else {
                     state = .enableAll
                 }
                 self.view?.getNotificationsInboxListView().categoryState = state
