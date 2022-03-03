@@ -8,6 +8,7 @@
 import CoreFoundationLib
 import Foundation
 import UI
+import PLCommons
 
 protocol TopUpConfirmationCoordinatorProtocol: AnyObject, ModuleCoordinator {
     func back()
@@ -36,8 +37,14 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     // MARK: SetUp
     
     private func setupDependencies(with summary: TopUpModel) {
-        self.dependenciesEngine.register(for: AcceptTopUpTransactionInputMapping.self) { _ in
-            return AcceptTopUpTransactionInputMapper()
+        dependenciesEngine.register(for: PLDomesticTransactionParametersGenerable.self) { _ in
+            return PLDomesticTransactionParametersProvider()
+        }
+        dependenciesEngine.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
+            return PLTransactionParametersProvider(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PerformTopUpTransactionInputMapping.self) { resolver in
+            return PerformTopUpTransactionInputMapper(dependenciesResolver: resolver)
         }
         
         self.dependenciesEngine.register(for: TopUpSummaryMapping.self) { _ in
