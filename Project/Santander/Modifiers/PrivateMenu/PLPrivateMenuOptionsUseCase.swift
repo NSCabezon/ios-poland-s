@@ -68,7 +68,10 @@ private extension PLPrivateMenuOptionsUseCase {
     func buildEnabledOptions(_ optionsRepresentable: [PrivateMenuOptionRepresentable],
                              _ notEnabled: [PrivateMenuOptions]) -> [PrivateMenuOptionRepresentable] {
         var availableOption = optionsRepresentable
-        availableOption.removeIfFound { notEnabled.contains($0.type) }
+        availableOption.removeIfFound { option in
+            guard let type = option.type else { return false }
+            return notEnabled.contains(type)
+        }
         return availableOption
     }
     
@@ -105,7 +108,7 @@ private extension PLPrivateMenuOptionsUseCase {
         let imageURL: String?
         let showArrow: Bool
         let isHighlighted: Bool
-        let type: PrivateMenuOptions
+        let type: PrivateMenuOptions?
         let isFeatured: Bool
         let accesibilityIdentifier: String?
         
