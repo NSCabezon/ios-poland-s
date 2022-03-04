@@ -29,7 +29,7 @@ public enum PLGenericError: Equatable {
         case .other(_):
             return localized("generic_error_txt")
         case .applicationNotWorking:
-            return localized("pl_onboarding_alert_genFailedText")
+            return localized("pl_login_alert_applicationNotWorking")
         case .unauthorized:
             return localized("pl_login_alert_loginError")
         case .maintenance:

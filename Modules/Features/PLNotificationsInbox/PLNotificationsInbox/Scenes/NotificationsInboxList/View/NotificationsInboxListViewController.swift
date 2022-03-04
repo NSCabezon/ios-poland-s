@@ -124,6 +124,7 @@ private extension NotificationsInboxListViewController {
     
     @objc private func markAsRead() {
         presenter.postPushSetAllStatus() { [weak self] in
+            self?.lastPushId = nil
             self?.getData(self?.selectedPushCategories ?? EnabledPushCategorie.allCases, self?.selectedPushStatuses ?? NotificationStatus.allCases)
         }
     }
@@ -142,7 +143,7 @@ private extension NotificationsInboxListViewController {
     func postPushListPageSize(_ postPushListPageSizeDTO: PLPostPushListPageSizeUseCaseInput) {
         self.presenter.postPushListPageSize(postPushListPageSizeDTO: postPushListPageSizeDTO, completion: { [weak self] response in
             self?.isLoadingNextPage = false
-            if response == nil {
+            if response == nil && self?.getNotificationsInboxListView().listState != .empty {
                 TopAlertController.setup(TopAlertView.self).showAlert(localized("pl_topup_title_alert_error"), alertType: .failure, position: .top)
                 self?.didSelectBack()
             }
@@ -162,6 +163,7 @@ private extension NotificationsInboxListViewController {
     func deleteNotification(_ indexPath: IndexPath) {
         presenter.didDeleteNotification(indexPath, { [weak self] success in
             if success {
+                self?.getUnreadedPushesCount()
                 TopAlertController.setup(TopAlertView.self).showAlert(localized("pl_alerts_text_messageDeleted"), alertType: .info, position: .bottom)
             } else {
                 self?.getData(self?.selectedPushCategories ?? EnabledPushCategorie.allCases, self?.selectedPushStatuses ?? NotificationStatus.allCases)

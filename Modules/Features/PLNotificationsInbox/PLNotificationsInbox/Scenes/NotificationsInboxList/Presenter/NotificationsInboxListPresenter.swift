@@ -152,8 +152,11 @@ extension NotificationsInboxListPresenter {
         })
     }
     
-    func postPushSetAllStatus(completion: @escaping () -> Void) {
-        notificationsUseCaseManager?.postPushSetAllStatus( completion: completion)
+    func postPushSetAllStatus(completion: @escaping () -> Void) {        
+        notificationsUseCaseManager?.postPushSetAllStatus( completion: {
+            self.sections.removeAll()
+            completion()
+        })
     }
     
     public func updatePushList(_ response: PLNotificationListEntity?, _ newData: Bool = false) {
