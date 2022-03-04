@@ -18,6 +18,8 @@ public protocol PLTransfersRepository: TransfersRepository {
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
     func getAccountsForDebit() -> AnyPublisher<[AccountRepresentable], Error>
     func getAccountsForCredit() -> AnyPublisher<[AccountRepresentable], Error>
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> //quitar?
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConfirmationTransferDTO, Error>
 }
 
 public extension PLTransfersRepository {
@@ -36,6 +38,17 @@ public extension PLTransfersRepository {
         return Future { promise in
             do {
                 promise(try getAccountsForCredit())
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConfirmationTransferDTO, Error> {
+        return Future { promise in
+            do {
+                promise(try sendConfirmation(input: input))
             } catch let error {
                 promise(.failure(error))
             }

@@ -33,6 +33,16 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        let response = try bsanTransferManager.sendConfirmation(input)
+        switch response {
+        case .success(let confirmationTransferDTO):
+            return .success(confirmationTransferDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
         let iban = input.destinationAccount
         let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban
