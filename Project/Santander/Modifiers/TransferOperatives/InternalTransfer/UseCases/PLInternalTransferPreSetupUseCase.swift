@@ -29,25 +29,33 @@ struct PLInternalTransferPreSetupUseCase {
 }
 
 extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
-    func fetchPreSetup() -> AnyPublisher<PreSetupData, Error> {
+    func fetchPreSetup() -> AnyPublisher<PreSetupData, InternalTransferOperativeError> {
         Publishers.Zip3(
             globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
             transfersRepository.getAccountsForDebit(),
             transfersRepository.getAccountsForCredit()
         )
-            .tryMap { response -> PreSetupData in
-                let debitAccounts = response.1
-                let creditAccounts = response.2
-                let notVisiblesPGAccounts = response.0.accounts.filter { $0.isVisible == false }
+            .mapError { _ in
+                return InternalTransferOperativeError.network
+            }
+            .flatMap { globalPosition, debitAccounts, creditAccounts -> AnyPublisher<PreSetupData, InternalTransferOperativeError> in
+                let notVisiblesPGAccounts = globalPosition.accounts.filter { $0.isVisible == false }
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                let (originAccountsVisibles, originAccountsNotVisibles) = try originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                let (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount) = originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
+                    return Fail(error: InternalTransferOperativeError.minimunAccounts).eraseToAnyPublisher()
+                }
+                if creditCardAccountConditions(notOriginCreditCardAccount) == false {
+                    return Fail(error: InternalTransferOperativeError.creditCardAccounts).eraseToAnyPublisher()
+                }
                 let (destinationAccountsVisibles, destinationAccountsNotVisibles) = destinationAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
-                return PreSetupData(originAccountsVisibles: originAccountsVisibles,
+                let data = PreSetupData(originAccountsVisibles: originAccountsVisibles,
                                     originAccountsNotVisibles: originAccountsNotVisibles,
                                     destinationAccountsVisibles: destinationAccountsVisibles,
                                     destinationAccountsNotVisibles: destinationAccountsNotVisibles)
+                return Just(data).setFailureType(to: InternalTransferOperativeError.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
@@ -70,7 +78,7 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
         }
     }
     
-    func originAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) throws -> ([AccountRepresentable], [AccountRepresentable]) {
+    func originAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable], [AccountRepresentable]) {
         var originAccountsVisibles: [AccountRepresentable] = []
         var originAccountsNotVisibles: [AccountRepresentable] = []
         var notOriginCreditCardAccount: [AccountRepresentable] = []
@@ -88,13 +96,7 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
             }
             originAccountsNotVisibles.append(account)
         }
-        if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
-            throw NSError()
-        }
-        if creditCardAccountConditions(notOriginCreditCardAccount) == false {
-            throw NSError()
-        }
-        return (originAccountsVisibles, originAccountsNotVisibles)
+        return (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount)
     }
     
     func destinationAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable]) {
