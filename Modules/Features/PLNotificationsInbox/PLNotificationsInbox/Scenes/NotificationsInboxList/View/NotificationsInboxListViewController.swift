@@ -142,7 +142,7 @@ private extension NotificationsInboxListViewController {
     func postPushListPageSize(_ postPushListPageSizeDTO: PLPostPushListPageSizeUseCaseInput) {
         self.presenter.postPushListPageSize(postPushListPageSizeDTO: postPushListPageSizeDTO, completion: { [weak self] response in
             self?.isLoadingNextPage = false
-            if response == nil {
+            if response == nil && self?.getNotificationsInboxListView().listState != .empty {
                 TopAlertController.setup(TopAlertView.self).showAlert(localized("pl_topup_title_alert_error"), alertType: .failure, position: .top)
                 self?.didSelectBack()
             }
