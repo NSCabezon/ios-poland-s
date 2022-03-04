@@ -413,6 +413,10 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: OpinatorManagerModifier.self) { _ in
             PLOpinatorManagerModifier()
         }
+
+        self.dependencieEngine.register(for: PLCardsHomeModuleCoordinatorApplePayProtocol.self) { resolver in
+            return PLCardsHomeModuleCoordinatorApplePay(dependenciesResolver: resolver)
+        }
     }
 }
 

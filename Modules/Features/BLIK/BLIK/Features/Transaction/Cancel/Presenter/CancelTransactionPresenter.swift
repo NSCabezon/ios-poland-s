@@ -2,7 +2,7 @@ import CoreFoundationLib
 
 protocol CancelTransactionPresenterProtocol: MenuTextWrapperProtocol {
     var view: CancelTransactionViewProtocol? { get set }
-    var cancelationData: TransactionCancelationData { get }
+    func getViewModel() -> CancelTransactionViewModel
     func didPressDeleteAlias()
     func didPressBack()
 }
@@ -37,6 +37,29 @@ extension CancelTransactionPresenter: CancelTransactionPresenterProtocol {
     
     func didPressBack() {
         coordinator.goToGlobalPosition()
+    }
+    
+    func getViewModel() -> CancelTransactionViewModel {
+        let bottomButtonsArrangement: CancelTransactionViewModel.BottomButtonsArrangement = {
+            switch cancelationData.aliasContext {
+            case .transactionPerformedWithoutAlias:
+                return .onlyBackButton
+            case let .transactionPerformedWithAlias(alias):
+                switch alias.type {
+                case .hce, .md:
+                    return .onlyBackButton
+                case .cookie:
+                    return .backAndDeleteAliasButtons(localized("pl_blik_button_deleteBrowser"))
+                case .uid:
+                    return .backAndDeleteAliasButtons(localized("pl_blik_button_deleteStore"))
+                }
+            }
+        }()
+        
+        return CancelTransactionViewModel(
+            infoLabelLocalizationKey: cancelationData.cancelType.rawValue,
+            bottomButtonsArrangement: bottomButtonsArrangement
+        )
     }
     
     private func handleFetchedAliases(_ aliases: [BlikAlias]) {

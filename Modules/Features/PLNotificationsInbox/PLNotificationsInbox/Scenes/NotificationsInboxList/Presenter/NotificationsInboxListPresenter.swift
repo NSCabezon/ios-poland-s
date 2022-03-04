@@ -26,6 +26,7 @@ final class NotificationsInboxListPresenter {
     weak var view: NotificationsInboxListViewProtocol?
     let dependenciesResolver: DependenciesResolver
     let dateFormatter = PLTimeFormat.ddMMyyyyDash.createDateFormatter()
+    let dateFormatterForSendTime = PLTimeFormat.ddMMyyyy_HHmmDash.createDateFormatter()
     private lazy var notificationsUseCaseManager: PLNotificationsUseCaseManagerProtocol? = {
         return self.dependenciesResolver.resolve(forOptionalType: PLNotificationsUseCaseManagerProtocol.self)
     }()
@@ -42,6 +43,8 @@ private extension NotificationsInboxListPresenter {
 }
 
 extension NotificationsInboxListPresenter: NotificationsInboxListPresenterProtocol {
+    func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void) {}
+    
     func backButtonSelected() {
         coordinator.goBack()
     }
@@ -106,6 +109,10 @@ extension NotificationsInboxListPresenter {
         notificationsUseCaseManager?.postPushStatus(pushStatus: pushStatus, completion: completion)
     }
     
+    func postPushStatusBeforeLogin(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void) {
+        notificationsUseCaseManager?.postPushStatusBeforeLogin(pushStatus: pushStatus, completion: completion)
+    }
+    
     func getPushById(pushId: Int, completion: @escaping (PLNotificationEntity?) -> Void) {
         notificationsUseCaseManager?.getPushById(pushId: pushId, completion: completion)
     }
@@ -135,8 +142,8 @@ extension NotificationsInboxListPresenter {
                 } else if !response.enabledCategories.contains(.alert) {
                     state = .disableAlerts
                 } else if !response.enabledCategories.contains(.notice) {
-                    state = .disableAlerts
-                }else{
+                    state = .disbleDisableNotice
+                } else {
                     state = .enableAll
                 }
                 self.view?.getNotificationsInboxListView().categoryState = state
@@ -152,11 +159,13 @@ extension NotificationsInboxListPresenter {
     public func updatePushList(_ response: PLNotificationListEntity?, _ newData: Bool = false) {
         let todayHeader = "\(localized("pl_alerts_text_today"))"
         let yestardayHeader = "\(localized("pl_alerts_text_yestarday"))"
-        let sortedDictionay = sort(pushList: response)
+        let result = sort(pushList: response)
+        let pushDictionary = result.0
+        let sortedKeys = result.1
         
         if sections.isEmpty {
-            for key in sortedDictionay.keys {
-                let section = NotificationsInboxListViewSectionViewModel(type: .push, list: sortedDictionay[key] ?? [], headerName: key)
+            for key in sortedKeys {
+                let section = NotificationsInboxListViewSectionViewModel(type: .push, list: pushDictionary[key] ?? [], headerName: key)
                 self.sections.append(section)
             }
             self.view?.getNotificationsInboxListView().listState = (response?.data ?? []).count == 0 ? .empty : .hasNotifications
@@ -165,23 +174,23 @@ extension NotificationsInboxListPresenter {
         }
         
         self.view?.getNotificationsInboxListView().tableView.performBatchUpdates({
-            for key in sortedDictionay.keys {
+            for key in sortedKeys {
                 if let index = self.sections.firstIndex(where: { $0.headerName == todayHeader }) {
-                    setSection(index, key, sortedDictionay)
+                    setSection(index, key, pushDictionary)
                 }
                 
                 if let index = self.sections.firstIndex(where: { $0.headerName == yestardayHeader}) {
-                    setSection(index, key, sortedDictionay)
+                    setSection(index, key, pushDictionary)
                 }
                 
                 if let index = self.sections.firstIndex(where: { $0.headerName == key }) {
-                    setSection(index, key, sortedDictionay)
+                    setSection(index, key, pushDictionary)
                 } else {
-                    let section = NotificationsInboxListViewSectionViewModel(type: .push, list: sortedDictionay[key] ?? [], headerName: key)
+                    let section = NotificationsInboxListViewSectionViewModel(type: .push, list: pushDictionary[key] ?? [], headerName: key)
                     self.sections.append(section)
                     print(sections.count)
                     var indexPaths: [IndexPath] = []
-                    for i in 0 ..< sortedDictionay[key]!.count - 1 {
+                    for i in 0 ..< pushDictionary[key]!.count - 1 {
                         indexPaths.append(IndexPath(row: i, section: sections.count - 1))
                     }
                     self.view?.getNotificationsInboxListView().tableView.insertSections(IndexSet(integer: sections.count - 1), with: .automatic)
@@ -208,33 +217,59 @@ extension NotificationsInboxListPresenter {
     
     public func formatDate(date: String) -> String? {
         guard let dateObj = PLTimeFormat.YYYYMMDD_HHmmssSSSZ.createDateFormatter().date(from: date) else { return nil}
-        return dateFormatter.string(from: dateObj)
+        return dateFormatterForSendTime.string(from: dateObj)
     }
     
     public func sectionTitleFor(date: Date) -> String? {
         return self.dateFormatter.string(from: date)
     }
     
-    private func sort(pushList: PLNotificationListEntity?) -> [String: [PLNotificationListSectionViewModel]]  {
+    public func sectionTitleFor(date: String) -> String? {
+        guard let dateObj = PLTimeFormat.YYYYMMDD_HHmmssSSSZ.createDateFormatter().date(from: date) else { return nil}
+        return self.dateFormatter.string(from: dateObj)
+    }
+    
+    private func sort(pushList: PLNotificationListEntity?) -> ([String: [PLNotificationListSectionViewModel]], [String])  {
         let array = pushList?.data.map({ notification -> PLNotificationListSectionViewModel in
-            return PLNotificationListSectionViewModel(notification: notification, sendTitleDate: formatDate(date: notification.sendTime) ?? "")
+            return PLNotificationListSectionViewModel(notification: notification, sendTitleDate: sectionTitleFor(date: notification.sendTime) ?? "")
         })
         
         let groupedByDay = Dictionary(grouping: array ?? [], by: { $0.sendTitleDate })
-        
         var sortedDictionay: [String: [PLNotificationListSectionViewModel]] = [:]
         let todayHeader = "\(localized("pl_alerts_text_today"))"
         let yestardayHeader = "\(localized("pl_alerts_text_yestarday"))"
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "dd-MM-yyyy"
+        var sortedKeys = groupedByDay.keys.sorted {
+            guard
+                let d1 = dateFormat.date(from: $0),
+                let d2 = dateFormat.date(from: $1)
+            else {
+                return false
+            }
+            return d1 > d2
+        }
+        
         groupedByDay.forEach { key, value in
             if key == sectionTitleFor(date: Date()) {
                 sortedDictionay.updateValue(value, forKey: todayHeader)
+                if let index = sortedKeys.firstIndex(where: { k in
+                    k == key
+                }) {
+                    sortedKeys[index] = todayHeader
+                }
             } else if key == sectionTitleFor(date: Date().dayBefore) {
                 sortedDictionay.updateValue(value, forKey: yestardayHeader)
+                if let index = sortedKeys.firstIndex(where: { k in
+                    k == key
+                }) {
+                    sortedKeys[index] = yestardayHeader
+                }
             } else {
                 sortedDictionay.updateValue(value, forKey: key)
             }
         }
-        return sortedDictionay
+        return (sortedDictionay, sortedKeys)
     }
 }
 

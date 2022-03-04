@@ -8,6 +8,7 @@ protocol CancelTransactionViewProtocol: AnyObject, ErrorPresentable, LoaderPrese
 
 final class CancelTransactionViewController: UIViewController, CancelTransactionViewProtocol {
     private let presenter: CancelTransactionPresenterProtocol
+    private let viewModel: CancelTransactionViewModel
     
     private let imageView = UIImageView(image: Images.error)
     private let infoLabel = UILabel()
@@ -17,6 +18,7 @@ final class CancelTransactionViewController: UIViewController, CancelTransaction
     
     init(presenter: CancelTransactionPresenterProtocol) {
         self.presenter = presenter
+        self.viewModel = presenter.getViewModel()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,7 +36,6 @@ private extension CancelTransactionViewController {
     func setUp() {
         prepareStyles()
         prepareNavigationBar()
-        prepareBottomButtonsTargets()
         prepareLayout()
         setIdentifiers()
     }
@@ -52,7 +53,7 @@ private extension CancelTransactionViewController {
         view.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
         infoLabel.configureText(
-            withKey: presenter.cancelationData.cancelType.rawValue,
+            withKey: viewModel.infoLabelLocalizationKey,
             andConfiguration: LocalizedStylableTextConfiguration(
                 font: UIFont.santander(
                     family: .headline,
@@ -69,14 +70,16 @@ private extension CancelTransactionViewController {
     
     func prepareLayout() {
         let bottomView: UIView = {
-            switch presenter.cancelationData.aliasContext {
-            case .transactionPerformedWithoutAlias:
+            switch viewModel.bottomButtonsArrangement {
+            case .onlyBackButton:
                 dualBottomButtons.isHidden = true
                 singleBottomButton.isHidden = false
+                prepareBackButton()
                 return singleBottomButton
-            case .transactionPerformedWithAlias:
+            case let .backAndDeleteAliasButtons(deleteAliasText):
                 dualBottomButtons.isHidden = false
                 singleBottomButton.isHidden = true
+                prepareBackAndDeleteAliasButtons(with: deleteAliasText)
                 return dualBottomButtons
             }
         }()
@@ -106,8 +109,14 @@ private extension CancelTransactionViewController {
         ])
     }
     
-    func prepareBottomButtonsTargets() {
-        let deleteAliasViewModel = BottomButtonViewModel(title: localized("pl_blik_button_deleteStore")) { [weak self] in
+    func prepareBackButton() {
+        singleBottomButton.configure(title: localized("pl_blik_button_back")) { [weak self] in
+            self?.presenter.didPressBack()
+        }
+    }
+    
+    func prepareBackAndDeleteAliasButtons(with deleteAliasText: String) {
+        let deleteAliasViewModel = BottomButtonViewModel(title: deleteAliasText) { [weak self] in
             self?.presenter.didPressDeleteAlias()
         }
         let backButtonViewModel = BottomButtonViewModel(title: localized("pl_blik_button_back")) { [weak self] in
@@ -118,10 +127,6 @@ private extension CancelTransactionViewController {
             firstButtonViewModel: deleteAliasViewModel,
             secondButtonViewModel: backButtonViewModel
         )
-        
-        singleBottomButton.configure(title: localized("pl_blik_button_back")) { [weak self] in
-            self?.presenter.didPressBack()
-        }
     }
     
     func setIdentifiers() {

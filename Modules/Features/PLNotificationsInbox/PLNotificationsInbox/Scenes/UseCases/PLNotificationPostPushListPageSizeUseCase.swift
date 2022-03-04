@@ -18,7 +18,9 @@ public final class PLNotificationPostPushListPageSizeUseCase: UseCase<PLPostPush
 
     public override func executeUseCase(requestValues: PLPostPushListPageSizeUseCaseInput) throws -> UseCaseResponse<PostPushListPageSizeUseCaseOkOutput, PLUseCaseErrorOutput<NotificationsErrorType>> {
         let globalPosition: GlobalPositionRepresentable = dependenciesResolver.resolve(for: GlobalPositionRepresentable.self)
-        guard let userId: Int = Int(globalPosition.userId ?? "") else { fatalError() }
+        guard let userId: Int = Int(globalPosition.userId ?? "") else {
+            return .error(self.handle(error: NetworkProviderError.other))
+        }
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         
         let parameters = NotificationPostPushListPageSizeParameters(

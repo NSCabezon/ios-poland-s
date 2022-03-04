@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		009046D3272AFD9300072AF8 /* PLWebViewURLRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009046D2272AFD9300072AF8 /* PLWebViewURLRepository.swift */; };
+		04291CFD27BFBDB80072A086 /* PLAddToApplePayConfirmationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04291CFC27BFBDB80072A086 /* PLAddToApplePayConfirmationUseCase.swift */; };
 		04304E2B276773C900AF0A99 /* PLPrivateMenuModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */; };
 		04741875279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */; };
 		04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */; };
@@ -15,7 +16,10 @@
 		04BAA0D227AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0D027AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift */; };
 		04BAA0D327AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0D127AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift */; };
 		04BAA0D527AAB32600AFDC2E /* PLAccountOperativeIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0D427AAB32600AFDC2E /* PLAccountOperativeIdentifier.swift */; };
+		04C4323C27CDFABA006D1F29 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C4323B27CDFABA006D1F29 /* PassKit.framework */; };
 		04D14CA5277C60F7005A2307 /* PLInboxNotificationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D14CA4277C60F7005A2307 /* PLInboxNotificationCoordinator.swift */; };
+		04E8A3B327BD14DA00CDA921 /* PLApplePayEnrollmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8A3B027BD14D900CDA921 /* PLApplePayEnrollmentManager.swift */; };
+		04E8A3B527BD14DA00CDA921 /* PLCardsHomeModuleCoordinatorApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8A3B227BD14D900CDA921 /* PLCardsHomeModuleCoordinatorApplePay.swift */; };
 		0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */; };
 		0D0340B726C5382E00CB72BF /* OtherOperativesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */; };
 		0D057D3627A82A28004EADCA /* PLLoanTransactionActionsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D057D3527A82A28004EADCA /* PLLoanTransactionActionsModifier.swift */; };
@@ -268,6 +272,7 @@
 /* Begin PBXFileReference section */
 		0026FAAFAA21549EE2D0E66A /* Pods-Santander.preprod-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-release.xcconfig"; sourceTree = "<group>"; };
 		009046D2272AFD9300072AF8 /* PLWebViewURLRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLWebViewURLRepository.swift; sourceTree = "<group>"; };
+		04291CFC27BFBDB80072A086 /* PLAddToApplePayConfirmationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAddToApplePayConfirmationUseCase.swift; sourceTree = "<group>"; };
 		04304E2A276773C900AF0A99 /* PLPrivateMenuModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuModifier.swift; sourceTree = "<group>"; };
 		04741874279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAppStoreInformationUseCase.swift; sourceTree = "<group>"; };
 		04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLWebViewCoordinatorNavigator.swift; sourceTree = "<group>"; };
@@ -275,7 +280,10 @@
 		04BAA0D027AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProductActionsShortcutsUseCase.swift; sourceTree = "<group>"; };
 		04BAA0D127AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductActionsShortcutsMatrix.swift; sourceTree = "<group>"; };
 		04BAA0D427AAB32600AFDC2E /* PLAccountOperativeIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOperativeIdentifier.swift; sourceTree = "<group>"; };
+		04C4323B27CDFABA006D1F29 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		04D14CA4277C60F7005A2307 /* PLInboxNotificationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInboxNotificationCoordinator.swift; sourceTree = "<group>"; };
+		04E8A3B027BD14D900CDA921 /* PLApplePayEnrollmentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLApplePayEnrollmentManager.swift; sourceTree = "<group>"; };
+		04E8A3B227BD14D900CDA921 /* PLCardsHomeModuleCoordinatorApplePay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardsHomeModuleCoordinatorApplePay.swift; sourceTree = "<group>"; };
 		0D02AFF126F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountTransactionDetailShareableInfo.swift; sourceTree = "<group>"; };
 		0D0340B626C5382E00CB72BF /* OtherOperativesModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOperativesModifier.swift; sourceTree = "<group>"; };
 		0D057D3527A82A28004EADCA /* PLLoanTransactionActionsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoanTransactionActionsModifier.swift; sourceTree = "<group>"; };
@@ -571,6 +579,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C4323C27CDFABA006D1F29 /* PassKit.framework in Frameworks */,
 				D27C31ED0663323E0C7994AB /* Pods_Santander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,6 +602,16 @@
 				04BAA0D127AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift */,
 			);
 			path = ProductActionsShortcuts;
+			sourceTree = "<group>";
+		};
+		04E8A3AF27BD14D900CDA921 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				04E8A3B027BD14D900CDA921 /* PLApplePayEnrollmentManager.swift */,
+				04291CFC27BFBDB80072A086 /* PLAddToApplePayConfirmationUseCase.swift */,
+				04E8A3B227BD14D900CDA921 /* PLCardsHomeModuleCoordinatorApplePay.swift */,
+			);
+			path = ApplePay;
 			sourceTree = "<group>";
 		};
 		0D0340B526C5381000CB72BF /* OtherOperatives */ = {
@@ -827,6 +846,7 @@
 		342822218E46CAD9AC5F3560 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04C4323B27CDFABA006D1F29 /* PassKit.framework */,
 				9A17194677FA9103CB795DDB /* Pods_Santander.framework */,
 				9390EDA32C56F35B4765D03A /* Pods_SantanderTests.framework */,
 			);
@@ -1041,13 +1061,14 @@
 		447D7D2D268F002700F9A70D /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */,
-				A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */,
-				A9EF0DA3271D78B700A1604B /* PLContextDTO.swift */,
+				04E8A3AF27BD14D900CDA921 /* ApplePay */,
 				0DA4CC8A269C564A008E2E4F /* CardBoarding */,
 				26328A8627070CA500D1318D /* Detail */,
+				A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */,
 				447D7D2E268F004100F9A70D /* Home */,
 				7E1B7DDC27216100002CC226 /* OnOff */,
+				A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */,
+				A9EF0DA3271D78B700A1604B /* PLContextDTO.swift */,
 				D2F5C33326E6262A002431DE /* Search */,
 				D5B9E49A2706CEEF0043196C /* TransactionDetails */,
 			);
@@ -1990,6 +2011,7 @@
 				7E9939C326B950BC00F1040D /* AddBanksPGFrequentOperativeOption.swift in Sources */,
 				1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */,
 				0DAA4D5926C3E833005A921C /* PLMakeDonationOperative.swift in Sources */,
+				04291CFD27BFBDB80072A086 /* PLAddToApplePayConfirmationUseCase.swift in Sources */,
 				0D38C7E726DE3CB70062C02C /* PLRepaymentOperative.swift in Sources */,
 				A9EF0DA4271D78B800A1604B /* PLContextDTO.swift in Sources */,
 				0D9ACF2D27352416001D6D51 /* GetGPLoanOperativeModifier.swift in Sources */,
@@ -2137,6 +2159,7 @@
 				EFFDC0CA27355DE800978668 /* IbanValidationSendMoneyUseCase.swift in Sources */,
 				BB1D29F326EA336D00684846 /* AppModifiers.swift in Sources */,
 				04BAA0CE27AA9B4300AFDC2E /* PLCardActionFactory.swift in Sources */,
+				04E8A3B527BD14DA00CDA921 /* PLCardsHomeModuleCoordinatorApplePay.swift in Sources */,
 				0D348BC82754D1590042B7A0 /* PLAccountAvailableBalanceModifier.swift in Sources */,
 				7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */,
 				A3DBFBDA27CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift in Sources */,
@@ -2153,6 +2176,7 @@
 				9C0BFBE526F8C5B0000F2C8E /* SendMoneyCoordinator.swift in Sources */,
 				DBD0EDF527983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift in Sources */,
 				0D13A93326E91CFB00359D5B /* PLSwitchBetweenAccountOperative.swift in Sources */,
+				04E8A3B327BD14DA00CDA921 /* PLApplePayEnrollmentManager.swift in Sources */,
 				0D7CA2CD26B8079C007E0C10 /* PLInboxActionBuilder.swift in Sources */,
 				B7D59A3F27A00E6900E2D777 /* PLSmallButtonType.swift in Sources */,
 			);

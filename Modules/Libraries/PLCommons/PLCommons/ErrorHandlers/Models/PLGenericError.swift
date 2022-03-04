@@ -7,12 +7,13 @@
 
 import CoreFoundationLib
 
-public enum PLGenericError {
+public enum PLGenericError: Equatable {
     
     case noConnection
     case unknown
     case other(_ errorTypeDescription: String)
     case applicationNotWorking
+    case maintenance
     case unauthorized
     
     public var rawValue: String {
@@ -31,6 +32,8 @@ public enum PLGenericError {
             return localized("pl_onboarding_alert_genFailedText")
         case .unauthorized:
             return localized("pl_login_alert_loginError")
+        case .maintenance:
+            return localized("generic_error_txt")
         }
     }
 }

@@ -9,6 +9,8 @@ import Foundation
 import CoreFoundationLib
 import LoginCommon
 import PLCommons
+import PLCommonOperatives
+import UI
 
 public enum PLRememberedLoginBackgroundType {
     case assets(name: String)
@@ -27,6 +29,7 @@ final class PLBeforeLoginPresenter {
     weak var view: PLBeforeLoginViewControllerProtocol?
     internal let dependenciesResolver: DependenciesResolver
     var isDeprecatedVersion:Bool = false
+    var isMaintenance:Bool = false
 
     private var beforeLoginUseCase: PLBeforeLoginUseCase {
         self.dependenciesResolver.resolve(for: PLBeforeLoginUseCase.self)
@@ -101,6 +104,7 @@ private extension PLBeforeLoginPresenter {
         })
         .onSuccess({ [weak self] result in
             guard let self = self else { return }
+            self.isMaintenance = false
             if configuration.userIdentifier == "" {
                 configuration.userIdentifier = String(result.userId)
             }
@@ -109,8 +113,15 @@ private extension PLBeforeLoginPresenter {
             self.navigate(configuration: configuration)
         })
         .onError({[weak self] error in
-            self?.view?.loadDidFinish()
+            self?.view?.loadDidFinish()            
+            if case .error(let err) = error {
+                if err?.genericError == .maintenance {
+                    self?.showMaintenanceWebView()
+                    return
+                }
+            }
             self?.handleError(error)
+            
         })
     }
 }
@@ -121,7 +132,7 @@ extension PLBeforeLoginPresenter: PLBeforeLoginPresenterProtocol {
     }
     
     func viewDidAppear() {
-        guard isDeprecatedVersion else { return }
+        guard isDeprecatedVersion || isMaintenance else { return }
         self.validateVersionAndUser()
     }
     
@@ -141,6 +152,24 @@ extension PLBeforeLoginPresenter: PLBeforeLoginPresenterProtocol {
     func openAppStore() {
         guard let viewController = self.view as? UIViewController else { return }
         appStoreNavigator.openAppStore(presenterViewController: viewController)
+    }
+    
+    func showMaintenanceWebView(){
+        isMaintenance = true
+        let webViewCoordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
+        let configuration = BasePLWebConfiguration(
+            initialURL: "https://www.centrum24.pl/przerwa/mobile_sa_zaslepka.html",
+            httpMethod: .get,
+            bodyParameters: [:],
+            closingURLs: ["app://close"],
+            webToolbarTitleKey: nil,
+            pdfToolbarTitleKey: nil,
+            isFullScreenEnabled: false,
+            showRightCloseNavigationItem: true,
+            showBackNavigationItem: false
+        )
+        let handler = PLWebviewCustomLinkHandler(configuration: configuration)
+        webViewCoordinator.showWebView(handler: handler)
     }
 }
 
