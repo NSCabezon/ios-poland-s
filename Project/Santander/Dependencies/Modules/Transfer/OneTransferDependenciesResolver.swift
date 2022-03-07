@@ -24,6 +24,6 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     }
     
     func resolveCustomSendMoneyActionCoordinator() -> BindableCoordinator {
-        return PLOneTransferHomeActionsCoordinator()
+        return PLOneTransferHomeActionsCoordinator(transferExternalResolver: self)
     }
 }
