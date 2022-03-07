@@ -26,7 +26,7 @@ final class NotificationsInboxListPresenter {
     weak var view: NotificationsInboxListViewProtocol?
     let dependenciesResolver: DependenciesResolver
     let dateFormatter = PLTimeFormat.ddMMyyyyDash.createDateFormatter()
-    let dateFormatterForSendTime = PLTimeFormat.ddMMyyyy_HHmmDash.createDateFormatter()
+    let dateFormatterForSendTime = PLTimeFormat.ddMMyyyy_HHmmDotted.createDateFormatter()
     private lazy var notificationsUseCaseManager: PLNotificationsUseCaseManagerProtocol? = {
         return self.dependenciesResolver.resolve(forOptionalType: PLNotificationsUseCaseManagerProtocol.self)
     }()
