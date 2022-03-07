@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyTransferTypeErrorView" customModule="PL_DEV_0_4_9" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyTransferTypeErrorView" customModule="Santander" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="gmF-Dt-dJz" id="AxM-fu-ejg"/>
                 <outlet property="descriptionLabel" destination="mcd-fl-YsV" id="gz6-Fn-fyE"/>
@@ -65,7 +65,6 @@
                         <constraint firstItem="gmF-Dt-dJz" firstAttribute="top" secondItem="mcd-fl-YsV" secondAttribute="bottom" constant="24" id="R4I-Z9-Pak"/>
                         <constraint firstItem="mcd-fl-YsV" firstAttribute="leading" secondItem="aKd-7h-bOt" secondAttribute="leading" constant="20" id="aXc-Da-kXU"/>
                         <constraint firstAttribute="trailing" secondItem="93X-1i-Sfz" secondAttribute="trailing" constant="24" id="aif-L8-xaw"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="286" id="jxZ-ta-MP9"/>
                         <constraint firstItem="mKM-7M-glo" firstAttribute="centerX" secondItem="aKd-7h-bOt" secondAttribute="centerX" id="oeC-z1-Mk3"/>
                         <constraint firstItem="93X-1i-Sfz" firstAttribute="leading" secondItem="aKd-7h-bOt" secondAttribute="leading" constant="24" id="qO1-a2-szI"/>
                         <constraint firstItem="93X-1i-Sfz" firstAttribute="top" secondItem="mKM-7M-glo" secondAttribute="bottom" constant="20" id="ts9-iW-bag"/>
