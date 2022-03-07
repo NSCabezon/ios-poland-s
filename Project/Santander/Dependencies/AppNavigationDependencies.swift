@@ -26,6 +26,7 @@ import Loans
 import Cards
 import ZusTransfer
 import GlobalPosition
+import ZusSMETransfer
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -36,11 +37,13 @@ final class AppNavigationDependencies {
     private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: (self.drawer.currentRootViewController as? UINavigationController)!)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
     private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+    private let moduleDependencies: ModuleDependencies
     
-    init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector) {
+    init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector, moduleDependencies: ModuleDependencies) {
         self.drawer = drawer
         self.dependenciesEngine = dependenciesEngine
         self.appSideMenuNavigationDependencies = AppSideMenuNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine)
+        self.moduleDependencies = moduleDependencies
     }
     
     func registerDependencies() {
@@ -132,6 +135,9 @@ final class AppNavigationDependencies {
                 navigationController: self.drawer.currentRootViewController as? UINavigationController,
                 validationMask: repository.get()?.zusTransfer?.mask
             )
+        }
+        dependenciesEngine.register(for: ZusSMETransferFormCoordinator.self) { [moduleDependencies] _ in
+            moduleDependencies.zusSMETransferFormCoordinator()
         }
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)

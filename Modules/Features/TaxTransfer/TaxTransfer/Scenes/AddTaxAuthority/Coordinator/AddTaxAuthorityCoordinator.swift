@@ -46,13 +46,19 @@ private extension AddTaxAuthorityCoordinator {
             return self
         }
         
+        dependenciesEngine.register(for: AddTaxAuthorityViewModelMapping.self) { _ in
+            return AddTaxAuthorityViewModelMapper()
+        }
+        
         dependenciesEngine.register(for: AddTaxAuthorityPresenterProtocol.self) { resolver in
             return AddTaxAuthorityPresenter(dependenciesResolver: resolver)
         }
         
         dependenciesEngine.register(for: AddTaxAuthorityViewController.self) { resolver in
-            let presenter = resolver.resolve(for: AddTaxAuthorityPresenterProtocol.self)
-            return AddTaxAuthorityViewController(presenter: presenter)
+            var presenter = resolver.resolve(for: AddTaxAuthorityPresenterProtocol.self)
+            let controller = AddTaxAuthorityViewController(presenter: presenter)
+            presenter.view = controller
+            return controller
         }
     }
 }

@@ -29,6 +29,10 @@ final class EditableTaxAccountView: UIView {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     
+    func setAccountNumber(_ number: String?) {
+        accountTextField.textField.setText(number)
+    }
+    
     func setInvalidFieldMessage(_ message: String?) {
         if let message = message {
             accountTextField.showError(message)
