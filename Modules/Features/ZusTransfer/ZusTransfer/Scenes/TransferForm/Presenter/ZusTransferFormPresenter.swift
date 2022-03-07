@@ -1,6 +1,7 @@
 import CoreFoundationLib
 import PLUI
 import PLCommons
+import PLCommonOperatives
 
 protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransferFormAccountSelectable {
     var view: ZusTransferFormViewProtocol? { get set }
@@ -16,6 +17,7 @@ protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransfe
     func showRecipientSelection()
     func getAccountRequiredLength() -> Int
     func clearForm()
+    func reloadAccounts()
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -126,6 +128,45 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     
     func clearForm() {
         transferFormViewModel = nil
+    }
+    
+    func reloadAccounts() {
+        view?.showLoader()
+        Scenario(
+            useCase: GetAccountsForDebitUseCase(
+                transactionType: .zusTransfer,
+                dependenciesResolver: dependenciesResolver
+            )
+        )
+        .execute(on: dependenciesResolver.resolve())
+        .onSuccess { [weak self] accounts in
+            guard let self = self else { return }
+            self.view?.hideLoader(completion: {
+                if accounts.isEmpty {
+                    self.showErrorView()
+                    return
+                }
+                self.accounts = accounts
+                if !accounts.contains(where: { $0.number == self.selectedAccountNumber }) {
+                    self.selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
+                }
+                let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+                let models = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: self.selectedAccountNumber) })
+                self.coordinator.updateAccounts(accounts: accounts)
+                self.view?.reloadAccountsComponent(with: models)
+            })
+        }
+        .onError { [weak self] _ in
+            self?.view?.hideLoader(completion: {
+                self?.showErrorView()
+            })
+        }
+    }
+    
+    private func showErrorView() {
+        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
+            self?.coordinator.closeProcess()
+        })
     }
 }
 

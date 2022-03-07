@@ -18,6 +18,7 @@ final class ZusTransferSummaryMapper: ZusTransferSummaryMapping {
         let amount = abs(Decimal(confirmationTransferDto.debitAmountData?.amount ?? 0))
         let currency = CurrencyType(rawValue: confirmationTransferDto.debitAmountData?.currency ?? CurrencyType.złoty.name)
         let accountNumber = IBANFormatter.format(iban: confirmationTransferDto.debitAccountData?.accountNo)
+        let recipientAccountNumber = IBANFormatter.format(iban: confirmationTransferDto.creditAccountData?.accountNo)
         return .init(
             amount: amount,
             currency: currency ?? .złoty,
@@ -25,6 +26,7 @@ final class ZusTransferSummaryMapper: ZusTransferSummaryMapping {
             accountName: confirmationTransferDto.debitAccountData?.accountName ?? "",
             accountNumber: accountNumber,
             recipientName: confirmationTransferDto.creditAccountData?.accountName ?? "",
+            recipientAccountNumber: recipientAccountNumber,
             dateString: formattedString ?? "",
             transferType: AcceptDomesticTransactionParameters.TransferType(
                 rawValue: confirmationTransferDto.transferType ?? ""

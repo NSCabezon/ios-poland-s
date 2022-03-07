@@ -30,6 +30,8 @@ public extension PLNotificationsUseCaseErrorHandlerProtocol {
             return PLUseCaseErrorOutput(genericError: .other("UNPROCESSABLE_ENTITY"), httpErrorCode: error.getErrorCode())
         case .other:
             return PLUseCaseErrorOutput(genericError: .applicationNotWorking, httpErrorCode: error.getErrorCode())
+        case .maintenance:
+            return PLUseCaseErrorOutput(genericError: .maintenance, httpErrorCode: error.getErrorCode())        
         case .error(let err):
             switch error.getErrorCode() {
             case 500, 510:

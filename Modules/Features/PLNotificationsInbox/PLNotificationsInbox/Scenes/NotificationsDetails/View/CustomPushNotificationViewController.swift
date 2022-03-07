@@ -40,7 +40,7 @@ class CustomPushNotificationViewController: UIViewController, WKUIDelegate {
 
 extension CustomPushNotificationViewController: CustomPushNotificationViewProtocol {
    
-    func openHtml(_ html: String) {
+    func openHtml(_ html: String) {        
         self.webView.loadHTMLString(html, baseURL: nil)
     }
     
