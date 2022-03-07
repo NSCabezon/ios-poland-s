@@ -48,7 +48,7 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
                     return Fail(error: InternalTransferOperativeError.minimunAccounts).eraseToAnyPublisher()
                 }
                 if creditCardAccountConditions(notOriginCreditCardAccount) == false {
-                    return Fail(error: InternalTransferOperativeError.creditCardAccounts).eraseToAnyPublisher()
+                    return Fail(error: InternalTransferOperativeError.genericError).eraseToAnyPublisher()
                 }
                 let (destinationAccountsVisibles, destinationAccountsNotVisibles) = destinationAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
                 let data = PreSetupData(originAccountsVisibles: originAccountsVisibles,
