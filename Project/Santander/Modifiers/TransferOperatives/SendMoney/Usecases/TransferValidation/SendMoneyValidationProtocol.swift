@@ -51,7 +51,7 @@ private extension SendMoneyValidationProtocol {
                                                       accountSequenceNumber: originAccount.sequencerNo,
                                                       accountType: originAccount.accountType)
         let creditAccountData = ItAccountDataParameters(accountNo: destinationIBAN,
-                                                        accountName: (requestValues.destinationAlias ?? "") + (requestValues.selectedPayee?.payeeAddress ?? ""),
+                                                        accountName: (requestValues.destinationName ?? "") + (requestValues.selectedPayee?.payeeAddress ?? ""),
                                                         accountSequenceNumber: 0,
                                                         accountType: 90)
         var valueDate: String?
@@ -75,7 +75,8 @@ private extension SendMoneyValidationProtocol {
             }
             return try self.executeNotifyDevice(challengeString,
                                                 requestValues: requestValues,
-                                                alias: requestValues.destinationAlias ?? "",
+                                                // TODO: CHANGE TO ALIAS
+                                                alias: requestValues.destinationName ?? "",
                                                 destinationAccountNumber: destinationIbanRepresentable,
                                                 amount: amount)
         case .failure(let error):

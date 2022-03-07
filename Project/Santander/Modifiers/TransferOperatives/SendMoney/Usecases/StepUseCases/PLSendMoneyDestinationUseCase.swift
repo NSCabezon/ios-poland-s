@@ -34,11 +34,12 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
         }
         requestValues.ibanValidationOutput = .data(checkInternalAccountDto)
-        guard let name = requestValues.destinationAlias, name.trim().count > 0 else {
+        guard let name = requestValues.destinationName, name.trim().count > 0 else {
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noToName))
         }
         if requestValues.saveToFavorite {
-            guard let alias = requestValues.destinationAlias, alias.trim().count > 0 else {
+            // TODO: CHANGE TO ALIAS
+            guard let alias = requestValues.destinationName, alias.trim().count > 0 else {
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noAlias))
             }
             let duplicate = requestValues.fullFavorites?.first { return $0.payeeName?.trim() == alias.trim() }
