@@ -8,16 +8,17 @@
 import CoreFoundationLib
 import UI
 import BLIK
+import Transfer
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?
     var onFinish: (() -> Void)?
     var childCoordinators: [Coordinator] = []
     var dataBinding: DataBinding = DataBindingObject()
-    let dependenciesResolver: DependenciesResolver
+    let oldResolver: DependenciesResolver
     
-    init(dependenciesResolver: DependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
+    init(transferExternalResolver: TransferExternalDependenciesResolver) {
+        self.oldResolver = transferExternalResolver.resolve()
     }
     
     func start() {
@@ -26,7 +27,7 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         else { return }
         switch actionType {
         case .blik:
-            let blikCoordinator: BLIKHomeCoordinator = self.dependenciesResolver.resolve()
+            let blikCoordinator: BLIKHomeCoordinator = self.oldResolver.resolve()
             blikCoordinator.start()
         case .anotherBank:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
