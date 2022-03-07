@@ -8,6 +8,7 @@
 import TransferOperatives
 import SANPLLibrary
 import CoreFoundationLib
+import PLCommons
 
 extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {
     func resolve() -> PLTransfersRepository {
@@ -28,5 +29,13 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
 
     func resolve() -> GetInternalTransferDestinationAccountsUseCase {
         return PLGetInternalTransferDestAccountsUseCase()
+    }
+    
+    func resolve() -> CurrencyFormatterProvider {
+        return PLNumberFormatter()
+    }
+    
+    func resolve() -> GetInternalTransferAmountExchangeRateUseCase {
+        PLGetInternalTransferAmountExchangeRateUseCase(dependencies: self)
     }
 }
