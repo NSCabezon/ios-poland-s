@@ -51,7 +51,7 @@ extension BlikLabelSettingsPresenter: BlikLabelSettingsPresenterProtocol {
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                    self?.coordinator.showErrorAlert()
                 })
             }
     }
