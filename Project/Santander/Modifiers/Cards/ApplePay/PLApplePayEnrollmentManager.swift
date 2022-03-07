@@ -15,6 +15,7 @@ import SANPLLibrary
 
 protocol PLApplePayEnrollmentManagerProtocol {
     func enroll(virtualPan: String,
+                sufixPan: String,
                 cardholderName: String)
 }
 
@@ -51,13 +52,13 @@ class PLApplePayEnrollmentManager: NSObject {
 }
 
 extension PLApplePayEnrollmentManager: PLApplePayEnrollmentManagerProtocol {
-    func enroll(virtualPan: String, cardholderName: String) {
+    func enroll(virtualPan: String, sufixPan: String, cardholderName: String) {
 
         self.virtualPan = virtualPan
 
         let configuration = PKAddPaymentPassRequestConfiguration(encryptionScheme: .ECC_V2)
         configuration?.cardholderName = cardholderName
-        configuration?.primaryAccountSuffix = virtualPan.substring(ofLast: 4)
+        configuration?.primaryAccountSuffix = sufixPan
 
         guard
             let paymentConfiguration = configuration,

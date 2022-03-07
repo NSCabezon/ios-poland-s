@@ -67,6 +67,7 @@ private extension BlikLabelSettingsViewController {
         configureTargets()
         configureDelegates()
         configureKeyboardDismissGesture()
+        bottomButton.disableButton()
     }
     
     func configureSubviews() {
