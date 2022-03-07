@@ -90,7 +90,7 @@ extension PLCreditCardRepaymentManager: PLCreditCardRepaymentManagerProtocol {
             .filter { $0.type == "CREDIT" }
             .filter { $0.generalStatus != "CANCELLED" && $0.generalStatus != "INACTIVE" }
             .compactMap { card -> CCRCardDTO? in
-                guard let account = accounts.first(where: { card.relatedAccount == $0.number }) else { return nil }
+                guard let account = accounts.first(where: { card.relatedAccountData?.accountNo == $0.number }) else { return nil }
                 let creditCardAccountDetails: CreditCardDetailsDTO? = try {
                     if let panIdentifier = card.panIdentifier,
                        case let .success(cardDetailDTO) = try getCardDetail(cardId: panIdentifier) {

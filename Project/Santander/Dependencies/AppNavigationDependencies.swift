@@ -39,7 +39,9 @@ final class AppNavigationDependencies {
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
     private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
     private let moduleDependencies: ModuleDependencies
-    
+    private lazy var applePayEnrollmentManager = PLApplePayEnrollmentManager(dependenciesResolver: dependenciesEngine,
+                                                                             navigationController: self.drawer.currentRootViewController as? UINavigationController)
+
     init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector, moduleDependencies: ModuleDependencies) {
         self.drawer = drawer
         self.dependenciesEngine = dependenciesEngine
@@ -149,6 +151,11 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
             return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
+
+        dependenciesEngine.register(for: PLApplePayEnrollmentManagerProtocol.self) { _ in
+            return self.applePayEnrollmentManager
+        }
+
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
         self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in

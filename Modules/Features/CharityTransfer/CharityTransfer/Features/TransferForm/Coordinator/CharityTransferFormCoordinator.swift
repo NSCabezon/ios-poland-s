@@ -8,6 +8,7 @@ protocol CharityTransferFormCoordinatorProtocol {
     func closeProcess()
     func showAccountSelector(selectedAccountNumber: String)
     func showConfirmation(with model: CharityTransferModel)
+    func updateAccounts(accounts: [AccountForDebit])
 }
 
 public protocol FormAccountSelectable: AnyObject {
@@ -17,10 +18,11 @@ public protocol FormAccountSelectable: AnyObject {
 public final class CharityTransferFormCoordinator: ModuleCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let accounts: [AccountForDebit]
+    private var accounts: [AccountForDebit]
     private let selectedAccountNumber: String
     weak var delegate: CharityTransferFormAccountSelectable?
     private let charityTransferSettings: CharityTransferSettings
+    weak var accountUpdateDelegate: CharityTransferAccountSelectorCoordinatorUpdatable?
     
     private let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
     
@@ -46,11 +48,15 @@ public final class CharityTransferFormCoordinator: ModuleCoordinator {
 
 extension CharityTransferFormCoordinator: CharityTransferFormCoordinatorProtocol {
     func pop() {
+        if let accountSelectorViewController = navigationController?.viewControllers.first(where: { $0 is AccountSelectorViewProtocol } ) as? AccountSelectorViewProtocol {
+            let models = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: nil) })
+            accountSelectorViewController.setViewModels(models)
+        }
+
         navigationController?.popViewController(animated: true)
     }
     
     func closeProcess() {
-        //TODO: change po to back to Send Money when will be available
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -71,6 +77,11 @@ extension CharityTransferFormCoordinator: CharityTransferFormCoordinatorProtocol
             model: model
         )
         coordinator.start()
+    }
+    
+    func updateAccounts(accounts: [AccountForDebit]) {
+        self.accounts = accounts
+        accountUpdateDelegate?.updateAccounts(with: accounts)
     }
 }
 

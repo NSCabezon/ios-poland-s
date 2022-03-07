@@ -176,7 +176,7 @@ struct TransfersDataRepository: PLTransfersRepository {
             .eraseToAnyPublisher()
     }
     
-    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
         let response = try bsanTransferManager.getChallenge(parameters: parameters)
         switch response {
         case .success(let transfers):
