@@ -13,6 +13,14 @@ import CoreFoundationLib
 import PrivateMenu
 
 extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
+    func resolve() -> GetOtherServicesSubMenuUseCase {
+        return PLPrivateMenuOtherServicesUseCase(dependencies: self)
+    }
+    
+    func resolve() -> GetMyProductSubMenuUseCase {
+        return PLPrivateMenuMyProductsUseCase(dependencies: self)
+    }
+    
     func resolve() -> LocalAppConfig {
         oldResolver.resolve()
     }

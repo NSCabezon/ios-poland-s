@@ -219,6 +219,8 @@
 		BB29665126CFB5210012599D /* PLGetPersonalBasicInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29665026CFB5200012599D /* PLGetPersonalBasicInfoUseCase.swift */; };
 		BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */; };
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
+		CC43F43827D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */; };
+		CC43F43A27D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43927D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift */; };
 		CC7BDC9627BA85590023B37A /* PrivateMenuExternalDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */; };
 		CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */; };
 		CC8E9F85273BEEE500F967A6 /* BottomSheetErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */; };
@@ -512,6 +514,8 @@
 		BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLMonthlyBalanceUseCase.swift; sourceTree = "<group>"; };
 		C12DA6A3977724B3A1EF154D /* Pods-SantanderTests.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-debug.xcconfig"; sourceTree = "<group>"; };
 		CA16056EE927AFF76FA97838 /* Pods-Santander.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-release.xcconfig"; sourceTree = "<group>"; };
+		CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuMyProductsUseCase.swift; sourceTree = "<group>"; };
+		CC43F43927D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOtherServicesUseCase.swift; sourceTree = "<group>"; };
 		CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMenuExternalDependency.swift; sourceTree = "<group>"; };
 		CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBiometricsViewModel.swift; sourceTree = "<group>"; };
 		CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetErrorView.swift; sourceTree = "<group>"; };
@@ -1602,6 +1606,8 @@
 			children = (
 				CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */,
 				CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */,
+				CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */,
+				CC43F43927D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift */,
 			);
 			path = PrivateMenu;
 			sourceTree = "<group>";
@@ -2125,9 +2131,11 @@
 				BB1D29F326EA336D00684846 /* AppModifiers.swift in Sources */,
 				04BAA0CE27AA9B4300AFDC2E /* PLCardActionFactory.swift in Sources */,
 				0D348BC82754D1590042B7A0 /* PLAccountAvailableBalanceModifier.swift in Sources */,
+				CC43F43A27D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift in Sources */,
 				7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 				0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */,
+				CC43F43827D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift in Sources */,
 				7E1B7DE027216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift in Sources */,
 				CCE45AAF2735208800691E91 /* RemainingTimeViewModel.swift in Sources */,
 				669A37E02717508300C0F272 /* PLEditBudgetHelperModifier.swift in Sources */,
