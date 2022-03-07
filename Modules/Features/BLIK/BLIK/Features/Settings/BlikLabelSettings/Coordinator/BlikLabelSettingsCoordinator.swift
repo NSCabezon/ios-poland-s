@@ -18,6 +18,7 @@ protocol BlikCustomerLabelUpdateDelegate: AnyObject {
 protocol BlikLabelSettingsCoordinatorProtocol: ModuleCoordinator {
     func back()
     func close()
+    func showErrorAlert()
     func notifyAboutLabelUpdateAndGoBack(newBlikLabel: String)
 }
 
@@ -58,6 +59,14 @@ extension BlikLabelSettingsCoordinator: BlikLabelSettingsCoordinatorProtocol {
     
     func close() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func showErrorAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_toast_errorApple"),
+            alertType: .failure,
+            position: .top
+        )
     }
     
     func notifyAboutLabelUpdateAndGoBack(newBlikLabel: String) {
