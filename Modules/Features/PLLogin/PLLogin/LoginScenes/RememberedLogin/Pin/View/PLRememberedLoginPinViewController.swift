@@ -142,6 +142,7 @@ private extension PLRememberedLoginPinViewController {
         sanIconImageView?.image = Assets.image(named: "logoSanLogin")
         backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
+        changeUserButton.isHidden = true
     }
     
     func setupLabels() {

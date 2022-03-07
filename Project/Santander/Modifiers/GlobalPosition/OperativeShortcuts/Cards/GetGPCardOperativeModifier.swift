@@ -16,8 +16,10 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
         if checkOnCardIsEnabled(cards) {
             self.shortcutsOperativesAvailable.append(.onCard)
         }
-        self.shortcutsOperativesAvailable.append(contentsOf: [PLRepaymentOperative().getActionType(),
-                                                             PLApplePayOperative().getActionType(),
+        if cards.isNotEmpty {
+            self.shortcutsOperativesAvailable.append(PLRepaymentOperative().getActionType())
+        }
+        self.shortcutsOperativesAvailable.append(contentsOf: [PLApplePayOperative().getActionType(),
                                                              PLPostponeBuyOperative().getAtionType(),
                                                               .changeAlias, PLMobilePaymentsOperative().getActionType()])
         return self.shortcutsOperativesAvailable

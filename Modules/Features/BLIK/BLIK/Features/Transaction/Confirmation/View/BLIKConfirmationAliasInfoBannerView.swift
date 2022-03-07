@@ -6,6 +6,7 @@
 //
 
 import UI
+import CoreFoundationLib
 
 final class BLIKConfirmationAliasInfoBannerView: UIView {
     private let infoIcon = UIImageView()
@@ -70,6 +71,6 @@ private extension BLIKConfirmationAliasInfoBannerView {
     }
     
     func configureStaticTexts() {
-        infoLabel.text = "#Płatność została zrealizowana bez konieczności podawania kodu BLIK, ponieważ była zrealizowana za pomocą Zakupów bez kodu."
+        infoLabel.text = localized("pl_blik_information_blikCodeUnnecessary")
     }
 }

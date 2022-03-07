@@ -34,4 +34,5 @@ Pod::Spec.new do |s|
   s.dependency "SANPLLibrary"
   s.dependency "PLNotifications"
   s.dependency "UIOneComponents"
+  s.dependency "PLLogin"
 end

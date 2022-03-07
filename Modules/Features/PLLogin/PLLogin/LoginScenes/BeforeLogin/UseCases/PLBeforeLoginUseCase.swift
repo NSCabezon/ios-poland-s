@@ -11,7 +11,7 @@ import SANLegacyLibrary
 import SANPLLibrary
 import PLCryptography
 
-final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+public final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     private let dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -58,8 +58,8 @@ final class PLBeforeLoginUseCase: UseCase<Void, PLBeforeLoginUseCaseOutput, PLUs
     }
 }
 
-struct PLBeforeLoginUseCaseOutput {
-    let userId: Int
+public struct PLBeforeLoginUseCaseOutput {
+    public let userId: Int
     let isTrustedDevice: Bool
     let isBiometricsAvailable: Bool
     let isPinAvailable: Bool

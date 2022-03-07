@@ -25,6 +25,6 @@ final class ZusTransferSummaryViewController: OperativeSummaryViewController {
 
 private extension ZusTransferSummaryViewController {
     @objc func close() {
-        self.presenter.goToZusTransfer()
+        self.presenter.close()
     }
 }

@@ -13,7 +13,7 @@ public struct PLPushStatusUseCaseInput: Codable {
     public init(
         requestHeader: RequestHeader = RequestHeader(requestId: UUID().uuidString, timestamp: nil),
         pushList: [PLPushStatus],
-        loginId: Int?) {
+        loginId: Int? = nil) {
         self.requestHeader = requestHeader
         self.pushList = pushList
         self.loginId = loginId
