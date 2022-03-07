@@ -12,6 +12,7 @@ import SANLegacyLibrary
 final class InsuranceDTOAdapter {
     static func adaptPLInsuranceToInsurance(_ plInsurance: SANPLLibrary.InsuranceDTO) -> SANLegacyLibrary.InsuranceDTO {
         var insuranceDTO = SANLegacyLibrary.InsuranceDTO()
+        insuranceDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: plInsurance.policyName, contractNumber: plInsurance.policyNumber)
         insuranceDTO.contractDescription = plInsurance.policyName
         insuranceDTO.referenciaExterna = plInsurance.policyNumber
         insuranceDTO.detailsUrl = plInsurance.detailsUrl
