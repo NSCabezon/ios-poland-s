@@ -3,7 +3,7 @@ import PLCommons
 import Operative
 
 protocol ZusTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
-    func goToZusTransfer()
+    func close()
 }
 
 final class ZusTransferSummaryPresenter {
@@ -40,8 +40,8 @@ extension ZusTransferSummaryPresenter: ZusTransferSummaryPresenterProtocol {
         prepareViewModel()
     }
     
-    func goToZusTransfer() {
-        coordinator.goToMakeAnotherPayment()
+    func close() {
+        coordinator.goToGlobalPosition()
     }
 }
 
@@ -59,7 +59,8 @@ private extension ZusTransferSummaryPresenter {
                   subTitle: summary.accountName,
                   info: summary.accountNumber),
             .init(title: localized("pl_zusTransfer_text_receipent"),
-                  subTitle: summary.recipientName),
+                  subTitle: summary.recipientName,
+                  info: summary.recipientAccountNumber),
             .init(title: localized("pl_zusTransfer_text_transactionType"),
                   subTitle: localized("pl_zusTransfer_text_transactionTypeText")),
             .init(title: localized("pl_zusTransfer_text_date"),

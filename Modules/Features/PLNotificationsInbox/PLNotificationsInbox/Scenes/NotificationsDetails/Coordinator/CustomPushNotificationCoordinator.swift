@@ -10,6 +10,7 @@ import UI
 import PLNotifications
 import SANPLLibrary
 import CoreFoundationLib
+import PLLogin
 
 public protocol CustomPushNotificationCoordinatorDelegate: AnyObject {
     func start(actionType: CustomPushLaunchActionTypeInfo)
@@ -78,6 +79,22 @@ extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorPr
         
         self.dependenciesEngine.register(for: PLNotificationPostPushStatusUseCase.self) { resolver in
             return PLNotificationPostPushStatusUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLNotificationPostPushStatusBeforeLoginUseCase.self) { resolver in
+            return PLNotificationPostPushStatusBeforeLoginUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLNotificationsUseCaseManagerProtocol.self) { _ in
+            return PLNotificationsUseCaseManager(dependenciesEngine: self.dependenciesEngine)
+        }
+        
+        self.dependenciesEngine.register(for: PLBeforeLoginUseCase.self) { resolver in
+            return PLBeforeLoginUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLNotificationGetPushDetailsBeforeLoginUseCase.self) { resolver in
+            return PLNotificationGetPushDetailsBeforeLoginUseCase(dependenciesResolver: resolver)
         }
     }
     

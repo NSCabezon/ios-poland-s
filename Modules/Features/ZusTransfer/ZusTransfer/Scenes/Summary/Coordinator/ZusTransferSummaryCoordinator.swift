@@ -31,8 +31,8 @@ final class ZusTransferSummaryCoordinator: ModuleCoordinator {
 extension ZusTransferSummaryCoordinator: ZusTransferSummaryCoordinatorProtocol {
     func goToMakeAnotherPayment() {
         if let zusTransferFormVC = navigationController?.viewControllers.reversed().first(where: { $0 is ZusTransferFormViewProtocol }) {
-            (zusTransferFormVC as? ZusTransferFormViewProtocol)?.clearForm()
             navigationController?.popToViewController(zusTransferFormVC, animated: true)
+            (zusTransferFormVC as? ZusTransferFormViewProtocol)?.resetForm()
             return
         }
         navigationController?.popToRootViewController(animated: true)

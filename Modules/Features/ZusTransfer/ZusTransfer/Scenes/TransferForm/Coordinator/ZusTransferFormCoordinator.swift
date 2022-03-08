@@ -17,6 +17,7 @@ protocol ZusTransferFormCoordinatorProtocol {
     func showAccountSelector(selectedAccountNumber: String)
     func showConfiramtion(model: ZusTransferModel)
     func showRecipientSelection(with maskAccount: String)
+    func updateAccounts(accounts: [AccountForDebit])
 }
 
 public protocol FormAccountSelectable: AnyObject {
@@ -26,11 +27,12 @@ public protocol FormAccountSelectable: AnyObject {
 public final class ZusTransferFormCoordinator: ModuleCoordinator {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let accounts: [AccountForDebit]
+    private var accounts: [AccountForDebit]
     private let selectedAccountNumber: String
     private let validationMask: String
     private weak var accountSelectableDelegate: ZusTransferFormAccountSelectable?
     private weak var recipientSelectorDelegate: RecipientSelectorDelegate?
+    weak var accountUpdateDelegate: ZusAccountSelectorCoordinatorUpdatable?
 
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -55,11 +57,15 @@ public final class ZusTransferFormCoordinator: ModuleCoordinator {
 
 extension ZusTransferFormCoordinator: ZusTransferFormCoordinatorProtocol {
     func pop() {
+        if let accountSelectorViewController = navigationController?.viewControllers.first(where: { $0 is AccountSelectorViewProtocol } ) as? AccountSelectorViewProtocol {
+            let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+            let models = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: nil) })
+            accountSelectorViewController.setViewModels(models)
+        }
         navigationController?.popViewController(animated: true)
     }
     
     func closeProcess() {
-        //TODO: change po to back to Send Money when will be available
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -92,6 +98,11 @@ extension ZusTransferFormCoordinator: ZusTransferFormCoordinatorProtocol {
             navigationController: navigationController,
             maskAccount: maskAccount)
         recipientSelectionCoordinator.start()
+    }
+    
+    func updateAccounts(accounts: [AccountForDebit]) {
+        self.accounts = accounts
+        accountUpdateDelegate?.updateAccounts(with: accounts)
     }
 }
 
