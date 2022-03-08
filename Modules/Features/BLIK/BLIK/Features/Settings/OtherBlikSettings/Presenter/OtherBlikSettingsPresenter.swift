@@ -56,7 +56,7 @@ extension OtherBlikSettingsPresenter: OtherBlikSettingsPresenterProtocol {
         .onError { [weak self] error in
             self?.view?.hideLoader(completion: {
                 guard let strongSelf = self else { return }
-                strongSelf.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                strongSelf.coordinator.showErrorAlert()
                 strongSelf.view?.setViewModel(viewModel: strongSelf.viewModel)
             })
         }

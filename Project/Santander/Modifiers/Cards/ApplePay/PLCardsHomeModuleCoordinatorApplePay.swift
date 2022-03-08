@@ -39,12 +39,13 @@ extension PLCardsHomeModuleCoordinatorApplePay: PLCardsHomeModuleCoordinatorAppl
 
         guard
             let card = card,
-            let cardID = card.dto.contract?.contractNumber
+            let cardID = card.dto.contract?.contractNumber,
+            let sufixPan = card.pan.substring(ofLast: 4)
         else {
             return
         }
 
-        if let sufix = cardID.substring(ofLast: 4), PKPassLibrary().containsActivatedPaymentPass(primaryAccountNumberSuffix: sufix) {
+        if PKPassLibrary().containsActivatedPaymentPass(primaryAccountNumberSuffix: sufixPan) {
             return
         }
 
@@ -53,22 +54,17 @@ extension PLCardsHomeModuleCoordinatorApplePay: PLCardsHomeModuleCoordinatorAppl
             .getCardsManager()
             .getCardDetail(cardId: cardID)
 
-        let virtualPan: String
-        let cardholderName: String
-
         switch result {
         case .success(let cardDetailDTO):
-            virtualPan = cardDetailDTO.virtualPan ?? cardID
-            cardholderName = cardDetailDTO.emboss1 + " " + cardDetailDTO.emboss2
+            let cardholderName = cardDetailDTO.emboss1 + " " + cardDetailDTO.emboss2
+
+            dependenciesResolver
+                .resolve(for: PLApplePayEnrollmentManagerProtocol.self)
+                .enroll(virtualPan: cardID,
+                        sufixPan: sufixPan,
+                        cardholderName: cardholderName)
         default:
-            virtualPan = cardID
-            cardholderName = ""
+            break
         }
-
-        dependenciesResolver
-            .resolve(for: PLApplePayEnrollmentManagerProtocol.self)
-            .enroll(virtualPan: virtualPan,
-                    cardholderName: cardholderName)
-
     }
 }
