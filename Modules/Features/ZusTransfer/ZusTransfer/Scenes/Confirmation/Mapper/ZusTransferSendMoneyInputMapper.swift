@@ -58,7 +58,7 @@ final class ZusTransferSendMoneyInputMapper: ZusTransferSendMoneyInputMapping {
             creditAccountData: creditAccountData,
             signData: signData,
             title: model.title,
-            type: AcceptDomesticTransactionParameters.TransactionType.ZUS_TOKEN_TRANSACTION.rawValue,
+            type: AcceptDomesticTransactionParameters.TransactionType.ONEAPP_ZUS_TRANSACTION.rawValue,
             transferType: transferType.rawValue,
             valueDate: date,
             transactionParameters: transactionParameters

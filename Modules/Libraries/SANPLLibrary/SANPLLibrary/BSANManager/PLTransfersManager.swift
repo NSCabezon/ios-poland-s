@@ -140,9 +140,10 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         let language = try self.bsanDataProvider.getLanguageISO()
         let iban = parameters.iban.countryCode + parameters.iban.checkDigits + parameters.iban.codBban
         let amountParameters = NotifyAmountParameters(value: debitAmount, currencyCode: debitAmountCurrency)
+        let derivedVariables = ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias]
         let inputParameters = NotifyDeviceParameters(language: language,
                                                      notificationSchemaId: parameters.notificationSchemaId,
-                                                     variables: ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias],
+                                                     variables: parameters.variables ?? derivedVariables,
                                                      challenge: parameters.challenge,
                                                      softwareTokenType: nil,
                                                      amount: amountParameters)
