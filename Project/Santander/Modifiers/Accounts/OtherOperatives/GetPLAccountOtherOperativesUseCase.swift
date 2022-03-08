@@ -16,7 +16,7 @@ final class GetPLAccountOtherOperativesActionUseCase: UseCase<GetAccountOtherOpe
     }
     
     override func executeUseCase(requestValues: GetAccountOtherOperativesActionUseCaseInput) throws -> UseCaseResponse<GetAccountOtherOperativesActionUseCaseOkOutput, StringErrorOutput> {
-        guard let entityCode = requestValues.accounts.first?.dto.contractNumber else { return .error(StringErrorOutput(nil)) }
+        let entityCode = ""
         return .ok(getUseCaseOkOutput(contract: entityCode))
     }
     

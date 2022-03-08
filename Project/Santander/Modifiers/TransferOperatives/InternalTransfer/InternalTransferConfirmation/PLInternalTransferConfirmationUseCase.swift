@@ -61,7 +61,7 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
                                                                                   signData: signData,
                                                                                   title: input.concept,
                                                                                   type: "ONEAPP_OWN_CURRENCY_TRANSACTION",// OWN_TRANSACTION input.transactionType,
-                                                                                  transferType: "INTERNAL",//transferType,
+                                                                                  transferType: PolandTransferType.zero.serviceString,
                                                                                   valueDate: prueba)//cambiar
         return transfersRepository.sendConfirmation(input: genericSendMoneyConfirmationInput)
             .tryMap { result in
