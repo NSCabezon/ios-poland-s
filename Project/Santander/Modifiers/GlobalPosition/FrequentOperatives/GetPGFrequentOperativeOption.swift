@@ -44,7 +44,7 @@ private extension GetPGFrequentOperativeOption {
             AddBanksPGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             CurrencyExchangePGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             OpenGoalPGFrequentOperativeOption(),
-            OpenDepositPGFrequentOperativeOption(),
+            OpenDepositPGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             BuyInsurancePGFrequentOperativeOption(),
             CustomerServicePGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             AccountStatementPGFrequentOperativeOption()
