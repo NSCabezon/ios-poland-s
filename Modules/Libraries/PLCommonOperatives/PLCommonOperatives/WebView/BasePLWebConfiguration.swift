@@ -13,6 +13,8 @@ public struct BasePLWebConfiguration: WebViewConfiguration {
     public var isCachePdfEnabled: Bool
     public var isFullScreenEnabled: Bool?
     public var reloadSessionOnClose: Bool
+    public var showRightCloseNavigationItem: Bool
+    public var showBackNavigationItem: Bool
     
     public init(
         initialURL: String,
@@ -26,7 +28,9 @@ public struct BasePLWebConfiguration: WebViewConfiguration {
         pdfSource: PdfSource? = nil,
         isCachePdfEnabled: Bool = false,
         isFullScreenEnabled: Bool?,
-        reloadSessionOnClose: Bool = false
+        reloadSessionOnClose: Bool = false,
+        showRightCloseNavigationItem: Bool = false,
+        showBackNavigationItem: Bool = true
     ) {
         self.initialURL = initialURL
         self.httpMethod = httpMethod
@@ -40,5 +44,7 @@ public struct BasePLWebConfiguration: WebViewConfiguration {
         self.isCachePdfEnabled = isCachePdfEnabled
         self.isFullScreenEnabled = isFullScreenEnabled
         self.reloadSessionOnClose = reloadSessionOnClose
+        self.showRightCloseNavigationItem = showRightCloseNavigationItem
+        self.showBackNavigationItem = showBackNavigationItem
     }
 }

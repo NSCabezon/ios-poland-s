@@ -33,4 +33,8 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     func resolve() -> GetInternalTransferDestinationAccountsUseCase {
         return PLGetInternalTransferDestAccountsUseCase()
     }
+
+    func resolve() -> CurrencyFormatterProvider {
+        return oldResolver.resolve()
+    }
 }

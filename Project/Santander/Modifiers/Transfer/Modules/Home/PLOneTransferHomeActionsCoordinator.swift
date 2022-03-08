@@ -7,12 +7,19 @@
 
 import CoreFoundationLib
 import UI
+import BLIK
+import Transfer
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?
     var onFinish: (() -> Void)?
     var childCoordinators: [Coordinator] = []
     var dataBinding: DataBinding = DataBindingObject()
+    let oldResolver: DependenciesResolver
+    
+    init(transferExternalResolver: TransferExternalDependenciesResolver) {
+        self.oldResolver = transferExternalResolver.resolve()
+    }
     
     func start() {
         guard let type: String = dataBinding.get(),
@@ -20,21 +27,22 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         else { return }
         switch actionType {
         case .blik:
-            ToastCoordinator().start()
+            let blikCoordinator: BLIKHomeCoordinator = self.oldResolver.resolve()
+            blikCoordinator.start()
         case .anotherBank:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .creditCard:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .transferTax:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .transferZus:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .fxExchange:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .scanPay:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .topUpPhone:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         }
     }
 }

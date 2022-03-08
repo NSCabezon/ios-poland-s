@@ -25,6 +25,7 @@ final class TopUpConfirmationPresenter {
     private let dependenciesResolver: DependenciesResolver
     private var coordinator: TopUpConfirmationCoordinatorProtocol?
     private let confirmationDialogFactory: ConfirmationDialogProducing
+    private let authorizationHandler: ChallengesHandlerDelegate
     private let summaryMapper: TopUpSummaryMapping
     private let summary: TopUpModel
     
@@ -34,6 +35,7 @@ final class TopUpConfirmationPresenter {
         self.dependenciesResolver = dependenciesResolver
         self.coordinator = dependenciesResolver.resolve(for: TopUpConfirmationCoordinatorProtocol.self)
         self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
+        self.authorizationHandler = dependenciesResolver.resolve(for: ChallengesHandlerDelegate.self)
         self.summaryMapper = dependenciesResolver.resolve(for: TopUpSummaryMapping.self)
         self.summary = summary
     }
@@ -60,7 +62,30 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
             operatorId: summary.operatorId,
             date: summary.date
         )
-        Scenario(useCase: PerformTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: input)
+        
+        Scenario(useCase: AuthorizeTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: input)
+            .execute(on: dependenciesResolver.resolve())
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    self?.authorizationHandler.handle(output.pendingChallenge, authorizationId: "\(output.authorizationId)") { [weak self] challengeResult in
+                        switch(challengeResult) {
+                        case .handled(_):
+                            self?.performTopUpTransaction(transactionInput: input)
+                        default:
+                            self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                        }
+                    }
+                })
+            }.onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                })
+            }
+    }
+    
+    func performTopUpTransaction(transactionInput: PerformTopUpTransactionUseCaseInput) {
+        view?.showLoader()
+        Scenario(useCase: PerformTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: transactionInput)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {
@@ -75,7 +100,6 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
                     self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
                 })
             }
-        coordinator?.showSummary(with: summary)
     }
     
     func summaryBodyItemsModels() -> [OperativeSummaryStandardBodyItemViewModel] {
