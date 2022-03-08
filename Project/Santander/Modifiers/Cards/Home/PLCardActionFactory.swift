@@ -150,7 +150,7 @@ private extension PLCardActionFactory {
         return CardActionType.custome(CustomCardActionValues(identifier: PLCardActionIdentifier.addToPay.rawValue,
                                                              localizedKey: localizedKey,
                                                              icon: icon,
-                                                             section: "",
+                                                             section: "otherOperatives",
                                                              location: nil,
                                                              isDisabled: { _ in return isDisabled }))
     }
