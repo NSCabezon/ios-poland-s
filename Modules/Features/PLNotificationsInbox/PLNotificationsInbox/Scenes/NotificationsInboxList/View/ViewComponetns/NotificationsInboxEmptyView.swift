@@ -11,6 +11,7 @@ import CoreFoundationLib
 import PLUI
 
 class NotificationsInboxEmptyView: UIView {
+    private let containerView = UIView()
     private let image = UIImageView()
     private let label = UILabel()
     
@@ -30,8 +31,9 @@ class NotificationsInboxEmptyView: UIView {
     }
     
     private func setUpSubviews() {
-        addSubview(image)
-        addSubview(label)
+        addSubview(containerView)
+        containerView.addSubview(image)
+        containerView.addSubview(label)
     }
     
     private func setUpView() {
@@ -57,12 +59,22 @@ class NotificationsInboxEmptyView: UIView {
     }
     
     private func setUpLayouts() {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            containerView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            containerView.heightAnchor.constraint(equalToConstant: 211)
+        ])
+
         image.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             image.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             image.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             image.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            image.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+            image.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            image.heightAnchor.constraint(equalToConstant: 211)
         ])
         
         label.translatesAutoresizingMaskIntoConstraints = false

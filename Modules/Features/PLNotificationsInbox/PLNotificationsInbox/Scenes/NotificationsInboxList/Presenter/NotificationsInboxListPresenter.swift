@@ -171,8 +171,8 @@ extension NotificationsInboxListPresenter {
                 let section = NotificationsInboxListViewSectionViewModel(type: .push, list: pushDictionary[key] ?? [], headerName: key)
                 self.sections.append(section)
             }
-            self.view?.getNotificationsInboxListView().listState = (response?.data ?? []).count == 0 ? .empty : .hasNotifications
             self.view?.getNotificationsInboxListView().tableView.reloadData()
+            self.view?.getNotificationsInboxListView().listState = (response?.data ?? []).count == 0 ? .empty : .hasNotifications
             return
         }
         

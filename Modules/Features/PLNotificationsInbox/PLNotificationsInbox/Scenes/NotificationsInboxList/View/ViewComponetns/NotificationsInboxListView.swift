@@ -57,18 +57,18 @@ final class NotificationsInboxListView: UIView {
         backgroundColor = .white
         setUpSubviews()
         loadingView.isHidden = true
-        emptyView.isHidden = true
     }
     
     private func reloadView() {
         loadingView.isHidden = true
-        emptyView.isHidden = true
         self.tableView.tableHeaderView = nil
+        self.tableView.tableFooterView = nil
+
         switch listState {
         case .loading:
             loadingView.isHidden = false
         case .empty:
-            emptyView.isHidden = categoryState == .disableAll
+            self.tableView.tableFooterView = categoryState == .disableAll ? nil : emptyView
         case .hasNotifications:
             break
         }
@@ -96,6 +96,7 @@ final class NotificationsInboxListView: UIView {
             self.tableView.tableHeaderView = infoView
         }
         setUpTableViewWithInfoViewLayout()
+        setUpTableViewWithEmptyViewLayout()
     }
     
     private func setUpSubviews() {
@@ -105,13 +106,11 @@ final class NotificationsInboxListView: UIView {
         addSubview(tableView)
         setUpTableViewLayout()
         self.tableView.tableHeaderView = nil
-        
+        self.tableView.tableFooterView = nil
+
         addSubview(loadingView)
         setUpLoadingViewLayout()
-        
-        addSubview(emptyView)
-        setUpEmptyViewLayout()
-        
+                
         configureTableView()
     }
     
@@ -120,11 +119,10 @@ final class NotificationsInboxListView: UIView {
         tableView.register(NotificationsInboxListInfoCell.self, forCellReuseIdentifier: NotificationsInboxListInfoCell.identifier)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 80.0
         tableView.showsVerticalScrollIndicator = false
         tableView.alwaysBounceVertical = false
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
     }
     
     private func setUpHeaderLayout() {
@@ -136,17 +134,7 @@ final class NotificationsInboxListView: UIView {
             header.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
-    
-    private func setUpEmptyViewLayout() {
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            emptyView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            emptyView.topAnchor.constraint(equalTo: header.bottomAnchor),
-            emptyView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            emptyView.heightAnchor.constraint(equalToConstant: 211)
-        ])
-    }
-    
+        
     private func setUpLoadingViewLayout() {
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -172,6 +160,7 @@ final class NotificationsInboxListView: UIView {
             return
         }
         infoView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             infoView.leadingAnchor.constraint(equalTo: leadingAnchor),
             infoView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -179,13 +168,22 @@ final class NotificationsInboxListView: UIView {
         updateInfoViewHeight()
     }
     
+    private func setUpTableViewWithEmptyViewLayout() {
+        if emptyView.superview == nil {
+            return
+        }
+        
+        emptyView.translatesAutoresizingMaskIntoConstraints = true
+        emptyView.frame = CGRect(x: 0, y: emptyView.frame.origin.y, width: self.tableView.frame.width, height: 211)
+    }
+    
     func updateInfoViewHeight() {
         infoView.setNeedsLayout()
         infoView.layoutIfNeeded()
         
         let height = infoView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        NSLayoutConstraint.activate([
-            infoView.heightAnchor.constraint(equalToConstant: height)
-        ])        
+        infoView.translatesAutoresizingMaskIntoConstraints = true
+        infoView.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: height)
+        self.tableView.reloadData()
     }
 }
