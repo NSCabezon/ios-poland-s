@@ -137,12 +137,12 @@ extension NotificationsInboxListPresenter {
         notificationsUseCaseManager?.getEnabledPushCategories(completion: { response in
             if let response = response {
                 var state: NotificationsInboxCategoryStatus = .enableAll
-                if !response.enabledCategories.contains(.alert) && !response.enabledCategories.contains(.notice) {
+                if response.enabledCategories.isEmpty {
                     state = .disableAll
                 } else if !response.enabledCategories.contains(.alert) {
                     state = .disableAlerts
                 } else if !response.enabledCategories.contains(.notice) {
-                    state = .disbleDisableNotice
+                    state = .disableNotice
                 } else {
                     state = .enableAll
                 }

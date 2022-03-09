@@ -20,18 +20,18 @@ enum NotificationsInboxCategoryStatus {
     case enableAll
     case disableAll
     case disableAlerts
-    case disbleDisableNotice
+    case disableNotice
 }
 
 final class NotificationsInboxListView: UIView {
     var listState: NotificationsInboxListStatus = .loading {
-        didSet{
+        didSet {
             reloadView()
         }
     }
     
     var categoryState: NotificationsInboxCategoryStatus = .enableAll {
-        didSet{
+        didSet {
             reloadView()
         }
     }
@@ -64,16 +64,16 @@ final class NotificationsInboxListView: UIView {
         loadingView.isHidden = true
         emptyView.isHidden = true
         self.tableView.tableHeaderView = nil
-        switch listState{
+        switch listState {
         case .loading:
             loadingView.isHidden = false
         case .empty:
-            emptyView.isHidden = false
+            emptyView.isHidden = categoryState == .disableAll
         case .hasNotifications:
             break
         }
         
-        switch categoryState{
+        switch categoryState {
         case .enableAll:
             self.tableView.tableHeaderView = nil
         case .disableAll:
@@ -88,7 +88,7 @@ final class NotificationsInboxListView: UIView {
                 setUpNotifications: localized("pl_alerts_link_turnOnAlerts")
             )
             self.tableView.tableHeaderView = infoView
-        case .disbleDisableNotice:
+        case .disableNotice:
             infoView.fill(
                 notificationsInfo: localized("pl_alerts_text_turnOnInfoNotExpl"),
                 setUpNotifications: localized("pl_alerts_link_turnOnAlerts")
