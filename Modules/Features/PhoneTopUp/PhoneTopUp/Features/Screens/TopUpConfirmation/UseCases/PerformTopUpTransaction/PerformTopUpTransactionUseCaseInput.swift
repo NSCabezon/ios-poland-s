@@ -9,7 +9,8 @@ import Foundation
 import PLCommons
 
 struct PerformTopUpTransactionUseCaseInput {
-    let account: AccountForDebit
+    let sourceAccount: AccountForDebit
+    let topUpAccount: TopUpAccount
     let amount: Int
     let recipientNumber: String
     let operatorId: Int

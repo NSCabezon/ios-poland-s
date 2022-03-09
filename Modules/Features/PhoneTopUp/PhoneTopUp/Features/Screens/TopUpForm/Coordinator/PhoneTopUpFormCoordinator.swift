@@ -90,7 +90,8 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
                                            operators: formData.operators,
                                            gsmOperators: formData.gsmOperators,
                                            internetContacts: formData.internetContacts,
-                                           settings: formData.settings)
+                                           settings: formData.settings,
+                                           topUpAccount: formData.topUpAccount)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)

@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import PLUI
 
 protocol TaxTransferPayerIdentifiersPresenterProtocol {
     var view: TaxTransferPayerIdentifiersViewController? { get set }
@@ -38,6 +39,19 @@ extension TaxTransferPayerIdentifiersPresenter: TaxTransferPayerIdentifiersPrese
     }
     
     func didPressClose() {
-        coordinator.goToGlobalPosition()
+        let closeConfirmationDialog = confirmationDialogFactory.create(
+            message: localized("#Czy na pewno chcesz zakończyć"),
+            confirmAction: { [weak self] in
+                self?.coordinator.goToGlobalPosition()
+            },
+            declineAction: {}
+        )
+        view?.showDialog(closeConfirmationDialog)
+    }
+}
+
+private extension TaxTransferPayerIdentifiersPresenter {
+    var confirmationDialogFactory: ConfirmationDialogFactory {
+        return dependenciesResolver.resolve()
     }
 }
