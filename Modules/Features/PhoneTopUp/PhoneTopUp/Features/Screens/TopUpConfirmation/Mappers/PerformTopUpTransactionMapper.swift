@@ -9,11 +9,13 @@ import Foundation
 import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
+import PLCommonOperatives
 import PLCommons
 
 protocol PerformTopUpTransactionInputMapping {
     func mapSendMoneyConfirmationInput(with input: PerformTopUpTransactionUseCaseInput, userId: Int) -> GenericSendMoneyConfirmationInput
     func mapNotifyDeviceInput(with input: PerformTopUpTransactionUseCaseInput, challenge: String) -> NotifyDeviceInput
+    func mapPartialNotifyDeviceInput(with input: PerformTopUpTransactionUseCaseInput) -> PartialNotifyDeviceInput
 }
 
 final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapping {
@@ -87,6 +89,11 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
     }
     
     func mapNotifyDeviceInput(with input: PerformTopUpTransactionUseCaseInput, challenge: String) -> NotifyDeviceInput {
+        return NotifyDeviceInput(partialInput: mapPartialNotifyDeviceInput(with: input),
+                                 challenge: challenge)
+    }
+    
+    func mapPartialNotifyDeviceInput(with input: PerformTopUpTransactionUseCaseInput) -> PartialNotifyDeviceInput {
         let iban = IBANRepresented(ibanString: IBANFormatter.formatIbanToNrb(for: input.topUpAccount.number))
         let amount = AmountDTO(
             value: Decimal(input.amount),
@@ -95,9 +102,8 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
                 currencyType: .złoty
             )
         )
-
-        return NotifyDeviceInput(
-            challenge: challenge,
+        
+        return PartialNotifyDeviceInput(
             softwareTokenType: nil,
             notificationSchemaId: "165",
             alias: input.topUpAccount.name,

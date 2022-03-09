@@ -9,7 +9,9 @@ import CoreFoundationLib
 import Foundation
 import Operative
 import PLCommons
+import PLCommonOperatives
 import PLUI
+import SANPLLibrary
 
 protocol TopUpConfirmationPresenterProtocol: AnyObject {
     var view: TopUpConfirmationViewProtocol? { get set }
@@ -27,6 +29,8 @@ final class TopUpConfirmationPresenter {
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let authorizationHandler: ChallengesHandlerDelegate
     private let summaryMapper: TopUpSummaryMapping
+    private let transactionMapper: PerformTopUpTransactionInputMapping
+    private let managersProvider: PLManagersProviderProtocol
     private let summary: TopUpModel
     
     // MARK: Lifecycle
@@ -37,6 +41,8 @@ final class TopUpConfirmationPresenter {
         self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         self.authorizationHandler = dependenciesResolver.resolve(for: ChallengesHandlerDelegate.self)
         self.summaryMapper = dependenciesResolver.resolve(for: TopUpSummaryMapping.self)
+        self.transactionMapper = dependenciesResolver.resolve(for: PerformTopUpTransactionInputMapping.self)
+        self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         self.summary = summary
     }
 }
@@ -55,7 +61,7 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
     
     func didSelectSubmit() {
         view?.showLoader()
-        let input = PerformTopUpTransactionUseCaseInput(
+        let transactionInput = PerformTopUpTransactionUseCaseInput(
             sourceAccount: summary.account,
             topUpAccount: summary.topUpAccount,
             amount: summary.amount,
@@ -64,14 +70,22 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
             date: summary.date
         )
         
-        Scenario(useCase: AuthorizeTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: input)
+        guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
+            return
+        }
+        
+        let sendMoneyInput = transactionMapper.mapSendMoneyConfirmationInput(with: transactionInput, userId: userId)
+        let notifyDeviceInput = transactionMapper.mapPartialNotifyDeviceInput(with: transactionInput)
+        let authorizeTransactionInput = AuthorizeTransactionUseCaseInput(sendMoneyConfirmationInput: sendMoneyInput,
+                                                                         partialNotifyDeviceInput: notifyDeviceInput)
+        Scenario(useCase: AuthorizeTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {
                     self?.authorizationHandler.handle(output.pendingChallenge, authorizationId: "\(output.authorizationId)") { [weak self] challengeResult in
                         switch(challengeResult) {
                         case .handled(_):
-                            self?.performTopUpTransaction(transactionInput: input)
+                            self?.performTopUpTransaction(transactionInput: transactionInput)
                         default:
                             self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
                         }
