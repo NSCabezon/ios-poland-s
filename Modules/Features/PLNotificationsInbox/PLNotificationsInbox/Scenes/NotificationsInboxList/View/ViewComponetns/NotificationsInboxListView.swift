@@ -41,7 +41,7 @@ final class NotificationsInboxListView: UIView {
     let loadingView = NotificationsInboxLoadingView()
     
     let infoView = NotificationsInboxInfoView()
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero, style: .grouped)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
