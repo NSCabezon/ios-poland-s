@@ -39,7 +39,7 @@ class CustomPushNotificationViewController: UIViewController, WKUIDelegate {
 
 extension CustomPushNotificationViewController: CustomPushNotificationViewProtocol {    
     func openHtml(_ html: String) {
-        let htmlWithStyle ="""
+        let htmlWithStyle = """
             <!DOCTYPE html>\
             <html>\
             <head>\
