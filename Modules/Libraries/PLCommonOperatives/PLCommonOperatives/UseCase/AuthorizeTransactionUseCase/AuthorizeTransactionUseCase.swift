@@ -10,35 +10,28 @@ import CoreDomain
 import CoreFoundationLib
 import SANPLLibrary
 
-protocol AuthorizeTopUpTransactionUseCaseProtocol: UseCase<PerformTopUpTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
+public protocol AuthorizeTopUpTransactionUseCaseProtocol: UseCase<AuthorizeTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
 }
 
-final class AuthorizeTopUpTransactionUseCase: UseCase<PerformTopUpTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
+public final class AuthorizeTopUpTransactionUseCase: UseCase<AuthorizeTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
     // MARK: Properties
     
     private let managersProvider: PLManagersProviderProtocol
     private let transferRepository: PLTransfersRepository
     private let authorizationManager: PLAuthorizationProcessorManagerProtocol
-    private let inputMapper: PerformTopUpTransactionInputMapping
     
     // MARK: Lifecycle
     
-    init(dependenciesResolver: DependenciesResolver) {
+    public init(dependenciesResolver: DependenciesResolver) {
         self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         self.transferRepository = dependenciesResolver.resolve(for: PLTransfersRepository.self)
         self.authorizationManager = managersProvider.getAuthorizationProcessorManager()
-        self.inputMapper = dependenciesResolver.resolve(for: PerformTopUpTransactionInputMapping.self)
     }
     
     // MARK: Methods
     
-    override func executeUseCase(requestValues: PerformTopUpTransactionUseCaseInput) throws -> UseCaseResponse<AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
-        guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
-            return .error(.init("userId not exists"))
-        }
-        let transferParameters = inputMapper.mapSendMoneyConfirmationInput(with: requestValues, userId: userId)
-        
-        let authorizationResults = try transferRepository.getChallenge(parameters: transferParameters)
+    public override func executeUseCase(requestValues: AuthorizeTransactionUseCaseInput) throws -> UseCaseResponse<AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
+        let authorizationResults = try transferRepository.getChallenge(parameters: requestValues.sendMoneyConfirmationInput)
             .flatMapError({ _ in
                 return .failure(NetworkProviderError.other)
             })
@@ -47,7 +40,7 @@ final class AuthorizeTopUpTransactionUseCase: UseCase<PerformTopUpTransactionUse
                     return .failure(NetworkProviderError.other)
                 }
                 
-                let notifyDeviceInput = inputMapper.mapNotifyDeviceInput(with: requestValues, challenge: challenge)
+                let notifyDeviceInput = NotifyDeviceInput(partialInput: requestValues.partialNotifyDeviceInput, challenge: challenge)
                 do {
                     return try self.transferRepository.notifyDevice(notifyDeviceInput)
                 } catch {
