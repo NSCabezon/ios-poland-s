@@ -37,6 +37,10 @@ public final class GetPhoneTopUpFormDataUseCase: UseCase<Void, GetPhoneTopUpForm
         return dependenciesResolver.resolve()
     }
     
+    private var topUpAccountMapper: TopUpAccountMapping {
+        return dependenciesResolver.resolve()
+    }
+    
     private var managersProvider: PLManagersProviderProtocol {
         return dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
     }
@@ -61,7 +65,12 @@ public final class GetPhoneTopUpFormDataUseCase: UseCase<Void, GetPhoneTopUpForm
             let gsmOperators = formDataDTO.gsmOperators.map(gsmOperatorMapper.map)
             let operators = formDataDTO.operators.map(operatorMapper.map)
             let internetContacts = formDataDTO.internetContacts.compactMap(contactsMapper.map)
-            return .ok(GetPhoneTopUpFormDataOutput(accounts: acccounts, operators: operators, gsmOperators: gsmOperators, internetContacts: internetContacts))
+            let topUpAccount = topUpAccountMapper.map(dto: formDataDTO.topUpAccount)
+            return .ok(GetPhoneTopUpFormDataOutput(accounts: acccounts,
+                                                   operators: operators,
+                                                   gsmOperators: gsmOperators,
+                                                   internetContacts: internetContacts,
+                                                   topUpAccount: topUpAccount))
         case .failure(let error):
             return .error(.init(error.localizedDescription))
         }

@@ -39,6 +39,7 @@ final class PhoneTopUpFormPresenter {
     private let gsmOperators: [GSMOperator]
     private let internetContacts: [MobileContact]
     private let settings: TopUpSettings
+    private let topUpAccount: TopUpAccount
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
@@ -122,13 +123,15 @@ final class PhoneTopUpFormPresenter {
          operators: [Operator],
          gsmOperators: [GSMOperator],
          internetContacts: [MobileContact],
-         settings: TopUpSettings) {
+         settings: TopUpSettings,
+         topUpAccount: TopUpAccount) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.operators = operators
         self.gsmOperators = gsmOperators
         self.internetContacts = internetContacts
         self.settings = settings
+        self.topUpAccount = topUpAccount
         self.coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         self.accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
@@ -375,7 +378,13 @@ private extension PhoneTopUpFormPresenter {
             return nil
         }
         
-        return TopUpModel(amount: amount, account: account, recipientNumber: recipientNumber, recipientName: recipientName, operatorId: operatorId, date: Date())
+        return TopUpModel(amount: amount,
+                          account: account,
+                          topUpAccount: topUpAccount,
+                          recipientNumber: recipientNumber,
+                          recipientName: recipientName,
+                          operatorId: operatorId,
+                          date: Date())
     }
     
     func showConfirmation() {

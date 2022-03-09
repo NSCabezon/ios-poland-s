@@ -40,7 +40,7 @@ final class AddTaxPayerFormValidator: AddTaxPayerFormValidating {
     
     private func getIdentifierNumberValidationMessage(_ number: String) -> String? {
         guard !number.isEmpty else {
-            return nil
+            return ""
         }
 
         if number.matches(type.regex) {
@@ -52,7 +52,7 @@ final class AddTaxPayerFormValidator: AddTaxPayerFormValidating {
     
     private func getNameValidationMessage(_ name: String) -> String? {
         guard !name.isEmpty else {
-            return nil
+            return ""
         }
         
         if name.matches(Constants.payerNameRegex) {
