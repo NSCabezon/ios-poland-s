@@ -21,6 +21,7 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate, TaxP
     func didTapDone(with data: TaxTransferFormFields)
     func didUpdateFields(with fields: TaxTransferFormFields)
     func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?)
+    func didAddTaxPayer(_ taxPayer: TaxPayer)
 }
 
 final class TaxTransferFormPresenter {
@@ -136,6 +137,18 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         
         updateViewWithLatestViewModel()
     }
+    
+    func didAddTaxPayer(_ taxPayer: TaxPayer) {
+        let currentFormData = formData
+        var currentTaxPayers = formData.taxPayers
+        currentTaxPayers.append(taxPayer)
+        
+        formData = TaxTransferFormData(
+            sourceAccounts: currentFormData.sourceAccounts,
+            taxPayers: currentTaxPayers,
+            predefinedTaxAuthorities: currentFormData.predefinedTaxAuthorities
+        )
+    }
 }
 
 private extension TaxTransferFormPresenter {
@@ -214,7 +227,6 @@ private extension TaxTransferFormPresenter {
             return .unselected
         }
         let viewModel = taxPayerViewModelMapper.map(taxPayer, selectedInfo: selectedInfo)
-        
         return .selected(viewModel)
     }
     

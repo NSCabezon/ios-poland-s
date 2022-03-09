@@ -9,14 +9,16 @@ import UI
 import PLUI
 
 protocol AddTaxPayerViewDelegate: AnyObject {
+    func didTapIdentifiersSelector()
     func didEndEditing()
 }
 
 protocol AddTaxPayerFormView: AnyObject,
                               ConfirmationDialogPresentable {
     func clearValidationMessages()
-    func getForm() -> AddTaxPayerForm
+    func getForm() -> AddTaxPayerForm?
     func showInvalidFormMessages(_ messages: InvalidAddTaxPayerFormMessages)
+    func setUp(with identifier: Selectable<TaxIdentifierType>)
 }
 
 final class AddTaxPayerFormViewController: UIViewController {
@@ -46,6 +48,10 @@ final class AddTaxPayerFormViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationItem()
+    }
+    
+    func setUp(with identifier: Selectable<TaxIdentifierType>) {
+        formView.setUp(with: identifier)
     }
     
     private func setUp() {
@@ -107,13 +113,17 @@ final class AddTaxPayerFormViewController: UIViewController {
 }
 
 extension AddTaxPayerFormViewController: AddTaxPayerFormViewDelegate {
+    func didTapIdentifiersSelector() {
+        delegate?.didTapIdentifiersSelector()
+    }
+    
     func didEndEditing() {
         delegate?.didEndEditing()
     }
 }
 
 extension AddTaxPayerFormViewController: AddTaxPayerFormView {
-    func getForm() -> AddTaxPayerForm {
+    func getForm() -> AddTaxPayerForm? {
         return formView.getForm()
     }
     

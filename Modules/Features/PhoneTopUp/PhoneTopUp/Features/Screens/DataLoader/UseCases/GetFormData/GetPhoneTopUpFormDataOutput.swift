@@ -13,4 +13,5 @@ public struct GetPhoneTopUpFormDataOutput {
     let operators: [Operator]
     let gsmOperators: [GSMOperator]
     let internetContacts: [MobileContact]
+    let topUpAccount: TopUpAccount
 }

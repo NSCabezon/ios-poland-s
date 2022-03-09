@@ -36,6 +36,10 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
     // MARK: SetUp
     
     private func setupDependencies() {
+        self.dependenciesEngine.register(for: TopUpAccountMapping.self) { _ in
+            return TopUpAccountMapper()
+        }
+
         self.dependenciesEngine.register(for: AccountForDebitMapping.self) { _ in
             return AccountForDebitMapper()
         }

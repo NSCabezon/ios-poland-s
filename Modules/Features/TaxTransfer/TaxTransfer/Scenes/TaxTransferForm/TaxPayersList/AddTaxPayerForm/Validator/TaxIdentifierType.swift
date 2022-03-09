@@ -5,13 +5,36 @@
 //  Created by 187831 on 04/02/2022.
 //
 
-enum TaxIdentifierType: String {
+import PLScenes
+
+enum TaxIdentifierType: SelectableItem {
     case NIP
     case PESEL
     case REGON
     case ID
     case passport
     case other
+    
+    public var identifier: String {
+        return String(describing: self)
+    }
+    
+    public var name: String {
+        switch self {
+        case .ID:
+            return "#Dowód osobisty"
+        case .passport:
+            return "#Paszport"
+        case .other:
+            return "#Inny"
+        case .PESEL:
+            return "#PESEL"
+        case .NIP:
+            return "#NIP"
+        case .REGON:
+            return "#REGON"
+        }
+    }
     
     var complementValue: Int {
         return 10
@@ -22,7 +45,7 @@ enum TaxIdentifierType: String {
         case .other:
             return "#Wprowadzony tekst zawiera niedozwolone znaki"
         default:
-            return "#Błędny numer \(self.rawValue)"
+            return "#Błędny numer \(self.name)"
         }
     }
     

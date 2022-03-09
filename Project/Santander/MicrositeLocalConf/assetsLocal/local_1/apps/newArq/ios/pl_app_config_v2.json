@@ -55,7 +55,7 @@
         "enableChatInbenta": "true",
         "inbentaChatUrl": "https://santander-avatar.inbenta.com/",
         "inbentaChatCloseUrl": "https://www.bancosantander.es",
-        "enableVirtualAssistant": "true",
+        "enableVirtualAssistant": "false",
         "virtualAssistantUrl":"http://santander-app.inbenta.com/app/?p=2",
         "virtualAssistantCloseUrl":"https://www.bancosantander.es",
         "enableManagerWall": "true",

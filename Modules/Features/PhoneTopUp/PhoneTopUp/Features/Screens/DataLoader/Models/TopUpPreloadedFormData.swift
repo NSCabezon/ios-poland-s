@@ -14,4 +14,5 @@ public struct TopUpPreloadedFormData {
     let gsmOperators: [GSMOperator]
     let internetContacts: [MobileContact]
     let settings: [TopUpOperatorSettings]
+    let topUpAccount: TopUpAccount
 }

@@ -12,4 +12,5 @@ public struct TopUpFormDataDTO: Codable {
     public let operators: [OperatorDTO]
     public let gsmOperators: [GSMOperatorDTO]
     public let internetContacts: [PayeeDTO]
+    public let topUpAccount: PopularAccountDTO
 }
