@@ -56,7 +56,8 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
     func didSelectSubmit() {
         view?.showLoader()
         let input = PerformTopUpTransactionUseCaseInput(
-            account: summary.account,
+            sourceAccount: summary.account,
+            topUpAccount: summary.topUpAccount,
             amount: summary.amount,
             recipientNumber: summary.recipientNumber,
             operatorId: summary.operatorId,

@@ -67,7 +67,8 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
                                               operators: fetchedData.operators,
                                               gsmOperators: fetchedData.gsmOperators,
                                               internetContacts: fetchedData.internetContacts,
-                                              settings: settings)
+                                              settings: settings,
+                                              topUpAccount: fetchedData.topUpAccount)
         view?.hideLoader(completion: { [weak self] in
             self?.coordinator?.showForm(with: formData)
         })

@@ -20,8 +20,6 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
     // MARK: Properties
     
     private let transactionParametersProvider: PLTransactionParametersProviderProtocol
-    private let blueMediaAccountNumber = "40109014890000000048087486"
-    private let bluemediaAccountName = "Bluemedia"
     
     // MARK: Lifecycle
     
@@ -36,11 +34,11 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
         let transactionType = AcceptDomesticTransactionParameters.TransactionType.ONEAPP_PREPAID_MOBILE_TRANSACTION
         let transferType: AcceptDomesticTransactionParameters.TransferType = .INTERNAL
         let debitAccountFormated = IBANFormatter.formatIbanToNrb(
-            for: input.account.number
+            for: input.sourceAccount.number
         )
 
         let creditAccountFormated = IBANFormatter.formatIbanToNrb(
-            for: blueMediaAccountNumber
+            for: input.topUpAccount.number
         )
 
         let amountData = ItAmountDataParameters(currency: CurrencyType.złoty.name,
@@ -48,12 +46,12 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
         )
         
         let debitAccounData = ItAccountDataParameters(accountNo: debitAccountFormated,
-                                                      accountName: input.account.name,
-                                                      accountSequenceNumber: input.account.accountSequenceNumber,
-                                                      accountType: input.account.accountType
+                                                      accountName: input.sourceAccount.name,
+                                                      accountSequenceNumber: input.sourceAccount.accountSequenceNumber,
+                                                      accountType: input.sourceAccount.accountType
         )
         let creditAccountData = ItAccountDataParameters(accountNo: creditAccountFormated,
-                                                        accountName: bluemediaAccountName,
+                                                        accountName: input.topUpAccount.name,
                                                         accountSequenceNumber: 0,
                                                         accountType: 70
         )
@@ -89,7 +87,7 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
     }
     
     func mapNotifyDeviceInput(with input: PerformTopUpTransactionUseCaseInput, challenge: String) -> NotifyDeviceInput {
-        let iban = IBANRepresented(ibanString: IBANFormatter.formatIbanToNrb(for: blueMediaAccountNumber))
+        let iban = IBANRepresented(ibanString: IBANFormatter.formatIbanToNrb(for: input.topUpAccount.number))
         let amount = AmountDTO(
             value: Decimal(input.amount),
             currency: CurrencyDTO(
@@ -102,7 +100,7 @@ final class PerformTopUpTransactionInputMapper: PerformTopUpTransactionInputMapp
             challenge: challenge,
             softwareTokenType: nil,
             notificationSchemaId: "165",
-            alias: bluemediaAccountName,
+            alias: input.topUpAccount.name,
             iban: iban,
             amount: amount,
             variables: [input.recipientNumber, "\(input.amount)", CurrencyType.złoty.name]
