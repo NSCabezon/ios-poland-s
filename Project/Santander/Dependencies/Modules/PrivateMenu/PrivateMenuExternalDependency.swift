@@ -33,6 +33,10 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
         return PLPrivateMenuOptionsUseCase(dependencies: self)
     }
     
+    func resolve() -> GetNameUseCase {
+        return PLPrivateMenuGetNameUseCase(dependencies: self)
+    }
+    
     func resolve() -> PersonalManagerReactiveRepository {
         oldResolver.resolve()
     }

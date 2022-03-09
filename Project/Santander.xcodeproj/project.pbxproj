@@ -221,6 +221,7 @@
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
 		CC43F43827D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */; };
 		CC43F43A27D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43927D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift */; };
+		CC43F43C27D7B20600FFA78A /* PLPrivateMenuGetNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */; };
 		CC7BDC9627BA85590023B37A /* PrivateMenuExternalDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */; };
 		CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */; };
 		CC8E9F85273BEEE500F967A6 /* BottomSheetErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */; };
@@ -516,6 +517,7 @@
 		CA16056EE927AFF76FA97838 /* Pods-Santander.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-release.xcconfig"; sourceTree = "<group>"; };
 		CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuMyProductsUseCase.swift; sourceTree = "<group>"; };
 		CC43F43927D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOtherServicesUseCase.swift; sourceTree = "<group>"; };
+		CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuGetNameUseCase.swift; sourceTree = "<group>"; };
 		CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMenuExternalDependency.swift; sourceTree = "<group>"; };
 		CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBiometricsViewModel.swift; sourceTree = "<group>"; };
 		CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetErrorView.swift; sourceTree = "<group>"; };
@@ -1605,8 +1607,9 @@
 			isa = PBXGroup;
 			children = (
 				CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */,
-				CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */,
+				CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */,
 				CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */,
+				CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */,
 				CC43F43927D6019C00FFA78A /* PLPrivateMenuOtherServicesUseCase.swift */,
 			);
 			path = PrivateMenu;
@@ -2126,6 +2129,7 @@
 				4446D0CC2701B789008B45A0 /* PLAccountHomePresenterModifier.swift in Sources */,
 				D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */,
 				0D59D63827201813007BF898 /* PLOpinatorInfoOption.swift in Sources */,
+				CC43F43C27D7B20600FFA78A /* PLPrivateMenuGetNameUseCase.swift in Sources */,
 				CC7BDC9627BA85590023B37A /* PrivateMenuExternalDependency.swift in Sources */,
 				EFFDC0CA27355DE800978668 /* IbanValidationSendMoneyUseCase.swift in Sources */,
 				BB1D29F326EA336D00684846 /* AppModifiers.swift in Sources */,
