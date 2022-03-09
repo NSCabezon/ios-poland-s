@@ -1,0 +1,43 @@
+use_frameworks!
+
+platform :ios, '12.3'
+
+source 'https://cdn.cocoapods.org/'
+
+def example_app_common
+  pod 'PLUI', :path => '../../../Libraries/PLUI'
+  pod 'PLCommons', :path => '../../../Libraries/PLCommons'
+  pod 'PLCryptography', :path => '../../../Libraries/PLCryptography'
+end
+
+def core_dependencies
+  pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
+  pod 'CoreDomain', :path => '../../../../santander-one/Modules/Libraries/CoreDomain'
+  pod 'SANLegacyLibrary', :path => '../../../../santander-one/Modules/Libraries/SANLegacyLibrary'
+  pod 'UI', :path => '../../../../santander-one/UI'
+  pod 'Locker', :path => '../../../../santander-one/Modules/Libraries/Locker'
+  pod 'Operative', :path => '../../../../santander-one/Operative'
+  pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
+  pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
+  pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
+  pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
+  pod 'Localization', :path => '../../../../santander-one/Localization'
+end
+
+def pl_dependencies
+  pod 'Authorization', :path => '../'
+  pod 'SANPLLibrary', :path => '../../../Libraries/SANPLLibrary'
+  pod 'PLCommonOperatives', :path => '../../../Libraries/PLCommonOperatives'
+end
+
+target 'Authorization_Example' do
+  example_app_common
+  core_dependencies
+  pl_dependencies
+end
+
+target 'Authorization_Tests' do
+  example_app_common
+  core_dependencies
+  pl_dependencies
+end

@@ -26,5 +26,14 @@ struct SendMoneyDependencies {
         legacyDependenciesInjector.register(for: ValidateScheduledSendMoneyUseCaseProtocol.self) { resolver in
             return PLValidateGenericSendMoneyUseCase(dependenciesResolver: resolver)
         }
+        legacyDependenciesInjector.register(for: SendMoneyDestinationUseCaseProtocol.self) { resolver in
+            return PLSendMoneyDestinationUseCase(dependenciesResolver: resolver)
+        }
+        legacyDependenciesInjector.register(for: SendMoneyAmountUseCaseProtocol.self) { resolver in
+            return PLSendMoneyAmountUseCase(dependenciesResolver: resolver)
+        }
+        legacyDependenciesInjector.register(for: SendMoneyConfirmationUseCaseProtocol.self) { resolver in
+            return PLSendMoneyConfirmationUseCase(dependenciesResolver: resolver)
+        }
     }
 }
