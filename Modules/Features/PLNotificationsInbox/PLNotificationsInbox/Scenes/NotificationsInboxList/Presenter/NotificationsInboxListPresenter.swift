@@ -121,8 +121,8 @@ extension NotificationsInboxListPresenter {
         notificationsUseCaseManager?.getList(completion: completion)
     }
     
-    func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
-        notificationsUseCaseManager?.getUnreadedPushesCount(completion: { response in
+    func getUnreadedPushesCount(enabledPushCategories: [EnabledPushCategorie], completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
+        notificationsUseCaseManager?.getUnreadedPushesCount(enabledPushCategories: enabledPushCategories, completion: { response in
             if let response = response {
                 self.view?.getNotificationsInboxListView().header.updateUnreadedMessagesLabel(unreadedMessagesCount: response.count)
                 
