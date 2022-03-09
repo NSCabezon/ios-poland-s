@@ -6,26 +6,37 @@
 //
 
 import CoreFoundationLib
+import PLScenes
+import UI
+
+protocol TaxPayersListDelegate: AnyObject {
+    func didAddTaxPayer(_ taxPayer: TaxPayer)
+}
 
 protocol TaxPayersListCoordinatorProtocol {
     var navigationController: UINavigationController? { get }
+    var delegate: TaxPayersListDelegate? { get set }
     
     func back()
     func backToForm()
     func goToGlobalPosition()
     
+    func reload()
     func showAddPayerView()
     func showPayerIdentifiers(for: TaxPayer)
     func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?)
 }
 
-final class TaxPayersListCoordinator {
+final class TaxPayersListCoordinator: ModuleCoordinator {
+    weak var delegate: TaxPayersListDelegate?
     weak var navigationController: UINavigationController?
     
     private weak var taxPayerSelectorDelegate: TaxPayerSelectorDelegate?
     private let selectedTaxPayer: TaxPayer?
     private let dependenciesEngine: DependenciesDefault
-    private let taxPayers: [TaxPayer]
+    private var taxPayers: [TaxPayer]
+    private let shouldBackAfterSelectItem = false
+    private var coordinator: TaxTransferParticipantSelectorCoordinator<TaxTransferFormViewModel.TaxPayerViewModel>?
     
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -46,7 +57,7 @@ final class TaxPayersListCoordinator {
             showAddPayerView()
             return
         }
-        
+
         if let selectedTaxPayer = selectedTaxPayer {
             showTaxItemSelector(with: mapper.map(selectedTaxPayer))
         } else {
@@ -67,9 +78,13 @@ final class TaxPayersListCoordinator {
         }
     }
     
+    private func didTapButton() {
+        showAddPayerView()
+    }
+    
     private func showTaxItemSelector(with selectedTaxPayer: TaxTransferFormViewModel.TaxPayerViewModel?) {
         let configuration = TaxTransferParticipantConfiguration<TaxTransferFormViewModel.TaxPayerViewModel>(
-            shouldBackAfterSelectItem: false,
+            shouldBackAfterSelectItem: shouldBackAfterSelectItem,
             taxItemSelectorType: .payer,
             items: mapper.map(taxPayers),
             selectedItem: selectedTaxPayer
@@ -77,14 +92,36 @@ final class TaxPayersListCoordinator {
         let taxItemSelectorCoordinator = TaxTransferParticipantSelectorCoordinator<TaxTransferFormViewModel.TaxPayerViewModel>(
             configuration: configuration,
             itemSelectionHandler: handleSelectionItem,
+            buttonActionHandler: didTapButton,
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController
         )
+        self.coordinator = taxItemSelectorCoordinator
         taxItemSelectorCoordinator.start()
     }
 }
 
 extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
+    func reload() {
+        if let selectedTaxPayer = selectedTaxPayer {
+            let configuration = TaxTransferParticipantConfiguration<TaxTransferFormViewModel.TaxPayerViewModel>(
+                shouldBackAfterSelectItem: shouldBackAfterSelectItem,
+                taxItemSelectorType: .payer,
+                items: mapper.map(taxPayers),
+                selectedItem: mapper.map(selectedTaxPayer)
+            )
+            coordinator?.reload(with: configuration)
+        } else {
+            let configuration = TaxTransferParticipantConfiguration<TaxTransferFormViewModel.TaxPayerViewModel>(
+                shouldBackAfterSelectItem: shouldBackAfterSelectItem,
+                taxItemSelectorType: .payer,
+                items: mapper.map(taxPayers),
+                selectedItem: nil
+            )
+            coordinator?.reload(with: configuration)
+        }
+    }
+    
     func back() {
         navigationController?.popViewController(animated: true)
     }
@@ -127,10 +164,19 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
         let coordinator = AddTaxPayerFormCoordinator(
             dependenciesResolver: dependenciesEngine,
             taxPayers: taxPayers,
+            delegate: self,
             navigationController: navigationController
         )
-        
         coordinator.start()
+    }
+}
+
+extension TaxPayersListCoordinator: AddTaxPayerFormCoordinatorDelegate {
+    func didAddTaxPayer(_ taxPayer: TaxPayer) {
+        taxPayers.append(taxPayer)
+        delegate?.didAddTaxPayer(taxPayer)
+        reload()
+        back()
     }
 }
 
@@ -139,3 +185,5 @@ private extension TaxPayersListCoordinator {
         dependenciesEngine.resolve()
     }
 }
+
+

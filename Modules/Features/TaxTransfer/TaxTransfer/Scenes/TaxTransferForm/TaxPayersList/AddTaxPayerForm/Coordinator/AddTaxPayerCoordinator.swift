@@ -6,33 +6,50 @@
 //
 
 import CoreFoundationLib
+import PLScenes
+
+protocol AddTaxPayerFormCoordinatorDelegate: AnyObject {
+    func didAddTaxPayer(_ taxPayer: TaxPayer)
+}
 
 protocol AddTaxPayerFormCoordinatorProtocol {
     var navigationController: UINavigationController? { get }
+    var delegate: AddTaxPayerFormCoordinatorDelegate? { get set }
     
     func back()
     func goToGlobalPosition()
+    
+    func didTapDone(with taxPayer: TaxPayer)
+    func showIdentifiersSelectorView(
+        with section: ItemSelectorConfiguration<TaxIdentifierType>.ItemSelectorSection,
+        selectedItem: TaxIdentifierType?
+    )
 }
 
 final class AddTaxPayerFormCoordinator {
     weak var navigationController: UINavigationController?
+    weak var delegate: AddTaxPayerFormCoordinatorDelegate?
+    
+    private lazy var presenter = AddTaxPayerFormPresenter(
+        dependenciesResolver: dependenciesEngine,
+        coordinator: self
+    )
     
     private let isEmptyTaxPayersList: Bool
     private let dependenciesEngine: DependenciesDefault
     
     init(dependenciesResolver: DependenciesResolver,
          taxPayers: [TaxPayer],
+         delegate: AddTaxPayerFormCoordinatorDelegate?,
          navigationController: UINavigationController?) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.isEmptyTaxPayersList = taxPayers.isEmpty
         self.navigationController = navigationController
+        self.delegate = delegate
+        setUpDependencies()
     }
     
     func start() {
-        let presenter = AddTaxPayerFormPresenter(
-            dependenciesResolver: dependenciesEngine,
-            coordinator: self
-        )
         let viewController = AddTaxPayerFormViewController(presenter: presenter)
         viewController.delegate = presenter
         presenter.view = viewController
@@ -42,6 +59,10 @@ final class AddTaxPayerFormCoordinator {
 }
 
 extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
+    func didTapDone(with taxPayer: TaxPayer) {
+        delegate?.didAddTaxPayer(taxPayer)
+    }
+    
     func back() {
         if isEmptyTaxPayersList {
             backToForm()
@@ -54,7 +75,37 @@ extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    private func backToForm() {
+    func showIdentifiersSelectorView(
+        with section: ItemSelectorConfiguration<TaxIdentifierType>.ItemSelectorSection,
+        selectedItem: TaxIdentifierType?
+    ) {
+        let configuration = ItemSelectorConfiguration<TaxIdentifierType>(
+            navigationTitle: "#Typ identyfikatora",
+            isSearchEnabled: false,
+            sections: [section],
+            selectedItem: selectedItem
+        )
+        let coordinator = ItemSelectorCoordinator<TaxIdentifierType>(
+            navigationController: navigationController,
+            configuration: configuration,
+            itemSelectionHandler: handleSelectedTaxIdentifier
+        )
+        coordinator.start()
+    }
+}
+
+private extension AddTaxPayerFormCoordinator {
+    func setUpDependencies() {
+        dependenciesEngine.register(for: TaxIdentifierMapping.self) { _ in
+            return TaxIdentifierMapper()
+        }
+    }
+    
+    func handleSelectedTaxIdentifier(item: TaxIdentifierType) {
+        presenter.handleSelectedTaxIdentifier(item: item)
+    }
+    
+    func backToForm() {
         guard let formViewController = navigationController?.viewControllers.first(
             where: { $0 is TaxTransferFormViewController }
         ) else { return }
