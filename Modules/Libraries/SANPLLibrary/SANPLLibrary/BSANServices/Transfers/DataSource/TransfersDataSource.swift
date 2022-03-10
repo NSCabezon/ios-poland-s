@@ -249,7 +249,6 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,
                                                                                                                 headers: self.headers,
-                                                                                                                contentType: .json,
                                                                                                                 localServiceName: .exchangeRates))
         return result
     }
