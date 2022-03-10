@@ -11,7 +11,6 @@ import SANPLLibrary
 import CoreDomain
 import OpenCombine
 
-
 struct PLTransfersRepositoryMock: PLTransfersRepository {
     private var rates: [ExchangeRateRepresentable]!
     
