@@ -373,7 +373,7 @@ private struct ExchangeRatesRequest: NetworkProviderRequest {
     let jsonBody: NotifyDeviceParameters? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding?
-    let contentType: NetworkProviderContentType?
+    let contentType: NetworkProviderContentType? = nil
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
     init(serviceName: String,
@@ -381,14 +381,12 @@ private struct ExchangeRatesRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          headers: [String: String]?,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
-         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
         self.headers = headers
         self.bodyEncoding = bodyEncoding
-        self.contentType = contentType
         self.localServiceName = localServiceName
     }
 }
