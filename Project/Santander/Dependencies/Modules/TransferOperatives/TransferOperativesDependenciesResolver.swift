@@ -6,8 +6,9 @@
 //
 
 import TransferOperatives
-import SANPLLibrary
 import CoreFoundationLib
+import SANPLLibrary
+import UI
 
 extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {
     func resolve() -> PLTransfersRepository {
@@ -32,5 +33,9 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
 
     func resolve() -> CurrencyFormatterProvider {
         return oldResolver.resolve()
+    }
+    
+    func opinatorCoordinator() -> BindableCoordinator {
+        return OpinatorWebViewCoordinator(dependencies: self)
     }
 }
