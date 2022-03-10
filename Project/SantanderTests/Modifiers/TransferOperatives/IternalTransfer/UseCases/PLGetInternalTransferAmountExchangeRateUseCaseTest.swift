@@ -18,6 +18,13 @@ class PLGetInternalTransferAmountExchangeRateUseCaseTest: XCTestCase {
     private var useCase: PLGetInternalTransferAmountExchangeRateUseCase!
 
     override func setUpWithError() throws {
+        let rates = [ExchangeRateRepresentableMock(currency: CurrencyType.złoty.rawValue,
+                                                   currencySymbol: "", buyRate: 0.0, sellRate: 0.0, decPlaces: 0),
+                     ExchangeRateRepresentableMock(currency: CurrencyType.eur.rawValue,
+                                                   currencySymbol: "", buyRate: 0.0, sellRate: 1.888, decPlaces: 0),
+                     ExchangeRateRepresentableMock(currency: CurrencyType.dollar.rawValue,
+                                                   currencySymbol: "", buyRate: 4.55, sellRate: 0.0, decPlaces: 0)]
+        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates))
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
@@ -26,9 +33,6 @@ class PLGetInternalTransferAmountExchangeRateUseCaseTest: XCTestCase {
     }
 
     func test_PLGetInternalTransferAmountExchangeRateUseCase_whenSameCurrency_rateShouldBeOne() throws {
-        let rates = [ExchangeRateRepresentableMock(currency: CurrencyType.złoty.rawValue,
-                                                   currencySymbol: "", buyRate: 0.0, sellRate: 0.0, decPlaces: 0)]
-        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates))
         let input = GetInternalTransferAmountExchangeRateUseCaseInput(localCurrency: .złoty,
                                                                       initialCurrency: .złoty,
                                                                       targetCurrency: .złoty)
@@ -42,9 +46,6 @@ class PLGetInternalTransferAmountExchangeRateUseCaseTest: XCTestCase {
     }
     
     func test_PLGetInternalTransferAmountExchangeRateUseCase_whenLocalCurrency_toForeingCurrency_sellRateShouldMatch() throws {
-        let rates = [ExchangeRateRepresentableMock(currency: CurrencyType.eur.rawValue,
-                                                   currencySymbol: "", buyRate: 0.0, sellRate: 1.888, decPlaces: 0)]
-        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates))
         let input = GetInternalTransferAmountExchangeRateUseCaseInput(localCurrency: .złoty,
                                                                       initialCurrency: .złoty,
                                                                       targetCurrency: .eur)
@@ -58,11 +59,6 @@ class PLGetInternalTransferAmountExchangeRateUseCaseTest: XCTestCase {
     }
     
     func test_PLGetInternalTransferAmountExchangeRateUseCase_whenForeingCurrency_toForeingCurrency_sellRate_andBuyRate_ShouldMatch() throws {
-        let rates = [ExchangeRateRepresentableMock(currency: CurrencyType.eur.rawValue,
-                                                   currencySymbol: "", buyRate: 0.0, sellRate: 1.888, decPlaces: 0),
-                 ExchangeRateRepresentableMock(currency: CurrencyType.dollar.rawValue,
-                                                   currencySymbol: "", buyRate: 4.55, sellRate: 0.0, decPlaces: 0)]
-        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates))
         let input = GetInternalTransferAmountExchangeRateUseCaseInput(localCurrency: .złoty,
                                                                   initialCurrency: .eur,
                                                                   targetCurrency: .dollar)
@@ -77,11 +73,6 @@ class PLGetInternalTransferAmountExchangeRateUseCaseTest: XCTestCase {
     }
     
     func test_PLGetInternalTransferAmountExchangeRateUseCase_missingCurrencyRate_ShouldFail() throws {
-        let rates = [ExchangeRateRepresentableMock(currency: CurrencyType.eur.rawValue,
-                                                   currencySymbol: "", buyRate: 0.0, sellRate: 1.888, decPlaces: 0),
-                 ExchangeRateRepresentableMock(currency: CurrencyType.dollar.rawValue,
-                                                   currencySymbol: "", buyRate: 4.55, sellRate: 0.0, decPlaces: 0)]
-        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates))
         let input = GetInternalTransferAmountExchangeRateUseCaseInput(localCurrency: .złoty,
                                                                   initialCurrency: .eur,
                                                                   targetCurrency: .pound)
