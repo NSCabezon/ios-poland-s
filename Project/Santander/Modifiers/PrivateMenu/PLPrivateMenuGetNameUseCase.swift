@@ -11,11 +11,9 @@ import CoreFoundationLib
 import PrivateMenu
 
 struct PLPrivateMenuGetNameUseCase {
-    private let repository: MenuRepository
-    let globalPositionRepository: GlobalPositionDataRepository
+    private let globalPositionRepository: GlobalPositionDataRepository
     
     init(dependencies: PrivateMenuExternalDependenciesResolver) {
-        repository = dependencies.resolve()
         globalPositionRepository = dependencies.resolve()
     }
 }
@@ -36,14 +34,16 @@ extension PLPrivateMenuGetNameUseCase: GetNameUseCase {
     }
 }
 
-struct Name: NameRepresentable {
-    var name: String?
-    var availableName: String?
-    var fullName: String?
-    var initials: String?
-    
-    init(availableName: String, initials: String) {
-        self.availableName = availableName
-        self.initials = initials
+private extension PLPrivateMenuGetNameUseCase {
+    struct Name: NameRepresentable {
+        var name: String?
+        var availableName: String?
+        var fullName: String?
+        var initials: String?
+        
+        init(availableName: String, initials: String) {
+            self.availableName = availableName
+            self.initials = initials
+        }
     }
 }
