@@ -11,16 +11,21 @@ import PLCommons
 import CoreFoundationLib
 import PLScenes
 
+protocol TaxItemSelectorView: AnyObject {
+    func didTapButton()
+}
+
 final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: UIViewController,
                                                                  UITableViewDataSource,
                                                                  UITableViewDelegate,
                                                                  ConfirmationDialogPresentable {
+    weak var delegate: TaxItemSelectorView?
     private let tableView = UITableView()
     private let button = LisboaButton()
     private let infoLabel = UILabel()
     
     private let taxItemSelectorType: TaxTransferParticipantSelectorType
-    private let viewModel: TaxTransferParticipantSelectorViewModel<Item>
+    private var viewModel: TaxTransferParticipantSelectorViewModel<Item>
     private let coordinator: TaxTransferParticipantSelectorCoordinator<Item>
     private let confirmationDialogFactory: ConfirmationDialogProducing
     
@@ -49,6 +54,15 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
         super.viewWillAppear(animated)
         
         configureNavigationItem()
+        tableView.reloadData()
+    }
+    
+    func reload() {
+        tableView.reloadData()
+    }
+    
+    func set(viewModel: TaxTransferParticipantSelectorViewModel<Item>) {
+        self.viewModel = viewModel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -146,6 +160,9 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
     private func configureButton() {
         button.setTitle(localized(taxItemSelectorType.buttonTitle), for: .normal)
         button.configureAsWhiteButton()
+        button.addAction { [weak self] in
+            self?.delegate?.didTapButton()
+        }
     }
     
     private func configureInfoLabel() {
@@ -153,7 +170,7 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
         infoLabel.textColor = .greyishBrown
         infoLabel.text = taxItemSelectorType.info
     }
-    
+
     @objc private func back() {
         coordinator.back()
     }

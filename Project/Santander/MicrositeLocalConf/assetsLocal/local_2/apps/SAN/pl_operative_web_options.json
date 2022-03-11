@@ -79,6 +79,13 @@
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/start-saving",
             "isAvailable": true,
             "method": "POST"
+        },
+        {
+            "id": "MULTICURRENCY",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
     

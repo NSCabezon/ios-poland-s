@@ -50,9 +50,10 @@ private extension PLInsuranceProtectionModifier {
     }
 
     func generateParameters(with insuranceEntity: InsuranceProtectionEntity) -> [String: String]? {
-        guard let dataProvider = self.dependenciesResolver.resolve(for: BSANDataProviderProtocol.self) as? SANPLLibrary.BSANDataProvider, let authCredentials = try? dataProvider.getAuthCredentials(), let accessToken = authCredentials.accessTokenCredentials?.accessToken, let productId = insuranceEntity.dto.referenciaExterna else {
+        guard let dataProvider = self.dependenciesResolver.resolve(for: BSANDataProviderProtocol.self) as? SANPLLibrary.BSANDataProvider, let authCredentials = try? dataProvider.getAuthCredentials(), let accessToken = authCredentials.accessTokenCredentials?.accessToken else {
             return nil
         }
+        let productId = insuranceEntity.dto.referenciaExterna
         var parameters = [String: String]()
         parameters["access_token"] = accessToken
         parameters["mlang"] = getLanguage()

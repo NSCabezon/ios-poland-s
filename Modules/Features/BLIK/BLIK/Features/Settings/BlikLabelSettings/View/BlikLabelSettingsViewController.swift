@@ -67,6 +67,7 @@ private extension BlikLabelSettingsViewController {
         configureTargets()
         configureDelegates()
         configureKeyboardDismissGesture()
+        bottomButton.disableButton()
     }
     
     func configureSubviews() {
@@ -96,7 +97,7 @@ private extension BlikLabelSettingsViewController {
     }
     
     func configureNavigationItem() {
-        NavigationBarBuilder(style: .white, title: .title(key: localized("pl_blik_title_otherSetting")))
+        NavigationBarBuilder(style: .white, title: .title(key: localized("pl_toolbar_blik_tag")))
             .setLeftAction(.back(action: .selector(#selector(back))))
             .setRightActions([.close(action: .selector(#selector(close)))])
             .build(on: self, with: nil)

@@ -6,6 +6,7 @@
 //
 
 protocol AddTaxPayerFormViewDelegate: AnyObject {
+    func didTapIdentifiersSelector()
     func didEndEditing()
 }
 
@@ -37,14 +38,18 @@ final class AddTaxPayerFormContainerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func getForm() -> AddTaxPayerForm {
+    func getForm() -> AddTaxPayerForm? {
         let identifierNumber = identifierNumber.getInputText()
         let payerName = payerName.getInputText()
+        
+        guard let identifier = identifierSelector.getIdentifierType() else {
+            return nil
+        }
         
         return AddTaxPayerForm(
             payerName: payerName,
             identifierNumber: identifierNumber,
-            identifierType: .PESEL // TODO: identifier type will be handled in next pr
+            identifierType: identifier
         )
     }
     
@@ -67,10 +72,18 @@ final class AddTaxPayerFormContainerView: UIView {
         payerName.hideError()
     }
     
+    func setUp(with identifier: Selectable<TaxIdentifierType>) {
+        identifierSelector.configure(
+            with: identifier,
+            onTap: didTapIdentifiersSelector
+        )
+    }
+    
     private func setUp() {
         configureStackView()
         configureSubviews()
         configureDelegates()
+        configureIdentifiersSelector()
     }
     
     private func configureStackView() {
@@ -103,6 +116,17 @@ final class AddTaxPayerFormContainerView: UIView {
     private func configureDelegates() {
         identifierNumber.delegate = self
         payerName.delegate = self
+    }
+    
+    private func configureIdentifiersSelector() {
+        identifierSelector.configure(
+            with: .unselected,
+            onTap: didTapIdentifiersSelector
+        )
+    }
+    
+    private func didTapIdentifiersSelector() {
+        delegate?.didTapIdentifiersSelector()
     }
 }
 

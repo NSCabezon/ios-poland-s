@@ -11,6 +11,7 @@ import PLCommons
 struct TopUpModel {
     let amount: Int
     let account: AccountForDebit
+    let topUpAccount: TopUpAccount
     let recipientNumber: String
     let recipientName: String?
     let operatorId: Int

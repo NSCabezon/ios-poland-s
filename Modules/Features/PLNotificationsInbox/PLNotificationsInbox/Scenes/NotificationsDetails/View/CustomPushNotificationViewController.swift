@@ -17,7 +17,6 @@ protocol CustomPushNotificationViewProtocol: AnyObject {
 class CustomPushNotificationViewController: UIViewController, WKUIDelegate {
     private let presenter: CustomPushNotificationPresenterProtocol
     private let webView = WKWebView()
-    private let closeButton = LisboaButton()
     init(presenter: CustomPushNotificationPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -40,7 +39,7 @@ class CustomPushNotificationViewController: UIViewController, WKUIDelegate {
 
 extension CustomPushNotificationViewController: CustomPushNotificationViewProtocol {
    
-    func openHtml(_ html: String) {
+    func openHtml(_ html: String) {        
         self.webView.loadHTMLString(html, baseURL: nil)
     }
     
@@ -53,13 +52,11 @@ extension CustomPushNotificationViewController: CustomPushNotificationViewProtoc
         addSubviews()
         prepareStyles()
         prepareNavigationBar()
-        prepareActions()
         prepareLayout()
     }
     
     func addSubviews() {
         view.addSubview(webView)
-        view.addSubview(closeButton)
     }
     
     func prepareNavigationBar() {
@@ -71,25 +68,10 @@ extension CustomPushNotificationViewController: CustomPushNotificationViewProtoc
     
     func prepareStyles() {
         view.backgroundColor = .white
-        closeButton.configureAsRedButton()
-        closeButton.setTitle(localized("pl_alerts_button_close"), for: .normal)
-    }
-    
-    func prepareActions() {
-        closeButton.addAction { [weak self] in
-            self?.close()
-        }
     }
     
     func prepareLayout() {
         webView.frame = self.view.frame
-        self.closeButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            closeButton.heightAnchor.constraint(equalToConstant: 48),
-            closeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            closeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -17)
-        ])
     }
     
     private func setupWebView() {

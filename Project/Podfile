@@ -9,9 +9,8 @@ def core_dependencies
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
   pod 'Operative', :path => '../santander-one/Operative'
   pod 'WebViews', :path => '../santander-one/Modules/Libraries/WebViews'
-  pod 'UI', :path => '../santander-one/UI'
+  pod 'UI', :path => '../santander-one/UI', :testspecs => ['Tests']
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
@@ -21,10 +20,10 @@ def core_dependencies
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Loans', :path => '../santander-one/Loans'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib', :testspecs => ['Tests']
+  pod 'Loans', :path => '../santander-one/Loans', :testspecs => ['Tests']
   pod 'Account', :path => '../santander-one/Accounts'
-  pod 'Cards', :path => '../santander-one/Cards'
+  pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
   pod 'PersonalArea', :path => '../santander-one/PersonalArea'
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
   pod 'Transfer', :path => '../santander-one/Transfer'
@@ -69,6 +68,8 @@ def pl_features
   pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
   pod 'PhoneTopUp', :path => '../Modules/Features/PhoneTopUp'
   pod 'ZusTransfer', :path => '../Modules/Features/ZusTransfer'
+  pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
+  pod 'Authorization', :path => '../Modules/Features/Authorization'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
 end
 
@@ -89,6 +90,12 @@ def pl_thirdparty_dependencies
   pod 'Dynatrace', '~> 8.227'
 end
 
+#------------ Tests ----------------
+def core_test_dependencies
+  pod 'UnitTestCommons', :path => '../santander-one/UnitTestCommons'
+  pod 'CoreTestData', :path => '../santander-one/Modules/Libraries/CoreTestData'
+end
+
 # --------- Target configuration
 target 'Santander' do
   use_frameworks!
@@ -103,6 +110,7 @@ target 'Santander' do
 
   target 'SantanderTests' do
         inherit! :search_paths
+        core_test_dependencies
   end
 end
 
@@ -117,6 +125,7 @@ post_install do |installer|
 		config.build_settings['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] = 'DEBUG'
 		config.build_settings['SWIFT_VERSION'] = '5.0'
 		config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    config.build_settings['ENABLE_TESTABILITY'] = 'YES'
 	  end
 	end
   end

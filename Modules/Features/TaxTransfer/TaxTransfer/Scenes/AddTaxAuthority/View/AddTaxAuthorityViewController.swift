@@ -8,13 +8,15 @@
 import UI
 import PLUI
 
+protocol AddTaxAuthorityView: AnyObject {
+    func setViewModel(_ viewModel: AddTaxAuthorityViewModel)
+}
+
 final class AddTaxAuthorityViewController: UIViewController {
     private let presenter: AddTaxAuthorityPresenterProtocol
     private let scrollView = UIScrollView()
     private let bottomButtonView = BottomButtonView()
-    private lazy var formView = AddTaxAuthorityContainerView(
-        delegate: self
-    )
+    private lazy var formView = AddTaxAuthorityContainerView(delegate: self)
     
     let keyboardManager = KeyboardManager()
 
@@ -32,6 +34,51 @@ final class AddTaxAuthorityViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         presenter.viewDidLoad()
+    }
+}
+
+extension AddTaxAuthorityViewController: AddTaxAuthorityView {
+    func setViewModel(_ viewModel: AddTaxAuthorityViewModel) {
+        DispatchQueue.main.async {
+            switch viewModel {
+            case .taxSymbolSelector:
+                self.setTaxSymbolSelectorState()
+            case let .usForm(viewModel):
+                self.setUsFormState(with: viewModel)
+            case let .irpForm(viewModel):
+                self.setIrpFormState(with: viewModel)
+            }
+        }
+    }
+    
+    private func setTaxSymbolSelectorState() {
+        formView.showTaxSymbolSelector(onTaxSymbolTap: { [weak self] in
+            self?.presenter.didTapTaxSymbolSelector()
+        })
+    }
+    
+    private func setUsFormState(with viewModel: AddTaxAuthorityViewModel.UsTaxAuthorityFormViewModel) {
+        formView.showUsForm(
+            viewModel: viewModel,
+            onTaxSymbolTap: { [weak self] in
+                self?.presenter.didTapTaxSymbolSelector()
+            },
+            onCityTap: { [weak self] in
+                self?.presenter.didTapCitySelector()
+            },
+            onTaxAuthorityTap: { [weak self] in
+                self?.presenter.didTapTaxAuthoritySelector()
+            }
+        )
+    }
+    
+    private func setIrpFormState(with viewModel: AddTaxAuthorityViewModel.IrpTaxAuthorityFormViewModel) {
+        formView.showIrpForm(
+            viewModel: viewModel,
+            onTaxSymbolTap: { [weak self] in
+                self?.presenter.didTapTaxSymbolSelector()
+            }
+        )
     }
 }
 
