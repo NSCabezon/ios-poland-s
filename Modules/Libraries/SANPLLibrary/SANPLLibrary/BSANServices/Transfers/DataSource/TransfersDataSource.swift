@@ -18,6 +18,7 @@ protocol TransfersDataSourceProtocol {
     func getChallenge(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError>
     func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError>
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -38,6 +39,7 @@ final class TransfersDataSource {
         case challenge = "/transactions/domestic/prepare"
         case checkTransactionAvailability = "/payhubpl-prodef/api/instant_payments/accounts/"
         case notifyDevice = "/auth/devices/mobile-authorization/notify-device/transactions"
+        case exchangeRates = "/exrates"
     }
     
     private let networkProvider: NetworkProvider
@@ -236,6 +238,20 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         )
         return result
     }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName = TransferServiceType.exchangeRates.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<ExchangeRatesDTO, NetworkProviderError> = self.networkProvider.request(ExchangeRatesRequest(serviceName: serviceName,
+                                                                                                                serviceUrl: absoluteUrl,
+                                                                                                                method: .get,
+                                                                                                                headers: self.headers,
+                                                                                                                localServiceName: .exchangeRates))
+        return result
+    }
 }
 
 private struct TransferRequest: NetworkProviderRequest {
@@ -343,6 +359,33 @@ private struct NotifiyDeviceRequest: NetworkProviderRequest {
         self.queryParams = queryParams
         self.bodyEncoding = bodyEncoding
         self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+
+private struct ExchangeRatesRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NotifyDeviceParameters? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType? = nil
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         headers: [String: String]?,
+         bodyEncoding: NetworkProviderBodyEncoding? = .none,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.headers = headers
+        self.bodyEncoding = bodyEncoding
         self.localServiceName = localServiceName
     }
 }

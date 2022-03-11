@@ -18,6 +18,7 @@ public protocol PLTransfersRepository: TransfersRepository {
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
     func getAccountsForDebit() -> AnyPublisher<[AccountRepresentable], Error>
     func getAccountsForCredit() -> AnyPublisher<[AccountRepresentable], Error>
+    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error>
 }
 
 public extension PLTransfersRepository {
