@@ -269,6 +269,7 @@
 		DBD0EDF527983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0EDF427983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift */; };
 		EF0CDC0327C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CDC0227C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift */; };
 		EF0CDC0527C803D800FDA289 /* ModuleDependencies+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CDC0427C803D800FDA289 /* ModuleDependencies+Repository.swift */; };
+		EF2E562F27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E562E27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift */; };
 		EF430D5F271DD855001DC4B9 /* TranferTypeMatrixEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */; };
 		EF446B0C271DCA770074813A /* SendMoneyDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */; };
 		EF446B0E271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */; };
@@ -592,6 +593,7 @@
 		DD835DEA4BA5FD58BCDDB136 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
 		EF0CDC0227C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift; sourceTree = "<group>"; };
 		EF0CDC0427C803D800FDA289 /* ModuleDependencies+Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleDependencies+Repository.swift"; sourceTree = "<group>"; };
+		EF2E562E27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpinatorWebViewCoordinator.swift; sourceTree = "<group>"; };
 		EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranferTypeMatrixEvaluator.swift; sourceTree = "<group>"; };
 		EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyDependencies.swift; sourceTree = "<group>"; };
 		EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeUseCaseInputAdapter.swift; sourceTree = "<group>"; };
@@ -981,6 +983,7 @@
 		3A4B64D82796DDC4003FFE00 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				EF2E562D27DA43A400830CA2 /* Operative */,
 				A3DBFBD227CE052D004316D6 /* ZusSMETransfer */,
 				EFE9103C27CD4098006D8FF7 /* GlobalPosition */,
 				90B594FB27BE8A4A00719FEA /* TransferOperatives */,
@@ -1867,6 +1870,14 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
+		EF2E562D27DA43A400830CA2 /* Operative */ = {
+			isa = PBXGroup;
+			children = (
+				EF2E562E27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift */,
+			);
+			path = Operative;
+			sourceTree = "<group>";
+		};
 		EF430D5D271DD83D001DC4B9 /* TransferType */ = {
 			isa = PBXGroup;
 			children = (
@@ -2183,6 +2194,7 @@
 				82AED78A2796F81C00E6133D /* PLPublicMenuRepository.swift in Sources */,
 				85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */,
 				B7BF53D527A7E95000EDDE88 /* PublicMenuCustomActionCoordinator.swift in Sources */,
+				EF2E562F27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift in Sources */,
 				0D02AFF226F2096A005E78DC /* PLAccountTransactionDetailShareableInfo.swift in Sources */,
 				66BC8A6E263FFFF000654CC5 /* PLAppConfig.swift in Sources */,
 				669A37D8270F573F00C0F272 /* PLAccountOtherOperativesWebConfiguration.swift in Sources */,
