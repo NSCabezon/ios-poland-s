@@ -34,17 +34,17 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
                                                                 street: nil,
                                                                 zipCode: nil,
                                                                 baseAddress: nil)
-        let signData = SignDataParameters(securityLevel: 2048)
+        let signData = SignDataParameters(securityLevel: 1)
         let originIBAN: String = originIbanRepresentable.countryCode + originIbanRepresentable.checkDigits + originIbanRepresentable.codBban
-        let destinationIBAN = "PL" + destinationIbanRepresentable.countryCode + destinationIbanRepresentable.checkDigits + destinationIbanRepresentable.codBban
+        let destinationIBAN = destinationIbanRepresentable.countryCode + destinationIbanRepresentable.checkDigits + destinationIbanRepresentable.codBban
         let debitAccounData = ItAccountDataParameters(accountNo: originIBAN,
                                                       accountName: nil,
                                                       accountSequenceNumber: originAccount.sequencerNo,
                                                       accountType: originAccount.accountType)
         let creditAccountData = ItAccountDataParameters(accountNo: destinationIBAN,
                                                         accountName: (input.name ?? ""),
-                                                        accountSequenceNumber: destinationAccount.sequencerNo,//1
-                                                        accountType: destinationAccount.accountType)//101
+                                                        accountSequenceNumber: destinationAccount.sequencerNo,
+                                                        accountType: destinationAccount.accountType)
         let transactionType = internalTransferMatrix(input)
         let time = input.time?.toString(format: "YYYY-MM-dd")
         let genericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: customerAddressData,
@@ -52,7 +52,7 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
                                                                                   creditAmountData: amountData,
                                                                                   debitAccountData: debitAccounData,
                                                                                   creditAccountData: creditAccountData,
-                                                                                  signData: signData,//nil?
+                                                                                  signData: signData,
                                                                                   title: input.concept,
                                                                                   type: transactionType,
                                                                                   transferType: PolandTransferType.zero.serviceString,
