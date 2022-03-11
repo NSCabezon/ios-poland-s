@@ -68,26 +68,9 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch taxItemSelectorType {
         case .payee:
-            return UITableViewCell() // TODO: implement with payee feature
+            return getPayeeCell(at: indexPath)
         case .payer:
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: SelectablePayerCell.identifier,
-                for: indexPath
-            ) as? SelectablePayerCell,
-            let taxPayerViewModel = viewModel.viewModels[safe: indexPath.row],
-            let isSelected = viewModel.viewModels[safe: indexPath.row]?.isSelected,
-            let viewModel = taxPayerViewModel.item as? TaxTransferFormViewModel.TaxPayerViewModel else {
-                return UITableViewCell()
-            }
-            
-            cell.setUp(
-                with: viewModel,
-                isSelected: isSelected,
-                onTap: { [weak self] in
-                    self?.coordinator.handleItemSelection(taxPayerViewModel.item)
-                }
-            )
-            return cell
+            return getPayerCell(at: indexPath)
         }
     }
     
@@ -96,7 +79,56 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+        switch taxItemSelectorType {
+        case .payee:
+            return UITableView.automaticDimension
+        case .payer:
+            return 110
+        }
+    }
+    
+    private func getPayeeCell(at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: SelectablePayeeCell.identifier,
+            for: indexPath
+        )
+        
+        guard
+            let payeeCell = cell as? SelectablePayeeCell,
+            let item = viewModel.viewModels[safe: indexPath.row]?.item,
+            let viewModel = item as? SelectableTaxAuthorityViewModel
+        else {
+            return UITableViewCell()
+        }
+        
+        payeeCell.configure(
+            viewModel: viewModel,
+            onTap: { [weak self] in
+                self?.coordinator.handleItemSelection(item)
+            }
+        )
+        return payeeCell
+    }
+    
+    private func getPayerCell(at indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: SelectablePayerCell.identifier,
+            for: indexPath
+        ) as? SelectablePayerCell,
+        let taxPayerViewModel = viewModel.viewModels[safe: indexPath.row],
+        let isSelected = viewModel.viewModels[safe: indexPath.row]?.isSelected,
+        let viewModel = taxPayerViewModel.item as? TaxTransferFormViewModel.TaxPayerViewModel else {
+            return UITableViewCell()
+        }
+        
+        cell.setUp(
+            with: viewModel,
+            isSelected: isSelected,
+            onTap: { [weak self] in
+                self?.coordinator.handleItemSelection(taxPayerViewModel.item)
+            }
+        )
+        return cell
     }
     
     private func setUp() {
@@ -130,7 +162,7 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
         case .payer:
             tableView.register(SelectablePayerCell.self, forCellReuseIdentifier: SelectablePayerCell.identifier)
         case .payee:
-            return // TODO: implement with payee feature
+            tableView.register(SelectablePayeeCell.self, forCellReuseIdentifier: SelectablePayeeCell.identifier)
         }
     }
     
