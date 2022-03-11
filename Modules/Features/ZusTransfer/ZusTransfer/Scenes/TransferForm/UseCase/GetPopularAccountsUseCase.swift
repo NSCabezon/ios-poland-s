@@ -15,7 +15,7 @@ final class GetPopularAccountsUseCase: UseCase<GetPopularAccountsUseCaseInput, G
     }
     
     override func executeUseCase(requestValues: GetPopularAccountsUseCaseInput) throws -> UseCaseResponse<GetPopularAccountsUseCaseOutput, StringErrorOutput> {
-        let result = try managersProvider.getAccountsManager().getExternalPolular(accountType: requestValues.accountType)
+        let result = try managersProvider.getAccountsManager().getExternalPopular(accountType: requestValues.accountType)
         switch result {
         case let .success(accounts):
             let numbers =  accounts.compactMap({ PopularAccountNumber(number: $0.number) })
