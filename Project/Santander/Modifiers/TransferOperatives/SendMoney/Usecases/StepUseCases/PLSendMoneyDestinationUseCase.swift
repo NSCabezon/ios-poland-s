@@ -38,13 +38,12 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noToName))
         }
         if requestValues.saveToFavorite {
-            // TODO: CHANGE TO ALIAS
-            guard let alias = requestValues.destinationName, alias.trim().count > 0 else {
+            guard let alias = requestValues.destinationAlias, alias.trim().count > 0 else {
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noAlias))
             }
             let duplicate = requestValues.fullFavorites?.first { return $0.payeeName?.trim() == alias.trim() }
             guard duplicate == nil else {
-                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias(alias: alias)))
+                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
             }
         }
         return .ok(requestValues)

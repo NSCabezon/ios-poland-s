@@ -75,8 +75,7 @@ private extension SendMoneyValidationProtocol {
             }
             return try self.executeNotifyDevice(challengeString,
                                                 requestValues: requestValues,
-                                                // TODO: CHANGE TO ALIAS
-                                                alias: requestValues.destinationName ?? "",
+                                                alias: requestValues.destinationAlias ?? "",
                                                 destinationAccountNumber: destinationIbanRepresentable,
                                                 amount: amount)
         case .failure(let error):
