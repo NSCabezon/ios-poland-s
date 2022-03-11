@@ -103,6 +103,7 @@ public enum PLLocalServiceName: String {
     case applePayConfirmation = "applePayConfirmation"
     case notificationPushqueryUnreadedCount = "notificationPushqueryUnreadedCount"
     case notificationPushqueryList = "notificationPushqueryList"
+    case exchangeRates = "exchangeRates"
     case notificationPushDetailsBeforeLogin = "notificationPushDetailsBeforeLogin"
     case notificationPushStatusBeforeLogin = "notificationPushStatusBeforeLogin"
 }
