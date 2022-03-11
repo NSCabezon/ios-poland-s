@@ -205,4 +205,21 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
+    
+    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+        Future { promise in
+            do {
+                let result = try self.bsanTransferManager.getExchangeRates()
+                switch result {
+                case .success(let response):
+                    promise(.success(response.exchangeRates))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }

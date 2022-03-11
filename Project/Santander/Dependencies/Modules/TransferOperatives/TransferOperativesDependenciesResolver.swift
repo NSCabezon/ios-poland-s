@@ -6,8 +6,10 @@
 //
 
 import TransferOperatives
-import SANPLLibrary
 import CoreFoundationLib
+import SANPLLibrary
+import PLCommons
+import UI
 
 extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {
     func resolve() -> PLTransfersRepository {
@@ -33,8 +35,16 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     func resolve() -> GetInternalTransferDestinationAccountsUseCase {
         return PLGetInternalTransferDestAccountsUseCase()
     }
-
+    
     func resolve() -> CurrencyFormatterProvider {
-        return oldResolver.resolve()
+        return PLNumberFormatter()
+    }
+    
+    func resolve() -> GetInternalTransferAmountExchangeRateUseCase {
+        PLGetInternalTransferAmountExchangeRateUseCase(dependencies: self)
+    }
+    
+    func opinatorCoordinator() -> BindableCoordinator {
+        return OpinatorWebViewCoordinator(dependencies: self)
     }
 }

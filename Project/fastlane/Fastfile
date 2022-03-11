@@ -243,27 +243,18 @@ platform :ios do
     certificates_release({version: "#{major}.#{minor}"})
   end
   
-  desc "Test selected example apps"
+  desc "Test all"
   lane :test do |options|
-    TEST_EXAMPLE_APPS_CONFIGURATION.each do |app, configuration|
-      UI.message "Passing #{app} tests"
-      path = "#{configuration[:path]}"
-      cocoapods(podfile: "#{path}/Podfile")
-      begin
+      UI.message "Passing tests"
+      cocoapods()
       run_tests(
-        workspace: "#{path}/#{configuration[:workspace]}",
-        scheme: configuration[:scheme],
+        workspace: "Santander.xcworkspace",
+        scheme: "Dev",
         derived_data_path: "~/derived_data",
         build_for_testing: false,
         output_style: "basic",
-        device: configuration[:device],
-        output_directory: Dir.pwd + "/test_output/" + app,
         suppress_xcode_output: options[:suppress_xcode_output]
-        )
-      rescue => ex
-        UI.error("Something went wrong: #{ex}")
-      end
-    end
+    )
   end
 
   desc 'Updating pods'
