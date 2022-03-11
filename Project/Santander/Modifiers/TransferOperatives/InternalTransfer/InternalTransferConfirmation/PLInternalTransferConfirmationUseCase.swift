@@ -27,7 +27,7 @@ struct PLInternalTransferConfirmationUseCase {
 extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUseCase {
     func fetchConfirmation(input: InternalTransferConfirmationUseCaseInput) -> AnyPublisher<ConditionState, Error> {
         let amountData = ItAmountDataParameters(currency: input.amount.currencyRepresentable?.currencyName, amount: input.amount.value)
-        guard let originAccount = input.originAccount as? PolandAccountRepresentable,
+        guard let originAccount = input.originAccount as? PolandAccountRepresentable, let destinationAccount = input.destinationAccount as? PolandAccountRepresentable,
               let originIbanRepresentable = input.originAccount.ibanRepresentable, let destinationIbanRepresentable = input.destinationAccount.ibanRepresentable else { return Just(.failure).setFailureType(to: Error.self).eraseToAnyPublisher() }
         let customerAddressData = CustomerAddressDataParameters(customerName: input.name,
                                                                 city: nil,
@@ -36,16 +36,15 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
                                                                 baseAddress: nil)
         let signData = SignDataParameters(securityLevel: 2048)
         let originIBAN: String = originIbanRepresentable.countryCode + originIbanRepresentable.checkDigits + originIbanRepresentable.codBban
-        let destinationIBAN = destinationIbanRepresentable.countryCode + destinationIbanRepresentable.checkDigits + destinationIbanRepresentable.codBban
+        let destinationIBAN = "PL" + destinationIbanRepresentable.countryCode + destinationIbanRepresentable.checkDigits + destinationIbanRepresentable.codBban
         let debitAccounData = ItAccountDataParameters(accountNo: originIBAN,
                                                       accountName: nil,
                                                       accountSequenceNumber: originAccount.sequencerNo,
                                                       accountType: originAccount.accountType)
-        
         let creditAccountData = ItAccountDataParameters(accountNo: destinationIBAN,
                                                         accountName: (input.name ?? ""),
-                                                        accountSequenceNumber: 0,
-                                                        accountType: 90)
+                                                        accountSequenceNumber: destinationAccount.sequencerNo,//1
+                                                        accountType: destinationAccount.accountType)//101
         let transactionType = internalTransferMatrix(input)
         let time = input.time?.toString(format: "YYYY-MM-dd")
         let genericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: customerAddressData,
@@ -53,12 +52,18 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
                                                                                   creditAmountData: amountData,
                                                                                   debitAccountData: debitAccounData,
                                                                                   creditAccountData: creditAccountData,
-                                                                                  signData: signData,
+                                                                                  signData: signData,//nil?
                                                                                   title: input.concept,
                                                                                   type: transactionType,
                                                                                   transferType: PolandTransferType.zero.serviceString,
                                                                                   valueDate: time)
-        return transfersRepository.sendConfirmation(input: genericSendMoneyConfirmationInput)
+        return sendConfirmation(genericSendMoneyConfirmationInput)
+    }
+}
+
+private extension PLInternalTransferConfirmationUseCase {
+    func sendConfirmation(_ input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConditionState, Error> {
+        return transfersRepository.sendConfirmation(input: input)
             .tryMap { result in
                 if let state = result.state, let confirmationResult = ConfirmationResultType(rawValue: state) {
                     switch confirmationResult {
@@ -73,9 +78,7 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
             }
             .eraseToAnyPublisher()
     }
-}
-
-private extension PLInternalTransferConfirmationUseCase {
+    
     func internalTransferMatrix(_ input: InternalTransferConfirmationUseCaseInput) -> String? {
         let matrix = TranferTypeMatrixEvaluator(isSourceCurrencyPLN: input.originAccount.currencyRepresentable?.currencyType == .złoty,
                                    isDestinationAccountInternal: true,

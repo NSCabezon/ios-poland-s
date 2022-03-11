@@ -18,7 +18,7 @@ public protocol PLTransfersRepository: TransfersRepository {
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
     func getAccountsForDebit() -> AnyPublisher<[AccountRepresentable], Error>
     func getAccountsForCredit() -> AnyPublisher<[AccountRepresentable], Error>
-    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> //quitar?
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error>
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConfirmationTransferDTO, Error>
 }
 
