@@ -13,7 +13,7 @@ import CoreFoundationLib
 import PLLogin
 
 public protocol CustomPushNotificationCoordinatorDelegate: AnyObject {
-    func start(actionType: CustomPushLaunchActionTypeInfo)
+    func start(actionType: CustomPushLaunchAction)
 }
 
 protocol CustomPushNotificationCoordinatorProtocol {
@@ -21,7 +21,7 @@ protocol CustomPushNotificationCoordinatorProtocol {
 }
 
 public class CustomPushNotificationCoordinator: ModuleCoordinator {
-    fileprivate var actionType: CustomPushLaunchActionTypeInfo?
+    fileprivate var actionType: CustomPushLaunchAction?
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     
@@ -104,7 +104,7 @@ extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorPr
 }
 
 extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorDelegate {
-    public func start(actionType: CustomPushLaunchActionTypeInfo) {
+    public func start(actionType: CustomPushLaunchAction) {
         self.actionType = actionType
         start()
     }

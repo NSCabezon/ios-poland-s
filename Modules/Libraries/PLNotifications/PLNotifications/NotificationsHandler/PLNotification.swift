@@ -57,7 +57,7 @@ public struct PLNotification: PushRequestable {
             else {
                 return nil
             }
-            customPushLaunch = CustomPushLaunchActionTypeBlik(messageId: messageIdInt, devId: devIdInt)
+            customPushLaunch = CustomPushLaunchActionTypeBlik(messageId: messageIdInt, devId: devIdInt, content: nil)
         case 2:
             guard
                 let messageIdStr = userInfo[gcmAlias + "messageId"] as? String,
@@ -67,7 +67,7 @@ public struct PLNotification: PushRequestable {
             else {
                 return nil
             }
-            customPushLaunch = CustomPushLaunchActionTypeAlert(messageId: messageIdInt, devId: devIdInt)
+            customPushLaunch = CustomPushLaunchActionTypeAlert(messageId: messageIdInt, devId: devIdInt, content: nil)
         case 3:
             guard
                 let messageIdStr = userInfo[gcmAlias + "messageId"] as? String,
@@ -77,7 +77,7 @@ public struct PLNotification: PushRequestable {
             else {
                 return nil
             }
-            customPushLaunch = CustomPushLaunchActionTypeAuth(messageId: messageIdInt, devId: devIdInt)
+            customPushLaunch = CustomPushLaunchActionTypeAuth(messageId: messageIdInt, devId: devIdInt, content: nil)
         default:
             print("invalid openApp: \(String(describing: userInfo[gcmAlias + "openApp"]))")
             return nil
@@ -98,7 +98,13 @@ public struct PLNotification: PushRequestable {
     }
 }
 
-public struct CustomPushLaunchActionTypeInfo: CustomPushLaunchActionTypeCapable {
+public protocol CustomPushLaunchAction: CustomPushLaunchActionTypeCapable {
+    var messageId: Int { get }
+    var devId: Int? { get }
+    var content: String? { get }
+}
+
+public struct CustomPushLaunchActionTypeInfo: CustomPushLaunchAction {
     public let messageId: Int
     public let devId: Int?
     public let content: String?
@@ -110,17 +116,20 @@ public struct CustomPushLaunchActionTypeInfo: CustomPushLaunchActionTypeCapable 
     }
 }
 
-public struct CustomPushLaunchActionTypeBlik: CustomPushLaunchActionTypeCapable {
-    let messageId: Int
-    let devId: Int?
+public struct CustomPushLaunchActionTypeBlik: CustomPushLaunchAction {
+    public let messageId: Int
+    public let devId: Int?
+    public let content: String?
 }
 
-public struct CustomPushLaunchActionTypeAlert: CustomPushLaunchActionTypeCapable {
-    let messageId: Int
-    let devId: Int?
+public struct CustomPushLaunchActionTypeAlert: CustomPushLaunchAction {
+    public let messageId: Int
+    public let devId: Int?
+    public let content: String?
 }
 
-public struct CustomPushLaunchActionTypeAuth: CustomPushLaunchActionTypeCapable {
-    let messageId: Int
-    let devId: Int?
+public struct CustomPushLaunchActionTypeAuth: CustomPushLaunchAction {
+    public let messageId: Int
+    public let devId: Int?
+    public let content: String?
 }

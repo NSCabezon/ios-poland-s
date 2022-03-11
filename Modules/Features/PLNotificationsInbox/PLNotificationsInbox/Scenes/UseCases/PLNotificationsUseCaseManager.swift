@@ -14,7 +14,7 @@ public protocol PLNotificationsUseCaseManagerProtocol {
     func getList(completion: @escaping (PLNotificationListEntity?) -> Void)
     func getPushById(pushId: Int, completion: @escaping (PLNotificationEntity?) -> Void)
     func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void)
-    func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void)
+    func getUnreadedPushesCount(enabledPushCategories: [EnabledPushCategorie], completion: @escaping (PLUnreadedPushCountEntity?) -> Void)
     func getEnabledPushCategories(completion: ((PLEnabledPushCategoriesListEntity?) -> Void)?)
     func postPushStatus(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void)
     func postPushStatusBeforeLogin(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void)
@@ -112,8 +112,9 @@ extension PLNotificationsUseCaseManager: PLNotificationsUseCaseManagerProtocol {
     }
     
     
-    public func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
-        Scenario(useCase: self.notificationGetUnreadedPushCountUseCase)
+    public func getUnreadedPushesCount(enabledPushCategories: [EnabledPushCategorie], completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
+        let input = GetUnreadedPushCountUseCaseInput(enabledPushCategories: enabledPushCategories)
+        Scenario(useCase: self.notificationGetUnreadedPushCountUseCase, input: input)
             .execute(on: self.dependenciesEngine.resolve())
             .onSuccess { response in
                 completion(response.entity)
