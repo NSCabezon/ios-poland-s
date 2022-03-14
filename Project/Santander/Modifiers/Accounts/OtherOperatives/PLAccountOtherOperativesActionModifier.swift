@@ -27,19 +27,21 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
             }
             switch actionKey {
             case .addBanks,
-                 .changeAccount,
-                 .alerts24,
-                 .editGoal,
-                 .accountStatement,
-                 .customerService,
-                 .fxExchange:
+                    .changeAccount,
+                    .alerts24,
+                    .editGoal,
+                    .accountStatement,
+                    .customerService,
+                    .fxExchange,
+                    .atmPackage,
+                    .openDeposit,
+                    .multicurrency,
+                    .memberGetMember:
                 showWebView(identifier: identifier, entity: entity)
             case .changeAliases:
                 goToPGProductsCustomization()
             case .generateQRCode,
-                 .history,
-                 .openDeposit,
-                 .memberGetMember:
+                    .history:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
@@ -56,9 +58,11 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.accountsOptions,
-              var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
-        
-        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue {
+              var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else {
+                  Toast.show(localized("generic_alert_notAvailableOperation"))
+                  return
+              }
+        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue || identifier == PLAccountOperativeIdentifier.openDeposit.rawValue {
             data.parameter = entity.productIdentifier
             if let contractNumber = entity.dto.contractNumber, let url = data.link?.replace(StringPlaceholder.Placeholder.number.rawValue, contractNumber) {
                 data.link = url
@@ -80,7 +84,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     private func getAccountOtherOperativesEntity(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
         var entity: PLProductOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
+            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, httpMethod: dto.getHTTPMethod, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }

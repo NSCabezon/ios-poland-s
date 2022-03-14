@@ -9,6 +9,10 @@ public protocol ZusAccountSelectorCoordinatorProtocol {
     func closeProcess()
 }
 
+public protocol ZusAccountSelectorCoordinatorUpdatable: AnyObject {
+    func updateAccounts(with accounts: [AccountForDebit])
+}
+
 public enum SourceView {
     case sendMoney, form
 }
@@ -16,17 +20,16 @@ public enum SourceView {
 public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
     weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let accounts: [AccountForDebit]
+    private var accounts: [AccountForDebit]
     private let selectedAccountNumber: String
-    private let validationMask: String
     private let sourceView: SourceView
     weak var selectableAccountDelegate: FormAccountSelectable?
+    private var presenter: ZusAccountSelectorPresenter?
 
     public init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
-         validationMask: String,
          sourceView: SourceView,
          selectableAccountDelegate: FormAccountSelectable? = nil) {
         self.navigationController = navigationController
@@ -35,7 +38,6 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
         self.selectedAccountNumber = selectedAccountNumber
         self.sourceView = sourceView
         self.selectableAccountDelegate = selectableAccountDelegate
-        self.validationMask = validationMask
         self.setupDependencies()
     }
     
@@ -51,6 +53,7 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
             presenter: presenter,
             screenLocationConfiguration: .zusTransfer
         )
+        self.presenter = presenter
         presenter.view = controller
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -66,9 +69,9 @@ extension ZusAccountSelectorCoordinator: ZusAccountSelectorCoordinatorProtocol {
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             accounts: accounts,
-            selectedAccountNumber: selectedAccountNumber,
-            validationMask: validationMask
+            selectedAccountNumber: selectedAccountNumber
         )
+        coordinator.accountUpdateDelegate = self
         coordinator.start()
     }
     
@@ -89,5 +92,12 @@ private extension ZusAccountSelectorCoordinator {
         dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
             ConfirmationDialogFactory()
         }
+    }
+}
+
+extension ZusAccountSelectorCoordinator: ZusAccountSelectorCoordinatorUpdatable {
+    public func updateAccounts(with accounts: [AccountForDebit]) {
+        self.accounts = accounts
+        presenter?.updateAccounts(accounts: accounts)
     }
 }

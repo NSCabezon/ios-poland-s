@@ -14,6 +14,7 @@ import CoreDomain
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func loadUnrememberedLogin()
+    func presentTermsAndConditions(configuration: PLTermsAndConditionsConfiguration)
 }
 
 extension PLRememberedLoginPinCoordinatorProtocol {
@@ -25,6 +26,12 @@ extension PLRememberedLoginPinCoordinatorProtocol {
 final class PLRememberedLoginPinCoordinator: ModuleCoordinator {
     weak var navigationController: UINavigationController?
     internal let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    
+    private lazy var termsAndConditionsCoordinator: PLTermsAndConditionsCoordinatorProtocol = {
+        return PLTermsAndConditionsCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                               delegate: self,
+                                               navigationController: navigationController)
+    }()
     
     public var loginConfiguration: RememberedLoginConfiguration {
         self.dependenciesEngine.resolve(for: RememberedLoginConfiguration.self)
@@ -43,9 +50,28 @@ final class PLRememberedLoginPinCoordinator: ModuleCoordinator {
 }
 
 extension PLRememberedLoginPinCoordinator: PLRememberedLoginPinCoordinatorProtocol {
+    func backToLogin() {
+        //
+    }
+
+    func presentTermsAndConditions(configuration: PLTermsAndConditionsConfiguration) {
+        self.termsAndConditionsCoordinator.startWith(configuration: configuration)
+    }
+    
     func loadUnrememberedLogin() {
         let loginModuleCoordinator = self.dependenciesEngine.resolve(for: PLLoginModuleCoordinatorProtocol.self)
         loginModuleCoordinator.loadUnrememberedLogin()
+    }
+}
+
+extension PLRememberedLoginPinCoordinator: PLTermsAndConditionsCoordinatorDelegate {
+    
+    func onAcceptTerms() {
+        let presenter = self.dependenciesEngine.resolve(for: PLRememberedLoginPinPresenterProtocol.self)
+        presenter.continueLogin()
+    }
+    
+    func onRejectTerms() {
     }
 }
 

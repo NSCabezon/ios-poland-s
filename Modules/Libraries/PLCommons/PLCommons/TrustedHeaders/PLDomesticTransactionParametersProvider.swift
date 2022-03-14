@@ -21,6 +21,7 @@ public class PLDomesticTransactionParametersProvider: PLDomesticTransactionParam
         )
         var tmpDebitAmount = amountEntity.getFormattedValue()
         tmpDebitAmount = tmpDebitAmount.replacingOccurrences(of: ",", with: ".")
+        tmpDebitAmount = tmpDebitAmount.replacingOccurrences(of: " ", with: "")
         if tmpDebitAmount.count < 13 {
             tmpDebitAmount = [
                 String(repeating: "0", count: 13 - tmpDebitAmount.count),

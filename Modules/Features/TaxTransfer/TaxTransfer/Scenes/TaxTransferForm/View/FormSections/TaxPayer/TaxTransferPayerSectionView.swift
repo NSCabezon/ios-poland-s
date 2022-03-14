@@ -29,9 +29,7 @@ final class TaxTransferPayerSectionView: UIView {
     ) {
         switch viewModel {
         case let .selected(taxPayer):
-            selectorView.isHidden = true
-            selectedPayerView.isHidden = false
-            selectedPayerView.configure(with: taxPayer, onTap: onTap)
+            showSelectedTaxPayer(taxPayer: taxPayer, onTap: onTap)
         case .unselected:
             showSelector(onTap: onTap)
         }
@@ -39,6 +37,15 @@ final class TaxTransferPayerSectionView: UIView {
 }
 
 private extension TaxTransferPayerSectionView {
+    func showSelectedTaxPayer(
+        taxPayer: TaxTransferFormViewModel.TaxPayerViewModel,
+        onTap: @escaping () -> Void
+    ) {
+        selectorView.isHidden = true
+        selectedPayerView.isHidden = false
+        selectedPayerView.configure(with: taxPayer, onTap: onTap)
+    }
+    
     func showSelector(onTap: @escaping () -> Void) {
         selectorView.isHidden = false
         selectedPayerView.isHidden = true
@@ -47,7 +54,7 @@ private extension TaxTransferPayerSectionView {
     
     func setUp() {
         configureSubviews()
-        hideSelectedPayerView()
+        showSelector(onTap: {})
     }
     
     func configureSubviews() {
@@ -82,9 +89,5 @@ private extension TaxTransferPayerSectionView {
             containedView: subviewsContainer,
             sectionTitle: "#Płatnik"
         )
-    }
-    
-    private func hideSelectedPayerView() {
-        selectedPayerView.isHidden = true
     }
 }

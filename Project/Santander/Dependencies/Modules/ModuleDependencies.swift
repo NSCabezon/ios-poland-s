@@ -60,6 +60,10 @@ struct ModuleDependencies {
     func resolve() -> SegmentedUserRepository {
         return oldResolver.resolve(for: SegmentedUserRepository.self)
     }
+    
+    func resolve() -> StringLoader {
+        return oldResolver.resolve()
+    }
 }
 
 // MARK: - Private
@@ -108,10 +112,6 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     }
     
     func resolve() -> SessionDataManager {
-        return oldResolver.resolve()
-    }
-    
-    func resolve() -> StringLoader {
         return oldResolver.resolve()
     }
     

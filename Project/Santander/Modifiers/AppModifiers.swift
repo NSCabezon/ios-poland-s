@@ -45,9 +45,6 @@ final class AppModifiers {
 //    private lazy var loansModifier: LoansModifierProtocol = {
 //        return PLLoanModifier(dependenciesEngine: dependencieEngine)
 //    }()
-    private lazy var loanDetailModifier: LoanDetailModifierProtocol = {
-        return PLLoanDetailModifier(dependenciesEngine: dependenciesEngine)
-    }()
     private lazy var currencyProvider: AmountFormatterProvider & CurrencyFormatterProvider = {
         return PLNumberFormatter()
     }()
@@ -120,9 +117,6 @@ private extension AppModifiers {
 //        self.dependencieEngine.register(for: LoansModifierProtocol.self) { _ in
 //            return self.loansModifier
 //        }
-        self.dependenciesEngine.register(for: LoanDetailModifierProtocol.self) { _ in
-            return self.loanDetailModifier
-        }
         self.dependenciesEngine.register(for: AmountFormatterProvider.self) { _ in
             return self.currencyProvider
         }

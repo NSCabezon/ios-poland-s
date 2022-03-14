@@ -10,7 +10,7 @@ final class PLBlikOperative: AccountOperativeActionTypeProtocol {
     var rawValue: String = "blik"
     var trackName: String? = "blik"
     var accessibilityIdentifier: String? = "ptFrequentOperativeButtonBlikPoland"
-    private let title: String = "pt_frequentOperative_button_blik"
+    private let title: String = "pl_frequentOperative_button_blik"
     private let icon: String = "icnBlik"
 
     func values() -> (title: String, imageName: String) {

@@ -72,9 +72,9 @@ private extension SendMoneyTransferTypeErrorView {
     
     func xibSetup() {
         self.view = self.loadViewFromNib()
-        self.view?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.view?.frame = self.bounds
+        self.view?.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.view ?? UIView())
+        self.view?.fullFit()
     }
     
     func loadViewFromNib() -> UIView {

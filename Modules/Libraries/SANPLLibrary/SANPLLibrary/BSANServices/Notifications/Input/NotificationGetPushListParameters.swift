@@ -9,8 +9,11 @@ import Foundation
 
 public struct NotificationGetPushListParameters: Encodable {
     let deviceId: Int
+    let enabledPushCategories: [EnabledPushCategorie]
 
-    public init(deviceId: Int) {
+
+    public init(deviceId: Int, enabledPushCategories: [EnabledPushCategorie] = []) {
         self.deviceId = deviceId
+        self.enabledPushCategories = enabledPushCategories
     }
 }

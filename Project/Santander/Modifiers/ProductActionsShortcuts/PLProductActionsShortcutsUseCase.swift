@@ -29,13 +29,13 @@ public final class PLProductActionsShortcutsUseCase: UseCase<PLProductActionsSho
                 if operations.isEmpty == false {
                     return .ok(ProductActionsShortcutsMatrix(operations: operations))
                 } else {
-                    return .error(StringErrorOutput("Empty operations"))
+                    return .ok(ProductActionsShortcutsMatrix(operations: nil))
                 }
-            case .failure(let error):
-                return .error(StringErrorOutput(error.localizedDescription))
+            case .failure(_):
+                return .ok(ProductActionsShortcutsMatrix(operations: nil))
             }
         } catch {
-            return .error(StringErrorOutput("Error getting operations"))
+            return .ok(ProductActionsShortcutsMatrix(operations: nil))
         }
     }
 }

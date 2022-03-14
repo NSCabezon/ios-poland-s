@@ -9,7 +9,7 @@ source 'https://cdn.cocoapods.org/'
 def core_dependencies
   pod 'CoreFoundationLib', :path => '../../../../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'RetailLegacy', :path => '../../../../santander-one/RetailLegacy'
-  pod 'PFM', :path => '../../../../santander-one/Modules/Libraries/PFM'
+  #pod 'PFM', :path => '../../../../santander-one/Modules/Libraries/PFM'
   pod 'GlobalPosition', :path => '../../../../santander-one/GlobalPosition'
   pod 'Loans', :path => '../../../../santander-one/Loans'
   pod 'Account', :path => '../../../../santander-one/Accounts'

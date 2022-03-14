@@ -14,6 +14,7 @@ import PLCommons
 protocol OtherBlikSettingsCoordinatorProtocol: ModuleCoordinator {
     func showBlikLabelSettings()
     func showSaveSettingsSuccessAlert()
+    func showErrorAlert()
     func back()
     func close()
 }
@@ -64,6 +65,14 @@ extension OtherBlikSettingsCoordinator: OtherBlikSettingsCoordinatorProtocol {
         TopAlertController.setup(TopAlertView.self).showAlert(
             localized("pl_blik_text_settingsChangedSuccess"),
             alertType: .info,
+            position: .top
+        )
+    }
+    
+    func showErrorAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_toast_errorApple"),
+            alertType: .failure,
             position: .top
         )
     }

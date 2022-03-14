@@ -6,9 +6,11 @@
 //
 
 import UI
+import PLUI
 import CoreFoundationLib
 
-final class TaxTransferPayerIdentifiersViewController: UIViewController {
+final class TaxTransferPayerIdentifiersViewController: UIViewController,
+                                                       ConfirmationDialogPresentable {
     private let identifiersTableView = UITableView()
     private let infoLabel = UILabel()
 

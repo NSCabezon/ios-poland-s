@@ -13,9 +13,11 @@ import SANPLLibrary
 public protocol PLNotificationsUseCaseManagerProtocol {
     func getList(completion: @escaping (PLNotificationListEntity?) -> Void)
     func getPushById(pushId: Int, completion: @escaping (PLNotificationEntity?) -> Void)
-    func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void)
+    func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void)
+    func getUnreadedPushesCount(enabledPushCategories: [EnabledPushCategorie], completion: @escaping (PLUnreadedPushCountEntity?) -> Void)
     func getEnabledPushCategories(completion: ((PLEnabledPushCategoriesListEntity?) -> Void)?)
     func postPushStatus(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void)
+    func postPushStatusBeforeLogin(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void)
     func postPushListPageSize(postPushListPageSizeDTO: PLPostPushListPageSizeUseCaseInput, completion: @escaping (PLNotificationListEntity?) -> Void)
     func postPushSetAllStatus(completion: @escaping () -> Void)
 }
@@ -31,6 +33,10 @@ public class PLNotificationsUseCaseManager {
         return self.dependenciesEngine.resolve(for: PLNotificationGetPushDetailsUseCase.self)
     }
     
+    private var notificationGetPushDetailsBeforeLoginUseCase: PLNotificationGetPushDetailsBeforeLoginUseCase {
+        return self.dependenciesEngine.resolve(for: PLNotificationGetPushDetailsBeforeLoginUseCase.self)
+    }
+    
     private var notificationGetUnreadedPushCountUseCase: PLNotificationGetUnreadedPushCountUseCase {
         return self.dependenciesEngine.resolve(for: PLNotificationGetUnreadedPushCountUseCase.self)
     }
@@ -41,6 +47,10 @@ public class PLNotificationsUseCaseManager {
     
     private var notificationPostPushStatusUseCase: PLNotificationPostPushStatusUseCase {
         return self.dependenciesEngine.resolve(for: PLNotificationPostPushStatusUseCase.self)
+    }
+    
+    private var notificationPostPushStatusBeforeLoginUseCase: PLNotificationPostPushStatusBeforeLoginUseCase {
+        return self.dependenciesEngine.resolve(for: PLNotificationPostPushStatusBeforeLoginUseCase.self)
     }
     
     private var notificationPostSetAllPushStatusUseCase: PLNotificationPostSetAllPushStatusUseCase {
@@ -89,8 +99,22 @@ extension PLNotificationsUseCaseManager: PLNotificationsUseCaseManagerProtocol {
             }
     }
     
-    public func getUnreadedPushesCount(completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
-        Scenario(useCase: self.notificationGetUnreadedPushCountUseCase)
+    
+    public func getPushBeforeLogin(pushId: Int, loginId: Int, completion: @escaping (PLNotificationEntity?) -> Void) {
+        let input = GetPushDetailsBeforeLoginUseCaseInput(pushId: pushId, loginId: loginId)
+        Scenario(useCase: self.notificationGetPushDetailsBeforeLoginUseCase, input: input)
+            .execute(on: self.dependenciesEngine.resolve())
+            .onSuccess { response in
+                completion(response.entity)
+            }.onError { error in
+                completion(nil)
+            }
+    }
+    
+    
+    public func getUnreadedPushesCount(enabledPushCategories: [EnabledPushCategorie], completion: @escaping (PLUnreadedPushCountEntity?) -> Void) {
+        let input = GetUnreadedPushCountUseCaseInput(enabledPushCategories: enabledPushCategories)
+        Scenario(useCase: self.notificationGetUnreadedPushCountUseCase, input: input)
             .execute(on: self.dependenciesEngine.resolve())
             .onSuccess { response in
                 completion(response.entity)
@@ -127,4 +151,16 @@ extension PLNotificationsUseCaseManager: PLNotificationsUseCaseManagerProtocol {
                 completion(nil)
             }
     }
+    
+    public func postPushStatusBeforeLogin(pushStatus: PLPushStatusUseCaseInput, completion: @escaping (PLPushStatusResponseEntity?) -> Void) {
+        let input = NotificationPostPushStatusInput(pushStatus: pushStatus)
+        Scenario(useCase: self.notificationPostPushStatusBeforeLoginUseCase, input: input)
+            .execute(on: self.dependenciesEngine.resolve())
+            .onSuccess { response in
+                completion(response.entity)
+            }.onError { error in
+                completion(nil)
+            }
+    }
+    
 }
