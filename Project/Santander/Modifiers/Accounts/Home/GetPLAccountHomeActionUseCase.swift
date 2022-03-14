@@ -28,9 +28,9 @@ private extension GetPLAccountHomeActionUseCase {
     
     private func getUseCaseOkOutput(contract: String) -> GetAccountHomeActionUseCaseOkOutput {
         let productActionMatrix = self.dependenciesResolver.resolve(forOptionalType: ProductActionsShortcutsMatrix.self)
-        let actions = productActionMatrix?.getEnabledOperationsIdentifiers(type: .accounts, contract: contract) ?? defaultIds
-        
-        let allActions = actionTypes(operatives: [.transfer, .externalTransfer, .blik, .details, .savingGoals, .addBanks, .changeAliases], available: actions)
+        let actions = productActionMatrix?.getEnabledOperationsIdentifiers(type: .accounts, contract: contract) ?? self.defaultIds
+        let operatives: [PLAccountOperativeIdentifier] = [.transfer, .externalTransfer, .blik, .details, .savingGoals, .addBanks, .changeAliases, .generateQRCode, .history, .customerService]
+        let allActions = actionTypes(operatives: operatives, available: actions)
         let itemsCount = min(allActions.count, Config.maxHomeActions)
         guard itemsCount > 0 else { return GetAccountHomeActionUseCaseOkOutput(actions: []) }
         let result = Array(allActions[0...(itemsCount-1)])

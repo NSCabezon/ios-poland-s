@@ -14,13 +14,13 @@ import SANPLLibrary
 
 protocol CustomPushNotificationPresenterProtocol: MenuTextWrapperProtocol {
     var view: CustomPushNotificationViewProtocol? { get set }
-    func setType(_ actionType: CustomPushLaunchActionTypeInfo)
+    func setType(_ actionType: CustomPushLaunchAction)
     func viewDidLoad()
     func didSelectClose()
 }
 
 final class CustomPushNotificationPresenter {
-    var actionType: CustomPushLaunchActionTypeInfo?
+    var actionType: CustomPushLaunchAction?
     weak var view: CustomPushNotificationViewProtocol?
     let dependenciesResolver: DependenciesResolver
     
@@ -32,7 +32,7 @@ final class CustomPushNotificationPresenter {
 }
 
 extension CustomPushNotificationPresenter: CustomPushNotificationPresenterProtocol {
-    func setType(_ actionType: CustomPushLaunchActionTypeInfo) {
+    func setType(_ actionType: CustomPushLaunchAction) {
         self.actionType = actionType
     }
     

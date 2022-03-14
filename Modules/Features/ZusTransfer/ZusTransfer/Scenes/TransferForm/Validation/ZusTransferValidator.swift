@@ -2,13 +2,14 @@ import CoreFoundationLib
 
 private enum Constants {
     static let countryCode = "PL"
+    static let digits = "0123456789"
 }
 
 protocol ZusTransferValidating {
     func validateForm(
         form: ZusTransferFormViewModel,
         with currentActivefield: TransferFormCurrentActiveField,
-        maskAccount: String
+        maskAccount: String?
     ) -> InvalidZusTransferFormData
     
     func getAccountRequiredLength() -> Int
@@ -30,7 +31,7 @@ struct ZusTransferValidator: ZusTransferValidating {
     func validateForm(
         form: ZusTransferFormViewModel,
         with currentActiveField: TransferFormCurrentActiveField,
-        maskAccount: String
+        maskAccount: String?
     ) -> InvalidZusTransferFormData {
         InvalidZusTransferFormData(
             invalidRecieptMessages: validateText(form.recipient),
@@ -53,7 +54,7 @@ struct ZusTransferValidator: ZusTransferValidating {
 private extension ZusTransferValidator {
     
     func validateAccount(_ account: String?,
-                         maskAccount: String,
+                         maskAccount: String?,
                          currentActiveField: TransferFormCurrentActiveField) -> String? {
         guard let account = account, !account.isEmpty else {
             return localized("pl_generic_validationText_thisFieldCannotBeEmpty").text
@@ -68,8 +69,12 @@ private extension ZusTransferValidator {
             }
         }
         
-        if account.count == accountRequiredLength, let accountSubstring = account.substring(2, 13) {
-            if accountSubstring != maskAccount || !isValidIban(account) {
+        if account.count == accountRequiredLength,
+           let firstDigitIndex = maskAccount?.firstIndex(where: { Constants.digits.contains($0)}),
+           let lastDigitIndex = maskAccount?.lastIndex(where: { Constants.digits.contains($0)}),
+           let maskSubstring = maskAccount?[firstDigitIndex...lastDigitIndex] {
+            let accountSubstring = account[firstDigitIndex...lastDigitIndex]
+            if accountSubstring != maskSubstring || !isValidIban(account) {
                 return localized("pl_generic_validationText_invalidAccNumber").text
             }
         }

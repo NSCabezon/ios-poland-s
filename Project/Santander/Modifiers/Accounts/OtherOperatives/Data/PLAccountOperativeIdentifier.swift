@@ -82,7 +82,7 @@ public enum PLAccountOperativeIdentifier: String, Codable {
     public var textKey: String {
         switch self {
         case .blik:
-            return "pt_frequentOperative_button_blik"
+            return "pl_frequentOperative_button_blik"
         case .externalTransfer:
             return "accountOption_button_transfer"
         case .savingGoals:

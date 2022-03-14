@@ -43,6 +43,14 @@ struct ModuleDependencies {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
     }
+    
+    func resolve() -> SegmentedUserRepository {
+        return oldResolver.resolve(for: SegmentedUserRepository.self)
+    }
+    
+    func resolve() -> StringLoader {
+        return oldResolver.resolve()
+    }
 }
 
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {

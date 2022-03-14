@@ -13,6 +13,7 @@ protocol AccountDataSourceProtocol {
     func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
     func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError>
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError>
 }
 
 private extension AccountDataSource {
@@ -30,7 +31,7 @@ final class AccountDataSource {
         case accountForDebit = "/accounts/for-debit"
         case accountForCredit = "/accounts/for-credit"
         case changeAlias = "/accounts/productaliases"
-        
+        case externalPopular = "/accounts/external/popular"
     }
 
     private let networkProvider: NetworkProvider
@@ -161,6 +162,22 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                 headers: self.headers,
                                                                                                                 contentType: .json,
                                                                                                                 localServiceName: .changeAlias)
+        )
+        return result
+    }
+    
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else { return .failure(NetworkProviderError.other) }
+        let serviceName = AccountServiceType.externalPopular.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let queryParams: [String: Any] = ["accountType": accountType]
+        let result: Result<[PopularAccountDTO], NetworkProviderError> = self.networkProvider.request(AccountRequest(serviceName: serviceName,
+                                                                                                                    serviceUrl: absoluteUrl,
+                                                                                                                    method: .get,
+                                                                                                                    headers: self.headers,
+                                                                                                                    queryParams: queryParams,
+                                                                                                                    contentType: nil,
+                                                                                                                    localServiceName: .getExternalPopular)
         )
         return result
     }

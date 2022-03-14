@@ -12,16 +12,13 @@ public protocol ZusTransferModuleCoordinatorProtocol: ModuleCoordinator {
 public final class ZusTransferModuleCoordinator: ZusTransferModuleCoordinatorProtocol {
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let validationMask: String
     
     public init(
         dependenciesResolver: DependenciesResolver,
-        navigationController: UINavigationController?,
-        validationMask: String?
+        navigationController: UINavigationController?
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
-        self.validationMask = validationMask ?? ""
         self.setUpDependencies()
     }
     
@@ -39,8 +36,7 @@ public final class ZusTransferModuleCoordinator: ZusTransferModuleCoordinatorPro
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             accounts: accounts,
-            selectedAccountNumber: selectedAccountNumber,
-            validationMask: validationMask
+            selectedAccountNumber: selectedAccountNumber
         )
         coordinator.start()
         removeModuleControllerFromStack()
@@ -52,7 +48,6 @@ public final class ZusTransferModuleCoordinator: ZusTransferModuleCoordinatorPro
             navigationController: navigationController,
             accounts: accounts,
             selectedAccountNumber: "",
-            validationMask: validationMask,
             sourceView: .sendMoney
         )
         coordinator.start()
