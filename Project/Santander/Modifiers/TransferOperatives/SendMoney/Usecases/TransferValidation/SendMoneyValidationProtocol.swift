@@ -51,7 +51,7 @@ private extension SendMoneyValidationProtocol {
                                                       accountSequenceNumber: originAccount.sequencerNo,
                                                       accountType: originAccount.accountType)
         let creditAccountData = ItAccountDataParameters(accountNo: destinationIBAN,
-                                                        accountName: (requestValues.destinationAlias ?? "") + (requestValues.selectedPayee?.payeeAddress ?? ""),
+                                                        accountName: (requestValues.destinationName ?? "") + (requestValues.selectedPayee?.payeeAddress ?? ""),
                                                         accountSequenceNumber: 0,
                                                         accountType: 90)
         var valueDate: String?
