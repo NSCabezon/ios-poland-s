@@ -36,6 +36,7 @@ final class ZusTransferFormViewController: UIViewController {
         setUp()
         configureKeyboardDismissGesture()
         IQKeyboardManager.shared.enableAutoToolbar = false
+        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {

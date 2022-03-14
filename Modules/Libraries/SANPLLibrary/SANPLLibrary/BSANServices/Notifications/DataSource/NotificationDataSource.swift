@@ -144,19 +144,21 @@ class NotificationDataSource: NotificationDataSourceProtocol {
         }
         let absoluteUrl = baseUrl + "/api/notification/pushquery/auth"
         
+        let queryParams = ["categories" : parameters.enabledPushCategories.map { $0.rawValue }.joined(separator: ",")]
+
         let serviceName =  NotificationsServiceType.unreadedCount.rawValue + "/\(parameters.deviceId)"
         
         let request = NotificationGetPushUnreadedCountRequest(serviceName: serviceName,
                                                               serviceUrl: absoluteUrl,
                                                               method: .get,
                                                               headers: self.headers,
+                                                              queryParams: queryParams,
                                                               localServiceName: .notificationPushqueryUnreadedCount,
                                                               authorization: .oauth)
         
         let result: Result<PLUnreadedPushCountDTO, NetworkProviderError> = self.networkProvider.request(request)
         return result
     }
-    
     
     func getEnabledPushCategoriesByDevice(_ parameters: NotificationGetPushListParameters) throws -> Result<PLEnabledPushCategoriesDTO, NetworkProviderError> {
         guard

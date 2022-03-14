@@ -12,7 +12,7 @@ protocol RecipientSelectionPresenterProtocol: AnyObject {
 final class RecipientSelectionPresenter {
     weak var view: RecipientSelectionViewProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private let maskAccount: String
+    private let maskAccount: String?
     private let useCaseHandler: UseCaseHandler
     private let getRecipientsUseCase: GetRecipientsUseCaseProtocol
     private let coordinator: RecipientSelectionCoordinatorProtocol
@@ -20,7 +20,7 @@ final class RecipientSelectionPresenter {
     
     init(
         dependenciesResolver: DependenciesResolver,
-        maskAccount: String
+        maskAccount: String?
     ) {
         coordinator = dependenciesResolver.resolve(
             for: RecipientSelectionCoordinatorProtocol.self

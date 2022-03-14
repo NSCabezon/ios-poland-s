@@ -26,6 +26,10 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
         selectedAccountNumber: String?,
         mode: AccountForDebitSelectorMode
     )
+    func showTaxAuthoritySelector(
+        with taxAuthorities: [TaxAuthority],
+        selectedTaxAuthority: TaxAuthority?
+    )
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
@@ -82,6 +86,19 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
             navigationController: navigationController
         )
         coordinator.delegate = self
+        coordinator.start()
+    }
+    
+    public func showTaxAuthoritySelector(
+        with taxAuthorities: [TaxAuthority],
+        selectedTaxAuthority: TaxAuthority?
+    ) {
+        let coordinator = TaxAuthoritySelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            taxAuthorities: taxAuthorities,
+            selectedTaxAuthority: selectedTaxAuthority
+        )
         coordinator.start()
     }
     

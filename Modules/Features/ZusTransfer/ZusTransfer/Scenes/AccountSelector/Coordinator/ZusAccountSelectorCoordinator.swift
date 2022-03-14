@@ -22,7 +22,6 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private var accounts: [AccountForDebit]
     private let selectedAccountNumber: String
-    private let validationMask: String
     private let sourceView: SourceView
     weak var selectableAccountDelegate: FormAccountSelectable?
     private var presenter: ZusAccountSelectorPresenter?
@@ -31,7 +30,6 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
          navigationController: UINavigationController?,
          accounts: [AccountForDebit],
          selectedAccountNumber: String,
-         validationMask: String,
          sourceView: SourceView,
          selectableAccountDelegate: FormAccountSelectable? = nil) {
         self.navigationController = navigationController
@@ -40,7 +38,6 @@ public final class ZusAccountSelectorCoordinator: ModuleCoordinator {
         self.selectedAccountNumber = selectedAccountNumber
         self.sourceView = sourceView
         self.selectableAccountDelegate = selectableAccountDelegate
-        self.validationMask = validationMask
         self.setupDependencies()
     }
     
@@ -72,8 +69,7 @@ extension ZusAccountSelectorCoordinator: ZusAccountSelectorCoordinatorProtocol {
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             accounts: accounts,
-            selectedAccountNumber: selectedAccountNumber,
-            validationMask: validationMask
+            selectedAccountNumber: selectedAccountNumber
         )
         coordinator.accountUpdateDelegate = self
         coordinator.start()

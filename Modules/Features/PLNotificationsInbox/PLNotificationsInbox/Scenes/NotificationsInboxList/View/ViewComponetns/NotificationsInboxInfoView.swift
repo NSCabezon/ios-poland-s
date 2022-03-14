@@ -36,9 +36,9 @@ class NotificationsInboxInfoView: UIView {
     }
 
     private func setUpSubviews() {
+        addSubview(backgroundView)
         backgroundView.addSubview(notificationsInfoLabel)
         backgroundView.addSubview(setUpNotificationsLabel)
-        addSubview(backgroundView)
     }
 
     private func setUpViews() {

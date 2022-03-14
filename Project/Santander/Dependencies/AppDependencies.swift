@@ -482,16 +482,18 @@ class CustomPushLauncher: CustomPushLauncherProtocol {
         coordinator.start(actionType: actionType)
     }
     
-    private func launchActionTypeBlik(_: CustomPushLaunchActionTypeBlik) {
+    private func launchActionTypeBlik(_ actionType: CustomPushLaunchActionTypeBlik) {
         let coordinator = dependenciesResolver.resolve(for: BLIKHomeCoordinator.self)
         coordinator.start()
     }
-    
-    private func launchActionTypeAlert(_: CustomPushLaunchActionTypeAlert) {
-        Toast.show("launchActionTypeAlert")
+        
+    private func launchActionTypeAlert(_ actionType: CustomPushLaunchActionTypeAlert) {
+         let coordinator = dependenciesResolver.resolve(for: CustomPushNotificationCoordinator.self)
+         coordinator.start(actionType: actionType)
     }
     
-    private func launchActionTypeAuth(_: CustomPushLaunchActionTypeAuth) {
-        Toast.show("launchActionTypeAuth")
+    private func launchActionTypeAuth(_ actionType: CustomPushLaunchActionTypeAuth) {
+         let coordinator = dependenciesResolver.resolve(for: CustomPushNotificationCoordinator.self)
+         coordinator.start(actionType: actionType)
     }
 }

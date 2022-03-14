@@ -66,6 +66,7 @@ private extension PLTermsAndConditionsViewController {
         let config = LocalizedStylableTextConfiguration(font: .santander(family: .text, type: .regular, size: 16))
         let localizedDescription: LocalizedStylableText = localized(description)
         self.descriptionTextView.configureText(withLocalizedString: localizedDescription, andConfiguration: config)
+        self.descriptionTextView.isEditable = false
     }
 
     func configureButtons() {
