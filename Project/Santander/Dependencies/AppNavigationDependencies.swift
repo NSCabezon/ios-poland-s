@@ -135,8 +135,7 @@ final class AppNavigationDependencies {
             let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
             return ZusTransferModuleCoordinator(
                 dependenciesResolver: resolver,
-                navigationController: self.drawer.currentRootViewController as? UINavigationController,
-                validationMask: repository.get()?.zusTransfer?.mask
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
         dependenciesEngine.register(for: ZusSMETransferFormCoordinator.self) { [moduleDependencies] _ in

@@ -8,7 +8,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_NAME = PL-REG-$(MARKETING_VERSION)
+PRODUCT_NAME = PL-ZT4-$(MARKETING_VERSION)
 PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.reg
 WIDGET_BUNDLE_IDENTIFIER = pl.santander.oneapp.reg.widget
 SIRI_BUNDLE_IDENTIFIER = pl.santander.oneapp.reg.siri.intents

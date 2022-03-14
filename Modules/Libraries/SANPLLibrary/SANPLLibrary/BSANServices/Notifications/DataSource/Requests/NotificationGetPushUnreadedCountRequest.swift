@@ -12,7 +12,7 @@ struct NotificationGetPushUnreadedCountRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: Any]? = nil
+    let queryParams: [String: Any]?
     let jsonBody: NotificationGetPushListParameters? = nil
     let formData: Data? = nil
     let bodyEncoding: NetworkProviderBodyEncoding? = nil
@@ -25,6 +25,7 @@ struct NotificationGetPushUnreadedCountRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          bodyEncoding: NetworkProviderBodyEncoding? = .body,
          headers: [String: String]?,
+         queryParams: [String: Any]?,
          contentType: NetworkProviderContentType? = .json,
          localServiceName: PLLocalServiceName,
          authorization: NetworkProviderRequestAuthorization? = nil) {
@@ -32,6 +33,7 @@ struct NotificationGetPushUnreadedCountRequest: NetworkProviderRequest {
         self.serviceUrl = serviceUrl
         self.method = method
         self.headers = headers
+        self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
         self.authorization = authorization

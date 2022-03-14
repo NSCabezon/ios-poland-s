@@ -6,13 +6,10 @@
 //
 
 import UI
-import Loans
 import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
-import Menu
-import Transfer
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
@@ -42,6 +39,10 @@ struct ModuleDependencies {
     func resolve() -> UINavigationController {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
+    }
+    
+    func resolve() -> StringLoader {
+        return oldResolver.resolve()
     }
 }
 

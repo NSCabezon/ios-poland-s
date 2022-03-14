@@ -106,4 +106,5 @@ public enum PLLocalServiceName: String {
     case exchangeRates = "exchangeRates"
     case notificationPushDetailsBeforeLogin = "notificationPushDetailsBeforeLogin"
     case notificationPushStatusBeforeLogin = "notificationPushStatusBeforeLogin"
+    case getExternalPopular = "getExternalPopular"
 }

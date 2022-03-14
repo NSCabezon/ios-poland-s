@@ -136,7 +136,7 @@ private extension NotificationsInboxListViewController {
     private func getData(_ pushFilters: [EnabledPushCategorie],_ pushStatuses: [NotificationStatus]) {
         let postPushListPageSizeDTO = PLPostPushListPageSizeUseCaseInput(categories: pushFilters, statuses: pushStatuses, pushId: nil)
         self.postPushListPageSize(postPushListPageSizeDTO)
-        self.getUnreadedPushesCount()
+        self.getUnreadedPushesCount(enabledPushCategories: pushFilters)
         self.presenter.getEnabledPushCategories(completion: nil)
     }
     
@@ -152,8 +152,8 @@ private extension NotificationsInboxListViewController {
         })
     }
     
-    func getUnreadedPushesCount() {
-        self.presenter.getUnreadedPushesCount { [weak self] response in
+    func getUnreadedPushesCount(enabledPushCategories: [EnabledPushCategorie]) {
+        self.presenter.getUnreadedPushesCount(enabledPushCategories: enabledPushCategories) { [weak self] response in
             if let response = response, response.count > 0 {
                 self?.setUpMarkAsReadButton()
             }
@@ -163,7 +163,7 @@ private extension NotificationsInboxListViewController {
     func deleteNotification(_ indexPath: IndexPath) {
         presenter.didDeleteNotification(indexPath, { [weak self] success in
             if success {
-                self?.getUnreadedPushesCount()
+                self?.getUnreadedPushesCount(enabledPushCategories: self?.selectedPushCategories ?? EnabledPushCategorie.allCases)
                 TopAlertController.setup(TopAlertView.self).showAlert(localized("pl_alerts_text_messageDeleted"), alertType: .info, position: .bottom)
             } else {
                 self?.getData(self?.selectedPushCategories ?? EnabledPushCategorie.allCases, self?.selectedPushStatuses ?? NotificationStatus.allCases)
@@ -195,7 +195,7 @@ extension NotificationsInboxListViewController: UITableViewDelegate {
         contentView.isUserInteractionEnabled = false
         presenter.didSelectNotification(indexPath) {
             self.contentView.isUserInteractionEnabled = true
-            self.getUnreadedPushesCount()
+            self.getUnreadedPushesCount(enabledPushCategories: self.selectedPushCategories ?? EnabledPushCategorie.allCases)
         }
     }
 }
@@ -321,5 +321,6 @@ extension NotificationsInboxListViewController: NotificationsInboxListViewContro
         self.contentView.header.updateFilterButton(selectedFilterCount: categories.count + statuses.count)
         self.presenter.sections.removeAll()
         getData(categories.isEmpty ? EnabledPushCategorie.allCases : categories, statuses.isEmpty ? NotificationStatus.allCases : statuses)
+        getUnreadedPushesCount(enabledPushCategories: categories)
     }
 }
