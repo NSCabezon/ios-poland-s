@@ -15,6 +15,8 @@ import BLIK
 import PLHelpCenter
 import CreditCardRepayment
 import OneAuthorizationProcessor
+import PLNotificationsInbox
+import Inbox
 import LoanSchedule
 import TaxTransfer
 import CharityTransfer
@@ -24,6 +26,7 @@ import Loans
 import Cards
 import ZusTransfer
 import GlobalPosition
+import ZusSMETransfer
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -34,11 +37,15 @@ final class AppNavigationDependencies {
     private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: (self.drawer.currentRootViewController as? UINavigationController)!)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
     private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
-    
-    init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector) {
+    private let moduleDependencies: ModuleDependencies
+    private lazy var applePayEnrollmentManager = PLApplePayEnrollmentManager(dependenciesResolver: dependenciesEngine,
+                                                                             navigationController: self.drawer.currentRootViewController as? UINavigationController)
+
+    init(drawer: BaseMenuViewController, dependenciesEngine: DependenciesResolver & DependenciesInjector, moduleDependencies: ModuleDependencies) {
         self.drawer = drawer
         self.dependenciesEngine = dependenciesEngine
         self.appSideMenuNavigationDependencies = AppSideMenuNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine)
+        self.moduleDependencies = moduleDependencies
     }
     
     func registerDependencies() {
@@ -97,8 +104,18 @@ final class AppNavigationDependencies {
         self.dependenciesEngine.register(for: ChallengesHandlerDelegate.self) { _ in
             return self.authorizationCoordinator
         }
+        
+        dependenciesEngine.register(for: CustomPushNotificationCoordinator.self) { resolver in
+            return CustomPushNotificationCoordinator(dependenciesResolver: resolver,
+                                     navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+        
         dependenciesEngine.register(for: PLWebViewCoordinatorDelegate.self) { [unowned self] resolver in
             return PLWebViewCoordinatorNavigator(dependenciesResolver: resolver, drawer: self.drawer)
+        }
+
+        dependenciesEngine.register(for: InboxNotificationCoordinatorDelegate.self) { _ in
+            return PLInboxNotificationCoordinator(dependenciesResolver: self.dependenciesEngine)
         }
         
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
@@ -117,9 +134,11 @@ final class AppNavigationDependencies {
             let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
             return ZusTransferModuleCoordinator(
                 dependenciesResolver: resolver,
-                navigationController: self.drawer.currentRootViewController as? UINavigationController,
-                validationMask: repository.get()?.zusTransfer?.mask
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
+        }
+        dependenciesEngine.register(for: ZusSMETransferFormCoordinator.self) { [moduleDependencies] _ in
+            moduleDependencies.zusSMETransferFormCoordinator()
         }
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
@@ -130,6 +149,11 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
             return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
+
+        dependenciesEngine.register(for: PLApplePayEnrollmentManagerProtocol.self) { _ in
+            return self.applePayEnrollmentManager
+        }
+
         appSideMenuNavigationDependencies.registerDependencies()
         DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
         self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in

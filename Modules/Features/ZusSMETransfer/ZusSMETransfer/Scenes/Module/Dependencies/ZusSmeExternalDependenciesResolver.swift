@@ -1,0 +1,2 @@
+public protocol ZusSMEExternalDependenciesResolver:
+    ZusSMETransferFormExternalDependenciesResolver {}

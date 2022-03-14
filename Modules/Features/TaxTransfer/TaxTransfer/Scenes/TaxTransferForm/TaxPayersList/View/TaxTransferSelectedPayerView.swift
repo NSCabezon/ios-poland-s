@@ -29,11 +29,15 @@ final class TaxTransferSelectedPayerView: UIView {
     
     func configure(with viewModel: TaxTransferFormViewModel.TaxPayerViewModel, onTap: @escaping () -> Void) {
         nameLabel.text = viewModel.taxPayer.name
-        taxIdentifierNumberLabel.attributedText = getAttributedText(key: "#Numer identyfikatora: ",
-                                                                    value: viewModel.selectedInfo.taxIdentifier)
-        taxIdentifierTypeLabel.attributedText = getAttributedText(key: "#Typ idenyfikatora: ",
-                                                                  value: viewModel.selectedInfo.idType.displayableValue)
         tappableCard.onTap = onTap
+        
+        guard let taxIdentifier = viewModel.selectedInfo?.taxIdentifier,
+              let value = viewModel.selectedInfo?.idType.displayableValue else { return }
+        
+        taxIdentifierNumberLabel.attributedText = getAttributedText(key: "#Numer identyfikatora: ",
+                                                                    value: taxIdentifier)
+        taxIdentifierTypeLabel.attributedText = getAttributedText(key: "#Typ idenyfikatora: ",
+                                                                  value: value)
     }
 }
 

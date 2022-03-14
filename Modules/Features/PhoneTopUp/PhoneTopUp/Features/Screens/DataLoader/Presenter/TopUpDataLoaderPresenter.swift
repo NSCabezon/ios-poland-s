@@ -53,9 +53,8 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
     private func handleSuccessfulDataFetch(with fetchedData: GetPhoneTopUpFormDataOutput) {
         guard !fetchedData.accounts.isEmpty else {
             view?.hideLoader(completion: { [weak self] in
-                #warning("todo: update translations once they are available")
-                self?.view?.showErrorMessage(title: localized("#Informacja"),
-                                            message: localized("#Brak rachunków źródłowych"),
+                self?.view?.showErrorMessage(title: localized("pl_popup_noSourceAccTitle"),
+                                            message: localized("pl_popup_noSourceAccParagraph"),
                                             image: "icnInfoGray",
                                             onConfirm: {
                     self?.coordinator?.close()
@@ -68,7 +67,8 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
                                               operators: fetchedData.operators,
                                               gsmOperators: fetchedData.gsmOperators,
                                               internetContacts: fetchedData.internetContacts,
-                                              settings: settings)
+                                              settings: settings,
+                                              topUpAccount: fetchedData.topUpAccount)
         view?.hideLoader(completion: { [weak self] in
             self?.coordinator?.showForm(with: formData)
         })

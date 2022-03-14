@@ -12,6 +12,7 @@ import Cards
 import CreditCardRepayment
 import CoreImage
 import FinantialTimeline
+import PassKit
 
 public final class PLCardActionFactory: CardActionFactoryProtocol {
     private let dependenciesResolver: DependenciesResolver
@@ -68,6 +69,9 @@ private extension PLCardActionFactory {
         let filteredCardActionsFromService = actionsFromService.filter { $0.state == ProductActionsShortcutsState.enabled.rawValue }
         let cardActions: [CardActionType] = filteredCardActionsFromService.compactMap {
             guard let cardActionIdentifier = PLCardActionIdentifier.mapped($0.id) else { return nil }
+            if cardActionIdentifier == .addToPay {
+                return cardActionApplePay(for: entity, isDisabled: ($0.state == ProductActionsShortcutsState.disabled.rawValue))
+            }
             return Self.cardActionType(for: cardActionIdentifier, isDisabled: ($0.state == ProductActionsShortcutsState.disabled.rawValue))
         }
 
@@ -117,6 +121,38 @@ private extension PLCardActionFactory {
                                                                                isDisabled: { _ in return isDisabled }))
             return customAction
         }
+    }
+
+    func cardActionApplePay(for entity: CardEntity,
+                            isDisabled: Bool) -> CardActionType? {
+
+        var addedApple = false
+        if let virtualPan = entity.dto.contract?.contractNumber,
+           let sufix = virtualPan.substring(ofLast: 4) {
+            addedApple = PKPassLibrary().containsActivatedPaymentPass(primaryAccountNumberSuffix: sufix)
+        }
+
+        var localizedKey: String
+        var icon: String
+
+        switch (isDisabled, addedApple) {
+        case (_, true):
+            localizedKey = "cardsOption_button_addedApple"
+            icon = "icnApayCheck"
+        case (true, false):
+            localizedKey = "cardsOption_button_addApple"
+            icon = "icnApayDisactive"
+        case (false, false):
+            localizedKey = "cardsOption_button_addApple"
+            icon = "icnApay"
+        }
+
+        return CardActionType.custome(CustomCardActionValues(identifier: PLCardActionIdentifier.addToPay.rawValue,
+                                                             localizedKey: localizedKey,
+                                                             icon: icon,
+                                                             section: "otherOperatives",
+                                                             location: nil,
+                                                             isDisabled: { _ in return isDisabled }))
     }
 }
 

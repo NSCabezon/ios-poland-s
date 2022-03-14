@@ -11,8 +11,13 @@ import CoreFoundationLib
 import SANPLLibrary
 import PLCommons
 
+enum DeleteAliasCoordinatorEntryPoint {
+    case aliasList
+    case blikTransaction
+}
+
 protocol DeleteAliasCoordinatorProtocol: ModuleCoordinator {
-    func goBackToAliasListAndRefreshIt()
+    func goBackAfterAliasDeletion()
     func goBack()
 }
 
@@ -20,15 +25,18 @@ final class DeleteAliasCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let alias: BlikAlias
+    private let entryPoint: DeleteAliasCoordinatorEntryPoint
 
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
-        alias: BlikAlias
+        alias: BlikAlias,
+        entryPoint: DeleteAliasCoordinatorEntryPoint
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.alias = alias
+        self.entryPoint = entryPoint
         setUpDependencies()
     }
     
@@ -48,7 +56,20 @@ final class DeleteAliasCoordinator: ModuleCoordinator {
 }
 
 extension DeleteAliasCoordinator: DeleteAliasCoordinatorProtocol {
-    func goBackToAliasListAndRefreshIt() {
+    func goBackAfterAliasDeletion() {
+        switch entryPoint {
+        case .aliasList:
+            goBackToAliasListAndRefreshIt()
+        case .blikTransaction:
+            navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
+    func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func goBackToAliasListAndRefreshIt() {
         let aliasListController = navigationController?
             .viewControllers
             .first(where: { $0 is AliasListSettingsViewController })
@@ -60,10 +81,6 @@ extension DeleteAliasCoordinator: DeleteAliasCoordinatorProtocol {
         
         navigationController?.popToViewController(controller, animated: true)
         controller.reloadView()
-    }
-    
-    func goBack() {
-        navigationController?.popViewController(animated: true)
     }
 }
 

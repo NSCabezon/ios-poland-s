@@ -35,8 +35,18 @@ final class ZusPrepareChallengeUseCase: UseCase<ZusPrepareChallengeUseCaseInput,
                 return .error(.init(ZusPrepareChallengeErrorResult.challengeError.rawValue))
             }
             return .ok(ZusPrepareChallengeUseCaseOutput(challenge: challenge))
-        case .failure(_):
-            return .error(.init(ZusPrepareChallengeErrorResult.generalErrorMessages.rawValue))
+        case .failure(let error):
+            return prepareErrorMessages(with: error)
+        }
+    }
+    
+    private func prepareErrorMessages(with error: NetworkProviderError) -> UseCaseResponse<ZusPrepareChallengeUseCaseOutput, StringErrorOutput> {
+        switch error {
+        case .noConnection:
+            return .error(.init(AcceptZusTransactionErrorResult.noConnection.rawValue))
+        default:
+            let zusTransferError = ZusTransferError(with: error.getErrorBody())
+            return .error(.init(zusTransferError?.errorResult.rawValue))
         }
     }
 }

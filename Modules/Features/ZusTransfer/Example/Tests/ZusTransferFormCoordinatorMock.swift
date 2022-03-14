@@ -5,7 +5,8 @@ final class ZusTransferFormCoordinatorMock: ZusTransferFormCoordinatorProtocol {
     var showAccountSelectorCalled = false
     var closeProcessCalled = false
     var popCalled = false
-    
+    var showRecipientSelectionCalled = false
+   
     func pop() {
         popCalled = true
     }
@@ -20,6 +21,10 @@ final class ZusTransferFormCoordinatorMock: ZusTransferFormCoordinatorProtocol {
     
     func showConfiramtion(model: ZusTransferModel) {
         showConfirmationCalled = true
+    }
+    
+    func showRecipientSelection(with maskAccount: String) {
+        showRecipientSelectionCalled = true
     }
 }
 

@@ -39,7 +39,7 @@ public class PLWebviewCustomLinkHandler: WebViewLinkHandler {
         case close
         case openOnlineAdvisor
         case pdf(url: URL)
-        case html
+        case html(url: URL)
         case phone
         case email
         case sms(text: String)
@@ -73,6 +73,9 @@ public class PLWebviewCustomLinkHandler: WebViewLinkHandler {
         case .pdf(let url):
             openPDF(url: url)
             return false
+        case .html(let url):
+            openHtml(url: url)
+            return false
         default:
             return false
         }
@@ -100,7 +103,10 @@ private extension PLWebviewCustomLinkHandler {
                 }
                 return .pdf(url: pdfUrl)
             case _ where urlString.contains(Constants.plHtmlKeyWord):
-                return .unknownAction
+                guard let htmlUrl = getHtmlUrl(urlString: urlString) else {
+                    return .unknownAction
+                }
+                return .html(url: htmlUrl)
             case _ where urlString.contains(Constants.plCardHistoryKeyWord):
                 guard let vpan = getQueryStringParameter(url: urlString, param: "vpan") else {
                     return .unknownAction
@@ -145,6 +151,12 @@ private extension PLWebviewCustomLinkHandler {
         guard urlString.hasPrefix(prefix) else { return nil }
         return URL(string: String(urlString.dropFirst(prefix.count)))
     }
+    
+    func getHtmlUrl(urlString: String) -> URL? {
+        let prefix = Constants.plWebActionPrefix + Constants.plHtmlKeyWord + "/"
+        guard urlString.hasPrefix(prefix) else { return nil }
+        return URL(string: String(urlString.dropFirst(prefix.count)))
+    }
 
     // MARK: Actions impl
     func openEmail(url: URL?) {
@@ -174,5 +186,12 @@ private extension PLWebviewCustomLinkHandler {
 
     func openDeepLink(deeplink: DeepLink) {
         delegate?.open(deepLink: deeplink)
+    }
+    
+    func openHtml(url: URL?) {
+        guard let url = url else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }        
     }
 }

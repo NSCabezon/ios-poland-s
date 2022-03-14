@@ -9,6 +9,7 @@ public struct ZusTransferSummary {
     let accountName: String
     let accountNumber: String
     let recipientName: String
+    let recipientAccountNumber: String
     let dateString: String
     let transferType: AcceptDomesticTransactionParameters.TransferType?
 }

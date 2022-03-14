@@ -26,13 +26,19 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
         selectedAccountNumber: String?,
         mode: AccountForDebitSelectorMode
     )
+    func showTaxAuthoritySelector(
+        with taxAuthorities: [TaxAuthority],
+        selectedTaxAuthority: TaxAuthority?
+    )
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
+    
     private let dependenciesEngine: DependenciesDefault
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var taxPayerSelectorDelegate: TaxPayerSelectorDelegate?
+    private lazy var taxFormPresenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
 
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -44,7 +50,6 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
     }
     
     public func start() {
-        let taxFormPresenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
         let controller = TaxTransferFormViewController(presenter: taxFormPresenter)
         taxFormPresenter.view = controller
         accountSelectorDelegate = taxFormPresenter
@@ -80,6 +85,20 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
             selectedTaxPayer: selectedTaxPayer,
             navigationController: navigationController
         )
+        coordinator.delegate = self
+        coordinator.start()
+    }
+    
+    public func showTaxAuthoritySelector(
+        with taxAuthorities: [TaxAuthority],
+        selectedTaxAuthority: TaxAuthority?
+    ) {
+        let coordinator = TaxAuthoritySelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            taxAuthorities: taxAuthorities,
+            selectedTaxAuthority: selectedTaxAuthority
+        )
         coordinator.start()
     }
     
@@ -89,6 +108,12 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
     
     public func goToGlobalPosition() {
         navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+extension TaxTransferFormCoordinator: TaxPayersListDelegate {
+    func didAddTaxPayer(_ taxPayer: TaxPayer) {
+        taxFormPresenter.didAddTaxPayer(taxPayer)
     }
 }
 

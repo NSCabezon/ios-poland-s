@@ -22,7 +22,7 @@ public enum PLAccountOperativeIdentifier: String, Codable {
     case atmPackage = "ATM_PACKAGE"
     case editGoal = "EDIT_GOAL"
     case history = "HISTORY"
-    case accountStatement = "VIEW_STATEMENTS"
+    case accountStatement = "STATEMENT_HISTORY"
     case customerService = "CUSTOMER_SERVICE"
     case ourOffer = "OFFER"
     case openDeposit = "OPEN_DEPOSIT"
@@ -82,7 +82,7 @@ public enum PLAccountOperativeIdentifier: String, Codable {
     public var textKey: String {
         switch self {
         case .blik:
-            return "pt_frequentOperative_button_blik"
+            return "pl_frequentOperative_button_blik"
         case .externalTransfer:
             return "accountOption_button_transfer"
         case .savingGoals:

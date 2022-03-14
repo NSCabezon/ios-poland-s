@@ -61,13 +61,24 @@ final class DeleteAliasPresenter: DeleteAliasPresenterProtocol {
     }
     
     private func handleAliasDeletion() {
+        let alertInfoText: LocalizedStylableText
+        
+        switch alias.type {
+        case .internetShop:
+            alertInfoText = localized("pl_blik_text_storeDeletedSuccess")
+        case .internetBrowser:
+            alertInfoText = localized("pl_blik_text_browserDeletedSuccess")
+        default:
+            alertInfoText = localized("pl_blik_text_deviceDeletedSuccess")
+        }
+        
         TopAlertController
             .setup(TopAlertView.self)
             .showAlert(
-                localized("pl_blik_text_deviceDeletedSuccess"),
+                alertInfoText,
                 alertType: .info,
                 position: .top
             )
-        coordinator.goBackToAliasListAndRefreshIt()
+        coordinator.goBackAfterAliasDeletion()
     }
 }

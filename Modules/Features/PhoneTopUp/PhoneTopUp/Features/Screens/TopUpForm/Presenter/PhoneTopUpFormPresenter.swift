@@ -39,6 +39,7 @@ final class PhoneTopUpFormPresenter {
     private let gsmOperators: [GSMOperator]
     private let internetContacts: [MobileContact]
     private let settings: TopUpSettings
+    private let topUpAccount: TopUpAccount
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
@@ -122,13 +123,15 @@ final class PhoneTopUpFormPresenter {
          operators: [Operator],
          gsmOperators: [GSMOperator],
          internetContacts: [MobileContact],
-         settings: TopUpSettings) {
+         settings: TopUpSettings,
+         topUpAccount: TopUpAccount) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.operators = operators
         self.gsmOperators = gsmOperators
         self.internetContacts = internetContacts
         self.settings = settings
+        self.topUpAccount = topUpAccount
         self.coordinator = dependenciesResolver.resolve(for: PhoneTopUpFormCoordinatorProtocol.self)
         self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         self.accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
@@ -221,7 +224,7 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {
                     if output.reloadPossible {
-                        #warning("todo: implement in another PR")
+                        self?.showConfirmation()
                     } else {
                         self?.view?.showErrorMessage(title: localized("pl_topup_title_alert_error"),
                                                      message: localized("pl_topup_text_alert_error"),
@@ -365,5 +368,29 @@ private extension PhoneTopUpFormPresenter {
         }
         
         return CheckPhoneUseCaseInput(operatorId: operatorId, topUpNumber: phoneNumber.number, reloadAmount: reloadAmount)
+    }
+    
+    func collectFormData() -> TopUpModel? {
+        guard let account = selectedAccount,
+              case .full(let recipientNumber) = phoneNumber,
+              let amount = selectedTopUpAmount?.amount,
+              let operatorId = selectedOperator?.id else {
+            return nil
+        }
+        
+        return TopUpModel(amount: amount,
+                          account: account,
+                          topUpAccount: topUpAccount,
+                          recipientNumber: recipientNumber,
+                          recipientName: recipientName,
+                          operatorId: operatorId,
+                          date: Date())
+    }
+    
+    func showConfirmation() {
+        guard let formData = collectFormData() else {
+            return
+        }
+        coordinator?.showTopUpConfirmation(with: formData)
     }
 }

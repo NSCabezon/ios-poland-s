@@ -8,6 +8,7 @@
 import SANPLLibrary
 
 public struct TaxPayer: Equatable {
+    let identifier: Int
     let shortName: String
     let name: String?
     let taxIdentifier: String?

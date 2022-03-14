@@ -20,7 +20,8 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate, TaxP
     func didTapBack()
     func didTapDone(with data: TaxTransferFormFields)
     func didUpdateFields(with fields: TaxTransferFormFields)
-    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo)
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?)
+    func didAddTaxPayer(_ taxPayer: TaxPayer)
 }
 
 final class TaxTransferFormPresenter {
@@ -103,7 +104,10 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     }
     
     func didTapTaxAuthority() {
-        // TODO: Implement in TAP-2517
+        coordinator.showTaxAuthoritySelector(
+            with: formData.predefinedTaxAuthorities,
+            selectedTaxAuthority: nil // TODO:- Implement tracking of selected tax authority
+        )
     }
     
     func didTapBack() {
@@ -125,10 +129,28 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         }
     }
     
-    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo) {
-        self.selectedPayerInfo = selectedPayerInfo
+    func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?) {
         selectedTaxPayer = taxPayer
+        
+        if let selectedPayerInfo = selectedPayerInfo {
+            self.selectedPayerInfo = selectedPayerInfo
+        } else {
+            self.selectedPayerInfo = getSelectedInfo(from: taxPayer)
+        }
+        
         updateViewWithLatestViewModel()
+    }
+    
+    func didAddTaxPayer(_ taxPayer: TaxPayer) {
+        let currentFormData = formData
+        var currentTaxPayers = formData.taxPayers
+        currentTaxPayers.append(taxPayer)
+        
+        formData = TaxTransferFormData(
+            sourceAccounts: currentFormData.sourceAccounts,
+            taxPayers: currentTaxPayers,
+            predefinedTaxAuthorities: currentFormData.predefinedTaxAuthorities
+        )
     }
 }
 
@@ -208,11 +230,17 @@ private extension TaxTransferFormPresenter {
             return .unselected
         }
         let viewModel = taxPayerViewModelMapper.map(taxPayer, selectedInfo: selectedInfo)
-        
         return .selected(viewModel)
     }
     
     func getTaxAuthorityViewModel() -> Selectable<TaxTransferFormViewModel.TaxAuthorityViewModel> {
         return .unselected // TODO: Add actual viewModel in TAP-2517
+    }
+    
+    func getSelectedInfo(from payer: TaxPayer) -> SelectedTaxPayerInfo {
+        return SelectedTaxPayerInfo(
+            taxIdentifier: payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber,
+            idType: payer.idType
+        )
     }
 }

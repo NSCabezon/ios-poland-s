@@ -14,9 +14,16 @@ struct MockHostProvider: PLHostProviderProtocol {
 }
 
 struct MockManager: PLManagersProviderProtocol {
-    
     let resolver: DependenciesResolver
-
+    
+    func getHistoryManager() -> PLHistoryManagerProtocol {
+        fatalError()
+    }
+    
+    func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
+        fatalError()
+    }
+    
     func getHelpCenterManager() -> PLHelpCenterManagerProtocol {
         fatalError()
     }

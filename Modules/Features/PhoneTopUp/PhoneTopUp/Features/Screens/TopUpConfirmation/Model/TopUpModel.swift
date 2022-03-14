@@ -9,9 +9,11 @@ import Foundation
 import PLCommons
 
 struct TopUpModel {
-    let amount: Decimal
+    let amount: Int
     let account: AccountForDebit
+    let topUpAccount: TopUpAccount
     let recipientNumber: String
     let recipientName: String?
+    let operatorId: Int
     let date: Date
 }
