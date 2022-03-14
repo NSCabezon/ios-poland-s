@@ -10,10 +10,40 @@ import OpenCombine
 import CoreDomain
 import CoreFoundationLib
 
+struct PrivateMenuSection: PrivateMenuSectionRepresentable {
+    let titleKey: String?
+    let items: [PrivateSubMenuOptionRepresentable]
+    
+    public init(titleKey: String? = nil, items: [PrivateSubMenuOptionRepresentable]) {
+        self.titleKey = titleKey
+        self.items = items
+    }
+}
+
+struct SubMenuElement: CoreDomain.PrivateSubMenuOptionRepresentable {
+    var titleKey: String
+    var icon: String?
+    var submenuArrow: Bool
+    var elementsCount: Int?
+}
+
 struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
     private let boxes: GetGlobalPositionBoxesUseCase
     private let globalPositionRepository: GlobalPositionDataRepository
     private let offers: GetCandidateOfferUseCase
+    
+    let dictOptions: [PrivateMenuMyProductsOption: UserPrefBoxType] =
+        [
+            PrivateMenuMyProductsOption.accounts: UserPrefBoxType.account,
+            PrivateMenuMyProductsOption.cards: UserPrefBoxType.card,
+            PrivateMenuMyProductsOption.stocks: UserPrefBoxType.stock,
+            PrivateMenuMyProductsOption.loans: UserPrefBoxType.loan,
+            PrivateMenuMyProductsOption.deposits: UserPrefBoxType.deposit,
+            PrivateMenuMyProductsOption.pensions: UserPrefBoxType.pension,
+            PrivateMenuMyProductsOption.funds: UserPrefBoxType.fund,
+            PrivateMenuMyProductsOption.insuranceSavings: UserPrefBoxType.insuranceSaving,
+            PrivateMenuMyProductsOption.insuranceProtection: UserPrefBoxType.insuranceProtection
+        ]
     
     init(dependencies: PrivateMenuModuleExternalDependenciesResolver) {
         boxes = dependencies.resolve()
@@ -21,15 +51,17 @@ struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
         offers = dependencies.resolve()
     }
     
-    func fetchSubMenuOptions() -> AnyPublisher<[PrivateMenuOptionRepresentable], Never> {
+    func fetchSubMenuOptions() -> AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
         return finalOptions
     }
 }
+
 private extension PLPrivateMenuMyProductsUseCase {
-    var finalOptions: AnyPublisher<[PrivateMenuOptionRepresentable], Never> {
-        return Publishers.Zip(
+    var finalOptions: AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
+        return Publishers.Zip3(
             optionsMyProducts,
-            boxes.fetchBoxesVisibles())
+            boxes.fetchBoxesVisibles(),
+            globalPositionRepository.getGlobalPosition())
             .map(buildOptions)
             .eraseToAnyPublisher()
     }
@@ -64,40 +96,69 @@ private extension PLPrivateMenuMyProductsUseCase {
     }
     
     func buildOptions(_ options: [PrivateMenuMyProductsOption],
-                      _ boxes: [UserPrefBoxType]) -> [PrivateMenuMyProductsOption] {
-        var finalOptions = options
-        if boxes.contains(.account), let index = finalOptions.firstIndex(of: .accounts) {
-            finalOptions.remove(at: index)
+                      _ boxes: [UserPrefBoxType],
+                      _ globalPosition: GlobalPositionDataRepresentable) -> [PrivateMenuSectionRepresentable] {
+        let finalOptions = options.filter { option in
+            guard let boxOption = dictOptions[option] else { return false }
+            return boxes.contains(boxOption)
         }
-        if boxes.contains(.card), let index = finalOptions.firstIndex(of: .cards) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.stock), let index = finalOptions.firstIndex(of: .stocks) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.loan), let index = finalOptions.firstIndex(of: .loans) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.deposit), let index = finalOptions.firstIndex(of: .deposits) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.pension), let index = finalOptions.firstIndex(of: .pensions) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.fund), let index = finalOptions.firstIndex(of: .funds) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.insuranceSaving), let index = finalOptions.firstIndex(of: .insuranceSavings) {
-            finalOptions.remove(at: index)
-        }
-        if boxes.contains(.insuranceProtection), let index = finalOptions.firstIndex(of: .insuranceProtection) {
-            finalOptions.remove(at: index)
-        }
-        return finalOptions
+        let countedElements = howManyElementsIn(globalPosition: globalPosition, from: finalOptions)
+        let section = PrivateMenuSection(items: finalOptions.toOptionRepresentable(countedElements))
+        return [section]
     }
     
     func isCandidate( _ locations: [PullOfferLocationRepresentable]) -> AnyPublisher<Bool, Never> {
         let result = locations.map(offers.fetchCandidateOfferPublisher).isNotEmpty
         return Just(result).eraseToAnyPublisher()
+    }
+}
+
+extension Array where Element == PrivateMenuMyProductsOption {
+    func toOptionRepresentable(_ elementsCount: [PrivateMenuMyProductsOption: Int]) -> [PrivateSubMenuOptionRepresentable] {
+        var result = [PrivateSubMenuOptionRepresentable]()
+        self.forEach { option in
+            let item = SubMenuElement(titleKey: option.titleKey,
+                                         icon: option.imageKey,
+                                         submenuArrow: false,
+                                         elementsCount: elementsCount[option])
+            result.append(item)
+        }
+        return result
+    }
+}
+
+private extension PLPrivateMenuMyProductsUseCase {
+    func howManyElementsIn(globalPosition: GlobalPositionDataRepresentable,
+                           from myProducts: [PrivateMenuMyProductsOption]) -> [PrivateMenuMyProductsOption: Int] {
+        var result = [PrivateMenuMyProductsOption: Int]()
+        myProducts.forEach { option in
+            result.updateValue(countForOption(option: option, in: globalPosition), forKey: option)
+        }
+        return result
+    }
+    
+    func countForOption(option: PrivateMenuMyProductsOption, in globalPosition: GlobalPositionDataRepresentable) -> Int {
+        switch option {
+        case .accounts:
+            return globalPosition.accountRepresentables.count
+        case .cards:
+            return globalPosition.cardRepresentables.count
+        case .deposits:
+            return globalPosition.depositRepresentables.count
+        case .funds:
+            return globalPosition.fundRepresentables.count
+        case .insuranceProtection:
+            return globalPosition.protectionInsuranceRepresentables.count
+        case .insuranceSavings:
+            return globalPosition.savingsInsuranceRepresentables.count
+        case .loans:
+            return globalPosition.loanRepresentables.count
+        case .pensions:
+            return globalPosition.pensionRepresentables.count
+        case .stocks:
+            return globalPosition.stockAccountRepresentables.count
+        case .tpvs:
+            return 0
+        }
     }
 }
