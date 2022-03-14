@@ -27,7 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = drawer
         self.window?.makeKeyAndVisible()
         self.legacyAppDelegate?.application(application, didFinishLaunchingWithOptions: launchOptions)
-        AppNavigationDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
+        AppNavigationDependencies(
+            drawer: drawer,
+            dependenciesEngine: dependenciesEngine,
+            moduleDependencies: moduleDependencies
+        ).registerDependencies()
         notificationsHandler.startServices()
         return true
     }
@@ -38,5 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         self.notificationsHandler.didFailToRegisterForRemoteNotificationsWithError(error)
+    }
+
+    public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        self.legacyAppDelegate?.application(application, performActionFor: shortcutItem, completionHandler: completionHandler)
     }
 }

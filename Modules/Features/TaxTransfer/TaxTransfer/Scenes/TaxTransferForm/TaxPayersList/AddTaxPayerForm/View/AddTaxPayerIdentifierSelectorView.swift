@@ -11,7 +11,9 @@ import PLUI
 final class AddTaxPayerIdentifierSelectorView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let subviewsContainer = UIView()
-    private let selectorView = TaxTransferElementSelectorView()
+    private let selectorView = TaxTransferSelectorView()
+    
+    private var currentIdentifier: TaxIdentifierType?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,16 +27,21 @@ final class AddTaxPayerIdentifierSelectorView: UIView {
     }
     
     func configure(
-        with viewModel: Selectable<TaxTransferFormViewModel.TaxPayerViewModel>,
+        with identifier: Selectable<TaxIdentifierType>,
         onTap: @escaping () -> Void
     ) {
-        switch viewModel {
-        case .selected:
-            selectorView.isHidden = true
+        switch identifier {
+        case let .selected(type):
+            currentIdentifier = type
+            selectorView.configure(selectionState: .selected(type.name), onTap: onTap)
         case .unselected:
-            selectorView.isHidden = false
-            selectorView.configure(onTap: onTap)
+            currentIdentifier = nil
+            selectorView.configure(selectionState: .unselected, onTap: onTap)
         }
+    }
+    
+    func getIdentifierType() -> TaxIdentifierType? {
+        return currentIdentifier
     }
     
     private func setUp() {

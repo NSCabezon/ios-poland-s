@@ -9,7 +9,9 @@ import CoreFoundationLib
 import Foundation
 import Operative
 import PLCommons
+import PLCommonOperatives
 import PLUI
+import SANPLLibrary
 
 protocol TopUpConfirmationPresenterProtocol: AnyObject {
     var view: TopUpConfirmationViewProtocol? { get set }
@@ -25,7 +27,10 @@ final class TopUpConfirmationPresenter {
     private let dependenciesResolver: DependenciesResolver
     private var coordinator: TopUpConfirmationCoordinatorProtocol?
     private let confirmationDialogFactory: ConfirmationDialogProducing
+    private let authorizationHandler: ChallengesHandlerDelegate
     private let summaryMapper: TopUpSummaryMapping
+    private let transactionMapper: PerformTopUpTransactionInputMapping
+    private let managersProvider: PLManagersProviderProtocol
     private let summary: TopUpModel
     
     // MARK: Lifecycle
@@ -34,7 +39,10 @@ final class TopUpConfirmationPresenter {
         self.dependenciesResolver = dependenciesResolver
         self.coordinator = dependenciesResolver.resolve(for: TopUpConfirmationCoordinatorProtocol.self)
         self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
+        self.authorizationHandler = dependenciesResolver.resolve(for: ChallengesHandlerDelegate.self)
         self.summaryMapper = dependenciesResolver.resolve(for: TopUpSummaryMapping.self)
+        self.transactionMapper = dependenciesResolver.resolve(for: PerformTopUpTransactionInputMapping.self)
+        self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         self.summary = summary
     }
 }
@@ -52,8 +60,61 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
     }
     
     func didSelectSubmit() {
-        #warning("todo: API call will be implemented in another PR")
-        coordinator?.showSummary(with: summary)
+        view?.showLoader()
+        let transactionInput = PerformTopUpTransactionUseCaseInput(
+            sourceAccount: summary.account,
+            topUpAccount: summary.topUpAccount,
+            amount: summary.amount,
+            recipientNumber: summary.recipientNumber,
+            operatorId: summary.operatorId,
+            date: summary.date
+        )
+        
+        guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
+            return
+        }
+        
+        let sendMoneyInput = transactionMapper.mapSendMoneyConfirmationInput(with: transactionInput, userId: userId)
+        let notifyDeviceInput = transactionMapper.mapPartialNotifyDeviceInput(with: transactionInput)
+        let authorizeTransactionInput = AuthorizeTransactionUseCaseInput(sendMoneyConfirmationInput: sendMoneyInput,
+                                                                         partialNotifyDeviceInput: notifyDeviceInput)
+        Scenario(useCase: AuthorizeTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
+            .execute(on: dependenciesResolver.resolve())
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    self?.authorizationHandler.handle(output.pendingChallenge, authorizationId: "\(output.authorizationId)") { [weak self] challengeResult in
+                        switch(challengeResult) {
+                        case .handled(_):
+                            self?.performTopUpTransaction(transactionInput: transactionInput)
+                        default:
+                            self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                        }
+                    }
+                })
+            }.onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                })
+            }
+    }
+    
+    func performTopUpTransaction(transactionInput: PerformTopUpTransactionUseCaseInput) {
+        view?.showLoader()
+        Scenario(useCase: PerformTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: transactionInput)
+            .execute(on: dependenciesResolver.resolve())
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    guard let self = self, output.reloadSuccessful else {
+                        self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                        return
+                    }
+                    self.coordinator?.showSummary(with: self.summary)
+                })
+            }.onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
+                })
+            }
     }
     
     func summaryBodyItemsModels() -> [OperativeSummaryStandardBodyItemViewModel] {

@@ -5,7 +5,7 @@ import SANPLLibrary
 import XCTest
 @testable import ZusTransfer
 
-class ZusTransferSummaryMapperTests: XCTestCase {
+final class ZusTransferSummaryMapperTests: XCTestCase {
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
     private var SUT: ZusTransferSummaryMapping!
     private var confirmationTransferDTO: ConfirmationTransferDTO!

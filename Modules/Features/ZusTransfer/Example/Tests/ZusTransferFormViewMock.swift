@@ -5,6 +5,8 @@ final class ZusTransferFormViewMock: ZusTransferFormViewProtocol {
     var showDialogCalled = false
     var setAccountViewModelCalled = false
     var showValidationMessagesCalled = false
+    var updateRecipientCalled = false
+    var clearFormCalled = false
     
     func showDialog(_ dialog: LisboaDialog) {
         showDialogCalled = true
@@ -16,5 +18,13 @@ final class ZusTransferFormViewMock: ZusTransferFormViewProtocol {
     
     func showValidationMessages(with data: InvalidZusTransferFormData) {
         showValidationMessagesCalled = true
+    }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        updateRecipientCalled = true
+    }
+    
+    func clearForm() {
+        clearFormCalled = true
     }
 }

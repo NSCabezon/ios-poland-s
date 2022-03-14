@@ -27,4 +27,8 @@ extension ModuleDependencies: LoanExternalDependenciesResolver {
     func loanCustomeOptionCoordinator() -> BindableCoordinator {
         return LoanCustomeOptionCoordinator(dependencies: self)
     }
+    
+    func resolve() -> LoanDetailConfigRepresentable {
+        return LoanDetailConfig()
+    }
 }

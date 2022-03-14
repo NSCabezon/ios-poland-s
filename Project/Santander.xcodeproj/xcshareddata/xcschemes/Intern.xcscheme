@@ -15,9 +15,79 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-               BuildableName = "PL-INTERN-0.5.5.app"
+               BuildableName = "PL-INTERN-0.12.5.app"
                BlueprintName = "Santander"
                ReferencedContainer = "container:Santander.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4215A56F27B538D800879EB1"
+               BuildableName = "SantanderTests.xctest"
+               BlueprintName = "SantanderTests"
+               ReferencedContainer = "container:Santander.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B0BEA8CC39E0131D3A9C87EDC30AF0F8"
+               BuildableName = "CoreFoundationLib-Unit-Tests.xctest"
+               BlueprintName = "CoreFoundationLib-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "71709A892F5D9E7DE1B566BED6462859"
+               BuildableName = "UI-Unit-Tests.xctest"
+               BlueprintName = "UI-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA5BE385AE705858D70218FAA4250F57"
+               BuildableName = "Loans-Unit-Tests.xctest"
+               BlueprintName = "Loans-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "57DECA95EDB5CEF5AB1E5C161098126B"
+               BuildableName = "Cards-Unit-Tests.xctest"
+               BlueprintName = "Cards-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,6 +108,46 @@
                ReferencedContainer = "container:Santander.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B0BEA8CC39E0131D3A9C87EDC30AF0F8"
+               BuildableName = "CoreFoundationLib-Unit-Tests.xctest"
+               BlueprintName = "CoreFoundationLib-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "71709A892F5D9E7DE1B566BED6462859"
+               BuildableName = "UI-Unit-Tests.xctest"
+               BlueprintName = "UI-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FA5BE385AE705858D70218FAA4250F57"
+               BuildableName = "Loans-Unit-Tests.xctest"
+               BlueprintName = "Loans-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "57DECA95EDB5CEF5AB1E5C161098126B"
+               BuildableName = "Cards-Unit-Tests.xctest"
+               BlueprintName = "Cards-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -55,7 +165,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-0.5.5.app"
+            BuildableName = "PL-INTERN-0.12.5.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>
@@ -72,7 +182,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-0.5.5.app"
+            BuildableName = "PL-INTERN-0.12.5.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>

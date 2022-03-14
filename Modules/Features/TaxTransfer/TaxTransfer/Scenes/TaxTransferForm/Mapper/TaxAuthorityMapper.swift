@@ -27,7 +27,6 @@ final class TaxAuthorityMapper: TaxAuthorityMapping {
             let identifier = payee.payeeId,
             let name = payee.payeeDisplayName,
             let accountNumber = payee.account?.accountNo
-        
         else {
             throw Error.missingData
         }
@@ -36,6 +35,7 @@ final class TaxAuthorityMapper: TaxAuthorityMapping {
             id: identifier,
             name: name,
             accountNumber: accountNumber,
+            address: payee.account?.address,
             taxAccountType: try taxAccountTypeRecognizer.recognizeType(of: accountNumber)
         )
     }

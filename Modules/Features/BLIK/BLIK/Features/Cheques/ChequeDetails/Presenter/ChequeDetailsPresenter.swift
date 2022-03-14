@@ -74,7 +74,7 @@ extension ChequeDetailsPresenter: ChequeDetailsPresenterProtocol {
                 }
                 .onError { [weak self] error in
                     self?.view?.hideLoader(completion: {
-                        self?.view?.displayErrorMessage("#Wystąpił błąd w usuwaniu czeku. Spróbuj ponownie.")
+                        self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
                     })
                 }
         }

@@ -104,9 +104,9 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
                     )
                 }
             }
-            .onError { [weak self] _ in
+            .onError { [weak self] error in
                 self?.view?.hideLoader {
-                    self?.handleServiceInaccessible()
+                    self?.showErrorMessage(error: error)
                 }
             }
     }
@@ -141,19 +141,7 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
-                    let errorResult = AcceptZusTransactionErrorResult(rawValue: error.getErrorDesc() ?? "")
-                    switch errorResult {
-                    case .noConnection:
-                        self?.showError(with: "pl_generic_alert_textUnstableConnection")
-                    case .accountOnBlacklist:
-                        self?.showError(with: "#Sprawdź poprawność wprowadzonego numeru rachunku. Przelew na wskazany rachunek może być zrealizowany wyłącznie w Oddziale Banku.")
-                    case .expressEecipientInactive:
-                        self?.showError(with: "#Bank odbiorcy nie obsługuje tego typu przelewów.")
-                    case .limitExceeded:
-                        self?.showError(with: "pl_generic_alert_textDayLimit", nameImage: "icnAlert")
-                    default:
-                        self?.handleServiceInaccessible()
-                    }
+                    self?.showErrorMessage(error: error)
                 }
             }
     }
@@ -166,6 +154,22 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
             default:
                 self?.handleServiceInaccessible()
             }
+        }
+    }
+    
+    func showErrorMessage(error: UseCaseError<StringErrorOutput>) {
+        let errorResult = AcceptZusTransactionErrorResult(rawValue: error.getErrorDesc() ?? "")
+        switch errorResult {
+        case .noConnection:
+            self.showError(with: "pl_generic_alert_textUnstableConnection")
+        case .accountOnBlacklist:
+            self.showError(with: "#Sprawdź poprawność wprowadzonego numeru rachunku. Przelew na wskazany rachunek może być zrealizowany wyłącznie w Oddziale Banku.")
+        case .expressEecipientInactive:
+            self.showError(with: "#Bank odbiorcy nie obsługuje tego typu przelewów.")
+        case .limitExceeded:
+            self.showError(with: "pl_generic_alert_textDayLimit", nameImage: "icnAlert")
+        default:
+            self.handleServiceInaccessible()
         }
     }
 }

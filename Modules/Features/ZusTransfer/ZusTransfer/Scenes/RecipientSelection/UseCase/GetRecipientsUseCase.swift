@@ -30,9 +30,12 @@ final class GetRecipientsUseCase: UseCase<GetRecipientsUseCaseInput, GetRecipien
                     guard let transferType = $0.account?.transferType else { return false }
                     let isCorrectType = transferType == TransferType.ELIXIR.rawValue
                     let accountNrb = IBANFormatter.formatIbanToNrb(for: $0.account?.accountNo)
-                    guard !accountNrb.isEmpty, accountNrb.count == 26 else { return false }
-                    let accountSubstring = accountNrb.substring(2, 13)
-                    let isCorrectAccount = accountSubstring == requestValues.maskAccount
+                    guard !accountNrb.isEmpty, accountNrb.count == 26,
+                          let firstMaskDigitIndex = requestValues.maskAccount?.firstIndex(where: { Consts.digits.contains($0) }),
+                          let lastMaskDigitIndex = requestValues.maskAccount?.lastIndex(where: { Consts.digits.contains($0) }),
+                          let maskSubstring = requestValues.maskAccount?[firstMaskDigitIndex...lastMaskDigitIndex] else { return false }
+                    let accountSubstring = accountNrb[firstMaskDigitIndex...lastMaskDigitIndex]
+                    let isCorrectAccount = accountSubstring == maskSubstring
                     return isCorrectType && isCorrectAccount
                 }
             )
@@ -47,9 +50,15 @@ final class GetRecipientsUseCase: UseCase<GetRecipientsUseCaseInput, GetRecipien
 extension GetRecipientsUseCase: GetRecipientsUseCaseProtocol { }
 
 struct GetRecipientsUseCaseInput {
-    let maskAccount: String
+    let maskAccount: String?
 }
 
 struct GetRecipientsUseCaseOutput {
     let recipients: [Recipient]
+}
+
+extension GetRecipientsUseCase {
+    struct Consts {
+        static let digits = "0123456789"
+    }
 }

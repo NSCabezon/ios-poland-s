@@ -54,7 +54,6 @@ final class PhoneNumberInputView: UIView {
         addSubviewConstraintToEdges(mainContainer)
         mainContainer.addArrangedSubview(headerLabel)
         mainContainer.addArrangedSubview(lisboaPhoneNumberTextField)
-        lisboaPhoneNumberTextField.textField.fieldDelegate = self
     }
     
     private func prepareStyles() {
@@ -64,6 +63,15 @@ final class PhoneNumberInputView: UIView {
         lisboaPhoneNumberTextField.textField.setRightAccessory(.uiImage(Images.Form.contactIcon, action: { [weak self] in
             self?.delegate?.didTouchContactsButton()
         }))
+        let configuration = LisboaTextField.WritableTextField(type: .simple,
+                                                              formatter: nil,
+                                                              disabledActions: [],
+                                                              keyboardReturnAction: nil,
+                                                              textFieldDelegate: nil) { component in
+            component.textField.keyboardType = .phonePad
+        }
+        lisboaPhoneNumberTextField.textField.setEditingStyle(.writable(configuration: configuration))
+        lisboaPhoneNumberTextField.textField.fieldDelegate = self
         lisboaPhoneNumberTextField.textField.setText(phoneNumberPrefix)
     }
     

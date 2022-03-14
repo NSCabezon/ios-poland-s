@@ -48,7 +48,7 @@ final class RecipientSelectionViewController: UIViewController {
     func prepareNavigationBar() {
         NavigationBarBuilder(
             style: .white,
-            title: .title(key: localized("toolbar_title_recipients")
+            title: .title(key: localized("pl_recipients_toolbar")
             )
         )
         .setLeftAction(.back(action: .closure(goBack)))

@@ -37,6 +37,14 @@ class ViewController: UIViewController {
             BankingUtils(dependencies: resolver)
         }
         
+        defaultResolver.register(for: PLTransfersRepository.self) { _ in
+            PLTransfersRepositoryMock()
+        }
+        
+        defaultResolver.register(for: ChallengesHandlerDelegate.self) { _ in
+            PLAuthorizationCoordinatorMock()
+        }
+
         return defaultResolver
     }()
 
@@ -62,6 +70,7 @@ class ViewController: UIViewController {
                                                                 navigationController: navigationController,
                                                                 accounts: accounts,
                                                                 selectedAccountNumber: "",
+                                                                validationMask: "60000002026",
                                                                 sourceView: .sendMoney)
                 coordinator.start()
             }

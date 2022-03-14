@@ -70,7 +70,8 @@ extension AliasSettingsCoordinator: AliasSettingsCoordinatorProtocol {
         let coordinator = DeleteAliasCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            alias: alias
+            alias: alias,
+            entryPoint: .aliasList
         )
         coordinator.start()
     }

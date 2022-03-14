@@ -18,11 +18,13 @@ final class PLSessionDataManagerModifier: SessionDataManagerModifier {
     func performAfterGlobalPosition(_ globalPosition: GlobalPositionRepresentable) -> ScenarioHandler<Void, StringErrorOutput>? {
         let useCaseHandler: UseCaseScheduler = self.dependenciesEngine.resolve()
         let actionsShortcutsUseCase = PLProductActionsShortcutsUseCase(dependenciesResolver: self.dependenciesEngine)
-        Scenario(useCase: actionsShortcutsUseCase, input: PLProductActionsShortcutsUseCaseInput(useCache: false)).execute(on: useCaseHandler).onSuccess { [weak self] productMatrix in
-            self?.productActionsShortcutsMatrix = productMatrix
-            self?.registerProductMatrix()
-        }
-        return nil
+        let productMatrixScenario = Scenario(useCase: actionsShortcutsUseCase, input: PLProductActionsShortcutsUseCaseInput(useCache: false))
+        return productMatrixScenario.execute(on: useCaseHandler)
+            .onSuccess { [weak self] productMatrix in
+                self?.productActionsShortcutsMatrix = productMatrix
+                self?.registerProductMatrix()
+            }
+            .map({ _ in return })
     }
     
     func performBeforePullOffers() -> ScenarioHandler<Bool, StringErrorOutput>? {

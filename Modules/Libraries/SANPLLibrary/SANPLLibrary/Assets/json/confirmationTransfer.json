@@ -39,7 +39,7 @@
                 "baseAmount": -1.23
             },
             "title": "rUjSIw6vPqy8Hcpk",
-            "type": "DEFAULT_TRANSACTION",
+            "type": "ONEAPP_MOBILE_TRANSACTION",
             "valueDate": "2021-11-02",
             "sendApplicationId": 21,
             "timestamp": 337554106,

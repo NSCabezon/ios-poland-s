@@ -9,9 +9,11 @@ public struct GenericSendMoneyConfirmationInput: Codable {
     let type: String?
     let transferType: String?
     let valueDate: String?
+    let gsmNumber: String?
+    let gsmOperatorId: Int?
     @SkipEncode var transactionParameters: TransactionParameters?
     
-    public init(customerAddressData: CustomerAddressDataParameters?, debitAmountData: ItAmountDataParameters?, creditAmountData: ItAmountDataParameters?, debitAccountData: ItAccountDataParameters?, creditAccountData: ItAccountDataParameters?, signData: SignDataParameters?, title: String?, type: String?, transferType: String?, valueDate: String?, transactionParameters: TransactionParameters? = nil) {
+    public init(customerAddressData: CustomerAddressDataParameters?, debitAmountData: ItAmountDataParameters?, creditAmountData: ItAmountDataParameters?, debitAccountData: ItAccountDataParameters?, creditAccountData: ItAccountDataParameters?, signData: SignDataParameters?, title: String?, type: String?, transferType: String?, valueDate: String?, gsmNumber: String? = nil, gsmOperatorId: Int? = nil, transactionParameters: TransactionParameters? = nil) {
         self.customerAddressData = customerAddressData
         self.debitAmountData = debitAmountData
         self.creditAmountData = creditAmountData
@@ -22,6 +24,8 @@ public struct GenericSendMoneyConfirmationInput: Codable {
         self.type = type
         self.transferType = transferType
         self.valueDate = valueDate
+        self.gsmNumber = gsmNumber
+        self.gsmOperatorId = gsmOperatorId
         self.transactionParameters = transactionParameters
     }
 }
