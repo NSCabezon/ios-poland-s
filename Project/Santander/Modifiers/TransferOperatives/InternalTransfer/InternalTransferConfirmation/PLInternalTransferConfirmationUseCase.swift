@@ -27,8 +27,13 @@ struct PLInternalTransferConfirmationUseCase {
 extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUseCase {
     func fetchConfirmation(input: InternalTransferConfirmationUseCaseInput) -> AnyPublisher<ConditionState, Error> {
         let amountData = ItAmountDataParameters(currency: input.amount.currencyRepresentable?.currencyName, amount: input.amount.value)
-        guard let originAccount = input.originAccount as? PolandAccountRepresentable, let destinationAccount = input.destinationAccount as? PolandAccountRepresentable,
-              let originIbanRepresentable = input.originAccount.ibanRepresentable, let destinationIbanRepresentable = input.destinationAccount.ibanRepresentable else { return Just(.failure).setFailureType(to: Error.self).eraseToAnyPublisher() }
+        guard let originAccount = input.originAccount as? PolandAccountRepresentable,
+              let destinationAccount = input.destinationAccount as? PolandAccountRepresentable,
+              let originIbanRepresentable = input.originAccount.ibanRepresentable,
+              let destinationIbanRepresentable = input.destinationAccount.ibanRepresentable
+        else {
+            return Just(.failure).setFailureType(to: Error.self).eraseToAnyPublisher()
+        }
         let customerAddressData = CustomerAddressDataParameters(customerName: input.name,
                                                                 city: nil,
                                                                 street: nil,
@@ -81,10 +86,10 @@ private extension PLInternalTransferConfirmationUseCase {
     
     func internalTransferMatrix(_ input: InternalTransferConfirmationUseCaseInput) -> String? {
         let matrix = TranferTypeMatrixEvaluator(isSourceCurrencyPLN: input.originAccount.currencyRepresentable?.currencyType == .złoty,
-                                   isDestinationAccountInternal: true,
+                                                isDestinationAccountInternal: true,
                                                 isDestinationAccountCurrencyPLN: input.destinationAccount.currencyRepresentable?.currencyType == .złoty,
-                                   isOwner: true,
-                                   isCountryPLN: true)
+                                                isOwner: true,
+                                                isCountryPLN: true)
         return matrix.evaluateTransactionType()?.asDto.rawValue
     }
 }
