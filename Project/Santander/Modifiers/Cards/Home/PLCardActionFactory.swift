@@ -90,8 +90,7 @@ private extension PLCardActionFactory {
             return .offCard
         case .cardDetails:
             return .detail
-        case .sendMoneyFromSrc,
-                .history:
+        case .history:
             return nil
         case .activate,
                 .alerts24,
@@ -106,6 +105,7 @@ private extension PLCardActionFactory {
                 .managePin,
                 .modifyLimits,
                 .multicurrency,
+                .sendMoneyFromSrc,
                 .offer,
                 .repayment,
                 .useAbroad,

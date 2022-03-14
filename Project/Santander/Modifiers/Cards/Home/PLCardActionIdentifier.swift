@@ -45,9 +45,10 @@ enum PLCardActionIdentifier: String, CaseIterable {
                 .unblock,
                 .cardDetails,
                 .history,
-                .block,
-                .sendMoneyFromSrc:
+                .block:
             return nil
+        case .sendMoneyFromSrc:
+            return ("transaction_buttonOption_transfer", "icnSendMoney", "otherOperatives")
         case .activate:
             return ("cardsOption_button_activate", "icnActivate", "otherOperatives") // Cuál es la sección correcta para ACTIVATE ????
         case .modifyLimits:
