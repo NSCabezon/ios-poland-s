@@ -16,6 +16,7 @@ import SANPLLibrary
 protocol PLInternalTransferOperativeExternalDependenciesResolver {
     func resolve() -> PLTransfersRepository
     func resolve() -> GlobalPositionDataRepository
+    func resolve() -> DependenciesResolver
 }
 
 struct PLInternalTransferPreSetupUseCase {
