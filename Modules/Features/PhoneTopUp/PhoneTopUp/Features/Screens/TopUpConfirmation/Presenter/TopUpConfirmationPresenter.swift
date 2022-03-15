@@ -78,7 +78,7 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
         let notifyDeviceInput = transactionMapper.mapPartialNotifyDeviceInput(with: transactionInput)
         let authorizeTransactionInput = AuthorizeTransactionUseCaseInput(sendMoneyConfirmationInput: sendMoneyInput,
                                                                          partialNotifyDeviceInput: notifyDeviceInput)
-        Scenario(useCase: AuthorizeTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
+        Scenario(useCase: AuthorizeTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {

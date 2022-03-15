@@ -28,7 +28,7 @@ final class AcceptCharityTransactionUseCase: UseCase<AcceptCharityTransactionUse
         guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
             return .error(.init("userId not exists"))
         }
-        let sendMoneyConfirmationInput = charityTransferSendMoneyInputMapper.map(with: requestValues, userId: userId)
+        let sendMoneyConfirmationInput = charityTransferSendMoneyInputMapper.map(with: requestValues.model, userId: userId)
         let result = try managersProvider.getTransferManager().sendConfirmation(sendMoneyConfirmationInput)
         
         switch result {
