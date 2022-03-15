@@ -27,8 +27,7 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         else { return }
         switch actionType {
         case .blik:
-            let blikCoordinator: BLIKHomeCoordinator = self.oldResolver.resolve()
-            blikCoordinator.start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .anotherBank:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .creditCard:
