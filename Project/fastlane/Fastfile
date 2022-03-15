@@ -375,7 +375,7 @@ end
     increment_version_number(xcodeproj: "Santander.xcodeproj", bump_type: "patch")
     increment_build_number(build_number: calculateVersionCode(get_version_number(xcodeproj: "Santander.xcodeproj", target: "Santander")))
     upload_build_settings_versions()
-    update_xcschemes()
+    #update_xcschemes()
     push_version()
   end
 
