@@ -8,6 +8,8 @@
 import CoreFoundationLib
 import CoreDomain
 import PLCommons
+import PLCommonOperatives
+import SANPLLibrary
 
 protocol CharityTransferConfirmationPresenterProtocol {
     var view: CharityTransferConfirmationViewControllerProtocol? { get set }
@@ -26,6 +28,15 @@ final class CharityTransferConfirmationPresenter {
     }
     private var acceptCharityTransactionUseCase: AcceptCharityTransactionProtocol {
         dependenciesResolver.resolve()
+    }
+    private var authorizationHandler: ChallengesHandlerDelegate {
+        dependenciesResolver.resolve(for: ChallengesHandlerDelegate.self)
+    }
+    private var managersProvider: PLManagersProviderProtocol {
+        dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+    }
+    private var charityTransferSendMoneyInputMapper: CharityTransferSendMoneyInputMapping {
+        dependenciesResolver.resolve(for: CharityTransferSendMoneyInputMapping.self)
     }
     
     init(dependenciesResolver: DependenciesResolver,
@@ -53,28 +64,36 @@ extension CharityTransferConfirmationPresenter: CharityTransferConfirmationPrese
     func confirmTapped() {
         guard let model = model else { return }
         self.view?.showLoader()
-        Scenario(useCase: acceptCharityTransactionUseCase,
-                 input: .init(model: model))
+        guard let userId = try? managersProvider.getLoginManager().getAuthCredentials().userId else {
+            return
+        }
+        let sendMoneyInput = charityTransferSendMoneyInputMapper.map(with: model, userId: userId)
+        let notifyDeviceInput = charityTransferSendMoneyInputMapper.mapPartialNotifyDeviceInput(with: model)
+        let authorizeTransactionInput = AuthorizeTransactionUseCaseInput(sendMoneyConfirmationInput: sendMoneyInput, partialNotifyDeviceInput: notifyDeviceInput)
+        
+        Scenario(useCase: AuthorizeTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
             .execute(on: useCaseHandler)
-            .onSuccess { [weak self] result in
-                guard let self = self else { return }
-                self.view?.hideLoader {
-                    self.coordinator.showSummary(with: result.summary)
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader {
+                    self?.authorizationHandler.handle(output.pendingChallenge, authorizationId: "\(output.authorizationId)", completion: { [weak self] challangeRestult in
+                        switch challangeRestult {
+                        case .handled(_):
+                            self?.startAcceptTransaction()
+                        default:
+                            self?.handleServiceInaccessible()
+                        }
+                    })
                 }
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
-                    let errorResult = AcceptCharityTransactionErrorResult(rawValue: error.getErrorDesc() ?? "")
-                    switch errorResult {
-                    case .noConnection:
-                        self?.showError(with: "pl_generic_alert_textUnstableConnection")
-                    case .insufficientFunds:
-                        self?.showError(with: "pl_generic_alert_textNoFunds")
-                    case .limitExceeded:
-                        self?.showError(with: "pl_generic_alert_textDayLimit", nameImage: "icnAlert")
-                    default:
-                        self?.handleServiceInaccessible()
+                    if let noConnectionError = AcceptCharityTransactionErrorResult(rawValue: error.getErrorDesc() ?? "") {
+                        self?.showErrorMessage(error: noConnectionError.rawValue)
+                        return
                     }
+                    let plError = error.getPLErrorDTO()
+                    let charityError = CharityTransferError(with: plError)
+                    self?.showErrorMessage(error: charityError?.errorResult.rawValue ?? "")
                 }
             }
     }
@@ -93,6 +112,37 @@ extension CharityTransferConfirmationPresenter: CharityTransferConfirmationPrese
         view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), image: "icnAlertError", onConfirm: { [weak self] in
             self?.coordinator.backToTransfer()
         })
+    }
+    
+    func startAcceptTransaction() {
+        guard let model = model else { return }
+        self.view?.showLoader()
+        Scenario(useCase: acceptCharityTransactionUseCase,
+                 input: .init(model: model))
+            .execute(on: useCaseHandler)
+            .onSuccess { [weak self] result in
+                guard let self = self else { return }
+                self.view?.hideLoader {
+                    self.coordinator.showSummary(with: result.summary)
+                }
+            }
+            .onError { [weak self] error in
+                self?.view?.hideLoader {
+                    self?.showErrorMessage(error: error.getErrorDesc() ?? "")
+                }
+            }
+    }
+    
+    func showErrorMessage(error: String) {
+        let errorResult = AcceptCharityTransactionErrorResult(rawValue: error)
+        switch errorResult {
+        case .noConnection:
+            self.showError(with: "pl_generic_alert_textUnstableConnection")
+        case .limitExceeded:
+            self.showError(with: "pl_generic_alert_textDayLimit", nameImage: "icnAlert")
+        default:
+            self.handleServiceInaccessible()
+        }
     }
 }
 
