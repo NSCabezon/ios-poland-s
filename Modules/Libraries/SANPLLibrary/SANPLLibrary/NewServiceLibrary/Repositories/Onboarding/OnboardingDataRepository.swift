@@ -28,15 +28,14 @@ public struct OnboardingDataRepository: OnboardingRepository {
                           promise(.failure(NetworkProviderError.other))
                           return
                       }
-                promise(.success(OnboardingInfo(id: String(userId), name: name.capitalized)))
+                promise(.success(OnboardingInfo(identifier: String(userId), name: name.capitalized)))
             }
         }.eraseToAnyPublisher()
     }
 }
 
-// swiftlint:disable identifier_name
 public struct OnboardingInfo: OnboardingInfoRepresentable {
-    public let id: String
+    public let identifier: String
     public let name: String
 }
 
