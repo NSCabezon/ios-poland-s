@@ -59,7 +59,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
                 Toast.show(localized("generic_alert_notAvailableOperation"))
                 return
             }
-            
+        case .enable:
+            self.openWebViewIfProceeds(for: .activate, entity: entity)
         default:
             Toast.show(localized("generic_alert_notAvailableOperation"))
         }
