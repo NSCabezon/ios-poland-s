@@ -10,6 +10,7 @@ import UI
 
 protocol PLDeviceDataCoordinatorProtocol {
     func goToTrustedDevicePIN(with trustedDeviceConfiguration: TrustedDeviceConfiguration)
+    func presentTermsAndConditions(configuration: PLTermsAndConditionsConfiguration)
 }
 
 final class PLDeviceDataCoordinator: ModuleCoordinator {
@@ -20,6 +21,12 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
             dependenciesResolver: self.dependenciesEngine,
             navigationController: self.navigationController
         )
+    }()
+    
+    private lazy var termsAndConditionsCoordinator: PLTermsAndConditionsCoordinatorProtocol = {
+        return PLTermsAndConditionsCoordinator(dependenciesResolver: self.dependenciesEngine,
+                                               delegate: self,
+                                               navigationController: navigationController)
     }()
 
     init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
@@ -35,11 +42,29 @@ final class PLDeviceDataCoordinator: ModuleCoordinator {
 }
 
 extension PLDeviceDataCoordinator: PLDeviceDataCoordinatorProtocol {
+    
+    func presentTermsAndConditions(configuration: PLTermsAndConditionsConfiguration) {
+        self.termsAndConditionsCoordinator.startWith(configuration: configuration)
+    }
+    
     func goToTrustedDevicePIN(with trustedDeviceConfiguration: TrustedDeviceConfiguration) {
         self.dependenciesEngine.register(for: TrustedDeviceConfiguration.self) { _ in
             return trustedDeviceConfiguration
         }
         self.trustedDevicePinCoordinator.start()
+    }
+}
+
+extension PLDeviceDataCoordinator: PLTermsAndConditionsCoordinatorDelegate {
+    
+    func onAcceptTerms() {
+        let presenter = self.dependenciesEngine.resolve(for: PLDeviceDataPresenterProtocol.self)
+        presenter.enableContinueButton()
+    }
+    
+    func onRejectTerms() {
+        let loginModuleCoordinator = self.dependenciesEngine.resolve(for: PLLoginModuleCoordinatorProtocol.self)
+        loginModuleCoordinator.loadUnrememberedLogin()
     }
 }
 

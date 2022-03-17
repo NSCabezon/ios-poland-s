@@ -26,5 +26,14 @@ struct SendMoneyDependencies {
         self.dependenciesEngine.register(for: ValidateScheduledSendMoneyUseCaseProtocol.self) { resolver in
             return PLValidateGenericSendMoneyUseCase(dependenciesResolver: resolver)
         }
+        self.dependenciesEngine.register(for: SendMoneyDestinationUseCaseProtocol.self) { resolver in
+            return PLSendMoneyDestinationUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: SendMoneyAmountUseCaseProtocol.self) { resolver in
+            return PLSendMoneyAmountUseCase(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: SendMoneyConfirmationUseCaseProtocol.self) { resolver in
+            return PLSendMoneyConfirmationUseCase(dependenciesResolver: resolver)
+        }
     }
 }

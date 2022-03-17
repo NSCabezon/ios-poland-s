@@ -3,9 +3,11 @@ import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
 import PLCommons
+import PLCommonOperatives
 
 protocol CharityTransferSendMoneyInputMapping {
-    func map(with input: AcceptCharityTransactionUseCaseInput, userId: Int) -> GenericSendMoneyConfirmationInput
+    func map(with model: CharityTransferModel, userId: Int) -> GenericSendMoneyConfirmationInput
+    func mapPartialNotifyDeviceInput(with model: CharityTransferModel) -> PartialNotifyDeviceInput
 }
 
 final class CharityTransferSendMoneyInputMapper: CharityTransferSendMoneyInputMapping {
@@ -15,35 +17,37 @@ final class CharityTransferSendMoneyInputMapper: CharityTransferSendMoneyInputMa
         transactionParametersProvider = dependenciesResolver.resolve(for: PLTransactionParametersProviderProtocol.self)
     }
     
-    func map(with input: AcceptCharityTransactionUseCaseInput, userId: Int) -> GenericSendMoneyConfirmationInput {
+    func map(with model: CharityTransferModel, userId: Int) -> GenericSendMoneyConfirmationInput {
         let debitAccountFormated = IBANFormatter.formatIbanToNrb(
-            for: input.model.account.number
+            for: model.account.number
         )
         let creditAccountFormated = IBANFormatter.formatIbanToNrb(
-            for: input.model.recipientAccountNumber
+            for: model.recipientAccountNumber
         )
         
         let amountData = ItAmountDataParameters(currency: CurrencyType.złoty.name,
-                                                amount: input.model.amount)
+                                                amount: model.amount)
         
         let debitAccounData = ItAccountDataParameters(accountNo: debitAccountFormated,
-                                                      accountName: input.model.account.name,
-                                                      accountSequenceNumber: input.model.account.accountSequenceNumber,
-                                                      accountType: input.model.account.accountType)
+                                                      accountName: model.account.name,
+                                                      accountSequenceNumber: model.account.accountSequenceNumber,
+                                                      accountType: model.account.accountType)
         
         let creditAccountData = ItAccountDataParameters(accountNo: creditAccountFormated,
-                                                        accountName: input.model.recipientName,
+                                                        accountName: model.recipientName,
                                                         accountSequenceNumber: 0,
                                                         accountType: 90)
         
-        let date = input.model.date?.toString(format: TimeFormat.yyyyMMdd.rawValue) ?? ""
+        let date = model.date?.toString(format: TimeFormat.yyyyMMdd.rawValue) ?? ""
         let transferType: AcceptDomesticTransactionParameters.TransferType = .INTERNAL
         let transactionParametersInput = PLDomesticTransactionParametersInput(
             debitAccountNumber: debitAccountFormated,
             creditAccountNumber: creditAccountFormated,
-            debitAmount: input.model.amount,
+            debitAmount: model.amount,
             userID: String(describing: userId)
         )
+        
+        let signData = SignDataParameters(securityLevel: 2048)
         
         let transactionParameters = transactionParametersProvider.getTransactionParameters(
             type: .charityTransfer(transactionParametersInput)
@@ -54,12 +58,33 @@ final class CharityTransferSendMoneyInputMapper: CharityTransferSendMoneyInputMa
             creditAmountData: amountData,
             debitAccountData: debitAccounData,
             creditAccountData: creditAccountData,
-            signData: nil,
-            title: input.model.title,
-            type: AcceptDomesticTransactionParameters.TransactionType.MOBILE_TRANSACTION.rawValue,
+            signData: signData,
+            title: model.title,
+            type: AcceptDomesticTransactionParameters.TransactionType.ONEAPP_MOBILE_TRANSACTION.rawValue,
             transferType: transferType.rawValue,
             valueDate: date,
             transactionParameters: transactionParameters
+        )
+    }
+    
+    func mapPartialNotifyDeviceInput(with model: CharityTransferModel) -> PartialNotifyDeviceInput {
+        let iban = IBANRepresented(ibanString: IBANFormatter.formatIbanToNrb(for: model.recipientAccountNumber))
+        let amount = AmountDTO(
+            value: model.amount,
+            currency: CurrencyDTO(
+                currencyName: CurrencyType.złoty.name,
+                currencyType: .złoty
+            )
+        )
+        let recipientName = model.recipientName ?? ""
+        
+        return PartialNotifyDeviceInput(
+            softwareTokenType: nil,
+            notificationSchemaId: "195",
+            alias: "",
+            iban: iban,
+            amount: amount,
+            variables: ["\(model.amount)", CurrencyType.złoty.name, model.recipientAccountNumber, recipientName]
         )
     }
 }

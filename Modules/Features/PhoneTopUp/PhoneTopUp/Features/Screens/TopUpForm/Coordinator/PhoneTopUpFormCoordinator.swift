@@ -81,6 +81,10 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return GetContactsUseCase(contactStore: CNContactStore(), contactMapper: resolver.resolve(for: ContactMapping.self))
         }
         
+        self.dependenciesEngine.register(for: CheckPhoneUseCaseProtocol.self) { resolver in
+            return CheckPhoneUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PhoneTopUpFormCoordinatorProtocol.self) { _ in
             return self
         }
@@ -90,7 +94,8 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
                                            operators: formData.operators,
                                            gsmOperators: formData.gsmOperators,
                                            internetContacts: formData.internetContacts,
-                                           settings: formData.settings)
+                                           settings: formData.settings,
+                                           topUpAccount: formData.topUpAccount)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)

@@ -8,38 +8,51 @@
 import UIKit
 import PLNotifications
 import CoreFoundationLib
+import PLLogin
+import UI
+import SANPLLibrary
 
 protocol CustomPushNotificationPresenterProtocol: MenuTextWrapperProtocol {
     var view: CustomPushNotificationViewProtocol? { get set }
-    func setType(_ actionType: CustomPushLaunchActionTypeInfo)
+    func setType(_ actionType: CustomPushLaunchAction)
     func viewDidLoad()
     func didSelectClose()
 }
 
 final class CustomPushNotificationPresenter {
-    var actionType: CustomPushLaunchActionTypeInfo?
+    var actionType: CustomPushLaunchAction?
     weak var view: CustomPushNotificationViewProtocol?
     let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+    
+    var content: String = ""
 }
 
 extension CustomPushNotificationPresenter: CustomPushNotificationPresenterProtocol {
-    func setType(_ actionType: CustomPushLaunchActionTypeInfo) {
+    func setType(_ actionType: CustomPushLaunchAction) {
         self.actionType = actionType
     }
     
     func viewDidLoad() {
-        view?.openHtml(replacingCharactersInHtml(self.actionType?.content ?? ""))
+        if let content = self.actionType?.content {
+            view?.openHtml(replacingCharactersInHtml(content))
+        } else {
+            getPushContent()
+        }
+    }
+    
+    func showHtml() {
+        self.view?.openHtml(replacingCharactersInHtml(self.content))
     }
     
     func didSelectClose() {
         coordinator.pop()
     }
     
-    private func replacingCharactersInHtml(_ response: String) -> String {
+    func replacingCharactersInHtml(_ response: String) -> String {
         guard let encodedData = response.data(using: .utf8) else {
             return response
         }
@@ -55,6 +68,37 @@ extension CustomPushNotificationPresenter: CustomPushNotificationPresenterProtoc
         } catch {
             return response
         }
+    }
+    
+    private func getPushFor(userId: Int) {
+        let notificationUseCase = dependenciesResolver.resolve(for: PLNotificationsUseCaseManagerProtocol.self)
+        guard let pushId =  self.actionType?.messageId else { return }
+        notificationUseCase.getPushBeforeLogin(pushId: pushId, loginId: userId) { [weak self] response in
+            guard let response = response, let content = response.content else { return }
+            self?.content = content
+            self?.showHtml()
+        }
+    }
+    
+    private func getPushContent() {
+        let loginUseCase: PLBeforeLoginUseCase = self.dependenciesResolver.resolve(for: PLBeforeLoginUseCase.self)
+        Scenario(useCase: loginUseCase)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { response in
+                self.getPushFor(userId: response.userId)
+                self.markAsRead(userId: response.userId)
+            }
+            .onError { error in
+                Toast.show(error.localizedDescription)
+            }
+    }
+    
+    private func markAsRead(userId: Int){
+        guard let notificationId = actionType?.messageId else { return }
+        let notificationUseCase = dependenciesResolver.resolve(for: PLNotificationsUseCaseManagerProtocol.self)
+        let input = PLPushStatusUseCaseInput(pushList: [PLPushStatus(id: notificationId, status: NotificationStatus.read.rawValue)],
+                                             loginId: userId)
+        notificationUseCase.postPushStatusBeforeLogin(pushStatus: input, completion: { _ in })
     }
 }
 

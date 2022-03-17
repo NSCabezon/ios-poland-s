@@ -12,15 +12,18 @@ import SANPLLibrary
 import PLCommons
 
 protocol OtherBlikSettingsCoordinatorProtocol: ModuleCoordinator {
-    func close()
-    func goBackToRoot()
+    func showBlikLabelSettings()
     func showSaveSettingsSuccessAlert()
+    func showErrorAlert()
+    func back()
+    func close()
 }
 
 final class OtherBlikSettingsCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let wallet: SharedValueBox<GetWalletUseCaseOkOutput.Wallet>
+    private weak var blikLabelUpdateDelegate: BlikCustomerLabelUpdateDelegate?
 
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -42,17 +45,20 @@ final class OtherBlikSettingsCoordinator: ModuleCoordinator {
             presenter: presenter
         )
         presenter.view = viewController
+        blikLabelUpdateDelegate = presenter
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
 extension OtherBlikSettingsCoordinator: OtherBlikSettingsCoordinatorProtocol {
-    func close() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func goBackToRoot() {
-        navigationController?.popToRootViewController(animated: true)
+    func showBlikLabelSettings() {
+        let coordinator = BlikLabelSettingsCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            blikLabelUpdateDelegate: blikLabelUpdateDelegate,
+            wallet: wallet
+        )
+        coordinator.start()
     }
     
     func showSaveSettingsSuccessAlert() {
@@ -62,6 +68,22 @@ extension OtherBlikSettingsCoordinator: OtherBlikSettingsCoordinatorProtocol {
             position: .top
         )
     }
+    
+    func showErrorAlert() {
+        TopAlertController.setup(TopAlertView.self).showAlert(
+            localized("pl_blik_toast_errorApple"),
+            alertType: .failure,
+            position: .top
+        )
+    }
+    
+    func back() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func close() {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
 
 private extension OtherBlikSettingsCoordinator {
@@ -70,16 +92,8 @@ private extension OtherBlikSettingsCoordinator {
             return self
         }
         
-        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
-            return ConfirmationDialogFactory()
-        }
-        
-        dependenciesEngine.register(for: BlikCustomerLabelValidating.self) { _ in
-            return BlikCustomerLabelValidator()
-        }
-        
-        dependenciesEngine.register(for: SaveBlikCustomerLabelUseCaseProtocol.self) { resolver in
-            return SaveBlikCustomerLabelUseCase(dependenciesResolver: resolver)
+        dependenciesEngine.register(for: SaveBlikTransactionDataVisibilityUseCaseProtocol.self) { resolver in
+            return SaveBlikTransactionDataVisibilityUseCase(dependenciesResolver: resolver)
         }
         
         dependenciesEngine.register(for: GetWalletsActiveUseCase.self) { resolver in

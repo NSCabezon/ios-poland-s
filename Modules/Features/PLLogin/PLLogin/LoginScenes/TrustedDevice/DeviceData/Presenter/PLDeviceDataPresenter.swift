@@ -17,6 +17,7 @@ protocol PLDeviceDataPresenterProtocol: MenuTextWrapperProtocol {
     func viewDidLoad()
     func viewWillAppear()
     func registerDevice()
+    func enableContinueButton()
 }
 
 enum PLDeviceDataEncryptionError: Error {
@@ -92,12 +93,24 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
 
     func viewDidLoad() {
         self.trackScreen()
+        self.checkTermsAndConditions()
     }
 
     func viewWillAppear() {
         self.generateDeviceData()
     }
 
+    func goToTrustedDevicePIN() {
+        self.view?.dismissLoading(completion: { [weak self] in
+            guard let self = self else { return }
+            self.coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
+        })
+    }
+
+    func enableContinueButton() {
+        self.view?.enableContinue()
+    }
+    
     func registerDevice() {
         self.trackEvent(.clickContinue)
         self.view?.showLoading(title: localized("generic_popup_loading"),
@@ -164,16 +177,24 @@ extension PLDeviceDataPresenter: PLDeviceDataPresenterProtocol {
                     .execute(on: self.dependenciesResolver.resolve())
             }
     }
-
-    func goToTrustedDevicePIN() {
-        self.view?.dismissLoading(completion: { [weak self] in
-            guard let self = self else { return }
-            self.coordinator.goToTrustedDevicePIN(with: self.deviceConfiguration)
-        })
-    }
 }
 
 private extension PLDeviceDataPresenter {
+    
+    func checkTermsAndConditions() {
+        let termsUseCase = PLTermsAndConditionsUseCase(dependenciesResolver: self.dependenciesResolver)
+        let input = PLTermsAndConditionsUseCaseInput(acceptCurrentVersion: false)
+        Scenario(useCase: termsUseCase, input: input).execute(on: self.dependenciesResolver.resolve()).onSuccess({ [weak self] result in
+            if result.shouldPresentTerms {
+                let config = PLTermsAndConditionsConfiguration(title: result.title, description: result.description)
+                self?.coordinator.presentTermsAndConditions(configuration: config)
+            } else {
+                self?.view?.enableContinue()
+            }
+        }).onError { [weak self] error in
+            self?.handleError(error)
+        }
+    }
 
     func generateDeviceData() {
         let input = PLDeviceDataGenerateDataUseCaseInput(isTrustedDevice: false)

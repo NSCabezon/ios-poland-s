@@ -12,6 +12,7 @@ protocol PhoneTopUpDataSourceProtocol {
     func getOperators() throws -> Result<[OperatorDTO], NetworkProviderError>
     func getGSMOperators() throws -> Result<[GSMOperatorDTO], NetworkProviderError>
     func getInternetContacts() throws -> Result<[PayeeDTO], NetworkProviderError>
+    func getTopUpAccount() throws -> Result<PopularAccountDTO, NetworkProviderError>
     func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError>
     func reloadPhone(request: ReloadPhoneRequestDTO) throws -> Result<ReloadPhoneResponseDTO, NetworkProviderError>
 }
@@ -27,6 +28,7 @@ final class PhoneTopUpDataSource {
         case internetContacts = "/payees/phone"
         case checkPhone = "/topup/ws/check-phone"
         case reloadPhone = "/topup/ws/reload"
+        case popularAccounts = "/accounts/external/popular"
     }
     
     // MARK: Properties
@@ -101,6 +103,28 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
                                         contentType: nil)
         return networkProvider.request(request)
             .flatMapError({ _ in return .success([]) })
+    }
+    
+    func getTopUpAccount() throws -> Result<PopularAccountDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = PhoneTopUpServiceType.popularAccounts.rawValue
+        let request = PhoneTopUpRequest(serviceName: serviceName,
+                                        serviceUrl: serviceUrl,
+                                        method: .get,
+                                        queryParams: ["accountType": 70],
+                                        contentType: nil)
+        let results: Result<[PopularAccountDTO], NetworkProviderError> = networkProvider.request(request)
+        
+        return results.flatMap { accounts in
+            guard let account = accounts.first else {
+                return .failure(NetworkProviderError.other)
+            }
+            
+            return .success(account)
+        }
     }
     
     func checkPhone(request: CheckPhoneRequestDTO) throws -> Result<CheckPhoneResponseDTO, NetworkProviderError> {

@@ -10,9 +10,10 @@ import UI
 import PLNotifications
 import SANPLLibrary
 import CoreFoundationLib
+import PLLogin
 
 public protocol CustomPushNotificationCoordinatorDelegate: AnyObject {
-    func start(actionType: CustomPushLaunchActionTypeInfo)
+    func start(actionType: CustomPushLaunchAction)
 }
 
 protocol CustomPushNotificationCoordinatorProtocol {
@@ -20,7 +21,7 @@ protocol CustomPushNotificationCoordinatorProtocol {
 }
 
 public class CustomPushNotificationCoordinator: ModuleCoordinator {
-    fileprivate var actionType: CustomPushLaunchActionTypeInfo?
+    fileprivate var actionType: CustomPushLaunchAction?
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     
@@ -79,6 +80,22 @@ extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorPr
         self.dependenciesEngine.register(for: PLNotificationPostPushStatusUseCase.self) { resolver in
             return PLNotificationPostPushStatusUseCase(dependenciesResolver: resolver)
         }
+        
+        self.dependenciesEngine.register(for: PLNotificationPostPushStatusBeforeLoginUseCase.self) { resolver in
+            return PLNotificationPostPushStatusBeforeLoginUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLNotificationsUseCaseManagerProtocol.self) { _ in
+            return PLNotificationsUseCaseManager(dependenciesEngine: self.dependenciesEngine)
+        }
+        
+        self.dependenciesEngine.register(for: PLBeforeLoginUseCase.self) { resolver in
+            return PLBeforeLoginUseCase(dependenciesResolver: resolver)
+        }
+        
+        self.dependenciesEngine.register(for: PLNotificationGetPushDetailsBeforeLoginUseCase.self) { resolver in
+            return PLNotificationGetPushDetailsBeforeLoginUseCase(dependenciesResolver: resolver)
+        }
     }
     
     func showVC(_ viewController: UIViewController) {
@@ -87,7 +104,7 @@ extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorPr
 }
 
 extension CustomPushNotificationCoordinator: CustomPushNotificationCoordinatorDelegate {
-    public func start(actionType: CustomPushLaunchActionTypeInfo) {
+    public func start(actionType: CustomPushLaunchAction) {
         self.actionType = actionType
         start()
     }

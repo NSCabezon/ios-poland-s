@@ -126,6 +126,7 @@ public extension AcceptDomesticTransactionParameters {
         case TRANSACTION_3D
         case BLIK_P2P_TRANSACTION
         case PREPAID_MOBILE_TRANSACTION
+        case ONEAPP_PREPAID_MOBILE_TRANSACTION
         case SWIFT_PIN_TRANSCTION
         case PAYROLL_PIN_TRANSFER
         case MULTICURRENCY_BZWBK_PIN_TRANSACTION
@@ -147,6 +148,8 @@ public extension AcceptDomesticTransactionParameters {
         case PLN_FROM_CURRENCY_ACCOUNT_TOKEN_TRANSACTION
         case PAYHUB_TRANSCTION
         case BLIK_P2PR_TRANSACTION
+        case ONEAPP_ZUS_TRANSACTION
+        case ONEAPP_MOBILE_TRANSACTION
     }
     
 }

@@ -36,9 +36,9 @@ class NotificationsInboxInfoView: UIView {
     }
 
     private func setUpSubviews() {
+        addSubview(backgroundView)
         backgroundView.addSubview(notificationsInfoLabel)
         backgroundView.addSubview(setUpNotificationsLabel)
-        addSubview(backgroundView)
     }
 
     private func setUpViews() {
@@ -53,6 +53,7 @@ class NotificationsInboxInfoView: UIView {
 
     private func setUpNotificationsInfoLabel() {
         notificationsInfoLabel.numberOfLines = 0
+        notificationsInfoLabel.lineBreakMode = .byWordWrapping
         notificationsInfoLabel.textColor = .lisboaGray
         notificationsInfoLabel.font = .santander(
             family: .micro,
@@ -64,6 +65,7 @@ class NotificationsInboxInfoView: UIView {
 
     private func setUpSetUpNotificationsLabel() {
         setUpNotificationsLabel.numberOfLines = 0
+        setUpNotificationsLabel.lineBreakMode = .byWordWrapping
         setUpNotificationsLabel.textColor = .darkTorquoise
         setUpNotificationsLabel.font = .santander(
             family: .micro,

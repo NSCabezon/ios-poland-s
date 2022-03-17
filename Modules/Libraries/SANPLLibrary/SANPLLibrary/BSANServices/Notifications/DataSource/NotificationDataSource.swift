@@ -11,10 +11,12 @@ protocol NotificationDataSourceProtocol {
     func doRegisterToken(_ parameters: NotificationRegisterParameters) throws -> Result<NetworkProviderResponseWithStatus, NetworkProviderError>
     func getPushList(_ parameters: NotificationGetPushListParameters) throws -> Result<PLNotificationListDTO, NetworkProviderError>
     func getPushDetails(_ parameters: NotificationGetPushDetailsParameters) throws -> Result<PLNotificationDTO, NetworkProviderError>
+    func getPushDetailsBeforeLogin(pushId: Int, parameters: NotificationGetPushDetailsBeforeLoginParameters) throws -> Result<PLNotificationDTO, NetworkProviderError>
     func getPushUnreadedCount(_ parameters: NotificationGetPushListParameters) throws -> Result<PLUnreadedPushCountDTO, NetworkProviderError>
     func getEnabledPushCategoriesByDevice(_ parameters: NotificationGetPushListParameters) throws -> Result<PLEnabledPushCategoriesDTO, NetworkProviderError>
     
     func postPushStatus(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
+    func postPushStatusBeforeLogin(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError>
     func postPushListPageSize(_ parameters: NotificationPostPushListPageSizeParameters) throws -> Result<PLNotificationListDTO, NetworkProviderError>
     func postSetAllPushStatus(_ parameters: PLPushSetAllStatusUseCaseInput) throws -> Result<Void, NetworkProviderError>
 }
@@ -113,6 +115,27 @@ class NotificationDataSource: NotificationDataSourceProtocol {
         return result
     }
     
+    func getPushDetailsBeforeLogin(pushId: Int, parameters: NotificationGetPushDetailsBeforeLoginParameters) throws -> Result<PLNotificationDTO, NetworkProviderError> {
+        guard
+            let baseUrl = self.getBaseUrl()
+        else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let absoluteUrl = baseUrl + "/api/notification/pushquery"
+        let serviceName =  "/\(pushId)"
+        let request = NotificationGetPushDetailsBeforeLoginRequest(serviceName: serviceName,
+                                                        serviceUrl: absoluteUrl,
+                                                        method: .post,
+                                                        jsonBody: parameters,
+                                                        headers: headers,
+                                                        localServiceName: .notificationPushDetailsBeforeLogin,
+                                                        authorization: .trustedDeviceOnly)
+        
+        let result: Result<PLNotificationDTO, NetworkProviderError> = self.networkProvider.request(request)
+        return result
+    }
+    
     func getPushUnreadedCount(_ parameters: NotificationGetPushListParameters) throws -> Result<PLUnreadedPushCountDTO, NetworkProviderError> {
         guard
             let baseUrl = self.getBaseUrl()
@@ -121,19 +144,21 @@ class NotificationDataSource: NotificationDataSourceProtocol {
         }
         let absoluteUrl = baseUrl + "/api/notification/pushquery/auth"
         
+        let queryParams = ["categories" : parameters.enabledPushCategories.map { $0.rawValue }.joined(separator: ",")]
+
         let serviceName =  NotificationsServiceType.unreadedCount.rawValue + "/\(parameters.deviceId)"
         
         let request = NotificationGetPushUnreadedCountRequest(serviceName: serviceName,
                                                               serviceUrl: absoluteUrl,
                                                               method: .get,
                                                               headers: self.headers,
+                                                              queryParams: queryParams,
                                                               localServiceName: .notificationPushqueryUnreadedCount,
                                                               authorization: .oauth)
         
         let result: Result<PLUnreadedPushCountDTO, NetworkProviderError> = self.networkProvider.request(request)
         return result
     }
-    
     
     func getEnabledPushCategoriesByDevice(_ parameters: NotificationGetPushListParameters) throws -> Result<PLEnabledPushCategoriesDTO, NetworkProviderError> {
         guard
@@ -172,6 +197,28 @@ class NotificationDataSource: NotificationDataSourceProtocol {
                                                     headers: self.headers,
                                                     localServiceName: .notificationTokenRegister,
                                                     authorization: .oauth)
+        
+        let result: Result<PLPushStatusResponseDTO, NetworkProviderError> = self.networkProvider.request(request)
+        return result
+    }
+    
+    func postPushStatusBeforeLogin(_ parameters: PLPushStatusUseCaseInput) throws -> Result<PLPushStatusResponseDTO, NetworkProviderError> {
+        guard
+            let baseUrl = self.getBaseUrl()
+        else {
+            return .failure(NetworkProviderError.other)
+        }
+        
+        let absoluteUrl = baseUrl + "/api/notification/pushstatus"
+        let serviceName =  NotificationsServiceType.set.rawValue
+        
+        let request = NotificationPushStatusRequest(serviceName: serviceName,
+                                                        serviceUrl: absoluteUrl,
+                                                        method: .post,
+                                                        jsonBody: parameters,
+                                                        headers: headers,
+                                                        localServiceName: .notificationPushStatusBeforeLogin,
+                                                        authorization: .trustedDeviceOnly)
         
         let result: Result<PLPushStatusResponseDTO, NetworkProviderError> = self.networkProvider.request(request)
         return result

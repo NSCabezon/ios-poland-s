@@ -3,9 +3,11 @@ import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
 import PLCommons
+import PLCommonOperatives
 
 protocol ZusTransferSendMoneyInputMapping {
     func map(with model: ZusTransferModel, userId: Int) -> GenericSendMoneyConfirmationInput
+    func mapPartialNotifyDeviceInput(with model: ZusTransferModel) -> PartialNotifyDeviceInput
 }
 
 final class ZusTransferSendMoneyInputMapper: ZusTransferSendMoneyInputMapping {
@@ -58,10 +60,31 @@ final class ZusTransferSendMoneyInputMapper: ZusTransferSendMoneyInputMapping {
             creditAccountData: creditAccountData,
             signData: signData,
             title: model.title,
-            type: AcceptDomesticTransactionParameters.TransactionType.ZUS_TOKEN_TRANSACTION.rawValue,
+            type: AcceptDomesticTransactionParameters.TransactionType.ONEAPP_ZUS_TRANSACTION.rawValue,
             transferType: transferType.rawValue,
             valueDate: date,
             transactionParameters: transactionParameters
+        )
+    }
+    
+    func mapPartialNotifyDeviceInput(with model: ZusTransferModel) -> PartialNotifyDeviceInput {
+        let iban = IBANRepresented(ibanString: IBANFormatter.formatIbanToNrb(for: model.recipientAccountNumber))
+        let amount = AmountDTO(
+            value: model.amount,
+            currency: CurrencyDTO(
+                currencyName: CurrencyType.złoty.name,
+                currencyType: .złoty
+            )
+        )
+        let recipientName = model.recipientName ?? ""
+        
+        return PartialNotifyDeviceInput(
+            softwareTokenType: nil,
+            notificationSchemaId: "195",
+            alias: "",
+            iban: iban,
+            amount: amount,
+            variables: ["\(model.amount)", CurrencyType.złoty.name, model.recipientAccountNumber, recipientName]
         )
     }
 }

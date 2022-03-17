@@ -131,6 +131,8 @@ private extension URLSessionNetworkProvider {
             return .failure(NetworkProviderError.unauthorized)
         case 422:
             return .failure(NetworkProviderError.unprocessableEntity)
+        case 503:
+            return .failure(NetworkProviderError.maintenance)
         default:
             let error = NetworkProviderResponseError(code: statusCode,
                                                 data: data,

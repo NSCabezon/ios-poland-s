@@ -8,12 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		175FE04CE1935F02A5930ADA /* Pods_PhoneTopUp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1C63189FAD0D30A443447F /* Pods_PhoneTopUp_Tests.framework */; };
+		4520068927DA2BF100348FF4 /* PolishContactFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520068827DA2BF100348FF4 /* PolishContactFilterTests.swift */; };
+		4520068C27DA3B1500348FF4 /* TopUpDataLoaderPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520068B27DA3B1500348FF4 /* TopUpDataLoaderPresenterTests.swift */; };
+		4520068E27DA3B5900348FF4 /* MockTopUpSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520068D27DA3B5900348FF4 /* MockTopUpSettings.swift */; };
+		4520069027DA432B00348FF4 /* MockTopUpDataLoaderCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520068F27DA432B00348FF4 /* MockTopUpDataLoaderCoordinatorProtocol.swift */; };
+		4520069227DA46C500348FF4 /* MockPLManagersProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520069127DA46C500348FF4 /* MockPLManagersProviderProtocol.swift */; };
+		4520069427DA471300348FF4 /* MockPLPhoneTopUpManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520069327DA471300348FF4 /* MockPLPhoneTopUpManagerProtocol.swift */; };
+		4520069627DA51C600348FF4 /* MockGetPhoneTopUpFormDataUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520069527DA51C600348FF4 /* MockGetPhoneTopUpFormDataUseCaseProtocol.swift */; };
+		4520069827DB4F3D00348FF4 /* MockTopUpDataLoaderViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520069727DB4F3D00348FF4 /* MockTopUpDataLoaderViewProtocol.swift */; };
+		4520069B27DB608C00348FF4 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4520069A27DB608C00348FF4 /* Delay.swift */; };
+		4542A70827D653FF004A0B13 /* PartialPhoneNumberValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A70727D653FF004A0B13 /* PartialPhoneNumberValidatorTests.swift */; };
+		4542A70A27D65DD0004A0B13 /* PartialPhoneNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A70927D65DD0004A0B13 /* PartialPhoneNumberFormatterTests.swift */; };
+		4542A70C27D663A3004A0B13 /* CustomTopUpAmountValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A70B27D663A3004A0B13 /* CustomTopUpAmountValidatorTests.swift */; };
+		4542A70E27D66B86004A0B13 /* TopUpFormValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A70D27D66B86004A0B13 /* TopUpFormValidatorTests.swift */; };
+		4542A71427D76D7B004A0B13 /* DataLoaderCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71327D76D7B004A0B13 /* DataLoaderCoordinatorTests.swift */; };
+		4542A71727D76FC1004A0B13 /* MockDependencyEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71527D76E5E004A0B13 /* MockDependencyEngine.swift */; };
+		4542A71827D76FC4004A0B13 /* MockNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71027D76D0E004A0B13 /* MockNavigationController.swift */; };
+		4542A71B27D7728A004A0B13 /* MockMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71927D77272004A0B13 /* MockMenuViewController.swift */; };
+		4542A71E27D776A3004A0B13 /* MockAccountForDebit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71C27D7769B004A0B13 /* MockAccountForDebit.swift */; };
+		4542A72127D78FC6004A0B13 /* PhoneTopUpCoordinatorFormTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71F27D78FC3004A0B13 /* PhoneTopUpCoordinatorFormTests.swift */; };
+		4542A72327D79062004A0B13 /* MockTopUpPreloadedFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72227D79062004A0B13 /* MockTopUpPreloadedFormData.swift */; };
+		4542A72527D790A6004A0B13 /* MockOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72427D790A6004A0B13 /* MockOperator.swift */; };
+		4542A72727D790C2004A0B13 /* MockGSMOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72627D790C2004A0B13 /* MockGSMOperator.swift */; };
+		4542A72927D790D2004A0B13 /* MockMobileContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72827D790D2004A0B13 /* MockMobileContact.swift */; };
+		4542A72B27D790E1004A0B13 /* MockTopUpOperatorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72A27D790E1004A0B13 /* MockTopUpOperatorSettings.swift */; };
+		4542A72D27D79274004A0B13 /* MockTopUpValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72C27D79274004A0B13 /* MockTopUpValues.swift */; };
+		4542A72F27D7A558004A0B13 /* MockTopUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72E27D7A558004A0B13 /* MockTopUpModel.swift */; };
+		4542A73127D7A616004A0B13 /* MockChallengesHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A73027D7A616004A0B13 /* MockChallengesHandlerDelegate.swift */; };
+		4542A73527D7C668004A0B13 /* TopUpConfirmationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A73427D7C668004A0B13 /* TopUpConfirmationCoordinatorTests.swift */; };
+		457A74E127D8D52D004350CE /* MockTopUpAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A74E027D8D52D004350CE /* MockTopUpAccount.swift */; };
+		457A74E327D8DF45004350CE /* TopUpSummaryCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A74E227D8DF45004350CE /* TopUpSummaryCoordinatorTests.swift */; };
+		457A74E527D8EBA6004350CE /* MockPhoneTopUpPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A74E427D8EBA6004350CE /* MockPhoneTopUpPresenterProtocol.swift */; };
+		457A74E727D8F9DB004350CE /* MobileContactsGrouperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A74E627D8F9DB004350CE /* MobileContactsGrouperTests.swift */; };
+		457A74E927D9F530004350CE /* MobileContactSearchFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A74E827D9F530004350CE /* MobileContactSearchFilterTests.swift */; };
+		45D3528927DB842A008857A6 /* TopUpFormPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3528827DB842A008857A6 /* TopUpFormPresenterTests.swift */; };
+		45D3528B27DB9234008857A6 /* MockPhoneTopUpFormCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3528A27DB9234008857A6 /* MockPhoneTopUpFormCoordinator.swift */; };
+		45D3528D27DB93D5008857A6 /* MockPhoneTopUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3528C27DB93D5008857A6 /* MockPhoneTopUpFormView.swift */; };
+		45D3528F27DF4165008857A6 /* MockDialogProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3528E27DF4165008857A6 /* MockDialogProducer.swift */; };
+		45D3529127DF44F8008857A6 /* MockGetContactsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3529027DF44F8008857A6 /* MockGetContactsUseCase.swift */; };
+		45D3529327E097D7008857A6 /* MockCheckPhoneUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3529227E097D7008857A6 /* MockCheckPhoneUseCase.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		CDC549736619F794C76A2975 /* Pods_PhoneTopUp_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF1D77247E2169F0DCFCA0E /* Pods_PhoneTopUp_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +67,45 @@
 
 /* Begin PBXFileReference section */
 		343C06B1CF34CF2D2EEFD4AD /* Pods-PhoneTopUp_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneTopUp_Example.release.xcconfig"; path = "Target Support Files/Pods-PhoneTopUp_Example/Pods-PhoneTopUp_Example.release.xcconfig"; sourceTree = "<group>"; };
+		4520068827DA2BF100348FF4 /* PolishContactFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolishContactFilterTests.swift; sourceTree = "<group>"; };
+		4520068B27DA3B1500348FF4 /* TopUpDataLoaderPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUpDataLoaderPresenterTests.swift; sourceTree = "<group>"; };
+		4520068D27DA3B5900348FF4 /* MockTopUpSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpSettings.swift; sourceTree = "<group>"; };
+		4520068F27DA432B00348FF4 /* MockTopUpDataLoaderCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpDataLoaderCoordinatorProtocol.swift; sourceTree = "<group>"; };
+		4520069127DA46C500348FF4 /* MockPLManagersProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPLManagersProviderProtocol.swift; sourceTree = "<group>"; };
+		4520069327DA471300348FF4 /* MockPLPhoneTopUpManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPLPhoneTopUpManagerProtocol.swift; sourceTree = "<group>"; };
+		4520069527DA51C600348FF4 /* MockGetPhoneTopUpFormDataUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetPhoneTopUpFormDataUseCaseProtocol.swift; sourceTree = "<group>"; };
+		4520069727DB4F3D00348FF4 /* MockTopUpDataLoaderViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpDataLoaderViewProtocol.swift; sourceTree = "<group>"; };
+		4520069A27DB608C00348FF4 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		4542A70727D653FF004A0B13 /* PartialPhoneNumberValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialPhoneNumberValidatorTests.swift; sourceTree = "<group>"; };
+		4542A70927D65DD0004A0B13 /* PartialPhoneNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialPhoneNumberFormatterTests.swift; sourceTree = "<group>"; };
+		4542A70B27D663A3004A0B13 /* CustomTopUpAmountValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTopUpAmountValidatorTests.swift; sourceTree = "<group>"; };
+		4542A70D27D66B86004A0B13 /* TopUpFormValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUpFormValidatorTests.swift; sourceTree = "<group>"; };
+		4542A71027D76D0E004A0B13 /* MockNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNavigationController.swift; sourceTree = "<group>"; };
+		4542A71327D76D7B004A0B13 /* DataLoaderCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderCoordinatorTests.swift; sourceTree = "<group>"; };
+		4542A71527D76E5E004A0B13 /* MockDependencyEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyEngine.swift; sourceTree = "<group>"; };
+		4542A71927D77272004A0B13 /* MockMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMenuViewController.swift; sourceTree = "<group>"; };
+		4542A71C27D7769B004A0B13 /* MockAccountForDebit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAccountForDebit.swift; sourceTree = "<group>"; };
+		4542A71F27D78FC3004A0B13 /* PhoneTopUpCoordinatorFormTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTopUpCoordinatorFormTests.swift; sourceTree = "<group>"; };
+		4542A72227D79062004A0B13 /* MockTopUpPreloadedFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpPreloadedFormData.swift; sourceTree = "<group>"; };
+		4542A72427D790A6004A0B13 /* MockOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOperator.swift; sourceTree = "<group>"; };
+		4542A72627D790C2004A0B13 /* MockGSMOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGSMOperator.swift; sourceTree = "<group>"; };
+		4542A72827D790D2004A0B13 /* MockMobileContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMobileContact.swift; sourceTree = "<group>"; };
+		4542A72A27D790E1004A0B13 /* MockTopUpOperatorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpOperatorSettings.swift; sourceTree = "<group>"; };
+		4542A72C27D79274004A0B13 /* MockTopUpValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpValues.swift; sourceTree = "<group>"; };
+		4542A72E27D7A558004A0B13 /* MockTopUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpModel.swift; sourceTree = "<group>"; };
+		4542A73027D7A616004A0B13 /* MockChallengesHandlerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChallengesHandlerDelegate.swift; sourceTree = "<group>"; };
+		4542A73427D7C668004A0B13 /* TopUpConfirmationCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUpConfirmationCoordinatorTests.swift; sourceTree = "<group>"; };
+		457A74E027D8D52D004350CE /* MockTopUpAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpAccount.swift; sourceTree = "<group>"; };
+		457A74E227D8DF45004350CE /* TopUpSummaryCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUpSummaryCoordinatorTests.swift; sourceTree = "<group>"; };
+		457A74E427D8EBA6004350CE /* MockPhoneTopUpPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhoneTopUpPresenterProtocol.swift; sourceTree = "<group>"; };
+		457A74E627D8F9DB004350CE /* MobileContactsGrouperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContactsGrouperTests.swift; sourceTree = "<group>"; };
+		457A74E827D9F530004350CE /* MobileContactSearchFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileContactSearchFilterTests.swift; sourceTree = "<group>"; };
+		45D3528827DB842A008857A6 /* TopUpFormPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUpFormPresenterTests.swift; sourceTree = "<group>"; };
+		45D3528A27DB9234008857A6 /* MockPhoneTopUpFormCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhoneTopUpFormCoordinator.swift; sourceTree = "<group>"; };
+		45D3528C27DB93D5008857A6 /* MockPhoneTopUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhoneTopUpFormView.swift; sourceTree = "<group>"; };
+		45D3528E27DF4165008857A6 /* MockDialogProducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDialogProducer.swift; sourceTree = "<group>"; };
+		45D3529027DF44F8008857A6 /* MockGetContactsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGetContactsUseCase.swift; sourceTree = "<group>"; };
+		45D3529227E097D7008857A6 /* MockCheckPhoneUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCheckPhoneUseCase.swift; sourceTree = "<group>"; };
 		57D1AED4B66D0920EF77C6EB /* Pods-PhoneTopUp_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneTopUp_Tests.debug.xcconfig"; path = "Target Support Files/Pods-PhoneTopUp_Tests/Pods-PhoneTopUp_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PhoneTopUp_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneTopUp_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,7 +116,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* PhoneTopUp_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhoneTopUp_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7EF1D77247E2169F0DCFCA0E /* Pods_PhoneTopUp_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PhoneTopUp_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A435705D1FCDD32949BE7495 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		AB251DE35D00A78CDDF14EF0 /* Pods-PhoneTopUp_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneTopUp_Example.debug.xcconfig"; path = "Target Support Files/Pods-PhoneTopUp_Example/Pods-PhoneTopUp_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +145,80 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4520068A27DA3AF500348FF4 /* PresentersTests */ = {
+			isa = PBXGroup;
+			children = (
+				4520068B27DA3B1500348FF4 /* TopUpDataLoaderPresenterTests.swift */,
+				45D3528827DB842A008857A6 /* TopUpFormPresenterTests.swift */,
+			);
+			name = PresentersTests;
+			sourceTree = "<group>";
+		};
+		4520069927DB608100348FF4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4520069A27DB608C00348FF4 /* Delay.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		4542A70627D653D7004A0B13 /* HelpersTests */ = {
+			isa = PBXGroup;
+			children = (
+				4542A70727D653FF004A0B13 /* PartialPhoneNumberValidatorTests.swift */,
+				4542A70927D65DD0004A0B13 /* PartialPhoneNumberFormatterTests.swift */,
+				4542A70B27D663A3004A0B13 /* CustomTopUpAmountValidatorTests.swift */,
+				4542A70D27D66B86004A0B13 /* TopUpFormValidatorTests.swift */,
+				457A74E627D8F9DB004350CE /* MobileContactsGrouperTests.swift */,
+				457A74E827D9F530004350CE /* MobileContactSearchFilterTests.swift */,
+				4520068827DA2BF100348FF4 /* PolishContactFilterTests.swift */,
+			);
+			name = HelpersTests;
+			sourceTree = "<group>";
+		};
+		4542A70F27D76CF7004A0B13 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				4542A71027D76D0E004A0B13 /* MockNavigationController.swift */,
+				4542A71527D76E5E004A0B13 /* MockDependencyEngine.swift */,
+				4542A71927D77272004A0B13 /* MockMenuViewController.swift */,
+				4542A71C27D7769B004A0B13 /* MockAccountForDebit.swift */,
+				4542A72227D79062004A0B13 /* MockTopUpPreloadedFormData.swift */,
+				4542A72427D790A6004A0B13 /* MockOperator.swift */,
+				4542A72627D790C2004A0B13 /* MockGSMOperator.swift */,
+				4542A72827D790D2004A0B13 /* MockMobileContact.swift */,
+				4542A72A27D790E1004A0B13 /* MockTopUpOperatorSettings.swift */,
+				4542A72C27D79274004A0B13 /* MockTopUpValues.swift */,
+				4542A72E27D7A558004A0B13 /* MockTopUpModel.swift */,
+				4542A73027D7A616004A0B13 /* MockChallengesHandlerDelegate.swift */,
+				457A74E027D8D52D004350CE /* MockTopUpAccount.swift */,
+				457A74E427D8EBA6004350CE /* MockPhoneTopUpPresenterProtocol.swift */,
+				4520068D27DA3B5900348FF4 /* MockTopUpSettings.swift */,
+				4520068F27DA432B00348FF4 /* MockTopUpDataLoaderCoordinatorProtocol.swift */,
+				4520069127DA46C500348FF4 /* MockPLManagersProviderProtocol.swift */,
+				4520069327DA471300348FF4 /* MockPLPhoneTopUpManagerProtocol.swift */,
+				4520069527DA51C600348FF4 /* MockGetPhoneTopUpFormDataUseCaseProtocol.swift */,
+				4520069727DB4F3D00348FF4 /* MockTopUpDataLoaderViewProtocol.swift */,
+				45D3528A27DB9234008857A6 /* MockPhoneTopUpFormCoordinator.swift */,
+				45D3528C27DB93D5008857A6 /* MockPhoneTopUpFormView.swift */,
+				45D3528E27DF4165008857A6 /* MockDialogProducer.swift */,
+				45D3529027DF44F8008857A6 /* MockGetContactsUseCase.swift */,
+				45D3529227E097D7008857A6 /* MockCheckPhoneUseCase.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		4542A71227D76D60004A0B13 /* CoordinatorTests */ = {
+			isa = PBXGroup;
+			children = (
+				4542A71327D76D7B004A0B13 /* DataLoaderCoordinatorTests.swift */,
+				4542A71F27D78FC3004A0B13 /* PhoneTopUpCoordinatorFormTests.swift */,
+				4542A73427D7C668004A0B13 /* TopUpConfirmationCoordinatorTests.swift */,
+				457A74E227D8DF45004350CE /* TopUpSummaryCoordinatorTests.swift */,
+			);
+			name = CoordinatorTests;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +265,11 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				4520069927DB608100348FF4 /* Helpers */,
+				4542A70F27D76CF7004A0B13 /* Mocks */,
+				4542A70627D653D7004A0B13 /* HelpersTests */,
+				4542A71227D76D60004A0B13 /* CoordinatorTests */,
+				4520068A27DA3AF500348FF4 /* PresentersTests */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -189,6 +343,7 @@
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
+				0980C978B3DB3E8C84F250C3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,6 +439,88 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		0980C978B3DB3E8C84F250C3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PhoneTopUp_Tests/Pods-PhoneTopUp_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/PhoneTopUp/PhoneTopUp.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneTopUp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PhoneTopUp_Tests/Pods-PhoneTopUp_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		48B489D79AD6A949425C6212 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,11 +550,75 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PhoneTopUp_Example/Pods-PhoneTopUp_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneTopUp/PhoneTopUp.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneTopUp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -340,7 +641,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				4520069B27DB608C00348FF4 /* Delay.swift in Sources */,
+				45D3529127DF44F8008857A6 /* MockGetContactsUseCase.swift in Sources */,
+				45D3528B27DB9234008857A6 /* MockPhoneTopUpFormCoordinator.swift in Sources */,
+				4520069827DB4F3D00348FF4 /* MockTopUpDataLoaderViewProtocol.swift in Sources */,
+				4520069027DA432B00348FF4 /* MockTopUpDataLoaderCoordinatorProtocol.swift in Sources */,
+				45D3528927DB842A008857A6 /* TopUpFormPresenterTests.swift in Sources */,
+				457A74E727D8F9DB004350CE /* MobileContactsGrouperTests.swift in Sources */,
+				4520069627DA51C600348FF4 /* MockGetPhoneTopUpFormDataUseCaseProtocol.swift in Sources */,
+				45D3528F27DF4165008857A6 /* MockDialogProducer.swift in Sources */,
+				4520068E27DA3B5900348FF4 /* MockTopUpSettings.swift in Sources */,
+				4520068927DA2BF100348FF4 /* PolishContactFilterTests.swift in Sources */,
+				4542A72927D790D2004A0B13 /* MockMobileContact.swift in Sources */,
+				4542A70A27D65DD0004A0B13 /* PartialPhoneNumberFormatterTests.swift in Sources */,
+				4542A72D27D79274004A0B13 /* MockTopUpValues.swift in Sources */,
+				45D3529327E097D7008857A6 /* MockCheckPhoneUseCase.swift in Sources */,
+				4542A70E27D66B86004A0B13 /* TopUpFormValidatorTests.swift in Sources */,
+				4542A72B27D790E1004A0B13 /* MockTopUpOperatorSettings.swift in Sources */,
+				45D3528D27DB93D5008857A6 /* MockPhoneTopUpFormView.swift in Sources */,
+				4542A73127D7A616004A0B13 /* MockChallengesHandlerDelegate.swift in Sources */,
+				4542A72F27D7A558004A0B13 /* MockTopUpModel.swift in Sources */,
+				4542A72327D79062004A0B13 /* MockTopUpPreloadedFormData.swift in Sources */,
+				4542A70827D653FF004A0B13 /* PartialPhoneNumberValidatorTests.swift in Sources */,
+				4542A71427D76D7B004A0B13 /* DataLoaderCoordinatorTests.swift in Sources */,
+				457A74E327D8DF45004350CE /* TopUpSummaryCoordinatorTests.swift in Sources */,
+				4542A72127D78FC6004A0B13 /* PhoneTopUpCoordinatorFormTests.swift in Sources */,
+				4520068C27DA3B1500348FF4 /* TopUpDataLoaderPresenterTests.swift in Sources */,
+				4542A71727D76FC1004A0B13 /* MockDependencyEngine.swift in Sources */,
+				457A74E127D8D52D004350CE /* MockTopUpAccount.swift in Sources */,
+				4520069427DA471300348FF4 /* MockPLPhoneTopUpManagerProtocol.swift in Sources */,
+				4542A72527D790A6004A0B13 /* MockOperator.swift in Sources */,
+				4542A73527D7C668004A0B13 /* TopUpConfirmationCoordinatorTests.swift in Sources */,
+				4542A71E27D776A3004A0B13 /* MockAccountForDebit.swift in Sources */,
+				457A74E927D9F530004350CE /* MobileContactSearchFilterTests.swift in Sources */,
+				4542A72727D790C2004A0B13 /* MockGSMOperator.swift in Sources */,
+				457A74E527D8EBA6004350CE /* MockPhoneTopUpPresenterProtocol.swift in Sources */,
+				4542A71B27D7728A004A0B13 /* MockMenuViewController.swift in Sources */,
+				4542A71827D76FC4004A0B13 /* MockNavigationController.swift in Sources */,
+				4520069227DA46C500348FF4 /* MockPLManagersProviderProtocol.swift in Sources */,
+				4542A70C27D663A3004A0B13 /* CustomTopUpAmountValidatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +758,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -465,7 +804,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

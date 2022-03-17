@@ -37,7 +37,7 @@ extension CustomerServicePGFrequentOperativeOption: PGFrequentOperativeOptionPro
                 return
             }
 
-            let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url)
+            let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url, method: option.getHTTPMethod)
             let webViewCoordinator = self.dependenciesResolver.resolve(for: PLWebViewCoordinatorDelegate.self)
             let useCase = self.dependenciesResolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
             
