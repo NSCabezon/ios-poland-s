@@ -14,7 +14,7 @@ public protocol ExchangeRatesRepresentable {
 public protocol ExchangeRateRepresentable {
     var currency: String { get }
     var currencySymbol: String { get }
-    var buyRate: Double { get }
-    var sellRate: Double { get }
+    var buyRate: Decimal { get }
+    var sellRate: Decimal { get }
     var decPlaces: Int { get }
 }

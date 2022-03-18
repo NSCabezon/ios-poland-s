@@ -22,8 +22,8 @@ public struct ExchangeRateDTO: Codable {
 }
 
 public struct MoneyRateDTO: Codable {
-    public let buyRate: Double
-    public let sellRate: Double
+    public let buyRate: Decimal
+    public let sellRate: Decimal
 }
 
 extension ExchangeRatesDTO: ExchangeRatesRepresentable {
@@ -33,11 +33,21 @@ extension ExchangeRatesDTO: ExchangeRatesRepresentable {
 }
 
 extension ExchangeRateDTO: ExchangeRateRepresentable {
-    public var buyRate: Double {
-        return foreignCurrencyRate.buyRate / Double(currencyUnit)
+//    public var buyRate: Double {
+//        return foreignCurrencyRate.buyRate / Double(currencyUnit)
+//    }
+
+    public var buyRate: Decimal {
+//        return foreignCurrencyRate.buyRate / Double(currencyUnit)
+        return foreignCurrencyRate.buyRate
     }
-    
-    public var sellRate: Double {
-        return foreignCurrencyRate.sellRate / Double(currencyUnit)
+
+//    public var sellRate: Double {
+//        return foreignCurrencyRate.sellRate / Double(currencyUnit)
+//    }
+
+    public var sellRate: Decimal {
+        foreignCurrencyRate.sellRate
+//        return foreignCurrencyRate.sellRate / Double(currencyUnit)
     }
 }
