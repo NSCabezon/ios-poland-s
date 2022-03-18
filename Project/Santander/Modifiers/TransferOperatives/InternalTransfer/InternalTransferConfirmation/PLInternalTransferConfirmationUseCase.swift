@@ -16,11 +16,9 @@ import Operative
 
 struct PLInternalTransferConfirmationUseCase {
     let transfersRepository: PLTransfersRepository
-    let dependenciesResolver: DependenciesResolver
     
     init(dependencies: PLInternalTransferOperativeExternalDependenciesResolver) {
         self.transfersRepository = dependencies.resolve()
-        self.dependenciesResolver = dependencies.resolve()
     }
 }
 
@@ -64,6 +62,15 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
                                                                                   valueDate: time)
         return sendConfirmation(genericSendMoneyConfirmationInput)
     }
+    
+    func internalTransferMatrix(_ input: InternalTransferConfirmationUseCaseInput) -> String? {
+        let matrix = TranferTypeMatrixEvaluator(isSourceCurrencyPLN: input.originAccount.currencyRepresentable?.currencyType == .złoty,
+                                                isDestinationAccountInternal: true,
+                                                isDestinationAccountCurrencyPLN: input.destinationAccount.currencyRepresentable?.currencyType == .złoty,
+                                                isOwner: true,
+                                                isCountryPLN: true)
+        return matrix.evaluateTransactionType()?.asDto.rawValue
+    }
 }
 
 private extension PLInternalTransferConfirmationUseCase {
@@ -82,14 +89,5 @@ private extension PLInternalTransferConfirmationUseCase {
                 }
             }
             .eraseToAnyPublisher()
-    }
-    
-    func internalTransferMatrix(_ input: InternalTransferConfirmationUseCaseInput) -> String? {
-        let matrix = TranferTypeMatrixEvaluator(isSourceCurrencyPLN: input.originAccount.currencyRepresentable?.currencyType == .złoty,
-                                                isDestinationAccountInternal: true,
-                                                isDestinationAccountCurrencyPLN: input.destinationAccount.currencyRepresentable?.currencyType == .złoty,
-                                                isOwner: true,
-                                                isCountryPLN: true)
-        return matrix.evaluateTransactionType()?.asDto.rawValue
     }
 }

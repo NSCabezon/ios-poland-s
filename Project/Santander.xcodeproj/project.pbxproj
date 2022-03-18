@@ -177,6 +177,10 @@
 		903E5BF927996290000BE389 /* PLGetSendMoneyActionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */; };
 		904F5DD927BD353600FDA40B /* PLInternalTransferPreSetupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904F5DD827BD353600FDA40B /* PLInternalTransferPreSetupUseCase.swift */; };
 		90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A952732AC5300691E91 /* RemainingTimeView.swift */; };
+		9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9092539C27E207DA0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift */; };
+		9092539F27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9092539E27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift */; };
+		909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909262EF27E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift */; };
+		909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909262F127E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift */; };
 		90B594FD27BE8A6C00719FEA /* TransferOperativesDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B594FC27BE8A6C00719FEA /* TransferOperativesDependenciesResolver.swift */; };
 		90CFA854273E7DAF006AD6CB /* PLSessionDataManagerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABD87B273D213900431F7F /* PLSessionDataManagerModifier.swift */; };
 		90FBA86127CFDDCC007A75C6 /* PLInternalTransferConfirmationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FBA86027CFDDCC007A75C6 /* PLInternalTransferConfirmationUseCase.swift */; };
@@ -489,6 +493,10 @@
 		903E5BF62799628F000BE389 /* PLOneTransferHomeActionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOneTransferHomeActionsCoordinator.swift; sourceTree = "<group>"; };
 		903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetSendMoneyActionsUseCase.swift; sourceTree = "<group>"; };
 		904F5DD827BD353600FDA40B /* PLInternalTransferPreSetupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferPreSetupUseCase.swift; sourceTree = "<group>"; };
+		9092539C27E207DA0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferConfirmationUseCaseTest.swift; sourceTree = "<group>"; };
+		9092539E27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferOperativeExternalDependenciesResolverTest.swift; sourceTree = "<group>"; };
+		909262EF27E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferPreSetupUseCaseTest.swift; sourceTree = "<group>"; };
+		909262F127E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGlobalPositionDataRepositoryMock.swift; sourceTree = "<group>"; };
 		90B594FC27BE8A6C00719FEA /* TransferOperativesDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperativesDependenciesResolver.swift; sourceTree = "<group>"; };
 		90FBA86027CFDDCC007A75C6 /* PLInternalTransferConfirmationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferConfirmationUseCase.swift; sourceTree = "<group>"; };
 		93CC7D2998660FC4E8F99CBE /* Pods-Santander.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pre-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pre-debug.xcconfig"; sourceTree = "<group>"; };
@@ -673,6 +681,9 @@
 			isa = PBXGroup;
 			children = (
 				04A66E7D27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift */,
+				9092539C27E207DA0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift */,
+				9092539E27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift */,
+				909262EF27E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -682,6 +693,7 @@
 			children = (
 				04A66E8027D9F9C100EE107F /* PLTransfersRepositoryMock.swift */,
 				04A66E8227D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift */,
+				909262F127E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -1059,13 +1071,6 @@
 				34F6B1C427C68042002CF2E5 /* PLSendMoneyConfirmationUseCase.swift */,
 			);
 			path = StepUseCases;
-			sourceTree = "<group>";
-		};
-		423DB2FD27CA384400BA5989 /* InternalTransfer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = InternalTransfer;
 			sourceTree = "<group>";
 		};
 		42BF586F264D13BA00136E8D /* Strings */ = {
@@ -2167,7 +2172,11 @@
 				04A66E8627D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift in Sources */,
 				4215A57327B538D800879EB1 /* SantanderTests.swift in Sources */,
 				04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */,
+				9092539F27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift in Sources */,
 				04A66E7E27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift in Sources */,
+				909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */,
+				909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */,
+				9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */,
 				04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

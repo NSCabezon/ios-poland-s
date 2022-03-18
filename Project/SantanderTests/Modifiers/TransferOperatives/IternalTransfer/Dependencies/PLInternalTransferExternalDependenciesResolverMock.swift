@@ -8,9 +8,15 @@
 import Foundation
 import SANPLLibrary
 import CoreDomain
+import CoreFoundationLib
+
 @testable import Santander
 
 struct PLInternalTransferExternalDependenciesResolverMock: PLInternalTransferOperativeExternalDependenciesResolver {
+    func resolve() -> DependenciesResolver {
+        fatalError()
+    }
+    
     private var rates: [ExchangeRateRepresentable]!
 
     public init(rates: [ExchangeRateRepresentable]) {
