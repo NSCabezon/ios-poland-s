@@ -35,7 +35,8 @@ extension PLGetInternalTransferAmountExchangeRateUseCase: GetInternalTransferAmo
                 }) else {
                     return .failure
                 }
-                let sellRate = fromCurrency == localCurrency ? rate.sellRate : 1 / rate.sellRate
+//                let sellRate = fromCurrency == localCurrency ? rate.sellRate : 1 / rate.sellRate
+                let sellRate = rate.sellRate
                 return .success(result: getOutputWith(fromCurrency: fromCurrency, toCurrency: toCurrency, sell: sellRate, buy: nil))
             }
             guard let sellRate = rates.first(where: { rates in
@@ -55,7 +56,7 @@ extension PLGetInternalTransferAmountExchangeRateUseCase: GetInternalTransferAmo
 }
 
 private extension PLGetInternalTransferAmountExchangeRateUseCase {
-    func getOutputWith(fromCurrency: CurrencyType, toCurrency: CurrencyType, sell: Double, buy: Double?) -> GetInternalTransferAmountExchangeRateUseCaseSuccessOutput {
+    func getOutputWith(fromCurrency: CurrencyType, toCurrency: CurrencyType, sell: Decimal, buy: Decimal?) -> GetInternalTransferAmountExchangeRateUseCaseSuccessOutput {
         return GetInternalTransferAmountExchangeRateUseCaseSuccessOutput(initialCurrency: fromCurrency,
                                                                          targetCurrency: toCurrency,
                                                                          sellRate: sell, buyRate: buy)
