@@ -13,6 +13,7 @@ public protocol PLAccountManagerProtocol {
     func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
     func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError>
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError>
 }
 
 final class PLAccountManager {
@@ -68,6 +69,11 @@ extension PLAccountManager: PLAccountManagerProtocol {
     
     func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
         let result = try self.accountDataSource.changeAlias(accountDTO: accountDTO, newAlias: newAlias)
+        return result
+    }
+    
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError> {
+        let result = try self.accountDataSource.getExternalPopular(accountType: accountType)
         return result
     }
 }

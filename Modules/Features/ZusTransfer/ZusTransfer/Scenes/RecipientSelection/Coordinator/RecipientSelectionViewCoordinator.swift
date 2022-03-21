@@ -22,7 +22,7 @@ final class RecipientSelectionCoordinator: ModuleCoordinator {
         dependenciesResolver: DependenciesResolver,
         delegate: RecipientSelectorDelegate?,
         navigationController: UINavigationController?,
-        maskAccount: String
+        maskAccount: String?
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
@@ -39,7 +39,7 @@ final class RecipientSelectionCoordinator: ModuleCoordinator {
     
     // MARK: Dependencies
     
-    private func setUpDependencies(maskAccount: String) {
+    private func setUpDependencies(maskAccount: String?) {
         dependenciesEngine.register(for: RecipientSelectionCoordinatorProtocol.self) { _ in
             return self
         }

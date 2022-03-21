@@ -5,6 +5,7 @@ import PLCommonOperatives
 
 protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransferFormAccountSelectable {
     var view: ZusTransferFormViewProtocol? { get set }
+    func viewDidLoad()
     func getLanguage() -> String
     func didSelectClose()
     func didSelectCloseProcess()
@@ -33,18 +34,16 @@ final class ZusTransferFormPresenter {
     private var confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
-    private let maskAccount: String
+    private var maskAccount: String?
     
     init(
         dependenciesResolver: DependenciesResolver,
         accounts: [AccountForDebit],
-        selectedAccountNumber: String,
-        maskAccount: String
+        selectedAccountNumber: String
     ) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
-        self.maskAccount = maskAccount
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
@@ -53,6 +52,26 @@ final class ZusTransferFormPresenter {
 }
 
 extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
+    
+    func viewDidLoad() {
+        view?.showLoader()
+        Scenario(useCase: GetPopularAccountsUseCase(dependenciesResolver: dependenciesResolver), input: GetPopularAccountsUseCaseInput(accountType: 80))
+            .execute(on: dependenciesResolver.resolve(for: UseCaseHandler.self))
+            .onSuccess({ [weak self] accounts in
+                self?.view?.hideLoader(completion: {
+                    guard let mask = accounts.numbers.first?.number else {
+                        self?.showErrorView()
+                        return
+                    }
+                    self?.maskAccount = mask
+                })
+            })
+            .onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.showErrorView()
+                })
+            }
+    }
     
     func getLanguage() -> String {
         dependenciesResolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode

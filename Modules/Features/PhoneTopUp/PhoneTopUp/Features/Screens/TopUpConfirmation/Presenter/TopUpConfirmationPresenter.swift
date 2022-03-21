@@ -25,36 +25,30 @@ final class TopUpConfirmationPresenter {
     // MARK: Properties
     weak var view: TopUpConfirmationViewProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private var coordinator: TopUpConfirmationCoordinatorProtocol?
-    private let confirmationDialogFactory: ConfirmationDialogProducing
-    private let authorizationHandler: ChallengesHandlerDelegate
-    private let summaryMapper: TopUpSummaryMapping
-    private let transactionMapper: PerformTopUpTransactionInputMapping
-    private let managersProvider: PLManagersProviderProtocol
+    private lazy var coordinator = dependenciesResolver.resolve(for: TopUpConfirmationCoordinatorProtocol.self)
+    private lazy var confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
+    private lazy var authorizationHandler = dependenciesResolver.resolve(for: ChallengesHandlerDelegate.self)
+    private lazy var summaryMapper = dependenciesResolver.resolve(for: TopUpSummaryMapping.self)
+    private lazy var transactionMapper = dependenciesResolver.resolve(for: PerformTopUpTransactionInputMapping.self)
+    private lazy var managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
     private let summary: TopUpModel
     
     // MARK: Lifecycle
     
     init(dependenciesResolver: DependenciesResolver, summary: TopUpModel) {
         self.dependenciesResolver = dependenciesResolver
-        self.coordinator = dependenciesResolver.resolve(for: TopUpConfirmationCoordinatorProtocol.self)
-        self.confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
-        self.authorizationHandler = dependenciesResolver.resolve(for: ChallengesHandlerDelegate.self)
-        self.summaryMapper = dependenciesResolver.resolve(for: TopUpSummaryMapping.self)
-        self.transactionMapper = dependenciesResolver.resolve(for: PerformTopUpTransactionInputMapping.self)
-        self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         self.summary = summary
     }
 }
 
 extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
     func didSelectBack() {
-        coordinator?.back()
+        coordinator.back()
     }
     
     func didSelectClose() {
         let dialog = confirmationDialogFactory.createEndProcessDialog { [weak self] in
-            self?.coordinator?.close()
+            self?.coordinator.close()
         } declineAction: {}
         view?.showDialog(dialog)
     }
@@ -78,7 +72,7 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
         let notifyDeviceInput = transactionMapper.mapPartialNotifyDeviceInput(with: transactionInput)
         let authorizeTransactionInput = AuthorizeTransactionUseCaseInput(sendMoneyConfirmationInput: sendMoneyInput,
                                                                          partialNotifyDeviceInput: notifyDeviceInput)
-        Scenario(useCase: AuthorizeTopUpTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
+        Scenario(useCase: AuthorizeTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {
@@ -108,7 +102,7 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
                         self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
                         return
                     }
-                    self.coordinator?.showSummary(with: self.summary)
+                    self.coordinator.showSummary(with: self.summary)
                 })
             }.onError { [weak self] error in
                 self?.view?.hideLoader(completion: {

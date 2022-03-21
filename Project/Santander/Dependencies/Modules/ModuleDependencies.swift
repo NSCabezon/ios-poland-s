@@ -26,11 +26,11 @@ struct ModuleDependencies {
     func resolve() -> DependenciesInjector {
         return oldResolver
     }
-
+    
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
-        
+    
     func resolve() -> TrackerManager {
         oldResolver.resolve()
     }
@@ -42,6 +42,10 @@ struct ModuleDependencies {
     func resolve() -> UINavigationController {
         drawer.currentRootViewController as?
         UINavigationController ?? UINavigationController()
+    }
+    
+    func resolve() -> StringLoader {
+        return oldResolver.resolve()
     }
 }
 

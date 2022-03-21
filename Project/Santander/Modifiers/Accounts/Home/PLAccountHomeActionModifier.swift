@@ -10,6 +10,7 @@ import OpenCombine
 import CoreDomain
 import Transfer
 import Account
+import BLIK
 import UI
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
@@ -38,6 +39,8 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
                 goToSendMoney(with: entity.representable)
             case .changeAliases:
                 goToPGProductsCustomization()
+            case .blik:
+                goToBLIK()
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
@@ -109,5 +112,10 @@ private extension PLAccountHomeActionModifier {
     private func goToPGProductsCustomization() {
         let coordinator = legacyDependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
         coordinator.goToGPProductsCustomization()
+    }
+    
+    private func goToBLIK() {
+        let blikCoordinator: BLIKHomeCoordinator = legacyDependenciesResolver.resolve()
+        blikCoordinator.start()
     }
 }

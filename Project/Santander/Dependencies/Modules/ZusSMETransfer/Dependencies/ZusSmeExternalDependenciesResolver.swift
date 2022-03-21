@@ -10,9 +10,4 @@ extension ModuleDependencies: ZusSMEExternalDependenciesResolver {
             dependencies: self, navigationController: resolve()
         )
     }
-    
-    func resolve() -> StringLoader {
-        let oldResolver: DependenciesResolver = resolve()
-        return oldResolver.resolve()
-    }
 }

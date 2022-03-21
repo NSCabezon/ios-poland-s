@@ -44,9 +44,6 @@ final class AppModifiers {
     private lazy var cardDetailModifier: CardDetailModifierProtocol = {
         return PLCardDetailModifier(legacyDependenciesResolver: legacyDependenciesResolver)
     }()
-    private lazy var loanDetailModifier: LoanDetailModifierProtocol = {
-        return PLLoanDetailModifier(dependencies: dependencies)
-    }()
     private lazy var accountHomeActionModifier: AccountHomeActionModifierProtocol = {
         return PLAccountHomeActionModifier(dependencies: self.dependencies)
     }()
@@ -122,9 +119,6 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: GetMonthlyBalanceUseCase.self) { resolver in
             return MonthlyBalanceUseCase(dependenciesResolver: resolver)
-        }
-        self.legacyDependenciesInjector.register(for: LoanDetailModifierProtocol.self) { _ in
-            return self.loanDetailModifier
         }
         self.legacyDependenciesInjector.register(for: AmountFormatterProvider.self) { _ in
             return self.currencyProvider

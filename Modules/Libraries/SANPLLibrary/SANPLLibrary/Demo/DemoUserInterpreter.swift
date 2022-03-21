@@ -105,4 +105,5 @@ public enum PLLocalServiceName: String {
     case notificationPushqueryList = "notificationPushqueryList"
     case notificationPushDetailsBeforeLogin = "notificationPushDetailsBeforeLogin"
     case notificationPushStatusBeforeLogin = "notificationPushStatusBeforeLogin"
+    case getExternalPopular = "getExternalPopular"
 }

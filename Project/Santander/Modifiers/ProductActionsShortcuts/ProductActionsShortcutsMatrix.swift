@@ -29,9 +29,9 @@ public struct ProductActionsShortcutsMatrix {
         self.operations = operations
     }
         
-    public func getEnabledOperationsIdentifiers(type: ProductActionsShortcutsType, contract: String) -> [String] {
+    public func getEnabledOperationsIdentifiers(type: ProductActionsShortcutsType, contract: String) -> [String]? {
 
-        guard let operations = self.getOperationsProducts(type: type, contract: contract) else { return [] }
+        guard let operations = self.getOperationsProducts(type: type, contract: contract) else { return nil }
         
         let enabledOperations = operations.filter { operation in
             return operation.state == ProductActionsShortcutsState.enabled.rawValue

@@ -11,6 +11,7 @@ import SANPLLibrary
 
 public protocol PLManagersProviderAdapterProtocol {
     func getPLManagerProvider() -> PLManagersProviderProtocol
+    func getPLReactiveManagerProvider() -> PLManagersProviderReactiveProtocol
 }
 
 public final class PLManagersProviderAdapter {
@@ -313,6 +314,10 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
 
 extension PLManagersProviderAdapter: PLManagersProviderAdapterProtocol {
     public func getPLManagerProvider() -> PLManagersProviderProtocol {
+        return self.plManagersProvider
+    }
+    
+    public func getPLReactiveManagerProvider() -> PLManagersProviderReactiveProtocol {
         return self.plManagersProvider
     }
 }

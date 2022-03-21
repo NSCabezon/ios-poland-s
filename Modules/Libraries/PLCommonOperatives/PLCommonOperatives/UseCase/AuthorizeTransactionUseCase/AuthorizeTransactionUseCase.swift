@@ -10,10 +10,10 @@ import CoreDomain
 import CoreFoundationLib
 import SANPLLibrary
 
-public protocol AuthorizeTopUpTransactionUseCaseProtocol: UseCase<AuthorizeTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
+public protocol AuthorizeTransactionUseCaseProtocol: UseCase<AuthorizeTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
 }
 
-public final class AuthorizeTopUpTransactionUseCase: UseCase<AuthorizeTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
+public final class AuthorizeTransactionUseCase: UseCase<AuthorizeTransactionUseCaseInput, AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
     // MARK: Properties
     
     private let managersProvider: PLManagersProviderProtocol
@@ -32,8 +32,8 @@ public final class AuthorizeTopUpTransactionUseCase: UseCase<AuthorizeTransactio
     
     public override func executeUseCase(requestValues: AuthorizeTransactionUseCaseInput) throws -> UseCaseResponse<AuthorizeTransactionUseCaseOutput, StringErrorOutput> {
         let authorizationResults = try transferRepository.getChallenge(parameters: requestValues.sendMoneyConfirmationInput)
-            .flatMapError({ _ in
-                return .failure(NetworkProviderError.other)
+            .flatMapError({ error in
+                return .failure(error)
             })
             .flatMap { [weak self] challenge -> Result<AuthorizationIdRepresentable, NetworkProviderError> in
                 guard let self = self, let challenge = challenge.challengeRepresentable else {
@@ -66,10 +66,18 @@ public final class AuthorizeTopUpTransactionUseCase: UseCase<AuthorizeTransactio
         case .success(let results):
             return .ok(AuthorizeTransactionUseCaseOutput(pendingChallenge: results.1, authorizationId: results.0))
         case .failure(let error):
-            return .error(.init(error.localizedDescription))
+            if let plError: PLErrorDTO = error.getErrorBody() {
+                guard let data = try? JSONEncoder().encode(plError) else { return .error(.init(error.localizedDescription)) }
+                return .error(.init(String(data: data, encoding: .utf8)))
+            }
+            switch error {
+            case .noConnection:
+                return .error(.init("noConnection"))
+            default:
+                return .error(.init(error.localizedDescription))
+            }
         }
     }
 }
 
-extension AuthorizeTopUpTransactionUseCase: AuthorizeTopUpTransactionUseCaseProtocol {
-}
+extension AuthorizeTransactionUseCase: AuthorizeTransactionUseCaseProtocol {}

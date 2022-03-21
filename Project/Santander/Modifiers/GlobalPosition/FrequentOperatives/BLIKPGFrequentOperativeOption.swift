@@ -32,7 +32,7 @@ extension BLIKPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
         let imageKey: String = "icnBlik"
-        let titleKey: String = "pt_frequentOperative_button_blik"
+        let titleKey: String = "pl_frequentOperative_button_blik"
         return .defaultButton(
             DefaultActionButtonViewModel(
                 title: titleKey,

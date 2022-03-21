@@ -104,7 +104,10 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     }
     
     func didTapTaxAuthority() {
-        // TODO: Implement in TAP-2517
+        coordinator.showTaxAuthoritySelector(
+            with: formData.predefinedTaxAuthorities,
+            selectedTaxAuthority: nil // TODO:- Implement tracking of selected tax authority
+        )
     }
     
     func didTapBack() {

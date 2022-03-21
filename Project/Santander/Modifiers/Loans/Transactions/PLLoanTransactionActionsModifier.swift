@@ -4,6 +4,7 @@
 //
 
 import CoreFoundationLib
+import CoreDomain
 import Loans
 import UI
 import SANPLLibrary
@@ -19,7 +20,7 @@ final class PLLoanTransactionActionsModifier: LoanTransactionActionsModifier {
         self.drawer = drawer
     }
 
-    func didSelectAction(_ action: Loans.LoanActionType, forTransaction transaction: LoanTransactionEntity, andLoan loan: LoanEntity) -> Bool {
+    func didSelectAction(_ action: LoanTransactionDetailActionType, forTransaction transaction: LoanTransactionEntity, andLoan loan: LoanEntity) -> Bool {
         switch action {
         case .pdfExtract:
             if let receiptId = transaction.receiptId {
