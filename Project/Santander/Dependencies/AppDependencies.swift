@@ -136,7 +136,8 @@ final class AppDependencies {
         return ServicesLibrary(
             bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider(),
             bsanDataProvider: self.bsanDataProvider,
-            networkProvider: networkProvider
+            networkProvider: networkProvider,
+            loansManagerAdapter: self.managersProviderAdapter.getLoansManager()
         )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
@@ -212,6 +213,9 @@ private extension AppDependencies {
         }
         dependencieEngine.register(for: PLManagersProviderProtocol.self) { _ in
             return self.managersProviderAdapter.getPLManagerProvider()
+        }
+        dependencieEngine.register(for: PLManagersProviderReactiveProtocol.self) { _ in
+            return self.managersProviderAdapter.getPLReactiveManagerProvider()
         }
         dependencieEngine.register(for: PLManagersProviderAdapter.self) { _ in
             return self.managersProviderAdapter
