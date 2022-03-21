@@ -20,6 +20,7 @@ final class TopUpDataLoaderPresenter {
     // MARK: Properties
     weak var view: TopUpDataLoaderViewProtocol?
     private let dependenciesResolver: DependenciesResolver
+    private let useCase: GetPhoneTopUpFormDataUseCaseProtocol
     private var coordinator: TopUpDataLoaderCoordinatorProtocol?
     private let settings: TopUpSettings
     
@@ -28,6 +29,7 @@ final class TopUpDataLoaderPresenter {
     init(dependenciesResolver: DependenciesResolver, settings: TopUpSettings) {
         self.dependenciesResolver = dependenciesResolver
         self.coordinator = dependenciesResolver.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
+        self.useCase = dependenciesResolver.resolve(for: GetPhoneTopUpFormDataUseCaseProtocol.self)
         self.settings = settings
     }
 }
@@ -35,7 +37,7 @@ final class TopUpDataLoaderPresenter {
 extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
     func viewDidLoad() {
         view?.showLoader()
-        Scenario(useCase: GetPhoneTopUpFormDataUseCase(dependenciesResolver: self.dependenciesResolver))
+        Scenario(useCase: useCase)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.handleSuccessfulDataFetch(with: output)

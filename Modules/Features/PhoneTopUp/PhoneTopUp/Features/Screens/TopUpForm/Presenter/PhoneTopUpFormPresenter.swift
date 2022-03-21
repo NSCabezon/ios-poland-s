@@ -43,6 +43,7 @@ final class PhoneTopUpFormPresenter {
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let accountMapper: SelectableAccountViewModelMapping
     private let getPhoneContactsUseCase: GetContactsUseCaseProtocol
+    private let checkPhoneUseCase: CheckPhoneUseCaseProtocol
     private let useCaseHandler: UseCaseHandler
     private let contactsPermissionHelper: ContactsPermissionHelperProtocol
     private let polishContactsFilter: PolishContactsFiltering
@@ -137,6 +138,7 @@ final class PhoneTopUpFormPresenter {
         self.accountMapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         self.selectedAccount = accounts.first(where: \.defaultForPayments)
         self.getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
+        self.checkPhoneUseCase = dependenciesResolver.resolve(for: CheckPhoneUseCaseProtocol.self)
         self.useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
         self.contactsPermissionHelper = dependenciesResolver.resolve(for: ContactsPermissionHelperProtocol.self)
         self.polishContactsFilter = dependenciesResolver.resolve(for: PolishContactsFiltering.self)
@@ -219,7 +221,7 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
         }
         
         view?.showLoader()
-        Scenario(useCase: CheckPhoneUseCase(dependenciesResolver: dependenciesResolver), input: input)
+        Scenario(useCase: checkPhoneUseCase, input: input)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {

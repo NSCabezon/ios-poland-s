@@ -81,6 +81,10 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return GetContactsUseCase(contactStore: CNContactStore(), contactMapper: resolver.resolve(for: ContactMapping.self))
         }
         
+        self.dependenciesEngine.register(for: CheckPhoneUseCaseProtocol.self) { resolver in
+            return CheckPhoneUseCase(dependenciesResolver: resolver)
+        }
+        
         self.dependenciesEngine.register(for: PhoneTopUpFormCoordinatorProtocol.self) { _ in
             return self
         }

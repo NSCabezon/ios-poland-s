@@ -10,8 +10,13 @@ import TransferOperatives
 import SANPLLibrary
 import CoreDomain
 import OpenCombine
+@testable import IDZSwiftCommonCrypto
 
 struct PLTransfersRepositoryMock: PLTransfersRepository {
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        fatalError()
+    }
+    
     private var rates: [ExchangeRateRepresentable]!
     
     public init(rates: [ExchangeRateRepresentable]) {
