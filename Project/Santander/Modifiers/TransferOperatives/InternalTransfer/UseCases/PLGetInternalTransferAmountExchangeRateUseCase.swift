@@ -35,7 +35,6 @@ extension PLGetInternalTransferAmountExchangeRateUseCase: GetInternalTransferAmo
                 }) else {
                     return .failure
                 }
-//                let sellRate = fromCurrency == localCurrency ? rate.sellRate : 1 / rate.sellRate
                 let sellRate = rate.sellRate
                 return .success(result: getOutputWith(fromCurrency: fromCurrency, toCurrency: toCurrency, sell: sellRate, buy: nil))
             }
