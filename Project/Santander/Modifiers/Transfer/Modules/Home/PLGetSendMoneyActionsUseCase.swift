@@ -37,7 +37,7 @@ struct PLGetSendMoneyActionsUseCase {
     private let anotherBank: SendMoneyActionType = .custome(
         identifier: PLSendMoneyActionTypeIdentifier.anotherBank.rawValue,
         title: "pl_transferOption_button_transferAnotherBank",
-        description: "pt_transferOption_text_transferPackages",
+        description: "pl_transferOption_text_transferAnotherBank",
         icon: "oneIcnAnotherBank"
     )
     
