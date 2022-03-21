@@ -23,11 +23,11 @@ struct ModuleDependencies {
     func resolve() -> DependenciesInjector {
         return oldResolver
     }
-
+    
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
-        
+    
     func resolve() -> TrackerManager {
         oldResolver.resolve()
     }
