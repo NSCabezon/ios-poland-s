@@ -96,7 +96,7 @@ struct PLPublicMenuConfiguration {
             [firstItem, serviceItem],
             [atmItem],
             [offerItem, contactItem],
-            [mobAuthElem, rowNil]
+            [mobAuthElem]
         ]
     }
 }
