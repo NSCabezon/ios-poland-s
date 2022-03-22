@@ -15,6 +15,7 @@ import SANPLLibrary
 
 protocol PLInternalTransferOperativeExternalDependenciesResolver {
     func resolve() -> PLTransfersRepository
+    func resolve() -> PLAccountOtherOperativesInfoRepository
     func resolve() -> GlobalPositionDataRepository
     func resolve() -> DependenciesResolver
 }
