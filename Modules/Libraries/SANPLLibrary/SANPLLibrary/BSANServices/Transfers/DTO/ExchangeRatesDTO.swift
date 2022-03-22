@@ -15,15 +15,15 @@ public struct ExchangeRateDTO: Codable {
     public let currency: String
     public let currencySymbol: String
     public let currencyUnit: Int
-    public let midRate: Double
+    public let midRate: Decimal
     public let decPlaces: Int
     public let moneyRate: MoneyRateDTO
     public let foreignCurrencyRate: MoneyRateDTO
 }
 
 public struct MoneyRateDTO: Codable {
-    public let buyRate: Double
-    public let sellRate: Double
+    public let buyRate: Decimal
+    public let sellRate: Decimal
 }
 
 extension ExchangeRatesDTO: ExchangeRatesRepresentable {
@@ -33,11 +33,12 @@ extension ExchangeRatesDTO: ExchangeRatesRepresentable {
 }
 
 extension ExchangeRateDTO: ExchangeRateRepresentable {
-    public var buyRate: Double {
-        return foreignCurrencyRate.buyRate / Double(currencyUnit)
+
+    public var buyRate: Decimal {
+        return foreignCurrencyRate.buyRate / Decimal(currencyUnit)
     }
-    
-    public var sellRate: Double {
-        return foreignCurrencyRate.sellRate / Double(currencyUnit)
+
+    public var sellRate: Decimal {
+        foreignCurrencyRate.sellRate / Decimal(currencyUnit)
     }
 }
