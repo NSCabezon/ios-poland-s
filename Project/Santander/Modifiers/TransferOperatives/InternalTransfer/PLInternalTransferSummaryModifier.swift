@@ -11,7 +11,6 @@ import CoreDomain
 import SANPLLibrary
 
 final class PLInternalTransferSummaryModifier: InternalTransferSummaryModifierProtocol {
-    
     let dependenciesResolver: DependenciesResolver
     var additionalFeeKey: String = ""
     var additionalFeeLinkKey: String?
@@ -25,7 +24,6 @@ final class PLInternalTransferSummaryModifier: InternalTransferSummaryModifierPr
     func freeTransferFor(originAccount: AccountRepresentable, destinationAccount: AccountRepresentable, date: Date) -> Bool {
         guard let origin = originAccount as? PolandAccountRepresentable else { return true }
         let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
-        
         guard let operative = repository.get()?.sendMoneyOptions?.first(where: { operative in
             operative.id == "FEE_AND_CHARGES"
         }) else { return true }
