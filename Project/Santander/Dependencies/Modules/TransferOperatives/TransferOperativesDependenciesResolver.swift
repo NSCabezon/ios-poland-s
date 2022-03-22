@@ -44,6 +44,14 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
         PLGetInternalTransferAmountExchangeRateUseCase(dependencies: self)
     }
     
+    func resolve() -> InternalTransferSummaryModifierProtocol {
+        return PLInternalTransferSummaryModifier(dependencies: self)
+    }
+    
+    func resolve() -> PLAccountOtherOperativesInfoRepository {
+        return oldResolver.resolve()
+    }
+    
     func opinatorCoordinator() -> BindableCoordinator {
         return OpinatorWebViewCoordinator(dependencies: self)
     }
