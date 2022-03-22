@@ -16,6 +16,7 @@
 		04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A66E8027D9F9C100EE107F /* PLTransfersRepositoryMock.swift */; };
 		04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A66E8227D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift */; };
 		04A66E8627D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A66E8527D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift */; };
+		04A66E9D27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A66E9C27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift */; };
 		04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */; };
 		04BAA0CE27AA9B4300AFDC2E /* PLCardActionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0CD27AA9B4200AFDC2E /* PLCardActionFactory.swift */; };
 		04BAA0D227AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BAA0D027AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift */; };
@@ -312,6 +313,7 @@
 		04A66E8027D9F9C100EE107F /* PLTransfersRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersRepositoryMock.swift; sourceTree = "<group>"; };
 		04A66E8227D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferExternalDependenciesResolverMock.swift; sourceTree = "<group>"; };
 		04A66E8527D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateRepresentableMock.swift; sourceTree = "<group>"; };
+		04A66E9C27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLInternalTransferSummaryModifier.swift; sourceTree = "<group>"; };
 		04B894ED270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLWebViewCoordinatorNavigator.swift; sourceTree = "<group>"; };
 		04BAA0CD27AA9B4200AFDC2E /* PLCardActionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLCardActionFactory.swift; sourceTree = "<group>"; };
 		04BAA0D027AA9B8400AFDC2E /* PLProductActionsShortcutsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProductActionsShortcutsUseCase.swift; sourceTree = "<group>"; };
@@ -1524,6 +1526,7 @@
 		904F5DD627BD350D00FDA40B /* InternalTransfer */ = {
 			isa = PBXGroup;
 			children = (
+				04A66E9C27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift */,
 				90FBA85F27CFDDA8007A75C6 /* InternalTransferConfirmation */,
 				423DB2FE27CA387200BA5989 /* PLInternalTransferAmountModifier.swift */,
 				904F5DD727BD351B00FDA40B /* UseCases */,
@@ -2432,6 +2435,7 @@
 				04E8A3B527BD14DA00CDA921 /* PLCardsHomeModuleCoordinatorApplePay.swift in Sources */,
 				0D348BC82754D1590042B7A0 /* PLAccountAvailableBalanceModifier.swift in Sources */,
 				7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */,
+				04A66E9D27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift in Sources */,
 				A3DBFBDA27CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 				0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */,
