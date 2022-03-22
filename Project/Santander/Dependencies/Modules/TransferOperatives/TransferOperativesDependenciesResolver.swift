@@ -45,7 +45,7 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     }
     
     func resolve() -> InternalTransferSummaryModifierProtocol {
-        return PLInternalTransferSummaryModifier()
+        return PLInternalTransferSummaryModifier(dependenciesResolver: oldResolver)
     }
     
     func opinatorCoordinator() -> BindableCoordinator {
