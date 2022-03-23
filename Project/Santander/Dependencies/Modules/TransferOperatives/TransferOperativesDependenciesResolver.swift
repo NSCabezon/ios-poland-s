@@ -47,6 +47,10 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     func resolve() -> InternalTransferSummaryModifierProtocol {
         return PLInternalTransferSummaryModifier(dependencies: self)
     }
+
+    func resolve() -> InternalTransferConfirmationModifierProtocol {
+        return PLInternalTransferConfirmationModifier(dependencies: self)
+    }
     
     func resolve() -> PLAccountOtherOperativesInfoRepository {
         return oldResolver.resolve()
