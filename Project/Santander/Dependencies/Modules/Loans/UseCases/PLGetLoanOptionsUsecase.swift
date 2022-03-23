@@ -22,7 +22,7 @@ struct PLGetLoanOptionsUsecase {
 
 extension PLGetLoanOptionsUsecase: GetLoanOptionsUsecase {
     func fetchOptionsPublisher() -> AnyPublisher<[LoanOptionRepresentable], Never> {
-        let options = [loanScheduleButton, customerServiceButton, detail]
+        let options = [loanScheduleButton, detail]
         return Just(options).eraseToAnyPublisher()
     }
     
@@ -40,7 +40,7 @@ extension PLGetLoanOptionsUsecase: GetLoanOptionsUsecase {
                 imageIdentifier: $0.icon
             )
         })
-        return Just(operations ?? []).eraseToAnyPublisher()
+        return Just(operations ?? [loanScheduleButton, detail]).eraseToAnyPublisher()
     }
 }
 
