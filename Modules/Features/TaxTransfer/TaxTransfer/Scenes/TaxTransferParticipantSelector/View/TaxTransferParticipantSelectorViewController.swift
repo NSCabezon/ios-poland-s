@@ -18,6 +18,7 @@ protocol TaxItemSelectorView: AnyObject {
 final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: UIViewController,
                                                                  UITableViewDataSource,
                                                                  UITableViewDelegate,
+                                                                 LoaderPresentable,
                                                                  ConfirmationDialogPresentable {
     weak var delegate: TaxItemSelectorView?
     private let tableView = UITableView()

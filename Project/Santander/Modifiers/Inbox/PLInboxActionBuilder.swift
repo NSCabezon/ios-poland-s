@@ -52,7 +52,7 @@ private extension PLInboxActionBuilder {
             extras: inboxActionExtras,
             accessibilityIdentifier: AccesibilityInbox.messages,
             action: { _ in
-                self.showToast()
+                self.goToWebview(identifier: .mailboxMain)
             },
             offerAction: isWebViewConfiguration ? nil : self.delegate?.didSelectOffer
         )
@@ -84,7 +84,7 @@ private extension PLInboxActionBuilder {
             action: { [weak self] _ in
                 self?.delegate?.gotoInboxNotification(nil)
             }, offerAction: { [weak self] _ in
-                self?.goToAlerts24Webview()
+                self?.goToWebview(identifier: .alerts24)
             }
         )
         self.inboxActions.append(viewModel)
@@ -108,11 +108,11 @@ private extension PLInboxActionBuilder {
         Toast.show(localized("generic_alert_notAvailableOperation"))
     }
     
-    private func goToAlerts24Webview() {
+    private func goToWebview(identifier: PLAccountOperativeIdentifier) {
         let repository = resolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
 
         guard let options = repository.get()?.accountsOptions,
-              let option = options.first(where: { $0.id == PLAccountOperativeIdentifier.alerts24.rawValue }),
+              let option = options.first(where: { $0.id == identifier.rawValue }),
               option.isAvailable ?? true,
               let url = option.url,
               let method = option.method,

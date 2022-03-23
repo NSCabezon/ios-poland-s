@@ -8,6 +8,12 @@
 import CoreFoundationLib
 import UI
 
+enum AddTaxAuthorityEntryPointContext {
+    case didSelectTaxAuthorityInTransferForm(TaxAuthority)
+    case didSelectTaxAuthorityInPredefinedList(TaxAuthority)
+    case didNotPreselectAnyData
+}
+
 protocol AddTaxAuthorityCoordinatorProtocol: ModuleCoordinator {
     func back()
     func close()
@@ -16,13 +22,16 @@ protocol AddTaxAuthorityCoordinatorProtocol: ModuleCoordinator {
 final class AddTaxAuthorityCoordinator: AddTaxAuthorityCoordinatorProtocol {
     weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let entryPointContext: AddTaxAuthorityEntryPointContext
 
     public init(
         dependenciesResolver: DependenciesResolver,
-        navigationController: UINavigationController?
+        navigationController: UINavigationController?,
+        entryPointContext: AddTaxAuthorityEntryPointContext
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
+        self.entryPointContext = entryPointContext
         setUpDependencies()
     }
     
@@ -51,6 +60,7 @@ private extension AddTaxAuthorityCoordinator {
         }
         
         dependenciesEngine.register(for: AddTaxAuthorityPresenterProtocol.self) { resolver in
+            // TODO:- Configure presenter with entry point context (TAP-2649)
             return AddTaxAuthorityPresenter(dependenciesResolver: resolver)
         }
         

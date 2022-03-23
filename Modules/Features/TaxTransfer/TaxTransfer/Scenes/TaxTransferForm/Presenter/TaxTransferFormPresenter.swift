@@ -43,7 +43,8 @@ final class TaxTransferFormPresenter {
         self.formData = TaxTransferFormData(
             sourceAccounts: [],
             taxPayers: [],
-            predefinedTaxAuthorities: []
+            predefinedTaxAuthorities: [],
+            taxSymbols: []
         )
     }
 }
@@ -149,7 +150,8 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         formData = TaxTransferFormData(
             sourceAccounts: currentFormData.sourceAccounts,
             taxPayers: currentTaxPayers,
-            predefinedTaxAuthorities: currentFormData.predefinedTaxAuthorities
+            predefinedTaxAuthorities: currentFormData.predefinedTaxAuthorities,
+            taxSymbols: currentFormData.taxSymbols
         )
     }
 }
