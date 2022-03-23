@@ -42,10 +42,10 @@ enum PLLoanOperativeIdentifier: String {
     
     var type: LoanOptionType {
         switch self {
-        case .repayment: return .custom(identifier: "")//TODO: return .repayment when it's available
+        case .repayment: return .custom(identifier: "loansOption_button_loanSchedule")
         case .details: return .detail
         case .changeAliases: return .custom(identifier: "change_alias")
-        case .customerService: return .changeLoanLinkedAccount
+        case .customerService: return .custom(identifier: "loansOption_button_customerService")
         }
     }
     
