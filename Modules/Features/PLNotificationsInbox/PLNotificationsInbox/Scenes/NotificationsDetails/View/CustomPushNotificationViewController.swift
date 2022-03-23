@@ -48,7 +48,7 @@ extension CustomPushNotificationViewController: CustomPushNotificationViewProtoc
             </head>\
             <body>\
             <p>\(html)</p>\
-            <style>* { font-size: 14px; font-family: TrebuchetMS }</style>
+            <style>* { font-size: 14px; font-family: SantanderMicroText }</style>
             </body>\
             </html>
             """

@@ -157,10 +157,6 @@ private extension TaxTransferFormCoordinator {
             )
         }
         
-        dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
-            return TaxTransferFormDataProvider(dependenciesResolver: resolver)
-        }
-        
         dependenciesEngine.register(for: TaxTransferAccountViewModelMapping.self) { _ in
             return TaxTransferAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
@@ -197,6 +193,18 @@ private extension TaxTransferFormCoordinator {
 
         dependenciesEngine.register(for: TaxPayerViewModelMapping.self) { _ in
             return TaxPayerViewModelMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxSymbolMapping.self) { _ in
+            return TaxSymbolMapper()
+        }
+        
+        dependenciesEngine.register(for: GetTaxSymbolsUseCaseProtocol.self) { resolver in
+            return GetTaxSymbolsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
+            return TaxTransferFormDataProvider(dependenciesResolver: resolver)
         }
     }
 }
