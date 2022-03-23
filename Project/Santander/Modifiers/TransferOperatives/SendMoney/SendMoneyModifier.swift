@@ -24,8 +24,9 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         return true
     }
     let shouldShowSaveAsFavourite: Bool = false
-    var transferTypeStep: OperativeStep? {
-        return SendMoneyTransferTypeStep(dependencies: dependenciesEngine)
+    
+    func getTransferTypeStep(dependencies: DependenciesInjector & DependenciesResolver) -> OperativeStep? {
+        return SendMoneyTransferTypeStep(dependencies: dependencies)
     }
     
     func goToSendMoney() {
