@@ -65,4 +65,8 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     var selectionIssueDateViewModel: SelectionIssueDateViewModel {
         return SelectionIssueDateViewModel(minDate: Date(), maxDate: Date().adding(.year, value: 1))
     }
+    
+    var maxProgressBarSteps: Int {
+        return 6
+    }
 }
