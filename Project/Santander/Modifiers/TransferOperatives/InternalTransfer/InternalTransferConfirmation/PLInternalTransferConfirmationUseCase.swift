@@ -24,8 +24,8 @@ struct PLInternalTransferConfirmationUseCase {
 
 extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUseCase {
     func fetchConfirmation(input: InternalTransferConfirmationUseCaseInput) -> AnyPublisher<ConditionState, Error> {
-        let debitAmountData = ItAmountDataParameters(currency: input.debitAmount.currencyRepresentable?.currencyName, amount: input.debitAmount.value)
-        let creditAmountData = ItAmountDataParameters(currency: input.creditAmount.currencyRepresentable?.currencyName, amount: input.creditAmount.value)
+        let debitAmountData = ItAmountDataParameters(currency: input.debitAmount.currencyRepresentable?.currencyCode, amount: input.debitAmount.value)
+        let creditAmountData = ItAmountDataParameters(currency: input.creditAmount.currencyRepresentable?.currencyCode, amount: input.creditAmount.value)
         guard let originAccount = input.originAccount as? PolandAccountRepresentable,
               let destinationAccount = input.destinationAccount as? PolandAccountRepresentable,
               let originIbanRepresentable = input.originAccount.ibanRepresentable,
