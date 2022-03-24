@@ -122,11 +122,14 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
         let remainingTimeViewModel = RemainingTimeViewModel(totalTime: Constants.totalTime)
         self.view?.addRemainingTimeView(remainingTimeViewModel)
         self.view?.addInputSignatureView()
-        self.addInputBiometryView()
+        self.shouldShowBiometryView { [weak self] showBiometry in
+            if showBiometry {
+                self?.addInputBiometryView()
+            }
+        }
     }
     
     func addInputBiometryView() {
-        guard self.localAuthentication.isTouchIdEnabled else { return }
         let biometryAvailable = self.localAuthentication.biometryTypeAvailable
         switch biometryAvailable {
         case .error(biometry: _, error: _), .none: return
@@ -169,6 +172,14 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
 private extension PLAuthorizationPresenter {
     var coordinator: PLAuthorizationCoordinatorProtocol {
         self.dependenciesResolver.resolve(for: PLAuthorizationCoordinatorProtocol.self)
+    }
+
+    func shouldShowBiometryView(completion: @escaping (Bool) -> Void) {
+        Scenario(useCase: self.getStoredUserKey)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { output in
+                completion(output.encryptedUserKeyBiometrics?.count ?? 0 > 0)
+            }
     }
     
     func getRandomKey(_ accessType: AccessType?) {
