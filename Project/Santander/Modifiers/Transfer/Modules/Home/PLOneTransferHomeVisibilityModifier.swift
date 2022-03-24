@@ -12,4 +12,8 @@ struct PLOneTransferHomeVisibilityModifier: OneTransferHomeVisibilityModifier {
     public var shouldShowRecentAndScheduledCarousel: Bool {
         return false
     }
+    
+    public var newTransferType: OneAdditionalFavoritesActionsViewModel.ViewType {
+        return .newTransferSimple
+    }
 }
