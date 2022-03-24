@@ -38,6 +38,7 @@ def core_dependencies
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives'
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
 end
 
 def legacy_libraries
