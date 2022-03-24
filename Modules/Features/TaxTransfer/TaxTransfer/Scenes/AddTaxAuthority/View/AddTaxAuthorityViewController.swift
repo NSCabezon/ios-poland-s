@@ -8,7 +8,7 @@
 import UI
 import PLUI
 
-protocol AddTaxAuthorityView: AnyObject {
+protocol AddTaxAuthorityView: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: AddTaxAuthorityViewModel)
 }
 

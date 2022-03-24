@@ -168,6 +168,7 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
         let coordinator = AddTaxPayerFormCoordinator(
             dependenciesResolver: dependenciesEngine,
             taxPayers: taxPayers,
+            coordinator: taxFormCoordinator,
             delegate: self,
             navigationController: navigationController
         )
@@ -188,6 +189,8 @@ private extension TaxPayersListCoordinator {
     var mapper: TaxPayerViewModelMapping {
         dependenciesEngine.resolve()
     }
+    
+    var taxFormCoordinator: TaxTransferFormCoordinatorProtocol {
+        dependenciesEngine.resolve()
+    }
 }
-
-

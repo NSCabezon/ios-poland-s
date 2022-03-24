@@ -19,17 +19,20 @@ final class TaxAuthoritySelectorCoordinator: TaxAuthoritySelectorCoordinatorProt
     private let dependenciesEngine: DependenciesDefault
     private let taxAuthorities: [TaxAuthority]
     private let selectedTaxAuthority: TaxAuthority?
+    private let taxSymbols: [TaxSymbol]
     
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?
+        selectedTaxAuthority: TaxAuthority?,
+        taxSymbols: [TaxSymbol]
     ) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
         self.taxAuthorities = taxAuthorities
         self.selectedTaxAuthority = selectedTaxAuthority
+        self.taxSymbols = taxSymbols
         setUpDependencies()
     }
     
@@ -58,7 +61,7 @@ private extension TaxAuthoritySelectorCoordinator {
         )
         let taxItemSelectorCoordinator = TaxTransferParticipantSelectorCoordinator<SelectableTaxAuthorityViewModel>(
             configuration: configuration,
-            itemSelectionHandler: handlePredefinedTaxAuthoritySelection,
+            itemSelectionHandler: handleTaxAuthoritySelection,
             buttonActionHandler: showTaxAuthorityForm,
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController
@@ -66,7 +69,7 @@ private extension TaxAuthoritySelectorCoordinator {
         taxItemSelectorCoordinator.start()
     }
     
-    func handlePredefinedTaxAuthoritySelection(
+    func handleTaxAuthoritySelection(
         with taxAuthorityViewModel: SelectableTaxAuthorityViewModel,
         in presenter: (LoaderPresentable & ConfirmationDialogPresentable)
     ) {
@@ -75,7 +78,7 @@ private extension TaxAuthoritySelectorCoordinator {
             withNumber: taxAuthorityViewModel.taxAuthority.accountNumber,
             onValidResult: { [weak self] in
                 presenter.hideLoader(completion: {
-                    self?.handleValidPredefinedTaxAuthoritySelection(taxAuthorityViewModel.taxAuthority)
+                    self?.showTaxSymbolSelector(for: taxAuthorityViewModel.taxAuthority)
                 })
             },
             onInvalidResult: { [weak self] in
@@ -91,21 +94,23 @@ private extension TaxAuthoritySelectorCoordinator {
         )
     }
     
-    func handleValidPredefinedTaxAuthoritySelection(_ taxAuthority: TaxAuthority) {
-        let isSelectedAuthorityEqualToSelectedInTransferForm = (selectedTaxAuthority == taxAuthority)
-
-        if isSelectedAuthorityEqualToSelectedInTransferForm {
-            showTaxAuthorityForm(withContext: .didSelectTaxAuthorityInTransferForm(taxAuthority))
-        } else {
-            showTaxAuthorityForm(withContext: .didSelectTaxAuthorityInPredefinedList(taxAuthority))
-        }
+    func showTaxSymbolSelector(for taxAuthority: TaxAuthority) {
+        let filteredTaxSymbols = taxSymbols.filter { $0.destinationAccountType == taxAuthority.taxAccountType }
+        let coordinator = TaxSymbolSelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            taxSymbols: filteredTaxSymbols,
+            selectedTaxSymbol: nil, // TODO:- Finish in TAP-2107
+            onSelection: { _ in  } // TODO:- Finish in TAP-2107
+        )
+        coordinator.start()
     }
     
     func showTaxAuthorityForm() {
         if let selectedTaxAuthority = selectedTaxAuthority {
-            showTaxAuthorityForm(withContext: .didSelectTaxAuthorityInTransferForm(selectedTaxAuthority))
+            showTaxAuthorityForm(withContext: .preselectedTaxAuthority(selectedTaxAuthority))
         } else {
-            showTaxAuthorityForm(withContext: .didNotPreselectAnyData)
+            showTaxAuthorityForm(withContext: .unselectedTaxAuthority)
         }
     }
     
@@ -113,7 +118,8 @@ private extension TaxAuthoritySelectorCoordinator {
         let coordinator = AddTaxAuthorityCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            entryPointContext: context
+            entryPointContext: context,
+            taxSymbols: taxSymbols
         )
         coordinator.start()
     }

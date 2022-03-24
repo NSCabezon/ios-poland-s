@@ -19,8 +19,9 @@ final class SendMoneyTransferTypeStep: OperativeStep {
     var view: OperativeView? {
         self.legacyDependenciesResolver.resolve(for: SendMoneyTransferTypeView.self)
     }
-    
-    var floatingButtonTitleKey = "sendMoney_button_sendType"
+    var floatingButtonTitleKey: String {
+        return "sendMoney_button_transferDetails"
+    }
     
     init(legacyDependenciesResolver: DependenciesResolver) {
         let legacyDependencies = DependenciesDefault(father: legacyDependenciesResolver)

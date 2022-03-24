@@ -34,7 +34,11 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     var transferTypeStep: OperativeStep? {
         return SendMoneyTransferTypeStep(legacyDependenciesResolver: legacyDependenciesResolver)
     }
-    
+
+    func getTransferTypeStep(dependencies: DependenciesInjector & DependenciesResolver) -> OperativeStep? {
+        return SendMoneyTransferTypeStep(dependencies: dependencies)
+    }
+
     func goToSendMoney() {
         self.legacyDependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
     }
@@ -70,5 +74,9 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     
     var selectionIssueDateViewModel: SelectionIssueDateViewModel {
         return SelectionIssueDateViewModel(minDate: Date(), maxDate: Date().adding(.year, value: 1))
+    }
+    
+    var maxProgressBarSteps: Int {
+        return 6
     }
 }

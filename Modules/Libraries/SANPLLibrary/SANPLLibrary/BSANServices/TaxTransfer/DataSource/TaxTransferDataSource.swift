@@ -12,6 +12,7 @@ protocol TaxTransferDataSourceProtocol {
     func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
     func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError>
     func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError>
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError>
 }
 
 final class TaxTransferDataSource {
@@ -21,6 +22,7 @@ final class TaxTransferDataSource {
         case payees = "/payees/account/tax"
         case taxSymbols = "/dictionaries/forms/tax"
         case taxAccounts = "/accounts/external/tax"
+        case taxAuthorityCities = "/accounts/external/tax/cities"
     }
     
     // MARK: Properties
@@ -116,6 +118,23 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
                 serviceUrl: serviceUrl,
                 method: .get,
                 queryParams: queryParams,
+                contentType: nil
+            )
+        )
+    }
+    
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = TaxTransferServiceType.taxAuthorityCities.rawValue
+        return networkProvider.request(
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                queryParams: ["type": requestQueries.taxTransferType],
                 contentType: nil
             )
         )
