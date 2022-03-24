@@ -36,22 +36,70 @@ class PLInternalTransferConfirmationUseCaseTest: XCTestCase {
     }
     
     func test_Given_PolandAccounts_Then_58_ONEAPP_OWN_TRANSACTION() {
-        let value = self.sut.internalTransferMatrix(InternalTransferConfirmationUseCaseInput(originAccount: polandAccount, destinationAccount: polandAccount, name: nil, alias: nil, amount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")), concept: nil, type: .national, time: nil))
+        let value = self.sut.internalTransferMatrix(
+            InternalTransferConfirmationUseCaseInput(
+                originAccount: polandAccount,
+                destinationAccount: polandAccount,
+                name: nil,
+                alias: nil,
+                debitAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                creditAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                concept: nil,
+                type: .national,
+                time: nil
+            )
+        )
         XCTAssertTrue(value == "ONEAPP_OWN_TRANSACTION")
     }
     
     func test_Given_NotPolandAccounts_Then_61_ONEAPP_OWN_CURRENCY_TRANSACTION() {
-        let value = self.sut.internalTransferMatrix(InternalTransferConfirmationUseCaseInput(originAccount: notPolandAccount, destinationAccount: notPolandAccount, name: nil, alias: nil, amount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")), concept: nil, type: .national, time: nil))
+        let value = self.sut.internalTransferMatrix(
+            InternalTransferConfirmationUseCaseInput(
+                originAccount: notPolandAccount,
+                destinationAccount: notPolandAccount,
+                name: nil,
+                alias: nil,
+                debitAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                creditAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                concept: nil,
+                type: .national,
+                time: nil
+            )
+        )
         XCTAssertTrue(value == "ONEAPP_OWN_CURRENCY_TRANSACTION")
     }
     
     func test_Given_NotPolandOriginAccount_Then_61_ONEAPP_OWN_CURRENCY_TRANSACTION() {
-        let value = self.sut.internalTransferMatrix(InternalTransferConfirmationUseCaseInput(originAccount: notPolandAccount, destinationAccount: polandAccount, name: nil, alias: nil, amount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")), concept: nil, type: .national, time: nil))
+        let value = self.sut.internalTransferMatrix(
+            InternalTransferConfirmationUseCaseInput(
+                originAccount: notPolandAccount,
+                destinationAccount: polandAccount,
+                name: nil,
+                alias: nil,
+                debitAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                creditAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                concept: nil,
+                type: .national,
+                time: nil
+            )
+        )
         XCTAssertTrue(value == "ONEAPP_OWN_CURRENCY_TRANSACTION")
     }
     
     func test_Given_NotPolandDestinationAccount_Then_61_ONEAPP_OWN_CURRENCY_TRANSACTION() {
-        let value = self.sut.internalTransferMatrix(InternalTransferConfirmationUseCaseInput(originAccount: polandAccount, destinationAccount: notPolandAccount, name: nil, alias: nil, amount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")), concept: nil, type: .national, time: nil))
+        let value = self.sut.internalTransferMatrix(
+            InternalTransferConfirmationUseCaseInput(
+                originAccount: polandAccount,
+                destinationAccount: notPolandAccount,
+                name: nil,
+                alias: nil,
+                debitAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                creditAmount: AmountRepresented(value: 5, currencyRepresentable: CurrencyRepresented(currencyName: nil, currencyCode: "")),
+                concept: nil,
+                type: .national,
+                time: nil
+            )
+        )
         XCTAssertTrue(value == "ONEAPP_OWN_CURRENCY_TRANSACTION")
     }
 }
