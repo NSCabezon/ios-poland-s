@@ -32,11 +32,11 @@ enum PLLoanOperativeIdentifier: String {
         case .repayment:
             return "loansOption_button_loanSchedule"
         case .changeAliases:
-            return "productOption_button_changeAlias"
+            return "loansOption_button_changeAlias"
         case .customerService:
-            return "frequentOperative_button_customerService"
+            return "loansOption_button_customerService"
         case .details:
-            return "accountOption_button_detail"
+            return "loansOption_button_detailLoan"
         }
     }
     
