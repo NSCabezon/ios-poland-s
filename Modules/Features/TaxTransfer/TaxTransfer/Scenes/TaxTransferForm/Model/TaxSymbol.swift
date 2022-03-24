@@ -5,11 +5,23 @@
 //  Created by 185167 on 15/03/2022.
 //
 
-struct TaxSymbol {
-    let symbolName: String
-    let symbolType: Int
-    let isActive: Bool
-    let isTimePeriodRequired: Bool
-    let isFundedFromVatAccount: Bool
-    let destinationAccountType: TaxAccountType
+import PLScenes
+
+public struct TaxSymbol {
+    public let symbolName: String
+    public let symbolType: Int
+    public let isActive: Bool
+    public let isTimePeriodRequired: Bool
+    public let isFundedFromVatAccount: Bool
+    public let destinationAccountType: TaxAccountType
+}
+
+extension TaxSymbol: SelectableItem {
+    public var name: String {
+        return symbolName
+    }
+    
+    public var identifier: String {
+        return symbolName + " | \(symbolType)"
+    }
 }

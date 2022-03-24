@@ -5,6 +5,8 @@
 //  Created by 185167 on 16/03/2022.
 //
 
+import PLScenes
+
 struct TaxAccount: Equatable {
     let accountNumber: String
     let address: Address
@@ -21,3 +23,12 @@ struct TaxAccount: Equatable {
     }
 }
 
+extension TaxAccount: SelectableItem {
+    var name: String {
+        return accountName
+    }
+    
+    var identifier: String {
+        return accountName + " | " + accountNumber
+    }
+}

@@ -28,7 +28,8 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     )
     func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?
+        selectedTaxAuthority: TaxAuthority?,
+        taxSymbols: [TaxSymbol]
     )
     func didAddTaxPayer(_ taxPayer: TaxPayer)
 }
@@ -92,13 +93,15 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
     
     public func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?
+        selectedTaxAuthority: TaxAuthority?,
+        taxSymbols: [TaxSymbol]
     ) {
         let coordinator = TaxAuthoritySelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             taxAuthorities: taxAuthorities,
-            selectedTaxAuthority: selectedTaxAuthority
+            selectedTaxAuthority: selectedTaxAuthority,
+            taxSymbols: taxSymbols
         )
         coordinator.start()
     }
