@@ -43,4 +43,8 @@ extension ModuleDependencies: LoanExternalDependenciesResolver {
     func resolve() -> LoanDetailConfigRepresentable {
         return LoanDetailConfig()
     }
+    
+    func resolve() -> GetLoanTransactionSearchConfigUseCase {
+        return PLGetLoanTransactionSearchConfigUseCase()
+    }
 }
