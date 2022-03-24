@@ -30,6 +30,7 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
         with taxAuthorities: [TaxAuthority],
         selectedTaxAuthority: TaxAuthority?
     )
+    func didAddTaxPayer(_ taxPayer: TaxPayer)
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
@@ -112,7 +113,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
 }
 
 extension TaxTransferFormCoordinator: TaxPayersListDelegate {
-    func didAddTaxPayer(_ taxPayer: TaxPayer) {
+    public func didAddTaxPayer(_ taxPayer: TaxPayer) {
         taxFormPresenter.didAddTaxPayer(taxPayer)
     }
 }

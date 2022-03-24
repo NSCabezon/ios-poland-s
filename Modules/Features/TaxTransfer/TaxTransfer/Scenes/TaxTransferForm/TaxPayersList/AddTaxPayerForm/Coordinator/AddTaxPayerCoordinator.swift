@@ -37,14 +37,17 @@ final class AddTaxPayerFormCoordinator {
     
     private let isEmptyTaxPayersList: Bool
     private let dependenciesEngine: DependenciesDefault
+    private let coordinator: TaxTransferFormCoordinatorProtocol
     
     init(dependenciesResolver: DependenciesResolver,
          taxPayers: [TaxPayer],
+         coordinator: TaxTransferFormCoordinatorProtocol,
          delegate: AddTaxPayerFormCoordinatorDelegate?,
          navigationController: UINavigationController?) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.isEmptyTaxPayersList = taxPayers.isEmpty
         self.navigationController = navigationController
+        self.coordinator = coordinator
         self.delegate = delegate
         setUpDependencies()
     }
@@ -60,7 +63,9 @@ final class AddTaxPayerFormCoordinator {
 
 extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
     func didTapDone(with taxPayer: TaxPayer) {
+        coordinator.didAddTaxPayer(taxPayer)
         delegate?.didAddTaxPayer(taxPayer)
+        back()
     }
     
     func back() {
