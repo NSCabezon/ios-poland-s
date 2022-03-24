@@ -30,4 +30,8 @@ struct PLInternalTransferExternalDependenciesResolverMock: PLInternalTransferOpe
     func resolve() -> GlobalPositionDataRepository {
         fatalError()
     }
+    
+    func resolve() -> PLAccountOtherOperativesInfoRepository {
+        fatalError()
+    }
 }

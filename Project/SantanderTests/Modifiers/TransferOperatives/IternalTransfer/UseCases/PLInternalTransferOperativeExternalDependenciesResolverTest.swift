@@ -27,4 +27,8 @@ struct PLInternalTransferOperativeExternalDependenciesResolverTest: PLInternalTr
     func resolve() -> DependenciesResolver {
         fatalError()
     }
+    
+    func resolve() -> PLAccountOtherOperativesInfoRepository {
+        fatalError()
+    }
 }

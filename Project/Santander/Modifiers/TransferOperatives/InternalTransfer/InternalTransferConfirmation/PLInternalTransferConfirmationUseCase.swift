@@ -24,7 +24,8 @@ struct PLInternalTransferConfirmationUseCase {
 
 extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUseCase {
     func fetchConfirmation(input: InternalTransferConfirmationUseCaseInput) -> AnyPublisher<ConditionState, Error> {
-        let amountData = ItAmountDataParameters(currency: input.amount.currencyRepresentable?.currencyName, amount: input.amount.value)
+        let debitAmountData = ItAmountDataParameters(currency: input.debitAmount.currencyRepresentable?.currencyName, amount: input.debitAmount.value)
+        let creditAmountData = ItAmountDataParameters(currency: input.creditAmount.currencyRepresentable?.currencyName, amount: input.creditAmount.value)
         guard let originAccount = input.originAccount as? PolandAccountRepresentable,
               let destinationAccount = input.destinationAccount as? PolandAccountRepresentable,
               let originIbanRepresentable = input.originAccount.ibanRepresentable,
@@ -51,8 +52,8 @@ extension PLInternalTransferConfirmationUseCase: InternalTransferConfirmationUse
         let transactionType = internalTransferMatrix(input)
         let time = input.time?.toString(format: "YYYY-MM-dd")
         let genericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: customerAddressData,
-                                                                                  debitAmountData: amountData,
-                                                                                  creditAmountData: amountData,
+                                                                                  debitAmountData: debitAmountData,
+                                                                                  creditAmountData: creditAmountData,
                                                                                   debitAccountData: debitAccounData,
                                                                                   creditAccountData: creditAccountData,
                                                                                   signData: signData,

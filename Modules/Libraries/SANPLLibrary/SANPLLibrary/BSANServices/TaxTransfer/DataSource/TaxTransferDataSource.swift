@@ -10,6 +10,8 @@ import Foundation
 protocol TaxTransferDataSourceProtocol {
     func getTaxPayers() throws -> Result<[TaxPayerDTO], NetworkProviderError>
     func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
+    func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError>
+    func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError>
 }
 
 final class TaxTransferDataSource {
@@ -17,6 +19,8 @@ final class TaxTransferDataSource {
     private enum TaxTransferServiceType: String {
         case payers = "/payers"
         case payees = "/payees/account/tax"
+        case taxSymbols = "/dictionaries/forms/tax"
+        case taxAccounts = "/accounts/external/tax"
     }
     
     // MARK: Properties
@@ -69,5 +73,51 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
             )
         )
     }
+    
+    func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = TaxTransferServiceType.taxSymbols.rawValue
+        return networkProvider.request(
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                contentType: nil
+            )
+        )
+    }
+    
+    func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = TaxTransferServiceType.taxAccounts.rawValue
+        let queryParams: [String: Any] = {
+            var params: [String: Any] = [:]
+            if let accountNumber = requestQueries.accountNumber {
+                params["accountNo"] = accountNumber
+            }
+            if let accountName = requestQueries.accountName {
+                params["name"] = accountName
+            }
+            if let city = requestQueries.city {
+                params["city"] = city
+            }
+            return params
+        }()
+        
+        return networkProvider.request(
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                queryParams: queryParams,
+                contentType: nil
+            )
+        )
+    }
 }
-

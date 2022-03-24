@@ -1,6 +1,13 @@
 {
     "accounts_options":[
         {
+            "id": "MAILBOX_MAIN",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/mailbox",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
             "id": "NEW_BBC_OFFER",
             "url" : "https://pluton2.centrum24.pl/centrum24-web/native/new-bbc-offer",
             "isAvailable": true,
