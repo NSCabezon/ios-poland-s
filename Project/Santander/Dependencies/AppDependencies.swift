@@ -305,9 +305,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
         }
-        self.dependencieEngine.register(for: LoanTransactionModifier.self) { _ in
-            return PLLoanTransaction()
-        }
         self.dependencieEngine.register(for: FiltersAlertModifier.self) { _ in
             return PLFiltersAlertModifier()
         }
