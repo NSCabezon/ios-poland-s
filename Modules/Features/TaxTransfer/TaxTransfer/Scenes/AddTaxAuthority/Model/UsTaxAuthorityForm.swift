@@ -8,5 +8,5 @@
 struct UsTaxAuthorityForm {
     let taxSymbol: TaxSymbol
     var city: String?
-    var taxAuthority: TaxAuthority?
+    var taxAuthorityAccount: TaxAccount?
 }

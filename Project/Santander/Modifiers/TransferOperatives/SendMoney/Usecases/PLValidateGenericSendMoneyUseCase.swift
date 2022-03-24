@@ -15,7 +15,7 @@ class PLValidateGenericSendMoneyUseCase: UseCase<ValidateSendMoneyUseCaseInput, 
     }
     
     override func executeUseCase(requestValues: ValidateSendMoneyUseCaseInput) throws -> UseCaseResponse<ValidateSendMoneyUseCaseOkOutput, StringErrorOutput> {
-        let transferType = self.dependenciesResolver.resolve(forOptionalType: SendMoneyModifierProtocol.self)?.transferTypeFor(onePayType: requestValues.type, subtype: requestValues.subType?.serviceString ?? "")
+        let transferType = requestValues.subType?.serviceString ?? ""
         let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyName, amount: requestValues.amount.value)
         guard let originAccount = requestValues.originAccount as? PolandAccountRepresentable,
               let ibanRepresentable = requestValues.originAccount.ibanRepresentable else { return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil))) }

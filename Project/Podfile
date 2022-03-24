@@ -72,6 +72,7 @@ def pl_features
   pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
   pod 'Authorization', :path => '../Modules/Features/Authorization'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
+  pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
 end
 
 def pl_libraries

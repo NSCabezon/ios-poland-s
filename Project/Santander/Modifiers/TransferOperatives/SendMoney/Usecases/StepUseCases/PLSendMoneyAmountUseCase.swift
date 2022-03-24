@@ -32,6 +32,7 @@ final class PLSendMoneyAmountUseCase: UseCase<SendMoneyOperativeData, SendMoneyO
                 ],
                 transactionType: transactionType
             )
+            requestValues.selectedTransferType = requestValues.specialPricesOutput?.fees.first
             return .ok(requestValues)
         }
         var fees: [SendMoneyTransferTypeFee] = []

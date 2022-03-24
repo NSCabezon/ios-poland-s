@@ -18,8 +18,8 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
     }
     
     override func executeUseCase(requestValues: SendMoneyConfirmationStepUseCaseInput) throws -> UseCaseResponse<SendMoneyTransferSummaryState, StringErrorOutput> {
-        let transferType = self.dependenciesResolver.resolve(forOptionalType: SendMoneyModifierProtocol.self)?.transferTypeFor(onePayType: requestValues.type, subtype: requestValues.subType?.serviceString ?? "")
-        let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyName, amount: requestValues.amount.value)
+        let transferType =  requestValues.subType?.serviceString ?? ""
+        let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyCode, amount: requestValues.amount.value)
         guard let originAccount = requestValues.originAccount as? PolandAccountRepresentable,
               let ibanRepresentable = requestValues.originAccount.ibanRepresentable else { return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil))) }
         let customerAddressData = CustomerAddressDataParameters(customerName: requestValues.name,

@@ -19,6 +19,7 @@ protocol AddTaxPayerFormView: AnyObject,
     func getForm() -> AddTaxPayerForm?
     func showInvalidFormMessages(_ messages: InvalidAddTaxPayerFormMessages)
     func setUp(with identifier: Selectable<TaxIdentifierType>)
+    func setUp(isEmpty: Bool)
 }
 
 final class AddTaxPayerFormViewController: UIViewController {
@@ -52,6 +53,14 @@ final class AddTaxPayerFormViewController: UIViewController {
     
     func setUp(with identifier: Selectable<TaxIdentifierType>) {
         formView.setUp(with: identifier)
+    }
+    
+    func setUp(isEmpty: Bool) {
+        if isEmpty {
+            bottomButtonView.disableButton()
+        } else {
+            bottomButtonView.enableButton()
+        }
     }
     
     private func setUp() {
@@ -129,7 +138,6 @@ extension AddTaxPayerFormViewController: AddTaxPayerFormView {
     
     func showInvalidFormMessages(_ messages: InvalidAddTaxPayerFormMessages) {
         formView.showInvalidFormMessages(messages)
-        bottomButtonView.disableButton()
     }
     
     func clearValidationMessages() {
