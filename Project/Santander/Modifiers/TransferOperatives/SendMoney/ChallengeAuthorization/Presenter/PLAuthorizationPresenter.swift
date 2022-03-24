@@ -68,7 +68,7 @@ final class PLAuthorizationPresenter {
 
 private extension PLAuthorizationPresenter {
     func evaluateBiometryAccess() {
-        let type = self.getBiometryTypeAvailable()
+        let type = self.localAuthentication.biometryTypeAvailable
         guard type != .none else {
             self.onBiometryError()
             return
@@ -105,10 +105,6 @@ private extension PLAuthorizationPresenter {
         }
         self.showGenericError()
     }
-    
-    func getBiometryTypeAvailable() -> BiometryTypeEntity {
-        return self.localAuthentication.biometryTypeAvailable
-    }
 }
 
 private extension PLAuthorizationPresenter {
@@ -130,7 +126,8 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
     }
     
     func addInputBiometryView() {
-        let biometryAvailable = self.getBiometryTypeAvailable()
+        guard self.localAuthentication.isTouchIdEnabled else { return }
+        let biometryAvailable = self.localAuthentication.biometryTypeAvailable
         switch biometryAvailable {
         case .error(biometry: _, error: _), .none: return
         case .faceId, .touchId:
