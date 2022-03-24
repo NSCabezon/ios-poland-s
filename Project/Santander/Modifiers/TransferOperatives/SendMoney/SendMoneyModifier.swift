@@ -36,7 +36,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     }
 
     func getTransferTypeStep(dependencies: DependenciesInjector & DependenciesResolver) -> OperativeStep? {
-        return SendMoneyTransferTypeStep(dependencies: dependencies)
+        return SendMoneyTransferTypeStep(legacyDependenciesResolver: dependencies)
     }
 
     func goToSendMoney() {
