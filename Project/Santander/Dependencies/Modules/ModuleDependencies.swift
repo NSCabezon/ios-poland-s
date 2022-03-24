@@ -47,14 +47,20 @@ struct ModuleDependencies {
     func resolve() -> StringLoader {
         return oldResolver.resolve()
     }
-}
-
-extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+    
     func resolve() -> PullOffersInterpreter {
-        let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
 }
+
+extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+    func resolve() -> FeatureFlagsRepository {
+        return asShared {
+            DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
+        }
+    }
+}
+
 extension ModuleDependencies: CoreDependenciesResolver {
     func resolve() -> CoreDependencies {
         return coreDependencies
