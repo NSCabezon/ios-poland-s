@@ -11,15 +11,12 @@ import Loans
 enum PLLoanOperativeIdentifier: String {
     case details = "LOAN_DETAILS"
     case repayment = "REPAYMENT_SCHEDULE"
-    case changeAliases = "CHANGE_ALIAS"
     case customerService = "CUSTOMER_SERVICE"
     
     public var icon: String {
         switch self {
         case .repayment:
             return "icnLoanSchedule"
-        case .changeAliases:
-            return "icnChangeAlias"
         case .customerService:
             return "icnCustomerService"
         case .details:
@@ -31,8 +28,6 @@ enum PLLoanOperativeIdentifier: String {
         switch self {
         case .repayment:
             return "loansOption_button_loanSchedule"
-        case .changeAliases:
-            return "loansOption_button_changeAlias"
         case .customerService:
             return "loansOption_button_customerService"
         case .details:
@@ -44,7 +39,6 @@ enum PLLoanOperativeIdentifier: String {
         switch self {
         case .repayment: return .custom(identifier: "loansOption_button_loanSchedule")
         case .details: return .detail
-        case .changeAliases: return .custom(identifier: "change_alias")
         case .customerService: return .custom(identifier: "loansOption_button_customerService")
         }
     }
