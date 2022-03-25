@@ -4,26 +4,26 @@ import PLCommons
 import PLCommonOperatives
 import CoreFoundationLib
 
-protocol ZusTransferModulePresenterProtocol: AnyObject {
-    var view: ZusTransferModuleViewProtocol? { get set }
+protocol ZusSmeTransferDataLoaderPresenterProtocol: AnyObject {
+    var view: ZusSmeTransferDataLoaderViewProtocol? { get set }
     func viewDidLoad()
     func close()
 }
 
-final class ZusTransferModulePresenter {
-    weak var view: ZusTransferModuleViewProtocol?
+final class ZusSmeTransferDataLoaderPresenter {
+    weak var view: ZusSmeTransferDataLoaderViewProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private var coordinator: ZusTransferModuleCoordinatorProtocol?
+    private var coordinator: ZusSmeTransferDataLoaderCoordinatorProtocol?
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
         self.coordinator = dependenciesResolver.resolve(
-            for: ZusTransferModuleCoordinatorProtocol.self
+            for: ZusSmeTransferDataLoaderCoordinatorProtocol.self
         )
     }
 }
 
-extension ZusTransferModulePresenter: ZusTransferModulePresenterProtocol {
+extension ZusSmeTransferDataLoaderPresenter: ZusSmeTransferDataLoaderPresenterProtocol {
     func viewDidLoad() {
         view?.showLoader()
         Scenario(
@@ -63,7 +63,7 @@ extension ZusTransferModulePresenter: ZusTransferModulePresenterProtocol {
     }
 }
 
-private extension ZusTransferModulePresenter {
+private extension ZusSmeTransferDataLoaderPresenter {
     func showErrorView() {
         view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
             self?.coordinator?.close()

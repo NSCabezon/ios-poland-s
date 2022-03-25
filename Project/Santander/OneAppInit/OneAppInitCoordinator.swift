@@ -203,7 +203,7 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             coordinator.start()
         case .zusSMETransfer:
             let coordinator = dependenciesEngine.resolve(
-                for: ZusSMETransferFormCoordinator.self
+                for: ZusSmeTransferDataLoaderCoordinatorProtocol.self
             )
             coordinator.start()
         case .scanAndPay:
