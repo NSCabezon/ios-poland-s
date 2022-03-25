@@ -414,9 +414,12 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: LoanReactiveRepository.self) { _ in
             return self.servicesLibrary.loanReactiveDataRepository
         }
-        self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
-            PLChangeAliasManager()
+        self.dependencieEngine.register(for: OnboardingRepository.self) { _ in
+            return self.servicesLibrary.onboardingDataRepository
         }
+		self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+			PLChangeAliasManager()
+		}
         self.dependencieEngine.register(for: UserSegmentProtocol.self) { resolver in
             PLUserSegmentProtocol(dependenciesResolver: resolver)
         }

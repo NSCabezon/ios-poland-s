@@ -38,5 +38,10 @@ public final class ServicesLibrary {
                                           networkProvider: networkProvider,
                                           loansManager: loansManagerAdapter)
     }
+    
+    public var onboardingDataRepository: OnboardingRepository {
+        return OnboardingDataRepository(customerManager: bsanManagersProvider.getCustomerManager(),
+                                        bsanDataProvider: bsanDataProvider)
+    }
 }
 
