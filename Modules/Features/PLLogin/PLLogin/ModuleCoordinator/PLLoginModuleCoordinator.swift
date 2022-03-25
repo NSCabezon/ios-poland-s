@@ -53,7 +53,7 @@ extension PLLoginModuleCoordinator: LoginModuleCoordinatorProtocol {
 extension PLLoginModuleCoordinator : PLLoginModuleCoordinatorProtocol {
     
     public func loadUnrememberedLogin() {
-        checkFirstLaunch()
+        self.unrememberedLoginOnboardingCoordinator.start()
     }
     
     public func loadRememberedLogin(configuration: RememberedLoginConfiguration) {
@@ -61,19 +61,5 @@ extension PLLoginModuleCoordinator : PLLoginModuleCoordinatorProtocol {
             return configuration
         }
         self.rememberedLoginPinCoordinator.start()
-    }
-}
-
-private extension PLLoginModuleCoordinator {
-    func checkFirstLaunch() {
-        Scenario(useCase: self.isFirstLaunchUseCase, input: PLFirstLaunchUseCaseInput(shouldSetFirstLaunch: false))
-            .execute(on: self.dependenciesEngine.resolve())
-            .onSuccess { result in
-                if result.isFirstLaunch {
-                    self.unrememberedLoginOnboardingCoordinator.start()
-                } else {
-                    self.unrememberdLoginIdCoordinator.start()
-                }
-            }
     }
 }

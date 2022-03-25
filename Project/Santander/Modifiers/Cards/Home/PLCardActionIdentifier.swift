@@ -9,6 +9,7 @@ import Foundation
 
 enum PLCardActionIdentifier: String, CaseIterable {
     case activate = "ACTIVATE"
+    case cardActivation = "CARD_ACTIVATION"
     case addToPay = "ADD_TO_PAY"
     case unblock = "UNBLOCK"
     case modifyLimits = "MODIFY_LIMITS"
@@ -45,11 +46,12 @@ enum PLCardActionIdentifier: String, CaseIterable {
                 .unblock,
                 .cardDetails,
                 .history,
-                .block,
-                .sendMoneyFromSrc:
+                .block:
             return nil
-        case .activate:
-            return ("cardsOption_button_activate", "icnActivate", "otherOperatives") // Cuál es la sección correcta para ACTIVATE ????
+        case .sendMoneyFromSrc:
+            return ("transaction_buttonOption_transfer", "icnSendMoney", "otherOperatives")
+        case .activate, .cardActivation:
+            return ("cardsOption_button_activate", "icnActivate", "otherOperatives")
         case .modifyLimits:
             return ("cardsOption_button_modifyCard", "icnChangeLimits", "otherOperatives")
         case .changeAlias:

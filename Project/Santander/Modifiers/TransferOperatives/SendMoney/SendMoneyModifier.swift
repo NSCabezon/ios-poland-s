@@ -24,8 +24,9 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         return true
     }
     let shouldShowSaveAsFavourite: Bool = false
-    var transferTypeStep: OperativeStep? {
-        return SendMoneyTransferTypeStep(dependencies: dependenciesEngine)
+    
+    func getTransferTypeStep(dependencies: DependenciesInjector & DependenciesResolver) -> OperativeStep? {
+        return SendMoneyTransferTypeStep(dependencies: dependencies)
     }
     
     func goToSendMoney() {
@@ -63,5 +64,9 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     
     var selectionIssueDateViewModel: SelectionIssueDateViewModel {
         return SelectionIssueDateViewModel(minDate: Date(), maxDate: Date().adding(.year, value: 1))
+    }
+    
+    var maxProgressBarSteps: Int {
+        return 6
     }
 }

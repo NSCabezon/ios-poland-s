@@ -1,5 +1,5 @@
 import XCTest
-import PhoneTopUp
+import ScanAndPay
 
 class Tests: XCTestCase {
     

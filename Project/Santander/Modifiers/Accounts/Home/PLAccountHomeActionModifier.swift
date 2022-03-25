@@ -8,6 +8,7 @@ import CoreFoundationLib
 import Account
 import Foundation
 import PersonalArea
+import BLIK
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
     private let dependenciesResolver: DependenciesResolver
@@ -31,6 +32,8 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
                 goToSendMoney()
             case .changeAliases:
                 goToPGProductsCustomization()
+            case .blik:
+                goToBLIK()
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
@@ -88,5 +91,10 @@ extension PLAccountHomeActionModifier {
     private func goToPGProductsCustomization() {
         let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
         coordinator.goToGPProductsCustomization()
+    }
+    
+    private func goToBLIK() {
+        let blikCoordinator: BLIKHomeCoordinator = dependenciesResolver.resolve()
+        blikCoordinator.start()
     }
 }

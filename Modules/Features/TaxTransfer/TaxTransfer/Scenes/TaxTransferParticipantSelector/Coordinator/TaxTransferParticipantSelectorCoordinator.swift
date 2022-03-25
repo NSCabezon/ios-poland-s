@@ -12,7 +12,7 @@ import PLScenes
 
 final class TaxTransferParticipantSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator {
     private lazy var mapper = dependenciesEngine.resolve(for: TaxTransferParticipantSelectorMapper<Item>.self)
-    private let itemSelectionHandler: (Item) -> ()
+    private let itemSelectionHandler: (Item, (LoaderPresentable & ConfirmationDialogPresentable)) -> ()
     private let buttonActionHandler: () -> ()
     private let configuration: TaxTransferParticipantConfiguration<Item>
     private let dependenciesEngine: DependenciesDefault
@@ -21,7 +21,7 @@ final class TaxTransferParticipantSelectorCoordinator<Item: SelectableItem>: Mod
     internal var navigationController: UINavigationController?
     
     init(configuration: TaxTransferParticipantConfiguration<Item>,
-         itemSelectionHandler: @escaping (Item) -> (),
+         itemSelectionHandler: @escaping (Item, (LoaderPresentable & ConfirmationDialogPresentable)) -> (),
          buttonActionHandler: @escaping () -> (),
          dependenciesResolver: DependenciesDefault,
          navigationController: UINavigationController?) {
@@ -47,7 +47,8 @@ final class TaxTransferParticipantSelectorCoordinator<Item: SelectableItem>: Mod
     }
     
     func handleItemSelection(_ item: Item) {
-        itemSelectionHandler(item)
+        guard let viewController = viewController else { return }
+        itemSelectionHandler(item, viewController)
         
         if configuration.shouldBackAfterSelectItem {
             navigationController?.popViewController(animated: true)

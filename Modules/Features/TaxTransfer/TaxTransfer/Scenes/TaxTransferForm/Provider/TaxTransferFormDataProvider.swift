@@ -35,6 +35,9 @@ final class TaxTransferFormDataProvider: TaxTransferFormDataProviding {
         var fetchedTaxAuthorities: [TaxAuthority]?
         let taxAuthoritiesScenario = Scenario(useCase: getTaxAuthoritiesUseCase)
         
+        var fetchedTaxSymbols: [TaxSymbol]?
+        let taxSymbolsScenario = Scenario(useCase: getTaxSymbolsUseCase)
+        
         MultiScenario(handledOn: useCaseHandler)
             .addScenario(accountsScenario) { _, accounts, _ in
                 fetchedAccounts = accounts
@@ -45,12 +48,16 @@ final class TaxTransferFormDataProvider: TaxTransferFormDataProviding {
             .addScenario(taxAuthoritiesScenario) { _, output, _ in
                 fetchedTaxAuthorities = output.taxAuthorities
             }
+            .addScenario(taxSymbolsScenario) { _, output, _ in
+                fetchedTaxSymbols = output.taxSymbols
+            }
             .asScenarioHandler()
             .onSuccess { _ in
                 guard
                     let fetchedAccounts = fetchedAccounts,
                     let fetchedTaxPayers = fetchedTaxPayers,
-                    let fetchedTaxAuthorities = fetchedTaxAuthorities
+                    let fetchedTaxAuthorities = fetchedTaxAuthorities,
+                    let taxSymbols = fetchedTaxSymbols
                 else {
                     completion(.failure(.apiFailure))
                     return
@@ -58,7 +65,8 @@ final class TaxTransferFormDataProvider: TaxTransferFormDataProviding {
                 let data = TaxTransferFormData(
                     sourceAccounts: fetchedAccounts,
                     taxPayers: fetchedTaxPayers,
-                    predefinedTaxAuthorities: fetchedTaxAuthorities
+                    predefinedTaxAuthorities: fetchedTaxAuthorities,
+                    taxSymbols: taxSymbols
                 )
                 completion(.success(data))
             }
@@ -82,6 +90,10 @@ private extension TaxTransferFormDataProvider {
     }
 
     var getTaxAuthoritiesUseCase: GetPredefinedTaxAuthoritiesUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var getTaxSymbolsUseCase: GetTaxSymbolsUseCaseProtocol {
         dependenciesResolver.resolve()
     }
 }

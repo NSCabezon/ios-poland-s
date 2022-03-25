@@ -99,7 +99,9 @@ pipeline {
                 		expression { return  !env.COMMIT_MESSAGE.startsWith("Updating Version")}
 			}
 			steps {
-				sh "cd Project && bundle exec fastlane ios increment_version"
+				catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+					sh "cd Project && bundle exec fastlane ios increment_version"
+				}
 			}
         	}
 	}

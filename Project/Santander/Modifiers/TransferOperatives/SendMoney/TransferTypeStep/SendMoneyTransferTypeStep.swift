@@ -17,8 +17,9 @@ final class SendMoneyTransferTypeStep: OperativeStep {
     var view: OperativeView? {
         self.dependencies.resolve(for: SendMoneyTransferTypeView.self)
     }
-    
-    var floatingButtonTitleKey = "sendMoney_button_sendType"
+    var floatingButtonTitleKey: String {
+        return "sendMoney_button_transferDetails"
+    }
     
     init(dependencies: DependenciesResolver & DependenciesInjector) {
         self.dependencies = dependencies

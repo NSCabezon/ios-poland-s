@@ -56,7 +56,15 @@ struct ModuleDependencies {
     }
 }
 
-extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {}
+extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+    
+    func resolve() -> FeatureFlagsRepository {
+        return asShared {
+            DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
+        }
+    }
+}
+
 extension ModuleDependencies: CoreDependenciesResolver {
     
     func resolve() -> CoreDependencies {

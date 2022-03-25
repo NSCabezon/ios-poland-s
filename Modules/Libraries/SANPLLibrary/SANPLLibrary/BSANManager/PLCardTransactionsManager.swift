@@ -9,7 +9,7 @@ import Foundation
 import SANLegacyLibrary
 
 public protocol PLCardTransactionsManagerProtocol {
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>?
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) throws -> Result<CardTransactionListDTO, NetworkProviderError>?
     func changeAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> Result<CardChangeAliasDTO, NetworkProviderError>
 }
 
@@ -66,7 +66,7 @@ extension PLCardTransactionsManager: PLCardTransactionsManagerProtocol {
         return cardKey
     }
     
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>? {
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) throws -> Result<CardTransactionListDTO, NetworkProviderError>? {
         
         let currentPagination = pagination
         let cardKey = getCardKeyWithFilters(cardId: cardId,
@@ -86,7 +86,7 @@ extension PLCardTransactionsManager: PLCardTransactionsManagerProtocol {
             }
         }
         
-        let result = dataSource.loadCardTransactions(cardId: cardId,
+        let result = try dataSource.loadCardTransactions(cardId: cardId,
                                                      pagination: pagination,
                                                      searchTerm: searchTerm,
                                                      startDate: startDate,

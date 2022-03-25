@@ -9,4 +9,8 @@ struct AddTaxPayerForm {
     let payerName: String
     let identifierNumber: String
     let identifierType: TaxIdentifierType
+    
+    var isEmpty: Bool {
+        return payerName.isEmpty || identifierNumber.isEmpty
+    }
 }

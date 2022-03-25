@@ -8,6 +8,8 @@
 import CoreFoundationLib
 import PLScenes
 import UI
+import PLUI
+import PLCommons
 
 protocol TaxAuthoritySelectorCoordinatorProtocol: ModuleCoordinator {}
 
@@ -17,22 +19,26 @@ final class TaxAuthoritySelectorCoordinator: TaxAuthoritySelectorCoordinatorProt
     private let dependenciesEngine: DependenciesDefault
     private let taxAuthorities: [TaxAuthority]
     private let selectedTaxAuthority: TaxAuthority?
+    private let taxSymbols: [TaxSymbol]
     
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?
+        selectedTaxAuthority: TaxAuthority?,
+        taxSymbols: [TaxSymbol]
     ) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
         self.taxAuthorities = taxAuthorities
         self.selectedTaxAuthority = selectedTaxAuthority
+        self.taxSymbols = taxSymbols
+        setUpDependencies()
     }
     
     func start() {
         if taxAuthorities.isEmpty {
-            showAddTaxAuthorityForm()
+            showTaxAuthorityForm()
         } else {
             showTaxAuthorityList()
         }
@@ -56,30 +62,121 @@ private extension TaxAuthoritySelectorCoordinator {
         let taxItemSelectorCoordinator = TaxTransferParticipantSelectorCoordinator<SelectableTaxAuthorityViewModel>(
             configuration: configuration,
             itemSelectionHandler: handleTaxAuthoritySelection,
-            buttonActionHandler: showAddTaxAuthorityForm,
+            buttonActionHandler: showTaxAuthorityForm,
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController
         )
         taxItemSelectorCoordinator.start()
     }
     
-    func handleTaxAuthoritySelection(of taxAuthority: SelectableTaxAuthorityViewModel) {
-        // TODO:- Finish in TAP-2650
+    func handleTaxAuthoritySelection(
+        with taxAuthorityViewModel: SelectableTaxAuthorityViewModel,
+        in presenter: (LoaderPresentable & ConfirmationDialogPresentable)
+    ) {
+        presenter.showLoader()
+        TaxAccountValidator(dependenciesResolver: dependenciesEngine).validateAccount(
+            withNumber: taxAuthorityViewModel.taxAuthority.accountNumber,
+            onValidResult: { [weak self] in
+                presenter.hideLoader(completion: {
+                    self?.showTaxSymbolSelector(for: taxAuthorityViewModel.taxAuthority)
+                })
+            },
+            onInvalidResult: { [weak self] in
+                presenter.hideLoader(completion: {
+                    self?.showInvalidTaxAccountDialog(in: presenter)
+                })
+            },
+            onError: { [weak self] _ in
+                presenter.hideLoader(completion: {
+                    self?.showInvalidTaxAccountDialog(in: presenter)
+                })
+            }
+        )
     }
     
-    func showAddTaxAuthorityForm() {
+    func showTaxSymbolSelector(for taxAuthority: TaxAuthority) {
+        let filteredTaxSymbols = taxSymbols.filter { $0.destinationAccountType == taxAuthority.taxAccountType }
+        let coordinator = TaxSymbolSelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            taxSymbols: filteredTaxSymbols,
+            selectedTaxSymbol: nil, // TODO:- Finish in TAP-2107
+            onSelection: { _ in  } // TODO:- Finish in TAP-2107
+        )
+        coordinator.start()
+    }
+    
+    func showTaxAuthorityForm() {
         if let selectedTaxAuthority = selectedTaxAuthority {
-            showFilledAddTaxAuthorityForm(with: selectedTaxAuthority)
+            showTaxAuthorityForm(withContext: .preselectedTaxAuthority(selectedTaxAuthority))
         } else {
-            showEmptyAddTaxAuthorityForm()
+            showTaxAuthorityForm(withContext: .unselectedTaxAuthority)
         }
     }
     
-    func showFilledAddTaxAuthorityForm(with selectedTaxAuthority: TaxAuthority) {
-        // TODO:- Finish in TAP-2649
+    func showTaxAuthorityForm(withContext context: AddTaxAuthorityEntryPointContext) {
+        let coordinator = AddTaxAuthorityCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            entryPointContext: context,
+            taxSymbols: taxSymbols
+        )
+        coordinator.start()
     }
     
-    func showEmptyAddTaxAuthorityForm() {
-        // TODO:- Finish in TAP-2472
+    // TODO:- Replace with generic LisboaDialog wrapper implemented in other PR
+    func showInvalidTaxAccountDialog(in presenter: ConfirmationDialogPresentable) {
+        let image = LisboaDialogImageViewItem(image: PLAssets.image(named: "info_blueGreen"), size: (50, 50))
+        let buttonTitle = LocalizedStylableText(text: localized("generic_link_ok"), styles: nil)
+        
+        let items: [LisboaDialogItem] = [
+            .margin(25),
+            .image(image),
+            .margin(12),
+            .styledText(
+                LisboaDialogTextItem(
+                    text: localized("#Informacja"),
+                    font: .santander(family: .micro, type: .bold, size: 28),
+                    color: .black,
+                    alignament: .center,
+                    margins: (((0, 0)))
+                )
+            ),
+            .margin(12),
+            .styledText(
+                LisboaDialogTextItem(
+                    text: localized("Nie możesz wpłacić podatku na numer rachunku wybranego urzędu. Zaktualizuj numer rachunku - zaloguj się do Santander Internet i wejdź w zakładkę Przelewy / Lista odbiorców."),
+                    font: .santander(family: .micro, type: .regular, size: 16),
+                    color: .lisboaGray,
+                    alignament: .center,
+                    margins: (24, 24)
+                )
+            ),
+            .margin(24),
+            .verticalAction(
+                VerticalLisboaDialogAction(
+                    title: buttonTitle,
+                    type: .red,
+                    margins: (16, 16),
+                    action: {}
+                )
+            ),
+            .margin(16)
+        ]
+        
+        let dialog = LisboaDialog(items: items, closeButtonAvailable: false)
+        presenter.showDialog(dialog)
+    }
+    
+    func setUpDependencies() {
+        dependenciesEngine.register(for: TaxAccountMapping.self) { _ in
+            return TaxAccountMapper(
+                dateFormatter: PLTimeFormat.yyyyMMdd.createDateFormatter()
+            )
+        }
+        
+        dependenciesEngine.register(for: GetTaxAccountsUseCaseProtocol.self) { resolver in
+            return GetTaxAccountsUseCase(dependenciesResolver: resolver)
+        }
     }
 }
