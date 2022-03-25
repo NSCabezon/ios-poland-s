@@ -4,16 +4,16 @@ import PLUI
 import PLCommons
 import CoreFoundationLib
 
-protocol ZusTransferModuleViewProtocol: AnyObject,
+protocol ZusSmeTransferDataLoaderViewProtocol: AnyObject,
                                         LoaderPresentable,
                                         ErrorPresentable {
     func showEmptyAccountsDialog(title: LocalizedStylableText, description: LocalizedStylableText)
 }
 
-final class ZusTransferModuleViewController: UIViewController {
-    private let presenter: ZusTransferModulePresenterProtocol
+final class ZusSmeTransferDataLoaderViewController: UIViewController {
+    private let presenter: ZusSmeTransferDataLoaderPresenterProtocol
     
-    init(presenter: ZusTransferModulePresenterProtocol) {
+    init(presenter: ZusSmeTransferDataLoaderPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -48,7 +48,7 @@ final class ZusTransferModuleViewController: UIViewController {
     }
 }
 
-extension ZusTransferModuleViewController: ZusTransferModuleViewProtocol {
+extension ZusSmeTransferDataLoaderViewController: ZusSmeTransferDataLoaderViewProtocol {
     func showEmptyAccountsDialog(title: LocalizedStylableText, description: LocalizedStylableText) {
         InfoDialogBuilder(
             title: title,

@@ -1,29 +1,30 @@
-import OpenCombine
 import UI
+import PLUI
 import IQKeyboardManagerSwift
 import CoreFoundationLib
-import PLUI
+import IQKeyboardManagerSwift
 
-final class ZusSMETransferFormViewController: UIViewController {
-    private let viewModel: ZusSMETransferFormViewModel
-    private var subscriptions: Set<AnyCancellable> = []
-    private let dependencies: ZusSMETransferFormDependenciesResolver
-    private let navigationBarItemBuilder: NavigationBarItemBuilder
+protocol ZusSmeTransferFormViewProtocol: AnyObject,
+                                         ConfirmationDialogPresentable,
+                                         LoaderPresentable,
+                                         ErrorPresentable {
+    func setAccountViewModel()
+}
+
+final class ZusSmeTransferFormViewController: UIViewController {
+    private let presenter: ZusSmeTransferFormPresenterProtocol
     private let scrollView = UIScrollView()
-    private let formView: ZusSMETransferFormView
+    private let formView: ZusSmeTransferFormView
     private let bottomView = BottomButtonView(style: .red)
-
-    init(dependencies: ZusSMETransferFormDependenciesResolver) {
-        self.dependencies = dependencies
-        viewModel = dependencies.resolve()
-        navigationBarItemBuilder = dependencies.external.resolve()
-        formView = ZusSMETransferFormView(language: viewModel.language)
+    
+    init(presenter: ZusSmeTransferFormPresenterProtocol) {
+        self.presenter = presenter
+        self.formView = ZusSmeTransferFormView(language: presenter.getLanguage())
         super.init(nibName: nil, bundle: nil)
     }
     
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -31,15 +32,27 @@ final class ZusSMETransferFormViewController: UIViewController {
         setUp()
         configureKeyboardDismissGesture()
         IQKeyboardManager.shared.enableAutoToolbar = false
+        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.addNavigationBarShadow()
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        view.layoutIfNeeded()
     }
 }
 
-private extension ZusSMETransferFormViewController {
+private extension ZusSmeTransferFormViewController {
+    
+    @objc func goBack() {
+        //TODO: later
+    }
+    
+    @objc func closeProcess() {
+        //TODO: later
+    }
+    
     func setUp() {
         addSubviews()
         configureView()
@@ -49,23 +62,37 @@ private extension ZusSMETransferFormViewController {
     }
     
     func addSubviews() {
-        [scrollView, bottomView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
-        }
-        formView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
         scrollView.addSubview(formView)
+        view.addSubview(bottomView)
+    }
+    
+    func prepareNavigationBar() {
+        NavigationBarBuilder(
+            style: .white,
+            title: .title(key: localized("pl_zusTransfer_toolbar")
+            )
+        )
+        .setLeftAction(.back(action: .closure(goBack)))
+        .setRightActions(.close(action: .closure(closeProcess)))
+        .build(on: self, with: nil)
     }
     
     func configureView() {
         view.backgroundColor = .white
         bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
-            //TODO: will be implemented
+            //TODO: latter
         }
         bottomView.disableButton()
+        formView.configure(with: presenter.getSelectedAccountViewModels())
+        formView.delegate = self
     }
     
     func setUpLayout() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        formView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -84,17 +111,6 @@ private extension ZusSMETransferFormViewController {
         ])
     }
     
-    func prepareNavigationBar() {
-        NavigationBarBuilder(
-            style: .white,
-            title: .title(key: localized("pl_zusTransfer_toolbar")
-            )
-        )
-        .setLeftAction(.back(action: .closure(didSelectGoBack)))
-        .setRightActions(.close(action: .closure(didSelectCloseProcess)))
-        .build(on: self, with: nil)
-    }
-    
     func addKeyboardObserver() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(keyboardWillHide),
@@ -104,14 +120,19 @@ private extension ZusSMETransferFormViewController {
     }
         
     @objc func keyboardWillHide(notification: NSNotification) {
-        //TODO: same as in zus transfer
+        //TODO: later
     }
-    
-    @objc func didSelectGoBack() {
-        viewModel.didSelectGoBack()
+}
+
+extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewProtocol {
+    func setAccountViewModel() {
+        formView.configure(with: presenter.getSelectedAccountViewModels())
     }
-    
-    @objc func didSelectCloseProcess() {
-        viewModel.didSelectCloseProcess()
+}
+
+extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
+
+    func changeAccountTapped() {
+        presenter.showAccountSelector()
     }
 }

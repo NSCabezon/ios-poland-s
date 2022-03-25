@@ -10,7 +10,6 @@ protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransfe
     func didSelectClose()
     func didSelectCloseProcess()
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
-    func getSelectedAccountNumber() -> String
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
     func showConfirmation()
@@ -31,7 +30,7 @@ final class ZusTransferFormPresenter {
     private var accounts: [AccountForDebit]
     private var selectedAccountNumber: String
     private var transferFormViewModel: ZusTransferFormViewModel?
-    private var confirmationDialogFactory: ConfirmationDialogProducing
+    private let confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
     private var maskAccount: String?
@@ -46,7 +45,6 @@ final class ZusTransferFormPresenter {
         self.selectedAccountNumber = selectedAccountNumber
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
-        confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         formValidator = dependenciesResolver.resolve(for: ZusTransferValidating.self)
     }
 }
@@ -92,10 +90,6 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel] {
         let selectebleAccountViewModels = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         return selectebleAccountViewModels
-    }
-    
-    func getSelectedAccountNumber() -> String {
-        selectedAccountNumber
     }
     
     func showAccountSelector() {

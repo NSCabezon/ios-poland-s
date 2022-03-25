@@ -120,13 +120,17 @@ private extension SendMoneyTransferTypePresenter {
     
     func mapToSendMoneyTransferTypeRadioButtonViewModel(from transferType: SendMoneyTransferTypeFee) -> SendMoneyTransferTypeRadioButtonViewModel? {
         guard let type = transferType.type as? PolandTransferType else { return nil }
+        let accessibilitySuffix = self.getAccessibilitySuffixForTransferType(type)
         let oneRadioButtonViewModel = OneRadioButtonViewModel(status: .inactive,
                                                               titleKey: localized(type.title ?? ""),
-                                                              subtitleKey: localized(type.subtitle ?? ""))
+                                                              subtitleKey: localized(type.subtitle ?? ""),
+                                                              accessibilitySuffix: accessibilitySuffix)
         let feeViewModel = SendMoneyTransferTypeFeeViewModel(amount: transferType.fee,
-                                                             status: .inactive)
+                                                             status: .inactive,
+                                                             accessibilitySuffix: accessibilitySuffix)
         return SendMoneyTransferTypeRadioButtonViewModel(oneRadioButtonViewModel: oneRadioButtonViewModel,
-                                                         feeViewModel: feeViewModel)
+                                                         feeViewModel: feeViewModel,
+                                                         accessibilitySuffix: accessibilitySuffix)
     }
 
     func getAccessibilitySuffixForTransferType(_ transferType: PolandTransferType) -> String {

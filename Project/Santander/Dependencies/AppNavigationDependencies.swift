@@ -132,14 +132,16 @@ final class AppNavigationDependencies {
                                               settings: topUpSettings)
         }
         dependenciesEngine.register(for: ZusTransferModuleCoordinatorProtocol.self) { resolver in
-            let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
             return ZusTransferModuleCoordinator(
                 dependenciesResolver: resolver,
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
-        dependenciesEngine.register(for: ZusSMETransferFormCoordinator.self) { [moduleDependencies] _ in
-            moduleDependencies.zusSMETransferFormCoordinator()
+        dependenciesEngine.register(for: ZusSmeTransferDataLoaderCoordinatorProtocol.self) { resolver in
+            return ZusSmeTransferDataLoaderCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
         }
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)

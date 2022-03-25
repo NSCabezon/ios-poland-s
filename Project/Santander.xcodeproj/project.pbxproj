@@ -195,7 +195,6 @@
 		A1192F75272805B600B83B42 /* UAT.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1192F74272805B600B83B42 /* UAT.xcconfig */; };
 		A1B81B132726D3B300714A3E /* Regression.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A1B81B122726D3B300714A3E /* Regression.xcconfig */; };
 		A1DDBB4B2733E8D6006CE2DE /* centrum24.pl.cer in Resources */ = {isa = PBXBuildFile; fileRef = A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */; };
-		A3DBFBDA27CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBFBD927CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift */; };
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712718CC1199B6EE214A84E5 /* Pods_SantanderTests.framework */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
@@ -522,7 +521,6 @@
 		A1192F74272805B600B83B42 /* UAT.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UAT.xcconfig; sourceTree = "<group>"; };
 		A1B81B122726D3B300714A3E /* Regression.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Regression.xcconfig; sourceTree = "<group>"; };
 		A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = centrum24.pl.cer; sourceTree = "<group>"; };
-		A3DBFBD927CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeExternalDependenciesResolver.swift; sourceTree = "<group>"; };
 		A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransferZusOperative.swift; sourceTree = "<group>"; };
 		A82E6EC9DAA3BA9A26EC0278 /* Pods-SantanderTests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.test.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.test.xcconfig"; sourceTree = "<group>"; };
 		A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
@@ -1589,22 +1587,6 @@
 				A1DDBB4A2733E8D6006CE2DE /* centrum24.pl.cer */,
 			);
 			path = Certificates;
-			sourceTree = "<group>";
-		};
-		A3DBFBD227CE052D004316D6 /* ZusSMETransfer */ = {
-			isa = PBXGroup;
-			children = (
-				A3DBFBD327CE056B004316D6 /* Dependencies */,
-			);
-			path = ZusSMETransfer;
-			sourceTree = "<group>";
-		};
-		A3DBFBD327CE056B004316D6 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				A3DBFBD927CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift */,
-			);
-			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		A97E8EF027AAD22700CB199C /* Transactions */ = {
