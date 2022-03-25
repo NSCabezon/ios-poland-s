@@ -39,6 +39,7 @@ def core_dependencies
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
+  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
 end
 
 def legacy_libraries
