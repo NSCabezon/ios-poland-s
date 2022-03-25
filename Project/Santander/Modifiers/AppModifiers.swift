@@ -208,6 +208,9 @@ private extension AppModifiers {
         self.legacyDependenciesInjector.register(for: PrivateMenuProtocol.self) { _ in
             PLPrivateMenuModifier(dependencies: self.dependencies)
         }
+        self.legacyDependenciesInjector.register(for: PrivateMenuTransferOptionProtocol.self) { _ in
+            PLPrivateMenuTransferOption(dependencies: self.dependencies)
+        }
         self.legacyDependenciesInjector.register(for: ShortcutItemsProviderProtocol.self) { _ in
             return PLShortcutItems()
         }

@@ -44,19 +44,17 @@ struct ModuleDependencies {
     func resolve() -> StringLoader {
         return oldResolver.resolve()
     }
+    
+    func resolve() -> PullOffersInterpreter {
+        return oldResolver.resolve()
+    }
 }
 
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-    
     func resolve() -> FeatureFlagsRepository {
         return asShared {
             DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
         }
-    }
-
-    func resolve() -> PullOffersInterpreter {
-        let oldResolver: DependenciesResolver = resolve()
-        return oldResolver.resolve()
     }
 }
 

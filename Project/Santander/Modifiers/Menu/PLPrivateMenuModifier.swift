@@ -34,10 +34,6 @@ final class PLPrivateMenuModifier: PrivateMenuProtocol {
     func goToHelpCenterPage() {
         legacyDependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
     }
-    
-    func goToOneTransferHome() {
-        dependencies.oneTransferHomeCoordinator().start()
-    }
 }
 
 private extension PLPrivateMenuModifier {
