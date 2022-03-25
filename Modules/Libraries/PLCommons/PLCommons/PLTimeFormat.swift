@@ -4,6 +4,7 @@ public enum PLTimeFormat: String {
     case ddMMyyyyDotted = "dd.MM.yyyy"
     case ddMMyyyyDash = "dd-MM-yyyy"
     case ddMMyyyy_HHmmDotted = "dd.MM.yyyy HH:mm"
+    case yyyyMMdd = "yyyy-MM-dd"
     
     public func createDateFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()

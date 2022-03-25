@@ -75,10 +75,15 @@ private extension ModuleDependencies {
     }
 }
 
-// MARK: - RetailLegacyExternalDependenciesResolver
-extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {}
+extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+    
+    func resolve() -> FeatureFlagsRepository {
+        return asShared {
+            DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
+        }
+    }
+}
 
-// MARK: - CoreDependenciesResolver
 extension ModuleDependencies: CoreDependenciesResolver {
     func resolve() -> CoreDependencies {
         return coreDependencies

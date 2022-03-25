@@ -10,6 +10,9 @@ import Foundation
 public protocol PLTaxTransferManagerProtocol {
     func getPayers() throws -> Result<[TaxPayerDTO], NetworkProviderError>
     func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
+    func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError>
+    func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError>
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError>
 }
 
 public final class PLTaxTransferManager {
@@ -29,5 +32,17 @@ extension PLTaxTransferManager: PLTaxTransferManagerProtocol {
     
     public func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError> {
         try dataSource.getPredefinedTaxAuthorities()
+    }
+    
+    public func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError> {
+        try dataSource.getTaxSymbols()
+    }
+    
+    public func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError> {
+        try dataSource.getTaxAccounts(requestQueries: requestQueries)
+    }
+    
+    public func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError> {
+        try dataSource.getTaxAuthorityCities(requestQueries: requestQueries)
     }
 }

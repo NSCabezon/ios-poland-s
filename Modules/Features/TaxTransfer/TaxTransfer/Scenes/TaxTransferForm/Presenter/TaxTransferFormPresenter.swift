@@ -43,7 +43,8 @@ final class TaxTransferFormPresenter {
         self.formData = TaxTransferFormData(
             sourceAccounts: [],
             taxPayers: [],
-            predefinedTaxAuthorities: []
+            predefinedTaxAuthorities: [],
+            taxSymbols: []
         )
     }
 }
@@ -106,7 +107,8 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     func didTapTaxAuthority() {
         coordinator.showTaxAuthoritySelector(
             with: formData.predefinedTaxAuthorities,
-            selectedTaxAuthority: nil // TODO:- Implement tracking of selected tax authority
+            selectedTaxAuthority: nil, // TODO:- Implement tracking of selected tax authority
+            taxSymbols: formData.taxSymbols
         )
     }
     
@@ -149,7 +151,8 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         formData = TaxTransferFormData(
             sourceAccounts: currentFormData.sourceAccounts,
             taxPayers: currentTaxPayers,
-            predefinedTaxAuthorities: currentFormData.predefinedTaxAuthorities
+            predefinedTaxAuthorities: currentFormData.predefinedTaxAuthorities,
+            taxSymbols: currentFormData.taxSymbols
         )
     }
 }

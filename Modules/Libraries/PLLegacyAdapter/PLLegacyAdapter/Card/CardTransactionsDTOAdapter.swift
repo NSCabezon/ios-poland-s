@@ -11,6 +11,7 @@ import SANPLLibrary
 // MARK: CardTransactionsDTOAdapter Class
 
 final public class CardTransactionsDTOAdapter {
+    public init() { }
     
     // MARK: - Public Methods
     public func adaptPLCardTransactionsToCardTransactionsList(_ plCardTransactions: SANPLLibrary.CardTransactionListDTO) -> SANLegacyLibrary.CardTransactionsListDTO {

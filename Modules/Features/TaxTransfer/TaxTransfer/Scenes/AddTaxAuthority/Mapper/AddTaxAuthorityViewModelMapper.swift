@@ -35,7 +35,7 @@ private extension AddTaxAuthorityViewModelMapper {
         return .init(
             taxSymbol: form.taxSymbol.symbolName,
             city: getCityViewModel(from: form.city),
-            taxAuthority: getTaxAuthorityViewModel(from: form.taxAuthority)
+            taxAuthority: getTaxAuthorityViewModel(from: form.taxAuthorityAccount)
         )
     }
     
@@ -49,12 +49,12 @@ private extension AddTaxAuthorityViewModelMapper {
     }
     
     typealias TaxAuthorityViewModel = AddTaxAuthorityViewModel.UsTaxAuthorityFormViewModel.TaxAuthorityViewModel
-    func getTaxAuthorityViewModel(from taxAuthority: TaxAuthority?) -> Selectable<TaxAuthorityViewModel> {
-        if let taxAuthority = taxAuthority {
+    func getTaxAuthorityViewModel(from taxAccount: TaxAccount?) -> Selectable<TaxAuthorityViewModel> {
+        if let taxAccount = taxAccount {
             return .selected(
                 .init(
-                    taxAuthorityName: taxAuthority.name,
-                    accountNumber: taxAuthority.accountNumber
+                    taxAuthorityName: taxAccount.accountName,
+                    accountNumber: taxAccount.accountNumber
                 )
             )
         } else {
