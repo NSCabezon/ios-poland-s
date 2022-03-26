@@ -10,14 +10,21 @@ import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
+import Onboarding
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
     
+    init(oldResolver: DependenciesInjector & DependenciesResolver, drawer: BaseMenuViewController) {
+        self.oldResolver = oldResolver
+        self.drawer = drawer
+        registerExternalDependencies()
+    }
+    
     func resolve() -> TimeManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> DependenciesInjector {
@@ -28,8 +35,12 @@ struct ModuleDependencies {
         return oldResolver
     }
     
+    func resolve() -> AppConfigRepositoryProtocol {
+        return oldResolver.resolve()
+    }
+    
     func resolve() -> TrackerManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> BaseMenuViewController {
@@ -37,8 +48,11 @@ struct ModuleDependencies {
     }
     
     func resolve() -> UINavigationController {
-        drawer.currentRootViewController as?
-        UINavigationController ?? UINavigationController()
+        return drawer.currentRootViewController as? UINavigationController ?? UINavigationController()
+    }
+    
+    func loanHomeCoordinator() -> BindableCoordinator {
+        return ToastCoordinator()
     }
     
     func resolve() -> StringLoader {
@@ -47,6 +61,15 @@ struct ModuleDependencies {
     
     func resolve() -> PullOffersInterpreter {
         return oldResolver.resolve()
+    }
+}
+
+// MARK: - Private
+private extension ModuleDependencies {
+    func registerExternalDependencies() {
+        oldResolver.register(for: OnboardingExternalDependenciesResolver.self) { _ in
+            return self
+        }
     }
 }
 

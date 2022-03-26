@@ -20,5 +20,6 @@ target 'SANPLLibrary_Example' do
 
   target 'SANPLLibrary_Tests' do
     inherit! :search_paths
+    pod "UnitTestCommons/standard", :path => '../../../../santander-one/UnitTestCommons'
   end
 end
