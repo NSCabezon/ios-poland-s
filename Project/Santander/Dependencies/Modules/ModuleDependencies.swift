@@ -35,10 +35,6 @@ struct ModuleDependencies {
         return oldResolver
     }
     
-    func resolve() -> AppConfigRepositoryProtocol {
-        return oldResolver.resolve()
-    }
-    
     func resolve() -> TrackerManager {
         return oldResolver.resolve()
     }
