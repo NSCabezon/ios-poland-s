@@ -245,8 +245,6 @@
 		B7D59A3D27A00A8B00E2D777 /* SelectOptionButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3C27A00A8B00E2D777 /* SelectOptionButtonModel.swift */; };
 		B7D59A3F27A00E6900E2D777 /* PLSmallButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */; };
 		BA5B257027C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5B256F27C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift */; };
-		BAA2FF2A27F0BF7800A38456 /* PLOnboardingConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2FF2827F0BF7700A38456 /* PLOnboardingConfigurationTests.swift */; };
-		BAA2FF2B27F0BF7800A38456 /* OnboardingPermissionOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2FF2927F0BF7700A38456 /* OnboardingPermissionOptionsTests.swift */; };
 		BADCDAFA273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADCDAF9273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift */; };
 		BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */; };
 		BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */; };
@@ -576,8 +574,6 @@
 		B7D59A3C27A00A8B00E2D777 /* SelectOptionButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOptionButtonModel.swift; sourceTree = "<group>"; };
 		B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSmallButtonType.swift; sourceTree = "<group>"; };
 		BA5B256F27C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetInternalTransferDestinationAccountsUseCase.swift; sourceTree = "<group>"; };
-		BAA2FF2827F0BF7700A38456 /* PLOnboardingConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PLOnboardingConfigurationTests.swift; path = "../../XcodeProjects/ios-poland/Project/SantanderTests/Modifiers/Onboarding/PLOnboardingConfigurationTests.swift"; sourceTree = "<group>"; };
-		BAA2FF2927F0BF7700A38456 /* OnboardingPermissionOptionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnboardingPermissionOptionsTests.swift; path = "../../XcodeProjects/ios-poland/Project/SantanderTests/Modifiers/Onboarding/OnboardingPermissionOptionsTests.swift"; sourceTree = "<group>"; };
 		BADCDAF9273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLValidateGenericSendMoneyUseCase.swift; sourceTree = "<group>"; };
 		BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaSectionsSecurityModifier.swift; sourceTree = "<group>"; };
 		BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalAreaSectionsProvider.swift; sourceTree = "<group>"; };
@@ -672,7 +668,6 @@
 		04A66E7927D9DEB200EE107F /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				BAA2FF2727F0BF7700A38456 /* Onboarding */,
 				04A66E7A27D9DEB200EE107F /* TransferOperatives */,
 			);
 			path = Modifiers;
@@ -1761,16 +1756,6 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		BAA2FF2727F0BF7700A38456 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				BAA2FF2827F0BF7700A38456 /* PLOnboardingConfigurationTests.swift */,
-				BAA2FF2927F0BF7700A38456 /* OnboardingPermissionOptionsTests.swift */,
-			);
-			name = Onboarding;
-			path = ../../../../../Desktop/Onboarding;
-			sourceTree = "<group>";
-		};
 		BB29664E26CFB38B0012599D /* PersonalArea */ = {
 			isa = PBXGroup;
 			children = (
@@ -2227,12 +2212,10 @@
 				04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */,
 				9092539F27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift in Sources */,
 				04A66E7E27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift in Sources */,
-				BAA2FF2B27F0BF7800A38456 /* OnboardingPermissionOptionsTests.swift in Sources */,
 				909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */,
 				909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */,
 				9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */,
 				04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */,
-				BAA2FF2A27F0BF7800A38456 /* PLOnboardingConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
