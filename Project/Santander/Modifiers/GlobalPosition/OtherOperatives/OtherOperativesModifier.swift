@@ -3,17 +3,24 @@
 //  Santander
 //
 
-import GlobalPosition
-import CoreFoundationLib
-import UI
 import CreditCardRepayment
+import CoreFoundationLib
+import GlobalPosition
 import PersonalArea
+import UI
+
+protocol OtherOperativesModifierDependenciesResolver {
+    func resolve() -> CreditCardRepaymentModuleCoordinator
+    func resolve() -> PersonalAreaModuleCoordinator
+}
 
 final class OtherOperativesModifier: OtherOperativesModifierProtocol {
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let creditCardRepaymentCoordinator: CreditCardRepaymentModuleCoordinator
+    private let personalAreaModuleCoordinator: PersonalAreaModuleCoordinator
 
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.dependenciesEngine = dependenciesEngine
+    init(dependencies: OtherOperativesModifierDependenciesResolver) {
+        self.creditCardRepaymentCoordinator = dependencies.resolve()
+        self.personalAreaModuleCoordinator = dependencies.resolve()
     }
     
     var isStockAccountsDisabled: Bool {
@@ -27,11 +34,9 @@ final class OtherOperativesModifier: OtherOperativesModifierProtocol {
     func performAction(_ values: OperativeActionValues) {
         switch values.identifier {
         case PLRepaymentOperative.identifier:
-            let coordinator = dependenciesEngine.resolve(for: CreditCardRepaymentModuleCoordinator.self)
-            coordinator.start()
+            creditCardRepaymentCoordinator.start()
         case PLLoansAliasOperative.rawValue:
-            let coordinator = dependenciesEngine.resolve(for: PersonalAreaModuleCoordinator.self)
-            coordinator.goToGPProductsCustomization()
+            personalAreaModuleCoordinator.goToGPProductsCustomization()
         default:
             Toast.show(localized("generic_alert_notAvailableOperation"))
         }

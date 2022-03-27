@@ -6,13 +6,11 @@
 //
 
 import UI
-import Loans
 import CoreFoundationLib
+import RetailLegacy
 import CoreDomain
 import Foundation
 import Onboarding
-import RetailLegacy
-import Menu
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
@@ -32,13 +30,9 @@ struct ModuleDependencies {
     func resolve() -> DependenciesInjector {
         return oldResolver
     }
-
+    
     func resolve() -> DependenciesResolver {
         return oldResolver
-    }
-    
-    func resolve() -> AppConfigRepositoryProtocol {
-        return oldResolver.resolve()
     }
     
     func resolve() -> TrackerManager {
@@ -57,11 +51,11 @@ struct ModuleDependencies {
         return ToastCoordinator()
     }
     
-    func resolve() -> SegmentedUserRepository {
-        return oldResolver.resolve(for: SegmentedUserRepository.self)
+    func resolve() -> StringLoader {
+        return oldResolver.resolve()
     }
     
-    func resolve() -> StringLoader {
+    func resolve() -> PullOffersInterpreter {
         return oldResolver.resolve()
     }
 }
@@ -76,7 +70,6 @@ private extension ModuleDependencies {
 }
 
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-    
     func resolve() -> FeatureFlagsRepository {
         return asShared {
             DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)

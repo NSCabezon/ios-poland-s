@@ -13,7 +13,7 @@ import SANPLLibrary
 
 final class PLCardDetailModifier: CardDetailModifierProtocol {
     private let managersProvider: PLManagersProviderProtocol
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
+    private let legacyDependenciesResolver: DependenciesResolver
     var isChangeAliasEnabled: Bool = true
     var isCardHolderEnabled: Bool = true
     var prepaidCardHeaderElements: [PrepaidCardHeaderElements] = [.availableBalance]
@@ -26,13 +26,13 @@ final class PLCardDetailModifier: CardDetailModifierProtocol {
         return CharacterSet(charactersIn: "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNMąęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
     }
 
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
-        self.dependenciesEngine = dependenciesEngine
+    init(legacyDependenciesResolver: DependenciesResolver) {
+        self.managersProvider = legacyDependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+        self.legacyDependenciesResolver = legacyDependenciesResolver
     }
 
     func formatLinkedAccount(_ linkedAccount: String?) -> String? {
-        return self.dependenciesEngine.resolve(for: AccountNumberFormatterProtocol.self).accountNumberFormat(linkedAccount)
+        return self.legacyDependenciesResolver.resolve(for: AccountNumberFormatterProtocol.self).accountNumberFormat(linkedAccount)
     }
 
     func showCardPAN(card: CardEntity) {

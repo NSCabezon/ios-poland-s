@@ -18,6 +18,14 @@ final class PLTransfersManagerAdapter {
 }
  
 extension PLTransfersManagerAdapter: BSANTransfersManager {
+    func loadEmittedTransfers(account: AccountRepresentable, amountFrom: AmountRepresentable?, amountTo: AmountRepresentable?, dateFilter: DateFilter, pagination: PaginationRepresentable?) throws -> BSANResponse<TransferEmittedListDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
+    func getAccountTransactions(forAccount account: AccountRepresentable, pagination: PaginationRepresentable?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
 
     func confirmRemoveSepaPayee(payeeId: String?, signatureWithTokenDTO: SignatureWithTokenDTO?) throws -> BSANResponse<SignatureWithTokenDTO?> {
         return BSANErrorResponse(nil)
@@ -157,19 +165,11 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func loadEmittedTransfers(account: SANLegacyLibrary.AccountDTO, amountFrom: AmountDTO?, amountTo: AmountDTO?, dateFilter: DateFilter, pagination: PaginationDTO?) throws -> BSANResponse<TransferEmittedListDTO> {
-        return BSANErrorResponse(nil)
-    }
-    
     func getEmittedTransferDetail(transferEmittedDTO: TransferEmittedDTO) throws -> BSANResponse<TransferEmittedDetailDTO> {
         return BSANErrorResponse(nil)
     }
     
     func loadEmittedTransferDetail(transferEmittedDTO: TransferEmittedDTO) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
-    }
-    
-    func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
         return BSANErrorResponse(nil)
     }
     

@@ -6,35 +6,42 @@
 //
 
 import CoreFoundationLib
-import UI
+import OpenCombine
+import RetailLegacy
 
 final class PaymentsPGFrequentOperativeOption {
     let trackName: String? = "enviar_dinero"
     let rawValue: String = "paymentsPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnPayments.rawValue
-    private let dependenciesResolver: DependenciesResolver
+    private let legacyDependenciesResolver: DependenciesResolver
+    private let dependencies: ModuleDependencies
     
-    init(dependenciesResolver: DependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    init(dependencies: ModuleDependencies) {
+        self.dependencies = dependencies
+        self.legacyDependenciesResolver = dependencies.resolve()
     }
 }
 
 extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
-        return .custom {
-            let useCase = CheckNewSendMoneyEnabledUseCase(dependenciesResolver: self.dependenciesResolver)
-            Scenario(useCase: useCase)
-                .execute(on: self.dependenciesResolver.resolve())
-                .onSuccess { [weak self] enabled in
-                    if enabled {
-                        self?.dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+        return .custom { [weak self] in
+            guard let self = self else { return }
+            self.checkNewSendMoneyHomeIsEnabled
+                .fetchEnabled()
+                .receive(on: Schedulers.main)
+                .sink { [unowned self] isEnabled in
+                    if isEnabled {
+                        self.dependencies.oneTransferHomeCoordinator().start()
                     } else {
-                        Toast.show(localized("generic_alert_notAvailableOperation"))
+                        self.sendMoneyCoordinator.start()
                     }
                 }
+                .store(in: &self.subscriptions)
         }
     }
-
+    
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
         let imageKey: String = "icnSendMoney"
         let titleKey: String = "frequentOperative_button_sendMoney"
@@ -47,12 +54,22 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
             )
         )
     }
-
+    
     func getEnabled() -> PGFrequentOperativeOptionEnabled {
         return .custom(enabled: { return true })
     }
-
+    
     func getLocation() -> String? {
         return nil
+    }
+}
+
+private extension PaymentsPGFrequentOperativeOption {
+    var checkNewSendMoneyHomeIsEnabled: CheckNewSendMoneyHomeEnabledUseCase {
+        return dependencies.resolve()
+    }
+    
+    var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {
+        return legacyDependenciesResolver.resolve()
     }
 }

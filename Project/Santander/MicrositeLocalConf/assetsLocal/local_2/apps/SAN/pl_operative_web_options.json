@@ -141,5 +141,14 @@
             "method": "POST",
             "isFullScreen": true
         }
+    ],
+    "send_money_options" : [
+       {
+          "id": "FEE_AND_CHARGES",
+          "url" : "https://www.santander.pl/przydatne-informacje/oplaty-i-prowizje",
+          "isAvailable": true,
+          "method": "POST",
+          "isFullScreen": true
+       }
     ]
 }
