@@ -201,7 +201,7 @@
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712718CC1199B6EE214A84E5 /* Pods_SantanderTests.framework */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A97543352784805B00400A0A /* PLCashLoanOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97543342784805A00400A0A /* PLCashLoanOperative.swift */; };
@@ -247,6 +247,8 @@
 		B7D59A3D27A00A8B00E2D777 /* SelectOptionButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3C27A00A8B00E2D777 /* SelectOptionButtonModel.swift */; };
 		B7D59A3F27A00E6900E2D777 /* PLSmallButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */; };
 		BA5B257027C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5B256F27C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift */; };
+		BAA2FF2A27F0BF7800A38456 /* PLOnboardingConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2FF2827F0BF7700A38456 /* PLOnboardingConfigurationTests.swift */; };
+		BAA2FF2B27F0BF7800A38456 /* OnboardingPermissionOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2FF2927F0BF7700A38456 /* OnboardingPermissionOptionsTests.swift */; };
 		BADCDAFA273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADCDAF9273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift */; };
 		BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */; };
 		BB19B25126E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */; };
@@ -282,8 +284,8 @@
 		DBD0EDF527983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0EDF427983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift */; };
 		EF0CDC0327C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CDC0227C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift */; };
 		EF0CDC0527C803D800FDA289 /* ModuleDependencies+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CDC0427C803D800FDA289 /* ModuleDependencies+Repository.swift */; };
-		EF2F1BBA27ED2B6C009872EF /* PLPrivateMenuTransferOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2F1BB927ED2B6C009872EF /* PLPrivateMenuTransferOption.swift */; };
 		EF2E562F27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E562E27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift */; };
+		EF2F1BBA27ED2B6C009872EF /* PLPrivateMenuTransferOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2F1BB927ED2B6C009872EF /* PLPrivateMenuTransferOption.swift */; };
 		EF430D5F271DD855001DC4B9 /* TranferTypeMatrixEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */; };
 		EF446B0C271DCA770074813A /* SendMoneyDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */; };
 		EF446B0E271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */; };
@@ -578,6 +580,8 @@
 		B7D59A3C27A00A8B00E2D777 /* SelectOptionButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOptionButtonModel.swift; sourceTree = "<group>"; };
 		B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSmallButtonType.swift; sourceTree = "<group>"; };
 		BA5B256F27C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetInternalTransferDestinationAccountsUseCase.swift; sourceTree = "<group>"; };
+		BAA2FF2827F0BF7700A38456 /* PLOnboardingConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOnboardingConfigurationTests.swift; sourceTree = "<group>"; };
+		BAA2FF2927F0BF7700A38456 /* OnboardingPermissionOptionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionOptionsTests.swift; sourceTree = "<group>"; };
 		BADCDAF9273D4C2C009FC953 /* PLValidateGenericSendMoneyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLValidateGenericSendMoneyUseCase.swift; sourceTree = "<group>"; };
 		BB19B24E26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaSectionsSecurityModifier.swift; sourceTree = "<group>"; };
 		BB19B25026E9FEEB000C1E83 /* PersonalAreaSectionsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalAreaSectionsProvider.swift; sourceTree = "<group>"; };
@@ -620,8 +624,8 @@
 		DD835DEA4BA5FD58BCDDB136 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
 		EF0CDC0227C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift; sourceTree = "<group>"; };
 		EF0CDC0427C803D800FDA289 /* ModuleDependencies+Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleDependencies+Repository.swift"; sourceTree = "<group>"; };
-		EF2F1BB927ED2B6C009872EF /* PLPrivateMenuTransferOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuTransferOption.swift; sourceTree = "<group>"; };
 		EF2E562E27DA43A400830CA2 /* OpinatorWebViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpinatorWebViewCoordinator.swift; sourceTree = "<group>"; };
+		EF2F1BB927ED2B6C009872EF /* PLPrivateMenuTransferOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuTransferOption.swift; sourceTree = "<group>"; };
 		EF430D5E271DD854001DC4B9 /* TranferTypeMatrixEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranferTypeMatrixEvaluator.swift; sourceTree = "<group>"; };
 		EF446B0B271DCA770074813A /* SendMoneyDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyDependencies.swift; sourceTree = "<group>"; };
 		EF446B0D271DCCA00074813A /* SendMoneyTransferTypeUseCaseInputAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeUseCaseInputAdapter.swift; sourceTree = "<group>"; };
@@ -672,6 +676,7 @@
 		04A66E7927D9DEB200EE107F /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				BAA2FF2727F0BF7700A38456 /* Onboarding */,
 				04A66E7A27D9DEB200EE107F /* TransferOperatives */,
 			);
 			path = Modifiers;
@@ -1017,7 +1022,6 @@
 			children = (
 				4535455727E47C440082D213 /* Onboarding */,
 				EF2E562D27DA43A400830CA2 /* Operative */,
-				A3DBFBD227CE052D004316D6 /* ZusSMETransfer */,
 				EFE9103C27CD4098006D8FF7 /* GlobalPosition */,
 				90B594FB27BE8A4A00719FEA /* TransferOperatives */,
 				B7BF53CF27A7E27200EDDE88 /* Menu */,
@@ -1081,7 +1085,6 @@
 			isa = PBXGroup;
 			children = (
 				04A66E7927D9DEB200EE107F /* Modifiers */,
-				4215A57227B538D800879EB1 /* SantanderTests.swift */,
 			);
 			path = SantanderTests;
 			sourceTree = "<group>";
@@ -1335,6 +1338,7 @@
 				66B3CFA72639C6C5000AAD0F /* Products */,
 				7B3C019BD872523CEA4DC1E6 /* Pods */,
 				342822218E46CAD9AC5F3560 /* Frameworks */,
+				BAA2FF2627F0BF6600A38456 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1520,23 +1524,6 @@
 				9CDAE3B32743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift */,
 			);
 			path = Usecases;
-			sourceTree = "<group>";
-		};
-		8D6C9AB627BBD96800AA6A42 /* Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-				8D6C9AB727BBD96F00AA6A42 /* Onboarding */,
-			);
-			path = Modifiers;
-			sourceTree = "<group>";
-		};
-		8D6C9AB727BBD96F00AA6A42 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				8D6C9AB827BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift */,
-				8D6C9ABA27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		903E5BF32799628F000BE389 /* Transfer */ = {
@@ -1769,6 +1756,25 @@
 				B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		BAA2FF2627F0BF6600A38456 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				8D6C9AB827BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift */,
+				8D6C9ABA27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		BAA2FF2727F0BF7700A38456 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				BAA2FF2827F0BF7700A38456 /* PLOnboardingConfigurationTests.swift */,
+				BAA2FF2927F0BF7700A38456 /* OnboardingPermissionOptionsTests.swift */,
+			);
+			name = Onboarding;
+			path = ../../../../../Desktop/Onboarding;
 			sourceTree = "<group>";
 		};
 		BB29664E26CFB38B0012599D /* PersonalArea */ = {
@@ -2224,16 +2230,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A66E8627D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift in Sources */,
-				4215A57327B538D800879EB1 /* SantanderTests.swift in Sources */,
 				04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */,
 				9092539F27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift in Sources */,
 				04A66E7E27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift in Sources */,
+				BAA2FF2B27F0BF7800A38456 /* OnboardingPermissionOptionsTests.swift in Sources */,
 				909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */,
 				909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */,
 				9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */,
 				04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */,
 				8D6C9AB927BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift in Sources */,
 				8D6C9ABB27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift in Sources */,
+				BAA2FF2A27F0BF7800A38456 /* PLOnboardingConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2242,7 +2249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -2473,7 +2480,6 @@
 				0D348BC82754D1590042B7A0 /* PLAccountAvailableBalanceModifier.swift in Sources */,
 				7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */,
 				04A66E9D27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift in Sources */,
-				A3DBFBDA27CE070D004316D6 /* ZusSmeExternalDependenciesResolver.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 				0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */,
 				7E1B7DE027216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift in Sources */,
