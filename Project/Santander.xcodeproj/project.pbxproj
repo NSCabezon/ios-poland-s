@@ -176,8 +176,6 @@
 		85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B5D270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift */; };
 		85E19B65270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E19B60270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift */; };
 		8D66B55127AD655A00A3CC41 /* PLOnboardingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D66B55027AD655A00A3CC41 /* PLOnboardingConfiguration.swift */; };
-		8D6C9AB927BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C9AB827BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift */; };
-		8D6C9ABB27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C9ABA27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift */; };
 		900EECE0273E784E00B7AD95 /* ConfirmPinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EECDF273E784E00B7AD95 /* ConfirmPinUseCase.swift */; };
 		903E5BF827996290000BE389 /* PLOneTransferHomeActionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E5BF62799628F000BE389 /* PLOneTransferHomeActionsCoordinator.swift */; };
 		903E5BF927996290000BE389 /* PLGetSendMoneyActionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */; };
@@ -504,8 +502,6 @@
 		85E19B60270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeUseCase.swift; sourceTree = "<group>"; };
 		8CAF3B50D254CC1A6D76F25D /* Pods-Santander.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-release.xcconfig"; sourceTree = "<group>"; };
 		8D66B55027AD655A00A3CC41 /* PLOnboardingConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLOnboardingConfiguration.swift; sourceTree = "<group>"; };
-		8D6C9AB827BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionOptionsTests.swift; sourceTree = "<group>"; };
-		8D6C9ABA27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLOnboardingConfigurationTests.swift; sourceTree = "<group>"; };
 		900EECDF273E784E00B7AD95 /* ConfirmPinUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPinUseCase.swift; sourceTree = "<group>"; };
 		903E5BF62799628F000BE389 /* PLOneTransferHomeActionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLOneTransferHomeActionsCoordinator.swift; sourceTree = "<group>"; };
 		903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetSendMoneyActionsUseCase.swift; sourceTree = "<group>"; };
@@ -1761,8 +1757,6 @@
 		BAA2FF2627F0BF6600A38456 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				8D6C9AB827BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift */,
-				8D6C9ABA27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -2238,8 +2232,6 @@
 				909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */,
 				9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */,
 				04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */,
-				8D6C9AB927BBD99700AA6A42 /* OnboardingPermissionOptionsTests.swift in Sources */,
-				8D6C9ABB27BBD9A600AA6A42 /* PLOnboardingConfigurationTests.swift in Sources */,
 				BAA2FF2A27F0BF7800A38456 /* PLOnboardingConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
