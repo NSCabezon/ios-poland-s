@@ -24,13 +24,13 @@ final class MobileContactsGrouper: MobileContactsGrouping {
             return firstCharacter.isLetter ? firstCharacter : nonLetterGroupingCharacter
         }
 
-        return contactsDictionary.map({$0}).sorted { lhs, rhs in
-            if rhs.0 == nonLetterGroupingCharacter {
+        return contactsDictionary.map({ GroupedMobileContactsSection(groupingCharacter: $0.key, contacts: $0.value) }).sorted { lhs, rhs in
+            if rhs.groupingCharacter == nonLetterGroupingCharacter {
                 return true
-            } else if lhs.0 == nonLetterGroupingCharacter {
+            } else if lhs.groupingCharacter == nonLetterGroupingCharacter {
                 return false
             } else {
-                return lhs.0 <= rhs.0
+                return lhs.groupingCharacter <= rhs.groupingCharacter
             }
         }
     }

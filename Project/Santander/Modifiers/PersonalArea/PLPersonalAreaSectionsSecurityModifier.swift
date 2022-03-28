@@ -5,19 +5,12 @@
 //  Created by Rubén Muñoz López on 8/9/21.
 //
 
-import Foundation
-import SANPLLibrary
 import CoreFoundationLib
 import PersonalArea
+import SANPLLibrary
 
 final class PLPersonalAreaSectionsSecurityModifier {
-    private let managersProvider: PLManagersProviderProtocol
-    private let dependenciesEngine: DependenciesResolver & DependenciesInjector
-
-    init(dependenciesEngine: DependenciesResolver & DependenciesInjector) {
-        self.managersProvider = dependenciesEngine.resolve(for: PLManagersProviderProtocol.self)
-        self.dependenciesEngine = dependenciesEngine
-    }
+    init() {}
 }
 
 extension PLPersonalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol {    

@@ -1,6 +1,13 @@
 {
     "accounts_options":[
         {
+            "id": "MAILBOX_MAIN",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/mailbox",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
             "id": "NEW_BBC_OFFER",
             "url" : "https://pluton2.centrum24.pl/centrum24-web/native/new-bbc-offer",
             "isAvailable": true,
@@ -256,5 +263,14 @@
             "method": "POST",
             "isFullScreen": true
         }
+    ],
+    "send_money_options" : [
+       {
+          "id": "FEE_AND_CHARGES",
+          "url" : "https://www.santander.pl/przydatne-informacje/oplaty-i-prowizje",
+          "isAvailable": true,
+          "method": "POST",
+          "isFullScreen": true
+       }
     ]
 }

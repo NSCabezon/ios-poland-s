@@ -149,6 +149,8 @@ public extension AcceptDomesticTransactionParameters {
         case PAYHUB_TRANSCTION
         case BLIK_P2PR_TRANSACTION
         case ONEAPP_ZUS_TRANSACTION
+        case ONEAPP_MOBILE_TRANSACTION
+        case ONEAPP_BLIK_P2P_TRANSACTION
     }
     
 }

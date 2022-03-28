@@ -8,9 +8,10 @@ import CoreDomain
 import SANLegacyLibrary
 
 public protocol PolandAccountRepresentable: AccountRepresentable {
-    var type: AccountForDebitTypeDTO? { get }
+    var type: AccountForPolandTypeDTO? { get }
     var sequencerNo: Int? { get }
     var accountType: Int? { get }
+    var currencyCode: String? { get }
 }
 
 struct AccountForDebitDTO: Codable {
@@ -18,7 +19,7 @@ struct AccountForDebitDTO: Codable {
     let id: String?
     let currencyCode: String?
     let name: AccountForDebitNameDTO?
-    let type: AccountForDebitTypeDTO?
+    let type: AccountForPolandTypeDTO?
     let balance: BalanceDTO?
     let availableFunds: BalanceDTO?
     let systemId: Int?
@@ -35,6 +36,8 @@ struct AccountForDebitNameDTO: Codable {
     let description: String?
     let userDefined: String?
 }
+
+
 
 struct AccountDetailsAccountForDebitDTO: Codable {
     let interestRateIndicator: String?

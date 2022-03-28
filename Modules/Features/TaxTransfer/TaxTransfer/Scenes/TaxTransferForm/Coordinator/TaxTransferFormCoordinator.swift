@@ -28,8 +28,10 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     )
     func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?
+        selectedTaxAuthority: TaxAuthority?,
+        taxSymbols: [TaxSymbol]
     )
+    func didAddTaxPayer(_ taxPayer: TaxPayer)
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
@@ -91,13 +93,15 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
     
     public func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?
+        selectedTaxAuthority: TaxAuthority?,
+        taxSymbols: [TaxSymbol]
     ) {
         let coordinator = TaxAuthoritySelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             taxAuthorities: taxAuthorities,
-            selectedTaxAuthority: selectedTaxAuthority
+            selectedTaxAuthority: selectedTaxAuthority,
+            taxSymbols: taxSymbols
         )
         coordinator.start()
     }
@@ -112,7 +116,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
 }
 
 extension TaxTransferFormCoordinator: TaxPayersListDelegate {
-    func didAddTaxPayer(_ taxPayer: TaxPayer) {
+    public func didAddTaxPayer(_ taxPayer: TaxPayer) {
         taxFormPresenter.didAddTaxPayer(taxPayer)
     }
 }
@@ -157,10 +161,6 @@ private extension TaxTransferFormCoordinator {
             )
         }
         
-        dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
-            return TaxTransferFormDataProvider(dependenciesResolver: resolver)
-        }
-        
         dependenciesEngine.register(for: TaxTransferAccountViewModelMapping.self) { _ in
             return TaxTransferAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
         }
@@ -197,6 +197,18 @@ private extension TaxTransferFormCoordinator {
 
         dependenciesEngine.register(for: TaxPayerViewModelMapping.self) { _ in
             return TaxPayerViewModelMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxSymbolMapping.self) { _ in
+            return TaxSymbolMapper()
+        }
+        
+        dependenciesEngine.register(for: GetTaxSymbolsUseCaseProtocol.self) { resolver in
+            return GetTaxSymbolsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
+            return TaxTransferFormDataProvider(dependenciesResolver: resolver)
         }
     }
 }

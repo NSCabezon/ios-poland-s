@@ -71,6 +71,10 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
             presenter.view = viewController
             return viewController
         }
+        
+        self.dependenciesEngine.register(for: GetPhoneTopUpFormDataUseCaseProtocol.self) { resolver in
+            return GetPhoneTopUpFormDataUseCase(dependenciesResolver: resolver)
+        }
     }
     
     // MARK: Methods

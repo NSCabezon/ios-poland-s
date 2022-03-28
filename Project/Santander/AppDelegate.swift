@@ -18,10 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let dependenciesEngine = appDependencies.dependencieEngine
-        let drawer = BaseMenuViewController(legacyResolver: dependenciesEngine)
-        let moduleDependencies = ModuleDependencies(oldResolver: dependenciesEngine, drawer: drawer)
-        self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: dependenciesEngine, coreDependenciesResolver: moduleDependencies)
+        let legacyDependenciesEngine = appDependencies.dependencieEngine
+        let localAppConfig = legacyDependenciesEngine.resolve(for: LocalAppConfig.self)
+        let drawer = BaseMenuViewController(isPrivateSideMenuEnabled: localAppConfig.privateMenu)
+        let moduleDependencies = ModuleDependencies(oldResolver: legacyDependenciesEngine, drawer: drawer)
+        _ = AppModifiers(dependencies: moduleDependencies)
+        self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: legacyDependenciesEngine, coreDependenciesResolver: moduleDependencies)
         application.applicationSupportsShakeToEdit = false
         self.window = UIWindow()
         self.window?.rootViewController = drawer
@@ -29,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.legacyAppDelegate?.application(application, didFinishLaunchingWithOptions: launchOptions)
         AppNavigationDependencies(
             drawer: drawer,
-            dependenciesEngine: dependenciesEngine,
+            dependenciesEngine: legacyDependenciesEngine,
             moduleDependencies: moduleDependencies
         ).registerDependencies()
         notificationsHandler.startServices()

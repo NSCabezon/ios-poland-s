@@ -5,18 +5,39 @@
 //  Created by Jose Javier Montes Romero on 6/10/21.
 //
 
-import CoreDomain
 import SANLegacyLibrary
+import OpenCombine
+import CoreDomain
 
 struct TransfersDataRepository: PLTransfersRepository {
 
     let bsanTransferManager: PLTransfersManagerProtocol
     
-    func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
+    func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
         let response = try bsanTransferManager.getAccountsForDebit()
         switch response {
         case .success(let accounts):
             return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
+        let response = try bsanTransferManager.getAccountsForCredit()
+        switch response {
+        case .success(let accounts):
+            return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        let response = try bsanTransferManager.sendConfirmation(input)
+        switch response {
+        case .success(let confirmationTransferDTO):
+            return .success(confirmationTransferDTO)
         case .failure(let error):
             return .failure(error)
         }
@@ -125,9 +146,44 @@ struct TransfersDataRepository: PLTransfersRepository {
             return .failure(error)
         }
     }
-
+    
+    func getAllTransfersReactive(accounts: [AccountRepresentable]?) -> AnyPublisher<[TransferRepresentable], Error> {
+        return Future { promise in
+            do {
+                promise(try getAllTransfers(accounts: accounts))
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     func getTransferDetail(transfer: TransferRepresentable) throws -> Result<TransferRepresentable, Error> {
         return .success(transfer)
+    }
+    
+    func loadAllUsualTransfers() -> AnyPublisher<[PayeeRepresentable], Error> {
+        Future { promise in
+            let parameters = GetPayeesParameters(recCunt: nil)
+            do {
+                let result = try self.bsanTransferManager.getPayees(parameters)
+                switch result {
+                case .success(let response):
+                    promise(.success(response))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
+        return Empty()
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
     
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
@@ -148,5 +204,22 @@ struct TransfersDataRepository: PLTransfersRepository {
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+        Future { promise in
+            do {
+                let result = try self.bsanTransferManager.getExchangeRates()
+                switch result {
+                case .success(let response):
+                    promise(.success(response.exchangeRates))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }

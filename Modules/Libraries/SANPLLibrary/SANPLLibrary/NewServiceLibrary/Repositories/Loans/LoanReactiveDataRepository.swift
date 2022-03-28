@@ -9,14 +9,21 @@ import Foundation
 import CoreDomain
 import OpenCombine
 import CoreFoundationLib
+import SANLegacyLibrary
+
+public protocol PLLoansManagerAdapterProtocol {
+    func getLoanTransactionDetail(contractDescription: String?, transactionNumber: String?) throws -> BSANResponse<LoanTransactionDetailDTO>
+}
 
 final class LoanReactiveDataRepository {
     private let loanDataSource: LoanDataSourceProtocol
     private let bsanDataProvider: BSANDataProvider
+    private let loansManager: PLLoansManagerAdapterProtocol
     
-    public init(bsanDataProvider: BSANDataProvider, networkProvider: NetworkProvider) {
+    public init(bsanDataProvider: BSANDataProvider, networkProvider: NetworkProvider, loansManager: PLLoansManagerAdapterProtocol) {
         self.loanDataSource = LoanDataSource(networkProvider: networkProvider, dataProvider: bsanDataProvider)
         self.bsanDataProvider = bsanDataProvider
+        self.loansManager = loansManager
     }
 }
 
@@ -44,6 +51,21 @@ extension LoanReactiveDataRepository: LoanReactiveRepository {
                 do {
                     let parameters = self.getLoanTransactionParameters(filters: filters)
                     let result = try self.getTransactions(loan: loan, parameters: parameters).get()
+                    promise(.success(result))
+                } catch let error {
+                    promise(.failure(error))
+                }
+            }
+        }.eraseToAnyPublisher()
+    }
+    
+    public func loadTransactionDetail(transaction: LoanTransactionRepresentable, loan: LoanRepresentable) -> AnyPublisher<LoanTransactionDetailRepresentable, Error> {
+        
+        return Future<LoanTransactionDetailRepresentable, Error> { promise in
+            Async(queue: .global(qos: .background)) {
+                do {
+                    let result = try self.getLoanTransactionDetail(forLoan: loan,
+                                                              transaction: transaction)
                     promise(.success(result))
                 } catch let error {
                     promise(.failure(error))
@@ -89,6 +111,16 @@ private extension LoanReactiveDataRepository {
         self.processTransactionResult(accountNumber, result: result)
         return result
     }
+    
+    func getLoanTransactionDetail(forLoan loan: LoanRepresentable, transaction: LoanTransactionRepresentable) throws -> LoanTransactionDetailRepresentable {
+        let response = try loansManager.getLoanTransactionDetail(contractDescription: loan.contractDescription,
+                                                                 transactionNumber: transaction.transactionNumber)
+        guard let result = try response.getResponseData() else {
+            throw SomeError()
+        }
+        return result
+    }
+
 
     func getInstallments(accountId: String, parameters: LoanInstallmentsParameters?) throws -> Result<LoanInstallmentsListDTO, NetworkProviderError> {
         let result = try self.loanDataSource.getInstallments(accountId: accountId, parameters: parameters)

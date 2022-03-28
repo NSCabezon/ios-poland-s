@@ -52,14 +52,16 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
                     .alerts24,
                     .viewStatements,
                     .cancelCard,
-                    .creditLimitIncrease:
+                    .creditLimitIncrease,
+                    .cardActivation:
                 self.openWebViewIfProceeds(for: identifier,
                                               entity: entity)
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
                 return
             }
-            
+        case .enable:
+            self.openWebViewIfProceeds(for: .cardActivation, entity: entity)
         default:
             Toast.show(localized("generic_alert_notAvailableOperation"))
         }

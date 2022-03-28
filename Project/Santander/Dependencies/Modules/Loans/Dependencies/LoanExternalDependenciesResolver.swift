@@ -28,7 +28,23 @@ extension ModuleDependencies: LoanExternalDependenciesResolver {
         return LoanCustomeOptionCoordinator(dependencies: self)
     }
     
+    func resolve() -> GetLoanTransactionDetailConfigurationUseCase {
+        return PLGetLoanTransactionDetailConfigurationUseCase()
+    }
+    
+    func resolve() -> GetLoanTransactionDetailActionUseCase {
+        return PLGetLoanTransactionDetailConfigurationUseCase()
+    }
+
+    func resolve() -> GetLoanPDFInfoUseCase {
+        return PLGetLoanPDFInfoUseCase(dependenciesResolver: resolve())
+    }
+
     func resolve() -> LoanDetailConfigRepresentable {
         return LoanDetailConfig()
+    }
+    
+    func resolve() -> GetLoanTransactionSearchConfigUseCase {
+        return PLGetLoanTransactionSearchConfigUseCase()
     }
 }

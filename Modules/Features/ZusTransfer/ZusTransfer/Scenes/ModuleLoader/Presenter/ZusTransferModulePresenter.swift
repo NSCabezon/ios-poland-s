@@ -7,6 +7,7 @@ import CoreFoundationLib
 protocol ZusTransferModulePresenterProtocol: AnyObject {
     var view: ZusTransferModuleViewProtocol? { get set }
     func viewDidLoad()
+    func close()
 }
 
 final class ZusTransferModulePresenter {
@@ -36,7 +37,10 @@ extension ZusTransferModulePresenter: ZusTransferModulePresenterProtocol {
             guard let self = self else { return }
             self.view?.hideLoader(completion: {
                 if accounts.isEmpty {
-                    self.showErrorView()
+                    self.view?.showEmptyAccountsDialog(
+                        title: localized("pl_popup_noSourceAccTitle"),
+                        description: localized("pl_popup_noSourceAccParagraph")
+                    )
                     return
                 }
                 if accounts.contains(where: { $0.defaultForPayments == true }) || accounts.count == 1 {
@@ -54,7 +58,13 @@ extension ZusTransferModulePresenter: ZusTransferModulePresenterProtocol {
         }
     }
     
-    private func showErrorView() {
+    func close() {
+        coordinator?.close()
+    }
+}
+
+private extension ZusTransferModulePresenter {
+    func showErrorView() {
         view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
             self?.coordinator?.close()
         })

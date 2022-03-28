@@ -32,7 +32,4 @@ Pod::Spec.new do |s|
   s.dependency "Operative"
   s.dependency "PLCryptography"
   s.dependency "PLCommonOperatives"
-  s.dependency 'OpenCombine', '~> 0.12.0'
-  s.dependency 'OpenCombineDispatch', '~> 0.12.0'
-  s.dependency 'OpenCombineFoundation', '~> 0.12.0'
 end

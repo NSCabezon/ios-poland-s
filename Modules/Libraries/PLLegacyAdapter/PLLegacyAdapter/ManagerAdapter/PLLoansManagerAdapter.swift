@@ -10,10 +10,6 @@ import SANPLLibrary
 import CoreDomain
 import CoreFoundationLib
 
-public protocol PLLoansManagerAdapterProtocol {
-    func getLoanTransactionDetail(contractDescription: String?, transactionNumber: String?) throws -> BSANResponse<LoanTransactionDetailDTO>
-}
-
 final class PLLoansManagerAdapter {
 
     private let bsanDataProvider: BSANDataProvider
@@ -37,7 +33,7 @@ extension PLLoansManagerAdapter: PLLoansManagerAdapterProtocol {
         return BSANOkResponse(adaptedLoanTransactionDetail)
     }
 }
- 
+
 extension PLLoansManagerAdapter: BSANLoansManager {
 
     func getLoanTransactions(forLoan loan: SANLegacyLibrary.LoanDTO, dateFilter: DateFilter?, pagination: PaginationDTO?) throws -> BSANResponse<SANLegacyLibrary.LoanTransactionsListDTO> {
