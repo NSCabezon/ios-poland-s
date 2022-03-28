@@ -8,6 +8,7 @@
 import CoreFoundationLib
 import PLScenes
 import UI
+import PLUI
 
 protocol TaxPayersListDelegate: AnyObject {
     func didAddTaxPayer(_ taxPayer: TaxPayer)
@@ -65,7 +66,10 @@ final class TaxPayersListCoordinator: ModuleCoordinator {
         }
     }
     
-    private func handleSelectionItem(_ taxPayerViewModel: TaxTransferFormViewModel.TaxPayerViewModel) {
+    private func handleSelectionItem(
+        _ taxPayerViewModel: TaxTransferFormViewModel.TaxPayerViewModel,
+        in presenter: (LoaderPresentable & ConfirmationDialogPresentable)
+    ) {
         switch taxPayerViewModel.taxPayerSecondaryIdentifier {
         case .available:
             if taxPayerViewModel.hasDifferentTaxIdentifiers {
@@ -164,6 +168,7 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
         let coordinator = AddTaxPayerFormCoordinator(
             dependenciesResolver: dependenciesEngine,
             taxPayers: taxPayers,
+            coordinator: taxFormCoordinator,
             delegate: self,
             navigationController: navigationController
         )
@@ -184,6 +189,8 @@ private extension TaxPayersListCoordinator {
     var mapper: TaxPayerViewModelMapping {
         dependenciesEngine.resolve()
     }
+    
+    var taxFormCoordinator: TaxTransferFormCoordinatorProtocol {
+        dependenciesEngine.resolve()
+    }
 }
-
-

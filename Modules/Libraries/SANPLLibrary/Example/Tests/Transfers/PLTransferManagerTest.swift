@@ -115,7 +115,7 @@ class PLTransferManagerTest: Tests {
         self.setUpDemoUser()
         let iban = IBANDTO(countryCode: "PL", checkDigits: "12", codBban: "109010430000000142742925")
         let amount = AmountDTO(value: 12, currency: CurrencyDTO(currencyName: "PLN", currencyType: .złoty))
-        let inputParameters = CheckFinalFeeInput(originAccount: iban, amount: amount)
+        let inputParameters = CheckFinalFeeInput(originAccount: iban, amount: amount, servicesAvailable: "")
         let result = try? transferManager.checkFinalFee(inputParameters)
         switch result {
         case .success(let response):
@@ -130,7 +130,7 @@ class PLTransferManagerTest: Tests {
     
     func test_confirmTransfer_shouldReturOkResonse() {
         self.setUpDemoUser()
-        let parameters: GenericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: nil, debitAmountData: nil, creditAmountData: nil, debitAccountData: nil, creditAccountData: nil, signData: nil, title: nil, type: nil, transferType: nil)
+        let parameters: GenericSendMoneyConfirmationInput = GenericSendMoneyConfirmationInput(customerAddressData: nil, debitAmountData: nil, creditAmountData: nil, debitAccountData: nil, creditAccountData: nil, signData: nil, title: nil, type: nil, transferType: nil, valueDate: nil)
         let result = try? transferManager.sendConfirmation(parameters)
         switch result {
         case .success(let response):

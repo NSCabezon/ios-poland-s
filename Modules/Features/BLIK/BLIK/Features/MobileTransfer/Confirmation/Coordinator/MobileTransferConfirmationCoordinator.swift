@@ -52,6 +52,10 @@ private extension MobileTransferConfirmationCoordinator {
         self.dependenciesEngine.register(for: GetIndividualProtocol.self) { resolver in
             return GetIndividualUseCase(dependencyResolver: resolver)
         }
+        
+        self.dependenciesEngine.register(for: MobileTransferSendMoneyInputMapping.self) { resolver in
+            return MobileTransferSendMoneyInputMapper(dependenciesResolver: resolver)
+        }
     }
 }
 

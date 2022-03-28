@@ -38,6 +38,7 @@ extension AddTaxPayerFormPresenter: AddTaxPayerPresenterFormProtocol {
     func handleSelectedTaxIdentifier(item: TaxIdentifierType) {
         selectedTaxIdentifier = item
         view?.setUp(with: getSelectableIdentifierType())
+        refreshButtonView()
     }
     
     func didPressBack() {
@@ -56,8 +57,10 @@ extension AddTaxPayerFormPresenter: AddTaxPayerPresenterFormProtocol {
     }
     
     func didTapDone() {
-        guard let taxPayer = getTaxPayer() else { return }
-        coordinator.didTapDone(with: taxPayer)
+        if isValid() {
+            guard let taxPayer = getTaxPayer() else { return }
+            coordinator.didTapDone(with: taxPayer)
+        }
     }
 }
 
@@ -70,7 +73,8 @@ extension AddTaxPayerFormPresenter: AddTaxPayerViewDelegate {
     }
     
     func didEndEditing() {
-        validate()
+        _ = isValid()
+        refreshButtonView()
     }
 }
 
@@ -79,15 +83,17 @@ private extension AddTaxPayerFormPresenter {
         return dependenciesResolver.resolve()
     }
     
-    func validate() {
-        guard let form = view?.getForm() else { return }
+    func isValid() -> Bool {
+        guard let form = view?.getForm() else { return false }
         let validator = AddTaxPayerFormValidator(type: form.identifierType)
         
         switch validator.validate(form) {
         case .valid:
             view?.clearValidationMessages()
+            return true
         case let .invalid(messages):
             view?.showInvalidFormMessages(messages)
+            return false
         }
     }
     
@@ -122,6 +128,11 @@ private extension AddTaxPayerFormPresenter {
             taxIdentifier: nil,
             secondaryTaxIdentifierNumber: form.identifierNumber,
             idType: mapper.map(form.identifierType))
+    }
+    
+    func refreshButtonView() {
+        guard let form = view?.getForm() else { return }
+        view?.setUp(isEmpty: form.isEmpty)
     }
 }
 

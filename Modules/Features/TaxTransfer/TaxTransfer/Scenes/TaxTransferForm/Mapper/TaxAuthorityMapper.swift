@@ -31,12 +31,15 @@ final class TaxAuthorityMapper: TaxAuthorityMapping {
             throw Error.missingData
         }
         
+        let accountNumberWithoutCountryCodePrefix = accountNumber
+            .components(separatedBy: CharacterSet.decimalDigits.inverted)
+            .joined()
         return TaxAuthority(
             id: identifier,
             name: name,
-            accountNumber: accountNumber,
+            accountNumber: accountNumberWithoutCountryCodePrefix,
             address: payee.account?.address,
-            taxAccountType: try taxAccountTypeRecognizer.recognizeType(of: accountNumber)
+            taxAccountType: try taxAccountTypeRecognizer.recognizeType(of: accountNumberWithoutCountryCodePrefix)
         )
     }
 }

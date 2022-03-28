@@ -10,6 +10,7 @@ import UI
 
 public enum PLAccountOperativeIdentifier: String, Codable {
     
+    case mailboxMain = "MAILBOX_MAIN"
     case transfer = "SEND_MONEY_FROM_SRC"
     case details = "ACCOUNT_DETAILS"
     case addBanks = "ADD_BANKS"
@@ -76,6 +77,8 @@ public enum PLAccountOperativeIdentifier: String, Codable {
             return "icnDetail"
         case .transfer:
             return "icnSendMoney"
+        case .mailboxMain:
+            return "icnMailbox"
         }
     }
     
@@ -123,6 +126,8 @@ public enum PLAccountOperativeIdentifier: String, Codable {
             return "accountOption_button_detail"
         case .transfer:
             return "accountOption_button_transfer"
+        case .mailboxMain:
+            return "accountOption_button_mailbox"
         }
     }
     

@@ -6,9 +6,9 @@
 //
 
 import CoreFoundationLib
+import CoreDomain
 import PLCommons
 import os
-import CoreDomain
 
 protocol PLTrustedDeviceSuccessPresenterProtocol: MenuTextWrapperProtocol {
     var view: PLTrustedDeviceSuccessViewProtocol? { get set }

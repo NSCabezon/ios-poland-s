@@ -6,11 +6,11 @@
 //
 
 import CoreFoundationLib
-import UI
 import SANLegacyLibrary
 import LoginCommon
-import PLCommons
 import CoreDomain
+import PLCommons
+import UI
 
 protocol PLRememberedLoginPinCoordinatorProtocol: PLLoginCoordinatorProtocol {
     func loadUnrememberedLogin()

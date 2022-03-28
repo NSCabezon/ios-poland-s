@@ -90,11 +90,18 @@ private extension PLCardActionFactory {
             return .offCard
         case .cardDetails:
             return .detail
-        case .sendMoneyFromSrc,
-                .history:
+        case .history:
             return nil
-        case .activate,
-                .alerts24,
+        case .activate, .cardActivation:
+            guard let values = actionIdentifier.customCardActionValues() else { return nil }
+            let customAction: CardActionType = .custome(CustomCardActionValues(identifier: PLCardActionIdentifier.cardActivation.rawValue,
+                                                                               localizedKey: values.localizedKey,
+                                                                               icon: values.icon,
+                                                                               section: values.section,
+                                                                               location: "",
+                                                                               isDisabled: { _ in return isDisabled }))
+            return customAction
+        case .alerts24,
                 .atmPackage,
                 .blockedFunds,
                 .cancelCard,
@@ -108,6 +115,7 @@ private extension PLCardActionFactory {
                 .multicurrency,
                 .offer,
                 .repayment,
+                .sendMoneyFromSrc,
                 .useAbroad,
                 .viewCvv,
                 .viewStatements:

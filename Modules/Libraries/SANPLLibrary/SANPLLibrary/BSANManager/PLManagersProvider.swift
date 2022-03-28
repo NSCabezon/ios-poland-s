@@ -3,6 +3,7 @@
 //  SanPLLibrary
 
 import Foundation
+import OpenCombine
 
 /// Note: Please add also extension method (at the bottom) that returns fatal error when adding new Manager
 public protocol PLManagersProviderProtocol {
@@ -30,6 +31,10 @@ public protocol PLManagersProviderProtocol {
     func getTaxTransferManager() -> PLTaxTransferManagerProtocol
     func getHistoryManager() -> PLHistoryManagerProtocol
     func getExpensesChartManager() -> PLExpensesChartManagerProtocol
+}
+
+public protocol PLManagersProviderReactiveProtocol {
+    func getHistoryManager() -> AnyPublisher<PLHistoryManagerProtocol, Never>
 }
 
 public final class PLManagersProvider {
@@ -273,5 +278,11 @@ public extension PLManagersProviderProtocol {
     
     func getOperationsProductsManager() -> PLOperationsProductsManagerProtocol {
         fatalError("Missing manager implementation")
+    }
+}
+
+extension PLManagersProvider: PLManagersProviderReactiveProtocol {
+    public func getHistoryManager() -> AnyPublisher<PLHistoryManagerProtocol, Never> {
+        return Just(historyManager).eraseToAnyPublisher()
     }
 }

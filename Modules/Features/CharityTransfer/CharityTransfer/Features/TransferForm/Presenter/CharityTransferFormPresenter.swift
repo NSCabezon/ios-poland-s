@@ -9,7 +9,6 @@ protocol CharityTransferFormPresenterProtocol {
     func didSelectClose()
     func didSelectCloseProcess()
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
-    func getSelectedAccountNumber() -> String
     func getCharityTransferSettings() -> CharityTransferSettings
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel)
@@ -64,10 +63,6 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel] {
         let selectebleAccountViewModels = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         return selectebleAccountViewModels
-    }
-    
-    func getSelectedAccountNumber() -> String {
-        selectedAccountNumber
     }
     
     func getCharityTransferSettings() -> CharityTransferSettings {

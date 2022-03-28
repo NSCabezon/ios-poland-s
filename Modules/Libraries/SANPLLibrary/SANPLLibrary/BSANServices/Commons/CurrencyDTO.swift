@@ -17,4 +17,8 @@ struct CurrencyDTO {
     }
 }
 
-extension CurrencyDTO: CurrencyRepresentable {}
+extension CurrencyDTO: CurrencyRepresentable {
+    public var currencyCode: String {
+        return self.currencyType.rawValue
+    }
+}

@@ -5,16 +5,18 @@
 //  Created by Mario Rosales Maillo on 13/12/21.
 //
 
-import Foundation
 import CoreFoundationLib
-import UI
 import PLHelpCenter
+import RetailLegacy
+import UI
 
 final class PLPrivateMenuModifier: PrivateMenuProtocol {
-    private var dependenciesResolver: DependenciesResolver
+    private var legacyDependenciesResolver: DependenciesResolver
+    private var dependencies: ModuleDependencies
     
-    public init(resolver: DependenciesResolver) {
-        self.dependenciesResolver = resolver
+    public init(dependencies: ModuleDependencies) {
+        self.legacyDependenciesResolver = dependencies.resolve()
+        self.dependencies = dependencies
     }
     
     func goToPaymentsLandingPage() {
@@ -30,7 +32,7 @@ final class PLPrivateMenuModifier: PrivateMenuProtocol {
     }
     
     func goToHelpCenterPage() {
-        dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
+        legacyDependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
     }
 }
 

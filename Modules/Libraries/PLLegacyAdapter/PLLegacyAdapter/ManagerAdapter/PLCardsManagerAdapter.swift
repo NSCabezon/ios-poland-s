@@ -474,7 +474,7 @@ private extension PLCardsManagerAdapter {
             self.bsanDataProvider.storeCardPagination(cardKey, resetCardPagination)
         }
         
-        let transactions = cardTransactionsManager.loadCardTransactions(cardId: cardId,
+        let transactions = try? cardTransactionsManager.loadCardTransactions(cardId: cardId,
                                                                               pagination: cardPagination,
                                                                               searchTerm: searchTerm,
                                                                               startDate: dateFilter?.fromDateModel?.stringReverseWithDashSeparator,

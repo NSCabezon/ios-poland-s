@@ -7,8 +7,8 @@
 
 import CoreFoundationLib
 import SANPLLibrary
-import PLCommons
 import CoreDomain
+import PLCommons
 
 final class PLGetGlobalPositionOptionUseCase: UseCase<Void, GetGlobalPositionOptionUseCaseOkOutput, PLUseCaseErrorOutput<LoginErrorType>> {
     private let dependenciesResolver: DependenciesResolver

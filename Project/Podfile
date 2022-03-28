@@ -17,6 +17,7 @@ def core_dependencies
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
+  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
@@ -36,8 +37,10 @@ def core_dependencies
   pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
   pod 'Localization', :path => '../santander-one/Localization'
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
-  pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives'
+  pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
+  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
 end
 
 def legacy_libraries
@@ -71,6 +74,7 @@ def pl_features
   pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
   pod 'Authorization', :path => '../Modules/Features/Authorization'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
+  pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
 end
 
 def pl_libraries
