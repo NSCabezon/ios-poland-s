@@ -21,4 +21,8 @@ public class PLInternalTransferAmountModifier: InternalTransferAmountModifierPro
         let regexCons = "[a-zA-Z0-9ąć ęłńóśźżĄĆĘŁŃÓŚŹŻ`!@#$%^&*()_+-=\\[\\]{};:,.?/–\\\\]+$"
         return try? NSRegularExpression(pattern: regexCons)
     }
+    
+    public var inputDescriptionKey: String? {
+        return "transfer_label_transferOwnAccount"
+    }
 }

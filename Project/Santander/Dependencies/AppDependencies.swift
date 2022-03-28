@@ -157,6 +157,9 @@ final class AppDependencies {
     private lazy var pfmController: PfmControllerProtocol = {
        return DefaultPFMController()
     }()
+    private lazy var bankingUtils: BankingUtils = {
+        return BankingUtils(dependencies: dependencieEngine)
+    }()
 
     // MARK: Dependencies init
     init() {
@@ -312,8 +315,8 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: OpinatorInfoOptionProtocol.self) { _ in
             PLOpinatorInfoOption()
         }
-        self.dependencieEngine.register(for: BankingUtilsProtocol.self) { resolver in
-            BankingUtils(dependencies: resolver)
+        self.dependencieEngine.register(for: BankingUtilsProtocol.self) { _ in
+            return self.bankingUtils
         }
         self.dependencieEngine.register(for: PersonalDataModifier.self) { _ in
             PLPersonalDataModifier()
