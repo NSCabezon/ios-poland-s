@@ -14,7 +14,7 @@ struct PLBigButtonType: BigButtonTypeRepresentable {
     
     init(fontSize: CGFloat) {
         self.font = UIFont.santander(size: fontSize)
-        self.lineBreakMode = .byTruncatingTail
+        self.lineBreakMode = .byWordWrapping
         self.numberOfLines = 2
         self.minimumScaleFactor = nil
     }
