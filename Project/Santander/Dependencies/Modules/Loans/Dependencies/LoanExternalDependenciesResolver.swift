@@ -21,7 +21,7 @@ extension ModuleDependencies: LoanExternalDependenciesResolver {
     }
     
     func resolve() -> GetLoanOptionsUsecase {
-        return PLGetLoanOptionsUsecase(resolver: resolve())
+        return PLGetLoanOptionsUsecase()
     }
     
     func loanCustomeOptionCoordinator() -> BindableCoordinator {

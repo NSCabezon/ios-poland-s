@@ -12,7 +12,6 @@ import Foundation
 import CoreDomain
 import LoanSchedule
 import RetailLegacy
-import PersonalArea
 
 final class LoanCustomeOptionCoordinator: BindableCoordinator {
     var onFinish: (() -> Void)?
@@ -36,8 +35,6 @@ final class LoanCustomeOptionCoordinator: BindableCoordinator {
             didSelectCustomerService()
         case "loansOption_button_loanSchedule":
             didSelectLoanSchedule()
-        case "change_alias":
-            goToChangeAlias()
         default:
             Toast.show(localized("generic_alert_notAvailableOperation"))
         }
@@ -78,10 +75,5 @@ private extension LoanCustomeOptionCoordinator {
         let coordinator = self.legacyDependenciesResolver.resolve(for: LoanScheduleModuleCoordinator.self)
         let schedule = LoanScheduleIdentity(loanAccountNumber: loanEntity?.dto.contractDescription ?? "", loanName: loanEntity?.alias ?? "")
         coordinator.start(with: schedule)
-    }
-    
-    func goToChangeAlias() {
-        let coordinator = legacyDependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
-        coordinator.goToGPProductsCustomization()
     }
 }
