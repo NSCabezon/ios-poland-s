@@ -68,7 +68,7 @@ final class PLAuthorizationPresenter {
 
 private extension PLAuthorizationPresenter {
     func evaluateBiometryAccess() {
-        let type = self.getBiometryTypeAvailable()
+        let type = self.localAuthentication.biometryTypeAvailable
         guard type != .none else {
             self.onBiometryError()
             return
@@ -105,10 +105,6 @@ private extension PLAuthorizationPresenter {
         }
         self.showGenericError()
     }
-    
-    func getBiometryTypeAvailable() -> BiometryTypeEntity {
-        return self.localAuthentication.biometryTypeAvailable
-    }
 }
 
 private extension PLAuthorizationPresenter {
@@ -126,11 +122,15 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
         let remainingTimeViewModel = RemainingTimeViewModel(totalTime: Constants.totalTime)
         self.view?.addRemainingTimeView(remainingTimeViewModel)
         self.view?.addInputSignatureView()
-        self.addInputBiometryView()
+        self.shouldShowBiometryView { [weak self] showBiometry in
+            if showBiometry {
+                self?.addInputBiometryView()
+            }
+        }
     }
     
     func addInputBiometryView() {
-        let biometryAvailable = self.getBiometryTypeAvailable()
+        let biometryAvailable = self.localAuthentication.biometryTypeAvailable
         switch biometryAvailable {
         case .error(biometry: _, error: _), .none: return
         case .faceId, .touchId:
@@ -172,6 +172,14 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
 private extension PLAuthorizationPresenter {
     var coordinator: PLAuthorizationCoordinatorProtocol {
         self.dependenciesResolver.resolve(for: PLAuthorizationCoordinatorProtocol.self)
+    }
+
+    func shouldShowBiometryView(completion: @escaping (Bool) -> Void) {
+        Scenario(useCase: self.getStoredUserKey)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { output in
+                completion(output.encryptedUserKeyBiometrics?.count ?? 0 > 0)
+            }
     }
     
     func getRandomKey(_ accessType: AccessType?) {

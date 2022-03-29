@@ -37,10 +37,22 @@ class CustomPushNotificationViewController: UIViewController, WKUIDelegate {
     }   
 }
 
-extension CustomPushNotificationViewController: CustomPushNotificationViewProtocol {
-   
-    func openHtml(_ html: String) {        
-        self.webView.loadHTMLString(html, baseURL: nil)
+extension CustomPushNotificationViewController: CustomPushNotificationViewProtocol {    
+    func openHtml(_ html: String) {
+        let htmlWithStyle = """
+            <!DOCTYPE html>\
+            <html>\
+            <head>\
+            <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\
+            <meta name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;'>\
+            </head>\
+            <body>\
+            <p>\(html)</p>\
+            <style>* { font-size: 14px; font-family: TrebuchetMS }</style>
+            </body>\
+            </html>
+            """
+        self.webView.loadHTMLString(htmlWithStyle, baseURL: Bundle.module?.bundleURL)
     }
     
     @objc func close() {

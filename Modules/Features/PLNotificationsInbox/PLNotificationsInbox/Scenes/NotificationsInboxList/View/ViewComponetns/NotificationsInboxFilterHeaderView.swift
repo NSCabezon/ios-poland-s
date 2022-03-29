@@ -27,7 +27,8 @@ class NotificationsInboxFilterHeaderView: UIView {
     
     func updateUnreadedMessagesLabel(unreadedMessagesCount: Int?) {
         if let unreadedMessagesCount = unreadedMessagesCount {
-            unreadedMessagesLabel.text = "\(localized("pl_alerts_text_unreadCheckBox")) (\(unreadedMessagesCount))"
+            let count = unreadedMessagesCount > 99 ? "99+" : "\(unreadedMessagesCount)"
+            unreadedMessagesLabel.text = "\(localized("pl_alerts_text_unreadCheckBox")) (\(count))"
         } else {
             unreadedMessagesLabel.text = "-"
         }
