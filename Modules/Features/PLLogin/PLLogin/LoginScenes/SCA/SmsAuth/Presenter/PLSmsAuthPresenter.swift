@@ -6,13 +6,13 @@
 //
 
 import CoreFoundationLib
-import PLCommons
-import LoginCommon
-import SANPLLibrary
 import PLLegacyAdapter
+import SANPLLibrary
+import LoginCommon
+import CoreDomain
+import PLCommons
 import Security
 import os
-import CoreDomain
 
 protocol PLSmsAuthPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLSmsAuthViewProtocol? { get set }

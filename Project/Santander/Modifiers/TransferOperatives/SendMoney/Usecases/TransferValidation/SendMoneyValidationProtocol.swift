@@ -42,8 +42,8 @@ private extension SendMoneyValidationProtocol {
         else {
             return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil)))
         }
-        let transferType: String? = self.dependenciesResolver.resolve(forOptionalType: SendMoneyModifierProtocol.self)?.transferTypeFor(onePayType: requestValues.type, subtype: requestValues.selectedTransferType?.type.serviceString ?? "")
-        let amountData = ItAmountDataParameters(currency: amount.currencyRepresentable?.currencyName, amount: amount.value)
+        let transferType: String? = requestValues.selectedTransferType?.type.serviceString ?? ""
+        let amountData = ItAmountDataParameters(currency: amount.currencyRepresentable?.currencyCode, amount: amount.value)
         let originIBAN: String = originIbanRepresentable.countryCode + originIbanRepresentable.checkDigits + originIbanRepresentable.codBban
         let destinationIBAN = destinationIbanRepresentable.countryCode + destinationIbanRepresentable.checkDigits + destinationIbanRepresentable.codBban
         let debitAccounData = ItAccountDataParameters(accountNo: originIBAN,

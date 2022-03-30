@@ -93,6 +93,11 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         self.setAccessibilityIdentifiers()
         self.presenter.viewDidLoad()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setAccessibility(setViewAccessibility: setAccessibilityInfo)
+    }
 }
 
 private extension SendMoneyTransferTypeViewController {
@@ -143,6 +148,10 @@ private extension SendMoneyTransferTypeViewController {
 
     @objc func floatingButtonDidPressed() {
         self.presenter.didPressedFloatingButton()
+    }
+    
+    func setAccessibilityInfo() {
+        UIAccessibility.post(notification: .layoutChanged, argument: self.navigationItem.titleView)
     }
 }
 
@@ -195,3 +204,5 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeErrorViewDel
         viewController?.dismiss(animated: true)
     }
 }
+
+extension SendMoneyTransferTypeViewController: AccessibilityCapable {}

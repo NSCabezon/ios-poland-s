@@ -6,36 +6,37 @@
 //
 
 import UI
-import Loans
 import CoreFoundationLib
+import RetailLegacy
 import CoreDomain
 import Foundation
-import RetailLegacy
-import Menu
+import Onboarding
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
     
+    init(oldResolver: DependenciesInjector & DependenciesResolver, drawer: BaseMenuViewController) {
+        self.oldResolver = oldResolver
+        self.drawer = drawer
+        registerExternalDependencies()
+    }
+    
     func resolve() -> TimeManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> DependenciesInjector {
         return oldResolver
     }
-
+    
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
     
-    func resolve() -> AppConfigRepositoryProtocol {
-        oldResolver.resolve()
-    }
-    
     func resolve() -> TrackerManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> BaseMenuViewController {
@@ -43,21 +44,32 @@ struct ModuleDependencies {
     }
     
     func resolve() -> UINavigationController {
-        drawer.currentRootViewController as?
-        UINavigationController ?? UINavigationController()
+        return drawer.currentRootViewController as? UINavigationController ?? UINavigationController()
     }
     
-    func resolve() -> SegmentedUserRepository {
-        return oldResolver.resolve(for: SegmentedUserRepository.self)
+    func loanHomeCoordinator() -> BindableCoordinator {
+        return ToastCoordinator()
     }
     
     func resolve() -> StringLoader {
         return oldResolver.resolve()
     }
+    
+    func resolve() -> PullOffersInterpreter {
+        return oldResolver.resolve()
+    }
+}
+
+// MARK: - Private
+private extension ModuleDependencies {
+    func registerExternalDependencies() {
+        oldResolver.register(for: OnboardingExternalDependenciesResolver.self) { _ in
+            return self
+        }
+    }
 }
 
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
-    
     func resolve() -> FeatureFlagsRepository {
         return asShared {
             DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
@@ -66,7 +78,6 @@ extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
 }
 
 extension ModuleDependencies: CoreDependenciesResolver {
-    
     func resolve() -> CoreDependencies {
         return coreDependencies
     }

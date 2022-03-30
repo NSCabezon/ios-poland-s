@@ -5,8 +5,6 @@
 //  Created by Jose C. Yebes on 03/05/2021.
 //
 
-import Foundation
-
 import CoreFoundationLib
 import CoreDomain
 
@@ -47,7 +45,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledGoToHelpCenter: Bool = true
     let isEnabledDigitalProfileView: Bool = false
     let isEnabledWorld123: Bool = false
-    let isEnabledSendMoney: Bool = false
+    let isEnabledSendMoney: Bool = true
     let isEnabledBills: Bool = false
     let isEnabledBillsAndTaxesInMenu: Bool = false
     let isEnabledExploreProductsInMenu: Bool = false

@@ -113,6 +113,7 @@ private extension PLCardActionFactory {
                 .managePin,
                 .modifyLimits,
                 .multicurrency,
+                .sendMoneyFromSrc,
                 .offer,
                 .repayment,
                 .sendMoneyFromSrc,
