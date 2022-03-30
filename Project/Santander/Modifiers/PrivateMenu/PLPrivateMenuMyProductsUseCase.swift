@@ -32,7 +32,6 @@ struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
     private let boxes: GetGlobalPositionBoxesUseCase
     private let globalPositionRepository: GlobalPositionDataRepository
     private let offers: GetCandidateOfferUseCase
-    private let pullOfferInterpreterReactive: ReactivePullOffersInterpreter
     private let dictOptions: [PrivateSubmenuAction: UserPrefBoxType] =
     [
         PrivateSubmenuAction.myProductOffer(.accounts): UserPrefBoxType.account,
@@ -50,7 +49,6 @@ struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
         boxes = dependencies.resolve()
         globalPositionRepository = dependencies.resolve()
         offers = dependencies.resolve()
-        pullOfferInterpreterReactive = dependencies.resolve()
     }
     
     func fetchSubMenuOptions() -> AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
