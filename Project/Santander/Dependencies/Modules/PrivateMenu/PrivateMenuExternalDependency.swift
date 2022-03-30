@@ -40,6 +40,10 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     func resolve() -> PrivateMenuToggleOutsider {
         self.drawer
     }
+    
+    func sendMoneyCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
 }
 
 extension BaseMenuViewController: PrivateMenuToggleOutsider { }

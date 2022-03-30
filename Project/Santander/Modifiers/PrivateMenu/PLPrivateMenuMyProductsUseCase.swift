@@ -59,6 +59,24 @@ struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
 }
 
 private extension PLPrivateMenuMyProductsUseCase {
+    static var options: [PrivateSubmenuAction] {
+        let defaultOptions: [PrivateSubmenuAction] =
+        [
+            .myProductOffer(.accounts),
+            .myProductOffer(.cards),
+            .myProductOffer(.deposits),
+            .myProductOffer(.loans),
+            .myProductOffer(.stocks),
+            .myProductOffer(.pensions),
+            .myProductOffer(.funds),
+            .myProductOffer(.insuranceSavings),
+            .myProductOffer(.insuranceProtection)
+        ]
+        return defaultOptions
+    }
+}
+
+private extension PLPrivateMenuMyProductsUseCase {
     var finalOptions: AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
         return Publishers.Zip3(
             optionsMyProducts,
@@ -68,30 +86,8 @@ private extension PLPrivateMenuMyProductsUseCase {
             .eraseToAnyPublisher()
     }
     
-    var isPb: AnyPublisher<Bool, Never> {
-        return globalPositionRepository
-            .getGlobalPosition()
-            .map(\.isPb)
-            .replaceNil(with: false)
-            .eraseToAnyPublisher()
-    }
-    
     var optionsMyProducts: AnyPublisher<[PrivateSubmenuAction], Never> {
-        return isPb
-            .map { value in
-                return value ? PrivateMenuMyProductsOption.actionPbOrder : PrivateMenuMyProductsOption.actionNotPbOrder
-            }
-            .zip(isTPVLocations) { previous, tpv in
-                var final: [PrivateSubmenuAction] = []
-                final.append(contentsOf: previous)
-                final.append(.myProductOffer(.tpvs, tpv))
-                return final
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    var isTPVLocations: AnyPublisher<OfferRepresentable, Never> {
-        return isLocation("MENU_TPV")
+        Just(PLPrivateMenuMyProductsUseCase.options).eraseToAnyPublisher()
     }
     
     func buildOptions(_ options: [PrivateSubmenuAction],
@@ -132,37 +128,12 @@ extension Array where Element == PrivateSubmenuAction {
     func toOptionRepresentable(_ elementsCount: [PrivateSubmenuAction: Int]? = nil) -> [PrivateSubMenuOptionRepresentable] {
         var result = [PrivateSubMenuOptionRepresentable]()
         self.forEach { option in
-            switch option {
-            case .myProductOffer(let product, let offer):
+            if case .myProductOffer(let product, let offer) = option {
                 guard let elementsCount = elementsCount, isNotEmptyOffer(offer) else { return }
                 let item = SubMenuElement(titleKey: product.titleKey,
                                           icon: product.imageKey,
                                           submenuArrow: false,
                                           elementsCount: elementsCount[option],
-                                          action: option)
-                result.append(item)
-            case .sofiaOffer(let sofia, let offer):
-                guard let elementsCount = elementsCount, isNotEmptyOffer(offer) else { return }
-                let item = SubMenuElement(titleKey: sofia.titleKey,
-                                          icon: sofia.icon,
-                                          submenuArrow: false,
-                                          elementsCount: elementsCount[option],
-                                          action: option)
-                result.append(item)
-            case .otherOffer(let other, let offer):
-                guard isNotEmptyOffer(offer) else { return }
-                let item = SubMenuElement(titleKey: other.titleKey,
-                                          icon: other.icon,
-                                          submenuArrow: false,
-                                          elementsCount: nil,
-                                          action: option)
-                result.append(item)
-            case .worldOffer(let world, let offer):
-                guard isNotEmptyOffer(offer) else { return }
-                let item = SubMenuElement(titleKey: world.titleKey,
-                                          icon: world.imageKey,
-                                          submenuArrow: false,
-                                          elementsCount: nil,
                                           action: option)
                 result.append(item)
             }
@@ -193,8 +164,7 @@ private extension PLPrivateMenuMyProductsUseCase {
             .insuranceSavings: globalPosition.accountRepresentables.count,
             .loans: globalPosition.accountRepresentables.count,
             .pensions: globalPosition.accountRepresentables.count,
-            .stocks: globalPosition.accountRepresentables.count,
-            .tpvs: .zero
+            .stocks: globalPosition.accountRepresentables.count
         ]
         switch option {
         case .myProductOffer(let product, _):

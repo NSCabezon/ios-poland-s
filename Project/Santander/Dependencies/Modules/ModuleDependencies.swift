@@ -48,7 +48,7 @@ struct ModuleDependencies {
     }
     
     func loanHomeCoordinator() -> BindableCoordinator {
-        return ToastCoordinator()
+        return ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
     func resolve() -> StringLoader {

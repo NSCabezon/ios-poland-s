@@ -23,8 +23,8 @@ struct PLPrivateMenuOptionsUseCase: GetPrivateMenuOptionsUseCase {
     }
 }
 
-extension PLPrivateMenuOptionsUseCase {
-    private static var options: [PrivateMenuOptions] {
+private extension PLPrivateMenuOptionsUseCase {
+    static var options: [PrivateMenuOptions] {
         let defaultOptions: [PrivateMenuOptions] =
         [
             .globalPosition,
