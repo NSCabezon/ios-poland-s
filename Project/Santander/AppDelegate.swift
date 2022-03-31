@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let legacyDependenciesEngine = appDependencies.dependencieEngine
-        let localAppConfig = legacyDependenciesEngine.resolve(for: LocalAppConfig.self)
         let dependencies = self.appDependencies.dependencieEngine
         let drawer = BaseMenuViewController(legacyResolver: dependencies)
         let moduleDependencies = ModuleDependencies(oldResolver: legacyDependenciesEngine, drawer: drawer)
