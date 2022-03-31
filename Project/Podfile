@@ -1,6 +1,7 @@
 platform :ios, '12.3'
+install! 'cocoapods', :deterministic_uuids => false
 
-source 'https://cdn.cocoapods.org/'
+source 'https://github.com/CocoaPods/Specs.git'
 
 # --------- General Core dependencies
 def core_dependencies
