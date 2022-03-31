@@ -25,6 +25,31 @@ final class PLCardsManagerAdapter {
     }
 }
 
+extension PLCardsManagerAdapter: PLCardManagerAdapterProtocol {
+    func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<SANLegacyLibrary.CardDetailDTO> {
+        guard let cards = self.bsanDataProvider.getGlobalPosition()?.cards else { return BSANErrorResponse(nil) }
+        let card = cards.first { $0.virtualPan == cardDTO.contract?.contractNumber }
+        guard let cardId = card?.virtualPan else { return BSANErrorResponse(nil) }
+        let result = try cardsManager.getCardDetail(cardId: cardId)
+        switch result {
+        case .success(let cardDetail):
+            if cardDTO.cardTypeDescription?.lowercased() == "credit" {
+                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLCreditCardToCardDetail(cardDetail)
+                return BSANOkResponse(adaptedCardDetail)
+            } else {
+                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLDebitCardToCardDetail(cardDetail)
+                return BSANOkResponse(adaptedCardDetail)
+            }
+        case .failure( _):
+            return BSANErrorResponse(nil)
+        }
+    }
+    
+    func changeCardAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> BSANResponse<Void> {
+        return try self.changeAlias(cardDTO: cardDTO, newAlias: newAlias)
+    }
+}
+
 extension PLCardsManagerAdapter: BSANCardsManager {
     func getAmortizationEasyPay(cardDTO: SANLegacyLibrary.CardDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO, feeDataDTO: FeeDataDTO, numFeesSelected: String, balanceCode: Int, movementIndex: Int) throws -> BSANResponse<EasyPayAmortizationDTO> {
         return BSANErrorResponse(nil)
@@ -136,25 +161,6 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     
     func loadCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<Void> {
         return BSANErrorResponse(nil)
-    }
-
-    func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<SANLegacyLibrary.CardDetailDTO> {
-        guard let cards = self.bsanDataProvider.getGlobalPosition()?.cards else { return BSANErrorResponse(nil) }
-        let card = cards.first { $0.virtualPan == cardDTO.contract?.contractNumber }
-        guard let cardId = card?.virtualPan else { return BSANErrorResponse(nil) }
-        let result = try cardsManager.getCardDetail(cardId: cardId)
-        switch result {
-        case .success(let cardDetail):
-            if cardDTO.cardTypeDescription?.lowercased() == "credit" {
-                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLCreditCardToCardDetail(cardDetail)
-                return BSANOkResponse(adaptedCardDetail)
-            } else {
-                let adaptedCardDetail = CardDetailDTOAdapter.adaptPLDebitCardToCardDetail(cardDetail)
-                return BSANOkResponse(adaptedCardDetail)
-            }
-        case .failure( _):
-            return BSANErrorResponse(nil)
-        }
     }
     
     func getCardBalance(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<CardBalanceDTO> {
@@ -274,10 +280,6 @@ extension PLCardsManagerAdapter: BSANCardsManager {
     
     func loadCardSuperSpeed(pagination: PaginationDTO?, isNegativeCreditBalanceEnabled: Bool) throws -> BSANResponse<Void> {
         return BSANOkResponse(nil)
-    }
-    
-    func changeCardAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> BSANResponse<Void> {
-        return try self.changeAlias(cardDTO: cardDTO, newAlias: newAlias)
     }
     
     func validateCVVOTP(cardDTO: SANLegacyLibrary.CardDTO, signatureWithTokenDTO: SignatureWithTokenDTO) throws -> BSANResponse<OTPValidationDTO> {
