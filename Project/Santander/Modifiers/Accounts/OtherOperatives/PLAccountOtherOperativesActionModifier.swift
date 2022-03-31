@@ -20,7 +20,7 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
-        if case .custome(let identifier, _, _, _, _, _) = action {
+        if case .custome(let identifier, _, _, _, _, _, _) = action {
             guard let actionKey = PLAccountOperativeIdentifier(rawValue: identifier) else {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
                 return

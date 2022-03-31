@@ -27,8 +27,8 @@ final class SendCreditCardRepaymentUseCase: UseCase<SendCreditCardRepaymentUseCa
         }
         
         guard let amount = form.amount,
-              let amountValue = amount.dto.value,
-              let currencyValue = amount.dto.currency?.currencyType.rawValue
+              let currencyValue = amount.dto.currency?.currencyName,
+              let amountValue = amount.dto.value
         else {
             return .error(SendCreditCardRepaymentUseCaseErrorOutput("Amount not set"))
         }

@@ -9,6 +9,7 @@ import TransferOperatives
 import CoreFoundationLib
 import SANPLLibrary
 import PLCommons
+import Operative
 import UI
 
 extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {

@@ -83,7 +83,8 @@ pipeline {
 
 		stage('Distribute Pre iOS') {
 			when {
-				anyOf { branch 'master'; branch 'release/*' }	
+				anyOf { branch 'master'; branch 'release/*' }
+			        expression { return  !env.COMMIT_MESSAGE.contains("Updating Version")}
 				expression { return params.DEPLOY_TO_PRE }
 			}
 			steps {
