@@ -64,7 +64,7 @@ extension PLDeviceDataCoordinator: PLTermsAndConditionsCoordinatorDelegate {
     
     func onRejectTerms() {
         let loginModuleCoordinator = self.dependenciesEngine.resolve(for: PLLoginModuleCoordinatorProtocol.self)
-        loginModuleCoordinator.loadUnrememberedLogin()
+        loginModuleCoordinator.loadUserLogin()
     }
 }
 
