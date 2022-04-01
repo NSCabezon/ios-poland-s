@@ -13,6 +13,10 @@ struct PLOneTransferHomeVisibilityModifier: OneTransferHomeVisibilityModifier {
         return false
     }
     
+    public var shouldShowHelpFooter: Bool {
+        return false
+    }
+    
     public var newTransferType: OneAdditionalFavoritesActionsViewModel.ViewType {
         return .newTransferSimple
     }
