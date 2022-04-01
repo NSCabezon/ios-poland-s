@@ -71,7 +71,12 @@ extension ZusSmeTransferFormCoordinator: ZusSmeTransferFormCoordinatorProtocol {
     }
     
     func showRecipientSelection(with maskAccount: String?) {
-       //TODO: latter
+        let recipientSelectionCoordinator = RecipientSelectionCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            delegate: self,
+            navigationController: navigationController,
+            maskAccount: maskAccount)
+        recipientSelectionCoordinator.start()
     }
     
     func updateAccounts(accounts: [AccountForDebit]) {
