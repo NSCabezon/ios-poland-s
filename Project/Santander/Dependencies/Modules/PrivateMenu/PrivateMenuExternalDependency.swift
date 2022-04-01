@@ -44,6 +44,26 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     func sendMoneyCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
+    
+    func depositsCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func loansCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func fundsCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func insuranceSavingsCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func insuranceProtectionCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
 }
 
 extension BaseMenuViewController: PrivateMenuToggleOutsider { }
