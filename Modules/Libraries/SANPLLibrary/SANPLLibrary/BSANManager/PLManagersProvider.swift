@@ -31,6 +31,7 @@ public protocol PLManagersProviderProtocol {
     func getTaxTransferManager() -> PLTaxTransferManagerProtocol
     func getHistoryManager() -> PLHistoryManagerProtocol
     func getExpensesChartManager() -> PLExpensesChartManagerProtocol
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol
 }
 
 public protocol PLManagersProviderReactiveProtocol {
@@ -62,6 +63,7 @@ public final class PLManagersProvider {
     private let taxTransferManager: PLTaxTransferManagerProtocol
     private let historyManager: PLHistoryManagerProtocol
     private let expensesChartManager: PLExpensesChartManagerProtocol
+    private let splitPaymentManager: PLSplitPaymentManagerProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -98,6 +100,8 @@ public final class PLManagersProvider {
         self.taxTransferManager = PLTaxTransferManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.historyManager = PLHistoryManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.expensesChartManager = PLExpensesChartManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.splitPaymentManager = PLSplitPaymentManager(bsanDataProvider: bsanDataProvider,
+                                                         networkProvider: networkProvider)
     }
 }
 
@@ -199,6 +203,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
         self.expensesChartManager
+    }
+    
+    public func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
+        self.splitPaymentManager
     }
 }
 

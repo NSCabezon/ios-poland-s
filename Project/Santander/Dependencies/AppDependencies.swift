@@ -132,7 +132,7 @@ final class AppDependencies {
             bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider(),
             bsanDataProvider: self.bsanDataProvider,
             networkProvider: networkProvider,
-            loansManagerAdapter: self.managersProviderAdapter.getLoansManager()
+            loansManagerAdapter: self.managersProviderAdapter.getLoansManager(), cardManagerAdapter: self.managersProviderAdapter.getCardsManager()
         )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
@@ -348,6 +348,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: OneAuthorizationProcessorRepository.self) { _ in
             return self.servicesLibrary.oneAuthorizationProcessorRepository
         }
+        self.dependencieEngine.register(for: GetCardDetailConfigurationUseCase.self) { resolver in
+            PLGetCardDetailConfigurationUseCase(dependenciesEngine: resolver)
+        }
         registerDependenciesPL()
     }
     
@@ -402,6 +405,9 @@ private extension AppDependencies {
         
         self.dependencieEngine.register(for: LoanReactiveRepository.self) { _ in
             return self.servicesLibrary.loanReactiveDataRepository
+        }
+        self.dependencieEngine.register(for: CardRepository.self) { _ in
+            return self.servicesLibrary.cardReactiveDataRepository
         }
         self.dependencieEngine.register(for: OnboardingRepository.self) { _ in
             return self.servicesLibrary.onboardingDataRepository

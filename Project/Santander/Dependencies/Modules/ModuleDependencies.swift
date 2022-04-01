@@ -58,6 +58,10 @@ struct ModuleDependencies {
     func resolve() -> PullOffersInterpreter {
         return oldResolver.resolve()
     }
+
+func resolve() -> NavigationBarItemBuilder {
+return NavigationBarItemBuilder(dependencies: self)
+}
 }
 
 // MARK: - Private

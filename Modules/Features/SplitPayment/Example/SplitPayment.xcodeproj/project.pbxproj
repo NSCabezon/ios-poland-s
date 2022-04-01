@@ -1,0 +1,830 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3063867A6834A4454A75A2DB /* Pods_SplitPayment_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB05B9CF41DBE9771AF982B /* Pods_SplitPayment_Example.framework */; };
+		5A40198E27EDB7C600C6314B /* PLTransfersManagerSuccessResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A40198D27EDB7C600C6314B /* PLTransfersManagerSuccessResponse.json */; };
+		5A665CEA27E3CBEB00328DA9 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CE927E3CBEB00328DA9 /* Mocks.swift */; };
+		5A665CEC27E3CC0600328DA9 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CEB27E3CC0600328DA9 /* PLAuthorizationProcessorManagerMock.swift */; };
+		5A665CEE27E3CC1400328DA9 /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CED27E3CC1400328DA9 /* PLAuthorizationCoordinatorMock.swift */; };
+		5A665CF427E3CF7700328DA9 /* RecipientSelectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CF327E3CF7700328DA9 /* RecipientSelectionPresenterTests.swift */; };
+		5A665CF627E3CF9500328DA9 /* RecipientSelectionCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CF527E3CF9500328DA9 /* RecipientSelectionCoordinatorMock.swift */; };
+		5A665CF827E3CFA700328DA9 /* RecipientSelectionViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CF727E3CFA700328DA9 /* RecipientSelectionViewControllerMock.swift */; };
+		5A665CFA27E3CFBA00328DA9 /* RecipientMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CF927E3CFBA00328DA9 /* RecipientMapperTests.swift */; };
+		5A665CFD27E3D04000328DA9 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CFC27E3D04000328DA9 /* Delay.swift */; };
+		5A665D0027E3D06C00328DA9 /* RecipientsMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665CFF27E3D06C00328DA9 /* RecipientsMockBuilder.swift */; };
+		5A665D0227E3D0AF00328DA9 /* PLManagersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665D0127E3D0AF00328DA9 /* PLManagersProviderMock.swift */; };
+		5A665D0427E3D0C400328DA9 /* PLTransfersManagerSuccessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665D0327E3D0C400328DA9 /* PLTransfersManagerSuccessMock.swift */; };
+		5A665D0627E3D0E200328DA9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A665D0527E3D0E200328DA9 /* PLTransfersManagerNonConnectionFailureMock.swift */; };
+		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
+		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
+		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
+		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		8D0D8A0DE1CB0DDCE7A93BF2 /* Pods_SplitPayment_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6ECC87DEF46686EE5AEF81 /* Pods_SplitPayment_Tests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = SplitPayment;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		13EBEFD928AA48E78B7A272C /* Pods-SplitPayment_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SplitPayment_Example.release.xcconfig"; path = "Target Support Files/Pods-SplitPayment_Example/Pods-SplitPayment_Example.release.xcconfig"; sourceTree = "<group>"; };
+		23CDE2B588974614CD92A175 /* Pods-SplitPayment_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SplitPayment_Example.debug.xcconfig"; path = "Target Support Files/Pods-SplitPayment_Example/Pods-SplitPayment_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		305D4B5163B7A06F83635092 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		57BDF851F6FEB3414360ABF3 /* Pods-SplitPayment_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SplitPayment_Tests.release.xcconfig"; path = "Target Support Files/Pods-SplitPayment_Tests/Pods-SplitPayment_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		5A40198D27EDB7C600C6314B /* PLTransfersManagerSuccessResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PLTransfersManagerSuccessResponse.json; sourceTree = "<group>"; };
+		5A665CE927E3CBEB00328DA9 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		5A665CEB27E3CC0600328DA9 /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
+		5A665CED27E3CC1400328DA9 /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
+		5A665CF327E3CF7700328DA9 /* RecipientSelectionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientSelectionPresenterTests.swift; sourceTree = "<group>"; };
+		5A665CF527E3CF9500328DA9 /* RecipientSelectionCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientSelectionCoordinatorMock.swift; sourceTree = "<group>"; };
+		5A665CF727E3CFA700328DA9 /* RecipientSelectionViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientSelectionViewControllerMock.swift; sourceTree = "<group>"; };
+		5A665CF927E3CFBA00328DA9 /* RecipientMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientMapperTests.swift; sourceTree = "<group>"; };
+		5A665CFC27E3D04000328DA9 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		5A665CFF27E3D06C00328DA9 /* RecipientsMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientsMockBuilder.swift; sourceTree = "<group>"; };
+		5A665D0127E3D0AF00328DA9 /* PLManagersProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLManagersProviderMock.swift; sourceTree = "<group>"; };
+		5A665D0327E3D0C400328DA9 /* PLTransfersManagerSuccessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerSuccessMock.swift; sourceTree = "<group>"; };
+		5A665D0527E3D0E200328DA9 /* PLTransfersManagerNonConnectionFailureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerNonConnectionFailureMock.swift; sourceTree = "<group>"; };
+		5C6ECC87DEF46686EE5AEF81 /* Pods_SplitPayment_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SplitPayment_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* SplitPayment_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SplitPayment_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		607FACE51AFB9204008FA782 /* SplitPayment_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SplitPayment_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA7694CDDA36192807EEB919 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F58019A3218242C6D730913F /* Pods-SplitPayment_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SplitPayment_Tests.debug.xcconfig"; path = "Target Support Files/Pods-SplitPayment_Tests/Pods-SplitPayment_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		FA254D3D1A8D6B45C1BE6257 /* SplitPayment.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SplitPayment.podspec; path = ../SplitPayment.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		FCB05B9CF41DBE9771AF982B /* Pods_SplitPayment_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SplitPayment_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3063867A6834A4454A75A2DB /* Pods_SplitPayment_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE21AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D0D8A0DE1CB0DDCE7A93BF2 /* Pods_SplitPayment_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5A40198C27EDB79B00C6314B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5A40198D27EDB7C600C6314B /* PLTransfersManagerSuccessResponse.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5A665CEF27E3CF4500328DA9 /* RecipientSelection */ = {
+			isa = PBXGroup;
+			children = (
+				5A665CF227E3CF5C00328DA9 /* Presenter */,
+				5A665CF127E3CF5400328DA9 /* Mock */,
+				5A665CF027E3CF4D00328DA9 /* Mapper */,
+			);
+			name = RecipientSelection;
+			sourceTree = "<group>";
+		};
+		5A665CF027E3CF4D00328DA9 /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				5A665CF927E3CFBA00328DA9 /* RecipientMapperTests.swift */,
+			);
+			name = Mapper;
+			sourceTree = "<group>";
+		};
+		5A665CF127E3CF5400328DA9 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				5A665CF527E3CF9500328DA9 /* RecipientSelectionCoordinatorMock.swift */,
+				5A665CF727E3CFA700328DA9 /* RecipientSelectionViewControllerMock.swift */,
+			);
+			name = Mock;
+			sourceTree = "<group>";
+		};
+		5A665CF227E3CF5C00328DA9 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				5A665CF327E3CF7700328DA9 /* RecipientSelectionPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		5A665CFB27E3D03800328DA9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5A665CFC27E3D04000328DA9 /* Delay.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		5A665CFE27E3D06200328DA9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				5A665CFF27E3D06C00328DA9 /* RecipientsMockBuilder.swift */,
+				5A665D0127E3D0AF00328DA9 /* PLManagersProviderMock.swift */,
+				5A665D0327E3D0C400328DA9 /* PLTransfersManagerSuccessMock.swift */,
+				5A665D0527E3D0E200328DA9 /* PLTransfersManagerNonConnectionFailureMock.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		607FACC71AFB9204008FA782 = {
+			isa = PBXGroup;
+			children = (
+				607FACF51AFB993E008FA782 /* Podspec Metadata */,
+				607FACD21AFB9204008FA782 /* Example for SplitPayment */,
+				607FACE81AFB9204008FA782 /* Tests */,
+				607FACD11AFB9204008FA782 /* Products */,
+				D8BAAA7096A5D49F9DAF27F1 /* Pods */,
+				E99F51132007F1BF3F94BB86 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		607FACD11AFB9204008FA782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD01AFB9204008FA782 /* SplitPayment_Example.app */,
+				607FACE51AFB9204008FA782 /* SplitPayment_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		607FACD21AFB9204008FA782 /* Example for SplitPayment */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				607FACD31AFB9204008FA782 /* Supporting Files */,
+				5A665CE927E3CBEB00328DA9 /* Mocks.swift */,
+				5A665CEB27E3CC0600328DA9 /* PLAuthorizationProcessorManagerMock.swift */,
+				5A665CED27E3CC1400328DA9 /* PLAuthorizationCoordinatorMock.swift */,
+			);
+			name = "Example for SplitPayment";
+			path = SplitPayment;
+			sourceTree = "<group>";
+		};
+		607FACD31AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD41AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACE81AFB9204008FA782 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				5A40198C27EDB79B00C6314B /* Resources */,
+				5A665CFE27E3D06200328DA9 /* Mocks */,
+				5A665CFB27E3D03800328DA9 /* Helpers */,
+				5A665CEF27E3CF4500328DA9 /* RecipientSelection */,
+				607FACE91AFB9204008FA782 /* Supporting Files */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		607FACE91AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACEA1AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				FA254D3D1A8D6B45C1BE6257 /* SplitPayment.podspec */,
+				305D4B5163B7A06F83635092 /* README.md */,
+				EA7694CDDA36192807EEB919 /* LICENSE */,
+			);
+			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		D8BAAA7096A5D49F9DAF27F1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				23CDE2B588974614CD92A175 /* Pods-SplitPayment_Example.debug.xcconfig */,
+				13EBEFD928AA48E78B7A272C /* Pods-SplitPayment_Example.release.xcconfig */,
+				F58019A3218242C6D730913F /* Pods-SplitPayment_Tests.debug.xcconfig */,
+				57BDF851F6FEB3414360ABF3 /* Pods-SplitPayment_Tests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E99F51132007F1BF3F94BB86 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FCB05B9CF41DBE9771AF982B /* Pods_SplitPayment_Example.framework */,
+				5C6ECC87DEF46686EE5AEF81 /* Pods_SplitPayment_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		607FACCF1AFB9204008FA782 /* SplitPayment_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SplitPayment_Example" */;
+			buildPhases = (
+				A4CB410A0725772974C47D93 /* [CP] Check Pods Manifest.lock */,
+				607FACCC1AFB9204008FA782 /* Sources */,
+				607FACCD1AFB9204008FA782 /* Frameworks */,
+				607FACCE1AFB9204008FA782 /* Resources */,
+				EBA7A8F2AEFB565E3F92AB3B /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SplitPayment_Example;
+			productName = SplitPayment;
+			productReference = 607FACD01AFB9204008FA782 /* SplitPayment_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		607FACE41AFB9204008FA782 /* SplitPayment_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SplitPayment_Tests" */;
+			buildPhases = (
+				9215BD6AB2A1F1010B38A5C1 /* [CP] Check Pods Manifest.lock */,
+				607FACE11AFB9204008FA782 /* Sources */,
+				607FACE21AFB9204008FA782 /* Frameworks */,
+				607FACE31AFB9204008FA782 /* Resources */,
+				BDE6C568E124213004C2C6DF /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
+			);
+			name = SplitPayment_Tests;
+			productName = Tests;
+			productReference = 607FACE51AFB9204008FA782 /* SplitPayment_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		607FACC81AFB9204008FA782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = CocoaPods;
+				TargetAttributes = {
+					607FACCF1AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0900;
+					};
+					607FACE41AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0900;
+						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+				};
+			};
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "SplitPayment" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 607FACC71AFB9204008FA782;
+			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607FACCF1AFB9204008FA782 /* SplitPayment_Example */,
+				607FACE41AFB9204008FA782 /* SplitPayment_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		607FACCE1AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				5A40198E27EDB7C600C6314B /* PLTransfersManagerSuccessResponse.json in Resources */,
+				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE31AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9215BD6AB2A1F1010B38A5C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SplitPayment_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4CB410A0725772974C47D93 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SplitPayment_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BDE6C568E124213004C2C6DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SplitPayment_Tests/Pods-SplitPayment_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
+				"${BUILT_PRODUCTS_DIR}/SplitPayment/SplitPayment.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SplitPayment.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SplitPayment_Tests/Pods-SplitPayment_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBA7A8F2AEFB565E3F92AB3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SplitPayment_Example/Pods-SplitPayment_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CoreDomain/CoreDomain.framework",
+				"${BUILT_PRODUCTS_DIR}/CoreFoundationLib/CoreFoundationLib.framework",
+				"${BUILT_PRODUCTS_DIR}/CorePushNotificationsService/CorePushNotificationsService.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
+				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
+				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
+				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
+				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
+				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
+				"${BUILT_PRODUCTS_DIR}/SplitPayment/SplitPayment.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreDomain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreFoundationLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CorePushNotificationsService.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IDZSwiftCommonCrypto.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SplitPayment.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SplitPayment_Example/Pods-SplitPayment_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		607FACCC1AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				5A665CEE27E3CC1400328DA9 /* PLAuthorizationCoordinatorMock.swift in Sources */,
+				5A665CEC27E3CC0600328DA9 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
+				5A665CEA27E3CBEB00328DA9 /* Mocks.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE11AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A665D0427E3D0C400328DA9 /* PLTransfersManagerSuccessMock.swift in Sources */,
+				5A665CFA27E3CFBA00328DA9 /* RecipientMapperTests.swift in Sources */,
+				5A665D0227E3D0AF00328DA9 /* PLManagersProviderMock.swift in Sources */,
+				5A665CFD27E3D04000328DA9 /* Delay.swift in Sources */,
+				5A665CF627E3CF9500328DA9 /* RecipientSelectionCoordinatorMock.swift in Sources */,
+				5A665CF427E3CF7700328DA9 /* RecipientSelectionPresenterTests.swift in Sources */,
+				5A665CF827E3CFA700328DA9 /* RecipientSelectionViewControllerMock.swift in Sources */,
+				5A665D0627E3D0E200328DA9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
+				5A665D0027E3D06C00328DA9 /* RecipientsMockBuilder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* SplitPayment_Example */;
+			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDA1AFB9204008FA782 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDF1AFB9204008FA782 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		607FACED1AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		607FACEE1AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		607FACF01AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23CDE2B588974614CD92A175 /* Pods-SplitPayment_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SplitPayment/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		607FACF11AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13EBEFD928AA48E78B7A272C /* Pods-SplitPayment_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SplitPayment/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		607FACF31AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F58019A3218242C6D730913F /* Pods-SplitPayment_Tests.debug.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SplitPayment_Example.app/SplitPayment_Example";
+			};
+			name = Debug;
+		};
+		607FACF41AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57BDF851F6FEB3414360ABF3 /* Pods-SplitPayment_Tests.release.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SplitPayment_Example.app/SplitPayment_Example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "SplitPayment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACED1AFB9204008FA782 /* Debug */,
+				607FACEE1AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SplitPayment_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF01AFB9204008FA782 /* Debug */,
+				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SplitPayment_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF31AFB9204008FA782 /* Debug */,
+				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
+}

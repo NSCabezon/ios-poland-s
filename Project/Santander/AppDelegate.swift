@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let drawer = BaseMenuViewController(legacyResolver: dependencies)
         let moduleDependencies = ModuleDependencies(oldResolver: legacyDependenciesEngine, drawer: drawer)
         _ = AppModifiers(dependencies: moduleDependencies)
-        self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: legacyDependenciesEngine, coreDependenciesResolver: moduleDependencies)
+        self.legacyAppDelegate = RetailLegacyAppDelegate(dependenciesEngine: legacyDependenciesEngine, coreDependenciesResolver: moduleDependencies, cardExternalDependenciesResolver: moduleDependencies)
         application.applicationSupportsShakeToEdit = false
         self.window = UIWindow()
         self.window?.rootViewController = drawer
