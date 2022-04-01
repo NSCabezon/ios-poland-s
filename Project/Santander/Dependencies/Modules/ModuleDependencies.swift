@@ -47,10 +47,6 @@ struct ModuleDependencies {
         return drawer.currentRootViewController as? UINavigationController ?? UINavigationController()
     }
     
-    func loanHomeCoordinator() -> BindableCoordinator {
-        return ToastCoordinator()
-    }
-    
     func resolve() -> StringLoader {
         return oldResolver.resolve()
     }
