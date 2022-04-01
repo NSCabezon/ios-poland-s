@@ -38,7 +38,7 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
     func addSourceAccount() {
         guard let operativeData = operativeData else { return }
         let items: [OneListFlowItemViewModel.Item] = [
-            .init(type: .title(keyOrValue: "confirmation_label_originAccount"),
+            .init(type: .title(keyOrValue: "summary_label_originAccount"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
             .init(type: .label(keyOrValue: operativeData.originAccount?.alias,
                                isBold: true),
