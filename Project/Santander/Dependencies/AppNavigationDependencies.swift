@@ -27,6 +27,7 @@ import Cards
 import ZusTransfer
 import GlobalPosition
 import ZusSMETransfer
+import SplitPayment
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -155,6 +156,10 @@ final class AppNavigationDependencies {
 
         dependenciesEngine.register(for: PLApplePayEnrollmentManagerProtocol.self) { _ in
             return self.applePayEnrollmentManager
+        }
+        dependenciesEngine.register(for: SplitPaymentModuleCoordinatorProtocol.self) { resolver in
+            return SplitPaymentModuleCoordinator(dependenciesResolver: resolver,
+                                                 navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
 
         appSideMenuNavigationDependencies.registerDependencies()
