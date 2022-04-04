@@ -1,3 +1,4 @@
+import PLCommons
 @testable import ZusTransfer
 
 final class ZusTransferFormCoordinatorMock: ZusTransferFormCoordinatorProtocol {
@@ -6,7 +7,8 @@ final class ZusTransferFormCoordinatorMock: ZusTransferFormCoordinatorProtocol {
     var closeProcessCalled = false
     var popCalled = false
     var showRecipientSelectionCalled = false
-   
+    var updateAccountsCalled = false
+
     func pop() {
         popCalled = true
     }
@@ -23,8 +25,12 @@ final class ZusTransferFormCoordinatorMock: ZusTransferFormCoordinatorProtocol {
         showConfirmationCalled = true
     }
     
-    func showRecipientSelection(with maskAccount: String) {
+    func showRecipientSelection(with maskAccount: String?) {
         showRecipientSelectionCalled = true
+    }
+
+    func updateAccounts(accounts: [AccountForDebit]) {
+        updateAccountsCalled = true
     }
 }
 

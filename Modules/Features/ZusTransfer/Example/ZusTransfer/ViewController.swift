@@ -70,7 +70,6 @@ class ViewController: UIViewController {
                                                                 navigationController: navigationController,
                                                                 accounts: accounts,
                                                                 selectedAccountNumber: "",
-                                                                validationMask: "60000002026",
                                                                 sourceView: .sendMoney)
                 coordinator.start()
             }

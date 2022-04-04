@@ -98,6 +98,9 @@ struct MockManager: PLManagersProviderProtocol {
 }
 
 struct MockAccountManager: PLAccountManagerProtocol {
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError> {
+        .success(PopularAccountMock.popularAccounts)
+    }
     
     func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
         fatalError()
@@ -404,6 +407,10 @@ struct MockLoginManeger: PLLoginManagerProtocol {
 }
 
 final class PLTransfersRepositoryMock: PLTransfersRepository {
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
+        .success(SendMoneyChallengeMock())
+    }
+    
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
         fatalError()
     }

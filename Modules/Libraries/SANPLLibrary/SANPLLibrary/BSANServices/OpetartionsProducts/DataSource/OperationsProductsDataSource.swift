@@ -21,8 +21,7 @@ class OperationsProductsDataSource: OperationsProductsDataSourceProtocol {
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api/v2/operations"
-    private var headers: [String: String] = ["X-Execution-Timestamp" : "\(Int(Date().timeIntervalSince1970))",
-                                             "X-Application-Version" : Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""]
+    private var headers: [String: String] = [:]
     private enum OperationsProductsServiceType: String {
         case operationsProducts = "/products"
     }
@@ -37,12 +36,15 @@ class OperationsProductsDataSource: OperationsProductsDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
 
+        headers = ["X-Execution-Timestamp" : "\(Int(Date().timeIntervalSince1970))",
+                   "X-Application-Version" : Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""]
+        
         let absoluteUrl = baseUrl + self.basePath
         let serviceName =  OperationsProductsServiceType.operationsProducts.rawValue
         let request = OperationsProductsRequest(serviceName: serviceName,
                                                 serviceUrl: absoluteUrl,
                                                 method: .get,
-                                                headers: self.headers,
+                                                headers: headers,
                                                 contentType: .json,
                                                 localServiceName: .operationsProducts,
                                                 authorization: .twoFactorOperation(transactionParameters: nil))
