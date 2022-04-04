@@ -64,6 +64,9 @@ class ZusTransferConfirmationPresenterTests: XCTestCase {
 
 private extension ZusTransferConfirmationPresenterTests {
     func setUpDependencies() {
+        dependencies.register(for: ZusTransferSendMoneyInputMapper.self) { resolver in
+            ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
+        }
         dependencies.register(for: ZusTransferConfirmationPresenterProtocol.self) { [unowned self] resolver in
             let presenter = ZusTransferConfirmationPresenter(dependenciesResolver: resolver,
                                                              model: ZusTransferModelMockBuilder.getZusTransferModelMock())

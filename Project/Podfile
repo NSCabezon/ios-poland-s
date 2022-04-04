@@ -1,6 +1,7 @@
 platform :ios, '12.3'
+install! 'cocoapods', :deterministic_uuids => false
 
-source 'https://cdn.cocoapods.org/'
+source 'https://github.com/CocoaPods/Specs.git'
 
 # --------- General Core dependencies
 def core_dependencies
@@ -74,6 +75,7 @@ def pl_features
   pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
   pod 'Authorization', :path => '../Modules/Features/Authorization'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
+  pod 'SplitPayment', :path => '../Modules/Features/SplitPayment'
   pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
 end
 

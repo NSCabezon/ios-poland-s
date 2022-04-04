@@ -4,7 +4,7 @@ import PLCommons
 @testable import ZusTransfer
 
 private enum Consts {
-    static let maskAccountConst = "60000002026"
+    static let maskAccountConst = "__60000002026_____________"
 }
 
 final class ZusTransferValidatorTests: XCTestCase {

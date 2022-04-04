@@ -160,6 +160,10 @@ extension PLManagersProviderAdapter: BSANManagersProvider {
         return self.cardsManagerAdapter
     }
     
+    public func getCardsManager() -> PLCardManagerAdapterProtocol {
+        return self.cardsManagerAdapter
+    }
+    
     public func getBsanUserSegmentManager() -> BSANUserSegmentManager {
         return self.userSegmentManagerAdapter
     }

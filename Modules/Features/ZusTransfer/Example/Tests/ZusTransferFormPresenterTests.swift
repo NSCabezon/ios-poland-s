@@ -54,14 +54,14 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         }
         XCTAssertEqual(viewModel.accountNumber, "*1234")
         XCTAssertEqual(viewModel.accountNumberUnformatted, "12123412341234123412341234")
-        XCTAssertEqual(viewModel.availableFunds, "1 500,00 PLN")
+        XCTAssertEqual(viewModel.availableFunds, "1500.00 PLN")
         XCTAssertEqual(viewModel.name, "Konto Jakie Chcesz")
         XCTAssertEqual(viewModel.isSelected, true)
     }
     
     func test_getting_selected_account_number() throws {
         let sut = try XCTUnwrap(sut)
-        let selectedAccountNumber = sut.getSelectedAccountNumber()
+        let selectedAccountNumber = sut.getSelectedAccountViewModels().first?.accountNumberUnformatted
         XCTAssertEqual(selectedAccountNumber, "12123412341234123412341234")
     }
     
@@ -211,8 +211,7 @@ private extension ZusTransferFormPresenterTests {
             ZusTransferFormPresenter(
                 dependenciesResolver: resolver,
                 accounts: AccountForDebitMockBuilder.getAccountForDebitMock(),
-                selectedAccountNumber: "12123412341234123412341234",
-                maskAccount: "60000002026"
+                selectedAccountNumber: "12123412341234123412341234"
             )
         }
         

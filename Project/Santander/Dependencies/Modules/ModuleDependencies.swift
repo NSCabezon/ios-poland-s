@@ -47,10 +47,6 @@ struct ModuleDependencies {
         return drawer.currentRootViewController as? UINavigationController ?? UINavigationController()
     }
     
-    func loanHomeCoordinator() -> BindableCoordinator {
-        return ToastCoordinator()
-    }
-    
     func resolve() -> StringLoader {
         return oldResolver.resolve()
     }
@@ -58,6 +54,10 @@ struct ModuleDependencies {
     func resolve() -> PullOffersInterpreter {
         return oldResolver.resolve()
     }
+
+func resolve() -> NavigationBarItemBuilder {
+return NavigationBarItemBuilder(dependencies: self)
+}
 }
 
 // MARK: - Private

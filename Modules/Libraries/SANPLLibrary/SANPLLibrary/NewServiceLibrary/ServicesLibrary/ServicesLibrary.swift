@@ -14,15 +14,17 @@ public final class ServicesLibrary {
     private let bsanDataProvider: BSANDataProvider
     private let networkProvider: NetworkProvider
     private let loansManagerAdapter: PLLoansManagerAdapterProtocol
+    private let cardManagerAdapter: PLCardManagerAdapterProtocol
     
     public init(bsanManagersProvider: PLManagersProviderProtocol,
                 bsanDataProvider: BSANDataProvider,
                 networkProvider: NetworkProvider,
-                loansManagerAdapter: PLLoansManagerAdapterProtocol) {
+                loansManagerAdapter: PLLoansManagerAdapterProtocol, cardManagerAdapter: PLCardManagerAdapterProtocol) {
         self.bsanManagersProvider = bsanManagersProvider
         self.bsanDataProvider = bsanDataProvider
         self.networkProvider = networkProvider
         self.loansManagerAdapter = loansManagerAdapter
+        self.cardManagerAdapter = cardManagerAdapter
     }
     
     public var transfersRepository: PLTransfersRepository {
@@ -42,6 +44,12 @@ public final class ServicesLibrary {
     public var onboardingDataRepository: OnboardingRepository {
         return OnboardingDataRepository(customerManager: bsanManagersProvider.getCustomerManager(),
                                         bsanDataProvider: bsanDataProvider)
+    }
+    
+    public var cardReactiveDataRepository: CardReactiveDataRepository {
+        return CardReactiveDataRepository(bsanDataProvider: bsanDataProvider,
+                                          networkProvider: networkProvider, cardManager: cardManagerAdapter)
+                                    
     }
 }
 
