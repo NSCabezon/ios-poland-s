@@ -11,6 +11,7 @@ import RetailLegacy
 import CoreDomain
 import Foundation
 import Onboarding
+import SANLegacyLibrary
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
@@ -55,9 +56,17 @@ struct ModuleDependencies {
         return oldResolver.resolve()
     }
 
-func resolve() -> NavigationBarItemBuilder {
-return NavigationBarItemBuilder(dependencies: self)
-}
+    func resolve() -> BSANManagersProvider {
+        oldResolver.resolve()
+    }
+    
+    func resolve() -> AppRepositoryProtocol {
+        return oldResolver.resolve()
+    }
+    
+    func resolve() -> NavigationBarItemBuilder {
+        NavigationBarItemBuilder(dependencies: self)
+    }
 }
 
 // MARK: - Private
