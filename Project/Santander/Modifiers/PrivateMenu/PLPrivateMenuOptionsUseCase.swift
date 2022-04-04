@@ -106,7 +106,7 @@ private extension PLPrivateMenuOptionsUseCase {
         let newMessageKey: String?
         let imageURL: String?
         let showArrow: Bool
-        let isHighlighted: Bool
+        var isHighlighted: Bool
         let type: PrivateMenuOptions
         let isFeatured: Bool
         let accesibilityIdentifier: String?
