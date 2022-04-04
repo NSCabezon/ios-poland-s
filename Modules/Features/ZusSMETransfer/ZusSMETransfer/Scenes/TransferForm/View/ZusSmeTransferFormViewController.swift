@@ -8,6 +8,7 @@ protocol ZusSmeTransferFormViewProtocol: AnyObject,
                                          ConfirmationDialogPresentable,
                                          LoaderPresentable,
                                          ErrorPresentable {
+    func updateRecipient(name: String, accountNumber: String)
     func setAccountViewModel()
 }
 
@@ -81,7 +82,7 @@ private extension ZusSmeTransferFormViewController {
     func configureView() {
         view.backgroundColor = .white
         bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
-            //TODO: latter
+            //TODO: show confirmation
         }
         bottomView.disableButton()
         formView.configure(with: presenter.getSelectedAccountViewModels())
@@ -134,5 +135,9 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
 
     func changeAccountTapped() {
         presenter.showAccountSelector()
+    }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        //TODO: update recipient in form
     }
 }

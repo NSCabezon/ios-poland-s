@@ -22,7 +22,7 @@ final class RecipientMapperTests: XCTestCase {
         SUT = nil
     }
     
-    func test_maping_dto_to_charityTransferSummaryModel() throws {
+    func test_maping_dto_to_RecipientModel() throws {
         let payeeList = try XCTUnwrap(RecipientsMockBuilder.getPayeeListDtoMock())
         let SUT = try XCTUnwrap(SUT)
         let recipients = SUT.map(with: payeeList)

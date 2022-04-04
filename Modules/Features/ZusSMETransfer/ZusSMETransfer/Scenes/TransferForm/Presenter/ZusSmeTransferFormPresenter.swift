@@ -64,7 +64,7 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
     }
     
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel] {
-        let selectebleAccountViewModels = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) })
+        let selectebleAccountViewModels = accounts.compactMap { try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) }
         return selectebleAccountViewModels
     }
         
@@ -89,7 +89,12 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
 
 extension ZusSmeTransferFormPresenter: RecipientSelectorDelegate {
     func didSelectRecipient(_ recipient: Recipient) {
-      //TODO: latter
+        view?.updateRecipient(
+            name: recipient.name,
+            accountNumber: IBANFormatter.format(
+                iban: IBANFormatter.formatIbanToNrb(for: recipient.accountNumber)
+            )
+        )
     }
 }
 
