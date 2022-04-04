@@ -59,6 +59,7 @@ final class PLAuthorizationViewController: UIViewController {
         self.presenter.viewDidLoad()
         self.configureTap()
         self.configureKeyboardListener()
+        self.setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
