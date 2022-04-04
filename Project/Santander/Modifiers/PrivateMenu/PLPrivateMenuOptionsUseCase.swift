@@ -23,8 +23,8 @@ struct PLPrivateMenuOptionsUseCase: GetPrivateMenuOptionsUseCase {
     }
 }
 
-extension PLPrivateMenuOptionsUseCase {
-    private static var options: [PrivateMenuOptions] {
+private extension PLPrivateMenuOptionsUseCase {
+    static var options: [PrivateMenuOptions] {
         let defaultOptions: [PrivateMenuOptions] =
         [
             .globalPosition,
@@ -69,8 +69,7 @@ private extension PLPrivateMenuOptionsUseCase {
                              _ notEnabled: [PrivateMenuOptions]) -> [PrivateMenuOptionRepresentable] {
         var availableOption = optionsRepresentable
         availableOption.removeIfFound { option in
-            guard let type = option.type else { return false }
-            return notEnabled.contains(type)
+            return notEnabled.contains(option.type)
         }
         return availableOption
     }
@@ -107,8 +106,8 @@ private extension PLPrivateMenuOptionsUseCase {
         let newMessageKey: String?
         let imageURL: String?
         let showArrow: Bool
-        let isHighlighted: Bool
-        let type: PrivateMenuOptions?
+        var isHighlighted: Bool
+        let type: PrivateMenuOptions
         let isFeatured: Bool
         let accesibilityIdentifier: String?
         

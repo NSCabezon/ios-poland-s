@@ -13,16 +13,8 @@ import CoreFoundationLib
 import PrivateMenu
 
 extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
-    func resolve() -> GetOtherServicesSubMenuUseCase {
-        return PLPrivateMenuOtherServicesUseCase(dependencies: self)
-    }
-    
     func resolve() -> GetMyProductSubMenuUseCase {
         return PLPrivateMenuMyProductsUseCase(dependencies: self)
-    }
-    
-    func resolve() -> LocalAppConfig {
-        oldResolver.resolve()
     }
     
     func resolve() -> GetPrivateMenuFooterOptionsUseCase {
@@ -47,6 +39,30 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     
     func resolve() -> PrivateMenuToggleOutsider {
         self.drawer
+    }
+    
+    func sendMoneyCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func depositsCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func loansCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func fundsCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func insuranceSavingsCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func insuranceProtectionCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
     }
 }
 
