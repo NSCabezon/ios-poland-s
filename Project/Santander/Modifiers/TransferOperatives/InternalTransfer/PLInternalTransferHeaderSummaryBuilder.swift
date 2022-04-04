@@ -5,7 +5,6 @@
 //  Created by Cristobal Ramos Laina on 31/3/22.
 //
 
-
 import Foundation
 import CoreFoundationLib
 import CoreDomain
@@ -16,7 +15,7 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
     private let dependencies: InternalTransferSummaryExternalDependenciesResolver
     private var operativeData: InternalTransferOperativeData?
     private var summaryItems: [OneListFlowItemViewModel] = []
-    private lazy var defaultCurrency: CurrencyType = NumberFormattingHandler.shared.getDefaultCurrency()
+    private var defaultCurrency: CurrencyType = NumberFormattingHandler.shared.getDefaultCurrency()
     private lazy var modifier: InternalTransferSummaryModifierProtocol = dependencies.resolve()
     
     init(dependencies: InternalTransferSummaryExternalDependenciesResolver) {
@@ -27,7 +26,7 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
         self.operativeData = operativeData
     }
     
-    func addConfirmItems() {
+    func addSummaryItems() {
         addSourceAccount()
         addAmountOrExchangeRate()
         addSendDate()
@@ -53,8 +52,8 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
     }
     
     func addAmount() {
-        guard let operativeData = operativeData else { return }
-        guard let amount = operativeData.amount else { return }
+        guard let operativeData = operativeData,
+              let amount = operativeData.amount else { return }
         let items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "summary_item_amountDescription"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
@@ -82,8 +81,8 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
     }
     
     func addSendType() {
-        guard let operativeData = operativeData else { return }
-        guard let originAccount = operativeData.originAccount,
+        guard let operativeData = operativeData,
+              let originAccount = operativeData.originAccount,
               let destinationAccount = operativeData.destinationAccount else { return }
         var items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "confirmation_label_sendType"),
@@ -147,8 +146,7 @@ private extension PLInternalTransferHeaderSummaryBuilder {
     }
     
     func bankLogoURLFrom(ibanRepresentable: IBANRepresentable?) -> String? {
-        guard let ibanRepresentable = ibanRepresentable else { return nil }
-        return ibanRepresentable.bankLogoURLFrom(baseURLProvider: dependencies.resolve())
+        return ibanRepresentable?.bankLogoURLFrom(baseURLProvider: dependencies.resolve())
     }
     
     func getFormattedAmountWithCurrency(amount: AmountRepresentable, font: FontName, decimalFont: FontName) -> NSAttributedString {
@@ -161,8 +159,8 @@ private extension PLInternalTransferHeaderSummaryBuilder {
     }
     
     func addOneConversionType(rate: InternalTransferExchangeType) {
-        guard let operativeData = operativeData else { return }
-        guard let receiveAmount = operativeData.receiveAmount,
+        guard let operativeData = operativeData,
+              let receiveAmount = operativeData.receiveAmount,
               let amount = operativeData.amount,
               let rateValue = rate.rate else { return }
         let localCurrency = defaultCurrency.rawValue
@@ -192,8 +190,8 @@ private extension PLInternalTransferHeaderSummaryBuilder {
     }
     
     func addTwoConversionsType(sellRate: InternalTransferExchangeType, buyRate: InternalTransferExchangeType) {
-        guard let operativeData = operativeData else { return }
-        guard let receiveAmount = operativeData.receiveAmount,
+        guard let operativeData = operativeData,
+              let receiveAmount = operativeData.receiveAmount,
               let amount = operativeData.amount,
               let sellRateValue = sellRate.rate,
               let buyRateValue = buyRate.rate else { return }
@@ -202,7 +200,6 @@ private extension PLInternalTransferHeaderSummaryBuilder {
         let toCurrency = buyRate.originCurrency.currencyType.rawValue
         let sellConversionString = String(format: "1 %@ = %.4f %@", fromCurrency, sellRateValue.doubleValue, localCurrency)
         let buyConversionString = String(format: "1 %@ = %.4f %@", toCurrency, buyRateValue.doubleValue, localCurrency)
-
         let items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "summary_label_recipientWillReceive"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
@@ -239,4 +236,3 @@ private extension PLInternalTransferHeaderSummaryBuilder {
         }
     }
 }
-

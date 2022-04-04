@@ -14,7 +14,7 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
     private let dependencies: InternalTransferConfirmationExternalDependenciesResolver
     private var operativeData: InternalTransferOperativeData?
     private var confirmItems: [OneListFlowItemViewModel] = []
-    private lazy var defaultCurrency: CurrencyType = NumberFormattingHandler.shared.getDefaultCurrency()
+    private var defaultCurrency: CurrencyType = NumberFormattingHandler.shared.getDefaultCurrency()
     private lazy var modifier: InternalTransferConfirmationModifierProtocol = dependencies.resolve()
 
     init(dependencies: InternalTransferConfirmationExternalDependenciesResolver) {
@@ -50,8 +50,7 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
     }
 
     func addAmount() {
-        guard let operativeData = operativeData else { return }
-        guard let amount = operativeData.amount else { return }
+        guard let operativeData = operativeData, let amount = operativeData.amount else { return }
         let items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "confirmation_item_amountDescription"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
@@ -91,8 +90,7 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
     }
     
     func addSendType() {
-        guard let operativeData = operativeData else { return }
-        guard let originAccount = operativeData.originAccount,
+        guard let operativeData = operativeData, let originAccount = operativeData.originAccount,
               let destinationAccount = operativeData.destinationAccount else { return }
         var items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "confirmation_label_sendType"),
@@ -144,8 +142,7 @@ private extension PLInternalTransferConfirmationBuilder {
     }
 
     func bankLogoURLFrom(ibanRepresentable: IBANRepresentable?) -> String? {
-        guard let ibanRepresentable = ibanRepresentable else { return nil }
-        return ibanRepresentable.bankLogoURLFrom(baseURLProvider: dependencies.resolve())
+        return ibanRepresentable?.bankLogoURLFrom(baseURLProvider: dependencies.resolve())
     }
 
     func getFormattedAmountWithCurrency(amount: AmountRepresentable, font: FontName, decimalFont: FontName) -> NSAttributedString {
@@ -158,10 +155,10 @@ private extension PLInternalTransferConfirmationBuilder {
     }
 
     func addSimpleExchangeRate(_ sellExchange: InternalTransferExchangeType) {
-        guard let operativeData = operativeData else { return }
-        guard let receiveAmount = operativeData.receiveAmount,
+        guard let operativeData = operativeData,
+            let receiveAmount = operativeData.receiveAmount,
             let rateValue = sellExchange.rate,
-              let amount = operativeData.amount else { return }
+            let amount = operativeData.amount else { return }
         let localCurrency = defaultCurrency.rawValue
         let foreignCurrency = sellExchange.originCurrency.currencyType.rawValue != localCurrency ? sellExchange.originCurrency : sellExchange.destinationCurrency
         let conversionString = String(format: "1 %@ = %.4f %@", foreignCurrency.currencyType.rawValue, rateValue.doubleValue, localCurrency)
@@ -188,11 +185,11 @@ private extension PLInternalTransferConfirmationBuilder {
     }
 
     func addDoubleExchangeRate(sellExchange: InternalTransferExchangeType, buyExchange: InternalTransferExchangeType) {
-        guard let operativeData = operativeData else { return }
-        guard let receiveAmount = operativeData.receiveAmount,
+        guard let operativeData = operativeData,
+              let receiveAmount = operativeData.receiveAmount,
               let amount = operativeData.amount,
-            let sellRateValue = sellExchange.rate,
-            let buyRateValue = buyExchange.rate
+              let sellRateValue = sellExchange.rate,
+              let buyRateValue = buyExchange.rate
         else { return }
         let localCurrency = defaultCurrency.rawValue
         let fromCurrency = sellExchange.originCurrency.currencyType.rawValue
