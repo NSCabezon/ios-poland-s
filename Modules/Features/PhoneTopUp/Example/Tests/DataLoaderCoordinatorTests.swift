@@ -50,7 +50,7 @@ class DataLoaderCoordinatorTests: XCTestCase {
     func testShowingAccountSelectionWhenThereAreNoDefaultAccounts() throws {
         let account = AccountForDebit.mockInstance(defaultForPayments: false)
         coordinator.start()
-        coordinator.showForm(with: TopUpPreloadedFormData(accounts: [account], operators: [], gsmOperators: [], internetContacts: [], settings: [], topUpAccount: TopUpAccount.mockInstance()))
+        coordinator.showForm(with: TopUpPreloadedFormData(accounts: [account], operators: [], internetContacts: [], settings: [], topUpAccount: TopUpAccount.mockInstance()))
         
         XCTAssert(mockNavigationController.viewControllers.count == 3, "There should be 3 controllers on the stack")
         XCTAssert(mockNavigationController.topViewController is AccountSelectorViewController, "The top controller should be an instance of AccountSelectorViewController")
@@ -59,7 +59,7 @@ class DataLoaderCoordinatorTests: XCTestCase {
     func testShowingFormController() throws {
         let account = AccountForDebit.mockInstance(defaultForPayments: true)
         coordinator.start()
-        coordinator.showForm(with: TopUpPreloadedFormData(accounts: [account], operators: [], gsmOperators: [], internetContacts: [], settings: [], topUpAccount: TopUpAccount.mockInstance()))
+        coordinator.showForm(with: TopUpPreloadedFormData(accounts: [account], operators: [], internetContacts: [], settings: [], topUpAccount: TopUpAccount.mockInstance()))
         
         XCTAssert(mockNavigationController.viewControllers.count == 2, "There should be 2 controllers on the stack")
         XCTAssert(mockNavigationController.topViewController is PhoneTopUpFormViewController, "The top controller should be an instance of PhoneTopUpFormViewController")

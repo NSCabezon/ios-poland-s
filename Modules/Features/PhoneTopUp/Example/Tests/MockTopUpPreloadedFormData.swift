@@ -14,7 +14,6 @@ extension TopUpPreloadedFormData {
     static func mockInstance() -> TopUpPreloadedFormData {
         return TopUpPreloadedFormData(accounts: [AccountForDebit.mockInstance(defaultForPayments: true)],
                                       operators: [Operator.mockInstance()],
-                                      gsmOperators: [GSMOperator.mockInstance()],
                                       internetContacts: [MobileContact.mockInstance()],
                                       settings: [TopUpOperatorSettings.mockInstance()],
                                       topUpAccount: TopUpAccount.mockInstance())

@@ -48,10 +48,6 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
             return OperatorMapper()
         }
         
-        self.dependenciesEngine.register(for: GSMOperatorMapping.self) { _ in
-            return GSMOperatorMapper()
-        }
-        
         self.dependenciesEngine.register(for: MobileContactMapping.self) { _ in
             return MobileContactMapper()
         }

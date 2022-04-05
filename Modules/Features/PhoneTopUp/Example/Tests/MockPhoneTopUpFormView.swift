@@ -47,7 +47,7 @@ final class MockPhoneTopUpFormView: PhoneTopUpFormViewProtocol {
         updateContactCallCount += 1
     }
     
-    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+    func updateOperatorSelection(with gsmOperator: Operator?) {
         updateOperatorSelectionCallCount += 1
     }
     
