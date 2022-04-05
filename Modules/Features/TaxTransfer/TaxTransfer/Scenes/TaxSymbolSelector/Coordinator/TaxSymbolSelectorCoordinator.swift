@@ -38,13 +38,16 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
     }
     
     func start() {
+        let taxSymbols = taxSymbols
+            .sorted { $0.name < $1.name }
+            .filter { $0.isActive }
         let configuration = ItemSelectorConfiguration<TaxSymbol>(
             navigationTitle: "#Symbol formularza",
             isSearchEnabled: true,
             sections: [
                 .init(
                     sectionTitle: "#Wybierz symbol formularza:",
-                    items: taxSymbols.sorted(by: { $0.name < $1.name })
+                    items: taxSymbols
                 )
             ],
             selectedItem: nil
