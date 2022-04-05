@@ -8,19 +8,22 @@ protocol SplitPaymentFormViewProtocol: AnyObject,
                                       ConfirmationDialogPresentable,
                                       LoaderPresentable,
                                       ErrorPresentable {
-    
+    func setAccountViewModel()
+    func showValidationMessages(with data: InvalidSplitPaymentFormData)
+    func updateRecipient(name: String, accountNumber: String)
+    func resetForm()
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel])
 }
 
 final class SplitPaymentFormViewController: UIViewController {
-    
     private let presenter: SplitPaymentFormPresenterProtocol
     private let scrollView = UIScrollView()
-    private let bottomView = BottomButtonView(style: .red)
     private let formView: SplitPaymentFormView
+    private let bottomView = BottomButtonView(style: .red)
     
     init(presenter: SplitPaymentFormPresenterProtocol) {
         self.presenter = presenter
-        self.formView = SplitPaymentFormView()
+        self.formView = SplitPaymentFormView(language: presenter.getLanguage())
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,7 +73,7 @@ private extension SplitPaymentFormViewController {
     func prepareNavigationBar() {
         NavigationBarBuilder(
             style: .white,
-            title: .title(key: localized("#pl_split_payment_navigation_title")
+            title: .title(key: localized("pl_split_payment")
             )
         )
         .setLeftAction(.back(action: .closure(goBack)))
@@ -80,14 +83,17 @@ private extension SplitPaymentFormViewController {
     
     func configureView() {
         view.backgroundColor = .white
-        bottomView.configure(title: localized("#pl_split_payment_button_doneTransfer")) { [weak self] in
-            // TODO: configure bottom view
+        bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
+            self?.presenter.showConfirmation()
         }
         bottomView.disableButton()
+        formView.configure(with: presenter.getSelectedAccountViewModels())
+        formView.delegate = self
     }
     
     func setUpLayout() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        formView.translatesAutoresizingMaskIntoConstraints = false
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -117,10 +123,66 @@ private extension SplitPaymentFormViewController {
     }
         
     @objc func keyboardWillHide(notification: NSNotification) {
-        // TODO: keyboardWillHide
+        formView.setCurrentActiveFieldType(.none)
     }
 }
 
 extension SplitPaymentFormViewController: SplitPaymentFormViewProtocol {
+    func setAccountViewModel() {
+        formView.configure(with: presenter.getSelectedAccountViewModels())
+    }
     
+    func showValidationMessages(with data: InvalidSplitPaymentFormData) {
+        let form = formView.getCurrentFormViewModel()
+        formView.showInvalidFormMessages(with: data)
+        if data.shouldContinueButtonBeEnabled,
+           form.recipientAccountNumber.count == presenter.getAccountRequiredLength() {
+            bottomView.enableButton()
+        } else {
+            bottomView.disableButton()
+        }
+    }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        formView.updateRecipient(name: name, accountNumber: accountNumber)
+    }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
+    }
+    
+    func resetForm() {
+        presenter.reloadAccounts()
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
+    }
+    
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel]) {
+        formView.configure(with: models)
+    }
+}
+
+extension SplitPaymentFormViewController: SplitPaymentFormViewDelegate {
+
+    func didChangeForm(with field: TransferFormCurrentActiveField) {
+        presenter.updateTransferFormViewModel(
+            with: formView.getCurrentFormViewModel()
+        )
+        presenter.startValidation(with: field)
+    }
+    
+    func didTapRecipientButton() {
+        presenter.showRecipientSelection()
+    }
+    
+    func changeAccountTapped() {
+        presenter.showAccountSelector()
+    }
 }
