@@ -10,6 +10,8 @@ protocol ZusSmeTransferFormViewProtocol: AnyObject,
                                          ErrorPresentable {
     func updateRecipient(name: String, accountNumber: String)
     func setAccountViewModel()
+    func setVatAccountDetails(vatAccountDetails: VATAccountDetails)
+    func showValidationMessages(with data: InvalidZusSmeTransferFormData)
 }
 
 final class ZusSmeTransferFormViewController: UIViewController {
@@ -47,11 +49,11 @@ final class ZusSmeTransferFormViewController: UIViewController {
 private extension ZusSmeTransferFormViewController {
     
     @objc func goBack() {
-        //TODO: later
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func closeProcess() {
-        //TODO: later
+        presenter.didSelectCloseProcess()
     }
     
     func setUp() {
@@ -129,12 +131,45 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewProtocol {
     func setAccountViewModel() {
         formView.configure(with: presenter.getSelectedAccountViewModels())
     }
+    
+    func setVatAccountDetails(vatAccountDetails: VATAccountDetails) {
+        formView.setVatAccountDetails(vatAccountDetails: vatAccountDetails)
+    }
+    
+    func showValidationMessages(with data: InvalidZusSmeTransferFormData) {
+        let form = formView.getCurrentFormViewModel()
+        formView.showInvalidFormMessages(with: data)
+        if data.shouldContinueButtonBeEnabled,
+           form.amount != nil,
+           form.recipientAccountNumber.count == presenter.getAccountRequiredLength() {
+            bottomView.enableButton()
+        } else {
+            bottomView.disableButton()
+        }
+    }
 }
 
 extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
 
     func changeAccountTapped() {
         presenter.showAccountSelector()
+    }
+    
+    func didChangeForm(with field: TransferFormCurrentActiveField) {
+        presenter.updateTransferFormViewModel(
+            with: formView.getCurrentFormViewModel()
+        )
+        presenter.startValidation(with: field)
+    }
+    
+    func scrollToBottom() {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom
+        )
+        if (bottomOffset.y > 0) {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
     }
     
     func updateRecipient(name: String, accountNumber: String) {

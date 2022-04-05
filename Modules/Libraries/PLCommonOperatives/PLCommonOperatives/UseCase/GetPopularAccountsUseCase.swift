@@ -2,19 +2,19 @@ import CoreFoundationLib
 import SANPLLibrary
 import PLCommons
 
-protocol GetPopularAccountsUseCaseProtocol: UseCase<GetPopularAccountsUseCaseInput, GetPopularAccountsUseCaseOutput, StringErrorOutput> { }
+public protocol GetPopularAccountsUseCaseProtocol: UseCase<GetPopularAccountsUseCaseInput, GetPopularAccountsUseCaseOutput, StringErrorOutput> { }
 
-final class GetPopularAccountsUseCase: UseCase<GetPopularAccountsUseCaseInput, GetPopularAccountsUseCaseOutput, StringErrorOutput> {
+public final class GetPopularAccountsUseCase: UseCase<GetPopularAccountsUseCaseInput, GetPopularAccountsUseCaseOutput, StringErrorOutput> {
     
     private let dependenciesResolver: DependenciesResolver
     private let managersProvider: PLManagersProviderProtocol
     
-    init(dependenciesResolver: DependenciesResolver) {
+    public init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
         managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
     }
     
-    override func executeUseCase(requestValues: GetPopularAccountsUseCaseInput) throws -> UseCaseResponse<GetPopularAccountsUseCaseOutput, StringErrorOutput> {
+    public override func executeUseCase(requestValues: GetPopularAccountsUseCaseInput) throws -> UseCaseResponse<GetPopularAccountsUseCaseOutput, StringErrorOutput> {
         let result = try managersProvider.getAccountsManager().getExternalPopular(accountType: requestValues.accountType)
         switch result {
         case let .success(accounts):
@@ -29,10 +29,14 @@ final class GetPopularAccountsUseCase: UseCase<GetPopularAccountsUseCaseInput, G
 
 extension GetPopularAccountsUseCase: GetPopularAccountsUseCaseProtocol { }
 
-struct GetPopularAccountsUseCaseInput {
+public struct GetPopularAccountsUseCaseInput {
     let accountType: Int
+    
+    public init(accountType: Int) {
+        self.accountType = accountType
+    }
 }
 
-struct GetPopularAccountsUseCaseOutput {
-    let numbers: [PopularAccountNumber]
+public struct GetPopularAccountsUseCaseOutput {
+    public let numbers: [PopularAccountNumber]
 }
