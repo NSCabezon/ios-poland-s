@@ -60,6 +60,7 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
         let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
         self.view?.showTransferTypes(viewModel: viewModel)
         self.setCreditAccountInfo()
+        self.trackerManager.trackScreen(screenId: self.trackerPage.page, extraParameters: ["transfer_country": self.operativeData.type.trackerName])
     }
     
     func setCreditAccountInfo() {
@@ -194,7 +195,7 @@ private extension SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
     var trackerPage: SendMoneyTransferTypePage {
-        SendMoneyTransferTypePage()
+        SendMoneyTransferTypePage(national: self.operativeData.type == .national)
     }
     
     var trackerManager: TrackerManager {
