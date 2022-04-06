@@ -11,12 +11,15 @@ import PLScenes
 import PLCommons
 
 enum AddTaxAuthorityEntryPointContext {
-    case preselectedTaxAuthority(TaxAuthority)
+    case preselectedTaxAuthority(SelectedTaxAuthority)
     case unselectedTaxAuthority
 }
 
 protocol AddTaxAuthorityCoordinatorProtocol: ModuleCoordinator {
-    func showTaxSymbolSelector(onSelection: @escaping (TaxSymbol) -> Void)
+    func showTaxSymbolSelector(
+        selectedTaxSymbol: TaxSymbol?,
+        onSelection: @escaping (TaxSymbol) -> Void
+    )
     func showCityNameSelector(
         cities: [TaxAuthorityCity],
         selectedCity: TaxAuthorityCity?,
@@ -27,6 +30,7 @@ protocol AddTaxAuthorityCoordinatorProtocol: ModuleCoordinator {
         selectedTaxAccount: TaxAccount?,
         onSelection: @escaping (TaxAccount) -> Void
     )
+    func handleTaxAuthoritySelection(of selectedTaxAuthority: SelectedTaxAuthority)
     func back()
     func close()
 }
@@ -36,17 +40,20 @@ final class AddTaxAuthorityCoordinator: AddTaxAuthorityCoordinatorProtocol {
     private let dependenciesEngine: DependenciesDefault
     private let entryPointContext: AddTaxAuthorityEntryPointContext
     private let taxSymbols: [TaxSymbol]
+    private let onSelect: (SelectedTaxAuthority) -> Void
 
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         entryPointContext: AddTaxAuthorityEntryPointContext,
-        taxSymbols: [TaxSymbol]
+        taxSymbols: [TaxSymbol],
+        onSelect: @escaping (SelectedTaxAuthority) -> Void
     ) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.entryPointContext = entryPointContext
         self.taxSymbols = taxSymbols
+        self.onSelect = onSelect
         setUpDependencies()
     }
     
@@ -55,12 +62,16 @@ final class AddTaxAuthorityCoordinator: AddTaxAuthorityCoordinatorProtocol {
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    func showTaxSymbolSelector(onSelection: @escaping (TaxSymbol) -> Void) {
+    func showTaxSymbolSelector(
+        selectedTaxSymbol: TaxSymbol?,
+        onSelection: @escaping (TaxSymbol) -> Void
+    ) {
         let coordinator = TaxSymbolSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
+            shouldPopControllerAfterSelection: true,
             taxSymbols: taxSymbols.sorted { $0.name < $1.name },
-            selectedTaxSymbol: nil, // TODO:- Replace mocks with preselected data
+            selectedTaxSymbol: selectedTaxSymbol,
             onSelection: onSelection
         )
         coordinator.start()
@@ -103,6 +114,10 @@ final class AddTaxAuthorityCoordinator: AddTaxAuthorityCoordinatorProtocol {
     func close() {
         navigationController?.popToRootViewController(animated: true)
     }
+    
+    func handleTaxAuthoritySelection(of selectedTaxAuthority: SelectedTaxAuthority) {
+        onSelect(selectedTaxAuthority)
+    }
 }
 
 private extension AddTaxAuthorityCoordinator {
@@ -115,22 +130,22 @@ private extension AddTaxAuthorityCoordinator {
         }
     }
     
-    // TODO:- Replace mocks with preselected data
-    func prepareInitialForm(for taxAuthority: TaxAuthority) -> TaxAuthorityForm {
-        switch taxAuthority.taxAccountType {
-        case .IRP:
+    func prepareInitialForm(for taxAuthority: SelectedTaxAuthority) -> TaxAuthorityForm {
+        switch taxAuthority {
+        case .predefinedTaxAuthority:
+            return .formTypeUnselected
+        case let .irpTaxAuthority(selectedData):
             let form = IrpTaxAuthorityForm(
-                taxSymbol: .init(symbolName: "VAT-7", symbolType: 13, isActive: true, isTimePeriodRequired: true, isFundedFromVatAccount: true, destinationAccountType: .IRP),
-                taxAuthorityName: taxAuthority.name,
-                accountNumber: taxAuthority.accountNumber
+                taxSymbol: selectedData.taxSymbol,
+                taxAuthorityName: selectedData.taxAuthorityName,
+                accountNumber: selectedData.accountNumber
             )
             return .irp(form)
-        case .US:
-            let taxAccount = TaxAccount(accountNumber: "", address: .init(street: "", city: "", zipCode: ""), accountName: "", taxFormType: 0, validFromDate: Date(), validToDate: Date(), isActive: true)
+        case let .usTaxAuthority(selectedData):
             let form = UsTaxAuthorityForm(
-                taxSymbol: .init(symbolName: "VAT-7", symbolType: 13, isActive: true, isTimePeriodRequired: true, isFundedFromVatAccount: true, destinationAccountType: .IRP),
-                city: taxAuthority.address,
-                taxAuthorityAccount: taxAccount
+                taxSymbol: selectedData.taxSymbol,
+                city: selectedData.cityName,
+                taxAuthorityAccount: selectedData.taxAuthorityAccount
             )
             return .us(form)
         }
@@ -155,6 +170,14 @@ private extension AddTaxAuthorityCoordinator {
         
         dependenciesEngine.register(for: GetTaxAccountsUseCaseProtocol.self) { resolver in
             return GetTaxAccountsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: SelectedTaxAuthorityMapping.self) { _ in
+            return SelectedTaxAuthorityMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxAuthorityFormValidating.self) { _ in
+            return TaxAuthorityFormValidator()
         }
         
         dependenciesEngine.register(for: AddTaxAuthorityPresenterProtocol.self) { [prepareInitialForm] resolver in

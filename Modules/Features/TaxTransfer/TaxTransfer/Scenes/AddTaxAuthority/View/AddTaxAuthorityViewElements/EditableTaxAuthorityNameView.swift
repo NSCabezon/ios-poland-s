@@ -13,14 +13,11 @@ final class EditableTaxAuthorityNameView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let containerView = UIView()
     private let authorityNameTextField = LisboaTextFieldWithErrorView()
-    weak var textFieldDelegate: UpdatableTextFieldDelegate? {
-        didSet {
-            authorityNameTextField.textField.updatableDelegate = textFieldDelegate
-        }
-    }
+    private weak var textFieldDelegate: FloatingTitleLisboaTextFieldDelegate?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: FloatingTitleLisboaTextFieldDelegate) {
+        self.textFieldDelegate = delegate
+        super.init(frame: .zero)
         setUp()
     }
     
@@ -31,6 +28,10 @@ final class EditableTaxAuthorityNameView: UIView {
     
     func setTaxAuthorityName(_ name: String?) {
         authorityNameTextField.textField.setText(name)
+    }
+    
+    func getTaxAuthorityName() -> String? {
+        return authorityNameTextField.textField.text
     }
     
     func setInvalidFieldMessage(_ message: String?) {
@@ -83,7 +84,7 @@ private extension EditableTaxAuthorityNameView {
                     formatter: nil,
                     disabledActions: [],
                     keyboardReturnAction: nil,
-                    textFieldDelegate: nil,
+                    textFieldDelegate: textFieldDelegate,
                     textfieldCustomizationBlock: { components in
                         components.textField.keyboardType = .asciiCapable
                     }

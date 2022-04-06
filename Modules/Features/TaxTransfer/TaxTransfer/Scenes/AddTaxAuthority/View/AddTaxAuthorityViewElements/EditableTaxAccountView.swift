@@ -13,14 +13,11 @@ final class EditableTaxAccountView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let containerView = UIView()
     private let accountTextField = LisboaTextFieldWithErrorView()
-    weak var textFieldDelegate: UpdatableTextFieldDelegate? {
-        didSet {
-            accountTextField.textField.updatableDelegate = textFieldDelegate
-        }
-    }
+    private weak var textFieldDelegate: FloatingTitleLisboaTextFieldDelegate?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: FloatingTitleLisboaTextFieldDelegate) {
+        self.textFieldDelegate = delegate
+        super.init(frame: .zero)
         setUp()
     }
     
@@ -31,6 +28,10 @@ final class EditableTaxAccountView: UIView {
     
     func setAccountNumber(_ number: String?) {
         accountTextField.textField.setText(number)
+    }
+    
+    func getAccountNumber() -> String? {
+        return accountTextField.textField.text
     }
     
     func setInvalidFieldMessage(_ message: String?) {
@@ -83,7 +84,7 @@ private extension EditableTaxAccountView {
                     formatter: nil,
                     disabledActions: [],
                     keyboardReturnAction: nil,
-                    textFieldDelegate: nil,
+                    textFieldDelegate: textFieldDelegate,
                     textfieldCustomizationBlock: { components in
                         components.textField.keyboardType = .numberPad
                     }

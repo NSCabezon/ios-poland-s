@@ -10,13 +10,16 @@ import UI
 import PLUI
 
 protocol AddTaxAuthorityContainerViewDelegate: AnyObject {
-    func didUpdateFields()
+    func didUpdateFields(
+        taxAuthorityName: String?,
+        accountNumber: String?
+    )
 }
 
 final class AddTaxAuthorityContainerView: UIView {
     private let stackView = UIStackView()
-    private let editableTaxAuthorityNameView = EditableTaxAuthorityNameView()
-    private let editableTaxAccountView = EditableTaxAccountView()
+    private lazy var editableTaxAuthorityNameView = EditableTaxAuthorityNameView(delegate: self)
+    private lazy var editableTaxAccountView = EditableTaxAccountView(delegate: self)
     private let nonEditableTaxAccountView = NonEditableTaxAccountView()
     private let irpWarningView = IrpWarningSectionView()
     private let taxFormSymbolSelectorView = TaxFormSelectorSectionView(
@@ -55,6 +58,10 @@ final class AddTaxAuthorityContainerView: UIView {
         onCityTap: @escaping () -> Void,
         onTaxAuthorityTap: @escaping () -> Void
     ) {
+        defer {
+            layoutIfNeeded()
+        }
+        
         hideAllFormElements()
         addTaxSymbolSelectorElement(with: viewModel.taxSymbol, onTap: onTaxSymbolTap)
         addCitySelectorElement(with: viewModel.city, onTap: onCityTap)
@@ -67,8 +74,6 @@ final class AddTaxAuthorityContainerView: UIView {
             with: viewModel.taxAuthority,
             onTaxAuthorityTap: onTaxAuthorityTap
         )
-        
-        layoutIfNeeded()
     }
     
     func showIrpForm(
@@ -81,6 +86,16 @@ final class AddTaxAuthorityContainerView: UIView {
         addEditableAccountNumberElement(with: viewModel.accountNumber)
         stackView.addArrangedSubview(irpWarningView)
         layoutIfNeeded()
+    }
+    
+    func showInvalidFormMessages(_ messages: InvalidTaxAuthorityFormFormMessages) {
+        editableTaxAuthorityNameView.setInvalidFieldMessage(messages.invalidTaxAuthorityNameMessage)
+        editableTaxAccountView.setInvalidFieldMessage(messages.invalidAccountNumberMessage)
+    }
+    
+    func clearInvalidFormMessages() {
+        editableTaxAuthorityNameView.setInvalidFieldMessage(nil)
+        editableTaxAccountView.setInvalidFieldMessage(nil)
     }
 }
 
@@ -173,5 +188,18 @@ private extension AddTaxAuthorityContainerView {
     func addEditableAccountNumberElement(with accountNumber: String?) {
         editableTaxAccountView.setAccountNumber(accountNumber)
         stackView.addArrangedSubview(editableTaxAccountView)
+    }
+}
+
+extension AddTaxAuthorityContainerView: FloatingTitleLisboaTextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Empty implementation - required by protocol
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.didUpdateFields(
+            taxAuthorityName: editableTaxAuthorityNameView.getTaxAuthorityName(),
+            accountNumber: editableTaxAccountView.getAccountNumber()
+        )
     }
 }
