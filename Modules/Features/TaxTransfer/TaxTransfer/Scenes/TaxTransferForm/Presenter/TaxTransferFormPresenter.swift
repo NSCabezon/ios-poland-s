@@ -9,7 +9,9 @@ import CoreFoundationLib
 import PLCommons
 import PLCommonOperatives
 
-protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate, TaxPayerSelectorDelegate {
+protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate,
+                                           TaxPayerSelectorDelegate,
+                                           TaxBillingPeriodSelectorDelegate {
     var view: TaxTransferFormView? { get set }
     
     func viewDidLoad()
@@ -18,6 +20,7 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate, TaxP
     func didTapTaxPayer()
     func didTapTaxAuthority()
     func didTapBack()
+    func didTapBillingPeriod()
     func didTapDone(with data: TaxTransferFormFields)
     func didUpdateFields(with fields: TaxTransferFormFields)
     func didSelectTaxPayer(_ taxPayer: TaxPayer, selectedPayerInfo: SelectedTaxPayerInfo?)
@@ -33,6 +36,9 @@ final class TaxTransferFormPresenter {
     private var selectedAccount: AccountForDebit?
     private var selectedTaxPayer: TaxPayer?
     private var selectedPayerInfo: SelectedTaxPayerInfo?
+    private var selectedPeriod: TaxTransferBillingPeriodType?
+    private var selectedBillingYear: String?
+    private var selectedPeriodNumber: Int?
     
     init(
         currency: String,
@@ -68,9 +74,28 @@ private extension TaxTransferFormPresenter {
     var taxPayerViewModelMapper: TaxPayerViewModelMapping {
         return dependenciesResolver.resolve()
     }
+    var taxBillingPeriodViewModelMapper: TaxBillingPeriodViewModelMapping {
+        return dependenciesResolver.resolve()
+    }
 }
 
-extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
+extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {    
+    func didSelectTaxBillingPeriod(form: TaxTransferBillingPeriodForm) {
+        selectedPeriod = form.periodType
+        selectedBillingYear = form.year
+        
+        switch selectedPeriod {
+        case .year:
+            selectedPeriodNumber = Int(form.year)
+        case .day:
+            selectedPeriodNumber = Int(form.day ?? "")
+        default:
+            selectedPeriodNumber = form.periodNumber
+        }
+        
+        updateViewWithLatestViewModel()
+    }
+    
     func viewDidLoad() {
         view?.showLoader()
         taxTransferFormDataProvider.getData { [weak self] result in
@@ -110,6 +135,10 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
             selectedTaxAuthority: nil, // TODO:- Implement tracking of selected tax authority
             taxSymbols: formData.taxSymbols
         )
+    }
+    
+    func didTapBillingPeriod() {
+        coordinator.showTaxBillingPeriodSelector()
     }
     
     func didTapBack() {
@@ -204,6 +233,7 @@ private extension TaxTransferFormPresenter {
             account: getAccountViewModel(),
             taxPayer: getTaxPayerViewModel(),
             taxAuthority: getTaxAuthorityViewModel(),
+            billingPeriod: getBillingPeriod(),
             sendAmount: TaxTransferFormViewModel.AmountViewModel(
                 amount: currentFormData?.amount ?? "",
                 currency: currency
@@ -246,4 +276,19 @@ private extension TaxTransferFormPresenter {
             idType: payer.idType
         )
     }
+    
+    func getBillingPeriod() -> Selectable<TaxTransferFormViewModel.TaxBillingPeriodViewModel> {
+        guard let period = selectedPeriod else {
+            return .unselected
+        }
+        let viewModel = taxBillingPeriodViewModelMapper.map(
+            period,
+            year: selectedBillingYear ?? "",
+            periodNumber: selectedPeriodNumber
+        )
+        
+        return .selected(viewModel)
+    }
 }
+
+

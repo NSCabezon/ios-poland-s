@@ -9,6 +9,7 @@ public struct DebitAccountDTO: Codable {
     public let systemId: Int
     public let defaultForPayments: Bool
     public let accountDetails: AccountDetails
+    public let taxAccountNumber: String?
     
     public struct Name: Codable {
         public let source: String

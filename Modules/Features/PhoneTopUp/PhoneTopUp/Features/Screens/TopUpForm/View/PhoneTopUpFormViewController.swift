@@ -9,13 +9,14 @@ import UI
 import PLUI
 import PLCommons
 import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol PhoneTopUpFormViewProtocol: AnyObject, ConfirmationDialogPresentable, LoaderPresentable, ErrorPresentable {
     func updateSelectedAccount(with accountModels: [SelectableAccountViewModel])
     func updatePhoneInput(with phoneNumber: String)
     func updateRecipientName(with name: String)
     func updateContact(with contact: MobileContact)
-    func updateOperatorSelection(with gsmOperator: GSMOperator?)
+    func updateOperatorSelection(with gsmOperator: Operator?)
     func updatePaymentAmounts(with cellModels: [PaymentAmountCellViewModel], selectedAmount: TopUpAmount?)
     func updateTermsView(isAcceptanceRequired: Bool, isAccepted: Bool)
     func updateContinueButton(isEnabled: Bool)
@@ -48,6 +49,12 @@ final class PhoneTopUpFormViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        IQKeyboardManager.shared.enableAutoToolbar = true
     }
     
     // MARK: Configuration
@@ -113,7 +120,7 @@ extension PhoneTopUpFormViewController: PhoneTopUpFormViewProtocol {
         formView.showInvalidPhoneNumberError(showError)
     }
     
-    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+    func updateOperatorSelection(with gsmOperator: Operator?) {
         formView.updateOperatorSelection(with: gsmOperator)
     }
     

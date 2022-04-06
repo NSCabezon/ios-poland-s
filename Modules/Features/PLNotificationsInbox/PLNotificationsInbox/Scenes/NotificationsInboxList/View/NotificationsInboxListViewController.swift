@@ -45,6 +45,9 @@ final class NotificationsInboxListViewController: UIViewController {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         
+        contentView.tableView.sectionHeaderHeight = UITableView.automaticDimension
+        contentView.tableView.estimatedSectionHeaderHeight = 250
+        
         setUpFilterButton()
         
         getData(selectedPushCategories ?? EnabledPushCategorie.allCases, selectedPushStatuses ?? NotificationStatus.allCases)

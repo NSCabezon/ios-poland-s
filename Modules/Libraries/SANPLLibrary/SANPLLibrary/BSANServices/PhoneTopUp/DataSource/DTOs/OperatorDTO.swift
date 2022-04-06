@@ -11,5 +11,5 @@ public struct OperatorDTO: Codable {
     public let id: Int
     public let name: String
     public let topupValues: TopUpValuesDTO
-    public let prefixes: [String]
+    public let prefixes: [String]?
 }

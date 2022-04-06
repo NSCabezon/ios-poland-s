@@ -160,7 +160,9 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
         } else {
             self.trackLoginSuccessWithBiometryType()
         }
-        self.openSessionAndNavigateToGlobalPosition()
+        self.view?.showLoading(completion: { [weak self] in
+            self?.openSessionAndNavigateToGlobalPosition()
+        })
         self.notificationTokenRegisterProcessGroup.execute { _ in }
     }
 

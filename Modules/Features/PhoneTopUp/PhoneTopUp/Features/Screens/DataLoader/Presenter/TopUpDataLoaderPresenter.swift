@@ -49,7 +49,6 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
                     })
                 })
             }
-
     }
     
     private func handleSuccessfulDataFetch(with fetchedData: GetPhoneTopUpFormDataOutput) {
@@ -65,14 +64,28 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
             return
         }
         
+        let operators = filterOperatorsWithoutSettings(operators: fetchedData.operators, settings: settings)
+        guard !operators.isEmpty else {
+            view?.hideLoader(completion: { [weak self] in
+                self?.view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: {
+                    self?.coordinator?.close()
+                })
+            })
+            return
+        }
+        
         let formData = TopUpPreloadedFormData(accounts: fetchedData.accounts,
-                                              operators: fetchedData.operators,
-                                              gsmOperators: fetchedData.gsmOperators,
+                                              operators: operators,
                                               internetContacts: fetchedData.internetContacts,
                                               settings: settings,
                                               topUpAccount: fetchedData.topUpAccount)
         view?.hideLoader(completion: { [weak self] in
             self?.coordinator?.showForm(with: formData)
         })
+    }
+    
+    private func filterOperatorsWithoutSettings(operators: [Operator], settings: TopUpSettings) -> [Operator] {
+        let operatorsWithSettings = Set(settings.map(\.operatorId))
+        return operators.filter({ operatorsWithSettings.contains($0.id) })
     }
 }

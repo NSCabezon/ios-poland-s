@@ -25,20 +25,16 @@ final class OperatorSelectionPresenter {
     private weak var coordinator: OperatorSelectionCoordinatorProtocol?
     private var selectedOperatorId: Int?
     private let operators: [Operator]
-    private let gsmOperators: [GSMOperator]
     private var cellModels: [OperatorSelectionCellViewModel] {
-        let matchedOperators = gsmOperators.filter { operators.map(\.id).contains($0.id) }
-        return matchedOperators.map { OperatorSelectionCellViewModel(gsmOperator: $0, isSelected: $0.id == selectedOperatorId) }
+        return operators.map { OperatorSelectionCellViewModel(gsmOperator: $0, isSelected: $0.id == selectedOperatorId) }
     }
     
     init(dependenciesResolver: DependenciesResolver,
          operators: [Operator],
-         gsmOperators: [GSMOperator],
          selectedOperatorId: Int?) {
         self.dependenciesResolver = dependenciesResolver
         coordinator = dependenciesResolver.resolve(for: OperatorSelectionCoordinatorProtocol.self)
         self.operators = operators
-        self.gsmOperators = gsmOperators
         self.selectedOperatorId = selectedOperatorId
     }
 }
@@ -54,7 +50,7 @@ extension OperatorSelectionPresenter: OperatorSelectionPresenterProtocol {
     
     func didSelectCell(at row: Int) {
         let selectedOperatorId = cellModels[row].operatorId
-        guard let selectedOperator = gsmOperators.first(where: { $0.id == selectedOperatorId }) else {
+        guard let selectedOperator = operators.first(where: { $0.id == selectedOperatorId }) else {
             return
         }
         coordinator?.didSelectOperator(selectedOperator)

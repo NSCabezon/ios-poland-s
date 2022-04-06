@@ -3,6 +3,7 @@ import CoreFoundationLib
 import SANPLLibrary
 import PLCommons
 import PLUI
+import PLCommonOperatives
 
 protocol ZusSmeTransferFormCoordinatorProtocol {
     func pop()
@@ -96,7 +97,18 @@ private extension ZusSmeTransferFormCoordinator {
         dependenciesEngine.register(for: ZusSmeTransferFormCoordinatorProtocol.self) { _ in
             self
         }
-        
+        dependenciesEngine.register(for: VATAccountDetailsMapping.self) { _ in
+            VATAccountDetailsMapper()
+        }
+        dependenciesEngine.register(for: ZusSmeTransferValidating.self) { resolver in
+            ZusSmeTransferValidator(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: GetPopularAccountsUseCase.self) { resolver in
+            GetPopularAccountsUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: GetVATAccountUseCase.self) { resolver in
+            GetVATAccountUseCase(dependenciesResolver: resolver)
+        }
         dependenciesEngine.register(for: ZusSmeTransferFormPresenterProtocol.self) { [accounts, selectedAccountNumber] resolver in
             ZusSmeTransferFormPresenter(
                 dependenciesResolver: resolver,
