@@ -71,21 +71,12 @@ final class AddTaxAuthorityCoordinator: AddTaxAuthorityCoordinatorProtocol {
         selectedCity: TaxAuthorityCity?,
         onSelection: @escaping (TaxAuthorityCity) -> Void
     ) {
-        let configuration = ItemSelectorConfiguration<TaxAuthorityCity>(
-            navigationTitle: "#Miasto",
-            isSearchEnabled: true,
-            sections: [
-                .init(
-                    sectionTitle: "#Lista:",
-                    items: cities.sorted(by: { $0.cityName < $1.cityName })
-                )
-            ],
-            selectedItem: selectedCity
-        )
-        let coordinator = ItemSelectorCoordinator(
+        let coordinator = TaxAuthorityCitySelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            configuration: configuration,
-            itemSelectionHandler: onSelection
+            cities: cities,
+            selectedCity: selectedCity,
+            onSelection: onSelection
         )
         coordinator.start()
     }
@@ -95,21 +86,12 @@ final class AddTaxAuthorityCoordinator: AddTaxAuthorityCoordinatorProtocol {
         selectedTaxAccount: TaxAccount?,
         onSelection: @escaping (TaxAccount) -> Void
     ) {
-        let configuration = ItemSelectorConfiguration<TaxAccount>(
-            navigationTitle: "#Nazwa organu",
-            isSearchEnabled: true,
-            sections: [
-                .init(
-                    sectionTitle: "#Lista:",
-                    items: taxAccounts.sorted(by: { $0.accountName < $1.accountName })
-                )
-            ],
-            selectedItem: selectedTaxAccount
-        )
-        let coordinator = ItemSelectorCoordinator(
+        let coordinator = TaxAccountSelectorCoordinator(
+            dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
-            configuration: configuration,
-            itemSelectionHandler: onSelection
+            taxAccounts: taxAccounts,
+            selectedTaxAccount: selectedTaxAccount,
+            onSelection: onSelection
         )
         coordinator.start()
     }

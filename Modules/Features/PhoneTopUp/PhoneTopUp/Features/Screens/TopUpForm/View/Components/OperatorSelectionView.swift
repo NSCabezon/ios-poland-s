@@ -36,7 +36,7 @@ final class OperatorSelectionView: UIView {
     
     // MARK: Configuration
     
-    func setUp(with gsmOperator: GSMOperator?) {
+    func setUp(with gsmOperator: Operator?) {
         isHidden = gsmOperator == nil
         operatorTextField.setText(gsmOperator?.name)
     }

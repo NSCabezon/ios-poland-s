@@ -20,6 +20,7 @@ def core_dependencies
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
   pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
   pod 'Localization', :path => '../../../../santander-one/Localization'
+  pod 'UIOneComponents', :path => '../../../../santander-one/UIOneComponents'
 end
 
 def pl_dependencies

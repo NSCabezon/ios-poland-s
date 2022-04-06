@@ -24,11 +24,12 @@ protocol FormAccountSelectable: AnyObject {
     func updateSelectedAccountNumber(number: String)
 }
 
-final class SplitPaymentFormCoordinator: ModuleCoordinator {
-    public var navigationController: UINavigationController?
+final class SplitPaymentFormCoordinator {
+    var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private var accounts: [AccountForDebit]
     private let selectedAccountNumber: String
+    private weak var accountSelectableDelegate: SplitPaymentFormAccountSelectable?
     private weak var recipientSelectorDelegate: RecipientSelectorDelegate?
     weak var accountUpdateDelegate: SplitPaymentAccountSelectorCoordinatorUpdatable?
 
@@ -55,7 +56,7 @@ extension SplitPaymentFormCoordinator: SplitPaymentFormCoordinatorProtocol {
     func pop() {
         if let accountSelectorViewController = navigationController?.viewControllers.first(where: { $0 is AccountSelectorViewProtocol } ) as? AccountSelectorViewProtocol {
             let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
-            let models = accounts.compactMap { try? mapper.map($0, selectedAccountNumber: nil) }
+            let models = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: nil) })
             accountSelectorViewController.setViewModels(models)
         }
         navigationController?.popViewController(animated: true)
@@ -78,7 +79,7 @@ extension SplitPaymentFormCoordinator: SplitPaymentFormCoordinatorProtocol {
     }
     
     func showConfiramtion(model: SplitPaymentModel) {
-        // TODO: showConfiramtion
+        // TODO: Show confirmation
     }
     
     func showRecipientSelection() {
@@ -90,13 +91,17 @@ extension SplitPaymentFormCoordinator: SplitPaymentFormCoordinatorProtocol {
     }
     
     func updateAccounts(accounts: [AccountForDebit]) {
-        // TODO: updateAccounts
+        self.accounts = accounts
+        accountUpdateDelegate?.updateAccounts(with: accounts)
     }
 }
 
 private extension SplitPaymentFormCoordinator {
     func setupDependencies() {
         
+        dependenciesEngine.register(for: SplitPaymentValidating.self) { resolver in
+            SplitPaymentValidator(dependenciesResolver: resolver)
+        }
         dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
             ConfirmationDialogFactory()
         }
@@ -106,6 +111,7 @@ private extension SplitPaymentFormCoordinator {
         dependenciesEngine.register(for: SplitPaymentFormCoordinatorProtocol.self) { _ in
             self
         }
+        
         dependenciesEngine.register(for: SplitPaymentFormPresenterProtocol.self) { [accounts, selectedAccountNumber] resolver in
             SplitPaymentFormPresenter(
                 dependenciesResolver: resolver,
@@ -115,6 +121,8 @@ private extension SplitPaymentFormCoordinator {
         }
         dependenciesEngine.register(for: SplitPaymentFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: SplitPaymentFormPresenterProtocol.self)
+            self?.accountSelectableDelegate = presenter
+            self?.recipientSelectorDelegate = presenter
             let viewController = SplitPaymentFormViewController(presenter: presenter)
             presenter.view = viewController
             return viewController
@@ -124,7 +132,7 @@ private extension SplitPaymentFormCoordinator {
 
 extension SplitPaymentFormCoordinator: FormAccountSelectable {
     public func updateSelectedAccountNumber(number: String) {
-        // TODO: updateSelectedAccountNumber
+        accountSelectableDelegate?.updateSelectedAccountNumber(number: number)
     }
 }
 

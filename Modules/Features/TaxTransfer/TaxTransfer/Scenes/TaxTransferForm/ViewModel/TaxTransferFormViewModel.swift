@@ -11,6 +11,7 @@ struct TaxTransferFormViewModel {
     let account: Selectable<AccountViewModel>
     let taxPayer: Selectable<TaxPayerViewModel>
     let taxAuthority: Selectable<TaxAuthorityViewModel>
+    let billingPeriod: Selectable<TaxBillingPeriodViewModel>
     let sendAmount: AmountViewModel
     let obligationIdentifier: String
 }
@@ -51,6 +52,25 @@ extension TaxTransferFormViewModel {
         }
         
         static func == (lhs: TaxTransferFormViewModel.TaxPayerViewModel, rhs: TaxTransferFormViewModel.TaxPayerViewModel) -> Bool {
+            return lhs.identifier == rhs.identifier && lhs.name == rhs.name
+        }
+    }
+    
+    struct TaxBillingPeriodViewModel: SelectableItem {
+        let periodType: TaxTransferBillingPeriodType
+        let year: String
+        let periodNumber: Int?
+        
+        var identifier: String {
+            return UUID().uuidString
+        }
+
+        var name: String {
+            return periodType.name
+        }
+        
+        static func == (lhs: TaxTransferFormViewModel.TaxBillingPeriodViewModel,
+                        rhs: TaxTransferFormViewModel.TaxBillingPeriodViewModel) -> Bool {
             return lhs.identifier == rhs.identifier && lhs.name == rhs.name
         }
     }
