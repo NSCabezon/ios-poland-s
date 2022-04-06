@@ -18,6 +18,8 @@ public final class PLNumberFormatter: AmountFormatterProvider {
             return self.generateWith1M()
         case .decimal(decimals: let decimals):
             return self.generateDecimals(decimals)
+        case .decimalPadded(decimals: let decimals):
+            return self.generateDecimals(decimals)
         case .decimalTracker(decimals: let decimals):
             return self.generateDecimalTracker(decimals)
         case .decimalServiceValue(decimals: let decimals):
