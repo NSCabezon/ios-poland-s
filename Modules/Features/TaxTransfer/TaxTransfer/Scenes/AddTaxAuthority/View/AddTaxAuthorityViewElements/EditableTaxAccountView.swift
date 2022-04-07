@@ -8,14 +8,15 @@
 import CoreFoundationLib
 import UI
 import PLUI
+import UIKit
 
 final class EditableTaxAccountView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let containerView = UIView()
     private let accountTextField = LisboaTextFieldWithErrorView()
-    private weak var textFieldDelegate: FloatingTitleLisboaTextFieldDelegate?
+    private weak var textFieldDelegate: UITextFieldDelegate?
     
-    init(delegate: FloatingTitleLisboaTextFieldDelegate) {
+    init(delegate: UITextFieldDelegate) {
         self.textFieldDelegate = delegate
         super.init(frame: .zero)
         setUp()
@@ -77,19 +78,17 @@ private extension EditableTaxAccountView {
     }
     
     func configureStyling() {
-        accountTextField.textField.setEditingStyle(
-            .writable(
-                configuration: .init(
-                    type: .simple,
-                    formatter: nil,
-                    disabledActions: [],
-                    keyboardReturnAction: nil,
-                    textFieldDelegate: textFieldDelegate,
-                    textfieldCustomizationBlock: { components in
-                        components.textField.keyboardType = .numberPad
-                    }
-                )
-            )
-        )
+        let accountFormatter = PLAccountTextFieldFormatter()
+        let configuration = LisboaTextField.WritableTextField(
+            type: .simple,
+            formatter: accountFormatter,
+            disabledActions: [],
+            keyboardReturnAction: nil,
+            textFieldDelegate: nil) { component in
+            component.textField.keyboardType = .numberPad
+        }
+        accountTextField.textField.placeholder = "#Numer rachunku/ aka Konto"
+        accountTextField.textField.setEditingStyle(.writable(configuration: configuration))
+        accountFormatter.delegate = textFieldDelegate
     }
 }

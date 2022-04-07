@@ -58,10 +58,7 @@ final class AddTaxAuthorityContainerView: UIView {
         onCityTap: @escaping () -> Void,
         onTaxAuthorityTap: @escaping () -> Void
     ) {
-        defer {
-            layoutIfNeeded()
-        }
-        
+        defer { layoutIfNeeded() }
         hideAllFormElements()
         addTaxSymbolSelectorElement(with: viewModel.taxSymbol, onTap: onTaxSymbolTap)
         addCitySelectorElement(with: viewModel.city, onTap: onCityTap)
@@ -84,7 +81,7 @@ final class AddTaxAuthorityContainerView: UIView {
         addTaxSymbolSelectorElement(with: viewModel.taxSymbol, onTap: onTaxSymbolTap)
         addEditableTaxAuthorityNameElement(with: viewModel.taxAuthorityName)
         addEditableAccountNumberElement(with: viewModel.accountNumber)
-        stackView.addArrangedSubview(irpWarningView)
+        addIrpWarningView()
         layoutIfNeeded()
     }
     
@@ -139,6 +136,7 @@ private extension AddTaxAuthorityContainerView {
     func hideAllFormElements() {
         stackView.arrangedSubviews.forEach {
             stackView.removeArrangedSubview($0)
+            $0.isHidden = true
         }
     }
     
@@ -154,6 +152,7 @@ private extension AddTaxAuthorityContainerView {
     func addTaxSymbolSelectorElement(with symbolName: String, onTap: @escaping () -> Void) {
         taxFormSymbolSelectorView.configure(with: .selected(symbolName), onTap: onTap)
         stackView.addArrangedSubview(taxFormSymbolSelectorView)
+        taxFormSymbolSelectorView.isHidden = false
     }
     
     func addCitySelectorElement(
@@ -162,6 +161,7 @@ private extension AddTaxAuthorityContainerView {
     ) {
         citySelectorView.configure(with: viewModel, onTap: onTap)
         stackView.addArrangedSubview(citySelectorView)
+        citySelectorView.isHidden = false
     }
     
     func addTaxAuthoritySelectorAndAccountNumberElements(
@@ -172,31 +172,37 @@ private extension AddTaxAuthorityContainerView {
         case .unselected:
             taxAuthorityNameSelectorView.configure(with: .unselected, onTap: onTaxAuthorityTap)
             stackView.addArrangedSubview(taxAuthorityNameSelectorView)
+            taxAuthorityNameSelectorView.isHidden = false
         case let .selected(viewModel):
             taxAuthorityNameSelectorView.configure(with: .selected(viewModel.taxAuthorityName), onTap: onTaxAuthorityTap)
             nonEditableTaxAccountView.configure(with: viewModel.accountNumber)
             stackView.addArrangedSubview(taxAuthorityNameSelectorView)
             stackView.addArrangedSubview(nonEditableTaxAccountView)
+            taxAuthorityNameSelectorView.isHidden = false
+            nonEditableTaxAccountView.isHidden = false
         }
     }
     
     func addEditableTaxAuthorityNameElement(with taxAuthorityName: String?) {
         editableTaxAuthorityNameView.setTaxAuthorityName(taxAuthorityName)
         stackView.addArrangedSubview(editableTaxAuthorityNameView)
+        editableTaxAuthorityNameView.isHidden = false
     }
     
     func addEditableAccountNumberElement(with accountNumber: String?) {
         editableTaxAccountView.setAccountNumber(accountNumber)
         stackView.addArrangedSubview(editableTaxAccountView)
+        editableTaxAccountView.isHidden = false
+    }
+    
+    func addIrpWarningView() {
+        stackView.addArrangedSubview(irpWarningView)
+        irpWarningView.isHidden = false
     }
 }
 
-extension AddTaxAuthorityContainerView: FloatingTitleLisboaTextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        // Empty implementation - required by protocol
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
+extension AddTaxAuthorityContainerView: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         delegate?.didUpdateFields(
             taxAuthorityName: editableTaxAuthorityNameView.getTaxAuthorityName(),
             accountNumber: editableTaxAccountView.getAccountNumber()

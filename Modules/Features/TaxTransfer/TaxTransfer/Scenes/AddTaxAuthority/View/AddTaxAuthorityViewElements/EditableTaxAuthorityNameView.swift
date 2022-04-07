@@ -13,9 +13,9 @@ final class EditableTaxAuthorityNameView: UIView {
     private lazy var sectionContainer = getSectionContainer()
     private let containerView = UIView()
     private let authorityNameTextField = LisboaTextFieldWithErrorView()
-    private weak var textFieldDelegate: FloatingTitleLisboaTextFieldDelegate?
+    private weak var textFieldDelegate: UITextFieldDelegate?
     
-    init(delegate: FloatingTitleLisboaTextFieldDelegate) {
+    init(delegate: UITextFieldDelegate) {
         self.textFieldDelegate = delegate
         super.init(frame: .zero)
         setUp()
@@ -77,19 +77,23 @@ private extension EditableTaxAuthorityNameView {
     }
     
     func configureStyling() {
+        let nameFormatter = UIFormattedCustomTextField()
+        nameFormatter.setMaxLength(maxLength: 80)
         authorityNameTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
                     type: .simple,
-                    formatter: nil,
+                    formatter: nameFormatter,
                     disabledActions: [],
                     keyboardReturnAction: nil,
-                    textFieldDelegate: textFieldDelegate,
+                    textFieldDelegate: nil,
                     textfieldCustomizationBlock: { components in
                         components.textField.keyboardType = .asciiCapable
                     }
                 )
             )
         )
+        authorityNameTextField.textField.placeholder = "#Nazwa Organu"
+        nameFormatter.delegate = textFieldDelegate
     }
 }

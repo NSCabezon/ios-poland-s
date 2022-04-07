@@ -183,7 +183,10 @@ extension AddTaxAuthorityViewController: AddTaxAuthorityContainerViewDelegate {
         taxAuthorityName: String?,
         accountNumber: String?
     ) {
-        
+        presenter.didUpdateIrpFields(
+            taxAuthorityName: taxAuthorityName,
+            accountNumber: accountNumber
+        )
     }
 }
 

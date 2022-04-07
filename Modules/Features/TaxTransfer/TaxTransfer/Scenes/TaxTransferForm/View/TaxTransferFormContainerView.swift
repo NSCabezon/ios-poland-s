@@ -112,7 +112,7 @@ private extension TaxTransferFormContainerView {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
-        stackView.spacing = 25
+        stackView.spacing = 0
     }
     
     func configureSubviews() {

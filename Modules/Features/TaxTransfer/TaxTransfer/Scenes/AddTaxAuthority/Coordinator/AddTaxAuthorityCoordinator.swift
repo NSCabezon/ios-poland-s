@@ -176,8 +176,14 @@ private extension AddTaxAuthorityCoordinator {
             return SelectedTaxAuthorityMapper()
         }
         
-        dependenciesEngine.register(for: TaxAuthorityFormValidating.self) { _ in
-            return TaxAuthorityFormValidator()
+        dependenciesEngine.register(for: TaxAccountTypeRecognizing.self) { _ in
+            return TaxAccountTypeRecognizer()
+        }
+        
+        dependenciesEngine.register(for: TaxAuthorityFormValidating.self) { resolver in
+            return TaxAuthorityFormValidator(
+                accountTypeRecognizer: resolver.resolve(for: TaxAccountTypeRecognizing.self)
+            )
         }
         
         dependenciesEngine.register(for: AddTaxAuthorityPresenterProtocol.self) { [prepareInitialForm] resolver in

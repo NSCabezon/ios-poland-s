@@ -5,6 +5,8 @@
 //  Created by 185167 on 02/03/2022.
 //
 
+import PLCommons
+
 protocol AddTaxAuthorityViewModelMapping {
     func map(_ form: TaxAuthorityForm) -> AddTaxAuthorityViewModel
 }
@@ -24,10 +26,19 @@ final class AddTaxAuthorityViewModelMapper: AddTaxAuthorityViewModelMapping {
 
 private extension AddTaxAuthorityViewModelMapper {
     func getIrpFormViewModel(from form: IrpTaxAuthorityForm) -> AddTaxAuthorityViewModel.IrpTaxAuthorityFormViewModel {
+        let accountNumber: String? = {
+            guard
+                let accountNumber = form.accountNumber,
+                accountNumber.count == 26
+            else {
+                return form.accountNumber
+            }
+            return IBANFormatter.format(iban: accountNumber)
+        }()
         return .init(
             taxSymbol: form.taxSymbol.symbolName,
             taxAuthorityName: form.taxAuthorityName,
-            accountNumber: form.accountNumber
+            accountNumber: accountNumber
         )
     }
     
