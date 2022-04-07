@@ -47,7 +47,7 @@ extension CardReactiveDataRepository: CardRepository {
         return Future { promise in
             Async(queue: .global(qos: .userInitiated)) {
                 do {
-                    let _ = self.changeAliasCard(card: cardDTO, newAlias: newAlias)
+                    let _ = try self.changeAlias(forCard: cardDTO, newAlias: newAlias)
                     promise(.success(()))
                 } catch let error {
                     promise(.failure(error))
@@ -65,7 +65,7 @@ extension CardReactiveDataRepository: CardRepository {
     }
 }
 
-private extension CardReactiveDataRepository {
+fileprivate extension CardReactiveDataRepository {
     
     func getCardDetail(forCard card: SANLegacyLibrary.CardDTO) throws -> CardDetailRepresentable {
         let response = try cardManager.getCardDetail(cardDTO: card)
