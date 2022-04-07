@@ -66,7 +66,7 @@
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
 		0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */; };
-		180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		180E15F4C4CFEF45D67C330D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		1C8B3EEB270DEF1F00868449 /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEA270DEF1F00868449 /* SendMoneyCoordinator.swift */; };
 		1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEC270DEF3000868449 /* SendMoneyModifier.swift */; };
 		26014B4127EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26014B4027EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift */; };
@@ -187,7 +187,6 @@
 		904F5DD927BD353600FDA40B /* PLInternalTransferPreSetupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904F5DD827BD353600FDA40B /* PLInternalTransferPreSetupUseCase.swift */; };
 		90607A2427397E1A00643651 /* RemainingTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A952732AC5300691E91 /* RemainingTimeView.swift */; };
 		9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9092539C27E207DA0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift */; };
-		9092539F27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9092539E27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift */; };
 		909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909262EF27E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift */; };
 		909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909262F127E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift */; };
 		90B594FD27BE8A6C00719FEA /* TransferOperativesDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B594FC27BE8A6C00719FEA /* TransferOperativesDependenciesResolver.swift */; };
@@ -204,7 +203,7 @@
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712718CC1199B6EE214A84E5 /* Pods_SantanderTests.framework */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A97543352784805B00400A0A /* PLCashLoanOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97543342784805A00400A0A /* PLCashLoanOperative.swift */; };
@@ -518,7 +517,6 @@
 		903E5BF72799628F000BE389 /* PLGetSendMoneyActionsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGetSendMoneyActionsUseCase.swift; sourceTree = "<group>"; };
 		904F5DD827BD353600FDA40B /* PLInternalTransferPreSetupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferPreSetupUseCase.swift; sourceTree = "<group>"; };
 		9092539C27E207DA0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferConfirmationUseCaseTest.swift; sourceTree = "<group>"; };
-		9092539E27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferOperativeExternalDependenciesResolverTest.swift; sourceTree = "<group>"; };
 		909262EF27E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferPreSetupUseCaseTest.swift; sourceTree = "<group>"; };
 		909262F127E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGlobalPositionDataRepositoryMock.swift; sourceTree = "<group>"; };
 		90B594FC27BE8A6C00719FEA /* TransferOperativesDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOperativesDependenciesResolver.swift; sourceTree = "<group>"; };
@@ -656,7 +654,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */,
+				180E15F4C4CFEF45D67C330D /* (null) in Frameworks */,
 				A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -713,7 +711,6 @@
 			children = (
 				04A66E7D27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift */,
 				9092539C27E207DA0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift */,
-				9092539E27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift */,
 				909262EF27E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift */,
 			);
 			path = UseCases;
@@ -2318,7 +2315,6 @@
 				444424B027EB7ADC0020E735 /* TestPLCardDetailConfiguration.swift in Sources */,
 				04A66E8627D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift in Sources */,
 				04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */,
-				9092539F27E20A380034A5E0 /* PLInternalTransferOperativeExternalDependenciesResolverTest.swift in Sources */,
 				04A66E7E27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift in Sources */,
 				BAA2FF2E27F10D1F00A38456 /* OnboardingPermissionOptionsTests.swift in Sources */,
 				909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */,
@@ -2334,7 +2330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
