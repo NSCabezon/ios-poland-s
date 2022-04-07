@@ -13,14 +13,14 @@ import CoreFoundationLib
 @testable import Santander
 
 struct PLInternalTransferExternalDependenciesResolverMock: PLInternalTransferOperativeExternalDependenciesResolver {
-    func resolve() -> DependenciesResolver {
-        fatalError()
-    }
-    
     private var rates: [ExchangeRateRepresentable]!
 
-    public init(rates: [ExchangeRateRepresentable]) {
+    public init(rates: [ExchangeRateRepresentable] = []) {
         self.rates = rates
+    }
+    
+    func resolve() -> DependenciesResolver {
+        fatalError()
     }
     
     func resolve() -> PLTransfersRepository {
@@ -28,7 +28,7 @@ struct PLInternalTransferExternalDependenciesResolverMock: PLInternalTransferOpe
     }
     
     func resolve() -> GlobalPositionDataRepository {
-        fatalError()
+        return PLGlobalPositionDataRepositoryMock()
     }
     
     func resolve() -> PLAccountOtherOperativesInfoRepository {
