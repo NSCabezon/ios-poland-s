@@ -25,6 +25,7 @@ import SANLegacyLibrary
 import PhoneTopUp
 import ZusTransfer
 import ZusSMETransfer
+import SplitPayment
 import ScanAndPay
 
 enum OneAppInitModule: String, CaseIterable {
@@ -43,6 +44,7 @@ enum OneAppInitModule: String, CaseIterable {
     case taxTransfer = "Tax Transfer"
     case zusTransfer = "Zus Transfer"
     case zusSMETransfer = "Zus SME Transfer"
+    case splitPayment = "Split Payment"
     case scanAndPay = "Scan and Pay"
 }
 
@@ -204,6 +206,11 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         case .zusSMETransfer:
             let coordinator = dependenciesEngine.resolve(
                 for: ZusSmeTransferDataLoaderCoordinatorProtocol.self
+            )
+            coordinator.start()
+        case .splitPayment:
+            let coordinator = dependenciesEngine.resolve(
+                for: SplitPaymentModuleCoordinatorProtocol.self
             )
             coordinator.start()
         case .scanAndPay:

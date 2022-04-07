@@ -36,7 +36,6 @@ final class PhoneTopUpFormPresenter {
     private let dependenciesResolver: DependenciesResolver
     private let accounts: [AccountForDebit]
     private let operators: [Operator]
-    private let gsmOperators: [GSMOperator]
     private let internetContacts: [MobileContact]
     private let settings: TopUpSettings
     private let topUpAccount: TopUpAccount
@@ -70,17 +69,9 @@ final class PhoneTopUpFormPresenter {
         }
     }
     
-    private var selectedGsmOperator: GSMOperator? {
-        didSet {
-            view?.updateOperatorSelection(with: selectedGsmOperator)
-            let matchingOperator = operators.first(where: { $0.id == selectedGsmOperator?.id })
-            selectedOperator = matchingOperator
-            validateFormData()
-        }
-    }
-    
     private var selectedOperator: Operator? {
         didSet {
+            view?.updateOperatorSelection(with: selectedOperator)
             selectedTopUpAmount = matchDefaultTopUpAmount(with: selectedOperator)
             termsAccepted = false
             let amountViewModels = amountCellViewModelMapper.map(topUpValues: selectedOperator?.topupValues, selectedAmount: selectedTopUpAmount)
@@ -122,14 +113,12 @@ final class PhoneTopUpFormPresenter {
     init(dependenciesResolver: DependenciesResolver,
          accounts: [AccountForDebit],
          operators: [Operator],
-         gsmOperators: [GSMOperator],
          internetContacts: [MobileContact],
          settings: TopUpSettings,
          topUpAccount: TopUpAccount) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.operators = operators
-        self.gsmOperators = gsmOperators
         self.internetContacts = internetContacts
         self.settings = settings
         self.topUpAccount = topUpAccount
@@ -242,11 +231,11 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func didTouchOperatorSelectionButton() {
-        coordinator?.showOperatorSelection(currentlySelectedOperatorId: selectedGsmOperator?.id)
+        coordinator?.showOperatorSelection(currentlySelectedOperatorId: selectedOperator?.id)
     }
     
-    func didSelectOperator(_ gsmOperator: GSMOperator) {
-        selectedGsmOperator = gsmOperator
+    func didSelectOperator(_ gsmOperator: Operator) {
+        selectedOperator = gsmOperator
     }
     
     func didTouchTermsAndConditionsCheckBox() {
@@ -260,7 +249,7 @@ private extension PhoneTopUpFormPresenter {
         case .partial(_):
             view?.showInvalidPhoneNumberError(false)
         case .full(let number):
-            let showError = matchGSMOperator(with: number) == nil
+            let showError = matchOperator(with: number) == nil
             view?.showInvalidPhoneNumberError(showError)
         }
     }
@@ -304,15 +293,14 @@ private extension PhoneTopUpFormPresenter {
     func updateOperator() {
         switch phoneNumber {
         case .partial(_):
-            selectedGsmOperator = nil
+            selectedOperator = nil
         case .full(let number):
-            selectedGsmOperator = matchGSMOperator(with: number)
+            selectedOperator = matchOperator(with: number)
         }
     }
     
-    func matchGSMOperator(with number: String) -> GSMOperator? {
-        let operatorId = operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })?.id
-        return gsmOperators.first(where: { $0.id == operatorId })
+    func matchOperator(with number: String) -> Operator? {
+        return operators.first(where: { $0.prefixes.first(where: { number.starts(with: $0) }) != nil })
     }
     
     func showPhoneContacts() {
@@ -348,7 +336,6 @@ private extension PhoneTopUpFormPresenter {
     func validateFormData() {
         let areFormInputsValid = formValidator.areFormInputsValid(account: selectedAccount,
                                                                   number: phoneNumber,
-                                                                  gsmOperator: selectedGsmOperator,
                                                                   operator: selectedOperator,
                                                                   topUpAmount: selectedTopUpAmount,
                                                                   termsAcceptanceRequired: isTermsAcceptanceRequired,

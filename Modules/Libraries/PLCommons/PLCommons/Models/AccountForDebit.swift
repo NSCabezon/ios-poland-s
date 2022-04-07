@@ -10,6 +10,7 @@ public struct AccountForDebit: Equatable {
     public let type: AccountType
     public let accountSequenceNumber: Int
     public let accountType: Int
+    public let taxAccountNumber: String
     
     public init(id: String,
                 name: String,
@@ -18,7 +19,8 @@ public struct AccountForDebit: Equatable {
                 defaultForPayments: Bool,
                 type: AccountType,
                 accountSequenceNumber: Int,
-                accountType: Int) {
+                accountType: Int,
+                taxAccountNumber: String) {
         self.id = id
         self.name = name
         self.number = number
@@ -27,6 +29,7 @@ public struct AccountForDebit: Equatable {
         self.type = type
         self.accountSequenceNumber = accountSequenceNumber
         self.accountType = accountType
+        self.taxAccountNumber = taxAccountNumber
     }
     
     public enum AccountType: String, Equatable {

@@ -78,4 +78,5 @@ class PLAppConfig: LocalAppConfig {
     var isAnalysisAreaHomeEnabled = false
     var countryCode = "PL"
     var isEnabledConsentManagement = false
+    let isEnabledSavings: Bool = false
 }

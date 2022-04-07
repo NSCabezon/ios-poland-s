@@ -93,7 +93,9 @@ extension PLAccountHomeActionModifier {
                         .set(account)
                         .start()
                 } else {
-                    self.sendMoneyCoordinator.start()
+                    self.sendMoneyCoordinator
+                        .set(account)
+                        .start()
                 }
             }
             .store(in: &subscriptions)

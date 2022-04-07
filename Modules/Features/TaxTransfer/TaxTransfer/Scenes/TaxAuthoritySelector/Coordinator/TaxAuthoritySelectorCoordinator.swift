@@ -18,21 +18,24 @@ final class TaxAuthoritySelectorCoordinator: TaxAuthoritySelectorCoordinatorProt
     
     private let dependenciesEngine: DependenciesDefault
     private let taxAuthorities: [TaxAuthority]
-    private let selectedTaxAuthority: TaxAuthority?
+    private let selectedTaxAuthority: SelectedTaxAuthority?
     private let taxSymbols: [TaxSymbol]
+    private let onSelect: (SelectedTaxAuthority) -> Void
     
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
         taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?,
-        taxSymbols: [TaxSymbol]
+        selectedTaxAuthority: SelectedTaxAuthority?,
+        taxSymbols: [TaxSymbol],
+        onSelect: @escaping (SelectedTaxAuthority) -> Void
     ) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
         self.taxAuthorities = taxAuthorities
         self.selectedTaxAuthority = selectedTaxAuthority
         self.taxSymbols = taxSymbols
+        self.onSelect = onSelect
         setUpDependencies()
     }
     
@@ -48,10 +51,15 @@ final class TaxAuthoritySelectorCoordinator: TaxAuthoritySelectorCoordinatorProt
 private extension TaxAuthoritySelectorCoordinator {
     func showTaxAuthorityList() {
         let viewModelMapper = SelectableTaxAuthorityViewModelMapper()
-        let itemsViewModels = taxAuthorities.map { viewModelMapper.map($0, selectedTaxAuthority: selectedTaxAuthority) }
+        let itemsViewModels = taxAuthorities.map {
+            viewModelMapper.map(
+                $0,
+                selectedTaxAuthority: selectedTaxAuthority?.selectedPredefinedTaxAuthority
+            )
+        }
         let selectedItemViewModel: SelectableTaxAuthorityViewModel? = {
-            guard let taxAuthority = selectedTaxAuthority else { return nil }
-            return viewModelMapper.map(taxAuthority, selectedTaxAuthority: selectedTaxAuthority)
+            guard let taxAuthority = selectedTaxAuthority?.selectedPredefinedTaxAuthority else { return nil }
+            return viewModelMapper.map(taxAuthority, selectedTaxAuthority: taxAuthority)
         }()
         let configuration = TaxTransferParticipantConfiguration<SelectableTaxAuthorityViewModel>(
             shouldBackAfterSelectItem: true,
@@ -99,9 +107,16 @@ private extension TaxAuthoritySelectorCoordinator {
         let coordinator = TaxSymbolSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
+            shouldPopControllerAfterSelection: false,
             taxSymbols: filteredTaxSymbols,
-            selectedTaxSymbol: nil, // TODO:- Finish in TAP-2107
-            onSelection: { _ in  } // TODO:- Finish in TAP-2107
+            selectedTaxSymbol: selectedTaxAuthority?.selectedTaxSymbol,
+            onSelection: { [weak self] taxSymbol in
+                let selectedTaxAuthority = SelectedTaxAuthority.SelectedPredefinedTaxAuthorityData(
+                    taxAuthority: taxAuthority,
+                    taxSymbol: taxSymbol
+                )
+                self?.onSelect(.predefinedTaxAuthority(selectedTaxAuthority))
+            }
         )
         coordinator.start()
     }
@@ -119,7 +134,8 @@ private extension TaxAuthoritySelectorCoordinator {
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             entryPointContext: context,
-            taxSymbols: taxSymbols
+            taxSymbols: taxSymbols,
+            onSelect: onSelect
         )
         coordinator.start()
     }

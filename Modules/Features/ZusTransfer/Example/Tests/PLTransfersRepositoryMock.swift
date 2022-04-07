@@ -2,6 +2,10 @@ import SANPLLibrary
 import CoreDomain
 
 final class PLTransfersRepositoryMock: PLTransfersRepository {
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
+        .success(SendMoneyChallengeMock())
+    }
+    
     func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
         fatalError()
     }

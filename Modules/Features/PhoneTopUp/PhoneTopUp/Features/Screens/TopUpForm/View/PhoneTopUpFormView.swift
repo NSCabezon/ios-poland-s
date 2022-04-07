@@ -115,7 +115,7 @@ final class PhoneTopUpFormView: UIView {
         updateOperatorSelection(with: nil)
     }
     
-    func updateOperatorSelection(with gsmOperator: GSMOperator?) {
+    func updateOperatorSelection(with gsmOperator: Operator?) {
         operatorSelectionView.setUp(with: gsmOperator)
     }
     

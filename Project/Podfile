@@ -42,6 +42,7 @@ def core_dependencies
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
+  pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
 end
 
 def legacy_libraries
@@ -75,6 +76,7 @@ def pl_features
   pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
   pod 'Authorization', :path => '../Modules/Features/Authorization'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
+  pod 'SplitPayment', :path => '../Modules/Features/SplitPayment'
   pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
 end
 

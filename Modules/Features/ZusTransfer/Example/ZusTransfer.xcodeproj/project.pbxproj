@@ -14,6 +14,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		95A954883200FEC4E5FFB048 /* Pods_ZusTransfer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CF6746A7A392CC9E453E7B /* Pods_ZusTransfer_Tests.framework */; };
+		A323EA4927F2F654009EADC8 /* PopularAccountMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA4827F2F654009EADC8 /* PopularAccountMock.swift */; };
+		A323EA4C27F3118F009EADC8 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0FFB827C3D31800E9BAAD /* PLAuthorizationProcessorManagerMock.swift */; };
 		A37B7B5A27C3B619006121F6 /* PLTransfersRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B7B5927C3B619006121F6 /* PLTransfersRepositoryMock.swift */; };
 		A3B0FFB927C3D31800E9BAAD /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0FFB827C3D31800E9BAAD /* PLAuthorizationProcessorManagerMock.swift */; };
 		A3B0FFBB27C3D81E00E9BAAD /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B0FFBA27C3D81E00E9BAAD /* PLAuthorizationCoordinatorMock.swift */; };
@@ -73,6 +75,7 @@
 		607FACE51AFB9204008FA782 /* ZusTransfer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZusTransfer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99CF6746A7A392CC9E453E7B /* Pods_ZusTransfer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZusTransfer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A323EA4827F2F654009EADC8 /* PopularAccountMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularAccountMock.swift; sourceTree = "<group>"; };
 		A37B7B5927C3B619006121F6 /* PLTransfersRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersRepositoryMock.swift; sourceTree = "<group>"; };
 		A3B0FFB827C3D31800E9BAAD /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
 		A3B0FFBA27C3D81E00E9BAAD /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				A323EA4727F2F61E009EADC8 /* Mocks */,
 				B0294BE927919C96005A9BDD /* Mocks.swift */,
 				A3B0FFB827C3D31800E9BAAD /* PLAuthorizationProcessorManagerMock.swift */,
 				A3B0FFBA27C3D81E00E9BAAD /* PLAuthorizationCoordinatorMock.swift */,
@@ -224,6 +228,14 @@
 				0B39BD956E5AD9C024811A54 /* Pods-ZusTransfer_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A323EA4727F2F61E009EADC8 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A323EA4827F2F654009EADC8 /* PopularAccountMock.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		A3B0FFBC27C6219C00E9BAAD /* RecipientSelection */ = {
@@ -552,8 +564,10 @@
 				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
 				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/UIOneComponents/UIOneComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
 				"${BUILT_PRODUCTS_DIR}/ZusTransfer/ZusTransfer.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
@@ -587,8 +601,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIOneComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZusTransfer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
@@ -632,8 +648,10 @@
 				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
 				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/UIOneComponents/UIOneComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
 				"${BUILT_PRODUCTS_DIR}/ZusTransfer/ZusTransfer.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
@@ -667,8 +685,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIOneComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZusTransfer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
@@ -713,6 +733,7 @@
 				A3B0FFBB27C3D81E00E9BAAD /* PLAuthorizationCoordinatorMock.swift in Sources */,
 				A3B0FFB927C3D31800E9BAAD /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 				B0294BEB27919CA4005A9BDD /* Mocks.swift in Sources */,
+				A323EA4927F2F654009EADC8 /* PopularAccountMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,6 +755,7 @@
 				B02F92F8279FBECC005F2B66 /* PLTransfersManagerSuccessMock.swift in Sources */,
 				B02F92F6279FBECC005F2B66 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
 				B02F92C8279969F2005F2B66 /* ZusTransferConfirmationPresenterTests.swift in Sources */,
+				A323EA4C27F3118F009EADC8 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 				B02F92D0279992C3005F2B66 /* AcceptZusTransactionUseCaseTests.swift in Sources */,
 				B02F92DE279EC1B0005F2B66 /* ZusTransferSummaryMapperTests.swift in Sources */,
 				A3C4888E279A9AEE009E3974 /* ZusTransferFormCoordinatorMock.swift in Sources */,

@@ -4,6 +4,7 @@ import LoginCommon
 
 public protocol PLLoginModuleCoordinatorProtocol: AnyObject {
     func loadUnrememberedLogin()
+    func loadUserLogin()
     func loadRememberedLogin(configuration: RememberedLoginConfiguration)
 }
 
@@ -54,6 +55,13 @@ extension PLLoginModuleCoordinator : PLLoginModuleCoordinatorProtocol {
     
     public func loadUnrememberedLogin() {
         self.unrememberedLoginOnboardingCoordinator.start()
+    }
+    
+    public func loadUserLogin() {
+        guard let controller = self.navigationController?.viewControllers
+                .first(where: { $0 is PLUnrememberedLoginIdViewController })
+        else { return }
+        self.navigationController?.popToViewController(controller, animated: false)
     }
     
     public func loadRememberedLogin(configuration: RememberedLoginConfiguration) {

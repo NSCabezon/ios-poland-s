@@ -92,7 +92,6 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return PhoneTopUpFormPresenter(dependenciesResolver: resolver,
                                            accounts: formData.accounts,
                                            operators: formData.operators,
-                                           gsmOperators: formData.gsmOperators,
                                            internetContacts: formData.internetContacts,
                                            settings: formData.settings,
                                            topUpAccount: formData.topUpAccount)
@@ -194,7 +193,6 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
                                                                         delegate: self,
                                                                         navigationController: navigationController,
                                                                         operators: formData.operators,
-                                                                        gsmOperators: formData.gsmOperators,
                                                                         selectedOperatorId: operatorId)
         operatorSelectionCoordinator.start()
     }
@@ -227,7 +225,7 @@ extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
 }
 
 extension PhoneTopUpFormCoordinator: OperatorSelectorDelegate {
-    func didSelectOperator(_ gsmOperator: GSMOperator) {
+    func didSelectOperator(_ gsmOperator: Operator) {
         navigationController?.popToViewController(phoneTopUpController, animated: true)
         operatorSelectorDelegate?.didSelectOperator(gsmOperator)
     }

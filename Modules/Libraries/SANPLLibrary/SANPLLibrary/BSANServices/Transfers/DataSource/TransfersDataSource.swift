@@ -45,6 +45,7 @@ final class TransfersDataSource {
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
+    private let version2 = "/v2"
     private var headers: [String: String] = [:]
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -244,7 +245,7 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
             return .failure(NetworkProviderError.other)
         }
         let serviceName = TransferServiceType.exchangeRates.rawValue
-        let absoluteUrl = baseUrl + self.basePath
+        let absoluteUrl = baseUrl + self.basePath + self.version2
         let result: Result<ExchangeRatesDTO, NetworkProviderError> = self.networkProvider.request(ExchangeRatesRequest(serviceName: serviceName,
                                                                                                                 serviceUrl: absoluteUrl,
                                                                                                                 method: .get,

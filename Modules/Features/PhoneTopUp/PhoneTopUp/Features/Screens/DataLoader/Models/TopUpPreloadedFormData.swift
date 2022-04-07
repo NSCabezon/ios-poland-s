@@ -11,7 +11,6 @@ import PLCommons
 public struct TopUpPreloadedFormData {
     let accounts: [AccountForDebit]
     let operators: [Operator]
-    let gsmOperators: [GSMOperator]
     let internetContacts: [MobileContact]
     let settings: [TopUpOperatorSettings]
     let topUpAccount: TopUpAccount
