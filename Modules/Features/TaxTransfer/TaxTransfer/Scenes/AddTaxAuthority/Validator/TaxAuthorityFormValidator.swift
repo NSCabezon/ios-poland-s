@@ -33,6 +33,19 @@ final class TaxAuthorityFormValidator: TaxAuthorityFormValidating {
 }
 
 private extension TaxAuthorityFormValidator {
+    struct Constants {
+        static let taxAuthorityNameValidationRegex = "^([0-9A-Za-ząęćółńśżźĄĘĆÓŁŃŚŻŹ\\-.:;,& ]*)$"
+    }
+    
+    var invalidResultWithEmptyMessages: TaxAuthorityFormValidationResult {
+        return .invalid(
+            InvalidTaxAuthorityFormFormMessages(
+                invalidTaxAuthorityNameMessage: nil,
+                invalidAccountNumberMessage: nil
+            )
+        )
+    }
+    
     func validateUsForm(_ form: UsTaxAuthorityForm) -> TaxAuthorityFormValidationResult {
         guard
             let cityName = form.city,
@@ -93,18 +106,5 @@ private extension TaxAuthorityFormValidator {
         }
         
         return nil
-    }
-    
-    var invalidResultWithEmptyMessages: TaxAuthorityFormValidationResult {
-        return .invalid(
-            InvalidTaxAuthorityFormFormMessages(
-                invalidTaxAuthorityNameMessage: nil,
-                invalidAccountNumberMessage: nil
-            )
-        )
-    }
-    
-    struct Constants {
-        static let taxAuthorityNameValidationRegex = "^([0-9A-Za-ząęćółńśżźĄĘĆÓŁŃŚŻŹ\\-.:;,& ]*)$"
     }
 }

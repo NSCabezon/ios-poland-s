@@ -106,12 +106,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
             selectedTaxAuthority: selectedTaxAuthority,
             taxSymbols: taxSymbols,
             onSelect: { [weak self] taxAuthority in
-                let formController = self?.navigationController?.viewControllers.first {
-                    $0 is TaxTransferFormViewController
-                }
-                guard let controller = formController else { return }
-                self?.taxFormPresenter.didSelectTaxAuthority(taxAuthority)
-                self?.navigationController?.popToViewController(controller, animated: true)
+                self?.handleTaxAuthoritySelection(taxAuthority)
             }
         )
         coordinator.start()
@@ -142,6 +137,15 @@ extension TaxTransferFormCoordinator: TaxPayersListDelegate {
 }
 
 private extension TaxTransferFormCoordinator {
+    func handleTaxAuthoritySelection(_ taxAuthority: SelectedTaxAuthority) {
+        let formController = navigationController?.viewControllers.first {
+            $0 is TaxTransferFormViewController
+        }
+        guard let controller = formController else { return }
+        taxFormPresenter.didSelectTaxAuthority(taxAuthority)
+        navigationController?.popToViewController(controller, animated: true)
+    }
+    
     func setUpDependencies() {
         let amountFormatter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
         
