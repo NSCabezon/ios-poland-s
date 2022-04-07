@@ -12,6 +12,8 @@ protocol AddTaxAuthorityViewModelMapping {
 }
 
 final class AddTaxAuthorityViewModelMapper: AddTaxAuthorityViewModelMapping {
+    private let irpAccountLength = 26
+    
     func map(_ form: TaxAuthorityForm) -> AddTaxAuthorityViewModel {
         switch form {
         case .formTypeUnselected:
@@ -29,7 +31,7 @@ private extension AddTaxAuthorityViewModelMapper {
         let accountNumber: String? = {
             guard
                 let accountNumber = form.accountNumber,
-                accountNumber.count == 26
+                accountNumber.count == irpAccountLength
             else {
                 return form.accountNumber
             }
