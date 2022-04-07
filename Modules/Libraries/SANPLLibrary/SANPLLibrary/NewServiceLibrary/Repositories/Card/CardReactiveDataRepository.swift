@@ -77,9 +77,8 @@ fileprivate extension CardReactiveDataRepository {
     
     func changeAlias(forCard card: SANLegacyLibrary.CardDTO, newAlias: String) throws -> Void {
         let response = try cardManager.changeCardAlias(cardDTO: card, newAlias: newAlias)
-        guard let result = try response.getResponseData() else {
+        if !response.isSuccess() {
             throw SomeError(errorDescription: try response.getErrorMessage())
         }
-        return result
     }
 }
