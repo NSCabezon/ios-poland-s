@@ -13,8 +13,13 @@ protocol AddTaxAuthorityPresenterProtocol {
     func didTapTaxSymbolSelector()
     func didTapCitySelector()
     func didTapTaxAuthoritySelector()
+    func didUpdateIrpFields(
+        taxAuthorityName: String?,
+        accountNumber: String?
+    )
     func didTapBack()
     func didTapClose()
+    func didTapDone()
 }
 
 final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
@@ -36,11 +41,14 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
     }
     
     func didTapTaxSymbolSelector() {
-        coordinator.showTaxSymbolSelector(onSelection: { [weak self] taxSymbol in
-            guard let strongSelf = self else { return }
-            let newForm = strongSelf.getUpdatedForm(with: taxSymbol)
-            strongSelf.updateForm(with: newForm)
-        })
+        coordinator.showTaxSymbolSelector(
+            selectedTaxSymbol: form.selectedTaxSymbol,
+            onSelection: { [weak self] taxSymbol in
+                guard let strongSelf = self else { return }
+                let newForm = strongSelf.getUpdatedForm(with: taxSymbol)
+                strongSelf.updateForm(with: newForm)
+            }
+        )
     }
     
     func didTapCitySelector() {
@@ -85,7 +93,7 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
                         taxAccounts: output.taxAccounts,
                         selectedTaxAccount: form.selectedTaxAccount,
                         onSelection: { taxAuthorityAccount in
-                            self?.handleTaxAuthorityAccount(taxAuthorityAccount)
+                            self?.handleSelectedTaxAuthorityAccount(taxAuthorityAccount)
                         }
                     )
                 })
@@ -97,12 +105,32 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
             }
     }
     
+    func didUpdateIrpFields(
+        taxAuthorityName: String?,
+        accountNumber: String?
+    ) {
+        let newForm = getUpdatedForm(
+            updatedTaxAuthorityName: taxAuthorityName,
+            updatedAccountNumber: accountNumber
+        )
+        updateForm(with: newForm)
+    }
+    
     func didTapBack() {
         coordinator.back()
     }
     
     func didTapClose() {
         coordinator.close()
+    }
+    
+    func didTapDone() {
+        do {
+            let selectedTaxAuthority = try selectedTaxAuthorityMapper.map(form)
+            coordinator.handleTaxAuthoritySelection(of: selectedTaxAuthority)
+        } catch {
+            assertionFailure("Button should be enabled only with valid filled form")
+        }
     }
 }
 
@@ -123,7 +151,7 @@ private extension AddTaxAuthorityPresenter {
         }
     }
     
-    func handleTaxAuthorityAccount(_ taxAuthorityAccount: TaxAccount) {
+    func handleSelectedTaxAuthorityAccount(_ taxAuthorityAccount: TaxAccount) {
         switch form {
         case let .us(form):
             let newForm = TaxAuthorityForm.us(
@@ -143,17 +171,20 @@ private extension AddTaxAuthorityPresenter {
         form = newForm
         let viewModel = viewModelMapper.map(newForm)
         view?.setViewModel(viewModel)
+        
+        let validationResult = formValidator.validate(form)
+        switch validationResult {
+        case .valid:
+            view?.setDoneButtonState(isEnabled: true)
+            view?.clearInvalidFormMessages()
+        case let .invalid(invalidFieldMessages):
+            view?.setDoneButtonState(isEnabled: false)
+            view?.setInvalidFormMessages(invalidFieldMessages)
+        }
     }
     
     func getUpdatedForm(with taxSymbol: TaxSymbol) -> TaxAuthorityForm {
         switch (form, taxSymbol.destinationAccountType) {
-        case let (.us(currentForm), .US):
-            let form = UsTaxAuthorityForm(
-                taxSymbol: taxSymbol,
-                city: currentForm.city,
-                taxAuthorityAccount: currentForm.taxAuthorityAccount
-            )
-            return .us(form)
         case let (.irp(currentForm), .IRP):
             let form = IrpTaxAuthorityForm(
                 taxSymbol: taxSymbol,
@@ -165,8 +196,30 @@ private extension AddTaxAuthorityPresenter {
             (.formTypeUnselected, .IRP),
             (.formTypeUnselected, .US),
             (.us, .IRP),
-            (.irp, .US):
+            (.irp, .US),
+            (.us, .US):
             return getFreshForm(with: taxSymbol)
+        }
+    }
+    
+    func getUpdatedForm(
+        updatedTaxAuthorityName: String?,
+        updatedAccountNumber: String?
+    ) -> TaxAuthorityForm {
+        switch form {
+        case let .irp(form):
+            let form = IrpTaxAuthorityForm(
+                taxSymbol: form.taxSymbol,
+                taxAuthorityName: updatedTaxAuthorityName,
+                accountNumber: updatedAccountNumber
+            )
+            return .irp(form)
+        case let .us(form):
+            assertionFailure("Invalid form type - should be illegal")
+            return getFreshForm(with: form.taxSymbol)
+        case .formTypeUnselected:
+            assertionFailure("Invalid form type - should be illegal")
+            return .formTypeUnselected
         }
     }
     
@@ -208,6 +261,14 @@ private extension AddTaxAuthorityPresenter {
     }
     
     var getTaxAccountsUseCase: GetTaxAccountsUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var selectedTaxAuthorityMapper: SelectedTaxAuthorityMapping {
+        dependenciesResolver.resolve()
+    }
+    
+    var formValidator: TaxAuthorityFormValidating {
         dependenciesResolver.resolve()
     }
 }

@@ -28,7 +28,7 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     )
     func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?,
+        selectedTaxAuthority: SelectedTaxAuthority?,
         taxSymbols: [TaxSymbol]
     )
     func showTaxBillingPeriodSelector()
@@ -96,7 +96,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
     
     public func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?,
+        selectedTaxAuthority: SelectedTaxAuthority?,
         taxSymbols: [TaxSymbol]
     ) {
         let coordinator = TaxAuthoritySelectorCoordinator(
@@ -104,7 +104,10 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
             navigationController: navigationController,
             taxAuthorities: taxAuthorities,
             selectedTaxAuthority: selectedTaxAuthority,
-            taxSymbols: taxSymbols
+            taxSymbols: taxSymbols,
+            onSelect: { [weak self] taxAuthority in
+                self?.handleTaxAuthoritySelection(taxAuthority)
+            }
         )
         coordinator.start()
     }
@@ -134,6 +137,15 @@ extension TaxTransferFormCoordinator: TaxPayersListDelegate {
 }
 
 private extension TaxTransferFormCoordinator {
+    func handleTaxAuthoritySelection(_ taxAuthority: SelectedTaxAuthority) {
+        let formController = navigationController?.viewControllers.first {
+            $0 is TaxTransferFormViewController
+        }
+        guard let controller = formController else { return }
+        taxFormPresenter.didSelectTaxAuthority(taxAuthority)
+        navigationController?.popToViewController(controller, animated: true)
+    }
+    
     func setUpDependencies() {
         let amountFormatter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
         
@@ -209,6 +221,10 @@ private extension TaxTransferFormCoordinator {
 
         dependenciesEngine.register(for: TaxPayerViewModelMapping.self) { _ in
             return TaxPayerViewModelMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxAuthorityViewModelMapping.self) { _ in
+            return TaxAuthorityViewModelMapper()
         }
         
         dependenciesEngine.register(for: TaxBillingPeriodViewModelMapping.self) { _ in

@@ -19,6 +19,7 @@ protocol TaxSymbolSelectorCoordinatorProtocol {}
 final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
     private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let shouldPopControllerAfterSelection: Bool
     private let taxSymbols: [TaxSymbol]
     private let selectedTaxSymbol: TaxSymbol?
     private let onSelection: (TaxSymbol) -> Void
@@ -26,12 +27,14 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
     init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
+        shouldPopControllerAfterSelection: Bool,
         taxSymbols: [TaxSymbol],
         selectedTaxSymbol: TaxSymbol?,
         onSelection: @escaping (TaxSymbol) -> Void
     ) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
+        self.shouldPopControllerAfterSelection = shouldPopControllerAfterSelection
         self.taxSymbols = taxSymbols
         self.selectedTaxSymbol = selectedTaxSymbol
         self.onSelection = onSelection
@@ -50,7 +53,8 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
                     items: taxSymbols
                 )
             ],
-            selectedItem: nil
+            selectedItem: selectedTaxSymbol,
+            shouldPopControllerAfterSelection: shouldPopControllerAfterSelection
         )
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,
