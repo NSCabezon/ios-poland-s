@@ -94,7 +94,6 @@ private extension SendMoneyModifier {
     func bindInternationalSendMoney() {
         let booleanFeatureFlag: BooleanFeatureFlag = legacyDependenciesResolver.resolve()
         booleanFeatureFlag.fetch(CoreFeatureFlag.internationalSendMoney)
-            .map { $0 }
             .sink { [unowned self] result in
                 self.isEnabledChangeCountry = result
             }
