@@ -20,6 +20,12 @@ protocol TaxAuthorityFormValidating {
 }
 
 final class TaxAuthorityFormValidator: TaxAuthorityFormValidating {
+    private let accountTypeRecognizer: TaxAccountTypeRecognizing
+    
+    init(accountTypeRecognizer: TaxAccountTypeRecognizing) {
+        self.accountTypeRecognizer = accountTypeRecognizer
+    }
+    
     func validate(_ form: TaxAuthorityForm) -> TaxAuthorityFormValidationResult {
         switch form {
         case .formTypeUnselected:
@@ -72,8 +78,8 @@ private extension TaxAuthorityFormValidator {
             )
         }
         
-        let everyFormElementIsEmpty = (form.taxAuthorityName ?? "").isEmpty && (form.taxAuthorityName ?? "").isEmpty
-        if everyFormElementIsEmpty {
+        let anyFormElementIsEmpty = (form.accountNumber ?? "").isEmpty || (form.taxAuthorityName ?? "").isEmpty
+        if anyFormElementIsEmpty {
             return invalidResultWithEmptyMessages
         }
         
@@ -103,6 +109,13 @@ private extension TaxAuthorityFormValidator {
         
         guard CharacterSet(charactersIn: accountNumber).isSubset(of: CharacterSet.decimalDigits) else {
             return "#Pole zawiera niedozwolone znaki"
+        }
+        
+        guard
+            let accountType = try? accountTypeRecognizer.recognizeType(of: accountNumber),
+            accountType == .IRP
+        else {
+            return "#Nieprawidłowy numer rachunku odbiorcy."
         }
         
         return nil
