@@ -121,6 +121,7 @@
 		44DE75412754CC56004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE75402754CC55004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift */; };
 		45D378FC27AA9859002C47E9 /* PLPhoneTopUpOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D378FB27AA9859002C47E9 /* PLPhoneTopUpOperative.swift */; };
 		45D378FE27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D378FD27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift */; };
+		45E05D1127FDF9CE00CE7CBB /* ModuleDependencies+SavingsExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E05D1027FDF9CE00CE7CBB /* ModuleDependencies+SavingsExternalDependenciesResolver.swift */; };
 		5F02263D27328E0C005161B6 /* LoadPfmSessionStartedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */; };
 		5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */; };
 		669A37CE270F564800C0F272 /* PLProductOperativesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37CC270F564800C0F272 /* PLProductOperativesData.swift */; };
@@ -438,6 +439,7 @@
 		44DE75402754CC55004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetGenericErrorDialogDataUseCase.swift; sourceTree = "<group>"; };
 		45D378FB27AA9859002C47E9 /* PLPhoneTopUpOperative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLPhoneTopUpOperative.swift; sourceTree = "<group>"; };
 		45D378FD27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTopUpTransferSettingsDTO.swift; sourceTree = "<group>"; };
+		45E05D1027FDF9CE00CE7CBB /* ModuleDependencies+SavingsExternalDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleDependencies+SavingsExternalDependenciesResolver.swift"; sourceTree = "<group>"; };
 		513384B5260512599C07BB45 /* Pods-Santander.dev-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-debug.xcconfig"; sourceTree = "<group>"; };
 		5841768F674728B7B1F8B465 /* Pods-SantanderTests.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.regression-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.regression-release.xcconfig"; sourceTree = "<group>"; };
 		5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPfmSessionStartedAction.swift; sourceTree = "<group>"; };
@@ -1017,6 +1019,7 @@
 		3A4B64D82796DDC4003FFE00 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				45E05D0F27FDF98800CE7CBB /* Savings */,
 				3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */,
 				44ABC30027E384A000815256 /* Cards */,
 				EF0CDC0427C803D800FDA289 /* ModuleDependencies+Repository.swift */,
@@ -1313,6 +1316,14 @@
 				44DE75402754CC55004DF0E7 /* PLGetGenericErrorDialogDataUseCase.swift */,
 			);
 			path = GenericErrorDIalog;
+			sourceTree = "<group>";
+		};
+		45E05D0F27FDF98800CE7CBB /* Savings */ = {
+			isa = PBXGroup;
+			children = (
+				45E05D1027FDF9CE00CE7CBB /* ModuleDependencies+SavingsExternalDependenciesResolver.swift */,
+			);
+			path = Savings;
 			sourceTree = "<group>";
 		};
 		5F02263B27328DFB005161B6 /* Session */ = {
@@ -2448,6 +2459,7 @@
 				B0115603271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift in Sources */,
 				66BC8FED2641200900654CC5 /* EmptyTrusteerRepository.swift in Sources */,
 				34939ACE2727DCD50010F987 /* SendMoneyTransferTypeRadioButtonsContainerViewModel.swift in Sources */,
+				45E05D1127FDF9CE00CE7CBB /* ModuleDependencies+SavingsExternalDependenciesResolver.swift in Sources */,
 				CCE45A9F2732AC5400691E91 /* InputSignatureView.swift in Sources */,
 				0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */,
 				7E974B0A2757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift in Sources */,
