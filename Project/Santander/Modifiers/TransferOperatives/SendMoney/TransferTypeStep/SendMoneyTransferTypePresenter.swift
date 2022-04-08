@@ -204,7 +204,7 @@ private extension SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
     var trackerPage: SendMoneyTransferTypePage {
-        SendMoneyTransferTypePage(national: self.operativeData.type == .national)
+        SendMoneyTransferTypePage(national: self.operativeData.type == .national, type: self.operativeData.type.trackerName)
     }
     
     var trackerManager: TrackerManager {
