@@ -20,7 +20,8 @@ public final class AccountForDebitMapper: AccountForDebitMapping {
             defaultForPayments: dto.defaultForPayments,
             type: AccountForDebit.AccountType(rawValue: dto.type) ?? .OTHER,
             accountSequenceNumber: dto.accountDetails.sequenceNumber,
-            accountType: dto.accountDetails.accountType
+            accountType: dto.accountDetails.accountType,
+            taxAccountNumber: dto.taxAccountNumber ?? ""
         )
     }
 

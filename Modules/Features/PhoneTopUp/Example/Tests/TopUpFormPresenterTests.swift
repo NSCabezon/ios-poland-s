@@ -24,7 +24,6 @@ class TopUpFormPresenterTests: XCTestCase {
     var mockDialogProducer: MockDialogProducer!
     var mockAccount = [AccountForDebit.mockInstance()]
     var mockOperators = [Operator.mockInstance()]
-    var mockGsmOperator = [GSMOperator.mockInstance()]
     var mockInternetContacts = [MobileContact.mockInstance()]
     var mockTopUpSettings = TopUpSettings.mockInstance()
     var mockTopUpAccount = TopUpAccount.mockInstance()
@@ -41,7 +40,6 @@ class TopUpFormPresenterTests: XCTestCase {
             dependenciesResolver: dependenciesResolver,
             accounts: mockAccount,
             operators: mockOperators,
-            gsmOperators: mockGsmOperator,
             internetContacts: mockInternetContacts,
             settings: mockTopUpSettings,
             topUpAccount: mockTopUpAccount
@@ -114,8 +112,8 @@ class TopUpFormPresenterTests: XCTestCase {
         XCTAssert(mockView.updateContinueButtonCallCount > 0)
     }
     
-    func testUpdatingViewOnGsmOperatorSelection() {
-        presenter.didSelectOperator(GSMOperator.mockInstance())
+    func testUpdatingViewOnOperatorSelection() {
+        presenter.didSelectOperator(Operator.mockInstance())
         
         XCTAssert(mockView.updateOperatorSelectionCallCount == 1)
         XCTAssert(mockView.updatePaymentAmountsCallCount > 1)
@@ -172,7 +170,7 @@ class TopUpFormPresenterTests: XCTestCase {
         mockCheckPhoneUseCase.result = .ok(CheckPhoneUseCaseOutput(reloadPossible: true, result: ""))
         presenter.didSelectAccount(withAccountNumber: AccountForDebit.mockInstance().number)
         presenter.didInputFullPhoneNumber("601000001")
-        presenter.didSelectOperator(GSMOperator.mockInstance())
+        presenter.didSelectOperator(Operator.mockInstance())
         presenter.didSelectTopUpAmount(TopUpAmount.custom(amount: 6))
         presenter.didTouchContinueButton()
         
@@ -186,7 +184,7 @@ class TopUpFormPresenterTests: XCTestCase {
         mockCheckPhoneUseCase.result = .ok(CheckPhoneUseCaseOutput(reloadPossible: false, result: ""))
         presenter.didSelectAccount(withAccountNumber: AccountForDebit.mockInstance().number)
         presenter.didInputFullPhoneNumber("601000001")
-        presenter.didSelectOperator(GSMOperator.mockInstance())
+        presenter.didSelectOperator(Operator.mockInstance())
         presenter.didSelectTopUpAmount(TopUpAmount.custom(amount: 6))
         presenter.didTouchContinueButton()
         
@@ -200,7 +198,7 @@ class TopUpFormPresenterTests: XCTestCase {
         mockCheckPhoneUseCase.result = .error(.init("Error"))
         presenter.didSelectAccount(withAccountNumber: AccountForDebit.mockInstance().number)
         presenter.didInputFullPhoneNumber("601000001")
-        presenter.didSelectOperator(GSMOperator.mockInstance())
+        presenter.didSelectOperator(Operator.mockInstance())
         presenter.didSelectTopUpAmount(TopUpAmount.custom(amount: 6))
         presenter.didTouchContinueButton()
         

@@ -29,10 +29,6 @@ public final class GetPhoneTopUpFormDataUseCase: UseCase<Void, GetPhoneTopUpForm
         return dependenciesResolver.resolve()
     }
     
-    private var gsmOperatorMapper: GSMOperatorMapping {
-        return dependenciesResolver.resolve()
-    }
-    
     private var contactsMapper: MobileContactMapping {
         return dependenciesResolver.resolve()
     }
@@ -62,13 +58,11 @@ public final class GetPhoneTopUpFormDataUseCase: UseCase<Void, GetPhoneTopUpForm
         switch results {
         case .success(let formDataDTO):
             let acccounts = try formDataDTO.accounts.map(accountMapper.map)
-            let gsmOperators = formDataDTO.gsmOperators.map(gsmOperatorMapper.map)
-            let operators = formDataDTO.operators.map(operatorMapper.map)
+            let operators = operatorMapper.mapAndMerge(operatorDTOs: formDataDTO.operators, gsmOperatorDTOs: formDataDTO.gsmOperators)
             let internetContacts = formDataDTO.internetContacts.compactMap(contactsMapper.map)
             let topUpAccount = topUpAccountMapper.map(dto: formDataDTO.topUpAccount)
             return .ok(GetPhoneTopUpFormDataOutput(accounts: acccounts,
                                                    operators: operators,
-                                                   gsmOperators: gsmOperators,
                                                    internetContacts: internetContacts,
                                                    topUpAccount: topUpAccount))
         case .failure(let error):

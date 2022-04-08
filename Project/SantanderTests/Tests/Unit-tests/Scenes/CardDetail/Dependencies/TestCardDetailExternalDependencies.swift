@@ -16,7 +16,7 @@ import OpenCombine
 @testable import Cards
 
 struct TestCardDetailExternalDependencies: CardDetailExternalDependenciesResolver {
-    let globalPositionRepository = DefaultGlobalPositionDataRepository()
+    let globalPositionRepository: MockGlobalPositionDataRepository
     let injector: MockDataInjector
     let dependencies: DependenciesResolver & DependenciesInjector
     init(injector: MockDataInjector, dependencies: DependenciesResolver & DependenciesInjector) {
@@ -25,7 +25,7 @@ struct TestCardDetailExternalDependencies: CardDetailExternalDependenciesResolve
         self.dependencies.register(for: AccountNumberFormatterProtocol.self) { _ in
                   return PLAccountNumberFormatter()
         }
-        globalPositionRepository.send(injector.mockDataProvider.gpData.getGlobalPositionMock)
+        globalPositionRepository = MockGlobalPositionDataRepository(injector.mockDataProvider.gpData.getGlobalPositionMock)
         
     }
     func resolve() -> AppConfigRepositoryProtocol {

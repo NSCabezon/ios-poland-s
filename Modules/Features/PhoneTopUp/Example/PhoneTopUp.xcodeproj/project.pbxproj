@@ -29,7 +29,6 @@
 		4542A72127D78FC6004A0B13 /* PhoneTopUpCoordinatorFormTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A71F27D78FC3004A0B13 /* PhoneTopUpCoordinatorFormTests.swift */; };
 		4542A72327D79062004A0B13 /* MockTopUpPreloadedFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72227D79062004A0B13 /* MockTopUpPreloadedFormData.swift */; };
 		4542A72527D790A6004A0B13 /* MockOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72427D790A6004A0B13 /* MockOperator.swift */; };
-		4542A72727D790C2004A0B13 /* MockGSMOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72627D790C2004A0B13 /* MockGSMOperator.swift */; };
 		4542A72927D790D2004A0B13 /* MockMobileContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72827D790D2004A0B13 /* MockMobileContact.swift */; };
 		4542A72B27D790E1004A0B13 /* MockTopUpOperatorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72A27D790E1004A0B13 /* MockTopUpOperatorSettings.swift */; };
 		4542A72D27D79274004A0B13 /* MockTopUpValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4542A72C27D79274004A0B13 /* MockTopUpValues.swift */; };
@@ -88,7 +87,6 @@
 		4542A71F27D78FC3004A0B13 /* PhoneTopUpCoordinatorFormTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTopUpCoordinatorFormTests.swift; sourceTree = "<group>"; };
 		4542A72227D79062004A0B13 /* MockTopUpPreloadedFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpPreloadedFormData.swift; sourceTree = "<group>"; };
 		4542A72427D790A6004A0B13 /* MockOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOperator.swift; sourceTree = "<group>"; };
-		4542A72627D790C2004A0B13 /* MockGSMOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGSMOperator.swift; sourceTree = "<group>"; };
 		4542A72827D790D2004A0B13 /* MockMobileContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMobileContact.swift; sourceTree = "<group>"; };
 		4542A72A27D790E1004A0B13 /* MockTopUpOperatorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpOperatorSettings.swift; sourceTree = "<group>"; };
 		4542A72C27D79274004A0B13 /* MockTopUpValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTopUpValues.swift; sourceTree = "<group>"; };
@@ -185,7 +183,6 @@
 				4542A71C27D7769B004A0B13 /* MockAccountForDebit.swift */,
 				4542A72227D79062004A0B13 /* MockTopUpPreloadedFormData.swift */,
 				4542A72427D790A6004A0B13 /* MockOperator.swift */,
-				4542A72627D790C2004A0B13 /* MockGSMOperator.swift */,
 				4542A72827D790D2004A0B13 /* MockMobileContact.swift */,
 				4542A72A27D790E1004A0B13 /* MockTopUpOperatorSettings.swift */,
 				4542A72C27D79274004A0B13 /* MockTopUpValues.swift */,
@@ -476,6 +473,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/UIOneComponents/UIOneComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
@@ -512,6 +510,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIOneComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
@@ -580,6 +579,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/UIOneComponents/UIOneComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
@@ -616,6 +616,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIOneComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
@@ -674,7 +675,6 @@
 				4542A73527D7C668004A0B13 /* TopUpConfirmationCoordinatorTests.swift in Sources */,
 				4542A71E27D776A3004A0B13 /* MockAccountForDebit.swift in Sources */,
 				457A74E927D9F530004350CE /* MobileContactSearchFilterTests.swift in Sources */,
-				4542A72727D790C2004A0B13 /* MockGSMOperator.swift in Sources */,
 				457A74E527D8EBA6004350CE /* MockPhoneTopUpPresenterProtocol.swift in Sources */,
 				4542A71B27D7728A004A0B13 /* MockMenuViewController.swift in Sources */,
 				4542A71827D76FC4004A0B13 /* MockNavigationController.swift in Sources */,

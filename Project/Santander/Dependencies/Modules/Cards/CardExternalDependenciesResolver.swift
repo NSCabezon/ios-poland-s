@@ -17,30 +17,30 @@ extension ModuleDependencies: CardExternalDependenciesResolver {
         let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
-    
+
     func activeCardCoordinator() -> BindableCoordinator {
         return ToastCoordinator()
     }
-    
+
     func resolve() -> CardRepository {
         let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
-  
+
     func resolve() -> [CardTextColorEntity] {
         let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
-    
+
     func resolve() -> GetCardDetailConfigurationUseCase {
         let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
-    
+
     func showPANCoordinator() -> BindableCoordinator {
         ToastCoordinator()
     }
-    
+
     func resolve() -> Bool {
         return true
     }

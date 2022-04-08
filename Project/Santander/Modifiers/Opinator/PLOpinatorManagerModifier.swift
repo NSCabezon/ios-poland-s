@@ -11,6 +11,9 @@ import RetailLegacy
 final class PLOpinatorManagerModifier: OpinatorManagerModifier {
     func modifyOpinatorConfiguration(with configuration: OpinatorWebViewConfiguration) -> OpinatorWebViewConfiguration {
         var config = configuration
+        var parameters = config.queryParameters
+        parameters["id"] = nil
+        config.queryParameters = parameters
         config.showBackButton = false
         return config
     }

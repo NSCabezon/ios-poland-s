@@ -7,24 +7,33 @@
 
 import UIKit
 import CoreFoundationLib
+import CoreDomain
 import UI
 import TransferOperatives
 import Operative
 
-protocol SendMoneyCoordinatorProtocol: ModuleCoordinator { }
+protocol SendMoneyCoordinatorProtocol: ModuleCoordinator {
+    func set(_ account: AccountRepresentable) -> Self
+}
 
 final class SendMoneyCoordinator {
     weak var navigationController: UINavigationController?
     let dependenciesResolver: DependenciesResolver
     private let drawer: BaseMenuController
+    private var selectedAccount: AccountRepresentable?
     
     init (dependenciesResolver: DependenciesResolver, drawer: BaseMenuController) {
         self.drawer = drawer
         self.dependenciesResolver = dependenciesResolver
     }
     
+    func set(_ account: AccountRepresentable) -> Self {
+        selectedAccount = account
+        return self
+    }
+    
     func start() {
-        self.goToSendMoney(handler: self)
+        goToSendMoney(handler: self, account: selectedAccount)
     }
 }
 

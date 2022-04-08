@@ -30,8 +30,11 @@ final class RecipientSelectionCoordinator {
         self.setUpDependencies(maskAccount: maskAccount)
     }
     
-    public func start() {
-       //TODO: later
+    func start() {
+        let recipientSelectionController = dependenciesEngine.resolve(
+            for: RecipientSelectionViewController.self
+        )
+        navigationController?.pushViewController(recipientSelectionController, animated: true)
     }
     
     // MARK: Dependencies
@@ -39,6 +42,31 @@ final class RecipientSelectionCoordinator {
     private func setUpDependencies(maskAccount: String?) {
         dependenciesEngine.register(for: RecipientSelectionCoordinatorProtocol.self) { _ in
             return self
+        }
+        dependenciesEngine.register(for: RecipientSelectionPresenterProtocol.self) { resolver in
+            RecipientSelectionPresenter(
+                dependenciesResolver: resolver,
+                maskAccount: maskAccount
+            )
+        }
+        dependenciesEngine.register(for: RecipientSelectionViewController.self) { resolver in
+            let presenter = resolver.resolve(for: RecipientSelectionPresenterProtocol.self)
+            let confirmationDialogFactory = resolver.resolve(for: ConfirmationDialogProducing.self)
+            let controller = RecipientSelectionViewController(
+                presenter: presenter,
+                confirmationDialogFactory: confirmationDialogFactory
+            )
+            presenter.view = controller
+            return controller
+        }
+        dependenciesEngine.register(for: GetRecipientsUseCaseProtocol.self) { resolver in
+            GetRecipientsUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: RecipientMapping.self) { _ in
+            RecipientMapper()
+        }
+        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
+            ConfirmationDialogFactory()
         }
     }
 }

@@ -102,7 +102,7 @@ class PhoneTopUpFormCoordinatorTests: XCTestCase {
     func testDismissingOperatorSelectorWhenOperatorIsSelected() throws {
         coordinator.start()
         coordinator.showOperatorSelection(currentlySelectedOperatorId: 0)
-        coordinator.didSelectOperator(GSMOperator.mockInstance())
+        coordinator.didSelectOperator(Operator.mockInstance())
         
         XCTAssert(mockNavigationController.viewControllers.count == 1, "There should be one controller on the stack")
         XCTAssert(mockNavigationController.topViewController is PhoneTopUpFormViewController, "The top controller should be an instance of PhoneTopUpFormViewController")
