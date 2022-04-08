@@ -121,15 +121,6 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
         coordinator.start()
     }
     
-    public func showTaxBillingPeriodSelector() {
-        let coordinator = TaxTransferBillingPeriodCoordinator(
-            dependenciesResolver: dependenciesEngine,
-            delegate: taxBillingPeriodSelectorDelegate,
-            navigationController: navigationController
-        )
-        coordinator.start()
-    }
-    
     public func back() {
         navigationController?.popViewController(animated: true)
     }

@@ -82,9 +82,6 @@ private extension TaxTransferFormPresenter {
     var taxBillingPeriodViewModelMapper: TaxBillingPeriodViewModelMapping {
         dependenciesResolver.resolve()
     }
-    var taxBillingPeriodViewModelMapper: TaxBillingPeriodViewModelMapping {
-        return dependenciesResolver.resolve()
-    }
 }
 
 extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {    
