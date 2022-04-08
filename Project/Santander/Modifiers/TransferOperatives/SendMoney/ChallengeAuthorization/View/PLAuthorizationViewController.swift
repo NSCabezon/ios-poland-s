@@ -59,6 +59,7 @@ final class PLAuthorizationViewController: UIViewController {
         self.presenter.viewDidLoad()
         self.configureTap()
         self.configureKeyboardListener()
+        self.setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,8 +182,8 @@ private extension PLAuthorizationViewController {
     }
     
     func setAccessibilityIdentifiers() {
-        self.cancelFloatingButton.accessibilityIdentifier = AccessibilityAuthorization.floatingBtnCancel
-        self.continueFloatingButton.accessibilityIdentifier = AccessibilityAuthorization.floatingBtnContinue
+        self.cancelFloatingButton.setAccessibilitySuffix(AccessibilityAuthorization.floatingBtnCancel)
+        self.continueFloatingButton.setAccessibilitySuffix(AccessibilityAuthorization.floatingBtnContinue)
     }
 }
 
