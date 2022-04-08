@@ -29,7 +29,7 @@ class PLInternalTransferPreSetupUseCaseTest: XCTestCase {
     override func setUp() {
         self.registrationManyAccounts()
         globalPositionMock = self.getGlobalPositionMock()
-        dependencies = PLInternalTransferOperativeExternalDependenciesResolverTest()
+        dependencies = PLInternalTransferExternalDependenciesResolverMock()
         self.sut = PLInternalTransferPreSetupUseCase(dependencies: dependencies)
         accounts = globalPositionMock.accounts.map { entity in
             entity.representable

@@ -67,7 +67,7 @@ private extension TaxTransferAuthoritySectionView {
         }
         
         NSLayoutConstraint.activate([
-            taxAuthoritySection.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            taxAuthoritySection.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             taxAuthoritySection.bottomAnchor.constraint(equalTo: bottomAnchor),
             taxAuthoritySection.leadingAnchor.constraint(equalTo: leadingAnchor),
             taxAuthoritySection.trailingAnchor.constraint(equalTo: trailingAnchor),

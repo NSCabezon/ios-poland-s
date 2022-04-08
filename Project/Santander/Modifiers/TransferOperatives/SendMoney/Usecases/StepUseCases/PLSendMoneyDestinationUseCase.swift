@@ -34,7 +34,7 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
         }
         requestValues.ibanValidationOutput = .data(checkInternalAccountDto)
-        guard let name = requestValues.destinationAlias, name.trim().count > 0 else {
+        guard let name = requestValues.destinationName, name.trim().count > 0 else {
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noToName))
         }
         if requestValues.saveToFavorite {
@@ -43,7 +43,7 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
             }
             let duplicate = requestValues.fullFavorites?.first { return $0.payeeName?.trim() == alias.trim() }
             guard duplicate == nil else {
-                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias(alias: alias)))
+                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
             }
         }
         return .ok(requestValues)

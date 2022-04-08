@@ -86,6 +86,12 @@ extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     }
 }
 
+extension ModuleDependencies: RetailLegacySavingsExternalDependenciesResolver {
+    func savingsHomeCoordinator() -> BindableCoordinator {
+        return ToastCoordinator()
+    }
+}
+
 extension ModuleDependencies: CoreDependenciesResolver {
     func resolve() -> CoreDependencies {
         return coreDependencies
