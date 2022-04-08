@@ -11,7 +11,6 @@ import PLCommons
 protocol TopUpFormValidating {
     func areFormInputsValid(account: AccountForDebit?,
                       number: TopUpPhoneNumber,
-                      gsmOperator: GSMOperator?,
                       operator: Operator?,
                       topUpAmount: TopUpAmount?,
                       termsAcceptanceRequired: Bool,
@@ -30,13 +29,11 @@ final class TopUpFormValidator: TopUpFormValidating {
     
     func areFormInputsValid(account: AccountForDebit?,
                       number: TopUpPhoneNumber,
-                      gsmOperator: GSMOperator?,
                       operator: Operator?,
                       topUpAmount: TopUpAmount?,
                       termsAcceptanceRequired: Bool,
                       termsAccepted: Bool) -> Bool {
         guard let account = account,
-              let _ = gsmOperator,
               let mobileOperator = `operator`,
               let topUpAmount = topUpAmount else {
             return false

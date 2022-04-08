@@ -19,10 +19,6 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
         fatalError()
     }
     
-    func resolve() -> AppRepositoryProtocol {
-        return oldResolver.resolve()
-    }
-    
     func resolve() -> CoreSessionManager {
         return oldResolver.resolve()
     }
@@ -64,8 +60,8 @@ extension ModuleDependencies: OnboardingExternalDependenciesResolver {
     }
     
     func resolve() -> OnboardingRepository {
-            let oldResolver: DependenciesResolver = resolve()
-            return oldResolver.resolve()
+        let oldResolver: DependenciesResolver = resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> CompilationProtocol {

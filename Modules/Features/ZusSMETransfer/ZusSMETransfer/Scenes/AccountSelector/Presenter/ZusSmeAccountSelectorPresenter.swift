@@ -41,8 +41,8 @@ extension ZusSmeAccountSelectorPresenter: AccountSelectorPresenterProtocol {
             coordinator.showTransferForm(accounts: accounts,
                                          selectedAccountNumber: selectedAccountNumber)
         case .form:
-            selectableDelegate?.updateSelectedAccountNumber(number: selectedAccountNumber)
             didPressClose()
+            selectableDelegate?.updateSelectedAccountNumber(number: selectedAccountNumber)
         }
     }
     

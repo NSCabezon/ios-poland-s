@@ -19,6 +19,7 @@ protocol TaxSymbolSelectorCoordinatorProtocol {}
 final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
     private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    private let shouldPopControllerAfterSelection: Bool
     private let taxSymbols: [TaxSymbol]
     private let selectedTaxSymbol: TaxSymbol?
     private let onSelection: (TaxSymbol) -> Void
@@ -26,28 +27,34 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
     init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?,
+        shouldPopControllerAfterSelection: Bool,
         taxSymbols: [TaxSymbol],
         selectedTaxSymbol: TaxSymbol?,
         onSelection: @escaping (TaxSymbol) -> Void
     ) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
+        self.shouldPopControllerAfterSelection = shouldPopControllerAfterSelection
         self.taxSymbols = taxSymbols
         self.selectedTaxSymbol = selectedTaxSymbol
         self.onSelection = onSelection
     }
     
     func start() {
+        let taxSymbols = taxSymbols
+            .sorted { $0.name < $1.name }
+            .filter { $0.isActive }
         let configuration = ItemSelectorConfiguration<TaxSymbol>(
             navigationTitle: "#Symbol formularza",
             isSearchEnabled: true,
             sections: [
                 .init(
                     sectionTitle: "#Wybierz symbol formularza:",
-                    items: taxSymbols.sorted(by: { $0.name < $1.name })
+                    items: taxSymbols
                 )
             ],
-            selectedItem: nil
+            selectedItem: selectedTaxSymbol,
+            shouldPopControllerAfterSelection: shouldPopControllerAfterSelection
         )
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,

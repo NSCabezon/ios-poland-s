@@ -14,6 +14,7 @@ public struct TopUpValues {
     public let values: [TopUpValue]
     
     public var customAmountEnabled: Bool {
-        return type == "RANGE_AND_DEFINED_AMOUNT" && min != nil && max != nil
+        let customAmountsTypes = ["RANGE_AND_DEFINED_AMOUNT", "RANGE_AMOUNT"]
+        return customAmountsTypes.contains(type) && min != nil && max != nil
     }
 }

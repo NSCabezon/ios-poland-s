@@ -9,6 +9,7 @@ import CoreFoundationLib
 import UI
 import BLIK
 import Transfer
+import PhoneTopUp
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?
@@ -41,7 +42,8 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         case .scanPay:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .topUpPhone:
-            ToastCoordinator("generic_alert_notAvailableOperation").start()
+            let coordinator = oldResolver.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
+            coordinator.start()
         }
     }
 }

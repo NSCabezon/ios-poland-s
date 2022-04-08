@@ -27,4 +27,30 @@ enum AddTaxAuthorityViewModel {
         var taxAuthorityName: String?
         var accountNumber: String?
     }
+    
+    var shouldEnableDoneButton: Bool {
+        switch self {
+        case .taxSymbolSelector:
+            return false
+        case let .irpForm(form):
+            guard
+                let authorityName = form.taxAuthorityName,
+                let accountNumber = form.accountNumber,
+                authorityName.isNotEmpty,
+                accountNumber.isNotEmpty
+            else {
+                return false
+            }
+            return true
+        case let .usForm(form):
+            switch (form.city, form.taxAuthority) {
+            case (.selected(_), .selected(_)):
+                return true
+            case (.selected(_), .unselected),
+                 (.unselected, .selected(_)),
+                 (.unselected, .unselected):
+                return false
+            }
+        }
+    }
 }

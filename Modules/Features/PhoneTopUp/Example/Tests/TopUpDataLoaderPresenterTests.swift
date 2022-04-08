@@ -66,7 +66,7 @@ class TopUpDataLoaderPresenterTests: XCTestCase {
     }
     
     func testShowingErrorAfterNoAccountsFetched() throws {
-        mockUseCase.result = .ok(GetPhoneTopUpFormDataOutput(accounts: [], operators: [], gsmOperators: [], internetContacts: [], topUpAccount: TopUpAccount.mockInstance()))
+        mockUseCase.result = .ok(GetPhoneTopUpFormDataOutput(accounts: [], operators: [], internetContacts: [], topUpAccount: TopUpAccount.mockInstance()))
         presenter.viewDidLoad()
         
         delayedTests {
@@ -78,7 +78,7 @@ class TopUpDataLoaderPresenterTests: XCTestCase {
     }
     
     func testShowingFormAfterSuccessfulFetch() throws {
-        mockUseCase.result = .ok(GetPhoneTopUpFormDataOutput(accounts: [AccountForDebit.mockInstance()], operators: [], gsmOperators: [], internetContacts: [], topUpAccount: TopUpAccount.mockInstance()))
+        mockUseCase.result = .ok(GetPhoneTopUpFormDataOutput(accounts: [AccountForDebit.mockInstance()], operators: [Operator.mockInstance()], internetContacts: [], topUpAccount: TopUpAccount.mockInstance()))
         presenter.viewDidLoad()
         
         delayedTests {

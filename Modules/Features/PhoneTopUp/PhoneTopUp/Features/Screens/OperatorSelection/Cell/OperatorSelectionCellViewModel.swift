@@ -22,7 +22,7 @@ struct OperatorSelectionCellViewModel {
         self.isSelected = isSelected
     }
     
-    init(gsmOperator: GSMOperator, isSelected: Bool) {
+    init(gsmOperator: Operator, isSelected: Bool) {
         self.operatorId = gsmOperator.id
         self.operatorName = gsmOperator.name
         self.isSelected = isSelected

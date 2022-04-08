@@ -68,9 +68,7 @@ final class MockPhoneTopUpFormPresenterProtocol: PhoneTopUpFormPresenterProtocol
         fatalError()
     }
     
-    func didSelectOperator(_ gsmOperator: GSMOperator) {
+    func didSelectOperator(_ gsmOperator: Operator) {
         fatalError()
     }
-    
-    
 }

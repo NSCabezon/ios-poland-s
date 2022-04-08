@@ -19,6 +19,7 @@ final class TaxTransferFormContainerView: UIView {
     private let accountSection = TaxTransferAccountSectionView()
     private let taxPayerSection = TaxTransferPayerSectionView()
     private let taxAuthoritySection = TaxTransferAuthoritySectionView()
+    private let taxBillingPeriodSection = TaxTransferBillingPeriodView()
     private let amountSection: TaxTransferAmountSectionView
     private let obligationIdentifierSection = TaxTransferObligationIdentifierSectionView()
     private let dateSection: TaxTransferDateSectionView
@@ -84,6 +85,13 @@ final class TaxTransferFormContainerView: UIView {
         taxAuthoritySection.configure(with: viewModel, onTap: onTap)
     }
     
+    func configureTaxBillingPeriodSelector(
+        with viewModel: Selectable<TaxTransferFormViewModel.TaxBillingPeriodViewModel>,
+        onTap: @escaping () -> Void
+    ) {
+        taxBillingPeriodSection.configure(with: viewModel, onTap: onTap)
+    }
+    
     func configureAmountField(with viewModel: TaxTransferFormViewModel.AmountViewModel) {
         amountSection.configure(with: viewModel)
     }
@@ -115,6 +123,7 @@ private extension TaxTransferFormContainerView {
             accountSection,
             taxPayerSection,
             taxAuthoritySection,
+            taxBillingPeriodSection,
             amountSection,
             obligationIdentifierSection,
             dateSection

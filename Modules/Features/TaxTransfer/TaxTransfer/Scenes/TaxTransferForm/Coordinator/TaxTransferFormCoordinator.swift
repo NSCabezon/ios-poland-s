@@ -28,9 +28,10 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     )
     func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?,
+        selectedTaxAuthority: SelectedTaxAuthority?,
         taxSymbols: [TaxSymbol]
     )
+    func showTaxBillingPeriodSelector()
     func didAddTaxPayer(_ taxPayer: TaxPayer)
 }
 
@@ -40,6 +41,7 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
     private let dependenciesEngine: DependenciesDefault
     private weak var accountSelectorDelegate: AccountForDebitSelectorDelegate?
     private weak var taxPayerSelectorDelegate: TaxPayerSelectorDelegate?
+    private weak var taxBillingPeriodSelectorDelegate: TaxBillingPeriodSelectorDelegate?
     private lazy var taxFormPresenter = dependenciesEngine.resolve(for: TaxTransferFormPresenterProtocol.self)
 
     public init(
@@ -56,6 +58,7 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
         taxFormPresenter.view = controller
         accountSelectorDelegate = taxFormPresenter
         taxPayerSelectorDelegate = taxFormPresenter
+        taxBillingPeriodSelectorDelegate = taxFormPresenter
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -93,7 +96,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
     
     public func showTaxAuthoritySelector(
         with taxAuthorities: [TaxAuthority],
-        selectedTaxAuthority: TaxAuthority?,
+        selectedTaxAuthority: SelectedTaxAuthority?,
         taxSymbols: [TaxSymbol]
     ) {
         let coordinator = TaxAuthoritySelectorCoordinator(
@@ -101,7 +104,19 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
             navigationController: navigationController,
             taxAuthorities: taxAuthorities,
             selectedTaxAuthority: selectedTaxAuthority,
-            taxSymbols: taxSymbols
+            taxSymbols: taxSymbols,
+            onSelect: { [weak self] taxAuthority in
+                self?.handleTaxAuthoritySelection(taxAuthority)
+            }
+        )
+        coordinator.start()
+    }
+    
+    public func showTaxBillingPeriodSelector() {
+        let coordinator = TaxTransferBillingPeriodCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            delegate: taxBillingPeriodSelectorDelegate,
+            navigationController: navigationController
         )
         coordinator.start()
     }
@@ -122,6 +137,15 @@ extension TaxTransferFormCoordinator: TaxPayersListDelegate {
 }
 
 private extension TaxTransferFormCoordinator {
+    func handleTaxAuthoritySelection(_ taxAuthority: SelectedTaxAuthority) {
+        let formController = navigationController?.viewControllers.first {
+            $0 is TaxTransferFormViewController
+        }
+        guard let controller = formController else { return }
+        taxFormPresenter.didSelectTaxAuthority(taxAuthority)
+        navigationController?.popToViewController(controller, animated: true)
+    }
+    
     func setUpDependencies() {
         let amountFormatter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
         
@@ -197,6 +221,14 @@ private extension TaxTransferFormCoordinator {
 
         dependenciesEngine.register(for: TaxPayerViewModelMapping.self) { _ in
             return TaxPayerViewModelMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxAuthorityViewModelMapping.self) { _ in
+            return TaxAuthorityViewModelMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxBillingPeriodViewModelMapping.self) { _ in
+            return TaxBillingPeriodViewModelMapper()
         }
         
         dependenciesEngine.register(for: TaxSymbolMapping.self) { _ in

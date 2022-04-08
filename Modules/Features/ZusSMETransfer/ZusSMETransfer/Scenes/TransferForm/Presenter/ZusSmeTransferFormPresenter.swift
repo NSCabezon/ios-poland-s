@@ -9,6 +9,10 @@ protocol ZusSmeTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusSmeT
     func getLanguage() -> String
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
     func showAccountSelector()
+    func didSelectCloseProcess()
+    func updateTransferFormViewModel(with viewModel: ZusSmeTransferFormViewModel)
+    func startValidation(with field: TransferFormCurrentActiveField)
+    func getAccountRequiredLength() -> Int
     func showRecipientSelection()
 }
 
@@ -25,7 +29,18 @@ final class ZusSmeTransferFormPresenter {
     private var transferFormViewModel: ZusSmeTransferFormViewModel?
     private let confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
+    private let formValidator: ZusSmeTransferValidating
     private var maskAccount: String?
+    private var vatAccountDetails: VATAccountDetails?
+    
+    private var getPopularAccountsUseCase: GetPopularAccountsUseCase {
+        dependenciesResolver.resolve()
+    }
+    
+    private var getVATAccountUseCase: GetVATAccountUseCase {
+        dependenciesResolver.resolve()
+    }
+    
     
     init(
         dependenciesResolver: DependenciesResolver,
@@ -38,13 +53,47 @@ final class ZusSmeTransferFormPresenter {
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
         coordinator = dependenciesResolver.resolve(for: ZusSmeTransferFormCoordinatorProtocol.self)
+        formValidator = dependenciesResolver.resolve(for: ZusSmeTransferValidating.self)
     }
 }
 
 extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
     
     func viewDidLoad() {
-      //TODO: start GetPopularAccountsUseCase
+        view?.showLoader()
+        let taxAccountNumber = accounts.first(where: { $0.number == selectedAccountNumber })?.taxAccountNumber ?? ""
+        let getVatAccountDetails = Scenario(useCase: getVATAccountUseCase,
+                                            input: GetVATAccountUseCaseInput(accountNumber: taxAccountNumber))
+        Scenario(useCase: getPopularAccountsUseCase,
+                 input: GetPopularAccountsUseCaseInput(accountType: 80))
+            .execute(on: dependenciesResolver.resolve(for: UseCaseHandler.self))
+            .onSuccess({ [weak self] accounts in
+                    guard let mask = accounts.numbers.first?.number else {
+                        self?.showErrorView()
+                        return
+                    }
+                    self?.maskAccount = mask
+            })
+            .thenIgnoringPreviousResult(scenario: {
+                () -> Scenario<GetVATAccountUseCaseInput, GetVATAccountCaseOkOutput, StringErrorOutput>? in
+                return getVatAccountDetails
+            })
+            .onSuccess({ [weak self] output in
+                self?.vatAccountDetails = output.vatAccountDetails
+                self?.view?.setVatAccountDetails(vatAccountDetails: output.vatAccountDetails)
+            })
+            .onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.showErrorView()
+                })
+            }
+            .finally({ [weak self] in
+                self?.view?.hideLoader(completion: {})
+            })
+    }
+    
+    func getAccountRequiredLength() -> Int {
+        formValidator.getAccountRequiredLength()
     }
     
     func getLanguage() -> String {
@@ -85,6 +134,26 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
             self?.coordinator.closeProcess()
         })
     }
+    
+    func startValidation(with field: TransferFormCurrentActiveField) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.validationAction(with: field)
+        }
+    }
+    
+    func validationAction(with field: TransferFormCurrentActiveField) {
+        guard let form = transferFormViewModel else { return }
+        let invalidMessages = formValidator.validateForm(
+            form: form,
+            with: field,
+            maskAccount: maskAccount
+        )
+        view?.showValidationMessages(with: invalidMessages)
+    }
+    
+    func updateTransferFormViewModel(with viewModel: ZusSmeTransferFormViewModel) {
+        transferFormViewModel = viewModel
+    }
 }
 
 extension ZusSmeTransferFormPresenter: RecipientSelectorDelegate {
@@ -109,7 +178,23 @@ private extension ZusSmeTransferFormPresenter {
 
 extension ZusSmeTransferFormPresenter: ZusSmeTransferFormAccountSelectable {
     func updateSelectedAccountNumber(number: String) {
+        view?.showLoader()
         selectedAccountNumber = number
         view?.setAccountViewModel()
+        let taxAccountNumber = accounts.first(where: { $0.number == selectedAccountNumber })?.taxAccountNumber ?? ""
+        Scenario(useCase: getVATAccountUseCase,
+                        input: GetVATAccountUseCaseInput(accountNumber: taxAccountNumber))
+            .execute(on: dependenciesResolver.resolve(for: UseCaseHandler.self))
+            .onSuccess({ [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    self?.vatAccountDetails = output.vatAccountDetails
+                    self?.view?.setVatAccountDetails(vatAccountDetails: output.vatAccountDetails)
+                })
+            })
+            .onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.showErrorView()
+                })
+            }
     }
 }
