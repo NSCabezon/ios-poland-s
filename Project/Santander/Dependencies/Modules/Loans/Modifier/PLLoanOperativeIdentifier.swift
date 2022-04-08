@@ -7,6 +7,7 @@
 
 import Foundation
 import Loans
+import CoreFoundationLib
 
 enum PLLoanOperativeIdentifier: String {
     case details = "LOAN_DETAILS"
@@ -48,7 +49,30 @@ enum PLLoanOperativeIdentifier: String {
         case .repayment: return 0
         case .customerService: return 1
         case .details: return 2
-        default: return Int.max
+        }
+    }
+    
+    var identifier: String {
+        switch self {
+        case .repayment: return AccessibilityIDLoansHome.optionScheduleContainer.rawValue
+        case .customerService: return AccessibilityIDLoansHome.optionCustomerServiceContainer.rawValue
+        case .details: return AccessibilityIDLoansHome.optionDetailContainer.rawValue
+        }
+    }
+    
+    var textIdentifier: String {
+        switch self {
+        case .repayment: return "loansOption_button_loanSchedule"
+        case .customerService: return "loansOption_button_customerService"
+        case .details: return AccessibilityIDLoansHome.optionDetailTitleLabel.rawValue
+        }
+    }
+    
+    var imageIdentifier: String {
+        switch self {
+        case .repayment: return "icnLoanSchedule"
+        case .customerService: return "icnCustomerService"
+        case .details: return AccessibilityIDLoansHome.optionDetailImage.rawValue
         }
     }
 }

@@ -34,10 +34,10 @@ extension PLGetLoanOptionsUsecase: GetLoanOptionsUsecase {
             LoanOption(
                 title: $0.textKey,
                 imageName: $0.icon,
-                accessibilityIdentifier: $0.textKey,
+                accessibilityIdentifier: $0.identifier,
                 type: $0.type,
-                titleIdentifier: $0.textKey,
-                imageIdentifier: $0.icon
+                titleIdentifier: $0.textIdentifier,
+                imageIdentifier: $0.imageIdentifier
             )
         })
         return Just(operations ?? [loanScheduleButton, detail]).eraseToAnyPublisher()
