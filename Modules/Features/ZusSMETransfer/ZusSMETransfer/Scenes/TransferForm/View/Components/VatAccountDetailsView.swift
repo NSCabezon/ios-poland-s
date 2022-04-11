@@ -1,6 +1,7 @@
 
 import PLUI
 import UI
+import CoreFoundationLib
 
 final class VatAccountDetailsView: UIView {
     private let titleLabel = UILabel()
@@ -48,7 +49,7 @@ private extension VatAccountDetailsView {
                                              textAlignment: .left))
         titleLabel.numberOfLines = 0
         detailsLabel.numberOfLines = 0
-        titleLabel.text = "#Konto VAT powiązane z kontem rozliczeniowym"
+        titleLabel.text = localized("pl_zusTransfer_text_linkedAcc")
     }
     
     func fillLabel() {

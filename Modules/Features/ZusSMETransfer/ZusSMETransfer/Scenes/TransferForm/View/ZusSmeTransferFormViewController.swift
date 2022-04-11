@@ -12,6 +12,7 @@ protocol ZusSmeTransferFormViewProtocol: AnyObject,
     func setAccountViewModel()
     func setVatAccountDetails(vatAccountDetails: VATAccountDetails)
     func showValidationMessages(with data: InvalidZusSmeTransferFormData)
+    func showNotEnoughMoneyInfo(difference: Decimal, completion: @escaping () -> Void)
 }
 
 final class ZusSmeTransferFormViewController: UIViewController {
@@ -84,7 +85,10 @@ private extension ZusSmeTransferFormViewController {
     func configureView() {
         view.backgroundColor = .white
         bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
-            //TODO: show confirmation
+            let form = self?.formView.getCurrentFormViewModel()
+            self?.presenter.checkIfHaveEnoughFounds(transferAmount: form?.amount ?? 0, completion: {
+                //TODO: show confirmation
+            })
         }
         bottomView.disableButton()
         formView.configure(with: presenter.getSelectedAccountViewModels())
@@ -147,6 +151,20 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewProtocol {
             bottomView.disableButton()
         }
     }
+    
+    func showNotEnoughMoneyInfo(difference: Decimal, completion: @escaping () -> Void) {
+        let numberForamtter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
+        let formatedDifference = numberForamtter.string(for: difference) ?? ""
+        InfoDialogBuilder(
+            title: localized("generic_alert_information"),
+            description: localized("#Nie masz wystarczających środków na rachunku VAT. Brakująca kwota: \(formatedDifference)PLN zostanie pobrana z rachunku rozliczeniowego."),
+            image: PLAssets.image(named: "info_black") ?? UIImage()
+        ) {
+            completion()
+        }
+        .build()
+        .showIn(self)
+    }
 }
 
 extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
@@ -172,7 +190,11 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
         }
     }
     
+    func didTapRecipientButton() {
+        presenter.showRecipientSelection()
+    }
+    
     func updateRecipient(name: String, accountNumber: String) {
-        //TODO: update recipient in form
+        formView.updateRecipient(name: name, accountNumber: accountNumber)
     }
 }

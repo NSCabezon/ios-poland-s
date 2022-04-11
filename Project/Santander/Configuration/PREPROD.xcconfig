@@ -15,7 +15,6 @@ SIRI_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod.siri.intents
 SIRI_UI_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod.siri.intents.ui
 APP_NAME = Santander Preprod
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
-EMMA_API_KEY = santanderpreHdgTYANJ0
 LOAD_PFM_ENABLED = YES
 LOG_ENABLED = YES
 MANAGER_WALL_PRODUCTION_ENVIRONMENT = NO

@@ -148,7 +148,7 @@ public struct BranchInfoDTO: Codable {
 
 public struct SwiftDataDTO: Codable {
     let isActive: Bool?
-    let id: String?
+    let id: Int?
     let bic: String?
     let branchInfo: BranchInfoDTO?
     let bankName: String?
