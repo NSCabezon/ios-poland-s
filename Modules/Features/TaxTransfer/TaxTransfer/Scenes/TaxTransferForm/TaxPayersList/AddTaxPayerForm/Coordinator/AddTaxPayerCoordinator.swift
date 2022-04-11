@@ -85,7 +85,7 @@ extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
         selectedItem: TaxIdentifierType?
     ) {
         let configuration = ItemSelectorConfiguration<TaxIdentifierType>(
-            navigationTitle: "#Typ identyfikatora",
+            navigationTitle: localized("pl_toolbar_title_chooseID"),
             isSearchEnabled: false,
             sections: [section],
             selectedItem: selectedItem

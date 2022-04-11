@@ -5,6 +5,8 @@
 //  Created by 185167 on 05/01/2022.
 //
 
+import CoreFoundationLib
+
 protocol TaxTransferFormValidating {
     func validateFields(_ fields: TaxTransferFormFields) -> TaxTransferFormValidity
 }
@@ -58,7 +60,7 @@ private extension TaxTransferFormValidator {
                 return nil
             }
         } catch {
-            return "#Niepoprawna identyfikacja zobowiązania"
+            return localized("pl_taxTransfer_validationText_InvalidFinancialObligationId")
         }
     }
     

@@ -7,6 +7,7 @@
 
 import UI
 import PLUI
+import CoreFoundationLib
 
 final class AddTaxPayerIdentifierSelectorView: UIView {
     private lazy var sectionContainer = getSectionContainer()
@@ -71,7 +72,7 @@ final class AddTaxPayerIdentifierSelectorView: UIView {
     private func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: subviewsContainer,
-            sectionTitle: "#Typ identyfikatora:"
+            sectionTitle: localized("pl_toolbar_title_chooseID")
         )
     }
 }

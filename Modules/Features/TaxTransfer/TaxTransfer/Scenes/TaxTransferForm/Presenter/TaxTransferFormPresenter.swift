@@ -229,9 +229,9 @@ private extension TaxTransferFormPresenter {
     
     func showEmptyAccountsListAlert() {
         view?.showErrorMessage(
-            title: "#Informacja",
-            message: "#Brak rachunków źródłowych",
-            actionButtonTitle: localized("generic_link_ok"),
+            title: localized("pl_popup_noSourceAccTitle"),
+            message: localized("pl_popup_noSourceAccParagraph"),
+            actionButtonTitle: localized("generic_button_understand"),
             closeButton: .none,
             onConfirm: { [weak self] in self?.coordinator.back() }
         )

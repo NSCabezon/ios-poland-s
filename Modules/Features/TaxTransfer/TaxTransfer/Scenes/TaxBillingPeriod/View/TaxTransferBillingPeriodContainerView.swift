@@ -28,7 +28,7 @@ final class TaxTransferBillingPeriodContainerView: UIView {
         with: localized("pl_taxTransfer_text_periodType")
     )
     private let periodNumberSelector = TaxTransferBillingPeriodSelectorView(
-        with: "#Numer okresu rozliczeniowego:"
+        with: localized("pl_taxTransfer_text_periodNumber")
     )
     
     override init(frame: CGRect) {

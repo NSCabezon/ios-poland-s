@@ -6,6 +6,7 @@
 //
 
 import PLScenes
+import CoreFoundationLib
 
 enum TaxIdentifierType: SelectableItem {
     case NIP
@@ -43,9 +44,17 @@ enum TaxIdentifierType: SelectableItem {
     var errorMessage: String {
         switch self {
         case .other:
-            return "#Wprowadzony tekst zawiera niedozwolone znaki"
-        default:
-            return "#Błędny numer \(self.name)"
+            return localized("pl_taxTransfer_validation_forbiddenCharacter")
+        case .NIP:
+            return localized("pl_taxTransfer_validation_wrongNip")
+        case .PESEL:
+            return localized("pl_taxTransfer_validation_wrongPesel")
+        case .REGON:
+            return localized("pl_taxTransfer_validation_wrongRegon")
+        case .ID:
+            return localized("pl_taxTransfer_validation_wrongId")
+        case .passport:
+            return localized("pl_taxTransfer_validation_wrongPassport")
         }
     }
     
