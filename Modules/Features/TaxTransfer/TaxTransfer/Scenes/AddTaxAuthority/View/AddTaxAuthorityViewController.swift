@@ -10,6 +10,9 @@ import PLUI
 
 protocol AddTaxAuthorityView: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: AddTaxAuthorityViewModel)
+    func setDoneButtonState(isEnabled: Bool)
+    func setInvalidFormMessages(_ messages: InvalidTaxAuthorityFormFormMessages)
+    func clearInvalidFormMessages()
 }
 
 final class AddTaxAuthorityViewController: UIViewController {
@@ -48,6 +51,24 @@ extension AddTaxAuthorityViewController: AddTaxAuthorityView {
             case let .irpForm(viewModel):
                 self.setIrpFormState(with: viewModel)
             }
+        }
+    }
+    
+    func setDoneButtonState(isEnabled: Bool) {
+        DispatchQueue.main.async {
+            isEnabled ? self.bottomButtonView.enableButton() : self.bottomButtonView.disableButton()
+        }
+    }
+    
+    func setInvalidFormMessages(_ messages: InvalidTaxAuthorityFormFormMessages) {
+        DispatchQueue.main.async {
+            self.formView.showInvalidFormMessages(messages)
+        }
+    }
+    
+    func clearInvalidFormMessages() {
+        DispatchQueue.main.async {
+            self.formView.clearInvalidFormMessages()
         }
     }
     
@@ -133,8 +154,8 @@ private extension AddTaxAuthorityViewController {
     
     func configureBottomView() {
         bottomButtonView.disableButton()
-        bottomButtonView.configure(title: "#Gotowe") {
-            // TODO:- Configure bottom button action
+        bottomButtonView.configure(title: "#Gotowe") { [weak self] in
+            self?.presenter.didTapDone()
         }
     }
     
@@ -158,8 +179,14 @@ extension AddTaxAuthorityViewController: KeyboardManagerDelegate {
 }
 
 extension AddTaxAuthorityViewController: AddTaxAuthorityContainerViewDelegate {
-    func didUpdateFields() {
-        // TODO:- Update delegate interface
+    func didUpdateFields(
+        taxAuthorityName: String?,
+        accountNumber: String?
+    ) {
+        presenter.didUpdateIrpFields(
+            taxAuthorityName: taxAuthorityName,
+            accountNumber: accountNumber
+        )
     }
 }
 

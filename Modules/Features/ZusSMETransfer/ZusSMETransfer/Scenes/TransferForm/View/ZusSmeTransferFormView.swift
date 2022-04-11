@@ -8,6 +8,7 @@ protocol ZusSmeTransferFormViewDelegate: AnyObject {
     func changeAccountTapped()
     func didChangeForm(with field: TransferFormCurrentActiveField)
     func scrollToBottom()
+    func didTapRecipientButton()
 }
 
 final class ZusSmeTransferFormView: UIView {
@@ -98,6 +99,18 @@ final class ZusSmeTransferFormView: UIView {
         default: break
         }
     }
+    
+    func updateRecipient(name: String, accountNumber: String) {
+        recipientTextField.setText(name)
+        accountNumberTextField.setText(accountNumber)
+        let fieldsChanged: [TransferFormCurrentActiveField] = [
+            .recipient,
+            .accountNumber(controlEvent: .endEditing)
+        ]
+        fieldsChanged.forEach {
+            delegate?.didChangeForm(with: $0)
+        }
+    }
 }
 
 private extension ZusSmeTransferFormView {
@@ -123,7 +136,7 @@ private extension ZusSmeTransferFormView {
     
     func configureView() {
         backgroundColor = .white
-        accountSelectorLabel.text = localized("pl_taxTransfer_label_account")
+        accountSelectorLabel.text = localized("pl_zusTransfer_text_fromAcc")
         selectedAccountView.setChangeAction { [weak self] in
             self?.delegate?.changeAccountTapped()
         }
@@ -153,7 +166,7 @@ private extension ZusSmeTransferFormView {
         recipientTextField.setPlaceholder(localized("pl_zusTransfer_text_zus"))
         recipientTextField.setRightAccessory(
             .uiImage(PLAssets.image(named: "contacts_icon"), action: { [weak self] in
-                
+                self?.delegate?.didTapRecipientButton()
             })
         )
         

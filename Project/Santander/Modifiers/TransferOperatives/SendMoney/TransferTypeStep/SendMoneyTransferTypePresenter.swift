@@ -60,6 +60,9 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
         let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
         self.view?.showTransferTypes(viewModel: viewModel)
         self.setCreditAccountInfo()
+        self.trackerManager.trackScreen(screenId: self.trackerPage.page,
+                                        extraParameters: [(self.operativeData.type == .national ? Constants.Tracker.transferCountryKey : Constants.Tracker.transferTypeKey) :
+                                                            self.operativeData.type.trackerName])
     }
     
     func setCreditAccountInfo() {
@@ -103,11 +106,18 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     }
     
     func didTapTooltip() {
-        self.trackerManager.trackEvent(screenId: self.trackerPage.page, eventId: SendMoneyTransferTypePage.Action.clickTooltip.rawValue, extraParameters: ["transfer_country": self.operativeData.type.trackerName])
+        self.trackEvent(.clickTooltip, parameters: [Constants.Tracker.transferTypeKey: self.operativeData.type.trackerName])
     }
 }
 
 private extension SendMoneyTransferTypePresenter {
+    enum Constants {
+        enum Tracker {
+            static let transferCountryKey: String = "transfer_country"
+            static let transferTypeKey: String = "transfer_type"
+        }
+    }
+    
     enum ValidTransferRangeType {
         case aYearFromToday, onlyToday
     }
@@ -194,7 +204,7 @@ private extension SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
     var trackerPage: SendMoneyTransferTypePage {
-        SendMoneyTransferTypePage()
+        SendMoneyTransferTypePage(national: self.operativeData.type == .national, type: self.operativeData.type.trackerName)
     }
     
     var trackerManager: TrackerManager {

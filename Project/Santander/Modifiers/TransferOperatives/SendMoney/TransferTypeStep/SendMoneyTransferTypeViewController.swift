@@ -197,6 +197,10 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeRadioButtons
     func didSelectRadioButton(at index: Int) {
         self.presenter.didSelectTransferType(at: index)
     }
+    
+    func didTapTooltip() {
+        self.presenter.didTapTooltip()
+    }
 }
 
 extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeErrorViewDelegate {

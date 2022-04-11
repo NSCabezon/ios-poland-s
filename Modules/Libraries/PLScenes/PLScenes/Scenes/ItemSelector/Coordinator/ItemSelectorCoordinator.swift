@@ -34,6 +34,7 @@ public final class ItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordina
     
     func handleItemSelection(_ item: Item) {
         itemSelectionHandler(item)
+        guard configuration.shouldPopControllerAfterSelection else { return }
         navigationController?.popViewController(animated: true)
     }
     

@@ -26,7 +26,7 @@ class PLInternalTransferConfirmationUseCaseTest: XCTestCase {
     override func setUp() {
         self.registrationManyAccounts()
         globalPositionMock = self.getGlobalPositionMock()
-        dependencies = PLInternalTransferOperativeExternalDependenciesResolverTest()
+        dependencies = PLInternalTransferExternalDependenciesResolverMock()
         self.sut = PLInternalTransferConfirmationUseCase(dependencies: dependencies)
         let accounts = globalPositionMock.accounts.map { entity in
             entity.representable

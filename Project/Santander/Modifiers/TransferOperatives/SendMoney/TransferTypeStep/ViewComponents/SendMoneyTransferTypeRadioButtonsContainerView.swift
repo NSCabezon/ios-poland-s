@@ -11,6 +11,7 @@ import CoreFoundationLib
 
 protocol SendMoneyTransferTypeRadioButtonsContainerViewDelegate: AnyObject {
     func didSelectRadioButton(at index: Int)
+    func didTapTooltip()
 }
 
 final class SendMoneyTransferTypeRadioButtonsContainerView: UIView {
@@ -146,6 +147,10 @@ private extension SendMoneyTransferTypeRadioButtonsContainerView {
 extension SendMoneyTransferTypeRadioButtonsContainerView: OneRadioButtonViewDelegate {
     public func didSelectOneRadioButton(_ index: Int) {
         self.didSelectTransferType(at: index)
+    }
+    
+    public func didTapTooltip() {
+        self.delegate?.didTapTooltip()
     }
 }
 
