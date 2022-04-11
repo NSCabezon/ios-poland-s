@@ -23,7 +23,7 @@ final class AddTaxAuthorityContainerView: UIView {
     private let nonEditableTaxAccountView = NonEditableTaxAccountView()
     private let irpWarningView = IrpWarningSectionView()
     private let taxFormSymbolSelectorView = TaxFormSelectorSectionView(
-        sectionTitle: "#Symbol formularza:"
+        sectionTitle: localized("pl_toolbar_formSymbol")
     )
     private let citySelectorView = TaxFormSelectorSectionView(
         sectionTitle: "#Miasto:"
