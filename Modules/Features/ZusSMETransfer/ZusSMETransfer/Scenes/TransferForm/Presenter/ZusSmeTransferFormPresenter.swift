@@ -14,6 +14,7 @@ protocol ZusSmeTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusSmeT
     func startValidation(with field: TransferFormCurrentActiveField)
     func getAccountRequiredLength() -> Int
     func showRecipientSelection()
+    func checkIfHaveEnoughFounds(transferAmount: Decimal, completion: @escaping () -> Void)
 }
 
 protocol ZusSmeTransferFormAccountSelectable: AnyObject {
@@ -130,7 +131,7 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
     }
     
     private func showErrorView() {
-        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
+        view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: { [weak self] in
             self?.coordinator.closeProcess()
         })
     }
@@ -153,6 +154,15 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
     
     func updateTransferFormViewModel(with viewModel: ZusSmeTransferFormViewModel) {
         transferFormViewModel = viewModel
+    }
+    
+    func checkIfHaveEnoughFounds(transferAmount: Decimal, completion: @escaping () -> Void) {
+        let transferDifference = (vatAccountDetails?.availableFunds ?? 0) - transferAmount
+        if transferDifference < 0 {
+            view?.showNotEnoughMoneyInfo(difference: abs(transferDifference), completion: completion)
+        } else {
+            completion()
+        }
     }
 }
 

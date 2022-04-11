@@ -27,7 +27,7 @@ final class GlobalPositionDataSource {
     private let dataProvider: BSANDataProvider
     private let basePath = "/api/v2"
     private var headers: [String: String] = [:]
-    private var queryParams: [String: Any]? = nil
+    private var queryParams: [String: Any]?
     
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
         self.networkProvider = networkProvider
@@ -55,13 +55,13 @@ final class GlobalPositionDataSource {
 
 extension GlobalPositionDataSource: GlobalPositionDataSourceProtocol {
     func getGlobalPosition() throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        self.queryParams = nil
+        self.queryParams = ["forceRefresh": "true"]
         let result = performGetGlobalPosition()
         return result
     }
     
     func getGlobalPosition(_ parameters: GlobalPositionParameters) throws -> Result<GlobalPositionDTO, NetworkProviderError> {
-        self.queryParams = ["types": parameters.filterBy.rawValue]
+        self.queryParams = ["types": parameters.filterBy.rawValue, "forceRefresh": "true"]
         let result = performGetGlobalPosition()
         return result
     }

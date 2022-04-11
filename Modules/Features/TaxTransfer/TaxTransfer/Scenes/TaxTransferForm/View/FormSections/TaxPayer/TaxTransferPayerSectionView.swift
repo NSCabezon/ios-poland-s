@@ -67,7 +67,7 @@ private extension TaxTransferPayerSectionView {
         sectionContainer.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            sectionContainer.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            sectionContainer.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             sectionContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             sectionContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             sectionContainer.trailingAnchor.constraint(equalTo: trailingAnchor),

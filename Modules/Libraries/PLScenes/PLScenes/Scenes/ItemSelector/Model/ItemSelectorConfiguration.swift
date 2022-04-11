@@ -10,17 +10,20 @@ public struct ItemSelectorConfiguration<Item: SelectableItem> {
     public let isSearchEnabled: Bool
     public let sections: [ItemSelectorSection]
     public let selectedItem: Item?
+    public let shouldPopControllerAfterSelection: Bool
 
     public init(
         navigationTitle: String,
         isSearchEnabled: Bool,
         sections: [ItemSelectorSection],
-        selectedItem: Item?
+        selectedItem: Item?,
+        shouldPopControllerAfterSelection: Bool = true
     ) {
         self.navigationTitle = navigationTitle
         self.isSearchEnabled = isSearchEnabled
         self.sections = sections
         self.selectedItem = selectedItem
+        self.shouldPopControllerAfterSelection = shouldPopControllerAfterSelection
     }
     
     public struct ItemSelectorSection {
