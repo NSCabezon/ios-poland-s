@@ -11,5 +11,5 @@ public struct TopUpValuesDTO: Codable {
     public let type: String
     public let min: Int?
     public let max: Int?
-    public let values: [TopUpValueDTO]
+    public let values: [TopUpValueDTO]?
 }

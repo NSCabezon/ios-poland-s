@@ -7,6 +7,7 @@ import CoreFoundationLib
 protocol ZusTransferModuleViewProtocol: AnyObject,
                                         LoaderPresentable,
                                         ErrorPresentable {
+    func showEmptyAccountsDialog(title: LocalizedStylableText, description: LocalizedStylableText)
 }
 
 final class ZusTransferModuleViewController: UIViewController {
@@ -47,4 +48,16 @@ final class ZusTransferModuleViewController: UIViewController {
     }
 }
 
-extension ZusTransferModuleViewController: ZusTransferModuleViewProtocol {}
+extension ZusTransferModuleViewController: ZusTransferModuleViewProtocol {
+    func showEmptyAccountsDialog(title: LocalizedStylableText, description: LocalizedStylableText) {
+        InfoDialogBuilder(
+            title: title,
+            description: description,
+            image: PLAssets.image(named: "info_black") ?? UIImage()
+        ) { [weak self] in
+            self?.presenter.close()
+        }
+        .build()
+        .showIn(self)
+    }
+}

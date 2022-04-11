@@ -68,6 +68,7 @@ public enum NetworkProviderError: LocalizedError {
     case other
     case noConnection
     case unprocessableEntity
+    case maintenance
     
     public func getErrorBody<T: Codable>() -> T? {
         guard let body = self.getErrorBody() else {

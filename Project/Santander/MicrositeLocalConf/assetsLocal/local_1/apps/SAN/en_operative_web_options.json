@@ -1,5 +1,12 @@
 {
-    "accounts_options":[
+    "accounts_options": [
+        {
+            "id": "MAILBOX_MAIN",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/mailbox",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
         {
             "id": "ADD_BANKS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/ps-aggregator",
@@ -29,21 +36,21 @@
             "isFullScreen": true
         },
         {
-            "id":"ALERTS_NOTIFICATION",
+            "id": "ALERTS_24",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
             "isAvailable": true,
             "method": "GET",
             "isFullScreen": true
         },
         {
-            "id":"GENERATE_QR",
+            "id": "GENERATE_QR",
             "url": null,
             "isAvailable": false,
             "method": "GET",
             "isFullScreen": true
         },
         {
-            "id":"CREDIT_CARD_REPAYMENT",
+            "id": "CREDIT_CARD_REPAYMENT",
             "url": null,
             "isAvailable": false,
             "method": "GET",
@@ -57,7 +64,7 @@
             "isFullScreen": true
         },
         {
-            "id": "ACCOUNT_STATEMENT",
+            "id": "VIEW_STATEMENTS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
             "method": "GET",
@@ -86,7 +93,7 @@
         },
         {
             "id": "MEMBER_GET_MEMBER",
-            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mgm"
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mgm",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
@@ -104,94 +111,127 @@
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
+        },
+        {
+            "id": "MULTICURRENCY",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
-    "cards_options" : [
+
+    "cards_options": [
         {
             "id": "MODIFY_LIMITS",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_limits_types/{$VPAN}",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_limits_types/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
-            "id": "STATEMENT_HISTORY",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/multi/mailbox#/mailbox/threads/inbox;messageType=zestawienia",
+            "id": "VIEW_STATEMENTS",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/multi/mailbox#/mailbox/threads/inbox;messageType=zestawienia",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "USE_ABROAD",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_emv/{$VPAN}",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_emv/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "CUSTOMER_SERVICE",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "REPAYMENT",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/bbc#/app/bbc_info_slider/bbc.ratio",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/bbc#/app/bbc_info_slider/bbc.ratio",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "MANAGE_PIN",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_pin/{$VPAN}",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_pin/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "MULTICURRENCY",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard/{$VPAN}",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "CANCEL_CARD",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
-            "id": "CARD_ACTIVATION",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_activation/{$VPAN}",
+            "id": "ACTIVATE",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_activation/{$VPAN}",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "ATM_PACKAGE",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/free-withdrawal-atm/domestic",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/free-withdrawal-atm/domestic",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
-        }            
+        },
+        {
+            "id": "CARD_CREDIT_LIMIT_INCREASE",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer#/pages/product-details/increaseCreditCardLimit",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
     ],
-    "help_center_options" : [
+    "help_center_options": [
         {
             "id": "YOUR_AFFAIRS",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/customer-service",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         },
         {
             "id": "MAILBOX",
-            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/newMessage;fresh=true",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/newMessage;fresh=true",
             "isAvailable": true,
             "method": "POST",
             "isFullScreen": true
         }
+    ],
+    "insurance_options": [
+        {
+            "id": "PROTECTION_INSURANCE",
+            "url": "https://micrositeoneapp2.santanderbankpolska.pl/omni/oneapp{$INSURANCE_URL}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
+    ],
+    "send_money_options" : [
+       {
+          "id": "FEE_AND_CHARGES",
+          "url" : "https://www.santander.pl/przydatne-informacje/oplaty-i-prowizje",
+          "isAvailable": true,
+          "method": "POST",
+          "isFullScreen": true
+       }
     ]
 }

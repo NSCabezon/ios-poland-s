@@ -23,7 +23,7 @@ struct RecentRecipientsDataDTO: Codable {
 }
 
 extension RecentRecipientsDataDTO: TransferRepresentable {
-    var number: IBANRepresentable? {
+    var ibanRepresentable: IBANRepresentable? {
         guard let iban = self.accountNo else {
             return nil
         }

@@ -13,13 +13,18 @@ public final class ServicesLibrary {
     var bsanManagersProvider: PLManagersProviderProtocol
     private let bsanDataProvider: BSANDataProvider
     private let networkProvider: NetworkProvider
+    private let loansManagerAdapter: PLLoansManagerAdapterProtocol
+    private let cardManagerAdapter: PLCardManagerAdapterProtocol
     
     public init(bsanManagersProvider: PLManagersProviderProtocol,
                 bsanDataProvider: BSANDataProvider,
-                networkProvider: NetworkProvider) {
+                networkProvider: NetworkProvider,
+                loansManagerAdapter: PLLoansManagerAdapterProtocol, cardManagerAdapter: PLCardManagerAdapterProtocol) {
         self.bsanManagersProvider = bsanManagersProvider
         self.bsanDataProvider = bsanDataProvider
         self.networkProvider = networkProvider
+        self.loansManagerAdapter = loansManagerAdapter
+        self.cardManagerAdapter = cardManagerAdapter
     }
     
     public var transfersRepository: PLTransfersRepository {
@@ -31,7 +36,20 @@ public final class ServicesLibrary {
     }
     
     public var loanReactiveDataRepository: LoanReactiveRepository {
-        return LoanReactiveDataRepository(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        return LoanReactiveDataRepository(bsanDataProvider: bsanDataProvider,
+                                          networkProvider: networkProvider,
+                                          loansManager: loansManagerAdapter)
+    }
+    
+    public var onboardingDataRepository: OnboardingRepository {
+        return OnboardingDataRepository(customerManager: bsanManagersProvider.getCustomerManager(),
+                                        bsanDataProvider: bsanDataProvider)
+    }
+    
+    public var cardReactiveDataRepository: CardReactiveDataRepository {
+        return CardReactiveDataRepository(bsanDataProvider: bsanDataProvider,
+                                          networkProvider: networkProvider, cardManager: cardManagerAdapter)
+                                    
     }
 }
 

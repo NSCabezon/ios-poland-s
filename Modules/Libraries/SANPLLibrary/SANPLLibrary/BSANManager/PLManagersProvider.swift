@@ -3,6 +3,7 @@
 //  SanPLLibrary
 
 import Foundation
+import OpenCombine
 
 /// Note: Please add also extension method (at the bottom) that returns fatal error when adding new Manager
 public protocol PLManagersProviderProtocol {
@@ -26,9 +27,15 @@ public protocol PLManagersProviderProtocol {
     func getCardOperativesManager() -> PLCardOperativesManagerProtocol
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol
+    func getOperationsProductsManager() -> PLOperationsProductsManagerProtocol
     func getTaxTransferManager() -> PLTaxTransferManagerProtocol
     func getHistoryManager() -> PLHistoryManagerProtocol
     func getExpensesChartManager() -> PLExpensesChartManagerProtocol
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol
+}
+
+public protocol PLManagersProviderReactiveProtocol {
+    func getHistoryManager() -> AnyPublisher<PLHistoryManagerProtocol, Never>
 }
 
 public final class PLManagersProvider {
@@ -52,9 +59,11 @@ public final class PLManagersProvider {
     private let loanScheduleManager: PLLoanScheduleManager
     private let authorizationProcessorManager: PLAuthorizationProcessorManager
     private let phoneTopUpManager: PLPhoneTopUpManagerProtocol
+    private let operationsProductsManager: PLOperationsProductsManagerProtocol
     private let taxTransferManager: PLTaxTransferManagerProtocol
     private let historyManager: PLHistoryManagerProtocol
     private let expensesChartManager: PLExpensesChartManagerProtocol
+    private let splitPaymentManager: PLSplitPaymentManagerProtocol
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -87,9 +96,12 @@ public final class PLManagersProvider {
         self.loanScheduleManager = PLLoanScheduleManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.authorizationProcessorManager = PLAuthorizationProcessorManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.phoneTopUpManager = PLPhoneTopUpManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
+        self.operationsProductsManager = PLOperationsProductsManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.taxTransferManager = PLTaxTransferManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.historyManager = PLHistoryManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.expensesChartManager = PLExpensesChartManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.splitPaymentManager = PLSplitPaymentManager(bsanDataProvider: bsanDataProvider,
+                                                         networkProvider: networkProvider)
     }
 }
 
@@ -176,6 +188,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
         self.phoneTopUpManager
     }
+
+    public func getOperationsProductsManager() -> PLOperationsProductsManagerProtocol {
+        self.operationsProductsManager
+    }
     
     public func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
         self.taxTransferManager
@@ -187,6 +203,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
         self.expensesChartManager
+    }
+    
+    public func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
+        self.splitPaymentManager
     }
 }
 
@@ -262,5 +282,15 @@ public extension PLManagersProviderProtocol {
     
     func getTaxTransferManager() -> PLTaxTransferManagerProtocol {
         fatalError("Missing manager implementation")
+    }
+    
+    func getOperationsProductsManager() -> PLOperationsProductsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+}
+
+extension PLManagersProvider: PLManagersProviderReactiveProtocol {
+    public func getHistoryManager() -> AnyPublisher<PLHistoryManagerProtocol, Never> {
+        return Just(historyManager).eraseToAnyPublisher()
     }
 }

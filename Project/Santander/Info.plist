@@ -21,9 +21,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.4.13</string>
+	<string>0.13.9</string>
 	<key>CFBundleVersion</key>
-	<string>4013</string>
+	<string>13009</string>
 	<key>DEFAULT_DEMO_USER</key>
 	<string>$(DEFAULT_DEMO_USER)</string>
 	<key>DEFAULT_MAGIC</key>
@@ -38,8 +38,6 @@
 	<string>$(DYNATRACE_BEACON_URL)</string>
 	<key>DTXUserOptIn</key>
 	<false/>
-	<key>EMMA_API_KEY</key>
-	<string>$(EMMA_API_KEY)</string>
 	<key>ENVIRONMENTS_AVAILABLE</key>
 	<string>$(ENVIRONMENTS_AVAILABLE)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

@@ -5,10 +5,13 @@
 //  Created by 185167 on 06/12/2021.
 //
 
+import PLScenes
+
 struct TaxTransferFormViewModel {
     let account: Selectable<AccountViewModel>
     let taxPayer: Selectable<TaxPayerViewModel>
     let taxAuthority: Selectable<TaxAuthorityViewModel>
+    let billingPeriod: Selectable<TaxBillingPeriodViewModel>
     let sendAmount: AmountViewModel
     let obligationIdentifier: String
 }
@@ -23,7 +26,7 @@ extension TaxTransferFormViewModel {
         let isEditButtonEnabled: Bool
     }
     
-    struct TaxPayerViewModel {
+    struct TaxPayerViewModel: SelectableItem {
         enum TaxPayerSecondaryIdentifier {
             case available(id: String)
             case notAvailable
@@ -31,18 +34,51 @@ extension TaxTransferFormViewModel {
         
         let taxPayer: TaxPayer
         let taxPayerSecondaryIdentifier: TaxPayerSecondaryIdentifier
-        let selectedInfo: SelectedTaxPayerInfo
+        let selectedInfo: SelectedTaxPayerInfo?
         
+        var identifier: String {
+            return String(taxPayer.identifier)
+        }
+
+        var name: String {
+            return taxPayer.name ?? ""
+        }
+
         var hasDifferentTaxIdentifiers: Bool {
-            guard let identifier = taxPayer.taxIdentifier else {
+            guard let identifier = taxPayer.taxIdentifier, !identifier.isEmpty else {
                 return false
             }
             return identifier != taxPayer.secondaryTaxIdentifierNumber
         }
+        
+        static func == (lhs: TaxTransferFormViewModel.TaxPayerViewModel, rhs: TaxTransferFormViewModel.TaxPayerViewModel) -> Bool {
+            return lhs.identifier == rhs.identifier && lhs.name == rhs.name
+        }
+    }
+    
+    struct TaxBillingPeriodViewModel: SelectableItem {
+        let periodType: TaxTransferBillingPeriodType
+        let year: String
+        let periodNumber: Int?
+        
+        var identifier: String {
+            return UUID().uuidString
+        }
+
+        var name: String {
+            return periodType.name
+        }
+        
+        static func == (lhs: TaxTransferFormViewModel.TaxBillingPeriodViewModel,
+                        rhs: TaxTransferFormViewModel.TaxBillingPeriodViewModel) -> Bool {
+            return lhs.identifier == rhs.identifier && lhs.name == rhs.name
+        }
     }
     
     struct TaxAuthorityViewModel {
-        // TODO: Add TaxAuthorityViewModel as associated value in TAP-2517
+        let taxAuthorityName: String
+        let taxFormSymbol: String
+        let destinationAccountNumber: String
     }
     
     struct AmountViewModel {

@@ -9,7 +9,7 @@ import TransferOperatives
 import CoreFoundationLib
 import SANPLLibrary
 
-final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationStepUseCaseInput, Void, StringErrorOutput> {
+final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationStepUseCaseInput, SendMoneyTransferSummaryState, StringErrorOutput> {
     
     private let dependenciesResolver: DependenciesResolver
     
@@ -17,9 +17,9 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
         self.dependenciesResolver = dependenciesResolver
     }
     
-    override func executeUseCase(requestValues: SendMoneyConfirmationStepUseCaseInput) throws -> UseCaseResponse<Void, StringErrorOutput> {
-        let transferType = self.dependenciesResolver.resolve(forOptionalType: SendMoneyModifierProtocol.self)?.transferTypeFor(onePayType: requestValues.type, subtype: requestValues.subType?.serviceString ?? "")
-        let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyName, amount: requestValues.amount.value)
+    override func executeUseCase(requestValues: SendMoneyConfirmationStepUseCaseInput) throws -> UseCaseResponse<SendMoneyTransferSummaryState, StringErrorOutput> {
+        let transferType =  requestValues.subType?.serviceString ?? ""
+        let amountData = ItAmountDataParameters(currency: requestValues.amount.currencyRepresentable?.currencyCode, amount: requestValues.amount.value)
         guard let originAccount = requestValues.originAccount as? PolandAccountRepresentable,
               let ibanRepresentable = requestValues.originAccount.ibanRepresentable else { return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: nil))) }
         let customerAddressData = CustomerAddressDataParameters(customerName: requestValues.name,
@@ -60,7 +60,7 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
             if let state = confirmationTrasferDTO.state, let confirmationResult = ConfirmationResultType(rawValue: state) {
                 switch confirmationResult {
                 case .accepted:
-                    return .ok()
+                    return .ok(.success())
                 default:
                     return .error(StringErrorOutput(nil))
                 }
@@ -68,7 +68,12 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
                 return .error(StringErrorOutput(nil))
             }
         case .failure(let error):
-            return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
+            guard let errorDTO: PLErrorDTO = error.getErrorBody(),
+                  let parsedError = errorMessages[errorDTO.errorCode2]
+            else {
+                return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
+            }
+            return .ok(.error(title: parsedError.0, subtitle: parsedError.1))
         }
     }
 }
@@ -105,3 +110,33 @@ enum ConfirmationResultType: String {
 }
 
 extension PLSendMoneyConfirmationStepUseCase: SendMoneyConfirmationStepUseCaseProtocol { }
+
+// MARK: - Service messages errors
+
+private extension PLSendMoneyConfirmationStepUseCase {
+    
+    var errorMessages: [Int: (String, String)] {
+        var errorArray: [Int: (String, String)] = [:]
+        let reLogCodes = [2, 3, 4, 5, 11, 13, 17, 21, 30, 79, 130, 170, 171, 172, 173, 174]
+        reLogCodes.forEach {
+            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_reLogApplication")
+        }
+        let passwordExpiredCodes = [7, 8]
+        passwordExpiredCodes.forEach {
+            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_passwordExpired")
+        }
+        let exchangeCodes = [14, 15, 23, 100]
+        exchangeCodes.forEach {
+            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_currencyExchangeRates")
+        }
+        errorArray[41] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_checkSenderRecipient")
+        errorArray[42] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_minimumTransferAmount")
+        errorArray[43] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_TransferTooLarge")
+        errorArray[99] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_transferOnlyOurBranch")
+        let blockedCodes = [251, 252]
+        blockedCodes.forEach {
+            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_blockedAccessingTransactionService")
+        }
+        return errorArray
+    }
+}

@@ -5,23 +5,18 @@
 //  Created by Cristobal Ramos Laina on 19/1/22.
 //
 
-import Foundation
-import Transfer
 import CoreFoundationLib
 import CoreDomain
+import Transfer
 import UI
 
 extension ModuleDependencies: TransferExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> TransfersRepository {
-        oldResolver.resolve()
-    }
-    
-    func resolve() -> DependenciesInjector {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> GetSendMoneyActionsUseCase {
@@ -29,14 +24,10 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     }
     
     func resolveCustomSendMoneyActionCoordinator() -> BindableCoordinator {
-        return PLOneTransferHomeActionsCoordinator()
+        return PLOneTransferHomeActionsCoordinator(transferExternalResolver: self)
     }
     
-    func resolve() -> AppRepositoryProtocol {
-        return oldResolver.resolve()
-    }
-    
-    func resolve() -> GlobalPositionRepresentable {
-        return oldResolver.resolve()
+    func resolve() -> OneTransferHomeVisibilityModifier {
+        return PLOneTransferHomeVisibilityModifier()
     }
 }

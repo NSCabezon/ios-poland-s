@@ -8,18 +8,20 @@
 import Foundation
 
 public struct RegisterDeviceParameters: Encodable {
-    public let transportKey, deviceParameters, deviceTime, certificate, appId: String
-    public let pushDefinition: PushDefinition
-    public let platform: Platform
-    public let applicationLanguage: String
+    let transportKey, deviceParameters, deviceTime, certificate, appId: String
+    let pushDefinition: PushDefinition
+    let platform: Platform
+    let applicationLanguage: String
+    
     
     public init(transportKey: String,
                 deviceParameters: String,
                 deviceTime: String,
                 certificate: String,
                 appId: String,
-                pushDefinition: PushDefinition = PushDefinition(),
-                platform: Platform = Platform(), applicationLanguage: String = NSLocale.preferredLanguages[0]) {
+                pushDefinition: PushDefinition,
+                platform: Platform,
+                applicationLanguage: String) {
         self.transportKey = transportKey
         self.deviceParameters = deviceParameters
         self.deviceTime = deviceTime
@@ -31,10 +33,11 @@ public struct RegisterDeviceParameters: Encodable {
     }
 }
 
+
 public struct PushDefinition: Encodable {
     public let categories: [String]
     public let status: String
-    public init(categories: [String] = ["INFORMATION", "BLIK"], status: String = "ON") {
+    public init(categories: [String], status: String) {
         self.categories = categories
         self.status = status
     }
@@ -42,10 +45,10 @@ public struct PushDefinition: Encodable {
 
 public struct Platform: Encodable {
     public let name, osVersion: String
-    public init(name: String = "IOS", osVersion: String = UIDevice.current.systemVersion) {
+    
+    public init(name: String, osVersion: String) {
         self.name = name
         self.osVersion = osVersion
     }
     
 }
-

@@ -5,15 +5,22 @@
 //  Created by Carlos Monfort Gómez on 24/12/21.
 //
 
-import Foundation
-import UI
 import CoreFoundationLib
+import UI
+import BLIK
+import Transfer
+import PhoneTopUp
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?
     var onFinish: (() -> Void)?
     var childCoordinators: [Coordinator] = []
     var dataBinding: DataBinding = DataBindingObject()
+    let oldResolver: DependenciesResolver
+    
+    init(transferExternalResolver: TransferExternalDependenciesResolver) {
+        self.oldResolver = transferExternalResolver.resolve()
+    }
     
     func start() {
         guard let type: String = dataBinding.get(),
@@ -21,21 +28,22 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         else { return }
         switch actionType {
         case .blik:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .anotherBank:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .creditCard:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .transferTax:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .transferZus:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .fxExchange:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .scanPay:
-            ToastCoordinator().start()
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .topUpPhone:
-            ToastCoordinator().start()
+            let coordinator = oldResolver.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
+            coordinator.start()
         }
     }
 }

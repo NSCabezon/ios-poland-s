@@ -43,25 +43,28 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
     }
     
     private func accountItemViewModel(from model: TopUpModel) -> OperativeSummaryStandardBodyItemViewModel {
+        let maskedAccountNumber = "*" + (model.account.number.substring(ofLast: 4) ?? "")
         return OperativeSummaryStandardBodyItemViewModel(
             title: localized("pl_topup_label_summaryAccountSender"),
             subTitle: model.account.name,
-            info: "*" + (model.account.number.substring(ofLast: 4) ?? "")
+            info: attributedInfoString(maskedAccountNumber)
         )
     }
     
     private func recipientItemViewModel(from model: TopUpModel) -> OperativeSummaryStandardBodyItemViewModel {
+        let phoneNumberFormatter = PhoneNumberFormatter()
+        let formattedRecipientNumber = phoneNumberFormatter.formatPhoneNumberText(model.recipientNumber)
         if let recipientName = model.recipientName {
             return OperativeSummaryStandardBodyItemViewModel(
                 title: localized("pl_topup_label_summaryRecip"),
                 subTitle: recipientName,
-                info: model.recipientNumber
+                info: attributedInfoString(formattedRecipientNumber)
             )
         }
         
         return OperativeSummaryStandardBodyItemViewModel(
             title: localized("pl_topup_label_summaryRecip"),
-            subTitle: model.recipientNumber
+            subTitle: formattedRecipientNumber
         )
     }
     
@@ -76,7 +79,7 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
     
     private func amountValueString(withAmountSize size: CGFloat, model: TopUpModel) -> NSAttributedString {
         return PLAmountFormatter.amountString(
-            amount: model.amount,
+            amount: Decimal(model.amount),
             currency: .złoty,
             withAmountSize: size
         )
@@ -87,5 +90,10 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
             title: localized("pl_topup_label_transType"),
             subTitle: localized("pl_topup_label_transTypeText")
         )
+    }
+    
+    private func attributedInfoString(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.santander(family: .micro, type: .regular, size: 14)]
+        return NSAttributedString(string: string, attributes: attributes)
     }
 }

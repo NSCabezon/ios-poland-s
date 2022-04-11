@@ -47,6 +47,18 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
     // MARK: Dependencies
     
     private func setUpDependencies() {
+        self.dependenciesEngine.register(for: PaymentAmountCellViewModelMapping.self) { _ in
+            return PaymentAmountCellViewModelMapper()
+        }
+
+        self.dependenciesEngine.register(for: CustomTopUpAmountValidating.self) { _ in
+            return CustomTopUpAmountValidator()
+        }
+        
+        self.dependenciesEngine.register(for: PartialPhoneNumberValidating.self) { _ in
+            return PartialPhoneNumberValidator()
+        }
+
         self.dependenciesEngine.register(for: ContactsPermissionHelperProtocol.self) { _ in
             return ContactsPermissionHelper()
         }
@@ -59,8 +71,18 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return ContactMapper()
         }
         
+        self.dependenciesEngine.register(for: TopUpFormValidating.self) { resolver in
+            let customAmountValidator = resolver.resolve(for: CustomTopUpAmountValidating.self)
+            let phoneNumberValidator = resolver.resolve(for: PartialPhoneNumberValidating.self)
+            return TopUpFormValidator(customAmountValidator: customAmountValidator, numberValidator: phoneNumberValidator)
+        }
+        
         self.dependenciesEngine.register(for: GetContactsUseCaseProtocol.self) { resolver in
             return GetContactsUseCase(contactStore: CNContactStore(), contactMapper: resolver.resolve(for: ContactMapping.self))
+        }
+        
+        self.dependenciesEngine.register(for: CheckPhoneUseCaseProtocol.self) { resolver in
+            return CheckPhoneUseCase(dependenciesResolver: resolver)
         }
         
         self.dependenciesEngine.register(for: PhoneTopUpFormCoordinatorProtocol.self) { _ in
@@ -70,9 +92,9 @@ final class PhoneTopUpFormCoordinator: ModuleCoordinator {
             return PhoneTopUpFormPresenter(dependenciesResolver: resolver,
                                            accounts: formData.accounts,
                                            operators: formData.operators,
-                                           gsmOperators: formData.gsmOperators,
                                            internetContacts: formData.internetContacts,
-                                           settings: formData.settings)
+                                           settings: formData.settings,
+                                           topUpAccount: formData.topUpAccount)
         }
         self.dependenciesEngine.register(for: PhoneTopUpFormViewController.self) { [weak self] resolver in
             let presenter = resolver.resolve(for: PhoneTopUpFormPresenterProtocol.self)
@@ -171,7 +193,6 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
                                                                         delegate: self,
                                                                         navigationController: navigationController,
                                                                         operators: formData.operators,
-                                                                        gsmOperators: formData.gsmOperators,
                                                                         selectedOperatorId: operatorId)
         operatorSelectionCoordinator.start()
     }
@@ -204,7 +225,7 @@ extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
 }
 
 extension PhoneTopUpFormCoordinator: OperatorSelectorDelegate {
-    func didSelectOperator(_ gsmOperator: GSMOperator) {
+    func didSelectOperator(_ gsmOperator: Operator) {
         navigationController?.popToViewController(phoneTopUpController, animated: true)
         operatorSelectorDelegate?.didSelectOperator(gsmOperator)
     }

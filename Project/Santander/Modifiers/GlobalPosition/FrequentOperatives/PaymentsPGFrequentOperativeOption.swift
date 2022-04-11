@@ -13,14 +13,14 @@ final class PaymentsPGFrequentOperativeOption {
     let trackName: String? = "enviar_dinero"
     let rawValue: String = "paymentsPoland"
     let accessibilityIdentifier: String? = PLAccessibilityPGFrequentOperatives.btnPayments.rawValue
-    private let dependenciesResolver: DependenciesResolver
-    private let coreDependenciesResolver: RetailLegacyExternalDependenciesResolver
+    private let legacyDependenciesResolver: DependenciesResolver
+    private let dependencies: ModuleDependencies
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    init(dependenciesResolver: DependenciesResolver, coreDependenciesResolver: RetailLegacyExternalDependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
-        self.coreDependenciesResolver = coreDependenciesResolver
+    init(dependencies: ModuleDependencies) {
+        self.dependencies = dependencies
+        self.legacyDependenciesResolver = dependencies.resolve()
     }
 }
 
@@ -28,12 +28,12 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
     func getAction() -> PGFrequentOperativeOptionAction {
         return .custom { [weak self] in
             guard let self = self else { return }
-            self.useCase
+            self.checkNewSendMoneyHomeIsEnabled
                 .fetchEnabled()
                 .receive(on: Schedulers.main)
                 .sink { [unowned self] isEnabled in
                     if isEnabled {
-                        self.coreDependenciesResolver.oneTransferHomeCoordinator().start()
+                        self.dependencies.oneTransferHomeCoordinator().start()
                     } else {
                         self.sendMoneyCoordinator.start()
                     }
@@ -65,11 +65,11 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
 }
 
 private extension PaymentsPGFrequentOperativeOption {
-    var useCase: CheckNewSendMoneyHomeEnabledUseCase {
-        return dependenciesResolver.resolve()
+    var checkNewSendMoneyHomeIsEnabled: CheckNewSendMoneyHomeEnabledUseCase {
+        return dependencies.resolve()
     }
     
     var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {
-        return dependenciesResolver.resolve()
+        return legacyDependenciesResolver.resolve()
     }
 }

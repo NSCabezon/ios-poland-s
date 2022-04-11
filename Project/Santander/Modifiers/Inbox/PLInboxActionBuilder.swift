@@ -7,6 +7,8 @@ import Foundation
 import Inbox
 import CoreFoundationLib
 import UI
+import PLCommons
+import PLCommonOperatives
 
 final class PLInboxActionBuilder {
     private var inboxActions: [InboxActionViewModel] = []
@@ -22,7 +24,7 @@ final class PLInboxActionBuilder {
 extension PLInboxActionBuilder: InboxActionBuilderProtocol {
     func addInboxActionViewModel(offerOnLine: OfferEntity?) -> [InboxActionViewModel] {
         self.addOnlineInbox(offerOnLine)
-        self.addInboxSetup()
+        self.addInboxSetup(offerOnLine)
         return self.inboxActions
     }
 
@@ -50,7 +52,7 @@ private extension PLInboxActionBuilder {
             extras: inboxActionExtras,
             accessibilityIdentifier: AccesibilityInbox.messages,
             action: { _ in
-                self.showToast()
+                self.goToWebview(identifier: .mailboxMain)
             },
             offerAction: isWebViewConfiguration ? nil : self.delegate?.didSelectOffer
         )
@@ -71,16 +73,18 @@ private extension PLInboxActionBuilder {
         self.inboxActions.append(viewModel)
     }
 
-    private func addInboxSetup() {
+    private func addInboxSetup(_ offer: OfferEntity?) {
         let viewModel = InboxActionViewModel(
             imageName: "icnNotification",
             title: localized("mailbox_title_notification"),
             description: localized("mailbox_text_notification"),
             notificationAlert: localized("mailbox_link_settingAlert"),
-            extras: InboxActionExtras(action: ()),
+            extras: InboxActionExtras(offer: offer),
             accessibilityIdentifier: AccesibilityInbox.notifications,
-            action: { _ in
-                self.showToast()
+            action: { [weak self] _ in
+                self?.delegate?.gotoInboxNotification(nil)
+            }, offerAction: { [weak self] _ in
+                self?.goToWebview(identifier: .alerts24)
             }
         )
         self.inboxActions.append(viewModel)
@@ -102,5 +106,34 @@ private extension PLInboxActionBuilder {
 
     private func showToast() {
         Toast.show(localized("generic_alert_notAvailableOperation"))
+    }
+    
+    private func goToWebview(identifier: PLAccountOperativeIdentifier) {
+        let repository = resolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+
+        guard let options = repository.get()?.accountsOptions,
+              let option = options.first(where: { $0.id == identifier.rawValue }),
+              option.isAvailable ?? true,
+              let url = option.url,
+              let method = option.method,
+              let methodType = HTTPMethodType(rawValue: method)
+        else {
+            Toast.show(localized("generic_alert_notAvailableOperation"))
+            return
+        }
+
+        let input = GetBasePLWebConfigurationUseCaseInput(initialURL: url, method: methodType, isFullScreenEnabled: option.isFullScreen)
+        let webViewCoordinator = resolver.resolve(for: PLWebViewCoordinatorDelegate.self)
+        let useCase = resolver.resolve(for: GetBasePLWebConfigurationUseCaseProtocol.self)
+        
+        Scenario(useCase: useCase, input: input)
+            .execute(on: resolver.resolve())
+            .onSuccess { result in
+                let handler = PLWebviewCustomLinkHandler(configuration: result.configuration)
+                webViewCoordinator.showWebView(handler: handler)
+            }
+            .onError { error in
+                Toast.show(error.getErrorDesc() ?? "")
+            }
     }
 }

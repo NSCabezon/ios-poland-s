@@ -10,7 +10,7 @@ import SANLegacyLibrary
 
 // MARK: - CardTransactionsDataSourceProtocol Protocol
 protocol CardTransactionsDataSourceProtocol {
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) -> Result<CardTransactionListDTO, NetworkProviderError>
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String?, startDate: String?, endDate: String?, fromAmount: Decimal?, toAmount: Decimal?, movementType: String?, cardOperationType: String?) throws -> Result<CardTransactionListDTO, NetworkProviderError>
     func changeAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> Result<CardChangeAliasDTO, NetworkProviderError>
 }
 
@@ -60,7 +60,7 @@ extension CardTransactionsDataSource: CardTransactionsDataSourceProtocol {
         return sessionData.cardTransactionsPagination[cardId]
     }
     
-    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String? = nil, endDate: String? = nil, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil) -> Result<CardTransactionListDTO, NetworkProviderError> {
+    func loadCardTransactions(cardId: String, pagination: TransactionsLinksDTO?, searchTerm: String? = nil, startDate: String? = nil, endDate: String? = nil, fromAmount: Decimal? = nil, toAmount: Decimal? = nil, movementType: String? = nil, cardOperationType: String? = nil) throws -> Result<CardTransactionListDTO, NetworkProviderError> {
         guard let baseUrl = getBaseUrl() else { return .failure(NetworkProviderError.other) }
         let absoluteUrl = baseUrl + basePath + serviceNamePath
         
@@ -68,7 +68,7 @@ extension CardTransactionsDataSource: CardTransactionsDataSourceProtocol {
         // Their functionality is to filter between credit (incomes) and debit operations (expenses)
         // cardOperationType is hidden by default in Poland
         
-        let parameters = CardTransactionsParameters(cardNo: cardId, firstOper: "25", text: searchTerm, startDate: startDate, endDate: endDate, amountFrom: fromAmount, amountTo: toAmount, debitFlag: movementType, pagination: pagination)
+        let parameters = CardTransactionsParameters(cardNo: cardId, firstOper: "100", text: searchTerm, startDate: startDate, endDate: endDate, amountFrom: fromAmount, amountTo: toAmount, debitFlag: movementType, pagination: pagination)
         
         let serviceName = "\(CardTransactionsServiceType.cardTransactions.rawValue)"
         

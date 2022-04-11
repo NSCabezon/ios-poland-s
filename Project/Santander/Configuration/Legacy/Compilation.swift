@@ -109,13 +109,13 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
         #elseif PRE
         publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES", "https://serverftp.ciber-es.com/one_app/pl/files_pre/", false))
         #elseif UAT
-        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt2.cdn.santanderbankpolska.pl/oneapp/rose/", false))
         #elseif REG
-        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt4.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt4.cdn.santanderbankpolska.pl/oneapp/rose/", false))
         #elseif PREPROD
-        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://zt1.cdn.santanderbankpolska.pl/oneapp/rose/", false))
         #elseif PRO
-        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://cdn.santanderbankpolska.pl/oneapp/scarlet/", false))
+        publicFilesEnvironments.append(PublicFilesEnvironmentDTO("FILES_PL", "https://cdn.santanderbankpolska.pl/oneapp/rose/", false))
         #endif
         
         return publicFilesEnvironments

@@ -243,27 +243,18 @@ platform :ios do
     certificates_release({version: "#{major}.#{minor}"})
   end
   
-  desc "Test selected example apps"
+  desc "Test all"
   lane :test do |options|
-    TEST_EXAMPLE_APPS_CONFIGURATION.each do |app, configuration|
-      UI.message "Passing #{app} tests"
-      path = "#{configuration[:path]}"
-      cocoapods(podfile: "#{path}/Podfile")
-      begin
+      UI.message "Passing tests"
+      cocoapods()
       run_tests(
-        workspace: "#{path}/#{configuration[:workspace]}",
-        scheme: configuration[:scheme],
+        workspace: "Santander.xcworkspace",
+        scheme: "Dev",
         derived_data_path: "~/derived_data",
         build_for_testing: false,
         output_style: "basic",
-        device: configuration[:device],
-        output_directory: Dir.pwd + "/test_output/" + app,
         suppress_xcode_output: options[:suppress_xcode_output]
-        )
-      rescue => ex
-        UI.error("Something went wrong: #{ex}")
-      end
-    end
+    )
   end
 
   desc 'Updating pods'
@@ -393,7 +384,12 @@ end
     UI.message("Current version " + versionName)
     Dir.chdir("..") do
       major, minor, patch = versionName.match(/(\d*)\.(\d*)\.(\d*)/).captures
-      branch = git_branch == "master" ? "release" : "dev"
+      branch = "dev"
+      if git_branch == "master"
+        branch = "master"
+      elsif git_branch.include? "release"
+        branch = "release"
+      end
       tag = "#{branch}/#{major}.#{minor}/#{versionName}"
       if !git_tag_exists(tag: tag)
         UI.message("NOT Found it 🚀 tag " + tag)
@@ -443,6 +439,7 @@ end
   end
 
   private_lane :update_xcschemes do
+    puts "CURRENT DIR: " + Dir.pwd
     UI.message "Start lane update xcshemes"
     project_path = "../Santander.xcodeproj"
     xcConfigFilesPath = "../Santander/Configuration/"

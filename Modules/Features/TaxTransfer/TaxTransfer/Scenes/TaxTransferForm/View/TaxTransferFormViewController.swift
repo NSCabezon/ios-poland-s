@@ -55,6 +55,10 @@ extension TaxTransferFormViewController: TaxTransferFormView {
                 self?.presenter.didTapTaxPayer()
             }
             
+            self.formView.configureTaxBillingPeriodSelector(with: viewModel.billingPeriod) { [weak self] in
+                self?.presenter.didTapBillingPeriod()
+            }
+            
             self.formView.configureTaxAuthoritySelector(with: viewModel.taxAuthority) { [weak self] in
                 self?.presenter.didTapTaxAuthority()
             }
@@ -140,7 +144,7 @@ private extension TaxTransferFormViewController {
     }
     
     @objc func back() {
-         presenter.didTapBack()
+        presenter.didTapBack()
     }
 }
 

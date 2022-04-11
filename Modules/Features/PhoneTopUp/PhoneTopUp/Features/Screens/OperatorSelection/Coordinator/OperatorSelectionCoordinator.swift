@@ -11,11 +11,11 @@ import UI
 
 protocol OperatorSelectionCoordinatorProtocol: AnyObject {
     func back()
-    func didSelectOperator(_ gsmOperator: GSMOperator)
+    func didSelectOperator(_ gsmOperator: Operator)
 }
 
 protocol OperatorSelectorDelegate: AnyObject {
-    func didSelectOperator(_ gsmOperator: GSMOperator)
+    func didSelectOperator(_ gsmOperator: Operator)
 }
 
 final class OperatorSelectionCoordinator: ModuleCoordinator {
@@ -32,17 +32,16 @@ final class OperatorSelectionCoordinator: ModuleCoordinator {
                 delegate: OperatorSelectorDelegate?,
                 navigationController: UINavigationController?,
                 operators: [Operator],
-                gsmOperators: [GSMOperator],
                 selectedOperatorId: Int?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.delegate = delegate
-        self.setUpDependencies(operators: operators, gsmOperators: gsmOperators, selectedOperatorId: selectedOperatorId)
+        self.setUpDependencies(operators: operators, selectedOperatorId: selectedOperatorId)
     }
     
     // MARK: Dependencies
     
-    private func setUpDependencies(operators: [Operator], gsmOperators: [GSMOperator], selectedOperatorId: Int?) {
+    private func setUpDependencies(operators: [Operator], selectedOperatorId: Int?) {
 
         dependenciesEngine.register(for: OperatorSelectionCoordinatorProtocol.self) { _ in
             return self
@@ -51,7 +50,6 @@ final class OperatorSelectionCoordinator: ModuleCoordinator {
         dependenciesEngine.register(for: OperatorSelectionPresenterProtocol.self) { resolver in
             return OperatorSelectionPresenter(dependenciesResolver: resolver,
                                               operators: operators,
-                                              gsmOperators: gsmOperators,
                                               selectedOperatorId: selectedOperatorId)
         }
         
@@ -75,7 +73,7 @@ extension OperatorSelectionCoordinator: OperatorSelectionCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    func didSelectOperator(_ gsmOperator: GSMOperator) {
+    func didSelectOperator(_ gsmOperator: Operator) {
         delegate?.didSelectOperator(gsmOperator)
     }
 }

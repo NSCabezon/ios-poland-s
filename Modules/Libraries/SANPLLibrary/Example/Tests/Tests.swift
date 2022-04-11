@@ -19,6 +19,10 @@ class Tests: XCTestCase {
     public var bsanDataProvider: SANPLLibrary.BSANDataProvider {
         return SANPLLibrary.BSANDataProvider(dataRepository: self.dataRepository)
     }
+    
+    public var managersProvider: PLManagersProviderProtocol {
+        return self.dependencies.resolve()
+    }
 
     public var demoInterpreter: DemoUserInterpreter {
         return DemoUserInterpreter(

@@ -75,8 +75,13 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         }
     }
     
-    func test_goToCharityTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
-        SUT.goToZusTransfer()
+    func test_goToZusTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
+        SUT.viewDidLoad()
+        let viewModel = view.operativeSummaryStandardFooterItemViewModels?.first {
+            $0.title == "generic_button_anotherPayment"
+        }
+        XCTAssertNotNil(viewModel)
+        viewModel?.action()        
         TestHelper.delay {
             XCTAssertTrue(self.coordinator?.goToMakeAnotherPaymentCalled == true)
         }

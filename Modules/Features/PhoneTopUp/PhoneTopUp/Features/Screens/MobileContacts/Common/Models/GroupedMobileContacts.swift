@@ -8,4 +8,9 @@
 import Foundation
 import PLCommons
 
-typealias GroupedMobileContacts = [(groupingCharacter: Character, contacts: [MobileContact])]
+typealias GroupedMobileContacts = [GroupedMobileContactsSection]
+
+struct GroupedMobileContactsSection: Equatable {
+    let groupingCharacter: Character
+    let contacts: [MobileContact]
+}

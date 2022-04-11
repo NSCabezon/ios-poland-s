@@ -13,7 +13,7 @@ struct TransfersDataRepository: PLTransfersRepository {
 
     let bsanTransferManager: PLTransfersManagerProtocol
     
-    func getAccountForDebit() throws -> Result<[AccountRepresentable], Error> {
+    func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
         let response = try bsanTransferManager.getAccountsForDebit()
         switch response {
         case .success(let accounts):
@@ -23,10 +23,30 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
+        let response = try bsanTransferManager.getAccountsForCredit()
+        switch response {
+        case .success(let accounts):
+            return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        let response = try bsanTransferManager.sendConfirmation(input)
+        switch response {
+        case .success(let confirmationTransferDTO):
+            return .success(confirmationTransferDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
         let iban = input.destinationAccount
         let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban
-        let parameters = CheckTransactionParameters(customerProfile: "CEKE_3", transactionAmount: input.transactionAmount, hasSplitPayment: false)
+        let parameters = CheckTransactionParameters(customerProfile: "SAN_PL", transactionAmount: input.transactionAmount, hasSplitPayment: false)
         let response = try bsanTransferManager.checkTransaction(parameters: parameters, accountReceiver: ibanFormatted)
         switch response {
         case .success(let transactionAvailability):
@@ -127,6 +147,17 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
+    func getAllTransfersReactive(accounts: [AccountRepresentable]?) -> AnyPublisher<[TransferRepresentable], Error> {
+        return Future { promise in
+            do {
+                promise(try getAllTransfers(accounts: accounts))
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     func getTransferDetail(transfer: TransferRepresentable) throws -> Result<TransferRepresentable, Error> {
         return .success(transfer)
     }
@@ -155,7 +186,7 @@ struct TransfersDataRepository: PLTransfersRepository {
             .eraseToAnyPublisher()
     }
     
-    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, Error> {
+    func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
         let response = try bsanTransferManager.getChallenge(parameters: parameters)
         switch response {
         case .success(let transfers):
@@ -173,5 +204,22 @@ struct TransfersDataRepository: PLTransfersRepository {
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+        Future { promise in
+            do {
+                let result = try self.bsanTransferManager.getExchangeRates()
+                switch result {
+                case .success(let response):
+                    promise(.success(response.exchangeRates))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }

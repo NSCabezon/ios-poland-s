@@ -1,6 +1,6 @@
 //
 //  ItemSelectorCell.swift
-//  PLUI
+//  PLScenes
 //
 //  Created by 185167 on 04/02/2022.
 //
@@ -64,6 +64,7 @@ final class ItemSelectorCell: UITableViewCell {
             
             titleLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
             
             checkImageView.centerXAnchor.constraint(equalTo: container.trailingAnchor),
             checkImageView.centerYAnchor.constraint(equalTo: container.topAnchor),

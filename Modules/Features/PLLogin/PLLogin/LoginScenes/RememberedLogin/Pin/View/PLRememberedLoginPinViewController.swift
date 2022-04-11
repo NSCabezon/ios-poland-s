@@ -142,6 +142,7 @@ private extension PLRememberedLoginPinViewController {
         sanIconImageView?.image = Assets.image(named: "logoSanLogin")
         backgroundImageView.image = TimeImageAndGreetingViewModel.shared.getBackground()
         backgroundImageView.contentMode = .scaleAspectFill
+        changeUserButton.isHidden = true
     }
     
     func setupLabels() {
@@ -258,12 +259,12 @@ extension PLRememberedLoginPinViewController: NumberPadViewDelegate {
     
     func didTapOnOK() {
         guard let pin = pinTextField.text else { return }
-        presenter.doLogin(with: .pin(value: pin))
+        presenter.tryToLogin(with: .pin(value: pin))
     }
 }
 
 extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewControllerProtocol {
-
+    
     func didUpdateEnvironments() {
     }
     
@@ -326,5 +327,11 @@ extension PLRememberedLoginPinViewController: PLRememberedLoginPinViewController
                 PLLoginCommonDialogs.presentGenericDialogWithText(on: self, textKey: "pl_login_alert_deviceReinstallError", completion: completion)
             }
         }
+    }
+}
+
+extension PLRememberedLoginPinViewController: RootMenuController {
+    var isSideMenuAvailable: Bool {
+        return true
     }
 }

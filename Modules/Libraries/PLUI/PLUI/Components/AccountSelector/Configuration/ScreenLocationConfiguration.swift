@@ -4,7 +4,7 @@ import CoreFoundationLib
 extension AccountSelectorViewController {
     
     public enum ScreenLocationConfiguration {
-        case mobileTransferSettings, mobileTransfer, charityTransfer, phoneTopUp, zusTransfer, taxTransfer
+        case mobileTransferSettings, mobileTransfer, charityTransfer, phoneTopUp, zusTransfer, taxTransfer, splitPayment
         
         var title: String {
             switch self {
@@ -15,12 +15,14 @@ extension AccountSelectorViewController {
             case .charityTransfer:
                 return localized("pl_foundtrans_text_infoSelectAccount")
             case .zusTransfer:
-                #warning("should be changed")
-                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+                return localized("pl_taxTransfer_text_infoSelectAccount")
             case .phoneTopUp:
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz doładować telefon:"
             case .taxTransfer:
+                #warning("should be changed")
+                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+            case .splitPayment:
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz zrobić przelew:"
             }

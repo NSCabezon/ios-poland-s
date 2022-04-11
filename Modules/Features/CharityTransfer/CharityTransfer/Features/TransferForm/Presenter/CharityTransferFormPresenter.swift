@@ -1,6 +1,7 @@
 import CoreFoundationLib
 import PLUI
 import PLCommons
+import PLCommonOperatives
 
 protocol CharityTransferFormPresenterProtocol {
     var view: CharityTransferFormViewProtocol? { get set }
@@ -8,12 +9,13 @@ protocol CharityTransferFormPresenterProtocol {
     func didSelectClose()
     func didSelectCloseProcess()
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
-    func getSelectedAccountNumber() -> String
     func getCharityTransferSettings() -> CharityTransferSettings
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: CharityTransferFormViewModel)
     func confirmTransfer()
     func startValidation()
+    func clearForm()
+    func reloadAccounts()
 }
 
 public protocol CharityTransferFormAccountSelectable: AnyObject {
@@ -63,10 +65,6 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
         return selectebleAccountViewModels
     }
     
-    func getSelectedAccountNumber() -> String {
-        selectedAccountNumber
-    }
-    
     func getCharityTransferSettings() -> CharityTransferSettings {
         charityTransferSettings
     }
@@ -110,6 +108,50 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
         let invalidMessages = formValidator.validateForm(form: form)
         view?.showValidationMessages(messages: invalidMessages)
     }
+    
+    func clearForm() {
+        transferFormViewModel = nil
+    }
+    
+    func reloadAccounts() {
+        view?.showLoader()
+        Scenario(
+            useCase: GetAccountsForDebitUseCase(
+                transactionType: .charityTransfer,
+                dependenciesResolver: dependenciesResolver
+            )
+        )
+        .execute(on: dependenciesResolver.resolve())
+        .onSuccess { [weak self] accounts in
+            guard let self = self else { return }
+            self.view?.hideLoader(completion: {
+                if accounts.isEmpty {
+                    self.showErrorView()
+                    return
+                }
+                self.accounts = accounts
+                if !accounts.contains(where: { $0.number == self.selectedAccountNumber }) {
+                    self.selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
+                }
+                let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+                let models = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: self.selectedAccountNumber) })
+                self.coordinator.updateAccounts(accounts: accounts)
+                self.view?.reloadAccountsComponent(with: models)
+            })
+        }
+        .onError { [weak self] _ in
+            self?.view?.hideLoader(completion: {
+                self?.showErrorView()
+            })
+        }
+    }
+    
+    private func showErrorView() {
+        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
+            self?.coordinator.closeProcess()
+        })
+    }
+
 }
 
 private extension CharityTransferFormPresenter {

@@ -1,6 +1,13 @@
 {
     "accounts_options":[
         {
+            "id": "MAILBOX_MAIN",
+            "url" : "https://pluton2.centrum24.pl/centrum24-web/native/mailbox",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        },
+        {
             "id": "ADD_BANKS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/ps-aggregator",
             "isAvailable": true,
@@ -20,7 +27,7 @@
             "method": "GET"
         },
         {
-            "id":"ALERTS_NOTIFICATION",
+            "id":"ALERTS_24",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/notification-settings",
             "isAvailable": true,
             "method": "GET"
@@ -44,7 +51,7 @@
             "method": "GET"
         },
         {
-            "id": "ACCOUNT_STATEMENT",
+            "id": "VIEW_STATEMENTS",
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/mailbox#/mailbox/threads/inbox;page=1;messageType=ewyciagi",
             "isAvailable": true,
             "method": "GET"
@@ -79,8 +86,16 @@
             "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/savings-goals#/start-saving",
             "isAvailable": true,
             "method": "POST"
+        },
+        {
+            "id": "MULTICURRENCY",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/tiles#/multiCurrencyCard",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
+    
     "cards_options" : [
         {
             "id": "MULTICURRENCY",
@@ -93,6 +108,13 @@
             "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-mobile-web/cards#/app/cards_restriction_reasons/{$VPAN}",
             "isAvailable": true,
             "method": "POST"
+        },
+        {
+            "id": "CARD_CREDIT_LIMIT_INCREASE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/new-bbc-offer#/pages/product-details/increaseCreditCardLimit",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
         }
     ],
     "help_center_options" : [
@@ -110,5 +132,23 @@
             "method": "POST",
             "isFullScreen": true
         }
+    ],
+    "insurance_options" : [
+        {
+            "id": "PROTECTION_INSURANCE",
+            "url" : "https://micrositeoneapp2.santanderbankpolska.pl/omni/oneapp{$INSURANCE_URL}",
+            "isAvailable": true,
+            "method": "POST",
+            "isFullScreen": true
+        }
+    ],
+    "send_money_options" : [
+       {
+          "id": "FEE_AND_CHARGES",
+          "url" : "https://www.santander.pl/przydatne-informacje/oplaty-i-prowizje",
+          "isAvailable": true,
+          "method": "POST",
+          "isFullScreen": true
+       }
     ]
 }

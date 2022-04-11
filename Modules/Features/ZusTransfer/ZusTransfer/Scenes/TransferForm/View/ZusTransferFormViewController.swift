@@ -5,10 +5,14 @@ import CoreFoundationLib
 import IQKeyboardManagerSwift
 
 protocol ZusTransferFormViewProtocol: AnyObject,
-                                      ConfirmationDialogPresentable {
+                                      ConfirmationDialogPresentable,
+                                      LoaderPresentable,
+                                      ErrorPresentable {
     func setAccountViewModel()
     func showValidationMessages(with data: InvalidZusTransferFormData)
     func updateRecipient(name: String, accountNumber: String)
+    func resetForm()
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel])
 }
 
 final class ZusTransferFormViewController: UIViewController {
@@ -32,6 +36,7 @@ final class ZusTransferFormViewController: UIViewController {
         setUp()
         configureKeyboardDismissGesture()
         IQKeyboardManager.shared.enableAutoToolbar = false
+        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +157,17 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
         if (bottomOffset.y > 0) {
             scrollView.setContentOffset(bottomOffset, animated: true)
         }
+    }
+    
+    func resetForm() {
+        presenter.reloadAccounts()
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
+    }
+    
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel]) {
+        formView.configure(with: models)
     }
 }
 

@@ -3,10 +3,10 @@
 //  Santander
 //
 
-import RetailLegacy
+import CoreFoundationLib
 
 class OnboardingPermissionOptions: OnboardingPermissionOptionsProtocol {
-    func getOptions() -> [FirstBoardingPermissionType] {
+    func getOptions() -> [OnboardingPermissionType] {
         [.notifications, .location]
     }
 }

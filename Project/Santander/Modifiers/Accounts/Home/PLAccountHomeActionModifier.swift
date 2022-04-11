@@ -4,35 +4,48 @@
 //
 
 import CoreFoundationLib
+import PersonalArea
+import RetailLegacy
 import OpenCombine
 import CoreDomain
 import Transfer
 import Account
+import BLIK
 import UI
 
 final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
-    private let dependenciesResolver: DependenciesResolver
-    private let transferHomeDependencies: OneTransferHomeExternalDependenciesResolver
+    private let legacyDependenciesResolver: DependenciesResolver
+    private let dependencies: ModuleDependencies
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    public init(dependenciesResolver: DependenciesResolver) {
-        self.dependenciesResolver = dependenciesResolver
-        self.transferHomeDependencies = dependenciesResolver.resolve()
+    public init(dependencies: ModuleDependencies) {
+        self.legacyDependenciesResolver = dependencies.resolve()
+        self.dependencies = dependencies
     }
     
     func didSelectAction(_ action: AccountActionType, _ entity: AccountEntity) {
-        if case .custome(let identifier, _, _, _, _, _) = action {
-            switch identifier {
-            case PLAccountOtherOperativesIdentifier.savingGoals.rawValue:
-                showWebView(identifier: identifier, entity: entity)
-            case PLAccountOtherOperativesIdentifier.externalTransfer.rawValue:
+        if case .custome(let identifier, _, _, _, _, _, _) = action {
+            guard let actionKey = PLAccountOperativeIdentifier(rawValue: identifier) else {
                 Toast.show(localized("generic_alert_notAvailableOperation"))
+                return
+            }
+            switch actionKey {
+            case .savingGoals, .addBanks:
+                showWebView(identifier: identifier, entity: entity)
+            case .externalTransfer:
+                Toast.show(localized("generic_alert_notAvailableOperation"))
+            case .transfer:
+                goToSendMoney(with: entity.representable)
+            case .changeAliases:
+                goToPGProductsCustomization()
+            case .blik:
+                goToBLIK()
             default:
                 Toast.show(localized("generic_alert_notAvailableOperation"))
             }
         } else if case .transfer = action {
-            goToSendMoney(with: entity.dto)
+            goToSendMoney(with: entity.representable)
         }
     }
     
@@ -44,9 +57,9 @@ final class PLAccountHomeActionModifier: AccountHomeActionModifierProtocol {
 extension PLAccountHomeActionModifier {
     private func showWebView(identifier: String, entity: AccountEntity) {
         let input: GetPLAccountOtherOperativesWebConfigurationUseCaseInput
-        let repository = dependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
+        let repository = legacyDependenciesResolver.resolve(for: PLAccountOtherOperativesInfoRepository.self)
         guard let list = repository.get()?.accountsOptions, var data = getAccountOtherOperativesEntity(list: list, identifier: identifier) else { return }
-        if identifier == PLAccountOtherOperativesIdentifier.editGoal.rawValue {
+        if identifier == PLAccountOperativeIdentifier.editGoal.rawValue {
             data.parameter = entity.productIdentifier
         }
         if let isAvailable = data.isAvailable, !isAvailable {
@@ -54,35 +67,35 @@ extension PLAccountHomeActionModifier {
             return
         }
         input = GetPLAccountOtherOperativesWebConfigurationUseCaseInput(type: data)
-        let useCase = self.dependenciesResolver.resolve(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self)
+        let useCase = legacyDependenciesResolver.resolve(for: GetPLAccountOtherOperativesWebConfigurationUseCase.self)
         Scenario(useCase: useCase, input: input)
-            .execute(on: self.dependenciesResolver.resolve())
-            .onSuccess { result in
-                self.dependenciesResolver.resolve(for: AccountsHomeCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
+            .execute(on: legacyDependenciesResolver.resolve())
+            .onSuccess { [weak self] result in
+                self?.legacyDependenciesResolver.resolve(for: AccountsHomeCoordinatorDelegate.self).goToWebView(configuration: result.configuration)
             }
     }
     
-    private func getAccountOtherOperativesEntity(list: [PLAccountOtherOperativesDTO], identifier: String) -> PLAccountOtherOperativesData? {
-        var entity: PLAccountOtherOperativesData?
+    private func getAccountOtherOperativesEntity(list: [PLProductOperativesDTO], identifier: String) -> PLProductOperativesData? {
+        var entity: PLProductOperativesData?
         for dto in list where dto.id == identifier {
-            entity = PLAccountOtherOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
+            entity = PLProductOperativesData(identifier: identifier, link: dto.url, isAvailable: dto.isAvailable, parameter: nil, isFullScreen: dto.isFullScreen)
         }
         return entity
     }
     
     private func goToSendMoney(with account: AccountRepresentable) {
-        useCase
+        checkNewSendMoneyHomeIsEnabled
             .fetchEnabled()
-            .receive(on: Schedulers.global)
+            .receive(on: Schedulers.main)
             .sink { [unowned self] isEnabled in
-                Async.main {
-                    if isEnabled {
-                        self.transferHomeDependencies.oneTransferHomeCoordinator()
-                            .set(account)
-                            .start()
-                    } else {
-                        self.sendMoneyCoordinator.start()
-                    }
+                if isEnabled {
+                    self.dependencies.oneTransferHomeCoordinator()
+                        .set(account)
+                        .start()
+                } else {
+                    self.sendMoneyCoordinator
+                        .set(account)
+                        .start()
                 }
             }
             .store(in: &subscriptions)
@@ -90,11 +103,21 @@ extension PLAccountHomeActionModifier {
 }
 
 private extension PLAccountHomeActionModifier {
-    var useCase: CheckNewSendMoneyHomeEnabledUseCase {
-        return dependenciesResolver.resolve()
+    var checkNewSendMoneyHomeIsEnabled: CheckNewSendMoneyHomeEnabledUseCase {
+        return dependencies.resolve()
     }
     
     var sendMoneyCoordinator: SendMoneyCoordinatorProtocol {
-        return dependenciesResolver.resolve()
+        return legacyDependenciesResolver.resolve()
+    }
+    
+    private func goToPGProductsCustomization() {
+        let coordinator = legacyDependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
+        coordinator.goToGPProductsCustomization()
+    }
+    
+    private func goToBLIK() {
+        let blikCoordinator: BLIKHomeCoordinator = legacyDependenciesResolver.resolve()
+        blikCoordinator.start()
     }
 }

@@ -24,6 +24,9 @@ import CoreFoundationLib
 import SANLegacyLibrary
 import PhoneTopUp
 import ZusTransfer
+import ZusSMETransfer
+import SplitPayment
+import ScanAndPay
 
 enum OneAppInitModule: String, CaseIterable {
     case deepLink = "Deep Link"
@@ -40,6 +43,9 @@ enum OneAppInitModule: String, CaseIterable {
     case phoneTopUp = "Phone Top-Up"
     case taxTransfer = "Tax Transfer"
     case zusTransfer = "Zus Transfer"
+    case zusSMETransfer = "Zus SME Transfer"
+    case splitPayment = "Split Payment"
+    case scanAndPay = "Scan and Pay"
 }
 
 extension OneAppInitModule {
@@ -55,7 +61,6 @@ protocol OneAppInitCoordinatorProtocol: ModuleCoordinator {
 
 protocol OneAppInitCoordinatorDelegate: AnyObject {
     func selectModule(_ module: OneAppInitModule)
-    func selectCharityTransfer(accounts: [AccountForDebit])
 }
 
 final class OneAppInitCoordinator: OneAppInitCoordinatorProtocol {
@@ -193,24 +198,27 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
                 for: ZusTransferModuleCoordinatorProtocol.self
             )
             coordinator.start()
+        case .charityTransfer:
+            let coordinator = dependenciesEngine.resolve(
+                for: CharityTransferModuleCoordinator.self
+            )
+            coordinator.start()
+        case .zusSMETransfer:
+            let coordinator = dependenciesEngine.resolve(
+                for: ZusSmeTransferDataLoaderCoordinatorProtocol.self
+            )
+            coordinator.start()
+        case .splitPayment:
+            let coordinator = dependenciesEngine.resolve(
+                for: SplitPaymentModuleCoordinatorProtocol.self
+            )
+            coordinator.start()
+        case .scanAndPay:
+            let coordinator = ScanAndPayScannerCoordinator(dependenciesResolver: dependenciesEngine,
+                                                           navigationController: navigationController)
+            coordinator.start()
         default:
             break
         }
-    }
-    
-    func selectCharityTransfer(accounts: [AccountForDebit]) {
-        guard !accounts.isEmpty else {
-            view?.showError()
-            return
-        }
-        let repository = dependenciesEngine.resolve(for: PLTransferSettingsRepository.self)
-        let settings = repository.get()?.charityTransfer
-        let charityTransferSettings = CharityTransferSettings(transferRecipientName: settings?.transferRecipientName,
-                                                              transferAccountNumber: settings?.transferAccountNumber,
-                                                              transferTitle: settings?.transferTitle)
-        let coordinator: CharityTransferModuleCoordinator = dependenciesEngine.resolve()
-        coordinator.setProperties(accounts: accounts,
-                                  charityTransferSettings: charityTransferSettings)
-        coordinator.start()
     }
 }

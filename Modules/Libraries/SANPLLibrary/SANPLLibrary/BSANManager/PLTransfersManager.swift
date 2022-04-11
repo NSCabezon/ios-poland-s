@@ -9,6 +9,7 @@ import CoreDomain
 
 public protocol PLTransfersManagerProtocol {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
@@ -17,6 +18,7 @@ public protocol PLTransfersManagerProtocol {
     func sendConfirmation(_ parameters: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, NetworkProviderError>
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -44,6 +46,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         switch result {
         case .success(let accountForDebitDTO):
             return .success(accountForDebitDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountsForCredit()
+        switch result {
+        case .success(let accountForCreditDTO):
+            return .success(accountForCreditDTO)
         case .failure(let error):
             return .failure(error)
         }
@@ -140,9 +152,10 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         let language = try self.bsanDataProvider.getLanguageISO()
         let iban = parameters.iban.countryCode + parameters.iban.checkDigits + parameters.iban.codBban
         let amountParameters = NotifyAmountParameters(value: debitAmount, currencyCode: debitAmountCurrency)
+        let derivedVariables = ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias]
         let inputParameters = NotifyDeviceParameters(language: language,
                                                      notificationSchemaId: parameters.notificationSchemaId,
-                                                     variables: ["\(debitAmount)", debitAmountCurrency, iban, parameters.alias],
+                                                     variables: parameters.variables ?? derivedVariables,
                                                      challenge: parameters.challenge,
                                                      softwareTokenType: nil,
                                                      amount: amountParameters)
@@ -150,6 +163,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         switch result {
         case .success(let authorizationDTO):
             return .success(authorizationDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
+        let result = try self.transferDataSource.getExchangeRates()
+        switch result {
+        case .success(let exchangeRatesDTO):
+            return .success(exchangeRatesDTO)
         case .failure(let error):
             return .failure(error)
         }

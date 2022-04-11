@@ -16,7 +16,12 @@ public final class GetGPLoanOperativeModifier: GetGPLoanOperativeOptionProtocol 
     }
 
     public func getCountryLoanOperativeActionType(loans: [LoanEntity]) -> [LoanActionType] {
-        return [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType(), PLLoansAliasOperative().getActionType()]
+        var shortcutsOperativesAvailable: [LoanActionType] = [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType()]
+
+        if loans.isNotEmpty {
+            shortcutsOperativesAvailable.append(PLLoansAliasOperative().getActionType())
+        }
+        return shortcutsOperativesAvailable
     }
 
     public func isOtherOperativeEnabled(_ option: LoanActionType) -> Bool {

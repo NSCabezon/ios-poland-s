@@ -30,9 +30,9 @@ final class CharityTransferSummaryCoordinator: ModuleCoordinator {
 
 extension CharityTransferSummaryCoordinator: CharityTransferSummaryCoordinatorProtocol {
     func goToMakeAnotherPayment() {
-        let charityTransferFormVC = navigationController?.viewControllers.reversed().first(where: { $0 is CharityTransferFormViewController })
-        if let charityTransferFormVC = charityTransferFormVC {
+        if let charityTransferFormVC = navigationController?.viewControllers.reversed().first(where: { $0 is CharityTransferFormViewProtocol }) {
             navigationController?.popToViewController(charityTransferFormVC, animated: true)
+            (charityTransferFormVC as? CharityTransferFormViewProtocol)?.resetForm()
             return
         }
         navigationController?.popToRootViewController(animated: true)

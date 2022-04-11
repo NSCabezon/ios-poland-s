@@ -19,7 +19,7 @@ final class SaveBlikCustomerLabelUseCase: UseCase<SaveBlikCustomerLabelInput, Vo
     }
     
     override func executeUseCase(requestValues: SaveBlikCustomerLabelInput) throws -> UseCaseResponse<Void, StringErrorOutput> {
-        let parameters = SetPSPAliasLabelParameters(label: requestValues.chequePin)
+        let parameters = SetPSPAliasLabelParameters(label: requestValues.blikCustomerLabel)
         let result = try managersProvider.getBLIKManager().setPSPAliasLabel(parameters)
         switch result {
         case .success:
@@ -31,7 +31,7 @@ final class SaveBlikCustomerLabelUseCase: UseCase<SaveBlikCustomerLabelInput, Vo
 }
 
 struct SaveBlikCustomerLabelInput {
-    let chequePin: String
+    let blikCustomerLabel: String
 }
 
 extension SaveBlikCustomerLabelUseCase: SaveBlikCustomerLabelUseCaseProtocol {}

@@ -37,7 +37,7 @@ struct PLGetSendMoneyActionsUseCase {
     private let anotherBank: SendMoneyActionType = .custome(
         identifier: PLSendMoneyActionTypeIdentifier.anotherBank.rawValue,
         title: "pl_transferOption_button_transferAnotherBank",
-        description: "pt_transferOption_text_transferPackages",
+        description: "pl_transferOption_text_transferAnotherBank",
         icon: "oneIcnAnotherBank"
     )
     
@@ -102,13 +102,11 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
     }
     
     public func fetchSendMoneyActions(_ locations: [PullOfferLocation]) -> AnyPublisher<[SendMoneyActionType], Never> {
-        let actions = locations.map {fetchSendMoneyAction($0)}
+        let actions = locations.map(fetchSendMoneyAction)
         return Publishers.MergeMany(actions)
-            .collect(locations.count)
+            .collect()
             .replaceError(with: [])
-            .map { sendMoneyActions in
-                return getHomeSendMoneyActions(sendMoneyActions)
-            }
+            .map(getHomeSendMoneyActions)
             .eraseToAnyPublisher()
     }
     

@@ -25,6 +25,10 @@ final class ZusAccountSelectorPresenter {
         self.selectedAccountNumber = selectedAccountNumber
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
     }
+    
+    func updateAccounts(accounts: [AccountForDebit]) {
+        self.accounts = accounts
+    }
 }
 
 private extension ZusAccountSelectorPresenter {

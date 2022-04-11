@@ -1,6 +1,7 @@
 platform :ios, '12.3'
+install! 'cocoapods', :deterministic_uuids => false
 
-source 'https://cdn.cocoapods.org/'
+source 'https://github.com/CocoaPods/Specs.git'
 
 # --------- General Core dependencies
 def core_dependencies
@@ -9,22 +10,22 @@ def core_dependencies
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
   pod 'Operative', :path => '../santander-one/Operative'
   pod 'WebViews', :path => '../santander-one/Modules/Libraries/WebViews'
-  pod 'UI', :path => '../santander-one/UI'
+  pod 'UI', :path => '../santander-one/UI', :testspecs => ['Tests']
   pod 'PdfCommons', :path => '../santander-one/PdfCommons'
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
   pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
   pod 'Menu', :path => '../santander-one/Menu'
   pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
   pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
+  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib'
-  pod 'Loans', :path => '../santander-one/Loans'
+  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib', :testspecs => ['Tests']
+  pod 'Loans', :path => '../santander-one/Loans', :testspecs => ['Tests']
   pod 'Account', :path => '../santander-one/Accounts'
-  pod 'Cards', :path => '../santander-one/Cards'
+  pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
   pod 'PersonalArea', :path => '../santander-one/PersonalArea'
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
   pod 'Transfer', :path => '../santander-one/Transfer'
@@ -37,8 +38,11 @@ def core_dependencies
   pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
   pod 'Localization', :path => '../santander-one/Localization'
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
-  pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives'
+  pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
+  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
+  pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
 end
 
 def legacy_libraries
@@ -69,7 +73,11 @@ def pl_features
   pod 'CharityTransfer', :path => '../Modules/Features/CharityTransfer'
   pod 'PhoneTopUp', :path => '../Modules/Features/PhoneTopUp'
   pod 'ZusTransfer', :path => '../Modules/Features/ZusTransfer'
+  pod 'ZusSMETransfer', :path => '../Modules/Features/ZusSMETransfer'
+  pod 'Authorization', :path => '../Modules/Features/Authorization'
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
+  pod 'SplitPayment', :path => '../Modules/Features/SplitPayment'
+  pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
 end
 
 def pl_libraries
@@ -89,6 +97,12 @@ def pl_thirdparty_dependencies
   pod 'Dynatrace', '~> 8.227'
 end
 
+#------------ Tests ----------------
+def core_test_dependencies
+  pod 'UnitTestCommons', :path => '../santander-one/UnitTestCommons'
+  pod 'CoreTestData', :path => '../santander-one/Modules/Libraries/CoreTestData'
+end
+
 # --------- Target configuration
 target 'Santander' do
   use_frameworks!
@@ -103,6 +117,7 @@ target 'Santander' do
 
   target 'SantanderTests' do
         inherit! :search_paths
+        core_test_dependencies
   end
 end
 
@@ -117,6 +132,7 @@ post_install do |installer|
 		config.build_settings['SWIFT_ACTIVE_COMPILATION_CONDITIONS'] = 'DEBUG'
 		config.build_settings['SWIFT_VERSION'] = '5.0'
 		config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    config.build_settings['ENABLE_TESTABILITY'] = 'YES'
 	  end
 	end
   end

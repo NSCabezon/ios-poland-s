@@ -8,14 +8,13 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-PRODUCT_NAME = PL-PREPROD-$(MARKETING_VERSION)
+PRODUCT_NAME = PL-ZT1-$(MARKETING_VERSION)
 PRODUCT_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod
 WIDGET_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod.widget
 SIRI_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod.siri.intents
 SIRI_UI_BUNDLE_IDENTIFIER = pl.santander.oneapp.preprod.siri.intents.ui
 APP_NAME = Santander Preprod
 EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
-EMMA_API_KEY = santanderpreHdgTYANJ0
 LOAD_PFM_ENABLED = YES
 LOG_ENABLED = YES
 MANAGER_WALL_PRODUCTION_ENVIRONMENT = NO

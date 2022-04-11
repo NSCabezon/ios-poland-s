@@ -10,6 +10,11 @@ import CoreFoundationLib
 import TransferOperatives
 import CoreDomain
 import SANLegacyLibrary
+import SANPLLibrary
+
+enum SendMoneyTransferTypeBottomSheet {
+    case amountToHigh, invalidDate
+}
 
 protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol {
     var view: SendMoneyTransferTypeView? { get set }
@@ -18,7 +23,6 @@ protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol 
     func didSelectClose()
     func didSelectTransferType(at index: Int)
     func didPressedFloatingButton()
-    func didTapCloseAmountHigh()
     func didTapTooltip()
     func getSubtitleInfo() -> String
 }
@@ -56,6 +60,9 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
         let viewModel = self.mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from: self.transferTypes ?? [])
         self.view?.showTransferTypes(viewModel: viewModel)
         self.setCreditAccountInfo()
+        self.trackerManager.trackScreen(screenId: self.trackerPage.page,
+                                        extraParameters: [(self.operativeData.type == .national ? Constants.Tracker.transferCountryKey : Constants.Tracker.transferTypeKey) :
+                                                            self.operativeData.type.trackerName])
     }
     
     func setCreditAccountInfo() {
@@ -83,15 +90,15 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
               let transferType = self.operativeData.selectedTransferType?.type as? PolandTransferType,
               let limitAmount = transferType.limitAmount.value
         else { return }
+        guard self.isValidDate else {
+            self.view?.showBottomSheet(type: .invalidDate)
+            return
+        }
         if limitAmount.isZero || amount.isLessThanOrEqualTo(limitAmount) {
             self.container?.stepFinished(presenter: self)
         } else {
-            self.view?.showAmountTooHighView()
+            self.view?.showBottomSheet(type: .amountToHigh)
         }
-    }
-    
-    func didTapCloseAmountHigh() {
-        self.view?.closeAmountTooHighView()
     }
     
     func getSubtitleInfo() -> String {
@@ -99,11 +106,22 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     }
     
     func didTapTooltip() {
-        self.trackerManager.trackEvent(screenId: self.trackerPage.page, eventId: SendMoneyTransferTypePage.Action.clickTooltip.rawValue, extraParameters: ["transfer_country": self.operativeData.type.trackerName])
+        self.trackEvent(.clickTooltip, parameters: [Constants.Tracker.transferTypeKey: self.operativeData.type.trackerName])
     }
 }
 
 private extension SendMoneyTransferTypePresenter {
+    enum Constants {
+        enum Tracker {
+            static let transferCountryKey: String = "transfer_country"
+            static let transferTypeKey: String = "transfer_type"
+        }
+    }
+    
+    enum ValidTransferRangeType {
+        case aYearFromToday, onlyToday
+    }
+    
     func mapToSendMoneyTransferTypeRadioButtonsContainerViewModel(from transferTypes: [SendMoneyTransferTypeFee]) -> SendMoneyTransferTypeRadioButtonsContainerViewModel {
         let radioButtonViewModels = transferTypes.compactMap { self.mapToSendMoneyTransferTypeRadioButtonViewModel(from: $0) }
         return SendMoneyTransferTypeRadioButtonsContainerViewModel(selectedIndex: self.getSelectedIndex(),
@@ -112,13 +130,17 @@ private extension SendMoneyTransferTypePresenter {
     
     func mapToSendMoneyTransferTypeRadioButtonViewModel(from transferType: SendMoneyTransferTypeFee) -> SendMoneyTransferTypeRadioButtonViewModel? {
         guard let type = transferType.type as? PolandTransferType else { return nil }
+        let accessibilitySuffix = self.getAccessibilitySuffixForTransferType(type)
         let oneRadioButtonViewModel = OneRadioButtonViewModel(status: .inactive,
                                                               titleKey: localized(type.title ?? ""),
-                                                              subtitleKey: localized(type.subtitle ?? ""))
+                                                              subtitleKey: localized(type.subtitle ?? ""),
+                                                              accessibilitySuffix: accessibilitySuffix)
         let feeViewModel = SendMoneyTransferTypeFeeViewModel(amount: transferType.fee,
-                                                             status: .inactive)
+                                                             status: .inactive,
+                                                             accessibilitySuffix: accessibilitySuffix)
         return SendMoneyTransferTypeRadioButtonViewModel(oneRadioButtonViewModel: oneRadioButtonViewModel,
-                                                         feeViewModel: feeViewModel)
+                                                         feeViewModel: feeViewModel,
+                                                         accessibilitySuffix: accessibilitySuffix)
     }
 
     func getAccessibilitySuffixForTransferType(_ transferType: PolandTransferType) -> String {
@@ -141,11 +163,48 @@ private extension SendMoneyTransferTypePresenter {
             return type == selectedType && fee == selectedFee
         }) ?? .zero
     }
+    
+    var isValidDate: Bool {
+        guard let transactionTypeString = self.operativeData.specialPricesOutput?.transactionTypeString,
+              let matrixTransactionType = MatrixTransactionTypeDTO(rawValue: transactionTypeString),
+              let transferType = self.operativeData.selectedTransferType?.type as? PolandTransferType
+        else {
+            return false
+        }
+        let transactionType = PolandTransactionType(dto: matrixTransactionType)
+        switch transactionType {
+        case .sixtyThree, .fiftyNine, .fiftyEight:
+            return self.validateTransferType(transferType)
+        default:
+            return true
+        }
+    }
+    
+    func validateTransferType(_ transferType: PolandTransferType) -> Bool {
+        switch transferType {
+        case .one, .zero:
+            return self.isDateInValidRange(validDateRange: .aYearFromToday)
+        case .eight, .a:
+            return self.isDateInValidRange(validDateRange: .onlyToday)
+        case .four:
+            return true
+        }
+    }
+    
+    func isDateInValidRange(validDateRange: ValidTransferRangeType) -> Bool {
+        let dateComponents = Calendar.current.dateComponents([.day], from: Date(), to: self.operativeData.issueDate)
+        switch validDateRange {
+        case .aYearFromToday:
+            return dateComponents.day ?? 0 <= 365
+        case .onlyToday:
+            return dateComponents.day ?? 0 == 0
+        }
+    }
 }
 
 extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
     var trackerPage: SendMoneyTransferTypePage {
-        SendMoneyTransferTypePage()
+        SendMoneyTransferTypePage(national: self.operativeData.type == .national, type: self.operativeData.type.trackerName)
     }
     
     var trackerManager: TrackerManager {

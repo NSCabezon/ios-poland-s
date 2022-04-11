@@ -31,6 +31,12 @@ final class TaxTransferFormDataProvider: TaxTransferFormDataProviding {
         
         var fetchedTaxPayers: [TaxPayer]?
         let taxPayersScenario = Scenario(useCase: getTaxPayersUseCase)
+
+        var fetchedTaxAuthorities: [TaxAuthority]?
+        let taxAuthoritiesScenario = Scenario(useCase: getTaxAuthoritiesUseCase)
+        
+        var fetchedTaxSymbols: [TaxSymbol]?
+        let taxSymbolsScenario = Scenario(useCase: getTaxSymbolsUseCase)
         
         MultiScenario(handledOn: useCaseHandler)
             .addScenario(accountsScenario) { _, accounts, _ in
@@ -39,18 +45,33 @@ final class TaxTransferFormDataProvider: TaxTransferFormDataProviding {
             .addScenario(taxPayersScenario) { _, output, _ in
                 fetchedTaxPayers = output.taxPayers
             }
+            .addScenario(taxAuthoritiesScenario) { _, output, _ in
+                fetchedTaxAuthorities = output.taxAuthorities
+            }
+            .addScenario(taxSymbolsScenario) { _, output, _ in
+                fetchedTaxSymbols = output.taxSymbols
+            }
             .asScenarioHandler()
-            .finally {
-                guard let fetchedAccounts = fetchedAccounts,
-                      let fetchedTaxPayers = fetchedTaxPayers else {
+            .onSuccess { _ in
+                guard
+                    let fetchedAccounts = fetchedAccounts,
+                    let fetchedTaxPayers = fetchedTaxPayers,
+                    let fetchedTaxAuthorities = fetchedTaxAuthorities,
+                    let taxSymbols = fetchedTaxSymbols
+                else {
                     completion(.failure(.apiFailure))
                     return
                 }
                 let data = TaxTransferFormData(
                     sourceAccounts: fetchedAccounts,
-                    taxPayers: fetchedTaxPayers
+                    taxPayers: fetchedTaxPayers,
+                    predefinedTaxAuthorities: fetchedTaxAuthorities,
+                    taxSymbols: taxSymbols
                 )
                 completion(.success(data))
+            }
+            .onError { _ in
+                completion(.failure(.apiFailure))
             }
     }
 }
@@ -59,11 +80,20 @@ private extension TaxTransferFormDataProvider {
     var useCaseHandler: UseCaseHandler {
         dependenciesResolver.resolve()
     }
+    
     var getAccountsUseCase: GetAccountsForDebitProtocol {
         dependenciesResolver.resolve()
     }
     
     var getTaxPayersUseCase: GetTaxPayersListUseCaseProtocol {
         return dependenciesResolver.resolve()
+    }
+
+    var getTaxAuthoritiesUseCase: GetPredefinedTaxAuthoritiesUseCaseProtocol {
+        dependenciesResolver.resolve()
+    }
+    
+    var getTaxSymbolsUseCase: GetTaxSymbolsUseCaseProtocol {
+        dependenciesResolver.resolve()
     }
 }

@@ -34,7 +34,7 @@ final class IbanValidationSendMoneyUseCase: UseCase<IbanValidationSendMoneyUseCa
             }
             let duplicate = requestValues.favouriteList.first { return $0.payeeName?.trim() == alias.trim() }
             guard duplicate == nil else {
-                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias(alias: alias)))
+                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
             }
         }
         return .ok(.data(checkInternalAccountDto))

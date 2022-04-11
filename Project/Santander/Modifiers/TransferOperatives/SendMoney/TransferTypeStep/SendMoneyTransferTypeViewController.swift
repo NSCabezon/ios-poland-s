@@ -14,8 +14,7 @@ import UI
 protocol SendMoneyTransferTypeView: OperativeView {
     func showTransferTypes(viewModel: SendMoneyTransferTypeRadioButtonsContainerViewModel)
     func setBottomInformationTextKey(_ key: String)
-    func showAmountTooHighView()
-    func closeAmountTooHighView()
+    func showBottomSheet(type: SendMoneyTransferTypeBottomSheet)
 }
 
 final class SendMoneyTransferTypeViewController: UIViewController {
@@ -68,8 +67,8 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         bottomLabel.textColor = .oneLisboaGray
         return bottomLabel
     }()
-    private lazy var amountHighView: SendMoneyTransferTypeAmountHighView = {
-        let amountHighView = SendMoneyTransferTypeAmountHighView()
+    private lazy var errorView: SendMoneyTransferTypeErrorView = {
+        let amountHighView = SendMoneyTransferTypeErrorView()
         amountHighView.delegate = self
         return amountHighView
     }()
@@ -93,6 +92,11 @@ final class SendMoneyTransferTypeViewController: UIViewController {
         self.setupStackView()
         self.setAccessibilityIdentifiers()
         self.presenter.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setAccessibility(setViewAccessibility: setAccessibilityInfo)
     }
 }
 
@@ -145,6 +149,10 @@ private extension SendMoneyTransferTypeViewController {
     @objc func floatingButtonDidPressed() {
         self.presenter.didPressedFloatingButton()
     }
+    
+    func setAccessibilityInfo() {
+        UIAccessibility.post(notification: .layoutChanged, argument: self.navigationItem.titleView)
+    }
 }
 
 extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
@@ -156,12 +164,25 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
         self.radioButtonsContainer.setViewModel(viewModel)
     }
     
-    func showAmountTooHighView() {
+    func showBottomSheet(type: SendMoneyTransferTypeBottomSheet) {
+        let viewModel: SendMoneyTransferTypeErrorViewModel
+        switch type {
+        case .amountToHigh:
+            viewModel = SendMoneyTransferTypeErrorViewModel(titleKey: "sendMoney_title_amountHigh",
+                                                            subtitleKey: "sendMoney_text_amountHigh",
+                                                            buttonKey: "generic_button_accept")
+        case .invalidDate:
+            viewModel = SendMoneyTransferTypeErrorViewModel(titleKey: "pl_sendMoney_title_dateNotValid",
+                                                            subtitleKey: "pl_sendMoney_text_changeDate",
+                                                            buttonKey: "generic_button_understand",
+                                                            imageColor: .oneBostonRed)
+        }
+        self.errorView.setupViewModel(viewModel)
         self.bottomSheet.show(
             in: self,
             type: .custom(height: nil, isPan: true, bottomVisible: true),
             component: .all,
-            view: self.amountHighView
+            view: self.errorView
         )
     }
     
@@ -170,20 +191,22 @@ extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeView {
         self.bottomLabel.accessibilityIdentifier = key
         self.mainStackView.addArrangedSubview(self.bottomLabel)
     }
-    
-    func closeAmountTooHighView() {
-        self.presentedViewController?.dismiss(animated: true)
-    }
 }
 
 extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeRadioButtonsContainerViewDelegate {
     func didSelectRadioButton(at index: Int) {
         self.presenter.didSelectTransferType(at: index)
     }
-}
-
-extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeAmountHighViewDelegate {
-    func didTapActionButton() {
-        self.presenter.didTapCloseAmountHigh()
+    
+    func didTapTooltip() {
+        self.presenter.didTapTooltip()
     }
 }
+
+extension SendMoneyTransferTypeViewController: SendMoneyTransferTypeErrorViewDelegate {
+    func didTapActionButton(viewController: UIViewController?) {
+        viewController?.dismiss(animated: true)
+    }
+}
+
+extension SendMoneyTransferTypeViewController: AccessibilityCapable {}

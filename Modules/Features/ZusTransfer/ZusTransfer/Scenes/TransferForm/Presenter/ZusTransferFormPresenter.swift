@@ -1,20 +1,23 @@
 import CoreFoundationLib
 import PLUI
 import PLCommons
+import PLCommonOperatives
 
 protocol ZusTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusTransferFormAccountSelectable {
     var view: ZusTransferFormViewProtocol? { get set }
+    func viewDidLoad()
     func getLanguage() -> String
     func didSelectClose()
     func didSelectCloseProcess()
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel]
-    func getSelectedAccountNumber() -> String
     func showAccountSelector()
     func updateTransferFormViewModel(with viewModel: ZusTransferFormViewModel)
     func showConfirmation()
     func startValidation(with field: TransferFormCurrentActiveField)
     func showRecipientSelection()
     func getAccountRequiredLength() -> Int
+    func clearForm()
+    func reloadAccounts()
 }
 
 public protocol ZusTransferFormAccountSelectable: AnyObject {
@@ -27,29 +30,46 @@ final class ZusTransferFormPresenter {
     private var accounts: [AccountForDebit]
     private var selectedAccountNumber: String
     private var transferFormViewModel: ZusTransferFormViewModel?
-    private var confirmationDialogFactory: ConfirmationDialogProducing
+    private let confirmationDialogFactory: ConfirmationDialogProducing
     private let mapper: SelectableAccountViewModelMapping
     private let formValidator: ZusTransferValidating
-    private let maskAccount: String
+    private var maskAccount: String?
     
     init(
         dependenciesResolver: DependenciesResolver,
         accounts: [AccountForDebit],
-        selectedAccountNumber: String,
-        maskAccount: String
+        selectedAccountNumber: String
     ) {
         self.dependenciesResolver = dependenciesResolver
         self.accounts = accounts
         self.selectedAccountNumber = selectedAccountNumber
-        self.maskAccount = maskAccount
         confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         mapper = dependenciesResolver.resolve(for: SelectableAccountViewModelMapping.self)
-        confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
         formValidator = dependenciesResolver.resolve(for: ZusTransferValidating.self)
     }
 }
 
 extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
+    
+    func viewDidLoad() {
+        view?.showLoader()
+        Scenario(useCase: GetPopularAccountsUseCase(dependenciesResolver: dependenciesResolver), input: GetPopularAccountsUseCaseInput(accountType: 80))
+            .execute(on: dependenciesResolver.resolve(for: UseCaseHandler.self))
+            .onSuccess({ [weak self] accounts in
+                self?.view?.hideLoader(completion: {
+                    guard let mask = accounts.numbers.first?.number else {
+                        self?.showErrorView()
+                        return
+                    }
+                    self?.maskAccount = mask
+                })
+            })
+            .onError { [weak self] error in
+                self?.view?.hideLoader(completion: {
+                    self?.showErrorView()
+                })
+            }
+    }
     
     func getLanguage() -> String {
         dependenciesResolver.resolve(for: StringLoader.self).getCurrentLanguage().appLanguageCode
@@ -70,10 +90,6 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     func getSelectedAccountViewModels() -> [SelectableAccountViewModel] {
         let selectebleAccountViewModels = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: selectedAccountNumber) })
         return selectebleAccountViewModels
-    }
-    
-    func getSelectedAccountNumber() -> String {
-        selectedAccountNumber
     }
     
     func showAccountSelector() {
@@ -121,6 +137,49 @@ extension ZusTransferFormPresenter: ZusTransferFormPresenterProtocol {
     
     func getAccountRequiredLength() -> Int {
         formValidator.getAccountRequiredLength()
+    }
+    
+    func clearForm() {
+        transferFormViewModel = nil
+    }
+    
+    func reloadAccounts() {
+        view?.showLoader()
+        Scenario(
+            useCase: GetAccountsForDebitUseCase(
+                transactionType: .zusTransfer,
+                dependenciesResolver: dependenciesResolver
+            )
+        )
+        .execute(on: dependenciesResolver.resolve())
+        .onSuccess { [weak self] accounts in
+            guard let self = self else { return }
+            self.view?.hideLoader(completion: {
+                if accounts.isEmpty {
+                    self.showErrorView()
+                    return
+                }
+                self.accounts = accounts
+                if !accounts.contains(where: { $0.number == self.selectedAccountNumber }) {
+                    self.selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
+                }
+                let mapper = SelectableAccountViewModelMapper(amountFormatter: .PLAmountNumberFormatter)
+                let models = accounts.compactMap({ try? mapper.map($0, selectedAccountNumber: self.selectedAccountNumber) })
+                self.coordinator.updateAccounts(accounts: accounts)
+                self.view?.reloadAccountsComponent(with: models)
+            })
+        }
+        .onError { [weak self] _ in
+            self?.view?.hideLoader(completion: {
+                self?.showErrorView()
+            })
+        }
+    }
+    
+    private func showErrorView() {
+        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
+            self?.coordinator.closeProcess()
+        })
     }
 }
 

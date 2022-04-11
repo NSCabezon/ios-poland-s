@@ -18,6 +18,14 @@ final class PLTransfersManagerAdapter {
 }
  
 extension PLTransfersManagerAdapter: BSANTransfersManager {
+    func loadEmittedTransfers(account: AccountRepresentable, amountFrom: AmountRepresentable?, amountTo: AmountRepresentable?, dateFilter: DateFilter, pagination: PaginationRepresentable?) throws -> BSANResponse<TransferEmittedListDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
+    func getAccountTransactions(forAccount account: AccountRepresentable, pagination: PaginationRepresentable?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
+        return BSANErrorResponse(nil)
+    }
+    
 
     func confirmRemoveSepaPayee(payeeId: String?, signatureWithTokenDTO: SignatureWithTokenDTO?) throws -> BSANResponse<SignatureWithTokenDTO?> {
         return BSANErrorResponse(nil)
@@ -74,8 +82,8 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     func validateUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable) throws -> BSANResponse<ValidateAccountTransferDTO> {
         return BSANErrorResponse(nil)
     }
-    
-    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO) throws -> BSANResponse<TransferConfirmAccountDTO> {
+
+    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -157,19 +165,11 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
         return BSANErrorResponse(nil)
     }
     
-    func loadEmittedTransfers(account: SANLegacyLibrary.AccountDTO, amountFrom: AmountDTO?, amountTo: AmountDTO?, dateFilter: DateFilter, pagination: PaginationDTO?) throws -> BSANResponse<TransferEmittedListDTO> {
-        return BSANErrorResponse(nil)
-    }
-    
     func getEmittedTransferDetail(transferEmittedDTO: TransferEmittedDTO) throws -> BSANResponse<TransferEmittedDetailDTO> {
         return BSANErrorResponse(nil)
     }
     
     func loadEmittedTransferDetail(transferEmittedDTO: TransferEmittedDTO) throws -> BSANResponse<Void> {
-        return BSANErrorResponse(nil)
-    }
-    
-    func getAccountTransactions(forAccount account: SANLegacyLibrary.AccountDTO, pagination: PaginationDTO?, filter: AccountTransferFilterInput) throws -> BSANResponse<AccountTransactionsListDTO> {
         return BSANErrorResponse(nil)
     }
     
@@ -281,10 +281,6 @@ extension PLTransfersManagerAdapter: BSANTransfersManager {
     }
     
     func validateCreateSepaPayee(alias: String, recipientType: FavoriteRecipientType?, beneficiary: String, iban: IBANDTO?, serviceType: String?, contractType: String?, accountIdType: String?, accountId: String?, streetName: String?, townName: String?, location: String?, country: String?, operationDate: Date?) throws -> BSANResponse<SignatureWithTokenDTO?> {
-        return BSANErrorResponse(nil)
-    }
-    
-    func confirmUsualTransfer(originAccountDTO: SANLegacyLibrary.AccountDTO, usualTransferInput: UsualTransferInput, payee: PayeeRepresentable, signatureDTO: SignatureDTO, trusteerInfo: TrusteerInfoDTO?) throws -> BSANResponse<TransferConfirmAccountDTO> {
         return BSANErrorResponse(nil)
     }
 }

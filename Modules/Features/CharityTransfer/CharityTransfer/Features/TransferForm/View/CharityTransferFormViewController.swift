@@ -5,9 +5,13 @@ import CoreFoundationLib
 import IQKeyboardManagerSwift
 
 protocol CharityTransferFormViewProtocol: AnyObject,
-                                          ConfirmationDialogPresentable {
+                                          ConfirmationDialogPresentable,
+                                          LoaderPresentable,
+                                          ErrorPresentable {
     func setAccountViewModel()
     func showValidationMessages(messages: InvalidCharityTransferFormMessages)
+    func resetForm()
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel])
 }
 
 final class CharityTransferFormViewController: UIViewController {
@@ -120,6 +124,17 @@ extension CharityTransferFormViewController: CharityTransferFormViewProtocol {
         } else {
             bottomView.disableButton()
         }
+    }
+    
+    func resetForm() {
+        presenter.reloadAccounts()
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
+    }
+    
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel]) {
+        formView.configure(with: models)
     }
 }
 

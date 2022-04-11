@@ -5,34 +5,39 @@
 //  Created by Juan Carlos López Robles on 12/30/21.
 //
 
+import UI
 import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
-import Transfer
-import Loans
-import UI
+import Onboarding
+import SANLegacyLibrary
 
 struct ModuleDependencies {
-    
     let oldResolver: DependenciesInjector & DependenciesResolver
     let drawer: BaseMenuViewController
     let coreDependencies = DefaultCoreDependencies()
     
+    init(oldResolver: DependenciesInjector & DependenciesResolver, drawer: BaseMenuViewController) {
+        self.oldResolver = oldResolver
+        self.drawer = drawer
+        registerExternalDependencies()
+    }
+    
     func resolve() -> TimeManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
+    }
+    
+    func resolve() -> DependenciesInjector {
+        return oldResolver
     }
     
     func resolve() -> DependenciesResolver {
         return oldResolver
     }
     
-    func resolve() -> AppConfigRepositoryProtocol {
-        oldResolver.resolve()
-    }
-    
     func resolve() -> TrackerManager {
-        oldResolver.resolve()
+        return oldResolver.resolve()
     }
     
     func resolve() -> BaseMenuViewController {
@@ -40,12 +45,53 @@ struct ModuleDependencies {
     }
     
     func resolve() -> UINavigationController {
-        drawer.currentRootViewController as?
-        UINavigationController ?? UINavigationController()
+        return drawer.currentRootViewController as? UINavigationController ?? UINavigationController()
+    }
+    
+    func resolve() -> StringLoader {
+        return oldResolver.resolve()
+    }
+    
+    func resolve() -> PullOffersInterpreter {
+        return oldResolver.resolve()
+    }
+
+    func resolve() -> BSANManagersProvider {
+        oldResolver.resolve()
+    }
+    
+    func resolve() -> AppRepositoryProtocol {
+        return oldResolver.resolve()
+    }
+    
+    func resolve() -> NavigationBarItemBuilder {
+        NavigationBarItemBuilder(dependencies: self)
     }
 }
 
-extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {}
+// MARK: - Private
+private extension ModuleDependencies {
+    func registerExternalDependencies() {
+        oldResolver.register(for: OnboardingExternalDependenciesResolver.self) { _ in
+            return self
+        }
+    }
+}
+
+extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
+    func resolve() -> FeatureFlagsRepository {
+        return asShared {
+            DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
+        }
+    }
+}
+
+extension ModuleDependencies: RetailLegacySavingsExternalDependenciesResolver {
+    func savingsHomeCoordinator() -> BindableCoordinator {
+        return ToastCoordinator()
+    }
+}
+
 extension ModuleDependencies: CoreDependenciesResolver {
     func resolve() -> CoreDependencies {
         return coreDependencies

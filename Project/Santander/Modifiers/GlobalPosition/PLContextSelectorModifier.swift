@@ -15,17 +15,10 @@ import PLContexts
 class PLContextSelectorModifier: ContextSelectorModifierProtocol {
     private let dependenciesResolver: DependenciesResolver
     private let dataProvider: BSANDataProvider
-    private let contextSelectorCoordinator: ContextSelectorCoordinator
-    
+
     init(dependenciesResolver: DependenciesResolver, bsanDataProvider: BSANDataProvider) {
         self.dependenciesResolver = dependenciesResolver
         self.dataProvider = bsanDataProvider
-        guard let drawer = UIApplication.shared.keyWindow?.rootViewController as? BaseMenuViewController else {
-            fatalError()
-        }
-        self.contextSelectorCoordinator = ContextSelectorCoordinator(resolver: self.dependenciesResolver,
-                                                                     bsanDataProvider: self.dataProvider,
-                                                                     coordinatingViewController: drawer.currentRootViewController as? UINavigationController)
     }
     
     var isContextSelectorEnabled: Bool {
@@ -44,6 +37,8 @@ class PLContextSelectorModifier: ContextSelectorModifierProtocol {
     }
     
     func pressedContextSelector() {
-        self.contextSelectorCoordinator.start()
+        let drawer = UIApplication.shared.keyWindow?.rootViewController as? BaseMenuViewController
+        let contextSelectorCoordinator = ContextSelectorCoordinator(resolver: self.dependenciesResolver, bsanDataProvider: self.dataProvider, coordinatingViewController: drawer?.currentRootViewController as? UINavigationController)
+        contextSelectorCoordinator.start()
     }
 }

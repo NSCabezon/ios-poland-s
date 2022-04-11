@@ -27,8 +27,11 @@ final class PLSessionUseCase: UseCase<Void, Void, PLUseCaseErrorOutput<LoginErro
     }()
 
     public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<Void, PLUseCaseErrorOutput<LoginErrorType>> {
-        sessionManager.sessionStarted(completion: nil)
-        sessionDataManager.load()
+        DispatchQueue.main.async {
+            self.sessionManager.sessionStarted(completion: nil)
+        }
+        //Removed from here because is called at PLOpenSessionProcessGroup
+        //sessionDataManager.load() 
         return .ok()
     }
 }

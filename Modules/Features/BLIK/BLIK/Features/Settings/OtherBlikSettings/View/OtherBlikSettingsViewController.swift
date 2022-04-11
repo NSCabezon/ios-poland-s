@@ -13,18 +13,13 @@ import PLCommons
 
 protocol OtherBlikSettingsViewProtocol: LoaderPresentable, ErrorPresentable, SnackbarPresentable, DialogViewPresentationCapable {
     func setViewModel(viewModel: OtherBlikSettingsViewModel)
-    func setLabelValidationError(_ errorText: String?)
 }
 
 final class OtherBlikSettingsViewController: UIViewController, OtherBlikSettingsViewProtocol {
-    
     private let presenter: OtherBlikSettingsPresenterProtocol
     private let contentView = OtherBlikSettingsView()
-    private let footerView = OtherBlikSettingsFooterView()
     
-    init(
-        presenter: OtherBlikSettingsPresenterProtocol
-    ) {
+    init(presenter: OtherBlikSettingsPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -45,16 +40,6 @@ final class OtherBlikSettingsViewController: UIViewController, OtherBlikSettings
             self?.contentView.set(viewModel: viewModel)
         }
     }
-    
-    func setLabelValidationError(_ errorText: String?) {
-        DispatchQueue.main.async { [weak self] in
-            self?.contentView.setLabelError(errorText)
-        }
-    }
-    
-    func setIsSaveButtonEnabled(_ isEnabled: Bool) {
-        footerView.setIsSaveButtonEnabled(isEnabled)
-    }
 }
 
 private extension OtherBlikSettingsViewController {
@@ -62,32 +47,24 @@ private extension OtherBlikSettingsViewController {
         configureNavigationItem()
         configureSubviews()
         configureStyling()
-        configureTargets()
         configureDelegates()
         configureKeyboardDismissGesture()
     }
     
     func configureSubviews() {
         view.addSubview(contentView)
-        view.addSubview(footerView)
-
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-
-            footerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     func configureStyling() {
         view.backgroundColor = .white
-        setIsSaveButtonEnabled(false)
     }
     
     func configureDelegates() {
@@ -96,50 +73,24 @@ private extension OtherBlikSettingsViewController {
     
     func configureNavigationItem() {
         NavigationBarBuilder(style: .white, title: .title(key: localized("pl_blik_title_otherSetting")))
-            .setLeftAction(.back(action: #selector(close)))
+            .setLeftAction(.back(action: .selector(#selector(back))))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
     }
     
-    func configureTargets() {
-        footerView.saveButtonTap = { [weak self] in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.presenter.didPressSave(
-                with: OtherBlikSettingsViewModel(
-                    blikCustomerLabel: strongSelf.contentView.blikCustomerLabel,
-                    isTransactionVisible: strongSelf.contentView.isTransactionVisible
-                )
-            )
-        }
-    }
-    
-    @objc func close() {
-        presenter.didPressClose(
-            with: OtherBlikSettingsViewModel(
-                blikCustomerLabel: contentView.blikCustomerLabel,
-                isTransactionVisible: contentView.isTransactionVisible
-            )
-        )
+    @objc func back() {
+        presenter.didPressBack()
     }
 }
 
 extension OtherBlikSettingsViewController: OtherBlikSettingsViewDelegate {
-    func didUpdateBlikLabel() {
-        presenter.didUpdateForm(
-            with: OtherBlikSettingsViewModel(
-                blikCustomerLabel: contentView.blikCustomerLabel,
-                isTransactionVisible: contentView.isTransactionVisible
-            )
+    func didUpdateVisibility() {
+        presenter.didToggleTransactionVisibilitySwitch(
+            isOn: contentView.isTransactionVisible
         )
     }
     
-    func didUpdateVisibility() {
-        presenter.didUpdateForm(
-            with: OtherBlikSettingsViewModel(
-                blikCustomerLabel: contentView.blikCustomerLabel,
-                isTransactionVisible: contentView.isTransactionVisible
-            )
-        )
+    func didTapBlikLabelEditButton() {
+        presenter.didPressBlikLabelEdit()
     }
 }

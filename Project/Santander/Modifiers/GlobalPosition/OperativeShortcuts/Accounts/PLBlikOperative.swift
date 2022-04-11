@@ -5,13 +5,19 @@
 
 import CoreFoundationLib
 import UI
+import BLIK
 
 final class PLBlikOperative: AccountOperativeActionTypeProtocol {
+    private let dependenciesResolver: DependenciesResolver
     var rawValue: String = "blik"
     var trackName: String? = "blik"
     var accessibilityIdentifier: String? = "ptFrequentOperativeButtonBlikPoland"
-    private let title: String = "pt_frequentOperative_button_blik"
+    private let title: String = "pl_frequentOperative_button_blik"
     private let icon: String = "icnBlik"
+    
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
+    }
 
     func values() -> (title: String, imageName: String) {
         return (self.title, self.icon)
@@ -26,8 +32,12 @@ final class PLBlikOperative: AccountOperativeActionTypeProtocol {
     }
 
     func getAction() -> AccountOperativeAction {
-        return .custom {
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+        return .custom {[weak self] in
+            guard let self = self else { return }
+            let blikCoordinator: BLIKHomeCoordinator = self.dependenciesResolver.resolve()
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: {
+                blikCoordinator.start()
+            })
         }
     }
 }
