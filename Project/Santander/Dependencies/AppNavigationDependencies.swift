@@ -28,6 +28,7 @@ import ZusTransfer
 import GlobalPosition
 import ZusSMETransfer
 import SplitPayment
+import ScanAndPay
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -123,14 +124,18 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
             return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
-        dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { resolver in
+        dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { [weak self] resolver in
             let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
             let settingsDto = repository.get()?.topup ?? []
             let topUpSettings = settingsDto
                 .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
             return TopUpDataLoaderCoordinator(dependenciesResolver: resolver,
-                                              navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                                              navigationController: self?.drawer.currentRootViewController as? UINavigationController,
                                               settings: topUpSettings)
+        }
+        dependenciesEngine.register(for: ScanAndPayScannerCoordinatorProtocol.self) { [weak self] resolver in
+            return ScanAndPayScannerCoordinator(dependenciesResolver: resolver,
+                                                navigationController: self?.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: ZusTransferModuleCoordinatorProtocol.self) { resolver in
             return ZusTransferModuleCoordinator(

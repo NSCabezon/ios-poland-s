@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreFoundationLib
+import PLCommons
 
 protocol ScanAndPayScannerPresenterProtocol: AnyObject {
     var view: ScanAndPayScannerViewProtocol? { get set }
@@ -14,6 +15,9 @@ protocol ScanAndPayScannerPresenterProtocol: AnyObject {
     func didSelectBack()
     func didInitializeScanner()
     func didFailToInitializeScanner()
+    func didSelectGallery()
+    func didSelectImage(_ image: UIImage?)
+    func didCaptureCode(_ code: String)
 }
 
 final class ScanAndPayScannerPresenter {
@@ -21,7 +25,10 @@ final class ScanAndPayScannerPresenter {
     weak var view: ScanAndPayScannerViewProtocol?
     private let dependenciesResolver: DependenciesResolver
     private var coordinator: ScanAndPayScannerCoordinatorProtocol?
+    private let qrCodeParser = QRTransferParser()
     private lazy var cameraPermissionsManager = dependenciesResolver.resolve(for: CameraPermissionsManagerProtocol.self)
+    private lazy var qrCodeDetector = dependenciesResolver.resolve(for: QRCodeDetectorProtocol.self)
+    private lazy var preferencesStore = dependenciesResolver.resolve(for: PreferencesStoreProtocol.self)
     
     // MARK: Lifecycle
     
@@ -50,14 +57,36 @@ extension ScanAndPayScannerPresenter: ScanAndPayScannerPresenterProtocol {
     }
     
     func didInitializeScanner() {
-        view?.startScanning()
+        if preferencesStore.isScannerShownForTheFirstTime {
+            view?.showInfoTooltip()
+            preferencesStore.isScannerShownForTheFirstTime = false
+        } else {
+            view?.startScanning()
+        }
     }
     
     func didFailToInitializeScanner() {
-        #warning("Add localized text")
-        view?.showErrorMessage("#Failed to initialize scanner", onConfirm: { [weak self] in
+        view?.showErrorMessage(localized("pl_scanAndPay_errorText_cameraError"), onConfirm: { [weak self] in
             self?.coordinator?.back(animated: true)
         })
+    }
+    
+    func didSelectGallery() {
+        view?.showImagePicker()
+    }
+    
+    func didSelectImage(_ image: UIImage?) {
+        guard let image = image, let detectedCode = qrCodeDetector.detectQrCodes(in: image).first else {
+            view?.showUnrecognizedCodeDialog()
+            view?.startScanning()
+            return
+        }
+        
+        handleCodeDetection(code: detectedCode)
+    }
+    
+    func didCaptureCode(_ code: String) {
+        handleCodeDetection(code: code)
     }
 }
 
@@ -67,5 +96,21 @@ private extension ScanAndPayScannerPresenter {
             self?.coordinator?.back(animated: false)
         }
         view?.showDialog(permissionsDeniedDialog)
+    }
+    
+    func handleCodeDetection(code: String) {
+        view?.stopScanning()
+        guard let transferModel = qrCodeParser.parse(string: code) else {
+            view?.showUnrecognizedCodeDialog()
+            view?.startScanning()
+            return
+        }
+        
+        showSummary(with: transferModel)
+    }
+    
+    func showSummary(with transferModel: QRTransferModel) {
+        view?.stopScanning()
+        #warning("todo: show summary, will be implemented in another PR")
     }
 }
