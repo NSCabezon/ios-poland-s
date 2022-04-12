@@ -99,8 +99,13 @@ extension SplitPaymentFormCoordinator: SplitPaymentFormCoordinatorProtocol {
 private extension SplitPaymentFormCoordinator {
     func setupDependencies() {
         
+        dependenciesEngine.register(for: PLValidatorProtocol.self) { resolver in
+            PLValidator()
+        }
         dependenciesEngine.register(for: SplitPaymentValidating.self) { resolver in
-            SplitPaymentValidator(dependenciesResolver: resolver)
+            let validator: PLValidatorProtocol = resolver.resolve(for: PLValidatorProtocol.self)
+            return SplitPaymentValidator(dependenciesResolver: resolver,
+                                         validator: validator)
         }
         dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
             ConfirmationDialogFactory()

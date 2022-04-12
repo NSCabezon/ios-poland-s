@@ -1,4 +1,5 @@
 import CoreFoundationLib
+import PLCommons
 
 protocol SplitPaymentValidating {
     func validateForm(
@@ -14,20 +15,23 @@ struct SplitPaymentValidator: SplitPaymentValidating {
     private let maxGrossTransferAmmount: Decimal
     private let maxVatRate: Int
     private var bankingUtils: BankingUtilsProtocol
-    
+    private let validator: PLValidatorProtocol
     private struct Constants {
         static let countryCode = "PL"
-        static let validationRegex = "^([0-9A-Za-ząęćółńśżźĄĘĆÓŁŃŚŻŹ\\-.:;,& ]*)$"
+        static let invoiceValidationRegex = "^([0-9A-Za-ząęćółńśżźĄĘĆÓŁŃŚŻŹ\\-.:;,& ]*)$"
+        static let nipValidationRegex = "^\\d{10}$"
     }
     
     init(dependenciesResolver: DependenciesResolver,
          accountRequiredLength: Int = 26,
          maxGrossTransferAmmount: Decimal = 100_000,
-         maxVatRate: Int = 23) {
+         maxVatRate: Int = 23,
+         validator: PLValidatorProtocol) {
         bankingUtils = dependenciesResolver.resolve()
         self.accountRequiredLength = accountRequiredLength
         self.maxGrossTransferAmmount = maxGrossTransferAmmount
         self.maxVatRate = maxVatRate
+        self.validator = validator
     }
     
     func validateForm(
@@ -116,7 +120,7 @@ private extension SplitPaymentValidator {
             return localized("pl_split_payment_invoice_title_max_length_error").text
         }
         
-        if !text.matches(Constants.validationRegex) {
+        if !text.matches(Constants.invoiceValidationRegex) {
             return localized("pl_split_payment_title_illegal_characters_error")
         }
         
@@ -124,10 +128,27 @@ private extension SplitPaymentValidator {
     }
     
     func validateNip(_ text: String?) -> String? {
-        guard let text = text, !text.isEmpty else {
-            return localized("pl_generic_validationText_thisFieldCannotBeEmpty").text
+        let result = validator.validateIdentificationNumber(text)
+        switch result {
+        case .success:
+            return nil
+        case .failure(let error):
+            var errorMessage = "#pl_split_payment_nip_error"
+            switch error {
+            case PLIdentificationNumberError.invalidType:
+                errorMessage = "#pl_split_payment_nip_invalid_type_error"
+            case PLIdentificationNumberError.illegalCharacter:
+                errorMessage = "#pl_split_payment_nip_invalid_illegal_character_error"
+            case PLIdentificationNumberError.invalidLength:
+                errorMessage = "#pl_split_payment_nip_invalid_length_error"
+            case PLIdentificationNumberError.empty:
+                errorMessage = "#pl_split_payment_nip_empty_error"
+            case PLIdentificationNumberError.invalidCheckSum:
+                errorMessage = "#pl_split_payment_nip_invalid_error"
+            }
+            
+            return errorMessage
         }
-        return nil
     }
     
     func validateText(_ text: String?) -> String? {

@@ -253,7 +253,7 @@ private extension SplitPaymentFormView {
     
     func configureNipField() {
         let formatter = UIFormattedCustomTextField()
-        formatter.setMaxLength(maxLength: 127)
+        formatter.setMaxLength(maxLength: PLTaxIdentifierType.NIP.length ?? 0)
         formatter.setAllowOnlyCharacters(.numbers)
         let configuration = LisboaTextField.WritableTextField(type: .simple,
                                                               formatter: formatter,
