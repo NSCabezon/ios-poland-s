@@ -10,7 +10,7 @@ import CoreDomain
 
 class PLChangeAliasManager: ProductAliasManagerProtocol {
 	func getProductAlias(for aliasType: ProductTypeEntity) -> ProductAlias? {
-		let regExp = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyząęćóøłńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
+		let regExp = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyząęćółńśżźĄĘĆÓŁŃŚŻŹ-.:,;/& ")
 
 		switch aliasType {
 		case .card: return ProductAlias(charSet: regExp, maxChars: 20)
