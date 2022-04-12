@@ -11,19 +11,25 @@ public struct ItemSelectorConfiguration<Item: SelectableItem> {
     public let sections: [ItemSelectorSection]
     public let selectedItem: Item?
     public let shouldPopControllerAfterSelection: Bool
+    public let shouldShowDialogBeforeClose: Bool
+    public let dialogMessage: String
 
     public init(
         navigationTitle: String,
         isSearchEnabled: Bool,
         sections: [ItemSelectorSection],
         selectedItem: Item?,
-        shouldPopControllerAfterSelection: Bool = true
+        shouldPopControllerAfterSelection: Bool = true,
+        shouldShowDialogBeforeClose: Bool = false,
+        dialogMessage: String = ""
     ) {
         self.navigationTitle = navigationTitle
         self.isSearchEnabled = isSearchEnabled
         self.sections = sections
         self.selectedItem = selectedItem
         self.shouldPopControllerAfterSelection = shouldPopControllerAfterSelection
+        self.shouldShowDialogBeforeClose = shouldShowDialogBeforeClose
+        self.dialogMessage = dialogMessage
     }
     
     public struct ItemSelectorSection {

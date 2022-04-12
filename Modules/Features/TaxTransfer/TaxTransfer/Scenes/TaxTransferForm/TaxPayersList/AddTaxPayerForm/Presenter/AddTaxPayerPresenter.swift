@@ -72,7 +72,7 @@ extension AddTaxPayerFormPresenter: AddTaxPayerViewDelegate {
         )
     }
     
-    func didEndEditing() {
+    func didUpdateText() {
         _ = isValid()
         refreshButtonView()
     }

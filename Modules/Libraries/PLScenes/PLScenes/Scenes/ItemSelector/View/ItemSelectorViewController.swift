@@ -6,9 +6,18 @@
 //
 
 import UI
+import PLUI
 import CoreFoundationLib
 
-final class ItemSelectorViewController<Item: SelectableItem>: UIViewController, UITableViewDelegate, UITableViewDataSource {
+protocol ItemSelectorView: AnyObject,
+                           ConfirmationDialogPresentable {
+    
+}
+
+final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
+                                                              UITableViewDelegate,
+                                                              UITableViewDataSource,
+                                                              ItemSelectorView {
     private let presenter: ItemSelectorPresenter<Item>
     
     private let searchView = ItemSearchView()

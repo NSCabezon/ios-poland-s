@@ -9,7 +9,7 @@ import CoreFoundationLib
 
 protocol AddTaxPayerFormViewDelegate: AnyObject {
     func didTapIdentifiersSelector()
-    func didEndEditing()
+    func didUpdateText()
 }
 
 final class AddTaxPayerFormContainerView: UIView {
@@ -133,7 +133,7 @@ final class AddTaxPayerFormContainerView: UIView {
 }
 
 extension AddTaxPayerFormContainerView: AddTaxPayerInfoViewDelegate {
-    func didEndEditing() {
-        delegate?.didEndEditing()
+    func didUpdateText() {
+        delegate?.didUpdateText()
     }
 }

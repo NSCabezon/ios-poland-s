@@ -5,21 +5,31 @@
 //  Created by 185167 on 10/02/2022.
 //
 
+import CoreFoundationLib
+import PLUI
+
 final class ItemSelectorPresenter<Item: SelectableItem> {
+    weak var view: ItemSelectorView?
+    
     private let coordinator: ItemSelectorCoordinator<Item>
     private let navigationTitle: String
     private let isSearchEnabled: Bool
     private let sectionViewModels: [SelectableItemSectionViewModel<Item>]
+    private let configuration: ItemSelectorConfiguration<Item>
+    private let dependenciesResolver: DependenciesResolver
     
     init(
         coordinator: ItemSelectorCoordinator<Item>,
         configuration: ItemSelectorConfiguration<Item>,
-        viewModelMapper: SelectableItemSectionViewModelMapper<Item>
+        viewModelMapper: SelectableItemSectionViewModelMapper<Item>,
+        dependenciesResolver: DependenciesResolver
     ) {
         self.coordinator = coordinator
         self.navigationTitle = configuration.navigationTitle
         self.isSearchEnabled = configuration.isSearchEnabled
         self.sectionViewModels = viewModelMapper.map(configuration)
+        self.configuration = configuration
+        self.dependenciesResolver = dependenciesResolver
     }
     
     func getNavigationTitle() -> String {
@@ -48,10 +58,27 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
     }
     
     func didTapClose() {
-        coordinator.close()
+        if configuration.shouldShowDialogBeforeClose {
+            let closeConfirmationDialog = confirmationDialogFactory.create(
+                message: configuration.dialogMessage,
+                confirmAction: { [weak self] in
+                    self?.coordinator.close()
+                },
+                declineAction: {}
+            )
+            view?.showDialog(closeConfirmationDialog)
+        } else {
+            coordinator.close()
+        }
+    }
+}
+
+private extension ItemSelectorPresenter {
+    var confirmationDialogFactory: ConfirmationDialogProducing {
+        return dependenciesResolver.resolve()
     }
     
-    private func getFilteredViewModels(with searchPhrase: String) -> [SelectableItemSectionViewModel<Item>] {
+    func getFilteredViewModels(with searchPhrase: String) -> [SelectableItemSectionViewModel<Item>] {
         return sectionViewModels.compactMap { section -> SelectableItemSectionViewModel<Item>? in
             let filteredItemViewModels = section.itemViewModels.filter {
                 $0.itemName.lowercased().contains(searchPhrase.lowercased())
