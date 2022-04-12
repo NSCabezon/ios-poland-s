@@ -58,7 +58,7 @@ final class AddTaxPayerFormValidator: AddTaxPayerFormValidating {
         if name.matches(Constants.payerNameRegex) {
             return nil
         } else {
-            return localized("#Wprowadzono niedozwolone znaki")
+            return localized("pl_taxTransfer_validation_forbiddenCharacter")
         }
     }
     

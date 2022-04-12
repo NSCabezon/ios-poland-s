@@ -34,9 +34,9 @@ final class TaxTransferSelectedPayerView: UIView {
         guard let taxIdentifier = viewModel.selectedInfo?.taxIdentifier,
               let value = viewModel.selectedInfo?.idType.displayableValue else { return }
         
-        taxIdentifierNumberLabel.attributedText = getAttributedText(key: "#Numer identyfikatora: ",
+        taxIdentifierNumberLabel.attributedText = getAttributedText(key: "pl_taxTransfer_text_identifierNumber",
                                                                     value: taxIdentifier)
-        taxIdentifierTypeLabel.attributedText = getAttributedText(key: "#Typ idenyfikatora: ",
+        taxIdentifierTypeLabel.attributedText = getAttributedText(key: "pl_taxTransfer_text_identifierType",
                                                                   value: value)
     }
 }

@@ -16,7 +16,7 @@ enum TaxTransferParticipantSelectorType {
         case .payer:
             return localized("pl_toolbar_title_Payee")
         case .payee:
-            return "#Odbiorca"
+            return localized("pl_toolbar_taxAuthority")
         }
     }
     
@@ -25,7 +25,7 @@ enum TaxTransferParticipantSelectorType {
         case .payer:
             return localized("pl_taxTransfer_text_payeesList")
         case .payee:
-            return "#Odbiorcy z Santander Internet:"
+            return localized("pl_taxTransfer_text_taxAuthoritiesDescription")
         }
     }
     
@@ -34,7 +34,7 @@ enum TaxTransferParticipantSelectorType {
         case .payer:
             return localized("pl_taxTransfer_button_choosePayee")
         case .payee:
-            return "#Inny odbiorca"
+            return localized("pl_taxTransfer_button_chooseTaxAuthority")
         }
     }
 }

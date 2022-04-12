@@ -45,11 +45,11 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
             .sorted { $0.name < $1.name }
             .filter { $0.isActive }
         let configuration = ItemSelectorConfiguration<TaxSymbol>(
-            navigationTitle: "#Symbol formularza",
+            navigationTitle: localized("pl_toolbar_formSymbol"),
             isSearchEnabled: true,
             sections: [
                 .init(
-                    sectionTitle: "#Wybierz symbol formularza:",
+                    sectionTitle: localized("pl_taxTransfer_text_chooseFormSymbol"),
                     items: taxSymbols
                 )
             ],

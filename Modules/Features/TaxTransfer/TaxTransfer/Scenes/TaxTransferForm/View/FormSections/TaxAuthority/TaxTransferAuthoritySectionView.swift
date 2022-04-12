@@ -6,6 +6,7 @@
 //
 
 import PLUI
+import CoreFoundationLib
 
 final class TaxTransferAuthoritySectionView: UIView {
     private lazy var taxAuthoritySection = getSectionContainer(with: taxAuthorityView)
@@ -82,7 +83,7 @@ private extension TaxTransferAuthoritySectionView {
     func getSectionContainer(with view: UIView) -> FormSectionContainer {
         return FormSectionContainer(
             containedView: view,
-            sectionTitle: "#Organ podatkowy"
+            sectionTitle: localized("pl_toolbar_taxAuthority")
         )
     }
 }
