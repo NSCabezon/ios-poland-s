@@ -11,7 +11,7 @@ import CoreFoundationLib
 protocol TaxTransferBillingPeriodFormDelegate: AnyObject {
     func didTapPeriodNumber()
     func didTapPeriodType()
-    func didEndEditing()
+    func didUpdateText()
 }
 
 final class TaxTransferBillingPeriodContainerView: UIView {
@@ -71,18 +71,6 @@ final class TaxTransferBillingPeriodContainerView: UIView {
         let periodType = periodSelector.getPeriodType()
         let periodNumber = periodNumberSelector.getPeriodNumber()
         let dayNumber = daySelector.getInputText()
-    
-        guard let periodType = periodType else {
-            return nil
-        }
-
-        if periodType.shouldChoosePeriodNumber, periodNumber == nil {
-            return nil
-        }
-
-        if periodType == .day, dayNumber.isEmpty {
-            return nil
-        }
         
         return TaxTransferBillingPeriodForm(
             year: year,
@@ -114,8 +102,8 @@ final class TaxTransferBillingPeriodContainerView: UIView {
 }
 
 extension TaxTransferBillingPeriodContainerView: TaxTransferBillingPeriodInputDelegate {
-    func didEndEditing() {
-        delegate?.didEndEditing()
+    func didUpdateText() {
+        delegate?.didUpdateText()
     }
 }
 

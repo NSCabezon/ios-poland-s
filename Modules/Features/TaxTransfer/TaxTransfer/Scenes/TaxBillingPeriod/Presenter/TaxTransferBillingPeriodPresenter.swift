@@ -81,7 +81,7 @@ extension TaxTransferBillingPeriodPresenter: TaxTransferFormBillingPeriodFormVie
         )
     }
     
-    func didEndEditing() {
+    func didUpdateText() {
         validate()
     }
 }
