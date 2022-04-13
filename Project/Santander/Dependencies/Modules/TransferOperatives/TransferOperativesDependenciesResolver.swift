@@ -56,8 +56,4 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     func resolve() -> PLAccountOtherOperativesInfoRepository {
         return oldResolver.resolve()
     }
-    
-    func opinatorCoordinator() -> BindableCoordinator {
-        return OpinatorWebViewCoordinator(dependencies: self)
-    }
 }
