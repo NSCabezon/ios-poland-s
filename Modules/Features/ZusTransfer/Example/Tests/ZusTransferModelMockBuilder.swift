@@ -14,7 +14,8 @@ struct ZusTransferModelMockBuilder {
                                       defaultForPayments: false,
                                       type: .PERSONAL,
                                       accountSequenceNumber: 2,
-                                      accountType: -101)
+                                      accountType: -101,
+                                      taxAccountNumber: "05109013620000000136623331")
         return ZusTransferModel(amount: 1500,
                                 title: "ZUS transfer",
                                 account: account,

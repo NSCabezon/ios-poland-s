@@ -23,7 +23,7 @@ final class RecipientMapperTests: XCTestCase {
     }
     
     func test_maping_dto_to_RecipientModel() throws {
-        let payeeList = try XCTUnwrap(RecipientsMockBuilder.getPayeeListDtoMock())
+        let payeeList = try XCTUnwrap(RecipientsBuilderMock.getPayeeListDtoMock())
         let SUT = try XCTUnwrap(SUT)
         let recipients = SUT.map(with: payeeList)
         XCTAssertTrue(!recipients.isEmpty)

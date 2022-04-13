@@ -1,28 +1,32 @@
 import CoreFoundationLib
+import PLCommonOperatives
 import CoreDomain
 import PLCommons
 import SANPLLibrary
 import XCTest
 @testable import ZusTransfer
 
-class ZusTransferConfirmationPresenterTests: XCTestCase {
+final class ZusTransferConfirmationPresenterTests: XCTestCase {
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
     private var SUT: ZusTransferConfirmationPresenterProtocol!
     private var view = ZusTransferConfirmationViewControllerMock()
-    private var coordinator: ZusTransferConfirmationCoordinatorMock?
-
+    private var coordinator = ZusTransferConfirmationCoordinatorMock()
+    private var authorizeMockUseCase: AuthorizeTransactionUseCaseMock?
+    private var acceptZusTransactionUseCaseMock: AcceptZusTransactionUseCaseMock?
+    
     override func setUp() {
         super.setUp()
         dependencies = DependenciesDefault()
         setUpDependencies()
         SUT = dependencies.resolve(for: ZusTransferConfirmationPresenterProtocol.self)
-        coordinator = dependencies.resolve(for: ZusTransferConfirmationCoordinatorProtocol.self) as? ZusTransferConfirmationCoordinatorMock
     }
     
     override func tearDown() {
         super.tearDown()
         dependencies = nil
         SUT = nil
+        authorizeMockUseCase = nil
+        acceptZusTransactionUseCaseMock = nil
     }
     
     func test_setViewModel_is_called() throws {
@@ -41,29 +45,28 @@ class ZusTransferConfirmationPresenterTests: XCTestCase {
     func test_confirm_called_use_case_success_should_start_showSummary_and_loader_hide() throws {
         SUT.confirmTapped()
         XCTAssertTrue(view.showLoaderCalled)
-        TestHelper.delay {
+        delayedTests { [unowned self] in
             XCTAssertTrue(self.view.hideLoaderCalled)
-            XCTAssertTrue(self.coordinator?.showSummaryCalled == true)
+            XCTAssertTrue(self.coordinator.showSummaryCalled)
         }
     }
     
     func test_goBack_called_should_start_pop_coordinator_function() throws {
         SUT.goBack()
-        TestHelper.delay {
-            XCTAssertTrue(self.coordinator?.popCalled == true)
-        }
+        XCTAssertTrue(coordinator.popCalled)
     }
     
     func test_goToTransfer_called_should_start_backToTransfer_coordinator_function() throws {
         SUT.backToTransfer()
-        TestHelper.delay {
-            XCTAssertTrue(self.coordinator?.backToTransferCalled == true)
-        }
+        XCTAssertTrue(coordinator.backToTransferCalled)
     }
 }
 
 private extension ZusTransferConfirmationPresenterTests {
     func setUpDependencies() {
+        dependencies.register(for: ZusTransferConfirmationCoordinatorProtocol.self) { [unowned self] _ in
+            self.coordinator
+        }
         dependencies.register(for: ZusTransferSendMoneyInputMapper.self) { resolver in
             ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
         }
@@ -79,14 +82,11 @@ private extension ZusTransferConfirmationPresenterTests {
         dependencies.register(for: UseCaseHandler.self) { _ in
             UseCaseHandler(maxConcurrentOperationCount: 8)
         }
-        dependencies.register(for: ZusTransferConfirmationCoordinatorProtocol.self) { _ in
-            ZusTransferConfirmationCoordinatorMock()
-        }
         dependencies.register(for: PLManagersProviderProtocol.self) { resolver in
             PLManagersProviderMock(dependenciesResolver: resolver)
         }
-        dependencies.register(for: AcceptZusTransactionProtocol.self) { resolver in
-            AcceptZusTransactionUseCase(dependenciesResolver: resolver)
+        dependencies.register(for: AcceptZusTransactionProtocol.self) { _ in
+            AcceptZusTransactionUseCaseMock()
         }
         dependencies.register(for: ZusTransferSendMoneyInputMapping.self) { resolver in
             ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
@@ -105,6 +105,12 @@ private extension ZusTransferConfirmationPresenterTests {
         }
         dependencies.register(for: PLTransfersRepository.self) { resolver in
             PLTransfersRepositoryMock()
+        }
+        dependencies.register(for: AuthorizeTransactionUseCaseProtocol.self) { _ in
+            AuthorizeTransactionUseCaseMock()
+        }
+        dependencies.register(for: ChallengesHandlerDelegate.self) { resolver in
+            PLAuthorizationCoordinatorMock()
         }
     }
 }

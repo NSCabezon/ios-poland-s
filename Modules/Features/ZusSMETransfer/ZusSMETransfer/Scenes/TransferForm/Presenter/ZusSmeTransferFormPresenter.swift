@@ -15,6 +15,7 @@ protocol ZusSmeTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusSmeT
     func getAccountRequiredLength() -> Int
     func showRecipientSelection()
     func checkIfHaveEnoughFounds(transferAmount: Decimal, completion: @escaping () -> Void)
+    func showConfirmation()
 }
 
 protocol ZusSmeTransferFormAccountSelectable: AnyObject {
@@ -130,10 +131,20 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
         transferFormViewModel = nil
     }
     
-    private func showErrorView() {
-        view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: { [weak self] in
-            self?.coordinator.closeProcess()
-        })
+    func showConfirmation() {
+        guard let account = getSelectedAccountViewModel(),
+              let transferFormViewModel = transferFormViewModel else { return }
+        let model = ZusSmeTransferModel(
+            amount: transferFormViewModel.amount ?? 0,
+            title: transferFormViewModel.title,
+            account: account,
+            accountVat: vatAccountDetails,
+            recipientName: transferFormViewModel.recipient,
+            recipientAccountNumber: transferFormViewModel.recipientAccountNumber,
+            transactionType: .zusTransfer,
+            date: transferFormViewModel.date
+        )
+        coordinator.showConfiramtion(model: model)
     }
     
     func startValidation(with field: TransferFormCurrentActiveField) {
@@ -183,6 +194,12 @@ private extension ZusSmeTransferFormPresenter {
             return accounts.first
         }
         return accounts.first(where: { $0.number == selectedAccountNumber })
+    }
+    
+    func showErrorView() {
+        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
+            self?.coordinator.closeProcess()
+        })
     }
 }
 

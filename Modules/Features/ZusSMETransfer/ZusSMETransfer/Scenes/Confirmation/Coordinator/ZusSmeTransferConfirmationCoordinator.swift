@@ -1,4 +1,3 @@
-
 import UI
 import PLUI
 import CoreFoundationLib
@@ -7,50 +6,50 @@ import SANPLLibrary
 import PLCryptography
 import PLCommonOperatives
 
-public protocol ZusTransferConfirmationCoordinatorProtocol {
+protocol ZusSmeTransferConfirmationCoordinatorProtocol {
     func pop()
     func backToTransfer()
-    func showSummary(with model: ZusTransferSummary)
+    func showSummary(with model: ZusSmeSummaryModel)
 }
 
-public final class ZusTransferConfirmationCoordinator: ModuleCoordinator {
-    public weak var navigationController: UINavigationController?
+final class ZusSmeTransferConfirmationCoordinator {
+    private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-    private let model: ZusTransferModel
+    private let model: ZusSmeTransferModel
 
     init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
-         model: ZusTransferModel) {
+         model: ZusSmeTransferModel) {
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
         self.navigationController = navigationController
         self.model = model
         setupDependencies()
     }
     
-    public func start() {
-        let controller =  dependenciesEngine.resolve(for: ZusTransferConfirmationViewController.self)
+    func start() {
+        let controller =  dependenciesEngine.resolve(for: ZusSmeTransferConfirmationViewController.self)
         navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-private extension ZusTransferConfirmationCoordinator {
+private extension ZusSmeTransferConfirmationCoordinator {
     func setupDependencies() {
-        dependenciesEngine.register(for: ZusTransferConfirmationCoordinatorProtocol.self) { _ in
+        dependenciesEngine.register(for: ZusSmeTransferConfirmationCoordinatorProtocol.self) { _ in
             self
         }
-        dependenciesEngine.register(for: ZusTransferConfirmationPresenterProtocol.self) { [weak self] resolver in
-            ZusTransferConfirmationPresenter(dependenciesResolver: resolver, model: self?.model)
+        dependenciesEngine.register(for: ZusSmeTransferConfirmationPresenterProtocol.self) { [weak self] resolver in
+            ZusSmeTransferConfirmationPresenter(dependenciesResolver: resolver, model: self?.model)
         }
-        dependenciesEngine.register(for: ZusTransferConfirmationViewController.self) { resolver in
-            var presenter = resolver.resolve(for: ZusTransferConfirmationPresenterProtocol.self)
-            let viewController =  ZusTransferConfirmationViewController(
+        dependenciesEngine.register(for: ZusSmeTransferConfirmationViewController.self) { resolver in
+            var presenter = resolver.resolve(for: ZusSmeTransferConfirmationPresenterProtocol.self)
+            let viewController =  ZusSmeTransferConfirmationViewController(
                 presenter: presenter
             )
             presenter.view = viewController
             return viewController
         }
-        dependenciesEngine.register(for: AcceptZusTransactionProtocol.self) { resolver in
-            AcceptZusTransactionUseCase(dependenciesResolver: resolver)
+        dependenciesEngine.register(for: AcceptZusSmeTransactionProtocol.self) { resolver in
+            AcceptZusSmeTransactionUseCase(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: PLTrustedHeadersGenerable.self) { resolver in
              PLTrustedHeadersProvider(dependenciesResolver: resolver)
@@ -61,17 +60,14 @@ private extension ZusTransferConfirmationCoordinator {
         dependenciesEngine.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
              PLTransactionParametersProvider(dependenciesResolver: resolver)
         }
-        dependenciesEngine.register(for: ZusTransferSummaryMapping.self) { _ in
-            ZusTransferSummaryMapper()
+        dependenciesEngine.register(for: ZusSmeTransferSummaryMapping.self) { _ in
+            ZusSmeTransferSummaryMapper()
         }
-        dependenciesEngine.register(for: ZusTransferSendMoneyInputMapping.self) { resolver in
+        dependenciesEngine.register(for: ZusSmeTransferSendMoneyInputMapping.self) { resolver in
             ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: PenndingChallengeUseCaseProtocol.self) { resolver in
             PenndingChallengeUseCase(dependenciesResolver: resolver)
-        }
-        dependenciesEngine.register(for: ZusPrepareChallengeUseCaseProtocol.self) { resolver in
-            ZusPrepareChallengeUseCase(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: NotifyDeviceUseCaseProtocol.self) { resolver in
             NotifyDeviceUseCase(dependenciesResolver: resolver)
@@ -85,20 +81,20 @@ private extension ZusTransferConfirmationCoordinator {
     }
 }
 
-extension ZusTransferConfirmationCoordinator: ZusTransferConfirmationCoordinatorProtocol {
+extension ZusSmeTransferConfirmationCoordinator: ZusSmeTransferConfirmationCoordinatorProtocol {
 
-    public func pop() {
+    func pop() {
         navigationController?.popViewController(animated: true)
     }
 
-    public func backToTransfer() {
+    func backToTransfer() {
         let accountSelectorViewControllerIndex = navigationController?.viewControllers.firstIndex {
             $0 is AccountSelectorViewController
         }
         guard let accountSelectorViewControllerIndex = accountSelectorViewControllerIndex,
               let parentController = navigationController?.viewControllers[safe: accountSelectorViewControllerIndex - 1] else {
             let zusTransferFormViewControllerIndex = navigationController?.viewControllers.firstIndex {
-                $0 is ZusTransferFormViewController
+                $0 is ZusSmeTransferFormViewController
             }
             if let zusTransferFormViewControllerIndex = zusTransferFormViewControllerIndex,
                let parentController = navigationController?.viewControllers[safe: zusTransferFormViewControllerIndex - 1] {
@@ -112,11 +108,8 @@ extension ZusTransferConfirmationCoordinator: ZusTransferConfirmationCoordinator
         navigationController?.popToViewController(parentController, animated: true)
     }
     
-    public func showSummary(with model: ZusTransferSummary) {
-        let coordinator = ZusTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
-                                                        navigationController: navigationController,
-                                                        summary: model)
-        coordinator.start()
+    func showSummary(with model: ZusSmeSummaryModel) {
+       //TODO: summary 
     }
 }
 

@@ -8,6 +8,7 @@ final class RecipientSelectionViewControllerMock: UIViewController, RecipientSel
     var hideLoaderCalled = false
     var showServiceInaccessibleMessageCalled = false
     var showErrorMessageCalled = false
+    var onConfirmSetViewModel: (() -> Void)?
     
     func setViewModel(_ viewModel: RecipientSelectionViewModel) {
         setViewModelCalled = true
@@ -19,6 +20,7 @@ final class RecipientSelectionViewControllerMock: UIViewController, RecipientSel
     
     func hideLoader(completion: (() -> Void)?) {
         hideLoaderCalled = true
+        completion?()
     }
     
     func showDialog(_ dialog: LisboaDialog) {
@@ -27,10 +29,12 @@ final class RecipientSelectionViewControllerMock: UIViewController, RecipientSel
     
     func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {
         showServiceInaccessibleMessageCalled = true
+        onConfirm?()
     }
     
     func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {
         showErrorMessageCalled  = true
+        onConfirm?()
     }
     
     func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {}

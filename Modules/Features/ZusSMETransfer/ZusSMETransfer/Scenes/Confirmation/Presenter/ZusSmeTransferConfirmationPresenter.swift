@@ -5,19 +5,19 @@ import PLCommons
 import SANPLLibrary
 import PLCommonOperatives
 
-protocol ZusTransferConfirmationPresenterProtocol {
-    var view: ZusTransferConfirmationViewControllerProtocol? { get set }
+protocol ZusSmeTransferConfirmationPresenterProtocol {
+    var view: ZusSmeTransferConfirmationViewControllerProtocol? { get set }
     func goBack()
     func backToTransfer()
     func confirmTapped()
     func viewDidLoad()
 }
 
-final class ZusTransferConfirmationPresenter {
-    var view: ZusTransferConfirmationViewControllerProtocol?
+final class ZusSmeTransferConfirmationPresenter {
+    var view: ZusSmeTransferConfirmationViewControllerProtocol?
     private let dependenciesResolver: DependenciesResolver
-    private let model: ZusTransferModel?
-    private var coordinator: ZusTransferConfirmationCoordinatorProtocol {
+    private let model: ZusSmeTransferModel?
+    private var coordinator: ZusSmeTransferConfirmationCoordinatorProtocol {
         dependenciesResolver.resolve()
     }
     private var authorizationHandler: ChallengesHandlerDelegate {
@@ -26,19 +26,17 @@ final class ZusTransferConfirmationPresenter {
     private var useCaseHandler: UseCaseHandler {
         dependenciesResolver.resolve()
     }
-    private var acceptZusTransactionUseCase: AcceptZusTransactionProtocol {
+    private var acceptZusTransactionUseCase: AcceptZusSmeTransactionProtocol {
         dependenciesResolver.resolve()
     }
     private var penndingChallengeUseCase: PenndingChallengeUseCaseProtocol {
         dependenciesResolver.resolve()
     }
-    private var prepareChallengeUseCase: ZusPrepareChallengeUseCaseProtocol {
-        dependenciesResolver.resolve()
-    }
+
     private var notifyDeviceUseCase: NotifyDeviceUseCaseProtocol {
         dependenciesResolver.resolve()
     }
-    private var zusTransferSendMoneyInputMapper: ZusTransferSendMoneyInputMapping {
+    private var zusTransferSendMoneyInputMapper: ZusSmeTransferSendMoneyInputMapping {
         dependenciesResolver.resolve(for: ZusTransferSendMoneyInputMapper.self)
     }
     private var managersProvider: PLManagersProviderProtocol {
@@ -49,18 +47,18 @@ final class ZusTransferConfirmationPresenter {
     }
     
     init(dependenciesResolver: DependenciesResolver,
-         model: ZusTransferModel?) {
+         model: ZusSmeTransferModel?) {
         self.dependenciesResolver = dependenciesResolver
         self.model = model
     }
     
     private func prepareViewModel() {
         guard let model = model else { return }
-        view?.setViewModel(ZusTransferConfirmationViewModel(transfer: model))
+        view?.setViewModel(ZusSmeTransferConfirmationViewModel(transfer: model))
     }
 }
 
-extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProtocol {
+extension ZusSmeTransferConfirmationPresenter: ZusSmeTransferConfirmationPresenterProtocol {
     func goBack() {
         coordinator.pop()
     }
@@ -93,12 +91,12 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
-                    if let noConnectionError = AcceptZusTransactionErrorResult(rawValue: error.getErrorDesc() ?? "") {
+                    if let noConnectionError = AcceptZusSmeTransactionErrorResult(rawValue: error.getErrorDesc() ?? "") {
                         self?.showErrorMessage(error: noConnectionError.rawValue)
                         return
                     }
                     let plError = error.getPLErrorDTO()
-                    let zusError = ZusTransferError(with: plError)
+                    let zusError = ZusSmeTransferError(with: plError)
                     self?.showErrorMessage(error: zusError?.errorResult.rawValue ?? "")
                 }
             }
@@ -151,7 +149,7 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
     }
     
     func showErrorMessage(error: String) {
-        let errorResult = AcceptZusTransactionErrorResult(rawValue: error)
+        let errorResult = AcceptZusSmeTransactionErrorResult(rawValue: error)
         switch errorResult {
         case .noConnection:
             self.showError(with: "pl_generic_alert_textUnstableConnection")

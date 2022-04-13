@@ -50,4 +50,12 @@ final class PLTransfersManagerSuccessMock: PLTransfersManagerProtocol {
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
         fatalError()
     }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
+        fatalError()
+    }
 }
