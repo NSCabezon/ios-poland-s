@@ -97,22 +97,28 @@ private extension ContactsPresenter {
     
     func verifyContacts(_ contacts: [MobileContact]) {
         let phoneNumbers = contacts.map { $0.phoneNumber }
-        
-        Scenario(useCase: verifyContactsUseCase, input: .init(phoneNumbers: phoneNumbers))
-            .execute(on: useCaseHandler)
-            .onSuccess {[weak self] numbers in
+        let phoneNumbersChunked = phoneNumbers.chunks(1000)
+        var output: [HashedNumberMetadata] = []
+        let multiScenario = MultiScenario(handledOn: dependenciesResolver.resolve())
+        for phonePackage in phoneNumbersChunked {
+            multiScenario.addScenario(Scenario(useCase: verifyContactsUseCase, input: .init(phoneNumbers: phonePackage))) {  (_, scenarioOutput, _) in
+                output.append(contentsOf: scenarioOutput.phoneNumbers)
+            }
+        }
+        multiScenario
+            .asScenarioHandler()
+            .onSuccess { [weak self] in
                 self?.view?.hideLoader {
                     let filteredContacts = contacts.filter { contact in
-                        numbers.phoneNumbers.contains { $0.unformattedNumber == contact.phoneNumber }
+                        output.contains { $0.unformattedNumber == contact.phoneNumber }
                     }
-
                     self?.view?.showEmptyView(filteredContacts.isEmpty)
                     guard let viewModels = self?.viewModelMapper.map(contacts: filteredContacts),
                           !viewModels.isEmpty else { return }
                     self?.view?.setViewModels(viewModels)
                 }
             }
-            .onError {[weak self] _ in
+            .onError { [weak self] _ in
                 self?.view?.hideLoader {
                     self?.handleServiceInaccessible()
                 }
