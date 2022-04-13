@@ -29,6 +29,7 @@ import GlobalPosition
 import ZusSMETransfer
 import SplitPayment
 import ScanAndPay
+import Authorization
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -145,6 +146,12 @@ final class AppNavigationDependencies {
         }
         dependenciesEngine.register(for: ZusSmeTransferDataLoaderCoordinatorProtocol.self) { resolver in
             return ZusSmeTransferDataLoaderCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
+        dependenciesEngine.register(for: AuthorizationCoordinatorProtocol.self) { resolver in
+            AuthorizationCoordinator(
                 dependenciesResolver: resolver,
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
