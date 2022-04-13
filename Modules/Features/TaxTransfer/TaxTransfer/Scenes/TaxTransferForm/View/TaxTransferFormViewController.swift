@@ -93,7 +93,7 @@ private extension TaxTransferFormViewController {
     }
     
     func configureNavigationItem() {
-        NavigationBarBuilder(style: .white, title: .title(key: "#Przelew podatkowy"))
+        NavigationBarBuilder(style: .white, title: .title(key: "pl_toolbar_title_taxTransfer"))
             .setLeftAction(.back(action: #selector(back)))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
@@ -133,7 +133,7 @@ private extension TaxTransferFormViewController {
     
     func configureBottomView() {
         bottomButtonView.disableButton()
-        bottomButtonView.configure(title: "#Gotowe") { [weak self] in
+        bottomButtonView.configure(title: localized("pl_generic_button_done")) { [weak self] in
             guard let data = self?.formView.getFormFields() else { return }
             self?.presenter.didTapDone(with: data)
         }

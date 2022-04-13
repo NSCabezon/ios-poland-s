@@ -42,11 +42,11 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		64195A9C1CA2887FBF7A9607 /* Pods-ScanAndPay_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScanAndPay_Example.debug.xcconfig"; path = "Target Support Files/Pods-ScanAndPay_Example/Pods-ScanAndPay_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		7740A61A8DC355768034B31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		7740A61A8DC355768034B31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		871B05B088DAFFE2A841EDF1 /* Pods_ScanAndPay_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScanAndPay_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF1D6D1358BB3AEA8006667 /* Pods-ScanAndPay_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScanAndPay_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ScanAndPay_Tests/Pods-ScanAndPay_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		E01C732CB9C7FAA6994999CB /* ScanAndPay.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = ScanAndPay.podspec; path = ../ScanAndPay.podspec; sourceTree = "<group>"; };
-		FA05ED969DB5AF4673F3E38F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		E01C732CB9C7FAA6994999CB /* ScanAndPay.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ScanAndPay.podspec; path = ../ScanAndPay.podspec; sourceTree = "<group>"; };
+		FA05ED969DB5AF4673F3E38F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,6 @@
 				CAF1D6D1358BB3AEA8006667 /* Pods-ScanAndPay_Tests.debug.xcconfig */,
 				5DF59D8215850520DF499EC1 /* Pods-ScanAndPay_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -213,10 +212,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 2RUZA39YH6;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 2RUZA39YH6;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -227,6 +228,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -478,6 +480,7 @@
 			baseConfigurationReference = 64195A9C1CA2887FBF7A9607 /* Pods-ScanAndPay_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2RUZA39YH6;
 				INFOPLIST_FILE = ScanAndPay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -493,6 +496,7 @@
 			baseConfigurationReference = 484BF6E3357D8C1ECE88FED5 /* Pods-ScanAndPay_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2RUZA39YH6;
 				INFOPLIST_FILE = ScanAndPay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -507,6 +511,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CAF1D6D1358BB3AEA8006667 /* Pods-ScanAndPay_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 2RUZA39YH6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -529,6 +534,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5DF59D8215850520DF499EC1 /* Pods-ScanAndPay_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 2RUZA39YH6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",

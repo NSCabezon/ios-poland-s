@@ -10,6 +10,7 @@ import UI
 import BLIK
 import Transfer
 import PhoneTopUp
+import ScanAndPay
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?
@@ -40,7 +41,8 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         case .fxExchange:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .scanPay:
-            ToastCoordinator("generic_alert_notAvailableOperation").start()
+            let coordinator = oldResolver.resolve(for: ScanAndPayScannerCoordinatorProtocol.self)
+            coordinator.start()
         case .topUpPhone:
             let coordinator = oldResolver.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
             coordinator.start()

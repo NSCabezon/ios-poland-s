@@ -7,7 +7,7 @@
 
 struct TaxTransferBillingPeriodForm {
     let year: String
-    let periodType: TaxTransferBillingPeriodType
+    let periodType: TaxTransferBillingPeriodType?
     let day: String?
     let periodNumber: Int?
 }

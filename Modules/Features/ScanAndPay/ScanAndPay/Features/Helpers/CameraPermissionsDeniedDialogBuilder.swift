@@ -5,10 +5,8 @@ import PLUI
 
 final class CameraPermissionsDeniedDialogBuilder {
     func buildDialog(closeAction: @escaping () -> Void) -> LisboaDialog {
-        #warning("change text and images")
-        let title: LocalizedStylableText = localized("#Dostęp do galerii zdjęć i aparatu")
-        let info: LocalizedStylableText = localized("Aby korzystać z funkcji Skanuj i płać, zezwól aplikacji na dostęp do galerii zdjęć i aparatu.")
-        let infoBold: LocalizedStylableText = localized("Po kliknięciu przycisku „Przejdź do ustawień” przeniesiemy Cię do ustawień Twojego telefonu. ")
+        let title: LocalizedStylableText = localized("pl_scanAndPay_popupTitle_accessNeeded")
+        let info: LocalizedStylableText = localized("pl_scanAndPay_popupText_accessNeeded")
         
         let items: [LisboaDialogItem] = [
             .closeAction({
@@ -32,18 +30,10 @@ final class CameraPermissionsDeniedDialogBuilder {
                       alignament: .center,
                       margins: (left: 28.0, right: 28.0))
             ),
-            .margin(18),
-            .styledText(
-                .init(text: infoBold,
-                      font: .santander(family: .micro, type: .bold, size: 16),
-                      color: .lisboaGray,
-                      alignament: .center,
-                      margins: (left: 28.0, right: 28.0))
-            ),
             .margin(32),
             .verticalAction(
                 VerticalLisboaDialogAction(
-                    title: localized("#Przejdź do ustawień"),
+                    title: localized("pl_scanAndPay_button_goToSettings"),
                     type: .red, margins: (left: 16, right: 16),
                     isCancelAction: false,
                     action: {

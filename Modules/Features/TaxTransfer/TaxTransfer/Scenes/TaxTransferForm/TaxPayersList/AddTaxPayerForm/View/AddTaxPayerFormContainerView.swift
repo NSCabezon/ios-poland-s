@@ -5,9 +5,11 @@
 //  Created by 187831 on 03/02/2022.
 //
 
+import CoreFoundationLib
+
 protocol AddTaxPayerFormViewDelegate: AnyObject {
     func didTapIdentifiersSelector()
-    func didEndEditing()
+    func didUpdateText()
 }
 
 final class AddTaxPayerFormContainerView: UIView {
@@ -17,13 +19,13 @@ final class AddTaxPayerFormContainerView: UIView {
     private let identifierSelector = AddTaxPayerIdentifierSelectorView()
     private let identifierNumber = AddTaxPayerInfoView(
         with: AddTaxPayerFormConfiguration(
-            info: "#Numer identyfikatora",
+            info: localized("pl_taxTransfer_text_identifierNumber"),
             charactersLimit: nil)
     )
     
     private let payerName = AddTaxPayerInfoView(
         with: AddTaxPayerFormConfiguration(
-            info: "#Nazwa płatnika",
+            info: localized("pl_taxTransfer_text_payeesName"),
             charactersLimit: 50)
     )
     
@@ -131,7 +133,7 @@ final class AddTaxPayerFormContainerView: UIView {
 }
 
 extension AddTaxPayerFormContainerView: AddTaxPayerInfoViewDelegate {
-    func didEndEditing() {
-        delegate?.didEndEditing()
+    func didUpdateText() {
+        delegate?.didUpdateText()
     }
 }

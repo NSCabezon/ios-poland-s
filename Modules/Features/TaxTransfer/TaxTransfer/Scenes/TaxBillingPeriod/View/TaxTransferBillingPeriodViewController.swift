@@ -8,11 +8,12 @@
 import UI
 import PLUI
 import CoreFoundationLib
+import IQKeyboardManagerSwift
 
 protocol TaxTransferFormBillingPeriodFormViewDelegate: AnyObject {
     func didTapPeriodType()
     func didTapPeriodNumber()
-    func didEndEditing()
+    func didUpdateText()
 }
 
 protocol TaxTransferFormBillingPeriodFormView: AnyObject,
@@ -53,6 +54,7 @@ final class TaxTransferBillingPeriodViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationItem()
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     private func setUp() {
@@ -60,6 +62,7 @@ final class TaxTransferBillingPeriodViewController: UIViewController {
         configureSubviews()
         configureBottomView()
         configureDelegate()
+        configureKeyboardDismissGesture()
     }
     
     private func configureNavigationItem() {
@@ -122,8 +125,8 @@ extension TaxTransferBillingPeriodViewController: TaxTransferBillingPeriodFormDe
         delegate?.didTapPeriodNumber()
     }
     
-    func didEndEditing() {
-        delegate?.didEndEditing()
+    func didUpdateText() {
+        delegate?.didUpdateText()
     }
 }
 

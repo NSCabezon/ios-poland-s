@@ -7,10 +7,11 @@
 
 import UI
 import PLUI
+import IQKeyboardManagerSwift
 
 protocol AddTaxPayerViewDelegate: AnyObject {
     func didTapIdentifiersSelector()
-    func didEndEditing()
+    func didUpdateText()
 }
 
 protocol AddTaxPayerFormView: AnyObject,
@@ -49,6 +50,8 @@ final class AddTaxPayerFormViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationItem()
+        configureKeyboardDismissGesture()
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     func setUp(with identifier: Selectable<TaxIdentifierType>) {
@@ -126,8 +129,8 @@ extension AddTaxPayerFormViewController: AddTaxPayerFormViewDelegate {
         delegate?.didTapIdentifiersSelector()
     }
     
-    func didEndEditing() {
-        delegate?.didEndEditing()
+    func didUpdateText() {
+        delegate?.didUpdateText()
     }
 }
 

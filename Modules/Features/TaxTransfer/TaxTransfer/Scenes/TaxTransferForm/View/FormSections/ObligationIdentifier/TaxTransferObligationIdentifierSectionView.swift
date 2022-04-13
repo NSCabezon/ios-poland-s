@@ -80,10 +80,10 @@ private extension TaxTransferObligationIdentifierSectionView {
     }
     
     func getSectionContainer() -> FormSectionContainer {
-        let infoButtonText = "#Identyfikacja zobowiązania-wpisz rodzaj dokumentu, np. decyzja, tytuł wykonawczy, postanowienie."
+        let infoButtonText: String = localized("pl_taxTransfer_tooltip_financialObligationId")
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: "#Identyfikacja zobowiązania",
+            sectionTitle: localized("pl_taxTransfer_tooltip_financialObligationIdTitle"),
             infoButtonMode: .enabled(infoButtonText)
         )
     }
@@ -91,7 +91,7 @@ private extension TaxTransferObligationIdentifierSectionView {
     func configureStyling() {
         let formatter = UIFormattedCustomTextField()
         formatter.setMaxLength(maxLength: 40)
-        obligationIdentifier.textField.placeholder = "#Identyfikacja zobowiązania"
+        obligationIdentifier.textField.placeholder = localized("pl_taxTransfer_label_financialObligationId")
         obligationIdentifier.textField.setEditingStyle(
             .writable(
                 configuration: .init(
@@ -107,7 +107,7 @@ private extension TaxTransferObligationIdentifierSectionView {
             )
         )
         
-        charactersLimit.text = "#Maksymalnie 40 znaków"
+        charactersLimit.text = localized("pl_taxTransfer_validation_maximumLength")
         charactersLimit.textColor = .brownishGray
         charactersLimit.font = .santander(
             family: .micro,

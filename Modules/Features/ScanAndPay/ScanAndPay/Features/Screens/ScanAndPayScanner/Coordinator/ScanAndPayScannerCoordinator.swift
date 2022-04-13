@@ -32,6 +32,14 @@ public final class ScanAndPayScannerCoordinator: ScanAndPayScannerCoordinatorPro
     // MARK: SetUp
     
     private func setupDependencies() {
+        self.dependenciesEngine.register(for: PreferencesStoreProtocol.self) { _ in
+            return PreferencesStore()
+        }
+        
+        self.dependenciesEngine.register(for: QRCodeDetectorProtocol.self) { _ in
+            return QRCodeDetector()
+        }
+
         self.dependenciesEngine.register(for: CameraPermissionsManagerProtocol.self) { _ in
             return CameraPermissionsManager()
         }
