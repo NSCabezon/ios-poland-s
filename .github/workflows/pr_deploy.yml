@@ -1,4 +1,4 @@
-name: QA Deploy Poland
+name: QA Deploy
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     if: ${{ github.event.label.name == 'deploy' }}
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,14 +24,23 @@ jobs:
           key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gem-
-
+      
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
           bundler-cache: true
+      
+      - name: Cache Pods packages
+        uses: actions/cache@v2
+        with:
+          path: Project/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('Project/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
 
       - name: Pod Install
-        run: cd Project && bundle exec pod update
+        working-directory: ./Project
+        run: bundle exec pod install
 
       - name: Compile to Appium Intern
         run: |
@@ -39,11 +48,8 @@ jobs:
           mv Build/Products/Intern-Debug-iphonesimulator/*.app INTERN.app
           zip -vr INTERN.zip INTERN.app/ -x "*.DS_Store"
         
-
       - uses: actions/upload-artifact@v2
         with:
           name: Intern App
           path: INTERN.zip
           if-no-files-found: error
-
-        
