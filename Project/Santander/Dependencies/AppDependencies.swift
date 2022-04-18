@@ -172,6 +172,7 @@ final class AppDependencies {
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
         self.ibanFormatter = ShareIbanFormatter()
+        
         registerDependencies()
     }
 }
