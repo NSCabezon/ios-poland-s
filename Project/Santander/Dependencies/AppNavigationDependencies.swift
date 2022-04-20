@@ -28,6 +28,8 @@ import ZusTransfer
 import GlobalPosition
 import ZusSMETransfer
 import SplitPayment
+import ScanAndPay
+import Authorization
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -123,14 +125,18 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: LoanScheduleModuleCoordinator.self) { resolver in
             return LoanScheduleModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
-        dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { resolver in
+        dependenciesEngine.register(for: TopUpDataLoaderCoordinatorProtocol.self) { [weak self] resolver in
             let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
             let settingsDto = repository.get()?.topup ?? []
             let topUpSettings = settingsDto
                 .compactMap({ TopUpOperatorSettings(operatorId: $0.id, defaultTopUpValue: $0.defValue, requestAcceptance: $0.reqAcceptance) })
             return TopUpDataLoaderCoordinator(dependenciesResolver: resolver,
-                                              navigationController: self.drawer.currentRootViewController as? UINavigationController,
+                                              navigationController: self?.drawer.currentRootViewController as? UINavigationController,
                                               settings: topUpSettings)
+        }
+        dependenciesEngine.register(for: ScanAndPayScannerCoordinatorProtocol.self) { [weak self] resolver in
+            return ScanAndPayScannerCoordinator(dependenciesResolver: resolver,
+                                                navigationController: self?.drawer.currentRootViewController as? UINavigationController)
         }
         dependenciesEngine.register(for: ZusTransferModuleCoordinatorProtocol.self) { resolver in
             return ZusTransferModuleCoordinator(
@@ -140,6 +146,12 @@ final class AppNavigationDependencies {
         }
         dependenciesEngine.register(for: ZusSmeTransferDataLoaderCoordinatorProtocol.self) { resolver in
             return ZusSmeTransferDataLoaderCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
+        dependenciesEngine.register(for: AuthorizationCoordinatorProtocol.self) { resolver in
+            AuthorizationCoordinator(
                 dependenciesResolver: resolver,
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
@@ -157,6 +169,11 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: PLApplePayEnrollmentManagerProtocol.self) { _ in
             return self.applePayEnrollmentManager
         }
+        
+        dependenciesEngine.register(for: OnlineAdvisorCoordinatorProtocol.self) { resolver in
+            return OnlineAdvisorCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+            
         dependenciesEngine.register(for: SplitPaymentModuleCoordinatorProtocol.self) { resolver in
             return SplitPaymentModuleCoordinator(dependenciesResolver: resolver,
                                                  navigationController: self.drawer.currentRootViewController as? UINavigationController)

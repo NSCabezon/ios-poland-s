@@ -16,8 +16,8 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         view = ZusTransferFormViewMock()
         setUpDependencies()
         sut = dependencies?.resolve(for: ZusTransferFormPresenter.self)
-        coordinator = dependencies?.resolve(for: ZusTransferFormCoordinatorProtocol.self) as? ZusTransferFormCoordinatorMock
     }
+    
     override func tearDown() {
         sut = nil
         dependencies = nil
@@ -28,20 +28,15 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     
     func test_showAccountSelector_is_called() throws {
         let sut = try XCTUnwrap(sut)
-        let coordinator = try XCTUnwrap(coordinator)
         sut.showAccountSelector()
-        TestHelper.delay {
-            XCTAssertTrue(coordinator.showAccountSelectorCalled)
-        }
+        XCTAssert(coordinator?.showAccountSelectorCalled == true)
     }
-    
+
     func test_showConfirmation_is_called() throws {
         let sut = try XCTUnwrap(sut)
-        let coordinator = try XCTUnwrap(coordinator)
+        sut.updateTransferFormViewModel(with: ZusTransferFormViewModelMockBuilder.getZusTransferFormViewModel())
         sut.showConfirmation()
-        TestHelper.delay {
-            XCTAssertTrue(coordinator.showConfirmationCalled)
-        }
+        XCTAssert(coordinator?.showConfirmationCalled == true)
     }
     
     func test_getting_selected_account_view_models() throws {
@@ -65,22 +60,18 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         XCTAssertEqual(selectedAccountNumber, "12123412341234123412341234")
     }
     
-    func test_goBack_called_should_start_closeProcess_coordinator_function() throws {
+    func test_goClose_called_should_shoiw_dialog() throws {
         let sut = try XCTUnwrap(sut)
-        let coordinator = try XCTUnwrap(coordinator)
+        let view = try XCTUnwrap(view)
+        sut.view = view
         sut.didSelectCloseProcess()
-        TestHelper.delay {
-            XCTAssertTrue(coordinator.closeProcessCalled)
-        }
+        XCTAssert(view.showDialogCalled)
     }
-    
+
     func test_goBack_called_should_start_pop_coordinator_function() throws {
         let sut = try XCTUnwrap(sut)
-        let coordinator = try XCTUnwrap(coordinator)
         sut.didSelectClose()
-        TestHelper.delay {
-            XCTAssertTrue(coordinator.popCalled)
-        }
+        XCTAssert(coordinator?.popCalled == true)
     }
     
     func test_setAccountViewModel_called() throws {
@@ -89,9 +80,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         sut.view = view
         XCTAssertFalse(view.setAccountViewModelCalled)
         sut.updateSelectedAccountNumber(number: "1212")
-        TestHelper.delay {
-            XCTAssertTrue(view.setAccountViewModelCalled)
-        }
+        XCTAssertTrue(view.setAccountViewModelCalled)
     }
     
     func test_showValidationMessages_called_when_validation_title_is_performing() throws {
@@ -152,11 +141,8 @@ final class ZusTransferFormPresenterTests: XCTestCase {
     
     func test_showRecipientSelection_called_should_start_showRecipient_coordinator_function() throws {
         let sut = try XCTUnwrap(sut)
-        let coordinator = try XCTUnwrap(coordinator)
         sut.showRecipientSelection()
-        TestHelper.delay {
-            XCTAssertTrue(coordinator.showRecipientSelectionCalled)
-        }
+        XCTAssert(coordinator?.showRecipientSelectionCalled == true)
     }
     
     func test_didSelectRecipient_called_should_start_updateRecipientCalled_on_view() throws {
@@ -187,6 +173,11 @@ final class ZusTransferFormPresenterTests: XCTestCase {
 
 private extension ZusTransferFormPresenterTests {
     func setUpDependencies() {
+        dependencies?.register(for: ZusTransferFormCoordinatorProtocol.self) { [unowned self] _ in
+            let mockCoordinator = ZusTransferFormCoordinatorMock()
+            self.coordinator = mockCoordinator
+            return mockCoordinator
+        }
         dependencies?.register(for: ZusTransferFormViewProtocol.self) { _ in
             ZusTransferFormViewMock()
         }
@@ -213,10 +204,6 @@ private extension ZusTransferFormPresenterTests {
                 accounts: AccountForDebitMockBuilder.getAccountForDebitMock(),
                 selectedAccountNumber: "12123412341234123412341234"
             )
-        }
-        
-        dependencies?.register(for: ZusTransferFormCoordinatorProtocol.self) { _ in
-            ZusTransferFormCoordinatorMock()
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import UI
 import PLUI
+import CoreFoundationLib
 
 protocol AddTaxAuthorityView: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModel(_ viewModel: AddTaxAuthorityViewModel)
@@ -113,7 +114,7 @@ private extension AddTaxAuthorityViewController {
     }
     
     func configureNavigationItem() {
-        NavigationBarBuilder(style: .white, title: .title(key: "#Odbiorca/ aka Organ Podatkowy"))
+        NavigationBarBuilder(style: .white, title: .title(key: "pl_toolbar_taxAuthority"))
             .setLeftAction(.back(action: .selector(#selector(back))))
             .setRightActions(.close(action: .selector(#selector(close))))
             .build(on: self, with: nil)
@@ -154,7 +155,7 @@ private extension AddTaxAuthorityViewController {
     
     func configureBottomView() {
         bottomButtonView.disableButton()
-        bottomButtonView.configure(title: "#Gotowe") { [weak self] in
+        bottomButtonView.configure(title: localized("generic_label_done")) { [weak self] in
             self?.presenter.didTapDone()
         }
     }

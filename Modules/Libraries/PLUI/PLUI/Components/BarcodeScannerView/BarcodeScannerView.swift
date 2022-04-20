@@ -132,10 +132,7 @@ public final class BarcodeScannerView: UIView {
             }
         }
         
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.previewLayer.frame = self.videoView.bounds
-        }
+        self.previewLayer.frame = self.videoView.bounds
     }
 }
 

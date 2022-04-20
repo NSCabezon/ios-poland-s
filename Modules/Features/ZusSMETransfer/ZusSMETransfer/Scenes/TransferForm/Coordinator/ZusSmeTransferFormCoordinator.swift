@@ -11,6 +11,7 @@ protocol ZusSmeTransferFormCoordinatorProtocol {
     func showAccountSelector(selectedAccountNumber: String)
     func showRecipientSelection(with maskAccount: String?)
     func updateAccounts(accounts: [AccountForDebit])
+    func showConfiramtion(model: ZusSmeTransferModel)
 }
 
 protocol FormAccountSelectable: AnyObject {
@@ -67,6 +68,15 @@ extension ZusSmeTransferFormCoordinator: ZusSmeTransferFormCoordinatorProtocol {
             selectedAccountNumber: selectedAccountNumber,
             sourceView: .form,
             selectableAccountDelegate: self
+        )
+        coordinator.start()
+    }
+    
+    func showConfiramtion(model: ZusSmeTransferModel) {
+        let coordinator = ZusSmeTransferConfirmationCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            model: model
         )
         coordinator.start()
     }

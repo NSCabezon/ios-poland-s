@@ -44,7 +44,11 @@ class ViewController: UIViewController {
         defaultResolver.register(for: ChallengesHandlerDelegate.self) { _ in
             PLAuthorizationCoordinatorMock()
         }
-
+        
+        defaultResolver.register(for: UseCaseScheduler.self) { _ in
+            UseCaseHandler(maxConcurrentOperationCount: 8)
+        }
+        
         return defaultResolver
     }()
 

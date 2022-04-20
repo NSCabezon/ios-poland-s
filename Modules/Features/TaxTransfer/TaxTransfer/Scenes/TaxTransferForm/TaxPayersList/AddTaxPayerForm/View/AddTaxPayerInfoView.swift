@@ -10,7 +10,7 @@ import PLUI
 import CoreFoundationLib
 
 protocol AddTaxPayerInfoViewDelegate: AnyObject {
-    func didEndEditing()
+    func didUpdateText()
 }
 
 final class AddTaxPayerInfoView: UIView {
@@ -79,26 +79,23 @@ final class AddTaxPayerInfoView: UIView {
     }
     
     private func configureStyling() {
-        let formatter = UIFormattedCustomTextField()
+        let customFormatter = UIFormattedCustomTextField()
         
         if let limit = configuration.charactersLimit {
-            formatter.setMaxLength(maxLength: limit)
+            customFormatter.setMaxLength(maxLength: limit)
         }
         
-        input.textField.setEditingStyle(
-            .writable(
-                configuration: .init(
-                    type: .simple,
-                    formatter: formatter,
-                    disabledActions: [],
-                    keyboardReturnAction: nil,
-                    textFieldDelegate: nil,
-                    textfieldCustomizationBlock: { components in
-                        components.textField.keyboardType = .asciiCapable
-                    }
-                )
-            )
+        
+        let textFieldConfiguration = LisboaTextField.WritableTextField(
+            type: .simple,
+            formatter: customFormatter,
+            disabledActions: [],
+            keyboardReturnAction: nil,
+            textfieldCustomizationBlock: { components in
+                components.textField.keyboardType = .asciiCapable
+            }
         )
+        input.textField.setEditingStyle(.writable(configuration: textFieldConfiguration))
         
         charactersLimit.text = configuration.charactersLimitInfo
         charactersLimit.textColor = .brownishGray
@@ -110,7 +107,7 @@ final class AddTaxPayerInfoView: UIView {
     }
     
     private func configureDelegate() {
-        input.textField.fieldDelegate = self
+        input.textField.updatableDelegate = self
     }
     
     private func getSectionContainer() -> FormSectionContainer {
@@ -121,8 +118,8 @@ final class AddTaxPayerInfoView: UIView {
     }
 }
 
-extension AddTaxPayerInfoView: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.didEndEditing()
+extension AddTaxPayerInfoView: UpdatableTextFieldDelegate {
+    func updatableTextFieldDidUpdate() {
+        delegate?.didUpdateText()
     }
 }

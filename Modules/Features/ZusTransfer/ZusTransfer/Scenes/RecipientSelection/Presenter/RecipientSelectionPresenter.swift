@@ -13,7 +13,7 @@ final class RecipientSelectionPresenter {
     weak var view: RecipientSelectionViewProtocol?
     private let dependenciesResolver: DependenciesResolver
     private let maskAccount: String?
-    private let useCaseHandler: UseCaseHandler
+    private let useCaseHandler: UseCaseScheduler
     private let getRecipientsUseCase: GetRecipientsUseCaseProtocol
     private let coordinator: RecipientSelectionCoordinatorProtocol
     private var recipients: [Recipient]?
@@ -26,7 +26,7 @@ final class RecipientSelectionPresenter {
             for: RecipientSelectionCoordinatorProtocol.self
         )
         getRecipientsUseCase = dependenciesResolver.resolve(for: GetRecipientsUseCaseProtocol.self)
-        useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
+        useCaseHandler = dependenciesResolver.resolve(for: UseCaseScheduler.self)
         self.dependenciesResolver = dependenciesResolver
         self.maskAccount = maskAccount
     }

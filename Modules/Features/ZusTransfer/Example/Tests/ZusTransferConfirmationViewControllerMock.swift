@@ -12,15 +12,25 @@ final class ZusTransferConfirmationViewControllerMock: UIViewController, ZusTran
         self.viewModel = viewModel
     }
     
-    func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {}
+    func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {
+        onConfirm?()
+    }
     
-    func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {}
+    func showErrorMessage(_ message: String, onConfirm: (() -> Void)?) {
+        onConfirm?()
+    }
     
-    func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {}
+    func showErrorMessage(_ message: String, image: String, onConfirm: (() -> Void)?) {
+        onConfirm?()
+    }
     
-    func showErrorMessage(title: String, message: String, image: String, onConfirm: (() -> Void)?) {}
+    func showErrorMessage(title: String, message: String, image: String, onConfirm: (() -> Void)?) {
+        onConfirm?()
+    }
     
-    func showErrorMessage(title: String, message: String, actionButtonTitle: String, closeButton: Dialog.CloseButton, onConfirm: (() -> Void)?) {}
+    func showErrorMessage(title: String, message: String, actionButtonTitle: String, closeButton: Dialog.CloseButton, onConfirm: (() -> Void)?) {
+        onConfirm?()
+    }
     
     func showLoader() {
         showLoaderCalled = true
@@ -28,6 +38,7 @@ final class ZusTransferConfirmationViewControllerMock: UIViewController, ZusTran
     
     func hideLoader(completion: (() -> Void)?) {
         hideLoaderCalled = true
+        completion?()
     }
     
     func showDialog(_ dialog: LisboaDialog) {

@@ -6,6 +6,7 @@
 //
 
 import PLUI
+import CoreFoundationLib
 
 final class TaxTransferAccountSectionView: UIView {
     private lazy var accountSection = getSectionContainer(with: accountView)
@@ -83,7 +84,7 @@ private extension TaxTransferAccountSectionView {
     func getSectionContainer(with view: UIView) -> FormSectionContainer {
         return FormSectionContainer(
             containedView: view,
-            sectionTitle: "#Konto, z którego robisz przelew"
+            sectionTitle: localized("pl_taxTransfer_text_infoSelectAccount")
         )
     }
     

@@ -86,8 +86,8 @@ private extension ZusSmeTransferFormViewController {
         view.backgroundColor = .white
         bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
             let form = self?.formView.getCurrentFormViewModel()
-            self?.presenter.checkIfHaveEnoughFounds(transferAmount: form?.amount ?? 0, completion: {
-                //TODO: show confirmation
+            self?.presenter.checkIfHaveEnoughFounds(transferAmount: form?.amount ?? 0, completion: { [weak self] in
+                self?.presenter.showConfirmation()
             })
         }
         bottomView.disableButton()
