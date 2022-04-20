@@ -50,7 +50,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     
     var doubleValidationRequired = false
     
-    func transferTypeFor(onePayType: OnePayTransferType, subtype: String) -> String {
+    func transferTypeFor(onePayType: SendMoneyTransferType, subtype: String) -> String {
         return subtype
     }
     
