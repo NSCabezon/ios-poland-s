@@ -152,7 +152,7 @@ private extension SendMoneyTransferTypeViewController {
     
     func setAccessibilityInfo() {
         let stepInfo = self.getOperativeStep()
-        self.floatingButton.accessibilityLabel = localized("voiceover_button_continueTypeTransfer", [StringPlaceholder(.number, stepInfo[0]), StringPlaceholder(.number, stepInfo[1])]).text
+        self.floatingButton.accessibilityLabel = localized("voiceover_button_continueConfirmation", [StringPlaceholder(.number, stepInfo[0]), StringPlaceholder(.number, stepInfo[1])]).text
         self.floatingButton.accessibilityHint = self.floatingButton.isEnabled ? localized("voiceover_activated") : localized("voiceover_deactivated")
         UIAccessibility.post(notification: .layoutChanged, argument: self.navigationItem.titleView)
     }
