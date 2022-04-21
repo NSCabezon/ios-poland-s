@@ -22,7 +22,7 @@ extension AtmsAndBranchesPGFrequentOperativeOption: PGFrequentOperativeOptionPro
     }
 
     func getViewType(isSmartGP: Bool) -> ActionButtonFillViewType {
-        let imageKey: String = "icnAtm"
+        let imageKey: String = "oneIcnAtms"
         let titleKey: String = "frequentOperative_label_atm"
         return .defaultButton(
             DefaultActionButtonViewModel(
