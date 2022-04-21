@@ -220,7 +220,7 @@ private extension PLUIInputCodeBoxView {
     }
 
     func configureAccessibilityIdentifiers() {
-        self.codeTextField.accessibilityIdentifier = Constants.AccesibilityIdentifiers.textField + "_\(position)"
+        self.codeTextField.accessibilityIdentifier = Constants.AccesibilityIdentifiers.textField
         self.positionLabel.accessibilityIdentifier = Constants.AccesibilityIdentifiers.positionLabel
     }
 }

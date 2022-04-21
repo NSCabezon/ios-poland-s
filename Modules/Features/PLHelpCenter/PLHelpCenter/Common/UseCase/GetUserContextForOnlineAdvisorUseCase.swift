@@ -9,13 +9,12 @@ final class GetUserContextForOnlineAdvisorUseCase: UseCase<GetUserContextForOnli
     
     private lazy var plManagersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
     private lazy var helpCenterManager = plManagersProvider.getHelpCenterManager()
-    
+
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
     
     override func executeUseCase(requestValues: GetUserContextForOnlineAdvisorUseCaseOkInput) throws -> UseCaseResponse<GetUserContextForOnlineAdvisorUseCaseOkOutput, StringErrorOutput> {
-        // Parameters have been transformed according to informations from MOBILE-7883
         let parameters = OnlineAdvisorUserContextParameters(
             baseAddress: requestValues.baseAddress,
             msgTypeName: requestValues.entryType,

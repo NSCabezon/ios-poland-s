@@ -169,6 +169,11 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: PLApplePayEnrollmentManagerProtocol.self) { _ in
             return self.applePayEnrollmentManager
         }
+        
+        dependenciesEngine.register(for: OnlineAdvisorCoordinatorProtocol.self) { resolver in
+            return OnlineAdvisorCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+            
         dependenciesEngine.register(for: SplitPaymentModuleCoordinatorProtocol.self) { resolver in
             return SplitPaymentModuleCoordinator(dependenciesResolver: resolver,
                                                  navigationController: self.drawer.currentRootViewController as? UINavigationController)

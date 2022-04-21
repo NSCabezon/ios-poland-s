@@ -37,7 +37,7 @@ public class PLWebviewCustomLinkHandler: WebViewLinkHandler {
 
     private enum ActionType {
         case close
-        case openOnlineAdvisor
+        case openOnlineAdvisor(params: String)
         case pdf(url: URL)
         case html(url: URL)
         case phone
@@ -76,6 +76,9 @@ public class PLWebviewCustomLinkHandler: WebViewLinkHandler {
         case .html(let url):
             openHtml(url: url)
             return false
+        case .openOnlineAdvisor(let params):
+            openOnlineAdvisor(params: params)
+            return false
         default:
             return false
         }
@@ -96,7 +99,10 @@ private extension PLWebviewCustomLinkHandler {
         case _ where urlString.hasPrefix(Constants.plWebActionPrefix):
             switch urlString {
             case _ where urlString.contains(Constants.plOnlineAdvisorKeyWord):
-                return .openOnlineAdvisor
+                guard let params = getOnlineAdvisorParams(urlString: urlString) else {
+                    return .unknownAction
+                }
+                return .openOnlineAdvisor(params: params)
             case _ where urlString.contains(Constants.plPdfKeyWord):
                 guard let pdfUrl = getPdfUrl(urlString: urlString) else {
                     return .unknownAction
@@ -157,6 +163,12 @@ private extension PLWebviewCustomLinkHandler {
         guard urlString.hasPrefix(prefix) else { return nil }
         return URL(string: String(urlString.dropFirst(prefix.count)))
     }
+    
+    func getOnlineAdvisorParams(urlString: String) -> String? {
+        let prefix = Constants.plWebActionPrefix + Constants.plOnlineAdvisorKeyWord + "/"
+        guard urlString.hasPrefix(prefix) else { return nil }
+        return String(urlString.dropFirst(prefix.count))
+    }
 
     // MARK: Actions impl
     func openEmail(url: URL?) {
@@ -194,4 +206,10 @@ private extension PLWebviewCustomLinkHandler {
             UIApplication.shared.open(url)
         }        
     }
+    
+    func openOnlineAdvisor(params: String) {
+        let deeplink = DeepLink.custom(deeplink: "onlineAdvisor", userInfo: [DeepLinkUserInfoKeys.date: params])
+        delegate?.open(deepLink: deeplink)
+    }
+    
 }
