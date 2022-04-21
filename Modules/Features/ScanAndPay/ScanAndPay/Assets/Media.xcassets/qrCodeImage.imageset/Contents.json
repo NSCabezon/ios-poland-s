@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "Zrzut ekranu 2022-03-23 o 09.59.37.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

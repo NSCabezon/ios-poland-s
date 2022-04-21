@@ -7,9 +7,10 @@
 
 import UI
 import PLUI
+import CoreFoundationLib
 
 protocol TaxTransferBillingPeriodInputDelegate: AnyObject {
-    func didEndEditing()
+    func didUpdateText()
 }
 
 final class TaxTransferBillingPeriodInputView: UIView {
@@ -72,27 +73,23 @@ final class TaxTransferBillingPeriodInputView: UIView {
     }
     
     private func configureStyling() {
-        let formatter = UIFormattedCustomTextField()
-        formatter.setMaxLength(maxLength: maxLength)
-
-        input.textField.setEditingStyle(
-            .writable(
-                configuration: .init(
-                    type: .simple,
-                    formatter: formatter,
-                    disabledActions: [],
-                    keyboardReturnAction: nil,
-                    textFieldDelegate: nil,
-                    textfieldCustomizationBlock: { components in
-                        components.textField.keyboardType = .numberPad
-                    }
-                )
-            )
+        let customFormatter = UIFormattedCustomTextField()
+        customFormatter.setMaxLength(maxLength: maxLength)
+        
+        let configuration = LisboaTextField.WritableTextField(
+            type: .simple,
+            formatter: customFormatter,
+            disabledActions: [],
+            keyboardReturnAction: nil,
+            textfieldCustomizationBlock: { components in
+                components.textField.keyboardType = .numberPad
+            }
         )
+        input.textField.setEditingStyle(.writable(configuration: configuration))
     }
     
     private func configureDelegate() {
-        input.textField.fieldDelegate = self
+        input.textField.updatableDelegate = self
     }
     
     private func getSectionContainer() -> FormSectionContainer {
@@ -103,8 +100,8 @@ final class TaxTransferBillingPeriodInputView: UIView {
     }
 }
 
-extension TaxTransferBillingPeriodInputView: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.didEndEditing()
+extension TaxTransferBillingPeriodInputView: UpdatableTextFieldDelegate {
+    func updatableTextFieldDidUpdate() {
+        delegate?.didUpdateText()
     }
 }

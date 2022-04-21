@@ -6,6 +6,7 @@
 //
 
 import UI
+import CoreFoundationLib
 
 struct EmptyDataMessageViewModel {
     let titleLocalizableKey: String

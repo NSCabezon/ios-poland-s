@@ -7,6 +7,7 @@
 
 import PLUI
 import UI
+import CoreFoundationLib
 
 final class TaxTransferSelectedTaxAuthorityView: UIView {
     private let tappableCard = TappableControl()
@@ -33,11 +34,11 @@ final class TaxTransferSelectedTaxAuthorityView: UIView {
     ) {
         nameLabel.text = viewModel.taxAuthorityName
         taxFormSymbolLabel.attributedText = getAttributedText(
-            key: "#Symbol formularza: ",
+            key: localized("pl_taxTransfer_text_formSymbol"),
             value: viewModel.taxFormSymbol
         )
         destinationAccountNumberLabel.attributedText = getAttributedText(
-            key: "#Konto: ",
+            key: localized("pl_taxTransfer_text_account"),
             value: viewModel.destinationAccountNumber
         )
         tappableCard.onTap = onTap

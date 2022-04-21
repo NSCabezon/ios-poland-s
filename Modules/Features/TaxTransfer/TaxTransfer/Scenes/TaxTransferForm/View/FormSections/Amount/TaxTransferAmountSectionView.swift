@@ -70,12 +70,12 @@ private extension TaxTransferAmountSectionView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: amount,
-            sectionTitle: "#Kwota"
+            sectionTitle: localized("pl_taxTransfer_label_amount")
         )
     }
     
     func configureAmountField() {
-        amount.textField.placeholder = "#Kwota"
+        amount.textField.placeholder = localized("pl_taxTransfer_label_amount")
         amount.textField.setRightAccessory(.view(currency))
         amount.textField.setEditingStyle(
             .writable(

@@ -23,6 +23,8 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         super.tearDown()
         dependencies = nil
         SUT = nil
+        view = nil
+        coordinator = nil
     }
     
     func test_setViewModels_is_called() throws {
@@ -51,18 +53,6 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         XCTAssertTrue(view.operativeSummaryStandardBodyItemViewModels?.count == 5)
     }
     
-    func test_generic_button_anotherPayment_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
-        SUT.viewDidLoad()
-        let viewModel = view.operativeSummaryStandardFooterItemViewModels?.first {
-            $0.title == "generic_button_anotherPayment"
-        }
-        XCTAssertNotNil(viewModel)
-        viewModel?.action()
-        TestHelper.delay {
-            XCTAssertTrue(self.coordinator?.goToMakeAnotherPaymentCalled == true)
-        }
-    }
-    
     func test_generic_button_globalPosition_called_should_start_goToGlobalPosition_coordinator_function() throws {
         SUT.viewDidLoad()
         let viewModel = view.operativeSummaryStandardFooterItemViewModels?.first {
@@ -70,9 +60,7 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         }
         XCTAssertNotNil(viewModel)
         viewModel?.action()
-        TestHelper.delay {
-            XCTAssertTrue(self.coordinator?.goToGlobalPositionCalled == true)
-        }
+        XCTAssertTrue(coordinator?.goToGlobalPositionCalled == true)
     }
     
     func test_goToZusTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
@@ -82,16 +70,16 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         }
         XCTAssertNotNil(viewModel)
         viewModel?.action()        
-        TestHelper.delay {
-            XCTAssertTrue(self.coordinator?.goToMakeAnotherPaymentCalled == true)
-        }
+        XCTAssertTrue(coordinator?.goToMakeAnotherPaymentCalled == true)
     }
 }
 
 private extension ZusTransferSummaryPresenterTests {
     func setUpDependencies() {
-        dependencies.register(for: ZusTransferSummaryCoordinatorProtocol.self) { _ in
-            ZusTransferSummaryCoordinatorMock()
+        dependencies.register(for: ZusTransferSummaryCoordinatorProtocol.self) { [unowned self] _ in
+            let mock = ZusTransferSummaryCoordinatorMock()
+            self.coordinator = mock
+            return mock
         }
         dependencies.register(for: ZusTransferSummaryMapping.self) { _ in
             ZusTransferSummaryMapper()

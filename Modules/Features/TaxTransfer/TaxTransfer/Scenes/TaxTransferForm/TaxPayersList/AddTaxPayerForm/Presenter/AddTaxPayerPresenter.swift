@@ -72,7 +72,7 @@ extension AddTaxPayerFormPresenter: AddTaxPayerViewDelegate {
         )
     }
     
-    func didEndEditing() {
+    func didUpdateText() {
         _ = isValid()
         refreshButtonView()
     }
@@ -99,7 +99,7 @@ private extension AddTaxPayerFormPresenter {
     
     func getItemSelectorConfiguration() -> ItemSelectorConfiguration<TaxIdentifierType>.ItemSelectorSection {
         return ItemSelectorConfiguration<TaxIdentifierType>.ItemSelectorSection(
-            sectionTitle: "#Wybierz typ identyfikatora",
+            sectionTitle: localized("pl_taxTransfer_text_chooseID"),
             items: [.NIP,
                     .PESEL,
                     .passport,

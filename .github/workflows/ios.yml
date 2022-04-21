@@ -1,41 +1,20 @@
-name: iOS CI Poland
+name: iOS CI
 
 on:
   pull_request:
-    branches: [ develop, master, release/** ]
+    branches: [develop, master, release/**]
 
 jobs:
   swift-lint:
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7'
-          bundler-cache: true
-
-      - name: Static Analysis
-        run: bundle exec fastlane run swiftlint 
-  
-  tests:
-    runs-on: macos-11
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           submodules: recursive
-      - name: Setup - Xcode
-        run: sudo xcode-select -s /Applications/Xcode_13.2.app
-    
-      # Setup ruby
-      - name: Setup - Ruby and bundler dependencies
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.2
-          bundler-cache: true
-          
+          lfs: true
+
       - name: Cache Pods packages
         uses: actions/cache@v2
         with:
@@ -44,6 +23,44 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
 
+      - name: Pods update
+        working-directory: ./Project
+        run: bundle exec pod install
+
+      - name: Static Analysis
+        working-directory: ./Project
+        run: bundle exec fastlane ios swift_lint
+
+  tests:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          submodules: recursive
+
+      # Setup ruby
+      - name: Setup - Ruby and bundler dependencies
+        run: bundle install
+
+      - name: Cache Pods packages
+        uses: actions/cache@v2
+        with:
+          path: Project/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('Project/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Pods update
+        working-directory: ./Project
+        run: bundle exec pod install
+
+      - name: Pods update
+        working-directory: ./Project
+        run: bundle exec pod install
+
       # Runs test lane created earlier
       - name: Run tests
-        run: cd Project && bundle exec fastlane ios test && cd ..
+        working-directory: ./Project
+        run: bundle exec fastlane ios test

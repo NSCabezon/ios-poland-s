@@ -20,13 +20,13 @@ import PLCommons
 import PLCommonOperatives
 import PLUI
 import CharityTransfer
-import CoreFoundationLib
 import SANLegacyLibrary
 import PhoneTopUp
 import ZusTransfer
 import ZusSMETransfer
 import SplitPayment
 import ScanAndPay
+import Authorization
 
 enum OneAppInitModule: String, CaseIterable {
     case deepLink = "Deep Link"
@@ -43,6 +43,7 @@ enum OneAppInitModule: String, CaseIterable {
     case phoneTopUp = "Phone Top-Up"
     case taxTransfer = "Tax Transfer"
     case zusTransfer = "Zus Transfer"
+    case authorization = "Authorization"
     case zusSMETransfer = "Zus SME Transfer"
     case splitPayment = "Split Payment"
     case scanAndPay = "Scan and Pay"
@@ -196,6 +197,11 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
         case .zusTransfer:
             let coordinator = dependenciesEngine.resolve(
                 for: ZusTransferModuleCoordinatorProtocol.self
+            )
+            coordinator.start()
+        case .authorization:
+            let coordinator = dependenciesEngine.resolve(
+                for: AuthorizationCoordinatorProtocol.self
             )
             coordinator.start()
         case .charityTransfer:

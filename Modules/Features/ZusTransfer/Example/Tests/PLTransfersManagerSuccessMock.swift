@@ -4,11 +4,18 @@ import CoreDomain
 import PLCommons
 
 final class PLTransfersManagerSuccessMock: PLTransfersManagerProtocol {
-    
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
+        fatalError()
     }
     
     func getTransactionParameters(type: PLDomesticTransactionParametersType?) -> TransactionParameters? {
@@ -20,7 +27,7 @@ final class PLTransfersManagerSuccessMock: PLTransfersManagerProtocol {
     }
     
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError> {
-        return .success(RecipientsMockBuilder.getPayeeListDtoMock() ?? [])
+        return .success(RecipientsBuilderMock.getPayeeListDtoMock() ?? [])
     }
     
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError> {

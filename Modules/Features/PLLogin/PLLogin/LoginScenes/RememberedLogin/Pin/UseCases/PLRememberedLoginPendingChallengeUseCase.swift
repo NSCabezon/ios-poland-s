@@ -9,7 +9,7 @@ import CoreFoundationLib
 import PLCommons
 import SANPLLibrary
 
-final class PLRememberedLoginPendingChallengeUseCase: UseCase<PLRememberedLoginPendingChallengeUseCaseInput, PLRememberedLoginPendingChallenge, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
+public final class PLRememberedLoginPendingChallengeUseCase: UseCase<PLRememberedLoginPendingChallengeUseCaseInput, PLRememberedLoginPendingChallenge, PLUseCaseErrorOutput<LoginErrorType>>, PLLoginUseCaseErrorHandlerProtocol {
     var dependenciesResolver: DependenciesResolver
 
     public init(dependenciesResolver: DependenciesResolver) {
@@ -32,8 +32,12 @@ final class PLRememberedLoginPendingChallengeUseCase: UseCase<PLRememberedLoginP
     }
 }
 
-struct PLRememberedLoginPendingChallengeUseCaseInput {
+public struct PLRememberedLoginPendingChallengeUseCaseInput {
     let userId: String
+    
+    public init(userId: String) {
+        self.userId = userId
+    }
 }
 
 public struct PLRememberedLoginPendingChallenge {

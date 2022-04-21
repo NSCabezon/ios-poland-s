@@ -32,9 +32,9 @@ class AcceptZusTransactionUseCaseTests: XCTestCase {
             .execute(on: useCaseHandler)
 
         scenario.onSuccess { result in
-            XCTAssertEqual(result.summary.amount, 1)
+            XCTAssertEqual(result.summary.amount, 1500)
             XCTAssertEqual(result.summary.currency, .złoty)
-            XCTAssertEqual(result.summary.transferType, .INTERNAL)
+            XCTAssertEqual(result.summary.transferType, .ZUS)
             XCTAssertEqual(result.summary.accountName, "GABRIELA RYBA UL. JASNOGÓRSKA 70A/13 01-496 CZĘSTOCHOWA")
             XCTAssertEqual(result.summary.accountNumber, "26 1090 0088 0000 0001 4223 0553")
         }

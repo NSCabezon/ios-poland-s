@@ -24,6 +24,19 @@ enum PolandDeepLink: CaseIterable {
     case sendMoney
     case services
     case blik
+    case onlineAdvisor(params: String)
+    
+    static var allCases: [PolandDeepLink] {
+        return [.helpCenter,
+                .contact,
+                .blikTransaction,
+                .ourOffer,
+                .alertsNotification,
+                .sendMoney,
+                .services,
+                .blik,
+                .onlineAdvisor(params: "")]
+    }
 }
 
 extension PolandDeepLink: DeepLinkEnumerationCapable {
@@ -37,6 +50,8 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case PolandDeepLink.sendMoney.deepLinkKey: self = .sendMoney
         case PolandDeepLink.services.deepLinkKey: self = .services
         case PolandDeepLink.blik.deepLinkKey: self = .blik
+        case PolandDeepLink.onlineAdvisor(params: "").deepLinkKey:
+            self = .onlineAdvisor(params: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.date] ?? "")
         default: return nil
         }
     }
@@ -51,6 +66,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .sendMoney: return "sendMoney_pl"
         case .services: return "services_pl"
         case .blik: return "blik_pl"
+        case .onlineAdvisor: return "onlineAdvisor"
         }
     }
       
@@ -64,6 +80,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .sendMoney: return "send_money"
         case .services: return "services"
         case .blik: return "blik"
+        case .onlineAdvisor: return "onlineAdvisor"
         }
     }
     
@@ -80,6 +97,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .sendMoney: return .privateDeepLink
         case .services: return .privateDeepLink
         case .blik: return .privateDeepLink
+        case .onlineAdvisor: return  .publicDeepLink
         }
     }
 }

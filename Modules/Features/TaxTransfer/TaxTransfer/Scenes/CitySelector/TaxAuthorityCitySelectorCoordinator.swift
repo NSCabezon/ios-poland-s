@@ -43,7 +43,8 @@ final class TaxAuthorityCitySelectorCoordinator {
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,
             configuration: configuration,
-            itemSelectionHandler: onSelection
+            itemSelectionHandler: onSelection,
+            dependenciesResolver: dependenciesEngine
         )
         coordinator.start()
     }

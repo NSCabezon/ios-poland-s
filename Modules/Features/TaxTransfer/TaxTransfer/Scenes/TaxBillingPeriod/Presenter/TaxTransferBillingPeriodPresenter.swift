@@ -63,7 +63,7 @@ extension TaxTransferBillingPeriodPresenter: TaxTransferFormBillingPeriodFormVie
                 sectionTitle: localized("pl_taxTransfer_text_choosePeriod"),
                 items: [.year, .halfYear, .quarter, .month, .decade, .day]
             ),
-            title: localized("pl_taxTransfer_text_periodType"),
+            title: localized("pl_toolbar_title_settlementPeriod"),
             selectedItem: selectedPeriodType
         )
     }
@@ -74,14 +74,14 @@ extension TaxTransferBillingPeriodPresenter: TaxTransferFormBillingPeriodFormVie
         }
         coordinator.showSelector(
             with: .init(
-                sectionTitle: localized("#Wybierz numer okresu:"),
+                sectionTitle: localized("pl_taxTransfer_text_choosePeriodNumber"),
                 items: selectedPeriodType.periodNumbers),
-            title: localized("#Numer okresu"),
+            title: localized("pl_toolbar_title_periodNumber"),
             selectedItem: selectedPeriodNumber
         )
     }
     
-    func didEndEditing() {
+    func didUpdateText() {
         validate()
     }
 }

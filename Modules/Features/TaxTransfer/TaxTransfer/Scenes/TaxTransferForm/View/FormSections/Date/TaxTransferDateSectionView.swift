@@ -6,6 +6,7 @@
 //
 
 import PLUI
+import CoreFoundationLib
 
 final class TaxTransferDateSectionView: UIView {
     private lazy var sectionContainer = getSectionContainer()
@@ -55,7 +56,7 @@ private extension TaxTransferDateSectionView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: dateSelector,
-            sectionTitle: "#Kiedy mamy wysłać ten przelew?"
+            sectionTitle: localized("pl_taxTransfer_label_date")
         )
     }
 }
