@@ -30,7 +30,7 @@ struct PLPrivateMenuFooterOptionsUseCase: GetPrivateMenuFooterOptionsUseCase {
                                     accessibilityIdentifier: "menuBtnSecurity",
                                     optionType: .security))
         options.append(PLPrivateMenuFooterOptions(title: "menu_link_atm",
-                                    imageName: "icnAtmMenu",
+                                    imageName: "icnAtmMenuBlack",
                                     imageURL: nil,
                                     accessibilityIdentifier: "menuBtnAtm",
                                     optionType: .atm))
