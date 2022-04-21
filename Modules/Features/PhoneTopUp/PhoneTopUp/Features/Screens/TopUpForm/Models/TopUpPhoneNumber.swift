@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import PLCommons
 
 enum TopUpPhoneNumber {
     case partial(number: String)
     case full(number: String)
+    case contact(MobileContact)
     
     var number: String {
         switch self {
@@ -17,6 +19,8 @@ enum TopUpPhoneNumber {
             return number
         case .full(let number):
             return number
+        case .contact(let contact):
+            return contact.phoneNumber
         }
     }
 }
