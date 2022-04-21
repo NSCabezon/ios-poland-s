@@ -81,7 +81,8 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
         let input = GetTaxAccountsUseCaseInput(
             taxAccountNumberFilter: nil,
             taxAccountNameFilter: nil,
-            cityFilter: selectedCity.cityName
+            cityFilter: selectedCity.cityName,
+            optionId: nil
         )
         
         view?.showLoader()
