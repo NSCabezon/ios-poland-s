@@ -95,7 +95,7 @@ end
 def pl_thirdparty_dependencies
   pod 'SwiftLint', '0.43.1'
   pod 'Dynatrace', '~> 8.227'
-  pod 'Vcc', :git => 'git@github.com:santander-group-europe/ios-poland-onlineAdvisor.git', :tag => '5.9.20210913174636.3720'
+  pod 'Vcc', :git => 'git@github.com:santander-group-europe/ios-poland-onlineAdvisor.git', :tag => '5.10.20220330150017.3809'
 end
 
 #------------ Tests ----------------

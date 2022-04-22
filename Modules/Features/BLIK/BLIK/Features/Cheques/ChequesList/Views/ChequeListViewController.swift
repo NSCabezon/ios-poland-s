@@ -50,7 +50,7 @@ final class ChequeListViewController: UIViewController {
         super.viewDidAppear(animated)
         presenter.viewDidAppear()
     }
-    
+
     func showDialog(title: LocalizedStylableText, text: LocalizedStylableText) {
         let image = LisboaDialogImageViewItem(image: Images.info_lisboaGray, size: (50, 50))
         let buttonTitle = LocalizedStylableText(text: localized("generic_link_ok"), styles: nil)
