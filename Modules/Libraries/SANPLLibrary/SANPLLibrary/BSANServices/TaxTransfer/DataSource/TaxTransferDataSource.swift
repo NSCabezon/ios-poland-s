@@ -111,6 +111,9 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
             if let city = requestQueries.city {
                 params["city"] = city
             }
+            if let options = requestQueries.optionId {
+                params["options"] = options
+            }
             return params
         }()
         
