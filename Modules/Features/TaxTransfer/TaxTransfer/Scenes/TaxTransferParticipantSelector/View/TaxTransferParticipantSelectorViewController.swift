@@ -202,6 +202,7 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
         infoLabel.font = .santander(family: .text, type: .regular, size: 16)
         infoLabel.textColor = .greyishBrown
         infoLabel.text = taxItemSelectorType.info
+        infoLabel.numberOfLines = 2
     }
 
     @objc private func back() {
