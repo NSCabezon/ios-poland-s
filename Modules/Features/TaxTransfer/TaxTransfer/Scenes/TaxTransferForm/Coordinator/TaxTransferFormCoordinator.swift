@@ -239,6 +239,14 @@ private extension TaxTransferFormCoordinator {
             return GetTaxSymbolsUseCase(dependenciesResolver: resolver)
         }
         
+        dependenciesEngine.register(for: UserTaxAccountMapping.self) { _ in
+            return UserTaxAccountMapper(dateFormatter: PLTimeFormat.yyyyMMdd.createDateFormatter())
+        }
+        
+        dependenciesEngine.register(for: GetUserTaxAccountUseCaseProtocol.self) { resolver in
+            return GetUserTaxAccountUseCase(dependenciesResolver: resolver)
+        }
+        
         dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
             return TaxTransferFormDataProvider(dependenciesResolver: resolver)
         }
