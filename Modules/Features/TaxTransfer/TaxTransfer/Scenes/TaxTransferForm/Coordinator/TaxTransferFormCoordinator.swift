@@ -15,7 +15,7 @@ import PLUI
 
 public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     func back()
-    func goToGlobalPosition()
+    func close()
 
     func showTaxPayerSelector(
         with taxPayers: [TaxPayer],
@@ -125,7 +125,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    public func goToGlobalPosition() {
+    public func close() {
         navigationController?.popToRootViewController(animated: true)
     }
 }
@@ -237,6 +237,14 @@ private extension TaxTransferFormCoordinator {
         
         dependenciesEngine.register(for: GetTaxSymbolsUseCaseProtocol.self) { resolver in
             return GetTaxSymbolsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: UserTaxAccountMapping.self) { _ in
+            return UserTaxAccountMapper(dateFormatter: PLTimeFormat.yyyyMMdd.createDateFormatter())
+        }
+        
+        dependenciesEngine.register(for: GetUserTaxAccountUseCaseProtocol.self) { resolver in
+            return GetUserTaxAccountUseCase(dependenciesResolver: resolver)
         }
         
         dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in

@@ -73,7 +73,7 @@ private extension TaxTransferAuthoritySectionView {
             taxAuthoritySection.leadingAnchor.constraint(equalTo: leadingAnchor),
             taxAuthoritySection.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            selectorSection.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            selectorSection.topAnchor.constraint(equalTo: topAnchor, constant: 24),
             selectorSection.bottomAnchor.constraint(equalTo: bottomAnchor),
             selectorSection.leadingAnchor.constraint(equalTo: leadingAnchor),
             selectorSection.trailingAnchor.constraint(equalTo: trailingAnchor)

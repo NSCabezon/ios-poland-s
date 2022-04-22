@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import PLUI
 
 protocol AddTaxAuthorityPresenterProtocol {
     var view: AddTaxAuthorityView? { get set }
@@ -121,7 +122,13 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
     }
     
     func didTapClose() {
-        coordinator.close()
+        let dialog = confirmationDialogFactory.createEndProcessDialog(
+            confirmAction: { [weak self] in
+                self?.coordinator.close()
+            },
+            declineAction: {}
+        )
+        view?.showDialog(dialog)
     }
     
     func didTapDone() {
@@ -269,6 +276,10 @@ private extension AddTaxAuthorityPresenter {
     }
     
     var formValidator: TaxAuthorityFormValidating {
+        dependenciesResolver.resolve()
+    }
+    
+    var confirmationDialogFactory: ConfirmationDialogProducing {
         dependenciesResolver.resolve()
     }
 }

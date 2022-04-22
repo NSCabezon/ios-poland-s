@@ -185,4 +185,8 @@ extension SplitPaymentFormViewController: SplitPaymentFormViewDelegate {
     func changeAccountTapped() {
         presenter.showAccountSelector()
     }
+    
+    func didTapMoreInfoAboutWhiteListButton() {
+        presenter.showMoreInfoAboutWhiteList()
+    }
 }
