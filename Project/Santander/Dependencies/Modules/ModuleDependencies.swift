@@ -71,6 +71,10 @@ struct ModuleDependencies {
     func resolve() -> NavigationBarItemBuilder {
         NavigationBarItemBuilder(dependencies: self)
     }
+    
+    func resolve() -> GetDigitalProfilePercentageUseCase {
+        return PLGetDigitalProfilePercentageUseCase(dependencies: self)
+    }
 }
 
 // MARK: - Private
