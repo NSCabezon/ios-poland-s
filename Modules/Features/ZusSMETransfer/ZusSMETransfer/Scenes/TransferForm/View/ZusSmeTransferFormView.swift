@@ -100,13 +100,17 @@ final class ZusSmeTransferFormView: UIView {
         }
     }
     
-    func updateRecipient(name: String, accountNumber: String) {
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String) {
         recipientTextField.setText(name)
         accountNumberTextField.setText(accountNumber)
-        let fieldsChanged: [TransferFormCurrentActiveField] = [
+        var fieldsChanged: [TransferFormCurrentActiveField] = [
             .recipient,
             .accountNumber(controlEvent: .endEditing)
         ]
+        if !transactionTitle.isEmpty {
+            titleTextField.setText(transactionTitle)
+            fieldsChanged.append(.title)
+        }
         fieldsChanged.forEach {
             delegate?.didChangeForm(with: $0)
         }
