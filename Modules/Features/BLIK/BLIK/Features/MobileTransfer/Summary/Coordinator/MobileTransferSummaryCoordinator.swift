@@ -8,6 +8,7 @@ import CoreFoundationLib
 protocol MobileTransferSummaryCoordinatorProtocol {
     func goToMakeAnotherPayment()
     func goToGlobalPosition()
+    func goToTransfers()
     func goToBlikCode()
     func shareSummary()
 }
@@ -56,6 +57,26 @@ extension MobileTransferSummaryCoordinator: MobileTransferSummaryCoordinatorProt
     
     func goToGlobalPosition() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func goToTransfers() {
+        let blikHomeVC = navigationController?.viewControllers.reversed().first(where: { $0 is BLIKHomeViewController })
+       
+        if let blikHomeViewController = blikHomeVC {
+            self.navigationController?.popToViewController(blikHomeViewController, animated: true)
+            return
+        }
+        
+        let contactsViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is ContactsViewController
+        }
+        guard let contactsViewControllerIndex = contactsViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: contactsViewControllerIndex - 1] else {
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
     }
     
     func shareSummary() {

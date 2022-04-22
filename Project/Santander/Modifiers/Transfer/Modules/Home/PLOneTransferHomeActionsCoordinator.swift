@@ -10,6 +10,7 @@ import UI
 import BLIK
 import Transfer
 import PhoneTopUp
+import ZusTransfer
 import ScanAndPay
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
@@ -29,7 +30,8 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         else { return }
         switch actionType {
         case .blik:
-            ToastCoordinator("generic_alert_notAvailableOperation").start()
+            let coordinator = oldResolver.resolve(for: ContactsCoordinatorProtocol.self)
+            coordinator.start()
         case .anotherBank:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .creditCard:
@@ -37,7 +39,8 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         case .transferTax:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .transferZus:
-            ToastCoordinator("generic_alert_notAvailableOperation").start()
+            let coordinator = oldResolver.resolve(for: ZusTransferModuleCoordinatorProtocol.self)
+            coordinator.start()
         case .fxExchange:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .scanPay:

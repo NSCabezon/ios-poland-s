@@ -75,12 +75,21 @@ extension AccountsForDebitCoordinator: AccountsForDebitCoordinatorProtocol {
     func closeProcess() {
         let blikHomeVC = navigationController?.viewControllers.reversed().first(where: { $0 is BLIKHomeViewController })
        
-        guard let blikHomeViewController = blikHomeVC else {
-            navigationController?.popViewController(animated: true)
+        if let blikHomeViewController = blikHomeVC {
+            self.navigationController?.popToViewController(blikHomeViewController, animated: true)
             return
         }
         
-        self.navigationController?.popToViewController(blikHomeViewController, animated: true)
+        let contactsViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is ContactsViewController
+        }
+        guard let contactsViewControllerIndex = contactsViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: contactsViewControllerIndex - 1] else {
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
     }
 }
 
