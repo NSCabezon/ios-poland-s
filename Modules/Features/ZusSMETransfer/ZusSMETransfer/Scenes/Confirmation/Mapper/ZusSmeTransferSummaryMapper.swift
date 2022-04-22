@@ -17,7 +17,7 @@ final class ZusSmeTransferSummaryMapper: ZusSmeTransferSummaryMapping {
         let formattedString = date?.toString(format: PLTimeFormat.ddMMyyyyDotted.rawValue)
         let amount = abs(Decimal(confirmationTransferDto.debitAmountData?.amount ?? 0))
         let currency = CurrencyType(rawValue: confirmationTransferDto.debitAmountData?.currency ?? CurrencyType.złoty.name)
-        let accountNumber = IBANFormatter.format(iban: confirmationTransferDto.debitAccountData?.accountNo)
+        let accountNumber = confirmationTransferDto.debitAccountData?.accountNo ?? ""
         let recipientAccountNumber = IBANFormatter.format(iban: confirmationTransferDto.creditAccountData?.accountNo)
         return .init(
             amount: amount,

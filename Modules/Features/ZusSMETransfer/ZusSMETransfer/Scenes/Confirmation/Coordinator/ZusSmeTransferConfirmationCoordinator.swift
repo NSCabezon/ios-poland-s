@@ -109,7 +109,10 @@ extension ZusSmeTransferConfirmationCoordinator: ZusSmeTransferConfirmationCoord
     }
     
     func showSummary(with model: ZusSmeSummaryModel) {
-       //TODO: summary 
+        let coordinator = ZusSmeTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
+                                                           navigationController: navigationController,
+                                                           summary: model)
+        coordinator.start()
     }
 }
 

@@ -13,6 +13,8 @@ protocol ZusSmeTransferFormViewProtocol: AnyObject,
     func setVatAccountDetails(vatAccountDetails: VATAccountDetails)
     func showValidationMessages(with data: InvalidZusSmeTransferFormData)
     func showNotEnoughMoneyInfo(difference: Decimal, completion: @escaping () -> Void)
+    func resetForm()
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel])
 }
 
 final class ZusSmeTransferFormViewController: UIViewController {
@@ -153,17 +155,28 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewProtocol {
     }
     
     func showNotEnoughMoneyInfo(difference: Decimal, completion: @escaping () -> Void) {
-        let numberForamtter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
+        let numberForamtter = NumberFormatter.PLAmountNumberFormatter
         let formatedDifference = numberForamtter.string(for: difference) ?? ""
         InfoDialogBuilder(
             title: localized("generic_alert_information"),
-            description: localized("#Nie masz wystarczających środków na rachunku VAT. Brakująca kwota: \(formatedDifference)PLN zostanie pobrana z rachunku rozliczeniowego."),
+            description: localized("pl_zusTransfer_text_notEnoughFounds", [StringPlaceholder(.value, formatedDifference)]),
             image: PLAssets.image(named: "info_black") ?? UIImage()
         ) {
             completion()
         }
         .build()
         .showIn(self)
+    }
+    
+    func resetForm() {
+        presenter.reloadAccounts()
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
+    }
+    
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel]) {
+        formView.configure(with: models)
     }
 }
 
