@@ -41,9 +41,11 @@ final class ZusTransferConfirmationPresenter {
     private var zusTransferSendMoneyInputMapper: ZusTransferSendMoneyInputMapping {
         dependenciesResolver.resolve(for: ZusTransferSendMoneyInputMapper.self)
     }
-    
     private var managersProvider: PLManagersProviderProtocol {
         dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
+    }
+    private var authorizeTransactionUseCase: AuthorizeTransactionUseCaseProtocol {
+        dependenciesResolver.resolve(for: AuthorizeTransactionUseCaseProtocol.self)
     }
     
     init(dependenciesResolver: DependenciesResolver,
@@ -77,7 +79,7 @@ extension ZusTransferConfirmationPresenter: ZusTransferConfirmationPresenterProt
         let notifyDeviceInput = zusTransferSendMoneyInputMapper.mapPartialNotifyDeviceInput(with: model)
         let authorizeTransactionInput = AuthorizeTransactionUseCaseInput(sendMoneyConfirmationInput: sendMoneyInput, partialNotifyDeviceInput: notifyDeviceInput)
         
-        Scenario(useCase: AuthorizeTransactionUseCase(dependenciesResolver: dependenciesResolver), input: authorizeTransactionInput)
+        Scenario(useCase: authorizeTransactionUseCase, input: authorizeTransactionInput)
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader {

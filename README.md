@@ -26,13 +26,31 @@ $ git submodule update --recursive
 ```
 This will init the santander-one and i18n-poland submodules and update them to the last reference in poland main project.
 
-2º) Install pods
+2º) Install git lfs
+You can download it here: https://github.com/git-lfs/git-lfs/releases/download/v3.1.2/git-lfs-darwin-amd64-v3.1.2.zip 
+Go to downloaded folder(git-lfs-darwin-amd64-v3) in terminal and run: 
+
+```
+$ sudo ./install.sh
+```
+
+3º) Install pods
 
 ```
 $ cd poland/Project
 $ pod install
 ```
 
+In case of error occurs:
+__[!] Unable to install vendored xcframework `WebRTC` for Pod `Vcc`, because it contains both static and dynamic frameworks.__
+
+Clean pod cache, install git lfs again and run pod install:
+```
+$ cd poland/Project
+$ pod cache clean --all
+$ git lfs install
+$ pod install
+```
 ## Development certificates
 We use fastlane and match to manage development certificates. To install a development certificate:
 

@@ -15,7 +15,7 @@ protocol FormAccountSelectable: AnyObject {
     func updateSelectedAccountNumber(_ number: String)
 }
 
-protocol FormContactSelectable: AnyObject {
+public protocol FormContactSelectable: AnyObject {
     func updateViewModel(with updatedViewModel: MobileContact?)
 }
 
@@ -82,13 +82,22 @@ extension MobileTransferFormCoordinator: MobileTransferFormCoordinatorProtocol {
     
     public func closeProcess() {
         let blikHomeVC = navigationController?.viewControllers.reversed().first(where: { $0 is BLIKHomeViewController })
-        
-        guard let blikHomeViewController = blikHomeVC else {
-            navigationController?.popViewController(animated: true)
+       
+        if let blikHomeViewController = blikHomeVC {
+            self.navigationController?.popToViewController(blikHomeViewController, animated: true)
             return
         }
         
-        self.navigationController?.popToViewController(blikHomeViewController, animated: true)
+        let contactsViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is ContactsViewController
+        }
+        guard let contactsViewControllerIndex = contactsViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: contactsViewControllerIndex - 1] else {
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
     }
 
     public func showConfirmation(viewModel: MobileTransferViewModel, isDstAccInternal: Bool, dstAccNo: String) {
@@ -127,7 +136,7 @@ extension MobileTransferFormCoordinator: FormAccountSelectable {
 }
 
 extension MobileTransferFormCoordinator: FormContactSelectable {
-    func updateViewModel(with updatedViewModel: MobileContact?) {
+    public func updateViewModel(with updatedViewModel: MobileContact?) {
         delegate?.updateViewModel(with: updatedViewModel)
     }
 }

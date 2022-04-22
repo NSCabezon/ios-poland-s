@@ -4,6 +4,7 @@ import Operative
 
 protocol MobileTransferSummaryPresenterProtocol: OperativeSummaryPresenterProtocol {
     func goToGlobalPosition()
+    func goToTransfers()
     func goToBlikCode()
 }
 
@@ -45,6 +46,10 @@ private extension MobileTransferSummaryPresenter {
 extension MobileTransferSummaryPresenter: MobileTransferSummaryPresenterProtocol {
     func viewDidLoad() {
         prepareViewModel()
+    }
+    
+    func goToTransfers() {
+        coordinator.goToTransfers()
     }
     
     func goToGlobalPosition() {

@@ -29,6 +29,7 @@ import GlobalPosition
 import ZusSMETransfer
 import SplitPayment
 import ScanAndPay
+import Authorization
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -143,8 +144,20 @@ final class AppNavigationDependencies {
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
+        dependenciesEngine.register(for: ContactsCoordinatorProtocol.self) { resolver in
+            return ContactsCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
         dependenciesEngine.register(for: ZusSmeTransferDataLoaderCoordinatorProtocol.self) { resolver in
             return ZusSmeTransferDataLoaderCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
+        dependenciesEngine.register(for: AuthorizationCoordinatorProtocol.self) { resolver in
+            AuthorizationCoordinator(
                 dependenciesResolver: resolver,
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
@@ -162,6 +175,11 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: PLApplePayEnrollmentManagerProtocol.self) { _ in
             return self.applePayEnrollmentManager
         }
+        
+        dependenciesEngine.register(for: OnlineAdvisorCoordinatorProtocol.self) { resolver in
+            return OnlineAdvisorCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
+            
         dependenciesEngine.register(for: SplitPaymentModuleCoordinatorProtocol.self) { resolver in
             return SplitPaymentModuleCoordinator(dependenciesResolver: resolver,
                                                  navigationController: self.drawer.currentRootViewController as? UINavigationController)

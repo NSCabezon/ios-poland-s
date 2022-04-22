@@ -16,7 +16,8 @@ struct AccountForDebitMockBuilder {
                 defaultForPayments: false,
                 type: .PERSONAL,
                 accountSequenceNumber: 1,
-                accountType: 123
+                accountType: 123,
+                taxAccountNumber: "05109013620000000136623331"
             )
         ]
     }

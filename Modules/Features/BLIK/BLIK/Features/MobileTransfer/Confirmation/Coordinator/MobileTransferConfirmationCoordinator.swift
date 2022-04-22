@@ -63,11 +63,22 @@ extension MobileTransferConfirmationCoordinator: MobileTransferConfirmationCoord
     
     public func backToBlikHome() {
         let blikHomeVC = navigationController?.viewControllers.reversed().first(where: { $0 is BLIKHomeViewController })
-        if let blikHomeVC = blikHomeVC {
-            self.navigationController?.popToViewController(blikHomeVC, animated: true)
+       
+        if let blikHomeViewController = blikHomeVC {
+            self.navigationController?.popToViewController(blikHomeViewController, animated: true)
             return
         }
-        navigationController?.popToRootViewController(animated: true)
+        
+        let contactsViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is ContactsViewController
+        }
+        guard let contactsViewControllerIndex = contactsViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: contactsViewControllerIndex - 1] else {
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
     }
     
     public func pop() {

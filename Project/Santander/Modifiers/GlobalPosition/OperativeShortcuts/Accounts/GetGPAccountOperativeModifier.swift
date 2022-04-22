@@ -31,7 +31,8 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
             AccountOperativeActionType.changeAlias,
             PLAccountNotificationsOperative(),
             PLTransportTicketsServicesOperative(),
-            PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver)
+            PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver),
+            PLTransferZusSmeOperative(dependenciesResolver: legacyDependenciesResolver)
         ].compactMap { $0 }
     }
     
@@ -48,7 +49,8 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
             AccountOperativeActionType.changeAlias,
             PLAccountNotificationsOperative(),
             PLTransportTicketsServicesOperative(),
-            PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver)
+            PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver),
+            PLTransferZusSmeOperative(dependenciesResolver: legacyDependenciesResolver)
         ].compactMap { $0 }
     }
 }

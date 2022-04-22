@@ -73,7 +73,24 @@ final class RecipientSelectionCoordinator: ModuleCoordinator {
 
 extension RecipientSelectionCoordinator: RecipientSelectionCoordinatorProtocol {
     func closeProcess() {
-        navigationController?.popToRootViewController(animated: true)
+        let accountSelectorViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is AccountSelectorViewController
+        }
+        guard let accountSelectorViewControllerIndex = accountSelectorViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: accountSelectorViewControllerIndex - 1] else {
+            let zusTransferFormViewControllerIndex = navigationController?.viewControllers.firstIndex {
+                $0 is ZusTransferFormViewController
+            }
+            if let zusTransferFormViewControllerIndex = zusTransferFormViewControllerIndex,
+               let parentController = navigationController?.viewControllers[safe: zusTransferFormViewControllerIndex - 1] {
+                navigationController?.popToViewController(parentController, animated: true)
+                return
+            }
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
     }
     
     func back() {

@@ -4,7 +4,7 @@ import SANPLLibrary
 import SANLegacyLibrary
 import PLCommons
 
-protocol GetVATAccountProtocol: UseCase<GetVATAccountUseCaseInput, GetVATAccountCaseOkOutput, StringErrorOutput> {}
+protocol GetVATAccountUseCaseProtocol: UseCase<GetVATAccountUseCaseInput, GetVATAccountCaseOkOutput, StringErrorOutput> {}
 
 final class GetVATAccountUseCase: UseCase<GetVATAccountUseCaseInput, GetVATAccountCaseOkOutput, StringErrorOutput> {
     private let managersProvider: PLManagersProviderProtocol
@@ -30,7 +30,7 @@ final class GetVATAccountUseCase: UseCase<GetVATAccountUseCaseInput, GetVATAccou
     }
 }
 
-extension GetVATAccountUseCase: GetVATAccountProtocol {}
+extension GetVATAccountUseCase: GetVATAccountUseCaseProtocol {}
 
 struct GetVATAccountUseCaseInput {
     let accountNumber: String

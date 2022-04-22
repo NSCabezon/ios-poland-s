@@ -1,7 +1,32 @@
 import SANPLLibrary
 import CoreDomain
+import OpenCombine
 
 final class PLTransfersRepositoryMock: PLTransfersRepository {
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        fatalError()
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
+    func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
+    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+        fatalError()
+    }
+    
+    func loadAllUsualTransfers() -> AnyPublisher<[PayeeRepresentable], Error> {
+        fatalError()
+    }
+    
+    func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
+        fatalError()
+    }
+    
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
         .success(SendMoneyChallengeMock())
     }

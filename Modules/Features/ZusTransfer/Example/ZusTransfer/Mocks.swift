@@ -2,6 +2,7 @@ import CoreDomain
 import CoreFoundationLib
 import SANPLLibrary
 import SANLegacyLibrary
+import OpenCombine
 
 struct MockHostProvider: PLHostProviderProtocol {
     var environmentDefault: BSANPLEnvironmentDTO {
@@ -95,6 +96,10 @@ struct MockManager: PLManagersProviderProtocol {
     func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
         PLAuthorizationProcessorManagerMock()
     }
+    
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
+        fatalError()
+    }
 }
 
 struct MockAccountManager: PLAccountManagerProtocol {
@@ -182,6 +187,14 @@ struct MockAccountManager: PLAccountManagerProtocol {
 }
 
 struct MockTransferManager: PLTransfersManagerProtocol {
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
+        fatalError()
+    }
+    
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
         .failure(.noConnection)
     }
@@ -407,6 +420,30 @@ struct MockLoginManeger: PLLoginManagerProtocol {
 }
 
 final class PLTransfersRepositoryMock: PLTransfersRepository {
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        fatalError()
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
+    func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
+    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+        fatalError()
+    }
+    
+    func loadAllUsualTransfers() -> AnyPublisher<[PayeeRepresentable], Error> {
+        fatalError()
+    }
+    
+    func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
+        fatalError()
+    }
+    
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError> {
         .success(SendMoneyChallengeMock())
     }

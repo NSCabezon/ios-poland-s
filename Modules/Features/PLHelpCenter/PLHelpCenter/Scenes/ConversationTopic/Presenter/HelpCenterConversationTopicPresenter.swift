@@ -1,6 +1,12 @@
 import CoreFoundationLib
 import UI
 
+public protocol PLOnlineAdvisorManagerProtocol {
+    func open(initialParams: String)
+    func pauseScreenSharing()
+    func resumeScreenSharing()
+}
+
 protocol HelpCenterConversationTopicPresenterProtocol: MenuTextWrapperProtocol {
     var view: HelpCenterConversationTopicViewProtocol? { get set }
 
@@ -76,11 +82,11 @@ extension HelpCenterConversationTopicPresenter: HelpCenterConversationTopicPrese
         )
         Scenario(useCase: getUserContextForOnlineAdvisorUseCase, input: input)
             .execute(on: dependenciesResolver.resolve())
-            .onSuccess { [weak self] _ in
+            .onSuccess { [weak self] response in
                 self?.view?.dismissLoading {
-                    // TODO:
-                    // Should be implemented in [MOBILE-8288]
-                    Toast.show(localized("generic_alert_notAvailableOperation"))
+                    let initialParams = response.pdata
+                    let onlineAdvisor = self?.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+                    onlineAdvisor?.open(initialParams: initialParams)
                 }
             }
             .onError { [weak self] _ in

@@ -8,11 +8,13 @@ protocol ZusSmeTransferFormViewProtocol: AnyObject,
                                          ConfirmationDialogPresentable,
                                          LoaderPresentable,
                                          ErrorPresentable {
-    func updateRecipient(name: String, accountNumber: String)
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String)
     func setAccountViewModel()
     func setVatAccountDetails(vatAccountDetails: VATAccountDetails)
     func showValidationMessages(with data: InvalidZusSmeTransferFormData)
     func showNotEnoughMoneyInfo(difference: Decimal, completion: @escaping () -> Void)
+    func resetForm()
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel])
 }
 
 final class ZusSmeTransferFormViewController: UIViewController {
@@ -86,8 +88,8 @@ private extension ZusSmeTransferFormViewController {
         view.backgroundColor = .white
         bottomView.configure(title: localized("pl_zusTransfer_button_doneTransfer")) { [weak self] in
             let form = self?.formView.getCurrentFormViewModel()
-            self?.presenter.checkIfHaveEnoughFounds(transferAmount: form?.amount ?? 0, completion: {
-                //TODO: show confirmation
+            self?.presenter.checkIfHaveEnoughFounds(transferAmount: form?.amount ?? 0, completion: { [weak self] in
+                self?.presenter.showConfirmation()
             })
         }
         bottomView.disableButton()
@@ -153,17 +155,28 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewProtocol {
     }
     
     func showNotEnoughMoneyInfo(difference: Decimal, completion: @escaping () -> Void) {
-        let numberForamtter = NumberFormatter.PLAmountNumberFormatterWithoutCurrency
+        let numberForamtter = NumberFormatter.PLAmountNumberFormatter
         let formatedDifference = numberForamtter.string(for: difference) ?? ""
         InfoDialogBuilder(
             title: localized("generic_alert_information"),
-            description: localized("#Nie masz wystarczających środków na rachunku VAT. Brakująca kwota: \(formatedDifference)PLN zostanie pobrana z rachunku rozliczeniowego."),
+            description: localized("pl_zusTransfer_text_notEnoughFounds", [StringPlaceholder(.value, formatedDifference)]),
             image: PLAssets.image(named: "info_black") ?? UIImage()
         ) {
             completion()
         }
         .build()
         .showIn(self)
+    }
+    
+    func resetForm() {
+        presenter.reloadAccounts()
+        bottomView.disableButton()
+        formView.clearForm()
+        presenter.clearForm()
+    }
+    
+    func reloadAccountsComponent(with models: [SelectableAccountViewModel]) {
+        formView.configure(with: models)
     }
 }
 
@@ -194,7 +207,7 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
         presenter.showRecipientSelection()
     }
     
-    func updateRecipient(name: String, accountNumber: String) {
-        formView.updateRecipient(name: name, accountNumber: accountNumber)
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String) {
+        formView.updateRecipient(name: name, accountNumber: accountNumber, transactionTitle: transactionTitle)
     }
 }

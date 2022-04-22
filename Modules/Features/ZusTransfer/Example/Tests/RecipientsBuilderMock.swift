@@ -3,7 +3,7 @@ import SANPLLibrary
 import CoreFoundationLib
 @testable import ZusTransfer
 
-struct RecipientsMockBuilder {
+struct RecipientsBuilderMock {
     
     static func getPayeeListDtoMock() -> [PayeeDTO]? {
         guard let jsonData = """
@@ -29,5 +29,9 @@ struct RecipientsMockBuilder {
         }]
         """.data(using: .utf8) else { return nil }
         return try? JSONDecoder().decode([PayeeDTO].self, from: jsonData)
+    }
+    
+    static func getRecipientMock() -> Recipient {
+        Recipient(name: "ZUS", accountNumber: "02600000020260006109165886")
     }
 }
