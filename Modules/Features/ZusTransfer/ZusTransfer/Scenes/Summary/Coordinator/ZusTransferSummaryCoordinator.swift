@@ -1,9 +1,10 @@
 import UI
 import CoreFoundationLib
+import PLUI
 
 protocol ZusTransferSummaryCoordinatorProtocol {
     func goToMakeAnotherPayment()
-    func goToGlobalPosition()
+    func backToTransfers()
 }
 
 final class ZusTransferSummaryCoordinator: ModuleCoordinator {
@@ -38,8 +39,25 @@ extension ZusTransferSummaryCoordinator: ZusTransferSummaryCoordinatorProtocol {
         navigationController?.popToRootViewController(animated: true)
     }
     
-    func goToGlobalPosition() {
-        navigationController?.popToRootViewController(animated: true)
+    func backToTransfers() {
+        let accountSelectorViewControllerIndex = navigationController?.viewControllers.firstIndex {
+            $0 is AccountSelectorViewController
+        }
+        guard let accountSelectorViewControllerIndex = accountSelectorViewControllerIndex,
+              let parentController = navigationController?.viewControllers[safe: accountSelectorViewControllerIndex - 1] else {
+            let zusTransferFormViewControllerIndex = navigationController?.viewControllers.firstIndex {
+                $0 is ZusTransferFormViewController
+            }
+            if let zusTransferFormViewControllerIndex = zusTransferFormViewControllerIndex,
+               let parentController = navigationController?.viewControllers[safe: zusTransferFormViewControllerIndex - 1] {
+                navigationController?.popToViewController(parentController, animated: true)
+                return
+            }
+            navigationController?.popViewController(animated: true)
+            return
+            
+        }
+        navigationController?.popToViewController(parentController, animated: true)
     }
 }
 
