@@ -9,7 +9,7 @@ import PrivateMenu
 import OpenCombine
 import CoreDomain
 
-struct ESGetDigitalProfilePercentageUseCase {
+struct PLGetDigitalProfilePercentageUseCase {
     private let personalAreaRepository: PersonalAreaRepository
     
     init(dependencies: PrivateMenuExternalDependenciesResolver) {
@@ -17,7 +17,7 @@ struct ESGetDigitalProfilePercentageUseCase {
     }
 }
 
-extension ESGetDigitalProfilePercentageUseCase: GetDigitalProfilePercentageUseCase {
+extension PLGetDigitalProfilePercentageUseCase: GetDigitalProfilePercentageUseCase {
     func fetchDigitalProfilePercentage() -> AnyPublisher<Double, Error> {
         return personalAreaRepository.fetchDigitalProfilePercentage()
             .map { $0.percentage }
