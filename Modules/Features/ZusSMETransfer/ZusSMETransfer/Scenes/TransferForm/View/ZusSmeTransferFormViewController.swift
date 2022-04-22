@@ -8,7 +8,7 @@ protocol ZusSmeTransferFormViewProtocol: AnyObject,
                                          ConfirmationDialogPresentable,
                                          LoaderPresentable,
                                          ErrorPresentable {
-    func updateRecipient(name: String, accountNumber: String)
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String)
     func setAccountViewModel()
     func setVatAccountDetails(vatAccountDetails: VATAccountDetails)
     func showValidationMessages(with data: InvalidZusSmeTransferFormData)
@@ -207,7 +207,7 @@ extension ZusSmeTransferFormViewController: ZusSmeTransferFormViewDelegate {
         presenter.showRecipientSelection()
     }
     
-    func updateRecipient(name: String, accountNumber: String) {
-        formView.updateRecipient(name: name, accountNumber: accountNumber)
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String) {
+        formView.updateRecipient(name: name, accountNumber: accountNumber, transactionTitle: transactionTitle)
     }
 }

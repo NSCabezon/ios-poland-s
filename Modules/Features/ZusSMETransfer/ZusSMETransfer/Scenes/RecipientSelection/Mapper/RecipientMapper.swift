@@ -12,7 +12,8 @@ final class RecipientMapper: RecipientMapping {
         return payeeListDto.compactMap {
             Recipient(
                 name: $0.payeeName ?? "",
-                accountNumber: $0.account?.accountNo ?? ""
+                accountNumber: $0.account?.accountNo ?? "",
+                transactionTitle: $0.account?.transactionTitle ?? ""
             )
         }
     }
