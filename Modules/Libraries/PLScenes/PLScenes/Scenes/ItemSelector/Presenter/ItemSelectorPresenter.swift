@@ -59,8 +59,7 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
     
     func didTapClose() {
         if configuration.shouldShowDialogBeforeClose {
-            let closeConfirmationDialog = confirmationDialogFactory.create(
-                message: configuration.dialogMessage,
+            let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
                 confirmAction: { [weak self] in
                     self?.coordinator.close()
                 },

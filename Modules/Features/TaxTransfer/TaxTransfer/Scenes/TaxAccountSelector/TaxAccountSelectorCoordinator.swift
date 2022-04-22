@@ -41,7 +41,8 @@ final class TaxAccountSelectorCoordinator {
             navigationTitle: "#Nazwa organu",
             isSearchEnabled: true,
             sections: getSections(withLastSelectedTaxAccounts: lastSelectedTaxAccounts),
-            selectedItem: selectedTaxAccount
+            selectedItem: selectedTaxAccount,
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,

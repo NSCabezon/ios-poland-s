@@ -46,8 +46,7 @@ final class TaxTransferBillingPeriodCoordinator: ModuleCoordinator {
             isSearchEnabled: false,
             sections: [section],
             selectedItem: selectedItem,
-            shouldShowDialogBeforeClose: true,
-            dialogMessage: localized("Czy na pewno chcesz zakończyć")
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator<TaxTransferBillingPeriodType>(
             navigationController: navigationController,
@@ -68,8 +67,7 @@ final class TaxTransferBillingPeriodCoordinator: ModuleCoordinator {
             isSearchEnabled: false,
             sections: [section],
             selectedItem: selectedItem,
-            shouldShowDialogBeforeClose: true,
-            dialogMessage: localized("Czy na pewno chcesz zakończyć")
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator<Int>(
             navigationController: navigationController,

@@ -54,7 +54,8 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
                 )
             ],
             selectedItem: selectedTaxSymbol,
-            shouldPopControllerAfterSelection: shouldPopControllerAfterSelection
+            shouldPopControllerAfterSelection: shouldPopControllerAfterSelection,
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,

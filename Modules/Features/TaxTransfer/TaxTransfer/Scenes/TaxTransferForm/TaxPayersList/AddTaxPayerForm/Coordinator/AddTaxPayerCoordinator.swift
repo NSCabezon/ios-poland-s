@@ -89,8 +89,7 @@ extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
             isSearchEnabled: false,
             sections: [section],
             selectedItem: selectedItem,
-            shouldShowDialogBeforeClose: true,
-            dialogMessage: localized("Czy na pewno chcesz zakończyć")
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator<TaxIdentifierType>(
             navigationController: navigationController,

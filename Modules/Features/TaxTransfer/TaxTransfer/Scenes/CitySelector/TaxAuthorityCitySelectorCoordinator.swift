@@ -38,7 +38,8 @@ final class TaxAuthorityCitySelectorCoordinator {
             navigationTitle: "#Miasto",
             isSearchEnabled: true,
             sections: getSections(withLastSelectedCities: lastSelectedCities),
-            selectedItem: selectedCity
+            selectedItem: selectedCity,
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,

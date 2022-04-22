@@ -15,7 +15,7 @@ import PLUI
 
 public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     func back()
-    func goToGlobalPosition()
+    func close()
 
     func showTaxPayerSelector(
         with taxPayers: [TaxPayer],
@@ -125,7 +125,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    public func goToGlobalPosition() {
+    public func close() {
         navigationController?.popToRootViewController(animated: true)
     }
 }
