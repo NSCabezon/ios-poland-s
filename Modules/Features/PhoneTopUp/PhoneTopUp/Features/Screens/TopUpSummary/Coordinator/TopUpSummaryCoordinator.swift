@@ -70,11 +70,7 @@ final class TopUpSummaryCoordinator: TopUpSummaryCoordinatorProtocol {
     }
     
     func makeAnotherTopUp() {
-        if let topupController = navigationController?.viewControllers.first(where: { $0 is PhoneTopUpFormViewController }) {
-            navigationController?.popToViewController(topupController, animated: true)
-            return
-        }
-        
-        navigationController?.popToRootViewController(animated: true)
+        let dataLoaderCoordinator = dependenciesEngine.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
+        dataLoaderCoordinator.startNewTransfer()
     }
 }
