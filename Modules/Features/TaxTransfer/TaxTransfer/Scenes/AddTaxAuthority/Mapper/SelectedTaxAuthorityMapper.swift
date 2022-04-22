@@ -35,7 +35,7 @@ final class SelectedTaxAuthorityMapper: SelectedTaxAuthorityMapping {
         case let .irp(form):
             guard
                 let taxAuthorityName = form.taxAuthorityName,
-                let accountNumber = form.accountNumber,
+                let accountNumber = form.accountNumber?.filter { !$0.isWhitespace },
                 taxAuthorityName.isNotEmpty,
                 accountNumber.isNotEmpty
             else {
