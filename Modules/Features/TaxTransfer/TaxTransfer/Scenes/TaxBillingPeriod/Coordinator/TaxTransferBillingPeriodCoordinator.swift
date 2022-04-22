@@ -43,7 +43,7 @@ final class TaxTransferBillingPeriodCoordinator: ModuleCoordinator {
     ) {
         let configuration = ItemSelectorConfiguration<TaxTransferBillingPeriodType>(
             navigationTitle: title,
-            isSearchEnabled: false,
+            searchMode: .disabled,
             sections: [section],
             selectedItem: selectedItem,
             shouldShowDialogBeforeClose: true
@@ -64,7 +64,7 @@ final class TaxTransferBillingPeriodCoordinator: ModuleCoordinator {
     ) {
         let configuration = ItemSelectorConfiguration<Int>(
             navigationTitle: title,
-            isSearchEnabled: false,
+            searchMode: .disabled,
             sections: [section],
             selectedItem: selectedItem,
             shouldShowDialogBeforeClose: true

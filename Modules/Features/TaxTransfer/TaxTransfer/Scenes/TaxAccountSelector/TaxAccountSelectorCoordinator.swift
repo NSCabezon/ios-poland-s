@@ -39,7 +39,12 @@ final class TaxAccountSelectorCoordinator {
         }
         let configuration = ItemSelectorConfiguration<TaxAccount>(
             navigationTitle: "#Nazwa organu",
-            isSearchEnabled: true,
+            searchMode: .enabled(
+                .init(
+                    searchBarPlaceholderText: "#Wyszukaj nazwę organu",
+                    emptySearchResultMessage: "#Nie znaleźliśmy organu o nazwie:"
+                )
+            ),
             sections: getSections(withLastSelectedTaxAccounts: lastSelectedTaxAccounts),
             selectedItem: selectedTaxAccount,
             shouldShowDialogBeforeClose: true

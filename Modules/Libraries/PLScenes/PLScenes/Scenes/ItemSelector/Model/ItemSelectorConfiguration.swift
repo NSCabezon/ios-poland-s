@@ -7,7 +7,7 @@
 
 public struct ItemSelectorConfiguration<Item: SelectableItem> {
     public let navigationTitle: String
-    public let isSearchEnabled: Bool
+    public let searchMode: SearchMode
     public let sections: [ItemSelectorSection]
     public let selectedItem: Item?
     public let shouldPopControllerAfterSelection: Bool
@@ -15,14 +15,14 @@ public struct ItemSelectorConfiguration<Item: SelectableItem> {
 
     public init(
         navigationTitle: String,
-        isSearchEnabled: Bool,
+        searchMode: SearchMode,
         sections: [ItemSelectorSection],
         selectedItem: Item?,
         shouldPopControllerAfterSelection: Bool = true,
         shouldShowDialogBeforeClose: Bool
     ) {
         self.navigationTitle = navigationTitle
-        self.isSearchEnabled = isSearchEnabled
+        self.searchMode = searchMode
         self.sections = sections
         self.selectedItem = selectedItem
         self.shouldPopControllerAfterSelection = shouldPopControllerAfterSelection
@@ -39,6 +39,24 @@ public struct ItemSelectorConfiguration<Item: SelectableItem> {
         ) {
             self.sectionTitle = sectionTitle
             self.items = items
+        }
+    }
+    
+    public enum SearchMode {
+        case enabled(SearchConfiguration)
+        case disabled
+        
+        public struct SearchConfiguration {
+            public let searchBarPlaceholderText: String
+            public let emptySearchResultMessage: String
+            
+            public init(
+                searchBarPlaceholderText: String,
+                emptySearchResultMessage: String
+            ) {
+                self.searchBarPlaceholderText = searchBarPlaceholderText
+                self.emptySearchResultMessage = emptySearchResultMessage
+            }
         }
     }
 }

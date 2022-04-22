@@ -36,7 +36,12 @@ final class TaxAuthorityCitySelectorCoordinator {
         let lastSelectedCities = (try? storage.getLastSelectedCities()) ?? []
         let configuration = ItemSelectorConfiguration<TaxAuthorityCity>(
             navigationTitle: "#Miasto",
-            isSearchEnabled: true,
+            searchMode: .enabled(
+                .init(
+                    searchBarPlaceholderText: "#Wyszukaj miasto",
+                    emptySearchResultMessage: "#Nie znaleźliśmy miasta o nazwie:"
+                )
+            ),
             sections: getSections(withLastSelectedCities: lastSelectedCities),
             selectedItem: selectedCity,
             shouldShowDialogBeforeClose: true
