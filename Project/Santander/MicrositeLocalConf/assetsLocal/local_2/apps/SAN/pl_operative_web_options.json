@@ -150,5 +150,14 @@
           "method": "POST",
           "isFullScreen": true
        }
-    ]
+    ],
+    "consents_options": [
+            {
+                "id": "MARKETING_CONSENTS",
+                "url": "https://micrositeoneapp2.santanderbankpolska.pl/centrum24-web/native/agreements#/marketing-agreements",
+                "isAvailable": true,
+                "method": "POST",
+                "isFullScreen": true
+            }
+        ]
 }
