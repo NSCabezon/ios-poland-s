@@ -20,7 +20,18 @@ enum TopUpPhoneNumber {
         case .full(let number):
             return number
         case .contact(let contact):
-            return contact.phoneNumber
+            return contact.phoneNumberDigits
+        }
+    }
+    
+    var fullNumber: String? {
+        switch self {
+        case .partial(let number):
+            return nil
+        case .full(let number):
+            return number
+        case .contact(let contact):
+            return contact.phoneNumberDigits
         }
     }
 }
