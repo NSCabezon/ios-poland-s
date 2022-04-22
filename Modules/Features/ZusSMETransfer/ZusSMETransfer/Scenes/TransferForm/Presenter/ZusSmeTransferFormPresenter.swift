@@ -16,6 +16,7 @@ protocol ZusSmeTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusSmeT
     func showRecipientSelection()
     func checkIfHaveEnoughFounds(transferAmount: Decimal, completion: @escaping () -> Void)
     func showConfirmation()
+    func didSelectClose()
     func clearForm()
     func reloadAccounts()
 }
@@ -41,7 +42,7 @@ final class ZusSmeTransferFormPresenter {
         dependenciesResolver.resolve()
     }
     
-    private var getVATAccountUseCase: GetVATAccountUseCase {
+    private var getVATAccountUseCase: GetVATAccountUseCaseProtocol {
         dependenciesResolver.resolve()
     }
     
