@@ -141,7 +141,7 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
     }
     
     func close() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.closeTopUpProces()
     }
     
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?) {
