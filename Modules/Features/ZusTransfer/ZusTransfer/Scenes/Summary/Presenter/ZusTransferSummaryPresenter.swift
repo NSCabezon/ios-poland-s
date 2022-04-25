@@ -41,7 +41,7 @@ extension ZusTransferSummaryPresenter: ZusTransferSummaryPresenterProtocol {
     }
     
     func close() {
-        coordinator.goToGlobalPosition()
+        coordinator.backToTransfers()
     }
 }
 
@@ -72,7 +72,7 @@ private extension ZusTransferSummaryPresenter {
                 self?.coordinator.goToMakeAnotherPayment()
             }),
             .init(imageKey: "icnPg", title: localized("generic_button_globalPosition"), action: { [weak self] in
-                self?.coordinator.goToGlobalPosition()
+                self?.coordinator.backToTransfers()
             }),
             .init(imageKey: "icnHelpUsMenu", title: localized("generic_button_improve"), action: { [weak self] in
                 let opinator = RegularOpinatorInfoEntity(path: "APP-RET-zus-transfer-SUCCESS")

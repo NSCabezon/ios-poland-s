@@ -32,7 +32,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledMagnifyingGlass = false
     let isEnabledTimeline = true
     let isEnabledPregranted = true
-    let languageList: [LanguageType] = [.polish, .english]
+    let languageList: [LanguageType] = [.polish, .english, .russian, .ukrainian]
     let isEnabledDepositWebView = false
     let isEnabledfundWebView = false
     let clickablePension = true

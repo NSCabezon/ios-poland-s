@@ -105,7 +105,7 @@ private extension BLIKHomeCoordinator {
          
         self.dependenciesEngine.register(for: BLIKHomeViewController.self) { resolver in
             var presenter = resolver.resolve(for: BLIKHomePresenterProtocol.self)
-            let viewController = BLIKHomeViewController(presenter: presenter)
+            let viewController = BLIKHomeViewController(dependenciesResolver: resolver, presenter: presenter)
             presenter.view = viewController
             return viewController
         }

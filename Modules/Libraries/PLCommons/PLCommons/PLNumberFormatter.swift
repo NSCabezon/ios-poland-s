@@ -54,6 +54,10 @@ extension PLNumberFormatter: CurrencyFormatterProvider {
     public var decimalSeparator: Character {
         return ","
     }
+    
+    public var millionsThreshold: Decimal {
+        return 1000000000
+    }
 
     public func assembleCurrencyString(for value: String, with symbol: String, representation: AmountRepresentation) -> CurrencySymbolPosition {
         let formattedValue = self.getFormattedValue(for: value, with: representation)

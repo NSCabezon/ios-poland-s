@@ -202,6 +202,7 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
         infoLabel.font = .santander(family: .text, type: .regular, size: 16)
         infoLabel.textColor = .greyishBrown
         infoLabel.text = taxItemSelectorType.info
+        infoLabel.numberOfLines = 2
     }
 
     @objc private func back() {
@@ -209,8 +210,7 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
     }
     
     @objc private func close() {
-        let closeConfirmationDialog = confirmationDialogFactory.create(
-            message: localized("#Czy na pewno chcesz zakończyć"),
+        let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
             confirmAction: { [weak self] in
                 self?.coordinator.close()
             },

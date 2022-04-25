@@ -11,6 +11,7 @@ protocol ZusSmeTransferFormCoordinatorProtocol {
     func showAccountSelector(selectedAccountNumber: String)
     func showRecipientSelection(with maskAccount: String?)
     func updateAccounts(accounts: [AccountForDebit])
+    func showConfiramtion(model: ZusSmeTransferModel)
 }
 
 protocol FormAccountSelectable: AnyObject {
@@ -71,6 +72,15 @@ extension ZusSmeTransferFormCoordinator: ZusSmeTransferFormCoordinatorProtocol {
         coordinator.start()
     }
     
+    func showConfiramtion(model: ZusSmeTransferModel) {
+        let coordinator = ZusSmeTransferConfirmationCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            navigationController: navigationController,
+            model: model
+        )
+        coordinator.start()
+    }
+    
     func showRecipientSelection(with maskAccount: String?) {
         let recipientSelectionCoordinator = RecipientSelectionCoordinator(
             dependenciesResolver: dependenciesEngine,
@@ -106,7 +116,7 @@ private extension ZusSmeTransferFormCoordinator {
         dependenciesEngine.register(for: GetPopularAccountsUseCase.self) { resolver in
             GetPopularAccountsUseCase(dependenciesResolver: resolver)
         }
-        dependenciesEngine.register(for: GetVATAccountUseCase.self) { resolver in
+        dependenciesEngine.register(for: GetVATAccountUseCaseProtocol.self) { resolver in
             GetVATAccountUseCase(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: ZusSmeTransferFormPresenterProtocol.self) { [accounts, selectedAccountNumber] resolver in

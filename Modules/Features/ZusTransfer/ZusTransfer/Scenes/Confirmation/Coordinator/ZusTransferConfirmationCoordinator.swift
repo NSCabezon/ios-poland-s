@@ -79,6 +79,9 @@ private extension ZusTransferConfirmationCoordinator {
         dependenciesEngine.register(for: ZusTransferSendMoneyInputMapper.self) { resolver in
             ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
         }
+        dependenciesEngine.register(for: AuthorizeTransactionUseCaseProtocol.self) { resolver in
+            AuthorizeTransactionUseCase(dependenciesResolver: resolver)
+        }
     }
 }
 

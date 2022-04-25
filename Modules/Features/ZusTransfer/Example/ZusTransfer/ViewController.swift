@@ -44,7 +44,11 @@ class ViewController: UIViewController {
         defaultResolver.register(for: ChallengesHandlerDelegate.self) { _ in
             PLAuthorizationCoordinatorMock()
         }
-
+        
+        defaultResolver.register(for: UseCaseScheduler.self) { _ in
+            UseCaseHandler(maxConcurrentOperationCount: 8)
+        }
+        
         return defaultResolver
     }()
 
@@ -62,7 +66,7 @@ class ViewController: UIViewController {
         let navigationController = UINavigationController()
         navigationController.modalPresentationStyle = .fullScreen
         
-        Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .charityTransfer, dependenciesResolver: self.dependenciesResolver))
+        Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .zusTransfer, dependenciesResolver: self.dependenciesResolver))
             .execute(on: self.dependenciesResolver.resolve(for: UseCaseHandler.self))
             .onSuccess { [weak self] accounts in
                 guard let self = self else { return }

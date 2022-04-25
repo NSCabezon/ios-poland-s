@@ -48,7 +48,8 @@ struct SplitPaymentValidator: SplitPaymentValidating {
                                     invalidVatAmountMessages: validateVatAmount(form.vatAmount, grossAmount: form.grossAmount),
                                     invalidInvoiceTitleMessages: validateInvoice(form.invoiceTitle),
                                     invalidTitleMessages: validateTitle(form.title),
-                                    currentActiveField: currentActiveField)
+                                    currentActiveField: currentActiveField,
+                                    showWhiteListInfoSection: shouldShowWhiteListSection(form.grossAmount))
     }
     
     func getAccountRequiredLength() -> Int {
@@ -86,11 +87,18 @@ private extension SplitPaymentValidator {
             return localized("pl_generic_validationText_thisFieldCannotBeEmpty").text
         }
         if amount <= 0 {
-            return localized("pl_generic_validationText_amountMoreThan0").text
+            return localized("#pl_split_payment_min_0_0_1").text
         } else if amount > maxGrossTransferAmmount  {
             return localized("pl_generic_validationText_amountLessThan100000").text
         }
         return nil
+    }
+    
+    func shouldShowWhiteListSection(_ amount: Decimal?) -> Bool {
+        guard let amount = amount else {
+            return false
+        }
+        return amount > 15000
     }
     
     func validateVatAmount(_ vatAmount: Decimal?, grossAmount: Decimal?) -> String? {

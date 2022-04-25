@@ -5,18 +5,18 @@ import PLUI
 import PLCommonOperatives
 import PLCommons
 
-protocol ContactsCoordinatorProtocol {
+public protocol ContactsCoordinatorProtocol: ModuleCoordinator {
     func showForm(with accounts: [AccountForDebit], contact: MobileContact?)
     func pop()
     func showAccountSelector(with accounts: [AccountForDebit], contact: MobileContact?)
 }
 
-final class ContactsCoordinator: ModuleCoordinator {
-    weak var navigationController: UINavigationController?
+public final class ContactsCoordinator {
+    weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     weak var selectableContactDelegate: FormContactSelectable?
 
-    init(dependenciesResolver: DependenciesResolver,
+    public init(dependenciesResolver: DependenciesResolver,
          navigationController: UINavigationController?,
          selectableContactDelegate: FormContactSelectable? = nil) {
         self.navigationController = navigationController
@@ -25,18 +25,18 @@ final class ContactsCoordinator: ModuleCoordinator {
         self.setupDependencies()
     }
     
-    func start() {
+    public func start() {
         let controller = self.dependenciesEngine.resolve(for: ContactsViewController.self)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension ContactsCoordinator: ContactsCoordinatorProtocol {
-    func pop() {
+    public func pop() {
         navigationController?.popViewController(animated: true)
     }
     
-    func showAccountSelector(with accounts: [AccountForDebit], contact: MobileContact?) {
+    public func showAccountSelector(with accounts: [AccountForDebit], contact: MobileContact?) {
         let selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
         let coordinator = AccountsForDebitCoordinator(dependenciesResolver: dependenciesEngine,
                                                       navigationController: navigationController,
@@ -49,7 +49,7 @@ extension ContactsCoordinator: ContactsCoordinatorProtocol {
         coordinator.start()
     }
 
-    func showForm(with accounts: [AccountForDebit], contact: MobileContact?) {
+    public func showForm(with accounts: [AccountForDebit], contact: MobileContact?) {
         let selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
         let coordinator = MobileTransferFormCoordinator(dependenciesResolver: dependenciesEngine,
                                                         navigationController: navigationController,
@@ -77,6 +77,7 @@ private extension ContactsCoordinator {
         self.dependenciesEngine.register(for: ContactsViewController.self) { resolver in
             var presenter = resolver.resolve(for: ContactsPresenterProtocol.self)
             let viewController = ContactsViewController(
+                dependenciesResolver: resolver,
                 presenter: presenter)
             presenter.view = viewController
             return viewController
@@ -92,6 +93,12 @@ private extension ContactsCoordinator {
         
         self.dependenciesEngine.register(for: GetAccountsForDebitProtocol.self) { resolver in
             return GetAccountsForDebitUseCase(transactionType: .mobileTransfer, dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
+             PLTransactionParametersProvider(dependenciesResolver: resolver)
+        }
+        self.dependenciesEngine.register(for: PLDomesticTransactionParametersGenerable.self) { _ in
+             PLDomesticTransactionParametersProvider()
         }
     }
 }

@@ -189,7 +189,8 @@ extension ZusTransferFormPresenter: RecipientSelectorDelegate {
             name: recipient.name,
             accountNumber: IBANFormatter.format(
                 iban: IBANFormatter.formatIbanToNrb(for: recipient.accountNumber)
-            )
+            ),
+            transactionTitle: recipient.transactionTitle
         )
     }
 }

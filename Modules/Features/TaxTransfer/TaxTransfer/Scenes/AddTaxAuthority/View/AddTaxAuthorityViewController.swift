@@ -9,7 +9,7 @@ import UI
 import PLUI
 import CoreFoundationLib
 
-protocol AddTaxAuthorityView: AnyObject, LoaderPresentable, ErrorPresentable {
+protocol AddTaxAuthorityView: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
     func setViewModel(_ viewModel: AddTaxAuthorityViewModel)
     func setDoneButtonState(isEnabled: Bool)
     func setInvalidFormMessages(_ messages: InvalidTaxAuthorityFormFormMessages)

@@ -49,17 +49,15 @@ private extension TaxTransferSelectedPayerView {
     }
     
     func configureSubviews() {
-        addSubview(taxInfoStackView)
-        taxInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        taxInfoStackView.isUserInteractionEnabled = false
         taxInfoStackView.axis = .vertical
         taxInfoStackView.distribution = .equalSpacing
-
-        addSubview(selectImage)
-        selectImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        [nameLabel,
-        taxIdentifierTypeLabel,
-        taxIdentifierNumberLabel].forEach {
+        taxInfoStackView.spacing = 4
+        [
+            nameLabel,
+            taxIdentifierTypeLabel,
+            taxIdentifierNumberLabel
+        ].forEach {
             taxInfoStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -67,23 +65,28 @@ private extension TaxTransferSelectedPayerView {
         addSubview(tappableCard)
         tappableCard.translatesAutoresizingMaskIntoConstraints = false
         
-        bringSubviewToFront(tappableCard)
+        [taxInfoStackView, selectImage].forEach {
+            tappableCard.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             tappableCard.topAnchor.constraint(equalTo: topAnchor),
+            tappableCard.bottomAnchor.constraint(equalTo: bottomAnchor),
             tappableCard.leadingAnchor.constraint(equalTo: leadingAnchor),
             tappableCard.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tappableCard.heightAnchor.constraint(equalToConstant: 95),
-
+            
+            taxInfoStackView.topAnchor.constraint(equalTo: tappableCard.topAnchor, constant: 16),
+            taxInfoStackView.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 16),
+            taxInfoStackView.trailingAnchor.constraint(equalTo: selectImage.leadingAnchor, constant: -16),
+            taxInfoStackView.bottomAnchor.constraint(equalTo: tappableCard.bottomAnchor, constant: -16),
+            
+            selectImage.topAnchor.constraint(greaterThanOrEqualTo: tappableCard.topAnchor, constant: 20),
             selectImage.centerYAnchor.constraint(equalTo: tappableCard.centerYAnchor),
             selectImage.trailingAnchor.constraint(equalTo: tappableCard.trailingAnchor, constant: -24),
+            selectImage.bottomAnchor.constraint(lessThanOrEqualTo: tappableCard.bottomAnchor, constant: -20),
             selectImage.widthAnchor.constraint(equalToConstant: 24),
-            selectImage.heightAnchor.constraint(equalToConstant: 24),
-
-            taxInfoStackView.topAnchor.constraint(equalTo: tappableCard.topAnchor, constant: 15),
-            taxInfoStackView.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 15),
-            taxInfoStackView.trailingAnchor.constraint(equalTo: selectImage.trailingAnchor, constant: 15),
-            taxInfoStackView.bottomAnchor.constraint(equalTo: tappableCard.bottomAnchor, constant: -15)
+            selectImage.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     

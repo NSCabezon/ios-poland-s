@@ -5,6 +5,8 @@
 //  Created by 185167 on 06/04/2022.
 //
 
+import PLCommons
+
 protocol TaxAuthorityViewModelMapping {
     func map(_ selectedTaxAuthority: SelectedTaxAuthority) -> TaxTransferFormViewModel.TaxAuthorityViewModel
 }
@@ -27,7 +29,7 @@ final class TaxAuthorityViewModelMapper: TaxAuthorityViewModelMapping {
         return TaxTransferFormViewModel.TaxAuthorityViewModel(
             taxAuthorityName: selectedData.taxAuthority.name,
             taxFormSymbol: selectedData.taxSymbol.name,
-            destinationAccountNumber: selectedData.taxAuthority.accountNumber
+            destinationAccountNumber: IBANFormatter.format(iban: selectedData.taxAuthority.accountNumber)
         )
     }
     
@@ -37,7 +39,7 @@ final class TaxAuthorityViewModelMapper: TaxAuthorityViewModelMapping {
         return TaxTransferFormViewModel.TaxAuthorityViewModel(
             taxAuthorityName: selectedData.taxAuthorityName,
             taxFormSymbol: selectedData.taxSymbol.name,
-            destinationAccountNumber: selectedData.accountNumber
+            destinationAccountNumber: IBANFormatter.format(iban: selectedData.accountNumber)
         )
     }
     
@@ -47,7 +49,7 @@ final class TaxAuthorityViewModelMapper: TaxAuthorityViewModelMapping {
         return TaxTransferFormViewModel.TaxAuthorityViewModel(
             taxAuthorityName: selectedData.taxAuthorityAccount.name,
             taxFormSymbol: selectedData.taxSymbol.name,
-            destinationAccountNumber: selectedData.taxAuthorityAccount.accountNumber
+            destinationAccountNumber: IBANFormatter.format(iban: selectedData.taxAuthorityAccount.accountNumber)
         )
     }
 }

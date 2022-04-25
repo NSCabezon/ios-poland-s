@@ -4,11 +4,18 @@ import CoreDomain
 import PLCommons
 
 final class PLTransfersManagerNonConnectionFailureMock: PLTransfersManagerProtocol {
-    
     private let dependenciesResolver: DependenciesResolver
    
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
+        fatalError()
     }
     
     func getTransactionParameters(type: PLDomesticTransactionParametersType?) -> TransactionParameters? {

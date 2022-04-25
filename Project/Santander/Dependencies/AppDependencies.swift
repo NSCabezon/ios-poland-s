@@ -161,6 +161,10 @@ final class AppDependencies {
         return BankingUtils(dependencies: dependencieEngine)
     }()
 
+    private lazy var onlineAdvisor: PLOnlineAdvisorManagerProtocol = {
+        return OnlineAdvisorManager()
+    }()
+
     // MARK: Dependencies init
     init() {
         self.dependencieEngine = DependenciesDefault()
@@ -172,6 +176,7 @@ final class AppDependencies {
         hostModule = HostsModule()
         localAppConfig = PLAppConfig()
         self.ibanFormatter = ShareIbanFormatter()
+        
         registerDependencies()
     }
 }
@@ -424,6 +429,10 @@ private extension AppDependencies {
 
         self.dependencieEngine.register(for: PLCardsHomeModuleCoordinatorApplePayProtocol.self) { resolver in
             return PLCardsHomeModuleCoordinatorApplePay(dependenciesResolver: resolver)
+        }
+
+        self.dependencieEngine.register(for: PLOnlineAdvisorManagerProtocol.self) { resolver in
+            return self.onlineAdvisor
         }
     }
 }
