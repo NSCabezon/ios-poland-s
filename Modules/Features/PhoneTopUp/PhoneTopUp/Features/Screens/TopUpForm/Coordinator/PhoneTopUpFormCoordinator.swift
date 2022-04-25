@@ -218,10 +218,6 @@ extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
         navigationController?.popToViewController(phoneTopUpController, animated: true)
         contactsSelectorDelegate?.mobileContactsDidSelectContact(contact)
     }
-    
-    func mobileContactDidSelectCloseProcess() {
-        navigationController?.popToViewController(phoneTopUpController, animated: true)
-    }
 }
 
 extension PhoneTopUpFormCoordinator: OperatorSelectorDelegate {
