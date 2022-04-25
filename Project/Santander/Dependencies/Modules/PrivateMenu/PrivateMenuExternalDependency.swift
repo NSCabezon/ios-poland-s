@@ -41,6 +41,10 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
         self.drawer
     }
     
+    func resolve() -> GetOtherServicesSubMenuUseCase {
+        return PLPrivateMenuOtherServicesUseCase(dependencies: self)
+    }
+    
     func sendMoneyCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }

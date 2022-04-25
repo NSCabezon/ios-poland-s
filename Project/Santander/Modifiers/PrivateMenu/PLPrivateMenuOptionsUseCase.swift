@@ -35,7 +35,8 @@ private extension PLPrivateMenuOptionsUseCase {
             .becomeClient,
             .currencyExchange,
             .services,
-            .memberGetMember
+            .memberGetMember,
+            .otherServices
         ]
         return defaultOptions
     }
