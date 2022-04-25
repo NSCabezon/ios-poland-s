@@ -70,8 +70,8 @@ final class PhoneTopUpFormViewController: UIViewController {
     private func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_topup_title_topup")))
-            .setLeftAction(.back(action: #selector(goBack)))
-            .setRightActions(.close(action: #selector(closeProcess)))
+        .setLeftAction(.back(action: .selector(#selector(goBack))))
+        .setRightActions(.close(action: .selector(#selector(closeProcess))))
             .build(on: self, with: nil)
     }
     

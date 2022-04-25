@@ -17,8 +17,8 @@ final class QRTransferParser {
     
     // MARK: Methods
     
-    func parse(string: String) -> QRTransferModel? {
-        let components = string
+    func parse(code: String) -> QRTransferModel? {
+        let components = code
             .split(separator: "|", omittingEmptySubsequences: false)
             .map(String.init)
         
@@ -48,6 +48,7 @@ final class QRTransferParser {
         let amount = Int(amountString.trimmingLeadingCharacters(eqaulTo: "0"))
         
         return QRTransferModel(
+            rawCode: code,
             taxIdentifier: taxIdentifier,
             countryCode: countryCode,
             accountNumber: accountNumber,
