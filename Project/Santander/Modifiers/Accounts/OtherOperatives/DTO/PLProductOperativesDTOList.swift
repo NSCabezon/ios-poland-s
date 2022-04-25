@@ -8,7 +8,7 @@
 import Foundation
 
 struct PLProductOperativesDTOList: Codable {
-    var accountsOptions, cardsOptions, helpCenterOptions, insuranceOptions, sendMoneyOptions: [PLProductOperativesDTO]?
+    var accountsOptions, cardsOptions, helpCenterOptions, insuranceOptions, sendMoneyOptions, consentsOptions: [PLProductOperativesDTO]?
 
     enum CodingKeys: String, CodingKey {
         case accountsOptions = "accounts_options"
@@ -16,5 +16,6 @@ struct PLProductOperativesDTOList: Codable {
         case helpCenterOptions = "help_center_options"
         case insuranceOptions = "insurance_options"
         case sendMoneyOptions = "send_money_options"
+        case consentsOptions = "consents_options"
     }
 }

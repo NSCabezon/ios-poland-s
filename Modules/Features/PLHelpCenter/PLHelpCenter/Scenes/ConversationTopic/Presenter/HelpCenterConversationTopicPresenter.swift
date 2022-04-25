@@ -3,6 +3,8 @@ import UI
 
 public protocol PLOnlineAdvisorManagerProtocol {
     func open(initialParams: String)
+    func pauseScreenSharing()
+    func resumeScreenSharing()
 }
 
 protocol HelpCenterConversationTopicPresenterProtocol: MenuTextWrapperProtocol {

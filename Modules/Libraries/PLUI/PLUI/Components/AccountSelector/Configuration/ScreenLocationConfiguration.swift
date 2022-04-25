@@ -29,7 +29,7 @@ extension AccountSelectorViewController {
         }
         
         var showRightNavigationAction: Bool {
-            self == .mobileTransfer || self == .charityTransfer || self == .zusTransfer
+            self == .mobileTransfer || self == .charityTransfer || self == .zusTransfer || self == .taxTransfer
         }
     }
     

@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import PLUI
 import PLCommons
 import PLCommonOperatives
 
@@ -20,6 +21,7 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate,
     func didTapTaxPayer()
     func didTapTaxAuthority()
     func didTapBack()
+    func didTapClose()
     func didTapBillingPeriod()
     func didTapDone(with data: TaxTransferFormFields)
     func didUpdateFields(with fields: TaxTransferFormFields)
@@ -81,6 +83,9 @@ private extension TaxTransferFormPresenter {
     }
     var taxBillingPeriodViewModelMapper: TaxBillingPeriodViewModelMapping {
         dependenciesResolver.resolve()
+    }
+    var confirmationDialogFactory: ConfirmationDialogProducing {
+        return dependenciesResolver.resolve()
     }
 }
 
@@ -148,6 +153,16 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
     
     func didTapBack() {
         coordinator.back()
+    }
+    
+    func didTapClose() {
+        let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
+            confirmAction: { [weak self] in
+                self?.coordinator.close()
+            },
+            declineAction: {}
+        )
+        view?.showDialog(closeConfirmationDialog)
     }
     
     func didTapDone(with data: TaxTransferFormFields) {

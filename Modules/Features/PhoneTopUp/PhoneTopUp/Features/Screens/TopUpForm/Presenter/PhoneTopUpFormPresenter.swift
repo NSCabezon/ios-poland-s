@@ -187,8 +187,7 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
     }
     
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
-        phoneNumber = .full(number: contact.phoneNumber)
-        recipientName = contact.fullName
+        phoneNumber = .contact(contact)
     }
     
     func didSelectTopUpAmount(_ amount: TopUpAmount) {
@@ -251,6 +250,9 @@ private extension PhoneTopUpFormPresenter {
         case .full(let number):
             let showError = matchOperator(with: number) == nil
             view?.showInvalidPhoneNumberError(showError)
+        case .contact(let contact):
+            let showError = matchOperator(with: contact.phoneNumberDigits) == nil
+            view?.showInvalidPhoneNumberError(showError)
         }
     }
     
@@ -287,6 +289,8 @@ private extension PhoneTopUpFormPresenter {
                     self?.recipientName = phoneContact.fullName
                 }
             }
+        case .contact(let contact):
+            recipientName = contact.fullName
         }
     }
     
@@ -296,6 +300,8 @@ private extension PhoneTopUpFormPresenter {
             selectedOperator = nil
         case .full(let number):
             selectedOperator = matchOperator(with: number)
+        case .contact(let contact):
+            selectedOperator = matchOperator(with: contact.phoneNumberDigits)
         }
     }
     
@@ -361,7 +367,7 @@ private extension PhoneTopUpFormPresenter {
     
     func collectFormData() -> TopUpModel? {
         guard let account = selectedAccount,
-              case .full(let recipientNumber) = phoneNumber,
+              let recipientNumber = phoneNumber.fullNumber,
               let amount = selectedTopUpAmount?.amount,
               let operatorId = selectedOperator?.id else {
             return nil

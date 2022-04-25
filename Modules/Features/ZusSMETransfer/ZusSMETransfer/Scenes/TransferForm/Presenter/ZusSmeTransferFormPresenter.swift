@@ -16,6 +16,9 @@ protocol ZusSmeTransferFormPresenterProtocol: RecipientSelectorDelegate, ZusSmeT
     func showRecipientSelection()
     func checkIfHaveEnoughFounds(transferAmount: Decimal, completion: @escaping () -> Void)
     func showConfirmation()
+    func didSelectClose()
+    func clearForm()
+    func reloadAccounts()
 }
 
 protocol ZusSmeTransferFormAccountSelectable: AnyObject {
@@ -39,7 +42,7 @@ final class ZusSmeTransferFormPresenter {
         dependenciesResolver.resolve()
     }
     
-    private var getVATAccountUseCase: GetVATAccountUseCase {
+    private var getVATAccountUseCase: GetVATAccountUseCaseProtocol {
         dependenciesResolver.resolve()
     }
     
@@ -175,6 +178,42 @@ extension ZusSmeTransferFormPresenter: ZusSmeTransferFormPresenterProtocol {
             completion()
         }
     }
+    
+    func reloadAccounts() {
+        view?.showLoader()
+        Scenario(useCase: GetAccountsForDebitUseCase(transactionType: .zusTransfer,
+                                                     dependenciesResolver: dependenciesResolver))
+            .execute(on: dependenciesResolver.resolve())
+            .then(scenario: { [weak self] accounts -> Scenario<GetVATAccountUseCaseInput, GetVATAccountCaseOkOutput, StringErrorOutput>? in
+                guard let self = self else { return nil }
+                if accounts.isEmpty {
+                    self.showErrorView()
+                    return nil
+                }
+                self.accounts = accounts
+                if !accounts.contains(where: { $0.number == self.selectedAccountNumber }) {
+                    self.selectedAccountNumber = accounts.first(where: { $0.defaultForPayments })?.number ?? ""
+                }
+                let taxAccountNumber = self.accounts.first(where: { $0.number == self.selectedAccountNumber })?.taxAccountNumber ?? ""
+                return Scenario(useCase: self.getVATAccountUseCase,
+                                input: GetVATAccountUseCaseInput(accountNumber: taxAccountNumber))
+            })
+            .onSuccess { [weak self] output in
+                self?.view?.hideLoader(completion: {
+                    guard let self = self else { return }
+                    let models = self.accounts.compactMap({ try? self.mapper.map($0, selectedAccountNumber: self.selectedAccountNumber) })
+                    self.coordinator.updateAccounts(accounts: self.accounts)
+                    self.view?.reloadAccountsComponent(with: models)
+                    self.vatAccountDetails = output.vatAccountDetails
+                    self.view?.setVatAccountDetails(vatAccountDetails: output.vatAccountDetails)
+                })
+            }
+            .onError { [weak self] _ in
+                self?.view?.hideLoader(completion: {
+                    self?.showErrorView()
+                })
+            }
+    }
 }
 
 extension ZusSmeTransferFormPresenter: RecipientSelectorDelegate {
@@ -183,7 +222,8 @@ extension ZusSmeTransferFormPresenter: RecipientSelectorDelegate {
             name: recipient.name,
             accountNumber: IBANFormatter.format(
                 iban: IBANFormatter.formatIbanToNrb(for: recipient.accountNumber)
-            )
+            ),
+            transactionTitle: recipient.transactionTitle
         )
     }
 }

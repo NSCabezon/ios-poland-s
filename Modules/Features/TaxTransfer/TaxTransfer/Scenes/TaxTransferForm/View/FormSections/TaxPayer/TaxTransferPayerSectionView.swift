@@ -9,10 +9,10 @@ import PLUI
 import CoreFoundationLib
 
 final class TaxTransferPayerSectionView: UIView {
-    private lazy var sectionContainer = getSectionContainer()
-    private let subviewsContainer = UIView()
     private let selectorView = TaxTransferSelectorView()
     private let selectedPayerView = TaxTransferSelectedPayerView()
+    private lazy var selectorSection = getSectionContainer(for: selectorView)
+    private lazy var payerSection = getSectionContainer(for: selectedPayerView)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,14 +42,14 @@ private extension TaxTransferPayerSectionView {
         taxPayer: TaxTransferFormViewModel.TaxPayerViewModel,
         onTap: @escaping () -> Void
     ) {
-        selectorView.isHidden = true
-        selectedPayerView.isHidden = false
+        selectorSection.isHidden = true
+        payerSection.isHidden = false
         selectedPayerView.configure(with: taxPayer, onTap: onTap)
     }
     
     func showSelector(onTap: @escaping () -> Void) {
-        selectorView.isHidden = false
-        selectedPayerView.isHidden = true
+        selectorSection.isHidden = false
+        payerSection.isHidden = true
         selectorView.configure(selectionState: .unselected, onTap: onTap)
     }
     
@@ -59,35 +59,27 @@ private extension TaxTransferPayerSectionView {
     }
     
     func configureSubviews() {
-        [selectorView, selectedPayerView].forEach {
-            subviewsContainer.addSubview($0)
+        [payerSection, selectorSection].forEach {
+            addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-         
-        addSubview(sectionContainer)
-        sectionContainer.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            sectionContainer.topAnchor.constraint(equalTo: topAnchor, constant: 24),
-            sectionContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            sectionContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            sectionContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            selectorSection.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            selectorSection.bottomAnchor.constraint(equalTo: bottomAnchor),
+            selectorSection.leadingAnchor.constraint(equalTo: leadingAnchor),
+            selectorSection.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            selectorView.topAnchor.constraint(equalTo: subviewsContainer.topAnchor),
-            selectorView.bottomAnchor.constraint(equalTo: subviewsContainer.bottomAnchor),
-            selectorView.leadingAnchor.constraint(equalTo: subviewsContainer.leadingAnchor),
-            selectorView.trailingAnchor.constraint(equalTo: subviewsContainer.trailingAnchor),
-            
-            selectedPayerView.topAnchor.constraint(equalTo: subviewsContainer.topAnchor),
-            selectedPayerView.bottomAnchor.constraint(equalTo: subviewsContainer.bottomAnchor),
-            selectedPayerView.leadingAnchor.constraint(equalTo: subviewsContainer.leadingAnchor),
-            selectedPayerView.trailingAnchor.constraint(equalTo: subviewsContainer.trailingAnchor),
+            payerSection.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            payerSection.bottomAnchor.constraint(equalTo: bottomAnchor),
+            payerSection.leadingAnchor.constraint(equalTo: leadingAnchor),
+            payerSection.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
     
-    func getSectionContainer() -> FormSectionContainer {
+    func getSectionContainer(for view: UIView) -> FormSectionContainer {
         return FormSectionContainer(
-            containedView: subviewsContainer,
+            containedView: view,
             sectionTitle: localized("pl_toolbar_title_Payee")
         )
     }

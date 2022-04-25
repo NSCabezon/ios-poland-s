@@ -126,6 +126,7 @@ public struct AccountPayeeDTO: Codable {
     var taxFormType: String?
     var validFrom: String?
     public var transferType: String?
+    public var transactionTitle: String?
     var status: String?
     var swiftData: SwiftDataDTO?
 }

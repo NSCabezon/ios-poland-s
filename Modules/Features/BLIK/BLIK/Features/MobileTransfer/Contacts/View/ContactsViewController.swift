@@ -4,6 +4,7 @@ import Foundation
 import PLUI
 import PLCommons
 import IQKeyboardManagerSwift
+import PLHelpCenter
 
 protocol ContactsViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
     func setViewModels(_ viewModels: [ContactViewModel])
@@ -11,7 +12,7 @@ protocol ContactsViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
 }
 
 final class ContactsViewController: UIViewController, ContactsViewProtocol {
-    
+    private let dependenciesResolver: DependenciesResolver
     private let presenter: ContactsPresenterProtocol
     
     private let tableView = UITableView()
@@ -24,7 +25,9 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
     private let viewModelMapper = ContactViewModelMapper()
     private var isSearching = false
     
-    init(presenter: ContactsPresenterProtocol) {
+    init(dependenciesResolver: DependenciesResolver,
+         presenter: ContactsPresenterProtocol) {
+        self.dependenciesResolver = dependenciesResolver
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -43,6 +46,15 @@ final class ContactsViewController: UIViewController, ContactsViewProtocol {
         super.viewWillAppear(animated)
         IQKeyboardManager.shared.enableAutoToolbar = false
         navigationController?.addNavigationBarShadow()
+
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.pauseScreenSharing()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.resumeScreenSharing()
     }
     
     func setViewModels(_ viewModels: [ContactViewModel]) {

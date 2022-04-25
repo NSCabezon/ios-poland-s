@@ -28,6 +28,14 @@ public class OnlineAdvisorManager: NSObject, PLOnlineAdvisorManagerProtocol {
                                     animated: true,
                                     completion: nil)
     }
+
+    public func pauseScreenSharing() {
+        viewController?.pauseScreenSharingForSensitiveData()
+    }
+
+    public func resumeScreenSharing() {
+        viewController?.resumeScreenSharingAfterSensitiveData()
+    }
 }
 
 extension OnlineAdvisorManager: VccViewControllerDelegate {

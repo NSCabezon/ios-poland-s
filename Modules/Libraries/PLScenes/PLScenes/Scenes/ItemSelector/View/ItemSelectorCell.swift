@@ -9,7 +9,7 @@ import UI
 import PLUI
 
 final class ItemSelectorCell: UITableViewCell {
-    public static let identifier = String(describing: self)
+    public static let identifier = String(describing: ItemSelectorCell.self)
     
     private let container = TappableControl()
     private let titleLabel = UILabel()
