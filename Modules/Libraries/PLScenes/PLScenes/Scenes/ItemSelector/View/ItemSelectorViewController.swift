@@ -26,7 +26,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
         equalToConstant: 0
     )
     
-    private var sectionViewModels: [SelectableItemSectionViewModel<Item>] {
+    private var viewModel: ItemSelectorViewModel<Item> {
         didSet {
             tableView.reloadData()
         }
@@ -34,7 +34,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
     
     init(presenter: ItemSelectorPresenter<Item>) {
         self.presenter = presenter
-        self.sectionViewModels = []
+        self.viewModel = .sections([])
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,36 +45,65 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        sectionViewModels = presenter.getViewModels(filteredBy: .unfiltered)
+        viewModel = presenter.getViewModel(filteredBy: .unfiltered)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionViewModels.count
+        switch viewModel {
+        case let .sections(sectionViewModels):
+            return sectionViewModels.count
+        case .emptySearchResultMessage:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
+        switch viewModel {
+        case .sections:
+            return 70
+        case .emptySearchResultMessage:
+            return 210
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = sectionViewModels[safe: section] else {
-            assertionFailure("Section shouldn't be empty here!")
-            return 0
+        switch viewModel {
+        case let .sections(sectionViewModels):
+            guard let section = sectionViewModels[safe: section] else {
+                assertionFailure("Section shouldn't be empty here!")
+                return 0
+            }
+            return section.itemViewModels.count
+        case .emptySearchResultMessage:
+            return 1
         }
-        return section.itemViewModels.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let section = sectionViewModels[safe: section] else {
-            assertionFailure("Section shouldn't be empty here!")
+        switch viewModel {
+        case let .sections(sectionViewModels):
+            guard let section = sectionViewModels[safe: section] else {
+                assertionFailure("Section shouldn't be empty here!")
+                return nil
+            }
+            let view = ItemSelectorSectionHeader()
+            view.configure(with: section.sectionTitle)
+            return view
+        case .emptySearchResultMessage:
             return nil
         }
-        let view = ItemSelectorSectionHeader()
-        view.configure(with: section.sectionTitle)
-        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch viewModel {
+        case let .sections(sectionViewModels):
+            return getItemCell(for: sectionViewModels, at: indexPath)
+        case let .emptySearchResultMessage(viewModel):
+            return getEmptySearchResultCell(for: viewModel, at: indexPath)
+        }
+    }
+    
+    private func getItemCell(for sectionViewModels: [SelectableItemSectionViewModel<Item>], at indexPath: IndexPath) -> UITableViewCell {
         let dequeuedCell = tableView.dequeueReusableCell(
             withIdentifier: ItemSelectorCell.identifier,
             for: indexPath
@@ -85,6 +114,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
             let section = sectionViewModels[safe: indexPath.section],
             let viewModel = section.itemViewModels[safe: indexPath.row]
         else {
+            assertionFailure("ItemSelectorCell should be dequeued!")
             return UITableViewCell()
         }
         
@@ -99,10 +129,30 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
         return cell
     }
     
+    private func getEmptySearchResultCell(
+        for viewModel: ItemSelectorViewModel<Item>.EmptySearchResultMessageViewModel,
+        at indexPath: IndexPath
+    ) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: EmptySearchResultCell.identifier,
+            for: indexPath
+        ) as? EmptySearchResultCell else {
+            assertionFailure("EmptySearchResultCell should be dequeued!")
+            return UITableViewCell()
+        }
+        
+        cell.configure(
+            titleMessageText: viewModel.titleMessage,
+            searchPhraseText: viewModel.searchPhrase
+        )
+        
+        return cell
+    }
+    
     private func setUp() {
         configureNavigationItem()
         configureLayout()
-        configureSearchView()
+        configureSearch()
         configureTableView()
         configureStyling()
         configureKeyboardDismissGesture()
@@ -129,10 +179,17 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
         view.backgroundColor = .white
     }
     
-    private func configureSearchView() {
+    private func configureSearch() {
         searchZeroHeightConstraint.priority = .required
-        searchZeroHeightConstraint.isActive = presenter.shouldDisableSearch()
         searchView.setUpdateDelegate(self)
+        switch presenter.getSearchMode() {
+        case let .enabled(configuration):
+            searchView.setPlaceholderText(configuration.searchBarPlaceholderText)
+            searchZeroHeightConstraint.isActive = false
+        case .disabled:
+            searchZeroHeightConstraint.isActive = true
+            
+        }
     }
     
     private func configureTableView() {
@@ -143,9 +200,17 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
             ItemSelectorCell.self,
             forCellReuseIdentifier: ItemSelectorCell.identifier
         )
+        tableView.register(
+            EmptySearchResultCell.self,
+            forCellReuseIdentifier: EmptySearchResultCell.identifier
+        )
         
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
+        tableView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        if #available(iOS 15.0, *) {
+             tableView.sectionHeaderTopPadding = 0
+        }
     }
     
     private func configureLayout() {
@@ -172,9 +237,9 @@ extension ItemSelectorViewController: UpdatableTextFieldDelegate {
         let searchText = searchView.getSearchText()
         
         if searchText.isEmpty {
-            sectionViewModels = presenter.getViewModels(filteredBy: .unfiltered)
+            viewModel = presenter.getViewModel(filteredBy: .unfiltered)
         } else {
-            sectionViewModels = presenter.getViewModels(filteredBy: .text(searchText))
+            viewModel = presenter.getViewModel(filteredBy: .text(searchText))
         }
     }
 }

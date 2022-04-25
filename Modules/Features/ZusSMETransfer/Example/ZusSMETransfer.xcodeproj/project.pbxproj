@@ -24,6 +24,15 @@
 		A323EA6427F341BB009EADC8 /* MaskAccountMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA6327F341BB009EADC8 /* MaskAccountMock.swift */; };
 		A323EA6627F34478009EADC8 /* GetRecipientsUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA6527F34478009EADC8 /* GetRecipientsUseCaseMock.swift */; };
 		A323EA6827F43228009EADC8 /* RecipientMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA6727F43228009EADC8 /* RecipientMapperTests.swift */; };
+		B0005CFC2809532800ADC1A4 /* ZusSmeTransferFormPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0005CFB2809532800ADC1A4 /* ZusSmeTransferFormPresenterTests.swift */; };
+		B0005CFF2809861200ADC1A4 /* ZusSmeTransferFormCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0005CFE2809861200ADC1A4 /* ZusSmeTransferFormCoordinatorMock.swift */; };
+		B0005D0128098C5900ADC1A4 /* ZusSmeTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0005D0028098C5900ADC1A4 /* ZusSmeTransferFormViewMock.swift */; };
+		B0005D0428098E7000ADC1A4 /* ZusSmeTransferFormViewModelMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0005D0328098E7000ADC1A4 /* ZusSmeTransferFormViewModelMockBuilder.swift */; };
+		B0005D0628098EF900ADC1A4 /* AccountForDebitStubBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0005D0528098EF900ADC1A4 /* AccountForDebitStubBuilder.swift */; };
+		B0005D082809931E00ADC1A4 /* GetVatAccountUseCaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0005D072809931E00ADC1A4 /* GetVatAccountUseCaseStub.swift */; };
+		B0FDEC5E280814BE00169B27 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FDEC5D280814BE00169B27 /* Mocks.swift */; };
+		B0FDEC60280814D800169B27 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FDEC5F280814D800169B27 /* PLAuthorizationProcessorManagerMock.swift */; };
+		B0FDEC62280814EB00169B27 /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FDEC61280814EB00169B27 /* PLAuthorizationCoordinatorMock.swift */; };
 		C9CA6970B0201BB645DF9EC3 /* Pods_ZusSMETransfer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24106B954659537570FDB49 /* Pods_ZusSMETransfer_Tests.framework */; };
 		CF9A016F749652151D5931A7 /* Pods_ZusSMETransfer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DDC0029B9080B750BF960E /* Pods_ZusSMETransfer_Example.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +75,15 @@
 		A323EA6327F341BB009EADC8 /* MaskAccountMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskAccountMock.swift; sourceTree = "<group>"; };
 		A323EA6527F34478009EADC8 /* GetRecipientsUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecipientsUseCaseMock.swift; sourceTree = "<group>"; };
 		A323EA6727F43228009EADC8 /* RecipientMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientMapperTests.swift; sourceTree = "<group>"; };
+		B0005CFB2809532800ADC1A4 /* ZusSmeTransferFormPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferFormPresenterTests.swift; sourceTree = "<group>"; };
+		B0005CFE2809861200ADC1A4 /* ZusSmeTransferFormCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferFormCoordinatorMock.swift; sourceTree = "<group>"; };
+		B0005D0028098C5900ADC1A4 /* ZusSmeTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferFormViewMock.swift; sourceTree = "<group>"; };
+		B0005D0328098E7000ADC1A4 /* ZusSmeTransferFormViewModelMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferFormViewModelMockBuilder.swift; sourceTree = "<group>"; };
+		B0005D0528098EF900ADC1A4 /* AccountForDebitStubBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitStubBuilder.swift; sourceTree = "<group>"; };
+		B0005D072809931E00ADC1A4 /* GetVatAccountUseCaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVatAccountUseCaseStub.swift; sourceTree = "<group>"; };
+		B0FDEC5D280814BE00169B27 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		B0FDEC5F280814D800169B27 /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
+		B0FDEC61280814EB00169B27 /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
 		B2AD42902076AAED42BDAAB8 /* Pods-ZusSMETransfer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusSMETransfer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ZusSMETransfer_Tests/Pods-ZusSMETransfer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C0722CB30926DE071AB9AD14 /* ZusSMETransfer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZusSMETransfer.podspec; path = ../ZusSMETransfer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E24106B954659537570FDB49 /* Pods_ZusSMETransfer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZusSMETransfer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +139,9 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				B0FDEC5D280814BE00169B27 /* Mocks.swift */,
+				B0FDEC5F280814D800169B27 /* PLAuthorizationProcessorManagerMock.swift */,
+				B0FDEC61280814EB00169B27 /* PLAuthorizationCoordinatorMock.swift */,
 			);
 			name = "Example for ZusSMETransfer";
 			path = ZusSMETransfer;
@@ -137,6 +158,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B0005D0228098E5100ADC1A4 /* Mock */,
+				B0FDEC6328083BB900169B27 /* TransferForm */,
 				A323EA4D27F321E2009EADC8 /* RecipientSelection */,
 				A323EA4427F1F7B1009EADC8 /* Helpers */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -219,6 +242,42 @@
 			isa = PBXGroup;
 			children = (
 				A323EA5127F32248009EADC8 /* RecipientSelectionPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		B0005CFD280985EC00ADC1A4 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				B0005CFE2809861200ADC1A4 /* ZusSmeTransferFormCoordinatorMock.swift */,
+				B0005D0028098C5900ADC1A4 /* ZusSmeTransferFormViewMock.swift */,
+				B0005D072809931E00ADC1A4 /* GetVatAccountUseCaseStub.swift */,
+			);
+			name = Mock;
+			sourceTree = "<group>";
+		};
+		B0005D0228098E5100ADC1A4 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				B0005D0328098E7000ADC1A4 /* ZusSmeTransferFormViewModelMockBuilder.swift */,
+				B0005D0528098EF900ADC1A4 /* AccountForDebitStubBuilder.swift */,
+			);
+			name = Mock;
+			sourceTree = "<group>";
+		};
+		B0FDEC6328083BB900169B27 /* TransferForm */ = {
+			isa = PBXGroup;
+			children = (
+				B0005CFD280985EC00ADC1A4 /* Mock */,
+				B0FDEC642808436C00169B27 /* Presenter */,
+			);
+			name = TransferForm;
+			sourceTree = "<group>";
+		};
+		B0FDEC642808436C00169B27 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				B0005CFB2809532800ADC1A4 /* ZusSmeTransferFormPresenterTests.swift */,
 			);
 			name = Presenter;
 			sourceTree = "<group>";
@@ -557,6 +616,9 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				B0FDEC62280814EB00169B27 /* PLAuthorizationCoordinatorMock.swift in Sources */,
+				B0FDEC60280814D800169B27 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
+				B0FDEC5E280814BE00169B27 /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,13 +626,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0005CFF2809861200ADC1A4 /* ZusSmeTransferFormCoordinatorMock.swift in Sources */,
 				A323EA5427F32286009EADC8 /* RecipientSelectionViewCoordinatorMock.swift in Sources */,
 				A323EA5627F322AF009EADC8 /* RecipientSelectionViewControllerMock.swift in Sources */,
+				B0005CFC2809532800ADC1A4 /* ZusSmeTransferFormPresenterTests.swift in Sources */,
+				B0005D0428098E7000ADC1A4 /* ZusSmeTransferFormViewModelMockBuilder.swift in Sources */,
 				A323EA6627F34478009EADC8 /* GetRecipientsUseCaseMock.swift in Sources */,
 				A323EA5E27F3242F009EADC8 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 				A323EA6027F3247A009EADC8 /* RecipientsBuilderMock.swift in Sources */,
 				A323EA5827F323B3009EADC8 /* PLTransfersManagerSuccessMock.swift in Sources */,
 				A323EA5227F32248009EADC8 /* RecipientSelectionPresenterTests.swift in Sources */,
+				B0005D082809931E00ADC1A4 /* GetVatAccountUseCaseStub.swift in Sources */,
+				B0005D0128098C5900ADC1A4 /* ZusSmeTransferFormViewMock.swift in Sources */,
+				B0005D0628098EF900ADC1A4 /* AccountForDebitStubBuilder.swift in Sources */,
 				A323EA5A27F323EB009EADC8 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
 				A323EA6827F43228009EADC8 /* RecipientMapperTests.swift in Sources */,
 				A323EA6427F341BB009EADC8 /* MaskAccountMock.swift in Sources */,

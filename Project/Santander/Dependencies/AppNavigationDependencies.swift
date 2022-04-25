@@ -144,6 +144,12 @@ final class AppNavigationDependencies {
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
+        dependenciesEngine.register(for: ContactsCoordinatorProtocol.self) { resolver in
+            return ContactsCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
         dependenciesEngine.register(for: ZusSmeTransferDataLoaderCoordinatorProtocol.self) { resolver in
             return ZusSmeTransferDataLoaderCoordinator(
                 dependenciesResolver: resolver,

@@ -48,7 +48,8 @@ private extension PLAuthorizationCoordinator {
         }
         self.dependenciesEngine.register(for: PLAuthorizationViewController.self) { resolver in
             let presenter = resolver.resolve(for: PLAuthorizationPresenterProtocol.self)
-            let viewController = PLAuthorizationViewController(presenter: presenter)
+            let viewController = PLAuthorizationViewController(dependenciesResolver: resolver,
+                                                               presenter: presenter)
             presenter.view = viewController
             return viewController
         }

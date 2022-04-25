@@ -33,13 +33,13 @@ jobs:
 
   tests:
     runs-on: self-hosted
-
+  
     steps:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           submodules: recursive
-
+    
       # Setup ruby
       - name: Setup - Ruby and bundler dependencies
         run: bundle install
@@ -51,10 +51,6 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('Project/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
-
-      - name: Pods update
-        working-directory: ./Project
-        run: bundle exec pod install
 
       - name: Pods update
         working-directory: ./Project

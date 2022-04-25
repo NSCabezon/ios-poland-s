@@ -23,6 +23,7 @@ public final class ChequesFactory: ChequesProducing {
     
     public func create(coordinator: ChequesCoordinator) -> UIViewController {
         return ChequesViewController(
+            dependenciesResolver: dependenciesResolver,
             dropdownPresenter: DropdownViewController(),
             coordinator: coordinator,
             activeChequesController: createChequeListController(

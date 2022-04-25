@@ -29,6 +29,10 @@ final class ItemSearchView: UIView {
         return searchField.text ?? ""
     }
     
+    func setPlaceholderText(_ placeholderText: String) {
+        searchField.setPlaceholder(placeholderText)
+    }
+    
     private func setUp() {
         configureLayout()
         configureStyling()
@@ -42,7 +46,7 @@ final class ItemSearchView: UIView {
             searchField.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             searchField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
             searchField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            searchField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            searchField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             searchField.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
@@ -67,7 +71,7 @@ final class ItemSearchView: UIView {
         )
         searchField.setStyle(LisboaTextFieldStyle.default)
         searchField.setRightAccessory(.image("icnSearch", action: {}))
-        searchField.setPlaceholder(localized("#Szukaj"))
+        searchField.setClearAccessory(.clearDefault)
     }
 }
 
