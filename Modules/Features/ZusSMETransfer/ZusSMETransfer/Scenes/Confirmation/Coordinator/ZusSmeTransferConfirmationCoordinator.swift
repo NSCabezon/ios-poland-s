@@ -64,16 +64,13 @@ private extension ZusSmeTransferConfirmationCoordinator {
             ZusSmeTransferSummaryMapper()
         }
         dependenciesEngine.register(for: ZusSmeTransferSendMoneyInputMapping.self) { resolver in
-            ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
+            ZusSmeTransferSendMoneyInputMapper(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: PenndingChallengeUseCaseProtocol.self) { resolver in
             PenndingChallengeUseCase(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: NotifyDeviceUseCaseProtocol.self) { resolver in
             NotifyDeviceUseCase(dependenciesResolver: resolver)
-        }
-        dependenciesEngine.register(for: ZusTransferSendMoneyInputMapper.self) { resolver in
-            ZusTransferSendMoneyInputMapper(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: AuthorizeTransactionUseCaseProtocol.self) { resolver in
             AuthorizeTransactionUseCase(dependenciesResolver: resolver)
