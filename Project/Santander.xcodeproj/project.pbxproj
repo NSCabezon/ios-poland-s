@@ -69,7 +69,7 @@
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
 		0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */; };
-		180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		180E15F4C4CFEF45D67C330D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		1C8B3EEB270DEF1F00868449 /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEA270DEF1F00868449 /* SendMoneyCoordinator.swift */; };
 		1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEC270DEF3000868449 /* SendMoneyModifier.swift */; };
 		26014B4127EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26014B4027EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift */; };
@@ -282,6 +282,7 @@
 		CCE45AAF2735208800691E91 /* RemainingTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */; };
 		CCE52FD527ABF96200E16690 /* PLPrivateMenuFooterOptionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */; };
 		CCE52FD727ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */; };
+		D23C3FA22816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */; };
 		D27C31ED0663323E0C7994AB /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17194677FA9103CB795DDB /* Pods_Santander.framework */; };
 		D2AEF96227EC6C6F0043F32D /* ru.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2AEF96127EC6C6E0043F32D /* ru.strings */; };
 		D2AEF96427EC6C7E0043F32D /* uk.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2AEF96327EC6C7D0043F32D /* uk.strings */; };
@@ -635,6 +636,7 @@
 		CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTimeViewModel.swift; sourceTree = "<group>"; };
 		CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuFooterOptionsUseCase.swift; sourceTree = "<group>"; };
 		CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOptionsUseCase.swift; sourceTree = "<group>"; };
+		D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOtherServicesUseCase.swift; sourceTree = "<group>"; };
 		D251359BAB670A4CFC01DEBC /* Pods-SantanderTests.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.intern-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.intern-debug.xcconfig"; sourceTree = "<group>"; };
 		D2AEF96127EC6C6E0043F32D /* ru.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru.strings; path = "../../i18n-poland/clients/iOS/ru.strings"; sourceTree = "<group>"; };
 		D2AEF96327EC6C7D0043F32D /* uk.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = uk.strings; path = "../../i18n-poland/clients/iOS/uk.strings"; sourceTree = "<group>"; };
@@ -683,7 +685,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */,
+				180E15F4C4CFEF45D67C330D /* (null) in Frameworks */,
 				A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2004,6 +2006,7 @@
 				CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */,
 				CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */,
 				CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */,
+				D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */,
 			);
 			path = PrivateMenu;
 			sourceTree = "<group>";
@@ -2550,6 +2553,7 @@
 				45E05D1127FDF9CE00CE7CBB /* ModuleDependencies+SavingsExternalDependenciesResolver.swift in Sources */,
 				CCE45A9F2732AC5400691E91 /* InputSignatureView.swift in Sources */,
 				0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */,
+				D23C3FA22816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift in Sources */,
 				7E974B0A2757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift in Sources */,
 				BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */,
 				0409C91527E488B900009C2D /* FloatingButtonController.swift in Sources */,

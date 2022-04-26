@@ -126,12 +126,35 @@ extension Array where Element == PrivateSubmenuAction {
     func toOptionRepresentable(_ elementsCount: [PrivateSubmenuAction: Int]? = nil) -> [PrivateSubMenuOptionRepresentable] {
         var result = [PrivateSubMenuOptionRepresentable]()
         self.forEach { option in
-            if case .myProductOffer(let product, let offer) = option {
+            switch option {
+            case .myProductOffer(let product, let offer):
                 guard let elementsCount = elementsCount, isNotEmptyOffer(offer) else { return }
                 let item = SubMenuElement(titleKey: product.titleKey,
                                           icon: product.imageKey,
                                           submenuArrow: false,
                                           elementsCount: elementsCount[option],
+                                          action: option)
+                result.append(item)
+            case .sofiaOffer(let sofia, _):
+                guard let elementsCount = elementsCount else { return }
+                let item = SubMenuElement(titleKey: sofia.titleKey,
+                                          icon: sofia.icon,
+                                          submenuArrow: false,
+                                          elementsCount: elementsCount[option],
+                                          action: option)
+                result.append(item)
+            case .otherOffer(let other, _):
+                let item = SubMenuElement(titleKey: other.titleKey,
+                                          icon: other.icon,
+                                          submenuArrow: false,
+                                          elementsCount: nil,
+                                          action: option)
+                result.append(item)
+            case .worldOffer(let world, _):
+                let item = SubMenuElement(titleKey: world.titleKey,
+                                          icon: world.imageKey,
+                                          submenuArrow: false,
+                                          elementsCount: nil,
                                           action: option)
                 result.append(item)
             }
