@@ -1,5 +1,6 @@
 import CoreFoundationLib
 import UI
+import PLCommons
 
 public protocol PLOnlineAdvisorManagerProtocol {
     func open(initialParams: String)
@@ -57,8 +58,18 @@ extension HelpCenterConversationTopicPresenter: HelpCenterConversationTopicPrese
     
     func performActionFor(subjectDetails: HelpCenterConfig.SubjectDetails, mediumType: String, baseAddress: String) {
         if subjectDetails.loginActionRequired {
-            // TODO: Implement the flow that requires user to log-in [MOBILE-7891]
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+            let deeplinkManager = self.dependenciesResolver.resolve(for: DeepLinkManagerProtocol.self)
+            view?.makeLoginInfoDialog(loginAction: { [weak self] in
+                let deeplink = PolandDeepLink.myProducts(
+                    entryType: subjectDetails.entryType,
+                    mediumType: mediumType,
+                    subjectID: subjectDetails.subjectId,
+                    baseAddress: baseAddress
+                )
+                deeplinkManager.registerDeepLink(deeplink)
+                self?.coordinator.close()
+             })
+
         } else {
             loadUserContextThenGoToOnlineAdvisor(
                 subjectDetails: subjectDetails,
@@ -105,4 +116,3 @@ extension HelpCenterConversationTopicPresenter: AutomaticScreenActionTrackable {
         self.dependenciesResolver.resolve(for: TrackerManager.self)
     }
 }
-

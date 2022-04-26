@@ -6,6 +6,7 @@ import Foundation
 protocol HelpCenterConversationTopicViewProtocol: GenericErrorDialogPresentationCapable, LoadingViewPresentationCapable {
     func setup(with viewModels: [HelpCenterSectionViewModel])
     func showErrorDialog()
+    func makeLoginInfoDialog(loginAction: (() -> Void)?)
 }
 
 final class HelpCenterConversationTopicViewController: UIViewController {
@@ -47,6 +48,11 @@ extension HelpCenterConversationTopicViewController: HelpCenterConversationTopic
         let errorDialog = HelpCenterDialogFactory.makeErrorDialog()
         errorDialog.showIn(self)
     }
+    
+    func makeLoginInfoDialog(loginAction: (() -> Void)?) {
+         let loginInfoDialog = HelpCenterDialogFactory.makeLoginInfoDialog(loginAction: loginAction)
+         loginInfoDialog.showIn(self)
+     }
 }
 
 private extension HelpCenterConversationTopicViewController {

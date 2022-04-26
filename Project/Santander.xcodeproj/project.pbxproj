@@ -69,7 +69,6 @@
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
 		0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */; };
-		180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		1C8B3EEB270DEF1F00868449 /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEA270DEF1F00868449 /* SendMoneyCoordinator.swift */; };
 		1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEC270DEF3000868449 /* SendMoneyModifier.swift */; };
 		26014B4127EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26014B4027EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift */; };
@@ -207,7 +206,6 @@
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712718CC1199B6EE214A84E5 /* Pods_SantanderTests.framework */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		A962AAAA27173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */; };
 		A962AAAD2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */; };
 		A97543352784805B00400A0A /* PLCashLoanOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97543342784805A00400A0A /* PLCashLoanOperative.swift */; };
@@ -226,7 +224,6 @@
 		B01155F7271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155F5271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift */; };
 		B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155F6271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift */; };
 		B01155FD2715935900A4C175 /* DeeplinkDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */; };
-		B01155FF2715935900A4C175 /* PolandDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FC2715935900A4C175 /* PolandDeepLink.swift */; };
 		B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */; };
 		B0115603271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */; };
 		B01156052715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */; };
@@ -569,7 +566,6 @@
 		B01155F5271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeepLinkDebugLauncherMenuViewController.swift; path = Santander/OneAppInit/DeepLink/DeepLinkDebugLauncherMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		B01155F6271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeepLinkDebugLauncherMenuCoordinator.swift; path = Santander/OneAppInit/DeepLink/DeepLinkDebugLauncherMenuCoordinator.swift; sourceTree = SOURCE_ROOT; };
 		B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeeplinkDependencies.swift; sourceTree = "<group>"; };
-		B01155FC2715935900A4C175 /* PolandDeepLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolandDeepLink.swift; sourceTree = "<group>"; };
 		B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDebugMenuFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLHelpCenterFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSideMenuNavigationDependencies.swift; sourceTree = "<group>"; };
@@ -673,7 +669,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */,
 				A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1750,7 +1745,6 @@
 			children = (
 				78A4071227344CBF002DEBF0 /* DeeplinkLauncher.swift */,
 				B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */,
-				B01155FC2715935900A4C175 /* PolandDeepLink.swift */,
 			);
 			path = DeepLinks;
 			sourceTree = "<group>";
@@ -2396,7 +2390,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -2463,7 +2456,6 @@
 				A9EF0DA4271D78B800A1604B /* PLContextDTO.swift in Sources */,
 				0D9ACF2D27352416001D6D51 /* GetGPLoanOperativeModifier.swift in Sources */,
 				85E19B65270E295C00EFA1CC /* SendMoneyTransferTypeUseCase.swift in Sources */,
-				B01155FF2715935900A4C175 /* PolandDeepLink.swift in Sources */,
 				B7D59A3927A008A900E2D777 /* PLCustomActions.swift in Sources */,
 				0D42455F26E7B05C00BA5A4B /* PLAccountTransactionDetail.swift in Sources */,
 				7E2CCA8D26B80D0A00CBDB11 /* CustomerServicePGFrequentOperativeOption.swift in Sources */,

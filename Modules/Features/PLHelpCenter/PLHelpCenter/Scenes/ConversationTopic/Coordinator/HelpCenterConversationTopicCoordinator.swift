@@ -10,6 +10,7 @@ protocol HelpCenterConversationTopicCoordinatorProtocol: ModuleCoordinator {
     
     func start(with advisorDetails: HelpCenterConfig.AdvisorDetails)
     func goBack()
+    func close()
 }
 
 final class HelpCenterConversationTopicCoordinator: HelpCenterConversationTopicCoordinatorProtocol {
@@ -38,6 +39,10 @@ final class HelpCenterConversationTopicCoordinator: HelpCenterConversationTopicC
     
     func goBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func close() {
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
