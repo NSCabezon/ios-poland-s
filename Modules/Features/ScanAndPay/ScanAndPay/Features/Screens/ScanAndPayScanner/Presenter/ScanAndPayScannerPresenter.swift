@@ -100,7 +100,7 @@ private extension ScanAndPayScannerPresenter {
     
     func handleCodeDetection(code: String) {
         view?.stopScanning()
-        guard let transferModel = qrCodeParser.parse(string: code) else {
+        guard let transferModel = qrCodeParser.parse(code: code) else {
             view?.showUnrecognizedCodeDialog()
             view?.startScanning()
             return
@@ -111,6 +111,6 @@ private extension ScanAndPayScannerPresenter {
     
     func showSummary(with transferModel: QRTransferModel) {
         view?.stopScanning()
-        #warning("todo: show summary, will be implemented in another PR")
+        coordinator?.showSummary(with: transferModel)
     }
 }

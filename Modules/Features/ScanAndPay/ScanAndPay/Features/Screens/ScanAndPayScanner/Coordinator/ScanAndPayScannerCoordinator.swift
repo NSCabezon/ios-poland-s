@@ -12,6 +12,7 @@ import UI
 public protocol ScanAndPayScannerCoordinatorProtocol: AnyObject, ModuleCoordinator {
     func back(animated: Bool)
     func close(animated: Bool)
+    func showSummary(with transferModel: QRTransferModel)
 }
 
 public final class ScanAndPayScannerCoordinator: ScanAndPayScannerCoordinatorProtocol {
@@ -75,5 +76,12 @@ public final class ScanAndPayScannerCoordinator: ScanAndPayScannerCoordinatorPro
     
     public func back(animated: Bool) {
         navigationController?.popViewController(animated: animated)
+    }
+    
+    public func showSummary(with transferModel: QRTransferModel) {
+        let summaryCoordinator = ScanAndPaySummaryCoordinator(dependenciesResolver: dependenciesEngine,
+                                                              navigationController: navigationController,
+                                                              transferModel: transferModel)
+        summaryCoordinator.start()
     }
 }

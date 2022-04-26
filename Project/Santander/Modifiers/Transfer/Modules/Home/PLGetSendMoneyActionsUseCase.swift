@@ -85,9 +85,9 @@ struct PLGetSendMoneyActionsUseCase {
 }
 
 extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
-    func fetchSendMoneyAction(_ location: PullOfferLocation) -> AnyPublisher<SendMoneyActionType, Error> {
+    func fetchSendMoneyAction(_ location: PullOfferLocation) -> AnyPublisher<SendMoneyActionType?, Never> {
         offersPublisher(location)
-            .compactMap { offer -> SendMoneyActionType? in
+            .map { offer -> SendMoneyActionType? in
                 switch location.stringTag {
                 case TransferPullOffers.fxpayTransferHomeOffer:
                     return SendMoneyActionType.onePayFX(offer)
@@ -98,18 +98,19 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
                 default: return nil
                 }
             }
+            .replaceError(with: nil)
             .eraseToAnyPublisher()
     }
-    
     public func fetchSendMoneyActions(_ locations: [PullOfferLocation]) -> AnyPublisher<[SendMoneyActionType], Never> {
         let actions = locations.map(fetchSendMoneyAction)
         return Publishers.MergeMany(actions)
             .collect()
-            .replaceError(with: [])
+            .map { offerActions in
+                offerActions.compactMap({ $0 })
+            }
             .map(getHomeSendMoneyActions)
             .eraseToAnyPublisher()
     }
-    
     func offersPublisher(_ location: PullOfferLocationRepresentable) -> AnyPublisher<OfferRepresentable, Error> {
         return candidateOfferUseCase
             .fetchCandidateOfferPublisher(location: location)
