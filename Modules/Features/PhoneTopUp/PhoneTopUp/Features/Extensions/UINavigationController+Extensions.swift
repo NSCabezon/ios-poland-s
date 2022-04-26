@@ -31,8 +31,8 @@ extension UINavigationController {
     }
     
     func closeTopUpProces() {
-        if let indexOfTopUpForm = viewControllers.firstIndex(where: { $0 is PhoneTopUpFormViewController }) {
-            let parentController = viewControllers[indexOfTopUpForm - 1]
+        if let indexOfTopUpForm = viewControllers.firstIndex(where: { $0 is PhoneTopUpFormViewController }),
+            let parentController = viewControllers[safe: indexOfTopUpForm - 1] {
             popToViewController(parentController, animated: true)
             return
         }
