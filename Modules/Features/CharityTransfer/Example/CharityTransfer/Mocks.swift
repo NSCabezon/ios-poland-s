@@ -14,6 +14,7 @@ struct MockHostProvider: PLHostProviderProtocol {
 }
 
 struct MockManager: PLManagersProviderProtocol {
+    
     let resolver: DependenciesResolver
     
     func getHistoryManager() -> PLHistoryManagerProtocol {
@@ -91,10 +92,14 @@ struct MockManager: PLManagersProviderProtocol {
     func getFundsManager() -> PLFundManagerProtocol {
         fatalError()
     }
+    
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
+        fatalError()
+    }
 }
 
 struct MockAccountManeger: PLAccountManagerProtocol {
-   
+    
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<SANPLLibrary.AccountDetailDTO, NetworkProviderError> {
         fatalError()
     }
@@ -172,9 +177,14 @@ struct MockAccountManeger: PLAccountManagerProtocol {
     func changeAlias(accountDTO: SANLegacyLibrary.AccountDTO, newAlias: String) throws -> Result<AccountChangeAliasDTO, NetworkProviderError> {
         fatalError()
     }
+    
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError> {
+        fatalError()
+    }
 }
 
 struct MockTransferManager: PLTransfersManagerProtocol {
+    
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
         .failure(.noConnection)
     }
@@ -267,6 +277,18 @@ struct MockTransferManager: PLTransfersManagerProtocol {
     }
     
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError> {
+        .failure(.noConnection)
+    }
+    
+    func getExternalPopular(accountType: Int) throws -> Result<[PopularAccountDTO], NetworkProviderError> {
+        .failure(.noConnection)
+    }
+    
+    func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        .failure(.noConnection)
+    }
+    
+    func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
         .failure(.noConnection)
     }
 }

@@ -1,34 +1,32 @@
 //
 //  DropdownViewController.swift
-//  BLIK
 //
 //  Created by Piotr Mielcarzewicz on 24/06/2021.
 //
 
 import UIKit
-import PLUI
 
-protocol DropdownPresenter {
+public protocol DropdownPresenter {
     func present(items: [DropdownItem], in parent: UIViewController)
 }
 
-final class DropdownViewController: UIViewController, DropdownPresenter {
+public final class DropdownViewController: UIViewController, DropdownPresenter {
     private let tableView = UITableView()
     private let dismissGestureLayer = UIView()
     private var items: [DropdownItem] = []
     private lazy var tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 0)
     private weak var parentController: UIViewController?
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         updateDropdownHeight()
     }
     
-    func present(items: [DropdownItem], in parent: UIViewController) {
+    public func present(items: [DropdownItem], in parent: UIViewController) {
         self.items = items
         self.parentController = parent
         configureSelfAsChild(in: parent)
@@ -130,11 +128,11 @@ final class DropdownViewController: UIViewController, DropdownPresenter {
 }
 
 extension DropdownViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: DropdownItemCell.identifier,
             for: indexPath
@@ -148,12 +146,12 @@ extension DropdownViewController: UITableViewDataSource {
 }
 
 extension DropdownViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         items[indexPath.row].action()
         dismissDropdown()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.itemHeight
     }
 }

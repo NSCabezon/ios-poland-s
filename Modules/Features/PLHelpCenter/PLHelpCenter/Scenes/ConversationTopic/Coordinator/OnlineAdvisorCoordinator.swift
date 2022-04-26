@@ -12,6 +12,12 @@ import UI
 
 public protocol OnlineAdvisorCoordinatorProtocol: ModuleCoordinator {
     var presenter: OnlineAdvisorCoordinatorPresenterProtocol? { get set }
+    func startAfterLogin(
+        entryType: String,
+        mediumType: String,
+        subjectId: String,
+        baseAddress: String
+    )
 }
 
 public class OnlineAdvisorCoordinator: OnlineAdvisorCoordinatorProtocol {
@@ -19,9 +25,27 @@ public class OnlineAdvisorCoordinator: OnlineAdvisorCoordinatorProtocol {
     
     public var navigationController: UINavigationController?
     public let dependenciesEngine: DependenciesDefault
+        
+    private var getUserContextForOnlineAdvisorUseCase: GetUserContextForOnlineAdvisorUseCaseProtocol {
+        dependenciesEngine.resolve(for: GetUserContextForOnlineAdvisorUseCaseProtocol.self)
+    }
     
     public func start() {
         presenter?.getUserContext(parameters: presenter?.onlineAdvisorParameters)
+    }
+    
+    public func startAfterLogin(
+        entryType: String,
+        mediumType: String,
+        subjectId: String,
+        baseAddress: String
+    ) {
+        presenter?.goToOnlineAdvisor(
+            entryType: entryType,
+            mediumType: mediumType,
+            subjectId: subjectId,
+            baseAddress: baseAddress
+        )
     }
     
     public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController? = nil) {

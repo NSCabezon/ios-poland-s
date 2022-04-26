@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct QRTransferModel {
+public struct QRTransferModel {
+    let rawCode: String
     let taxIdentifier: String?
     let countryCode: String
     let accountNumber: String
