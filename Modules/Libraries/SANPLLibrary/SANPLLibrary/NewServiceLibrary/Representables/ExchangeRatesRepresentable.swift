@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import CoreDomain
 
 public protocol ExchangeRatesRepresentable {
     var exchangeRates: [ExchangeRateRepresentable] { get }
 }
 
-public protocol ExchangeRateRepresentable {
+public protocol ExchangeRateRepresentable: CoreExchangeRateRepresentable {
     var currency: String { get }
     var currencySymbol: String { get }
     var buyRate: Decimal { get }

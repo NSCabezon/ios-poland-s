@@ -20,7 +20,8 @@ public protocol PLTransfersRepository: TransfersRepository {
     func getAccountsForCredit() -> AnyPublisher<[AccountRepresentable], Error>
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error>
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConfirmationTransferDTO, Error>
-    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error>
+    func getExchangeRatesReactive() -> AnyPublisher<[ExchangeRateRepresentable], Error>
+    func getExchangeRates() throws -> Result<[ExchangeRateRepresentable], Error>
 }
 
 public extension PLTransfersRepository {
