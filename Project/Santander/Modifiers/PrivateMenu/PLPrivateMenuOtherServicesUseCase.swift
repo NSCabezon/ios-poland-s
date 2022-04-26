@@ -11,11 +11,13 @@ import CoreDomain
 import CoreFoundationLib
 
 struct PLPrivateMenuOtherServicesUseCase: GetOtherServicesSubMenuUseCase {
+    
     private let offers: GetCandidateOfferUseCase
     private let appConfig: AppConfigRepositoryProtocol
     private let globalPositionRepository: GlobalPositionDataRepository
     private let userPrefRepository: UserPreferencesRepository
     private let servicesForYou: ServicesForYouRepository
+    
     init(dependencies: PrivateMenuModuleExternalDependenciesResolver) {
         offers = dependencies.resolve()
         appConfig = dependencies.resolve()
@@ -25,11 +27,14 @@ struct PLPrivateMenuOtherServicesUseCase: GetOtherServicesSubMenuUseCase {
             netClient: NetClientImplementation(),
             assetsClient: AssetsClient())
     }
+    
     func fetchSubMenuOptions() -> AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
         return otherServices
     }
 }
+
 private extension PLPrivateMenuOtherServicesUseCase {
+    
     var otherServices: AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
         let enableComingFeatures = appConfig
             .value(for: "enableComingFeatures", defaultValue: false)
@@ -52,6 +57,7 @@ private extension PLPrivateMenuOtherServicesUseCase {
             }
             .eraseToAnyPublisher()
     }
+    
     var isSmartServicesEnabled: AnyPublisher<Bool, Never> {
         return globalPositionRepository
             .getGlobalPosition()
@@ -70,6 +76,7 @@ private extension PLPrivateMenuOtherServicesUseCase {
             .replaceError(with: false)
             .eraseToAnyPublisher()
     }
+    
     func getCandidate( _ location: PullOfferLocationRepresentable?) -> AnyPublisher<OfferRepresentable?, Never> {
         guard let location = location else { return Just(nil).eraseToAnyPublisher() }
         return offers.fetchCandidateOfferPublisher(location: location)
