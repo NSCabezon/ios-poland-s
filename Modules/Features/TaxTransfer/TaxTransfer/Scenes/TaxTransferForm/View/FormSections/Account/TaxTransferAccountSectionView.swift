@@ -84,7 +84,7 @@ private extension TaxTransferAccountSectionView {
     func getSectionContainer(with view: UIView) -> FormSectionContainer {
         return FormSectionContainer(
             containedView: view,
-            sectionTitle: localized("pl_taxTransfer_text_infoSelectAccount")
+            sectionTitle: localized("pl_taxTransfer_label_account")
         )
     }
     

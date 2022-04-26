@@ -46,8 +46,7 @@ extension AddTaxPayerFormPresenter: AddTaxPayerPresenterFormProtocol {
     }
     
     func didPressClose() {
-        let closeConfirmationDialog = confirmationDialogFactory.create(
-            message: localized("#Czy na pewno chcesz zakończyć"),
+        let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
             confirmAction: { [weak self] in
                 self?.coordinator.goToGlobalPosition()
             },

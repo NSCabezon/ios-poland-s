@@ -8,6 +8,7 @@
 import CoreFoundationLib
 import UI
 import PLUI
+import PLCommons
 
 final class TaxTransferObligationIdentifierSectionView: UIView {
     private lazy var sectionContainer = getSectionContainer()
@@ -91,6 +92,7 @@ private extension TaxTransferObligationIdentifierSectionView {
     func configureStyling() {
         let formatter = UIFormattedCustomTextField()
         formatter.setMaxLength(maxLength: 40)
+        formatter.setAllowOnlyCharacters(.ascii)
         obligationIdentifier.textField.placeholder = localized("pl_taxTransfer_label_financialObligationId")
         obligationIdentifier.textField.setEditingStyle(
             .writable(
