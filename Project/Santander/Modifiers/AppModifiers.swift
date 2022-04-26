@@ -93,6 +93,12 @@ private extension AppModifiers {
         self.legacyDependenciesInjector.register(for: FundModifier.self) { _ in
             return self.fundModifiers
         }
+        self.legacyDependenciesInjector.register(for: SecurityAreaActionProtocol.self) { resolver in
+            return PLSecurityActionFactory(dependenciesResolver: resolver)
+        }
+        self.legacyDependenciesInjector.register(for: GlobalSecurityViewContainerProtocol.self) { resolver in
+            return PLGlobalSecurityViewContainer(dependenciesResolver: resolver)
+        }
         self.legacyDependenciesInjector.register(for: AccountNumberFormatterProtocol.self) { _ in
             return PLAccountNumberFormatter()
         }
