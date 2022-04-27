@@ -22,7 +22,7 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
                                                                  ConfirmationDialogPresentable {
     weak var delegate: TaxItemSelectorView?
     private let tableView = UITableView()
-    private let button = LisboaButton()
+    private let button = BottomButtonView(style: .white)
     private let infoLabel = UILabel()
     
     private let taxItemSelectorType: TaxTransferParticipantSelectorType
@@ -183,19 +183,19 @@ final class TaxTransferParticipantSelectorViewController<Item: SelectableItem>: 
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -10),
             
-            button.heightAnchor.constraint(equalToConstant: 48),
-            button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -23),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
     private func configureButton() {
-        button.setTitle(localized(taxItemSelectorType.buttonTitle), for: .normal)
-        button.configureAsWhiteButton()
-        button.addAction { [weak self] in
-            self?.delegate?.didTapButton()
-        }
+        button.configure(
+            title: localized(taxItemSelectorType.buttonTitle),
+            action: { [weak self] in
+                self?.delegate?.didTapButton()
+            }
+        )
     }
     
     private func configureInfoLabel() {

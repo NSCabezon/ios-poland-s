@@ -62,7 +62,7 @@ final class TopUpSummaryCoordinator: TopUpSummaryCoordinatorProtocol {
     }
     
     func close() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.closeTopUpProces()
     }
     
     func goToGlobalPosition() {

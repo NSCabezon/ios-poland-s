@@ -15,7 +15,7 @@ public protocol AccountForDebitSelectorCoordinatorProtocol {
     func closeProcess()
 }
 
-public final class AccountForDebitSelectorCoordinator: ModuleCoordinator {
+open class AccountForDebitSelectorCoordinator: ModuleCoordinator, AccountForDebitSelectorCoordinatorProtocol {
     weak public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let mode: AccountForDebitSelectorMode
@@ -56,9 +56,7 @@ public final class AccountForDebitSelectorCoordinator: ModuleCoordinator {
         presenter.view = controller
         self.navigationController?.pushViewController(controller, animated: true)
     }
-}
-
-extension AccountForDebitSelectorCoordinator: AccountForDebitSelectorCoordinatorProtocol {
+    
     public func back() {
         switch mode {
         case .mustSelectDefaultAccount:
@@ -73,7 +71,7 @@ extension AccountForDebitSelectorCoordinator: AccountForDebitSelectorCoordinator
         navigationController?.popViewController(animated: true)
     }
     
-    public func closeProcess() {
+    open func closeProcess() {
         navigationController?.popToRootViewController(animated: true)
     }
 }

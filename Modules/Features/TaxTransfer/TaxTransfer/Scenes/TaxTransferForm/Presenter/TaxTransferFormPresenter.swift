@@ -217,7 +217,7 @@ private extension TaxTransferFormPresenter {
         case let .success(data):
             handleFetchedTaxFormData(data)
         case .failure:
-            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+            view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
                 self?.coordinator.back()
             })
         }
@@ -307,17 +307,25 @@ private extension TaxTransferFormPresenter {
         )
     }
     
-    func getBillingPeriod() -> Selectable<TaxTransferFormViewModel.TaxBillingPeriodViewModel> {
-        guard let period = selectedPeriod else {
-            return .unselected
+    func getBillingPeriod() -> TaxTransferFormViewModel.BillingPeriodVisibility {
+        guard
+            let taxSymbol = selectedTaxAuthority?.selectedTaxSymbol,
+            taxSymbol.isTimePeriodRequired
+        else {
+            return .hidden
         }
+            
+        guard let period = selectedPeriod else {
+            return .visible(.unselected)
+        }
+        
         let viewModel = taxBillingPeriodViewModelMapper.map(
             period,
             year: selectedBillingYear ?? "",
             periodNumber: selectedPeriodNumber
         )
         
-        return .selected(viewModel)
+        return .visible(.selected(viewModel))
     }
 }
 

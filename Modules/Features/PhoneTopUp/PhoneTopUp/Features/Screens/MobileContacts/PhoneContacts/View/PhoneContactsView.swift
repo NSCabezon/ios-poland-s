@@ -9,7 +9,7 @@ import UI
 import PLUI
 import CoreFoundationLib
 
-protocol PhoneContactsViewProtocol: AnyObject {
+protocol PhoneContactsViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func showContactsPermissionsDeniedDialog()
     func reloadData()
 }
@@ -57,7 +57,8 @@ final class PhoneContactsViewController: UIViewController {
     private func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_topup_title_contacts")))
-            .setLeftAction(.back(action: #selector(goBack)))
+            .setLeftAction(.back(action: .selector(#selector(goBack))))
+            .setRightActions(.close(action: .selector(#selector(close))))
             .build(on: self, with: nil)
     }
     
@@ -133,8 +134,14 @@ final class PhoneContactsViewController: UIViewController {
     
     // MARK: Actions
     
-    @objc private func goBack() {
+    @objc
+    private func goBack() {
         presenter.didSelectBack()
+    }
+    
+    @objc
+    private func close() {
+        presenter.didSelectClose()
     }
 }
 
