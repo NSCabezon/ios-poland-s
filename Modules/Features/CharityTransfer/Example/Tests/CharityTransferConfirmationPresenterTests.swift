@@ -1,28 +1,30 @@
 import CoreFoundationLib
+import PLCommonOperatives
 import CoreDomain
 import PLCommons
 import SANPLLibrary
 import XCTest
 @testable import CharityTransfer
 
-class CharityTransferConfirmationPresenterTests: XCTestCase {
+final class CharityTransferConfirmationPresenterTests: XCTestCase {
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
     private var SUT: CharityTransferConfirmationPresenterProtocol!
     private var view = CharityTransferConfirmationViewControllerMock()
-    private var coordinator: CharityTransferConfirmationCoordinatorMock?
+    private var coordinator: CharityTransferConfirmationCoordinatorMock!
 
     override func setUp() {
         super.setUp()
+        coordinator = CharityTransferConfirmationCoordinatorMock()
         dependencies = DependenciesDefault()
         setUpDependencies()
         SUT = dependencies.resolve(for: CharityTransferConfirmationPresenterProtocol.self)
-        coordinator = dependencies.resolve(for: CharityTransferConfirmationCoordinatorProtocol.self) as? CharityTransferConfirmationCoordinatorMock
     }
     
     override func tearDown() {
         super.tearDown()
         dependencies = nil
         SUT = nil
+        coordinator = nil
     }
     
     func test_setViewModel_is_called() throws {
@@ -41,35 +43,46 @@ class CharityTransferConfirmationPresenterTests: XCTestCase {
     func test_confirm_called_use_case_success_should_start_showSummary_and_loader_hide() throws {
         SUT.confirmTapped()
         XCTAssertTrue(view.showLoaderCalled)
-        TestHelper.delay { [unowned self] in
+        delayedTests { [unowned self] in
             XCTAssertTrue(self.view.hideLoaderCalled)
-            XCTAssertTrue(self.coordinator?.showSummaryCalled == true)
+            XCTAssertTrue(self.coordinator.showSummaryCalled)
         }
     }
     
     func test_goBack_called_should_start_pop_coordinator_function() throws {
         SUT.goBack()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.popCalled == true)
-        }
+        XCTAssertTrue(coordinator.popCalled)
     }
     
     func test_goToTransfer_called_should_start_backToTransfer_coordinator_function() throws {
         SUT.backToTransfer()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.backToTransferCalled == true)
-        }
+        XCTAssertTrue(coordinator.backToTransferCalled)
     }
 }
 
 private extension CharityTransferConfirmationPresenterTests {
     func setUpDependencies() {
+        dependencies.register(for: PLTransfersRepository.self) { resolver in
+            PLTransfersRepositoryMock()
+        }
+        dependencies.register(for: AuthorizeTransactionUseCaseProtocol.self) { _ in
+            AuthorizeTransactionUseCaseStub()
+        }
+        dependencies.register(for: PLManagersProviderProtocol.self) { resolver in
+            PLManagersProviderMock(dependenciesResolver: resolver)
+        }
+        dependencies.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
+            PLTransactionParametersProviderMock(dependenciesResolver: resolver)
+        }
+        dependencies.register(for: CharityTransferSendMoneyInputMapping.self) { resolver in
+            CharityTransferSendMoneyInputMapper(dependenciesResolver: resolver)
+        }
         dependencies.register(for: AcceptCharityTransactionProtocol.self) { resolver in
             AcceptCharityTransactionUseCaseMock(dependenciesResolver: resolver)
         }
         dependencies.register(for: CharityTransferConfirmationPresenterProtocol.self) { [unowned self] resolver in
             let presenter = CharityTransferConfirmationPresenter(dependenciesResolver: resolver,
-                                                                 model: CharityTransferModelMockBuilder.getCharityTransferModelMock())
+                                                                 model: CharityTransferModel.stub())
             presenter.view = self.view
             return presenter
         }
@@ -79,8 +92,11 @@ private extension CharityTransferConfirmationPresenterTests {
         dependencies.register(for: UseCaseHandler.self) { _ in
             UseCaseHandler(maxConcurrentOperationCount: 8)
         }
-        dependencies.register(for: CharityTransferConfirmationCoordinatorProtocol.self) { _ in
-            CharityTransferConfirmationCoordinatorMock()
+        dependencies.register(for: CharityTransferConfirmationCoordinatorProtocol.self) { [unowned self] _ in
+            self.coordinator
+        }
+        dependencies.register(for: PLLoginManagerProtocol.self) { resolver in
+            PLLoginManagerMock(dependenciesResolver: resolver)
         }
     }
 }

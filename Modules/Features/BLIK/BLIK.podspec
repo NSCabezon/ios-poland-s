@@ -35,4 +35,5 @@ Pod::Spec.new do |s|
   s.dependency "Operative"
   s.dependency "PLCommonOperatives"
   s.dependency "PLCryptography"
+  s.dependency "PLHelpCenter"
 end

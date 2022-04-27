@@ -39,6 +39,7 @@ extension AddTaxPayerFormPresenter: AddTaxPayerPresenterFormProtocol {
         selectedTaxIdentifier = item
         view?.setUp(with: getSelectableIdentifierType())
         refreshButtonView()
+        _ = isValid()
     }
     
     func didPressBack() {
@@ -108,7 +109,7 @@ private extension AddTaxPayerFormPresenter {
                     .other]
         )
     }
-    
+
     func getSelectableIdentifierType() -> Selectable<TaxIdentifierType> {
         guard let selectedTaxIdentifier = selectedTaxIdentifier else {
             return .unselected
@@ -127,7 +128,8 @@ private extension AddTaxPayerFormPresenter {
             name: form.payerName,
             taxIdentifier: nil,
             secondaryTaxIdentifierNumber: form.identifierNumber,
-            idType: mapper.map(form.identifierType))
+            idType: mapper.map(form.identifierType)
+        )
     }
     
     func refreshButtonView() {

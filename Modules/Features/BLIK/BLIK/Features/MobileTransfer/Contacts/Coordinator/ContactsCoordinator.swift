@@ -77,6 +77,7 @@ private extension ContactsCoordinator {
         self.dependenciesEngine.register(for: ContactsViewController.self) { resolver in
             var presenter = resolver.resolve(for: ContactsPresenterProtocol.self)
             let viewController = ContactsViewController(
+                dependenciesResolver: resolver,
                 presenter: presenter)
             presenter.view = viewController
             return viewController

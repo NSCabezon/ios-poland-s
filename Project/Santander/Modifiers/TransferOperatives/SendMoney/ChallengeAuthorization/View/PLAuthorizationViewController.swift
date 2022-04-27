@@ -11,6 +11,7 @@ import UIOneComponents
 import CoreFoundationLib
 import PLCommons
 import PLUI
+import PLHelpCenter
 
 protocol PLAuthorizationView: AnyObject {
     func addRemainingTimeView(_ viewModel: RemainingTimeViewModel)
@@ -21,7 +22,7 @@ protocol PLAuthorizationView: AnyObject {
 }
 
 final class PLAuthorizationViewController: UIViewController {
-    
+    private let dependenciesResolver: DependenciesResolver
     @IBOutlet private weak var floattingButtonConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var continueFloatingButton: OneFloatingButton!
@@ -45,7 +46,9 @@ final class PLAuthorizationViewController: UIViewController {
         static let floattingButtonBottomKeyboard: CGFloat = -10
     }
     
-    init(presenter: PLAuthorizationPresenterProtocol) {
+    init(dependenciesResolver: DependenciesResolver,
+         presenter: PLAuthorizationPresenterProtocol) {
+        self.dependenciesResolver = dependenciesResolver
         self.presenter = presenter
         super.init(nibName: "PLAuthorizationViewController", bundle: nil)
     }
@@ -67,6 +70,15 @@ final class PLAuthorizationViewController: UIViewController {
         self.setupNavigationBar()
         self.configureContinueFloatingButton()
         self.configureCancelFloatingButton()
+
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.pauseScreenSharing()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.resumeScreenSharing()
     }
     
     deinit {

@@ -251,7 +251,7 @@ private extension PhoneTopUpFormPresenter {
             let showError = matchOperator(with: number) == nil
             view?.showInvalidPhoneNumberError(showError)
         case .contact(let contact):
-            let showError = matchOperator(with: contact.phoneNumber) == nil
+            let showError = matchOperator(with: contact.phoneNumberDigits) == nil
             view?.showInvalidPhoneNumberError(showError)
         }
     }
@@ -301,7 +301,7 @@ private extension PhoneTopUpFormPresenter {
         case .full(let number):
             selectedOperator = matchOperator(with: number)
         case .contact(let contact):
-            selectedOperator = matchOperator(with: contact.phoneNumber)
+            selectedOperator = matchOperator(with: contact.phoneNumberDigits)
         }
     }
     
@@ -367,7 +367,7 @@ private extension PhoneTopUpFormPresenter {
     
     func collectFormData() -> TopUpModel? {
         guard let account = selectedAccount,
-              case .full(let recipientNumber) = phoneNumber,
+              let recipientNumber = phoneNumber.fullNumber,
               let amount = selectedTopUpAmount?.amount,
               let operatorId = selectedOperator?.id else {
             return nil
