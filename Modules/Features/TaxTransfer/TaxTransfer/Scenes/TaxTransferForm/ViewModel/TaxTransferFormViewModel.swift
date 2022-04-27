@@ -11,7 +11,7 @@ struct TaxTransferFormViewModel {
     let account: Selectable<AccountViewModel>
     let taxPayer: Selectable<TaxPayerViewModel>
     let taxAuthority: Selectable<TaxAuthorityViewModel>
-    let billingPeriod: Selectable<TaxBillingPeriodViewModel>
+    let billingPeriod: BillingPeriodVisibility
     let sendAmount: AmountViewModel
     let obligationIdentifier: String
 }
@@ -84,5 +84,10 @@ extension TaxTransferFormViewModel {
     struct AmountViewModel {
         let amount: String
         let currency: String
+    }
+    
+    enum BillingPeriodVisibility {
+        case visible(Selectable<TaxBillingPeriodViewModel>)
+        case hidden
     }
 }

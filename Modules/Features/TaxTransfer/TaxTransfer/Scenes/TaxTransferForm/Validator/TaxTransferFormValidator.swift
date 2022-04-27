@@ -69,7 +69,7 @@ private extension TaxTransferFormValidator {
             return nil
         }
         guard amount >= minimalAmount else {
-            return "#Kwota minimalna przelewu wynosi 0,01 PLN"
+            return localized("pl_generic_validationText_amountMoreThan0")
         }
         return nil
     }

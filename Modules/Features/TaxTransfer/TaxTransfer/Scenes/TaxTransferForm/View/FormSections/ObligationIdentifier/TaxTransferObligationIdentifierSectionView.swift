@@ -81,11 +81,11 @@ private extension TaxTransferObligationIdentifierSectionView {
     }
     
     func getSectionContainer() -> FormSectionContainer {
-        let infoButtonText: String = localized("pl_taxTransfer_tooltip_financialObligationId")
+        let infoButtonTextKey = "pl_taxTransfer_tooltip_financialObligationId"
         return FormSectionContainer(
             containedView: containerView,
             sectionTitle: localized("pl_taxTransfer_tooltip_financialObligationIdTitle"),
-            infoButtonMode: .enabled(infoButtonText)
+            infoButtonMode: .enabled(infoButtonTextKey)
         )
     }
     
