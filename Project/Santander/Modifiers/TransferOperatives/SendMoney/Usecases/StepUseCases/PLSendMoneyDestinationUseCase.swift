@@ -46,6 +46,14 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
             }
         }
+        requestValues.type = self.getTransferType(requestValues: requestValues)
         return .ok(requestValues)
+    }
+}
+
+private extension PLSendMoneyDestinationUseCase {
+    func getTransferType(requestValues: SendMoneyOperativeData) -> SendMoneyTransferType {
+        // TODO: make logic with source/destination accounts country/currency
+        return .allInternational
     }
 }
