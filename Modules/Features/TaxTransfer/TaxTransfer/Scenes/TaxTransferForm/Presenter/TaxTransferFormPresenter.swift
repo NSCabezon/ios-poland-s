@@ -328,5 +328,3 @@ private extension TaxTransferFormPresenter {
         return .visible(.selected(viewModel))
     }
 }
-
-

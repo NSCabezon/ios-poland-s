@@ -55,10 +55,13 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
         let serviceUrl = baseUrl + basePath
         let serviceName = TaxTransferServiceType.payers.rawValue
         return networkProvider.request(
-            TaxTransferRequest(serviceName: serviceName,
-                        serviceUrl: serviceUrl,
-                        method: .get,
-                        contentType: nil)
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                queryParams: ["forceRefresh": "true"],
+                contentType: nil
+            )
         )
     }
     
