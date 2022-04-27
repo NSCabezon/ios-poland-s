@@ -10,6 +10,8 @@ import CoreDomain
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
     func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError>
+    func getAccountsForDebitSwitch() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountForCreditDTO], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
@@ -31,6 +33,7 @@ final class TransfersDataSource {
     private enum TransferServiceType: String {
         case accountForDebit = "/accounts/for-debit"
         case accountForCredit = "/accounts/for-credit/1"
+        case accountForCreditSwitch = "/accounts/for-credit/61"
         case payees = "/payees/account/all"
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
@@ -92,6 +95,27 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         return result
     }
     
+    func getAccountsForDebitSwitch() throws -> Result<[AccountForDebitDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let queryParams = ["context": "SWITCH"]
+        let serviceName = TransferServiceType.accountForDebit.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<[AccountForDebitDTO], NetworkProviderError> = self.networkProvider.request(
+            TransferRequest(
+                serviceName: serviceName,
+                serviceUrl: absoluteUrl,
+                method: .get,
+                headers: self.headers,
+                queryParams: queryParams,
+                contentType: nil,
+                localServiceName: .accountsForDebit
+            )
+        )
+        return result
+    }
+    
     func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
@@ -105,6 +129,27 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                 method: .get,
                 headers: self.headers,
                 queryParams: nil,
+                contentType: nil,
+                localServiceName: .accountsForCredit
+            )
+        )
+        return result
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountForCreditDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let queryParams = ["context": "SWITCH", "srcAccountType": accountType]
+        let serviceName = TransferServiceType.accountForCreditSwitch.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<[AccountForCreditDTO], NetworkProviderError> = self.networkProvider.request(
+            TransferRequest(
+                serviceName: serviceName,
+                serviceUrl: absoluteUrl,
+                method: .get,
+                headers: self.headers,
+                queryParams: queryParams,
                 contentType: nil,
                 localServiceName: .accountsForCredit
             )

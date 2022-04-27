@@ -31,6 +31,14 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
         fatalError()
     }
     
+    func getAccountsForCreditSwitch() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
+    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], Error> {
+        fatalError()
+    }
+    
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
         fatalError()
     }

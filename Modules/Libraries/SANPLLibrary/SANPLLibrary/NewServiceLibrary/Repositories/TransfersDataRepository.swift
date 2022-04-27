@@ -23,8 +23,28 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
+    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], Error> {
+        let response = try bsanTransferManager.getAccountsForDebitSwitch()
+        switch response {
+        case .success(let accounts):
+            return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
         let response = try bsanTransferManager.getAccountsForCredit()
+        switch response {
+        case .success(let accounts):
+            return .success(accounts)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], Error> {
+        let response = try bsanTransferManager.getAccountsForCreditSwitch(accountType)
         switch response {
         case .success(let accounts):
             return .success(accounts)
