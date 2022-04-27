@@ -1,5 +1,4 @@
 import PersonalArea
-//import NotificationInBox
 import CoreFoundationLib
 import UI
 
@@ -78,7 +77,5 @@ private extension PLGlobalSecurityViewContainer {
     
     func didSelectSmallAlertView() {
         Toast.show(localized("generic_alert_notAvailableOperation"))
-//        let coordinator = self.dependenciesResolver.resolve(for: NotificationInboxModuleCoordinatorProtocol.self)
-//        coordinator.start(.settings)
     }
 }
