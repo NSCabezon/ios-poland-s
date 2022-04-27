@@ -13,13 +13,13 @@ import PLCommonOperatives
 
 protocol InternetContactsCoordinatorProtocol: AnyObject {
     func back()
+    func close()
     func didSelectContact(_ contact: MobileContact)
     func showPhoneContacts(_ contacts: [MobileContact])
 }
 
 protocol MobileContactsSelectorDelegate: AnyObject {
     func mobileContactsDidSelectContact(_ contact: MobileContact)
-    func mobileContactDidSelectCloseProcess()
 }
 
 final class InternetContactsCoordinator: ModuleCoordinator {
@@ -77,6 +77,10 @@ final class InternetContactsCoordinator: ModuleCoordinator {
 extension InternetContactsCoordinator: InternetContactsCoordinatorProtocol {
     func back() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func close() {
+        navigationController?.closeTopUpProces()
     }
     
     func didSelectContact(_ contact: MobileContact) {

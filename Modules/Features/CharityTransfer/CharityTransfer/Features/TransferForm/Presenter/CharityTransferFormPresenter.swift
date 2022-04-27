@@ -16,6 +16,7 @@ protocol CharityTransferFormPresenterProtocol {
     func startValidation()
     func clearForm()
     func reloadAccounts()
+    func getNavigationBarTitle() -> String
 }
 
 public protocol CharityTransferFormAccountSelectable: AnyObject {
@@ -146,12 +147,9 @@ extension CharityTransferFormPresenter: CharityTransferFormPresenterProtocol {
         }
     }
     
-    private func showErrorView() {
-        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
-            self?.coordinator.closeProcess()
-        })
+    func getNavigationBarTitle() -> String {
+        charityTransferSettings.windowTitle ?? localized("pl_foundtrans_title_foundTransfer")
     }
-
 }
 
 private extension CharityTransferFormPresenter {
@@ -164,6 +162,12 @@ private extension CharityTransferFormPresenter {
             return accounts.first
         }
         return accounts.first(where: { $0.number == selectedAccountNumber })
+    }
+    
+    func showErrorView() {
+        view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
+            self?.coordinator.closeProcess()
+        })
     }
 }
 

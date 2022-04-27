@@ -65,8 +65,9 @@ private extension TaxAuthorityFormValidator {
     }
     
     func validateIrpForm(_ form: IrpTaxAuthorityForm) -> TaxAuthorityFormValidationResult {
+        let accountNumber = form.accountNumber?.filter { !$0.isWhitespace }
         let invalidTaxAuthorityNameMessage = getInvalidTaxAuthorityNameMessageIfNeeded(for: form.taxAuthorityName)
-        let invalidAccountNumberMessage = getInvalidAccountNumberMessageIfNeeded(for: form.accountNumber)
+        let invalidAccountNumberMessage = getInvalidAccountNumberMessageIfNeeded(for: accountNumber)
         
         let anyFormElementIsInvalid = !invalidTaxAuthorityNameMessage.isNil || !invalidAccountNumberMessage.isNil
         if anyFormElementIsInvalid {
@@ -78,7 +79,7 @@ private extension TaxAuthorityFormValidator {
             )
         }
         
-        let anyFormElementIsEmpty = (form.accountNumber ?? "").isEmpty || (form.taxAuthorityName ?? "").isEmpty
+        let anyFormElementIsEmpty = (accountNumber ?? "").isEmpty || (form.taxAuthorityName ?? "").isEmpty
         if anyFormElementIsEmpty {
             return invalidResultWithEmptyMessages
         }

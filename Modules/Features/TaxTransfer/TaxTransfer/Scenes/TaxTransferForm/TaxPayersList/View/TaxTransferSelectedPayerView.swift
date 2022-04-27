@@ -7,6 +7,7 @@
 
 import PLUI
 import UI
+import CoreFoundationLib
 
 final class TaxTransferSelectedPayerView: UIView {
     private let tappableCard = TappableControl()
@@ -34,10 +35,14 @@ final class TaxTransferSelectedPayerView: UIView {
         guard let taxIdentifier = viewModel.selectedInfo?.taxIdentifier,
               let value = viewModel.selectedInfo?.idType.displayableValue else { return }
         
-        taxIdentifierNumberLabel.attributedText = getAttributedText(key: "pl_taxTransfer_text_identifierNumber",
-                                                                    value: taxIdentifier)
-        taxIdentifierTypeLabel.attributedText = getAttributedText(key: "pl_taxTransfer_text_identifierType",
-                                                                  value: value)
+        taxIdentifierNumberLabel.attributedText = getAttributedText(
+            key: localized("pl_taxTransfer_text_identifierNumber"),
+            value: taxIdentifier
+        )
+        taxIdentifierTypeLabel.attributedText = getAttributedText(
+            key: localized("pl_taxTransfer_text_identifierType"),
+            value: value
+        )
     }
 }
 
@@ -49,17 +54,15 @@ private extension TaxTransferSelectedPayerView {
     }
     
     func configureSubviews() {
-        addSubview(taxInfoStackView)
-        taxInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        taxInfoStackView.isUserInteractionEnabled = false
         taxInfoStackView.axis = .vertical
         taxInfoStackView.distribution = .equalSpacing
-
-        addSubview(selectImage)
-        selectImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        [nameLabel,
-        taxIdentifierTypeLabel,
-        taxIdentifierNumberLabel].forEach {
+        taxInfoStackView.spacing = 4
+        [
+            nameLabel,
+            taxIdentifierTypeLabel,
+            taxIdentifierNumberLabel
+        ].forEach {
             taxInfoStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -67,23 +70,28 @@ private extension TaxTransferSelectedPayerView {
         addSubview(tappableCard)
         tappableCard.translatesAutoresizingMaskIntoConstraints = false
         
-        bringSubviewToFront(tappableCard)
+        [taxInfoStackView, selectImage].forEach {
+            tappableCard.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             tappableCard.topAnchor.constraint(equalTo: topAnchor),
+            tappableCard.bottomAnchor.constraint(equalTo: bottomAnchor),
             tappableCard.leadingAnchor.constraint(equalTo: leadingAnchor),
             tappableCard.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tappableCard.heightAnchor.constraint(equalToConstant: 95),
-
+            
+            taxInfoStackView.topAnchor.constraint(equalTo: tappableCard.topAnchor, constant: 16),
+            taxInfoStackView.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 16),
+            taxInfoStackView.trailingAnchor.constraint(equalTo: selectImage.leadingAnchor, constant: -16),
+            taxInfoStackView.bottomAnchor.constraint(equalTo: tappableCard.bottomAnchor, constant: -16),
+            
+            selectImage.topAnchor.constraint(greaterThanOrEqualTo: tappableCard.topAnchor, constant: 20),
             selectImage.centerYAnchor.constraint(equalTo: tappableCard.centerYAnchor),
             selectImage.trailingAnchor.constraint(equalTo: tappableCard.trailingAnchor, constant: -24),
+            selectImage.bottomAnchor.constraint(lessThanOrEqualTo: tappableCard.bottomAnchor, constant: -20),
             selectImage.widthAnchor.constraint(equalToConstant: 24),
-            selectImage.heightAnchor.constraint(equalToConstant: 24),
-
-            taxInfoStackView.topAnchor.constraint(equalTo: tappableCard.topAnchor, constant: 15),
-            taxInfoStackView.leadingAnchor.constraint(equalTo: tappableCard.leadingAnchor, constant: 15),
-            taxInfoStackView.trailingAnchor.constraint(equalTo: selectImage.trailingAnchor, constant: 15),
-            taxInfoStackView.bottomAnchor.constraint(equalTo: tappableCard.bottomAnchor, constant: -15)
+            selectImage.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     
@@ -113,9 +121,10 @@ private extension TaxTransferSelectedPayerView {
 
     func getAttributedText(key: String, value: String) -> NSAttributedString {
         guard !value.isEmpty else { return NSAttributedString() }
-        
+
         let attributedKey = NSMutableAttributedString(string: key)
         attributedKey.addAttribute(.font(.santander(family: .micro, type: .regular, size: 12)))
+        attributedKey.append(.init(string: ": "))
 
         let attributedValue = NSMutableAttributedString(string: value)
         attributedValue.addAttribute(.font(.santander(family: .micro, type: .bold, size: 12)))

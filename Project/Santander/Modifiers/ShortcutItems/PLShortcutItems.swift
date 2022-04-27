@@ -5,6 +5,7 @@
 
 import CoreFoundationLib
 import UIKit
+import PLCommons
 
 final class PLShortcutItems {
     private struct ShortcutItem: ShortcutItemProtocol {

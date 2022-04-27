@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import PLUI
 
 protocol AddTaxAuthorityPresenterProtocol {
     var view: AddTaxAuthorityView? { get set }
@@ -71,7 +72,7 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
             }
             .onError { [weak self] _ in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                    self?.view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: nil)
                 })
             }
     }
@@ -81,7 +82,8 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
         let input = GetTaxAccountsUseCaseInput(
             taxAccountNumberFilter: nil,
             taxAccountNameFilter: nil,
-            cityFilter: selectedCity.cityName
+            cityFilter: selectedCity.cityName,
+            optionId: nil
         )
         
         view?.showLoader()
@@ -100,7 +102,7 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
             }
             .onError { [weak self] _ in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                    self?.view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: nil)
                 })
             }
     }
@@ -121,7 +123,13 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
     }
     
     func didTapClose() {
-        coordinator.close()
+        let dialog = confirmationDialogFactory.createEndProcessDialog(
+            confirmAction: { [weak self] in
+                self?.coordinator.close()
+            },
+            declineAction: {}
+        )
+        view?.showDialog(dialog)
     }
     
     func didTapDone() {
@@ -269,6 +277,10 @@ private extension AddTaxAuthorityPresenter {
     }
     
     var formValidator: TaxAuthorityFormValidating {
+        dependenciesResolver.resolve()
+    }
+    
+    var confirmationDialogFactory: ConfirmationDialogProducing {
         dependenciesResolver.resolve()
     }
 }

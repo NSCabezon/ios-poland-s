@@ -11,6 +11,7 @@ import UI
 
 protocol OperatorSelectionCoordinatorProtocol: AnyObject {
     func back()
+    func close()
     func didSelectOperator(_ gsmOperator: Operator)
 }
 
@@ -71,6 +72,10 @@ final class OperatorSelectionCoordinator: ModuleCoordinator {
 extension OperatorSelectionCoordinator: OperatorSelectionCoordinatorProtocol {
     func back() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func close() {
+        navigationController?.closeTopUpProces()
     }
     
     func didSelectOperator(_ gsmOperator: Operator) {

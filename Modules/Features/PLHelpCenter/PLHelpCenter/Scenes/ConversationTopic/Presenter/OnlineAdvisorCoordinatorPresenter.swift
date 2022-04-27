@@ -11,6 +11,12 @@ import UI
 
 public protocol OnlineAdvisorCoordinatorPresenterProtocol: MenuTextWrapperProtocol {
     func getUserContext(parameters: String?)
+    func goToOnlineAdvisor(
+        entryType: String,
+        mediumType: String,
+        subjectId: String,
+        baseAddress: String
+    )
     var onlineAdvisorParameters: String? { get set }
 }
 
@@ -43,22 +49,35 @@ final class OnlineAdvisorCoordinatorPresenter: OnlineAdvisorCoordinatorPresenter
             let value = splitPair.last?.removingPercentEncoding?.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
             parameters[key ?? ""] = value ?? ""
         })
-       
-        let input = GetUserContextForOnlineAdvisorUseCaseOkInput(
+        
+        goToOnlineAdvisor(
             entryType: result?["entryType"]?.removingPercentEncoding ?? "",
             mediumType: result?["mediumType"]?.removingPercentEncoding ?? "",
-            subjectID: result?["subjectId"]?.removingPercentEncoding ?? "",
+            subjectId: result?["subjectId"]?.removingPercentEncoding ?? "",
             baseAddress: url
         )
-        
-        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+    }
+    
+    func goToOnlineAdvisor(
+        entryType: String,
+        mediumType: String,
+        subjectId: String,
+        baseAddress: String
+    ) {
+
+        let input = GetUserContextForOnlineAdvisorUseCaseOkInput(
+            entryType: entryType,
+            mediumType: mediumType,
+            subjectID: subjectId, baseAddress: baseAddress
+        )
         Scenario(useCase: getUserContextForOnlineAdvisorUseCase, input: input)
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { response in
                 let initialParams = response.pdata
+                let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
                 onlineAdvisor.open(initialParams: initialParams)
             }
-            .onError {error in
+            .onError { error in
                 Toast.show(error.getErrorDesc() ?? "")
             }
     }

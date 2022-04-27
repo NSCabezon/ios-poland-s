@@ -25,18 +25,24 @@
 		A396FA6E27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA6D27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift */; };
 		A396FA7127612ACE00DEF2F9 /* setConfirmationResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A396FA7027612ACE00DEF2F9 /* setConfirmationResponse.json */; };
 		A396FA752761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA742761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift */; };
-		A396FA772761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA762761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift */; };
 		A396FA7A2761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA792761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift */; };
 		A396FA7D27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA7C27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift */; };
 		A396FA8027636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA7F27636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift */; };
 		A396FA82276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA81276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift */; };
 		A396FA8427638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA8327638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift */; };
-		A396FA872763A30700DEF2F9 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA862763A30700DEF2F9 /* TestHelper.swift */; };
+		A396FA872763A30700DEF2F9 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A396FA862763A30700DEF2F9 /* Delay.swift */; };
+		A3EB62192809609000269C97 /* AuthorizeTransactionUseCaseStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB62182809609000269C97 /* AuthorizeTransactionUseCaseStub.swift */; };
+		A3EB621B2809612700269C97 /* ChallengeRepresentableStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB621A2809612700269C97 /* ChallengeRepresentableStub.swift */; };
+		A3EB621D2809619600269C97 /* PLTransfersRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB621C2809619600269C97 /* PLTransfersRepositoryMock.swift */; };
+		A3EB621F2809636500269C97 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB621E2809636500269C97 /* PLAuthorizationProcessorManagerMock.swift */; };
+		A3EB6221280EC9D600269C97 /* CharityTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6220280EC9D600269C97 /* CharityTransferFormViewMock.swift */; };
+		A3EB6223280ECD1B00269C97 /* CharityTransferFormViewModelBuilderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6222280ECD1B00269C97 /* CharityTransferFormViewModelBuilderMock.swift */; };
+		A3EB6226280FF89800269C97 /* AccountForDebitStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6225280FF89800269C97 /* AccountForDebitStub.swift */; };
+		A3EB6228280FFD7900269C97 /* CharityTransferModelStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6227280FFD7900269C97 /* CharityTransferModelStub.swift */; };
 		B0176DC4275F63E400CD49DE /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0176DC3275F63E400CD49DE /* Mocks.swift */; };
 		B07ED7162768BAC600210603 /* CharityTransferValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED7142768BAA800210603 /* CharityTransferValidatorTests.swift */; };
-		B07ED71D2768BF5600210603 /* CharityTreasferPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED71B2768BF3C00210603 /* CharityTreasferPresenterTests.swift */; };
+		B07ED71D2768BF5600210603 /* CharityTransferPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED71B2768BF3C00210603 /* CharityTransferPresenterTests.swift */; };
 		B07ED71E2768BF5A00210603 /* CharityTransferFormCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED7182768BE8E00210603 /* CharityTransferFormCoordinatorMock.swift */; };
-		B07ED7242768C7BC00210603 /* AccountForDebitMockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED7222768C72C00210603 /* AccountForDebitMockBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,18 +79,24 @@
 		A396FA6D27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerSuccessMock.swift; sourceTree = "<group>"; };
 		A396FA7027612ACE00DEF2F9 /* setConfirmationResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = setConfirmationResponse.json; sourceTree = "<group>"; };
 		A396FA742761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersManagerNonConnectionFailureMock.swift; sourceTree = "<group>"; };
-		A396FA762761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferModelMockBuilder.swift; sourceTree = "<group>"; };
 		A396FA792761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferSummaryMapperTests.swift; sourceTree = "<group>"; };
 		A396FA7C27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferConfirmationPresenterTests.swift; sourceTree = "<group>"; };
 		A396FA7F27636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferConfirmationViewControllerMock.swift; sourceTree = "<group>"; };
 		A396FA81276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptCharityTransactionUseCaseMock.swift; sourceTree = "<group>"; };
 		A396FA8327638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferConfirmationCoordinatorMock.swift; sourceTree = "<group>"; };
-		A396FA862763A30700DEF2F9 /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
+		A396FA862763A30700DEF2F9 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
+		A3EB62182809609000269C97 /* AuthorizeTransactionUseCaseStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeTransactionUseCaseStub.swift; sourceTree = "<group>"; };
+		A3EB621A2809612700269C97 /* ChallengeRepresentableStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeRepresentableStub.swift; sourceTree = "<group>"; };
+		A3EB621C2809619600269C97 /* PLTransfersRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersRepositoryMock.swift; sourceTree = "<group>"; };
+		A3EB621E2809636500269C97 /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
+		A3EB6220280EC9D600269C97 /* CharityTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferFormViewMock.swift; sourceTree = "<group>"; };
+		A3EB6222280ECD1B00269C97 /* CharityTransferFormViewModelBuilderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferFormViewModelBuilderMock.swift; sourceTree = "<group>"; };
+		A3EB6225280FF89800269C97 /* AccountForDebitStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitStub.swift; sourceTree = "<group>"; };
+		A3EB6227280FFD7900269C97 /* CharityTransferModelStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferModelStub.swift; sourceTree = "<group>"; };
 		B0176DC3275F63E400CD49DE /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		B07ED7142768BAA800210603 /* CharityTransferValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferValidatorTests.swift; sourceTree = "<group>"; };
 		B07ED7182768BE8E00210603 /* CharityTransferFormCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferFormCoordinatorMock.swift; sourceTree = "<group>"; };
-		B07ED71B2768BF3C00210603 /* CharityTreasferPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTreasferPresenterTests.swift; sourceTree = "<group>"; };
-		B07ED7222768C72C00210603 /* AccountForDebitMockBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitMockBuilder.swift; sourceTree = "<group>"; };
+		B07ED71B2768BF3C00210603 /* CharityTransferPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferPresenterTests.swift; sourceTree = "<group>"; };
 		B3924529A0C618282595F9A0 /* Pods_CharityTransfer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CharityTransfer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3567534574F5DBCFA93090 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CC546D52BCB4250919AC9004 /* Pods-CharityTransfer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CharityTransfer_Example.release.xcconfig"; path = "Target Support Files/Pods-CharityTransfer_Example/Pods-CharityTransfer_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -169,6 +181,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A3EB6224280FF87A00269C97 /* Stubs */,
 				B07ED7122768B59400210603 /* TransferForm */,
 				A381FD472774C1010075F1DD /* Summary */,
 				A396FA852763A2CD00DEF2F9 /* TestHelper */,
@@ -252,8 +265,9 @@
 				A396FA6B27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift */,
 				A396FA6D27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift */,
 				A396FA742761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift */,
-				A396FA762761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift */,
-				B07ED7222768C72C00210603 /* AccountForDebitMockBuilder.swift */,
+				A3EB621C2809619600269C97 /* PLTransfersRepositoryMock.swift */,
+				A3EB621E2809636500269C97 /* PLAuthorizationProcessorManagerMock.swift */,
+				A3EB6222280ECD1B00269C97 /* CharityTransferFormViewModelBuilderMock.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -288,6 +302,8 @@
 				A396FA7F27636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift */,
 				A396FA81276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift */,
 				A396FA8327638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift */,
+				A3EB62182809609000269C97 /* AuthorizeTransactionUseCaseStub.swift */,
+				A3EB621A2809612700269C97 /* ChallengeRepresentableStub.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -295,9 +311,18 @@
 		A396FA852763A2CD00DEF2F9 /* TestHelper */ = {
 			isa = PBXGroup;
 			children = (
-				A396FA862763A30700DEF2F9 /* TestHelper.swift */,
+				A396FA862763A30700DEF2F9 /* Delay.swift */,
 			);
 			name = TestHelper;
+			sourceTree = "<group>";
+		};
+		A3EB6224280FF87A00269C97 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				A3EB6225280FF89800269C97 /* AccountForDebitStub.swift */,
+				A3EB6227280FFD7900269C97 /* CharityTransferModelStub.swift */,
+			);
+			name = Stubs;
 			sourceTree = "<group>";
 		};
 		B07ED7122768B59400210603 /* TransferForm */ = {
@@ -322,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				B07ED7182768BE8E00210603 /* CharityTransferFormCoordinatorMock.swift */,
+				A3EB6220280EC9D600269C97 /* CharityTransferFormViewMock.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -329,7 +355,7 @@
 		B07ED71A2768BF2000210603 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				B07ED71B2768BF3C00210603 /* CharityTreasferPresenterTests.swift */,
+				B07ED71B2768BF3C00210603 /* CharityTransferPresenterTests.swift */,
 			);
 			name = Presenter;
 			sourceTree = "<group>";
@@ -679,30 +705,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B07ED71D2768BF5600210603 /* CharityTreasferPresenterTests.swift in Sources */,
+				A3EB6228280FFD7900269C97 /* CharityTransferModelStub.swift in Sources */,
+				B07ED71D2768BF5600210603 /* CharityTransferPresenterTests.swift in Sources */,
 				A396FA7A2761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift in Sources */,
 				A396FA68276104B500DEF2F9 /* PLManagersProviderMock.swift in Sources */,
 				A396FA752761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
 				B07ED7162768BAC600210603 /* CharityTransferValidatorTests.swift in Sources */,
 				A396FA7A2761EE2C00DEF2F9 /* CharityTransferSummaryMapperTests.swift in Sources */,
 				A381FD4D2774C14E0075F1DD /* CharityTransferSummaryCoordinatorMock.swift in Sources */,
+				A3EB6226280FF89800269C97 /* AccountForDebitStub.swift in Sources */,
 				A396FA68276104B500DEF2F9 /* PLManagersProviderMock.swift in Sources */,
 				A396FA752761E7FE00DEF2F9 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
+				A3EB621D2809619600269C97 /* PLTransfersRepositoryMock.swift in Sources */,
 				A396FA6A2761060600DEF2F9 /* PLLoginManagerMock.swift in Sources */,
 				A396FA82276388F900DEF2F9 /* AcceptCharityTransactionUseCaseMock.swift in Sources */,
 				A396FA652760EF2200DEF2F9 /* AcceptCharityTransactionUseCaseTests.swift in Sources */,
-				A396FA772761EBB200DEF2F9 /* CharityTransferModelMockBuilder.swift in Sources */,
+				A3EB621F2809636500269C97 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 				A396FA6E27610F5100DEF2F9 /* PLTransfersManagerSuccessMock.swift in Sources */,
 				A396FA6C27610A2300DEF2F9 /* PLTransactionParametersProviderMock.swift in Sources */,
 				A381FD4F2774C1B60075F1DD /* CharityTransferSummaryMockBuilder.swift in Sources */,
+				A3EB6223280ECD1B00269C97 /* CharityTransferFormViewModelBuilderMock.swift in Sources */,
+				A3EB621B2809612700269C97 /* ChallengeRepresentableStub.swift in Sources */,
 				A396FA8027636F4C00DEF2F9 /* CharityTransferConfirmationViewControllerMock.swift in Sources */,
 				B07ED71E2768BF5A00210603 /* CharityTransferFormCoordinatorMock.swift in Sources */,
+				A3EB6221280EC9D600269C97 /* CharityTransferFormViewMock.swift in Sources */,
 				A396FA8427638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift in Sources */,
 				A396FA7D27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift in Sources */,
-				B07ED7242768C7BC00210603 /* AccountForDebitMockBuilder.swift in Sources */,
 				A396FA8427638F9400DEF2F9 /* CharityTransferConfirmationCoordinatorMock.swift in Sources */,
 				A396FA7D27636D6100DEF2F9 /* CharityTransferConfirmationPresenterTests.swift in Sources */,
-				A396FA872763A30700DEF2F9 /* TestHelper.swift in Sources */,
+				A3EB62192809609000269C97 /* AuthorizeTransactionUseCaseStub.swift in Sources */,
+				A396FA872763A30700DEF2F9 /* Delay.swift in Sources */,
 				A381FD4B2774C12B0075F1DD /* CharityTransferSummaryPresenterTests.swift in Sources */,
 				A381FD512774C1E10075F1DD /* CharityTransferSummaryViewControllerMock.swift in Sources */,
 			);
