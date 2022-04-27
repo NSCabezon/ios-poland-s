@@ -72,7 +72,7 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
             }
             .onError { [weak self] _ in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                    self?.view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: nil)
                 })
             }
     }
@@ -102,7 +102,7 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
             }
             .onError { [weak self] _ in
                 self?.view?.hideLoader(completion: {
-                    self?.view?.showServiceInaccessibleMessage(onConfirm: nil)
+                    self?.view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: nil)
                 })
             }
     }
