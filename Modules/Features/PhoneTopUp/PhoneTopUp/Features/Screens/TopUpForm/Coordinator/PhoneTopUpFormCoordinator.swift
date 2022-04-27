@@ -153,7 +153,7 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         selectedAccountNumber: String?,
         mode: AccountForDebitSelectorMode
     ) {
-        let coordinator = AccountForDebitSelectorCoordinator(
+        let coordinator = TopUpAccountSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             mode: mode,
