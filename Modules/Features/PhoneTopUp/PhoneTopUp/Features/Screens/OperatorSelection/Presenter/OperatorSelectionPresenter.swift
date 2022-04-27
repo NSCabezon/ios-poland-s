@@ -12,6 +12,7 @@ import PLUI
 protocol OperatorSelectionPresenterProtocol: AnyObject {
     var view: OperatorSelectionViewProtocol? { get set }
     func didSelectBack()
+    func didSelectClose()
     func numberOfRows() -> Int
     func cellModel(for row: Int) -> OperatorSelectionCellViewModel
     func didSelectCell(at row: Int)
@@ -23,6 +24,7 @@ final class OperatorSelectionPresenter {
     weak var view: OperatorSelectionViewProtocol?
     private let dependenciesResolver: DependenciesResolver
     private weak var coordinator: OperatorSelectionCoordinatorProtocol?
+    private lazy var confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
     private var selectedOperatorId: Int?
     private let operators: [Operator]
     private var cellModels: [OperatorSelectionCellViewModel] {
@@ -58,5 +60,12 @@ extension OperatorSelectionPresenter: OperatorSelectionPresenterProtocol {
     
     func didSelectBack() {
         coordinator?.back()
+    }
+    
+    func didSelectClose() {
+        let dialog = confirmationDialogFactory.createEndProcessDialog { [weak self] in
+            self?.coordinator?.close()
+        } declineAction: {}
+        view?.showDialog(dialog)
     }
 }

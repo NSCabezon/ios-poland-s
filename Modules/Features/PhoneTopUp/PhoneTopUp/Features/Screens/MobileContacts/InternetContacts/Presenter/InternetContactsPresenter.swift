@@ -14,6 +14,7 @@ import SANLegacyLibrary
 protocol InternetContactsPresenterProtocol: AnyObject {
     var view: InternetContactsViewProtocol? { get set }
     func didSelectBack()
+    func didSelectClose()
     func getNumberOfSections() -> Int
     func headerTitle(forSection section: Int) -> Character
     func getNumberOfContacts(inSection section: Int) -> Int
@@ -32,6 +33,7 @@ final class InternetContactsPresenter {
     private lazy var contactsPermissionHelper = dependenciesResolver.resolve(for: ContactsPermissionHelperProtocol.self)
     private lazy var getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
     private lazy var useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
+    private lazy var confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
     
     init(dependenciesResolver: DependenciesResolver, contacts: [MobileContact]) {
         self.dependenciesResolver = dependenciesResolver
@@ -44,6 +46,13 @@ final class InternetContactsPresenter {
 extension InternetContactsPresenter: InternetContactsPresenterProtocol {
     func didSelectBack() {
         coordinator?.back()
+    }
+    
+    func didSelectClose() {
+        let dialog = confirmationDialogFactory.createEndProcessDialog { [weak self] in
+            self?.coordinator?.close()
+        } declineAction: {}
+        view?.showDialog(dialog)
     }
     
     func getNumberOfSections() -> Int {

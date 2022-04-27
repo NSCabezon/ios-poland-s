@@ -83,7 +83,7 @@ extension PhoneContactsCoordinator: PhoneContactsCoordinatorProtocol {
     }
     
     func close() {
-        delegate?.mobileContactDidSelectCloseProcess()
+        navigationController?.closeTopUpProces()
     }
     
     func didSelectContact(_ contact: MobileContact) {

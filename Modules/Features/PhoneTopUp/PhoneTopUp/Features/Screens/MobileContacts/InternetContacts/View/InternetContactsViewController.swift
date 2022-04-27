@@ -9,7 +9,7 @@ import UI
 import PLUI
 import CoreFoundationLib
 
-protocol InternetContactsViewProtocol: AnyObject {
+protocol InternetContactsViewProtocol: AnyObject, ConfirmationDialogPresentable {
     func showContactsPermissionsDeniedDialog()
 }
 
@@ -54,7 +54,8 @@ final class InternetContactsViewController: UIViewController {
     private func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_topup_title_phoneNumRecip")))
-            .setLeftAction(.back(action: #selector(goBack)))
+            .setLeftAction(.back(action: .selector(#selector(goBack))))
+            .setRightActions(.close(action: .selector(#selector(close))))
             .build(on: self, with: nil)
     }
     
@@ -106,8 +107,14 @@ final class InternetContactsViewController: UIViewController {
     
     // MARK: Actions
     
-    @objc private func goBack() {
+    @objc
+    private func goBack() {
         presenter.didSelectBack()
+    }
+    
+    @objc
+    private func close() {
+        presenter.didSelectClose()
     }
 }
 
