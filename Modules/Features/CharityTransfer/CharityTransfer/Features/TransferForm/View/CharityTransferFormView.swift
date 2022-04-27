@@ -99,7 +99,7 @@ private extension CharityTransferFormView {
     func prepareStyles() {
         backgroundColor = .white
         
-        headerLabel.text = localized("pl_foundtrans_text_aboutFound")
+        headerLabel.text = charityTransferSettings.infoText ?? localized("pl_foundtrans_text_aboutFound")
         headerLabel.applyStyle(LabelStylist(textColor: .lisboaGray,
                                             font: .santander(family: .micro,
                                                              type: .regular,
