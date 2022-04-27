@@ -8,6 +8,7 @@
 import CoreFoundationLib
 import UI
 import PLUI
+import PLCommons
 
 final class EditableTaxAuthorityNameView: UIView {
     private lazy var sectionContainer = getSectionContainer()
@@ -79,6 +80,7 @@ private extension EditableTaxAuthorityNameView {
     func configureStyling() {
         let nameFormatter = UIFormattedCustomTextField()
         nameFormatter.setMaxLength(maxLength: 80)
+        nameFormatter.setAllowOnlyCharacters(.ascii)
         authorityNameTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
