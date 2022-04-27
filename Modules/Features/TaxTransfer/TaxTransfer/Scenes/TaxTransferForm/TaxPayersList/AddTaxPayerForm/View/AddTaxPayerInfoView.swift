@@ -98,7 +98,6 @@ final class AddTaxPayerInfoView: UIView {
                 )
             )
         )
-        input.textField.setEditingStyle(.writable(configuration: textFieldConfiguration))
         
         charactersLimit.text = configuration.charactersLimitInfo
         charactersLimit.textColor = .brownishGray
