@@ -45,27 +45,35 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
         return PLPrivateMenuOtherServicesUseCase(dependencies: self)
     }
     
-    func sendMoneyCoordinator() -> BindableCoordinator {
+    func sendMoneyHomeCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func depositsCoordinator() -> BindableCoordinator {
+    func depositsHomeCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func loansCoordinator() -> BindableCoordinator {
+    func fundsHomeCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func fundsCoordinator() -> BindableCoordinator {
+    func insuranceSavingsHomeCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func insuranceSavingsCoordinator() -> BindableCoordinator {
+    func insuranceProtectionHomeCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func insuranceProtectionCoordinator() -> BindableCoordinator {
+    func securityCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+
+    func helpCenterCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+
+    func branchLocatorCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
 }
