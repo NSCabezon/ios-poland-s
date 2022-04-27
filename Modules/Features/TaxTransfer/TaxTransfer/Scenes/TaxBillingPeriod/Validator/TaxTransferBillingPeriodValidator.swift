@@ -29,7 +29,7 @@ final class TaxTransferBillingPeriodValidator: TaxTransferBillingPeriodValidatin
     
     private func getValidation(for value: String) -> String? {
         guard value.count >= 1 else {
-            return localized("#Pole nie może być puste")
+            return localized("pl_generic_validationText_thisFieldCannotBeEmpty")
         }
         return nil
     }

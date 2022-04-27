@@ -60,7 +60,7 @@ private extension NonEditableTaxAccountView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: "#Numer rachunku/ aka Konto"
+            sectionTitle: localized("generic_label_taxAuthorityAcc")
         )
     }
     
