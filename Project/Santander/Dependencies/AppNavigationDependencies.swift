@@ -80,12 +80,18 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: CharityTransferModuleCoordinator.self) { resolver in
             let repository = resolver.resolve(for: PLTransferSettingsRepository.self)
             let charityTransfer = repository.get()?.charityTransfer
-            let charityTransferSettings = CharityTransferSettings(transferRecipientName: charityTransfer?.transferRecipientName,
-                                                                  transferAccountNumber: charityTransfer?.transferAccountNumber,
-                                                                  transferTitle: charityTransfer?.transferTitle)
-            return CharityTransferModuleCoordinator(dependenciesResolver: resolver,
-                                                    charityTransferSettings: charityTransferSettings,
-                                                    navigationController: self.drawer.currentRootViewController as? UINavigationController)
+            let charityTransferSettings = CharityTransferSettings(
+                transferRecipientName: charityTransfer?.transferRecipientName,
+                transferAccountNumber: charityTransfer?.transferAccountNumber,
+                transferTitle: charityTransfer?.transferTitle,
+                windowTitle: charityTransfer?.windowTitle,
+                infoText: charityTransfer?.infoText
+            )
+            return CharityTransferModuleCoordinator(
+                dependenciesResolver: resolver,
+                charityTransferSettings: charityTransferSettings,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
         }
         dependenciesEngine.register(for: PLHelpCenterModuleCoordinator.self) { resolver in
             return PLHelpCenterModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
