@@ -252,6 +252,7 @@ platform :ios do
         scheme: "Dev",
         derived_data_path: "~/derived_data",
         build_for_testing: false,
+        result_bundle: true,
         output_style: "basic",
         suppress_xcode_output: options[:suppress_xcode_output]
     )

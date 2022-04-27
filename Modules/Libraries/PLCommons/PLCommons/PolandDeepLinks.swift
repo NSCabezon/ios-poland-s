@@ -15,7 +15,8 @@ import CoreFoundationLib
  But there is problem with implementing DeepLinkEnumerationCapable protocol
  Especially with the init method.
  */
-enum PolandDeepLink: CaseIterable {
+public enum PolandDeepLink: CaseIterable {
+    
     case helpCenter
     case contact
     case blikTransaction
@@ -24,9 +25,10 @@ enum PolandDeepLink: CaseIterable {
     case sendMoney
     case services
     case blik
+    case myProducts(entryType: String, mediumType: String, subjectID: String, baseAddress: String)
     case onlineAdvisor(params: String)
     
-    static var allCases: [PolandDeepLink] {
+    public static var allCases: [PolandDeepLink] {
         return [.helpCenter,
                 .contact,
                 .blikTransaction,
@@ -35,12 +37,13 @@ enum PolandDeepLink: CaseIterable {
                 .sendMoney,
                 .services,
                 .blik,
-                .onlineAdvisor(params: "")]
+                .onlineAdvisor(params: ""),
+                .myProducts(entryType: "", mediumType: "", subjectID: "", baseAddress: "")]
     }
 }
 
 extension PolandDeepLink: DeepLinkEnumerationCapable {
-    init?(_ string: String, userInfo: [DeepLinkUserInfoKeys: String] = [:]) {
+    public init?(_ string: String, userInfo: [DeepLinkUserInfoKeys: String] = [:]) {
         switch string {
         case PolandDeepLink.helpCenter.deepLinkKey: self = .helpCenter
         case PolandDeepLink.contact.deepLinkKey: self = .contact
@@ -50,6 +53,12 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case PolandDeepLink.sendMoney.deepLinkKey: self = .sendMoney
         case PolandDeepLink.services.deepLinkKey: self = .services
         case PolandDeepLink.blik.deepLinkKey: self = .blik
+        case PolandDeepLink.myProducts(entryType: "", mediumType: "", subjectID: "", baseAddress: "").deepLinkKey: self = .myProducts(
+            entryType: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.identifier] ?? "",
+            mediumType: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.date] ?? "",
+            subjectID: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.authorizationId] ?? "",
+            baseAddress: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.scope] ?? ""
+        )
         case PolandDeepLink.onlineAdvisor(params: "").deepLinkKey:
             self = .onlineAdvisor(params: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.date] ?? "")
         default: return nil
@@ -66,11 +75,12 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .sendMoney: return "sendMoney_pl"
         case .services: return "services_pl"
         case .blik: return "blik_pl"
+        case .myProducts: return "myProducts"
         case .onlineAdvisor: return "onlineAdvisor"
         }
     }
       
-    var deepLinkKey: String {
+    public var deepLinkKey: String {
         switch self {
         case .helpCenter: return "helpCenter"
         case .contact: return "contact"
@@ -80,6 +90,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .sendMoney: return "send_money"
         case .services: return "services"
         case .blik: return "blik"
+        case .myProducts: return "myProducts"
         case .onlineAdvisor: return "onlineAdvisor"
         }
     }
@@ -87,7 +98,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
     /** NOTE: privateDeepLink in opened on GlobalPosition after login
         other DeepLinks can be opened before login, but it seems that there is a bug and the change environment button must be tapped first
      */
-    var accessType: DeepLinkAccessType {
+    public var accessType: DeepLinkAccessType {
         switch self {
         case .helpCenter: return .privateDeepLink
         case .contact: return .publicDeepLink
@@ -97,7 +108,9 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .sendMoney: return .privateDeepLink
         case .services: return .privateDeepLink
         case .blik: return .privateDeepLink
+        case .myProducts: return .privateDeepLink
         case .onlineAdvisor: return  .publicDeepLink
         }
     }
 }
+

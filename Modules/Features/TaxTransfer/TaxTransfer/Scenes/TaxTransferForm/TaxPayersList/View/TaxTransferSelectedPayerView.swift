@@ -7,6 +7,7 @@
 
 import PLUI
 import UI
+import CoreFoundationLib
 
 final class TaxTransferSelectedPayerView: UIView {
     private let tappableCard = TappableControl()
@@ -34,10 +35,14 @@ final class TaxTransferSelectedPayerView: UIView {
         guard let taxIdentifier = viewModel.selectedInfo?.taxIdentifier,
               let value = viewModel.selectedInfo?.idType.displayableValue else { return }
         
-        taxIdentifierNumberLabel.attributedText = getAttributedText(key: "pl_taxTransfer_text_identifierNumber",
-                                                                    value: taxIdentifier)
-        taxIdentifierTypeLabel.attributedText = getAttributedText(key: "pl_taxTransfer_text_identifierType",
-                                                                  value: value)
+        taxIdentifierNumberLabel.attributedText = getAttributedText(
+            key: localized("pl_taxTransfer_text_identifierNumber"),
+            value: taxIdentifier
+        )
+        taxIdentifierTypeLabel.attributedText = getAttributedText(
+            key: localized("pl_taxTransfer_text_identifierType"),
+            value: value
+        )
     }
 }
 
@@ -116,9 +121,10 @@ private extension TaxTransferSelectedPayerView {
 
     func getAttributedText(key: String, value: String) -> NSAttributedString {
         guard !value.isEmpty else { return NSAttributedString() }
-        
+
         let attributedKey = NSMutableAttributedString(string: key)
         attributedKey.addAttribute(.font(.santander(family: .micro, type: .regular, size: 12)))
+        attributedKey.append(.init(string: ": "))
 
         let attributedValue = NSMutableAttributedString(string: value)
         attributedValue.addAttribute(.font(.santander(family: .micro, type: .bold, size: 12)))

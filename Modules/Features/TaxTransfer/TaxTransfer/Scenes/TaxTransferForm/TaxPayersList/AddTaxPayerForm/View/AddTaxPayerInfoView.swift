@@ -46,6 +46,11 @@ final class AddTaxPayerInfoView: UIView {
         input.showError(message)
     }
     
+    func clear() {
+        input.textField.setText(nil)
+        input.hideError()
+    }
+    
     private func setUp() {
         configureSubviews()
         configureStyling()
@@ -79,23 +84,20 @@ final class AddTaxPayerInfoView: UIView {
     }
     
     private func configureStyling() {
-        let customFormatter = UIFormattedCustomTextField()
-        
-        if let limit = configuration.charactersLimit {
-            customFormatter.setMaxLength(maxLength: limit)
-        }
-        
-        
-        let textFieldConfiguration = LisboaTextField.WritableTextField(
-            type: .simple,
-            formatter: customFormatter,
-            disabledActions: [],
-            keyboardReturnAction: nil,
-            textfieldCustomizationBlock: { components in
-                components.textField.keyboardType = .asciiCapable
-            }
+        input.textField.setEditingStyle(
+            .writable(
+                configuration: .init(
+                    type: .simple,
+                    formatter: UIFormattedCustomTextField(),
+                    disabledActions: [],
+                    keyboardReturnAction: nil,
+                    textFieldDelegate: nil,
+                    textfieldCustomizationBlock: { components in
+                        components.textField.keyboardType = .asciiCapable
+                    }
+                )
+            )
         )
-        input.textField.setEditingStyle(.writable(configuration: textFieldConfiguration))
         
         charactersLimit.text = configuration.charactersLimitInfo
         charactersLimit.textColor = .brownishGray
@@ -121,5 +123,20 @@ final class AddTaxPayerInfoView: UIView {
 extension AddTaxPayerInfoView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
         delegate?.didUpdateText()
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let limit = configuration.charactersLimit else {
+            return true
+        }
+        
+        guard let textFieldText = textField.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                  return false
+        }
+        
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= limit
     }
 }

@@ -11,7 +11,7 @@ import PLUI
 import PLCommons
 import CoreServices
 
-protocol ScanAndPayScannerViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
+protocol ScanAndPayScannerViewProtocol: AnyObject, ErrorPresentable, ConfirmationDialogPresentable {
     func showInfoTooltip()
     func initializeScanner()
     func startScanning()

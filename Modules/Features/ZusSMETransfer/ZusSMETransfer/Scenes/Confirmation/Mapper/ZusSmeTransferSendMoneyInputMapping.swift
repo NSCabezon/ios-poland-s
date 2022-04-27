@@ -10,7 +10,7 @@ protocol ZusSmeTransferSendMoneyInputMapping {
     func mapPartialNotifyDeviceInput(with model: ZusSmeTransferModel) -> PartialNotifyDeviceInput
 }
 
-final class ZusTransferSendMoneyInputMapper: ZusSmeTransferSendMoneyInputMapping {
+final class ZusSmeTransferSendMoneyInputMapper: ZusSmeTransferSendMoneyInputMapping {
     private let transactionParametersProvider: PLTransactionParametersProviderProtocol
     
     init(dependenciesResolver: DependenciesResolver) {

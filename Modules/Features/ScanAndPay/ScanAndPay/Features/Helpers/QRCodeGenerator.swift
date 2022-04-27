@@ -16,7 +16,7 @@ final class QRCodeGenerator: QRCodeGeneratorProtocol {
     // MARK: Properties
     
     private let qrCodeFilterName = "CIQRCodeGenerator"
-    private let qrCodeScaleFactor: CGFloat = 3
+    private let qrCodeScaleFactor: CGFloat = 5
     
     // MARK: Methods
     

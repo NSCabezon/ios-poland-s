@@ -63,9 +63,8 @@ final class AddTaxPayerFormCoordinator {
 
 extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
     func didTapDone(with taxPayer: TaxPayer) {
-        coordinator.didAddTaxPayer(taxPayer)
         delegate?.didAddTaxPayer(taxPayer)
-        back()
+        backToForm()
     }
     
     func back() {

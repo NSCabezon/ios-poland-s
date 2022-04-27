@@ -178,10 +178,8 @@ extension TaxPayersListCoordinator: TaxPayersListCoordinatorProtocol {
 
 extension TaxPayersListCoordinator: AddTaxPayerFormCoordinatorDelegate {
     func didAddTaxPayer(_ taxPayer: TaxPayer) {
-        taxPayers.append(taxPayer)
         delegate?.didAddTaxPayer(taxPayer)
         reload()
-        back()
     }
 }
 

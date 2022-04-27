@@ -6,6 +6,7 @@
 //
 
 import UI
+import PLUI
 import CoreFoundationLib
 import PLHelpCenter
 

@@ -133,6 +133,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
 extension TaxTransferFormCoordinator: TaxPayersListDelegate {
     public func didAddTaxPayer(_ taxPayer: TaxPayer) {
         taxFormPresenter.didAddTaxPayer(taxPayer)
+        taxFormPresenter.didSelectTaxPayer(taxPayer, selectedPayerInfo: nil)
     }
 }
 
