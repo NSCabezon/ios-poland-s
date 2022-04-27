@@ -12,7 +12,8 @@ protocol TaxTransferDataSourceProtocol {
     func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
     func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError>
     func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError>
-    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError>
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<[String], NetworkProviderError>
+    func getUserTaxAccount(requestQueries: UserTaxAccountRequestQueries) throws -> Result<UserTaxAccountDTO, NetworkProviderError>
 }
 
 final class TaxTransferDataSource {
@@ -23,6 +24,7 @@ final class TaxTransferDataSource {
         case taxSymbols = "/dictionaries/forms/tax"
         case taxAccounts = "/accounts/external/tax"
         case taxAuthorityCities = "/accounts/external/tax/cities"
+        case userTaxAccount = "accounts"
     }
     
     // MARK: Properties
@@ -109,6 +111,9 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
             if let city = requestQueries.city {
                 params["city"] = city
             }
+            if let options = requestQueries.optionId {
+                params["options"] = options
+            }
             return params
         }()
         
@@ -123,7 +128,7 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
         )
     }
     
-    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError> {
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<[String], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
@@ -135,6 +140,30 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
                 serviceUrl: serviceUrl,
                 method: .get,
                 queryParams: ["type": requestQueries.taxTransferType],
+                contentType: nil
+            )
+        )
+    }
+    
+    func getUserTaxAccount(requestQueries: UserTaxAccountRequestQueries) throws -> Result<UserTaxAccountDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceUrl = baseUrl + basePath
+        let serviceName = TaxTransferServiceType.userTaxAccount.rawValue
+        let queryParams: [String: Any] = {
+            var params: [String: Any] = [:]
+            params["accountNo"] = requestQueries.accountNumber
+            params["systemId"] = requestQueries.systemId
+            return params
+        }()
+        
+        return networkProvider.request(
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                queryParams: queryParams,
                 contentType: nil
             )
         )

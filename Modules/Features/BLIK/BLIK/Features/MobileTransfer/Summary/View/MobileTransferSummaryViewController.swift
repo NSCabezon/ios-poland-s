@@ -28,6 +28,6 @@ final class MobileTransferSummaryViewController: OperativeSummaryViewController 
 
 private extension MobileTransferSummaryViewController {
     @objc func close() {
-        self.presenter.goToBlikCode()
+        self.presenter.goToTransfers()
     }
 }

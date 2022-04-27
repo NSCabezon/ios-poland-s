@@ -194,5 +194,9 @@ private extension TaxAuthoritySelectorCoordinator {
         dependenciesEngine.register(for: GetTaxAccountsUseCaseProtocol.self) { resolver in
             return GetTaxAccountsUseCase(dependenciesResolver: resolver)
         }
+        
+        dependenciesEngine.register(for: TaxAccountTypeRecognizing.self) { _ in
+            return TaxAccountTypeRecognizer()
+        }
     }
 }

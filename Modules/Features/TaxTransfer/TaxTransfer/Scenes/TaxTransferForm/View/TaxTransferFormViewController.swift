@@ -10,7 +10,7 @@ import PLCommons
 import UI
 import PLUI
 
-protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable {
+protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
     func setViewModel(_ viewModel: TaxTransferFormViewModel)
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
     func enableDoneButton()
@@ -95,6 +95,7 @@ private extension TaxTransferFormViewController {
     func configureNavigationItem() {
         NavigationBarBuilder(style: .white, title: .title(key: "pl_toolbar_title_taxTransfer"))
             .setLeftAction(.back(action: #selector(back)))
+            .setRightActions([.close(action: #selector(close))])
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
     }
@@ -145,6 +146,10 @@ private extension TaxTransferFormViewController {
     
     @objc func back() {
         presenter.didTapBack()
+    }
+    
+    @objc func close() {
+        presenter.didTapClose()
     }
 }
 

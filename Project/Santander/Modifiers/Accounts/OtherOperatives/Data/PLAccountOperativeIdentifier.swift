@@ -32,7 +32,8 @@ public enum PLAccountOperativeIdentifier: String, Codable {
     case savingGoals = "SAVING_GOALS"
     case externalTransfer = "SEND_MONEY_FROM_OTHER"
     case blik = "BLIK"
-    
+    case consents = "MARKETING_CONSENTS"
+
     public var icon: String {
         switch self {
         case .blik:
@@ -79,6 +80,8 @@ public enum PLAccountOperativeIdentifier: String, Codable {
             return "icnSendMoney"
         case .mailboxMain:
             return "icnMailbox"
+        case .consents:
+            return "" //TODO: add icon
         }
     }
     
@@ -128,6 +131,8 @@ public enum PLAccountOperativeIdentifier: String, Codable {
             return "accountOption_button_transfer"
         case .mailboxMain:
             return "accountOption_button_mailbox"
+        case .consents:
+            return "" //TODO: add textkey
         }
     }
     

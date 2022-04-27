@@ -6,18 +6,23 @@
 //
 
 import UI
+import PLUI
 import CoreFoundationLib
+import PLHelpCenter
 
 final class ChequesViewController: SegmentedPageViewController {
+    private let dependenciesResolver: DependenciesResolver
     private let dropdownPresenter: DropdownPresenter
     private let coordinator: ChequesCoordinator
     
     init(
+        dependenciesResolver: DependenciesResolver,
         dropdownPresenter: DropdownPresenter,
         coordinator: ChequesCoordinator,
         activeChequesController: UIViewController,
         archivedChequesController: UIViewController
     ) {
+        self.dependenciesResolver = dependenciesResolver
         self.dropdownPresenter = dropdownPresenter
         self.coordinator = coordinator
         super.init(pagedControllers: [
@@ -40,6 +45,18 @@ final class ChequesViewController: SegmentedPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationItem()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.pauseScreenSharing()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.resumeScreenSharing()
     }
     
     private func configureNavigationItem() {

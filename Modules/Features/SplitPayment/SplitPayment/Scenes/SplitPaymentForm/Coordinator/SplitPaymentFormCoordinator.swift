@@ -18,6 +18,7 @@ protocol SplitPaymentFormCoordinatorProtocol {
     func showConfiramtion(model: SplitPaymentModel)
     func showRecipientSelection()
     func updateAccounts(accounts: [AccountForDebit])
+    func showMoreInfoAboutWhiteList()
 }
 
 protocol FormAccountSelectable: AnyObject {
@@ -93,6 +94,11 @@ extension SplitPaymentFormCoordinator: SplitPaymentFormCoordinatorProtocol {
     func updateAccounts(accounts: [AccountForDebit]) {
         self.accounts = accounts
         accountUpdateDelegate?.updateAccounts(with: accounts)
+    }
+    
+    func showMoreInfoAboutWhiteList() {
+        // TODO: Show info about White List of payers
+        print("showMoreInfoAboutWhiteList")
     }
 }
 

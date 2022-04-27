@@ -46,7 +46,12 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
             .filter { $0.isActive }
         let configuration = ItemSelectorConfiguration<TaxSymbol>(
             navigationTitle: localized("pl_toolbar_formSymbol"),
-            isSearchEnabled: true,
+            searchMode: .enabled(
+                .init(
+                    searchBarPlaceholderText: "#Wyszukaj symbol formularza",
+                    emptySearchResultMessage: "#Nie znaleźliśmy symbolu o nazwie:"
+                )
+            ),
             sections: [
                 .init(
                     sectionTitle: localized("pl_taxTransfer_text_chooseFormSymbol"),
@@ -54,7 +59,8 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
                 )
             ],
             selectedItem: selectedTaxSymbol,
-            shouldPopControllerAfterSelection: shouldPopControllerAfterSelection
+            shouldPopControllerAfterSelection: shouldPopControllerAfterSelection,
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator(
             navigationController: navigationController,

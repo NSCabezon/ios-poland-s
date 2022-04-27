@@ -1,6 +1,5 @@
 //
 //  DropdownItemCell.swift
-//  BLIK
 //
 //  Created by Piotr Mielcarzewicz on 25/06/2021.
 //
@@ -15,7 +14,7 @@ final class DropdownItemCell: UITableViewCell {
     }
     
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("Storyboards are not compatbile with truth and beauty!")
     }
     

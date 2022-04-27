@@ -9,6 +9,7 @@ protocol SplitPaymentFormViewDelegate: AnyObject {
     func didChangeForm(with field: TransferFormCurrentActiveField)
     func didTapRecipientButton()
     func scrollToBottom()
+    func didTapMoreInfoAboutWhiteListButton()
 }
 
 final class SplitPaymentFormView: UIView {
@@ -29,6 +30,7 @@ final class SplitPaymentFormView: UIView {
     private let grossAmountView = LisboaTextFieldWithErrorView()
     private var grossAmountTextField: LisboaTextField { return grossAmountView.textField }
     private let grossCurrencyAccessoryView = CurrencyAccessoryView()
+    private let whiteListPayersInfoView = PayersWhiteListInfoView(text: "#white_list_payers_info")
     
     private let vatAmountFieldName = UILabel()
     private let vatAmountView = LisboaTextFieldWithErrorView()
@@ -65,7 +67,8 @@ final class SplitPaymentFormView: UIView {
             language: language,
             dateFormatter: dateFormatter
         )
-        views = [accountSelectorLabel, selectedAccountView,
+        views = [accountSelectorLabel,
+                 selectedAccountView,
                  textFieldsMainContainer,
                  dateFieldName,
                  transferDateSelector]
@@ -115,6 +118,23 @@ final class SplitPaymentFormView: UIView {
         case .date, .none:
             break
         }
+        let animationDuration: TimeInterval = 0.3
+        if data.showWhiteListInfoSection {
+            whiteListPayersInfoView.isHidden = false
+            if whiteListPayersInfoView.alpha != 0 {
+                return
+            }
+            whiteListPayersInfoView.alpha = 0
+            UIView.animate(withDuration: animationDuration) {
+                self.whiteListPayersInfoView.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: animationDuration) {
+                self.whiteListPayersInfoView.alpha = 0
+            } completion: { _ in
+                self.whiteListPayersInfoView.isHidden = true
+            }
+        }
     }
     
     func updateRecipient(name: String, accountNumber: String) {
@@ -153,13 +173,15 @@ private extension SplitPaymentFormView {
         views.forEach {
             self.addSubview($0)
         }
-        [createTextFieldContainer(with: recipientFieldName, textFieldView: recipientView),
-         createTextFieldContainer(with: nipFieldName, textFieldView: nipView),
-         createTextFieldContainer(with: accountNumberFieldName, textFieldView: accountView),
-         createTextFieldContainer(with: grossAmountFieldName, textFieldView: grossAmountView),
-         createTextFieldContainer(with: vatAmountFieldName, textFieldView: vatAmountView),
-         createTextFieldContainer(with: invoiceTitleFieldName, textFieldView: invoiceTitleView),
-         createTextFieldContainer(with: titleFieldName, textFieldView: titleView),
+        [
+            createTextFieldContainer(with: recipientFieldName, textFieldView: recipientView),
+            createTextFieldContainer(with: nipFieldName, textFieldView: nipView),
+            createTextFieldContainer(with: accountNumberFieldName, textFieldView: accountView),
+            createTextFieldContainer(with: grossAmountFieldName, textFieldView: grossAmountView),
+            whiteListPayersInfoView,
+            createTextFieldContainer(with: vatAmountFieldName, textFieldView: vatAmountView),
+            createTextFieldContainer(with: invoiceTitleFieldName, textFieldView: invoiceTitleView),
+            createTextFieldContainer(with: titleFieldName, textFieldView: titleView),
         ]
         .forEach {
             textFieldsMainContainer.addArrangedSubview($0)
@@ -176,6 +198,7 @@ private extension SplitPaymentFormView {
         configureNipField()
         configureAccountNumberField()
         configureGrossAmountField()
+        configureWhiteListPayersInfoView()
         configureVatAmountField()
         configureInvoiceTitleField()
         configureTitleField()
@@ -290,7 +313,30 @@ private extension SplitPaymentFormView {
             guard let self = self else { return }
             self.currentActiveField = .grossAmount
         }
+        grossAmountTextFieldDelegate.textFieldDidEndEditing = { [weak self] in
+            
+            guard let self = self,
+                  let textAmount = self.grossAmountTextField.text,
+                  let formattedText = PLAmountFormatter.formatAmount(amount: textAmount)
+            else {
+                return
+            }
+            
+            self.grossAmountTextField.setText(formattedText)
+
+        }
         amountFormatter.delegate = grossAmountTextFieldDelegate
+    }
+    
+    func configureWhiteListPayersInfoView() {
+        whiteListPayersInfoView.isHidden = true
+        whiteListPayersInfoView.moreInfoButton.addTarget(self,
+                                                         action: #selector(self.didTapMoreInfoAboutWhiteListButton),
+                                                         for: .touchUpInside)
+    }
+    
+    @objc private func didTapMoreInfoAboutWhiteListButton() {
+        delegate?.didTapMoreInfoAboutWhiteListButton()
     }
     
     func configureVatAmountField() {

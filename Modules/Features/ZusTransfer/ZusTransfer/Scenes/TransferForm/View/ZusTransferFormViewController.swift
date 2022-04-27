@@ -10,7 +10,7 @@ protocol ZusTransferFormViewProtocol: AnyObject,
                                       ErrorPresentable {
     func setAccountViewModel()
     func showValidationMessages(with data: InvalidZusTransferFormData)
-    func updateRecipient(name: String, accountNumber: String)
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String)
     func resetForm()
     func reloadAccountsComponent(with models: [SelectableAccountViewModel])
 }
@@ -145,8 +145,8 @@ extension ZusTransferFormViewController: ZusTransferFormViewProtocol {
         }
     }
     
-    func updateRecipient(name: String, accountNumber: String) {
-        formView.updateRecipient(name: name, accountNumber: accountNumber)
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String) {
+        formView.updateRecipient(name: name, accountNumber: accountNumber, transactionTitle: transactionTitle)
     }
     
     func scrollToBottom() {

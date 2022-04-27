@@ -9,20 +9,22 @@ final class CharityTransferSummaryPresenterTests: XCTestCase {
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
     private var SUT: CharityTransferSummaryPresenterProtocol!
     private var view: CharityTransferSummaryViewControllerMock!
-    private var coordinator: CharityTransferSummaryCoordinatorMock?
+    private var coordinator: CharityTransferSummaryCoordinatorMock!
 
     override func setUp() {
         super.setUp()
+        coordinator = CharityTransferSummaryCoordinatorMock()
         dependencies = DependenciesDefault()
         setUpDependencies()
         SUT = dependencies.resolve(for: CharityTransferSummaryPresenterProtocol.self)
-        coordinator = dependencies.resolve(for: CharityTransferSummaryCoordinatorProtocol.self) as? CharityTransferSummaryCoordinatorMock
     }
     
     override func tearDown() {
         super.tearDown()
         dependencies = nil
         SUT = nil
+        coordinator = nil
+        view = nil
     }
     
     func test_setViewModels_is_called() throws {
@@ -59,9 +61,7 @@ final class CharityTransferSummaryPresenterTests: XCTestCase {
         }
         XCTAssertNotNil(viewModel)
         viewModel?.action()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.goToMakeAnotherPaymentCalled == true)
-        }
+        XCTAssertTrue(coordinator.goToMakeAnotherPaymentCalled)
     }
     
     func test_generic_button_globalPosition_called_should_start_goToGlobalPosition_coordinator_function() throws {
@@ -71,23 +71,19 @@ final class CharityTransferSummaryPresenterTests: XCTestCase {
         }
         XCTAssertNotNil(viewModel)
         viewModel?.action()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.goToGlobalPositionCalled == true)
-        }
+        XCTAssertTrue(coordinator.goToGlobalPositionCalled)
     }
     
     func test_goToCharityTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {
         SUT.goToCharityTransfer()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.goToMakeAnotherPaymentCalled == true)
-        }
+        XCTAssertTrue(coordinator.goToMakeAnotherPaymentCalled)
     }
 }
 
 private extension CharityTransferSummaryPresenterTests {
     func setUpDependencies() {
-        dependencies.register(for: CharityTransferSummaryCoordinatorProtocol.self) { _ in
-            CharityTransferSummaryCoordinatorMock()
+        dependencies.register(for: CharityTransferSummaryCoordinatorProtocol.self) { [unowned self] _ in
+            self.coordinator
         }
         dependencies.register(for: CharityTransferSummaryMapping.self) { _ in
             CharityTransferSummaryMapper()
