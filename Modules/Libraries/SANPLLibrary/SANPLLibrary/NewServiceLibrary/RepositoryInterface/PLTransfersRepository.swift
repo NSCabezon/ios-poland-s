@@ -11,8 +11,6 @@ import CoreDomain
 public protocol PLTransfersRepository: TransfersRepository {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error>
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error>
-    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], Error>
-    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], Error>
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error>
     func getFinalFee(input: CheckFinalFeeInput) throws -> Result<[CheckFinalFeeRepresentable], Error>
     func checkInternalAccount(input: CheckInternalAccountInput) throws -> Result<CheckInternalAccountRepresentable, Error>
@@ -39,32 +37,10 @@ public extension PLTransfersRepository {
         .eraseToAnyPublisher()
     }
     
-    func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error> {
-        return Future { promise in
-            do {
-                promise(try getAccountsForDebitSwitch())
-            } catch let error {
-                promise(.failure(error))
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-    
     func getAccountsForCredit() -> AnyPublisher<[AccountRepresentable], Error> {
         return Future { promise in
             do {
                 promise(try getAccountsForCredit())
-            } catch let error {
-                promise(.failure(error))
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error> {
-        return Future { promise in
-            do {
-                promise(try getAccountsForCreditSwitch(accountType))
             } catch let error {
                 promise(.failure(error))
             }

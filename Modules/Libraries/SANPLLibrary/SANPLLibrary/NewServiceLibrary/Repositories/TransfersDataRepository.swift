@@ -23,14 +23,21 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
-    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], Error> {
-        let response = try bsanTransferManager.getAccountsForDebitSwitch()
-        switch response {
-        case .success(let accounts):
-            return .success(accounts)
-        case .failure(let error):
-            return .failure(error)
+    func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error> {
+        return Future { promise in
+            do {
+                let response = try bsanTransferManager.getAccountsForDebitSwitch()
+                switch response {
+                case .success(let accounts):
+                    promise(.success(accounts))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
         }
+        .eraseToAnyPublisher()
     }
     
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
@@ -43,14 +50,21 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
-    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], Error> {
-        let response = try bsanTransferManager.getAccountsForCreditSwitch(accountType)
-        switch response {
-        case .success(let accounts):
-            return .success(accounts)
-        case .failure(let error):
-            return .failure(error)
+    func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error> {
+        return Future { promise in
+            do {
+                let response = try bsanTransferManager.getAccountsForCreditSwitch(accountType)
+                switch response {
+                case .success(let accounts):
+                    promise(.success(accounts))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
         }
+        .eraseToAnyPublisher()
     }
     
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
