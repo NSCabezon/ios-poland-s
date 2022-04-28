@@ -37,7 +37,7 @@ final class ZusSmeTransferConfirmationPresenter {
         dependenciesResolver.resolve()
     }
     private var zusTransferSendMoneyInputMapper: ZusSmeTransferSendMoneyInputMapping {
-        dependenciesResolver.resolve(for: ZusTransferSendMoneyInputMapper.self)
+        dependenciesResolver.resolve(for: ZusSmeTransferSendMoneyInputMapping.self)
     }
     private var managersProvider: PLManagersProviderProtocol {
         dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)

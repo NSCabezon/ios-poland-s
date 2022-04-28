@@ -38,4 +38,35 @@ final class HelpCenterDialogFactory {
         ]
         return LisboaDialog(items: components, closeButtonAvailable: false)
     }
+    
+    static func makeLoginInfoDialog(loginAction: (() -> Void)?) -> LisboaDialog {
+         let loginAction = LisboaDialogAction(title: localized("pl_helpdesk_alert_loginButton"), type: .red, margins: (left: 16.0, right: 8.0)) {
+             loginAction?()
+         }
+         let cancelAction = LisboaDialogAction(title: localized("generic_link_cancel"), type: .white, margins: (left: 16.0, right: 8.0)) { }
+         let body: LocalizedStylableText = LocalizedStylableText(text: localized("pl_accountServices_popup_logInToContinue"), styles: nil)
+         let absoluteMargin: (left: CGFloat, right: CGFloat) = (left: 24.0, right: 24.0)
+         let components: [LisboaDialogItem] = [
+             .margin(8.0),
+             .styledText(
+                 LisboaDialogTextItem(
+                     text: LocalizedStylableText.empty,
+                     font: .santander(family: .text, type: .regular, size: 29),
+                     color: .black,
+                     alignament: .center,
+                     margins: absoluteMargin)),
+             .margin(12.0),
+             .styledText(
+                 LisboaDialogTextItem(
+                     text: body,
+                     font: .santander(family: .text, type: .light, size: 16),
+                     color: .lisboaGray,
+                     alignament: .center,
+                     margins: absoluteMargin)),
+             .margin(24.0),
+             .horizontalActions(HorizontalLisboaDialogActions(left: cancelAction, right: loginAction)),
+             .margin(12.0)
+         ]
+         return LisboaDialog(items: components, closeButtonAvailable: false)
+     }
 }
