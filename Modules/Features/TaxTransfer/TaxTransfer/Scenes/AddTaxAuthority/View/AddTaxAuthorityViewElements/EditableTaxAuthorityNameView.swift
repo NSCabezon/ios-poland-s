@@ -73,7 +73,7 @@ private extension EditableTaxAuthorityNameView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: "#Nazwa Organu"
+            sectionTitle: localized("pl_taxTransfer_label_TaxAuthorityName")
         )
     }
     
@@ -95,7 +95,7 @@ private extension EditableTaxAuthorityNameView {
                 )
             )
         )
-        authorityNameTextField.textField.placeholder = "#Nazwa Organu"
+        authorityNameTextField.textField.placeholder = localized("pl_taxTransfer_label_TaxAuthorityName")
         nameFormatter.delegate = textFieldDelegate
     }
 }

@@ -5,6 +5,8 @@
 //  Created by 185167 on 06/04/2022.
 //
 
+import CoreFoundationLib
+
 enum TaxAuthorityFormValidationResult {
     case valid
     case invalid(InvalidTaxAuthorityFormFormMessages)
@@ -93,7 +95,7 @@ private extension TaxAuthorityFormValidator {
         }
         
         guard taxAuthorityName.matches(Constants.taxAuthorityNameValidationRegex) else {
-            return "#Pole zawiera niedozwolone znaki"
+            return localized("pl_taxTransfer_validation_forbiddenCharacter")
         }
         
         return nil
@@ -109,14 +111,14 @@ private extension TaxAuthorityFormValidator {
         }
         
         guard CharacterSet(charactersIn: accountNumber).isSubset(of: CharacterSet.decimalDigits) else {
-            return "#Pole zawiera niedozwolone znaki"
+            return localized("pl_taxTransfer_validation_forbiddenCharacter")
         }
         
         guard
             let accountType = try? accountTypeRecognizer.recognizeType(of: accountNumber),
             accountType == .IRP
         else {
-            return "#Nieprawidłowy numer rachunku odbiorcy."
+            return localized("pl_generic_validationText_invalidAccNumber")
         }
         
         return nil

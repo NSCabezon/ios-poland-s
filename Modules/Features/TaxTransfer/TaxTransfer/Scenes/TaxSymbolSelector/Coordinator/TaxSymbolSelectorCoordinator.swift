@@ -48,8 +48,8 @@ final class TaxSymbolSelectorCoordinator: TaxSymbolSelectorCoordinatorProtocol {
             navigationTitle: localized("pl_toolbar_formSymbol"),
             searchMode: .enabled(
                 .init(
-                    searchBarPlaceholderText: "#Wyszukaj symbol formularza",
-                    emptySearchResultMessage: "#Nie znaleźliśmy symbolu o nazwie:"
+                    searchBarPlaceholderText: localized("generic_placeholder_typeFormSymbol"),
+                    emptySearchResultMessage: localized("pl_taxTransfer_text_unableToFindSymbol")
                 )
             ),
             sections: [

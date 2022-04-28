@@ -26,10 +26,10 @@ final class AddTaxAuthorityContainerView: UIView {
         sectionTitle: localized("pl_toolbar_formSymbol")
     )
     private let citySelectorView = TaxFormSelectorSectionView(
-        sectionTitle: "#Miasto:"
+        sectionTitle: localized("generic_label_city")
     )
     private let taxAuthorityNameSelectorView = TaxFormSelectorSectionView(
-        sectionTitle: "#Nazwa organu:"
+        sectionTitle: localized("pl_taxTransfer_label_TaxAuthorityName")
     )
     
     private weak var delegate: AddTaxAuthorityContainerViewDelegate?
