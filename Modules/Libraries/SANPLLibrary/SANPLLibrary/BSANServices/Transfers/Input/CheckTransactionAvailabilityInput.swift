@@ -9,9 +9,9 @@ import CoreDomain
 
 public struct CheckTransactionAvailabilityInput {
     var destinationAccount: IBANRepresentable
-    var transactionAmount: Decimal
+    var transactionAmount: AmountRepresentable?
     
-    public init(destinationAccount: IBANRepresentable, transactionAmount: Decimal) {
+    public init(destinationAccount: IBANRepresentable, transactionAmount: AmountRepresentable?) {
         self.destinationAccount = destinationAccount
         self.transactionAmount = transactionAmount
     }
