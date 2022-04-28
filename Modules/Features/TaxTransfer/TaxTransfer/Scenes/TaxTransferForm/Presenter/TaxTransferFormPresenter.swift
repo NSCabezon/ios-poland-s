@@ -85,7 +85,10 @@ private extension TaxTransferFormPresenter {
         dependenciesResolver.resolve()
     }
     var confirmationDialogFactory: ConfirmationDialogProducing {
-        return dependenciesResolver.resolve()
+        dependenciesResolver.resolve()
+    }
+    var taxTransferModelMapper: TaxTransferModelMapping {
+        dependenciesResolver.resolve()
     }
 }
 
@@ -164,9 +167,11 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         )
         view?.showDialog(closeConfirmationDialog)
     }
-    
-    func didTapDone(with data: TaxTransferFormFields) {
-        // TODO:- Implement in TAP-2186
+
+    func didTapDone(with fields: TaxTransferFormFields) {
+        guard let model = getTaxTransferModel() else { return }
+        
+        coordinator.showTaxTransferConfirmation(with: model)
     }
     
     func didUpdateFields(with fields: TaxTransferFormFields) {
@@ -220,6 +225,7 @@ private extension TaxTransferFormPresenter {
             view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
                 self?.coordinator.back()
             })
+            break
         }
     }
     
@@ -326,5 +332,27 @@ private extension TaxTransferFormPresenter {
         )
         
         return .visible(.selected(viewModel))
+    }
+    
+    func getTaxTransferModel() -> TaxTransferModel? {
+        guard let account = selectedAccount,
+              let currentFormData = view?.getCurrentFormFields(),
+              let taxAuthority = selectedTaxAuthority,
+              let taxPayer = selectedTaxPayer,
+              let taxPayerInfo = selectedPayerInfo,
+              let period = selectedPeriod else {
+                  return nil
+              }
+        
+        return taxTransferModelMapper.map(
+            account: account,
+            formData: currentFormData,
+            taxAuthority: taxAuthority,
+            taxPayer: taxPayer,
+            taxPayerInfo: taxPayerInfo,
+            billingPeriod: period,
+            selectedBillingYear: selectedBillingYear,
+            selectedPeriodNumber: selectedPeriodNumber
+        )
     }
 }

@@ -61,6 +61,9 @@ final class SelectablePayerCell: UITableViewCell {
         
         switch viewModel.taxPayerSecondaryIdentifier {
         case .available:
+            [extraTaxIdentifierLabel,
+             extraTaxNameLabel].forEach { $0.isHidden = !viewModel.hasDifferentTaxIdentifiers }
+            
             extraTaxIdentifierLabel.text = viewModel.taxPayer.secondaryTaxIdentifierNumber
             extraTaxNameLabel.text = viewModel.taxPayer.idType.displayableValue
         case .notAvailable:
