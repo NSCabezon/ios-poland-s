@@ -21,6 +21,7 @@ protocol PLAuthorizationPresenterProtocol: AnyObject {
     func didTapBiometry()
     func didUpdateSignature(isInputSignatureComplete: Bool)
     func didPinChange(pin: String, isPinComplete: Bool)
+    func updateRemainingProgressTime(_ time: Float?)
 }
 
 final class PLAuthorizationPresenter {
@@ -35,6 +36,7 @@ final class PLAuthorizationPresenter {
     private var pin: String?
     private var randomKey: String?
     private var softwareTokenType: String?
+    private var progressTotalTime: Float?
 
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
@@ -119,7 +121,7 @@ private extension PLAuthorizationPresenter {
 
 extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
     func viewDidLoad() {
-        let remainingTimeViewModel = RemainingTimeViewModel(totalTime: Constants.totalTime)
+        let remainingTimeViewModel = RemainingTimeViewModel(totalTime: progressTotalTime ?? Constants.totalTime)
         self.view?.addRemainingTimeView(remainingTimeViewModel)
         self.view?.addInputSignatureView()
         self.shouldShowBiometryView { [weak self] showBiometry in
@@ -137,6 +139,10 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
             let viewModel = InputBiometricsViewModel(biometryType: biometryAvailable)
             self.view?.addInputBiometricsView(viewModel)
         }
+    }
+    
+    func updateRemainingProgressTime(_ time: Float?) {
+        progressTotalTime = time
     }
     
     func didSelectBack() {

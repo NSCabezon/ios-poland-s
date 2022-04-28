@@ -12,7 +12,7 @@ protocol TaxTransferDataSourceProtocol {
     func getPredefinedTaxAuthorities() throws -> Result<[PayeeDTO], NetworkProviderError>
     func getTaxSymbols() throws -> Result<[TaxSymbolDTO], NetworkProviderError>
     func getTaxAccounts(requestQueries: TaxAccountsRequestQueries) throws -> Result<[TaxAccountDTO], NetworkProviderError>
-    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError>
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<[String], NetworkProviderError>
     func getUserTaxAccount(requestQueries: UserTaxAccountRequestQueries) throws -> Result<UserTaxAccountDTO, NetworkProviderError>
 }
 
@@ -55,10 +55,13 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
         let serviceUrl = baseUrl + basePath
         let serviceName = TaxTransferServiceType.payers.rawValue
         return networkProvider.request(
-            TaxTransferRequest(serviceName: serviceName,
-                        serviceUrl: serviceUrl,
-                        method: .get,
-                        contentType: nil)
+            TaxTransferRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .get,
+                queryParams: ["forceRefresh": "true"],
+                contentType: nil
+            )
         )
     }
     
@@ -128,7 +131,7 @@ extension TaxTransferDataSource: TaxTransferDataSourceProtocol {
         )
     }
     
-    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<TaxAuthorityCitiesDTO, NetworkProviderError> {
+    func getTaxAuthorityCities(requestQueries: TaxAuthorityCitiesRequestQueries) throws -> Result<[String], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }

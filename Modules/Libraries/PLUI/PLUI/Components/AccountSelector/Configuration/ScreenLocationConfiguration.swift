@@ -19,8 +19,7 @@ extension AccountSelectorViewController {
             case .phoneTopUp:
                 return localized("pl_topup_text_selectAccountDesc")
             case .taxTransfer:
-                #warning("should be changed")
-                return "#Wybierz konto, z którego chcesz zrobić przelew:"
+                return localized("pl_taxTransfer_text_infoSelectAccount")
             case .splitPayment:
                 #warning("should be changed")
                 return "#Wybierz konto, z którego chcesz zrobić przelew:"
@@ -28,7 +27,7 @@ extension AccountSelectorViewController {
         }
         
         var showRightNavigationAction: Bool {
-            self == .mobileTransfer || self == .charityTransfer || self == .zusTransfer || self == .taxTransfer
+            self == .mobileTransfer || self == .charityTransfer || self == .zusTransfer || self == .taxTransfer || self == .phoneTopUp
         }
     }
     

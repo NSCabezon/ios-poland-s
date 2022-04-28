@@ -141,7 +141,7 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
     }
     
     func close() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.closeTopUpProces()
     }
     
     func didSelectChangeAccount(availableAccounts: [AccountForDebit], selectedAccountNumber: String?) {
@@ -153,7 +153,7 @@ extension PhoneTopUpFormCoordinator: PhoneTopUpFormCoordinatorProtocol {
         selectedAccountNumber: String?,
         mode: AccountForDebitSelectorMode
     ) {
-        let coordinator = AccountForDebitSelectorCoordinator(
+        let coordinator = TopUpAccountSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
             mode: mode,
@@ -217,10 +217,6 @@ extension PhoneTopUpFormCoordinator: MobileContactsSelectorDelegate {
     func mobileContactsDidSelectContact(_ contact: MobileContact) {
         navigationController?.popToViewController(phoneTopUpController, animated: true)
         contactsSelectorDelegate?.mobileContactsDidSelectContact(contact)
-    }
-    
-    func mobileContactDidSelectCloseProcess() {
-        navigationController?.popToViewController(phoneTopUpController, animated: true)
     }
 }
 

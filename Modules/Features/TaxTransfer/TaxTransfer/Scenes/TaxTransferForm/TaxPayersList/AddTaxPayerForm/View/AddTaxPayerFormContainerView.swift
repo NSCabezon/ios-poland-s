@@ -79,6 +79,7 @@ final class AddTaxPayerFormContainerView: UIView {
             with: identifier,
             onTap: didTapIdentifiersSelector
         )
+        identifierNumber.clear()
     }
     
     private func setUp() {
