@@ -29,9 +29,10 @@ struct SubMenuElement: CoreDomain.PrivateSubMenuOptionRepresentable {
 }
 
 struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
-    private let boxes: GetGlobalPositionBoxesUseCase
+    private let boxes: GetMyProductsUseCase
     private let globalPositionRepository: GlobalPositionDataRepository
     private let offers: GetCandidateOfferUseCase
+    private let pullOfferInterpreterReactive: ReactivePullOffersInterpreter
     private let dictOptions: [PrivateSubmenuAction: UserPrefBoxType] =
     [
         PrivateSubmenuAction.myProductOffer(.accounts): UserPrefBoxType.account,
@@ -49,6 +50,7 @@ struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
         boxes = dependencies.resolve()
         globalPositionRepository = dependencies.resolve()
         offers = dependencies.resolve()
+        pullOfferInterpreterReactive = dependencies.resolve()
     }
     
     func fetchSubMenuOptions() -> AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
@@ -72,13 +74,11 @@ private extension PLPrivateMenuMyProductsUseCase {
         ]
         return defaultOptions
     }
-}
-
-private extension PLPrivateMenuMyProductsUseCase {
+    
     var finalOptions: AnyPublisher<[PrivateMenuSectionRepresentable], Never> {
         return Publishers.Zip3(
             optionsMyProducts,
-            boxes.fetchBoxesVisibles(),
+            boxes.fetchMyProducts().replaceError(with: [:]),
             globalPositionRepository.getGlobalPosition())
             .map(buildOptions)
             .eraseToAnyPublisher()
@@ -89,46 +89,50 @@ private extension PLPrivateMenuMyProductsUseCase {
     }
     
     func buildOptions(_ options: [PrivateSubmenuAction],
-                      _ boxes: [UserPrefBoxType],
+                      _ boxes: [UserPrefBoxType: PGBoxRepresentable],
                       _ globalPosition: GlobalPositionDataRepresentable) -> [PrivateMenuSectionRepresentable] {
         let finalOptions = options.filter { option in
-            guard let boxOption = dictOptions[option] else { return false }
-            return boxes.contains(boxOption)
+            if let boxOption = dictOptions[option] {
+                return boxes.keys.contains(boxOption)
+            }
+            if case let .myProductOffer(_, offer) = option {
+                return offer != nil
+            }
+            return false
         }
-        let countedElements = howManyElementsIn(globalPosition: globalPosition, from: finalOptions)
+        let countedElements = howManyElementsIn(boxes: boxes, from: finalOptions)
         let section = PrivateMenuSection(items: finalOptions.toOptionRepresentable(countedElements))
         return [section]
     }
     
-    func isLocation(_ location: String) -> AnyPublisher<OfferRepresentable, Never> {
+    func isLocation(_ location: String) -> AnyPublisher<OfferRepresentable?, Never> {
         guard let location = PullOffersLocationsFactoryEntity()
                 .getLocationRepresentable(
                     locations: PullOffersLocationsFactoryEntity().myProductsSideMenu,
                     location: location) else {
-                        return Just(EmptyOffer()).eraseToAnyPublisher() }
-        return isCandidate(location).eraseToAnyPublisher()
+                        return Just(nil).eraseToAnyPublisher() }
+        return getCandidate(location).eraseToAnyPublisher()
     }
     
-    func isCandidate( _ location: PullOfferLocationRepresentable) -> AnyPublisher<OfferRepresentable, Never> {
-        return offers
-            .fetchCandidateOfferPublisher(location: location)
-            .catch { _ in Just(EmptyOffer()).eraseToAnyPublisher() }
+    func getCandidate( _ location: PullOfferLocationRepresentable) -> AnyPublisher<OfferRepresentable?, Never> {
+        return offers.fetchCandidateOfferPublisher(location: location)
+            .flatMap({ offerRepresentable -> AnyPublisher<OfferRepresentable?, Never> in
+                return Just(offerRepresentable).eraseToAnyPublisher()
+            })
+            .replaceError(with: nil)
+            .map { $0 }
             .eraseToAnyPublisher()
     }
 }
 
 extension Array where Element == PrivateSubmenuAction {
-    func isNotEmptyOffer(_ offer: OfferRepresentable?) -> Bool {
-        guard let offer = offer, offer is EmptyOffer else { return true }
-        return false
-    }
     
     func toOptionRepresentable(_ elementsCount: [PrivateSubmenuAction: Int]? = nil) -> [PrivateSubMenuOptionRepresentable] {
         var result = [PrivateSubMenuOptionRepresentable]()
         self.forEach { option in
             switch option {
-            case .myProductOffer(let product, let offer):
-                guard let elementsCount = elementsCount, isNotEmptyOffer(offer) else { return }
+            case .myProductOffer(let product, _):
+                guard let elementsCount = elementsCount else { return }
                 let item = SubMenuElement(titleKey: product.titleKey,
                                           icon: product.imageKey,
                                           submenuArrow: false,
@@ -164,60 +168,20 @@ extension Array where Element == PrivateSubmenuAction {
 }
 
 private extension PLPrivateMenuMyProductsUseCase {
-    func howManyElementsIn(globalPosition: GlobalPositionDataRepresentable,
+    func howManyElementsIn(boxes: [UserPrefBoxType: PGBoxRepresentable],
                            from myProducts: [PrivateSubmenuAction]) -> [PrivateSubmenuAction: Int] {
         var result = [PrivateSubmenuAction: Int]()
         myProducts.forEach { option in
-            result.updateValue(countForOption(option: option, in: globalPosition), forKey: option)
+            result.updateValue(countForOption(option: option, in: boxes), forKey: option)
         }
         return result
     }
     
-    func countForOption(option: PrivateSubmenuAction,
-                        in globalPosition: GlobalPositionDataRepresentable) -> Int {
-        let representablesDictionary: [PrivateMenuMyProductsOption: Int] =
-        [
-            .accounts: globalPosition.accountRepresentables.count,
-            .cards: globalPosition.accountRepresentables.count,
-            .deposits: globalPosition.accountRepresentables.count,
-            .funds: globalPosition.accountRepresentables.count,
-            .insuranceProtection: globalPosition.accountRepresentables.count,
-            .insuranceSavings: globalPosition.accountRepresentables.count,
-            .loans: globalPosition.accountRepresentables.count,
-            .pensions: globalPosition.accountRepresentables.count,
-            .stocks: globalPosition.accountRepresentables.count
-        ]
-        switch option {
-        case .myProductOffer(let product, _):
-            return representablesDictionary[product] ?? .zero
-        default: return .zero
-        }
-    }
-}
-
-struct EmptyOffer: OfferRepresentable {
-    let pullOfferLocation: PullOfferLocationRepresentable?
-    let bannerRepresentable: BannerRepresentable?
-    let action: OfferActionRepresentable?
-    let id: String?
-    let identifier: String
-    let transparentClosure: Bool
-    let productDescription: String
-    let rulesIds: [String]
-    let startDateUTC: Date?
-    let endDateUTC: Date?
-    
-    init() {
-        self.identifier = "EmptyOffer"
-        self.transparentClosure = false
-        self.productDescription = ""
-        self.rulesIds = []
-        self.pullOfferLocation = nil
-        self.bannerRepresentable = nil
-        self.startDateUTC = nil
-        self.endDateUTC = nil
-        self.action = nil
-        self.id = nil
+    func countForOption(option: PrivateSubmenuAction, in boxes: [UserPrefBoxType: PGBoxRepresentable]) -> Int {
+        guard let userPrefBox = dictOptions[option],
+              let boxRepresentable = boxes[userPrefBox]
+        else { return 0 }
+        return boxRepresentable.productsRepresentable.count
     }
 }
 
