@@ -194,10 +194,6 @@ extension PhoneTopUpFormPresenter: PhoneTopUpFormPresenterProtocol {
         selectedTopUpAmount = amount
     }
     
-    func mobileContactDidSelectCloseProcess() {
-        // we don't need to do anything here
-    }
-    
     func didTouchContinueButton() {
         guard sufficientFundsForTopUp() else {
             view?.showDialog(InsufficientFundsDialogBuilder().buildDialog())

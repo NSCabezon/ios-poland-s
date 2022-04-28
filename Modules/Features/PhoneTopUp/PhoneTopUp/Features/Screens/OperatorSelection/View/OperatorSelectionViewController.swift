@@ -9,7 +9,7 @@ import UI
 import PLUI
 import CoreFoundationLib
 
-protocol OperatorSelectionViewProtocol: AnyObject {
+protocol OperatorSelectionViewProtocol: AnyObject, ConfirmationDialogPresentable {
 }
 
 final class OperatorSelectionViewController: UIViewController {
@@ -50,7 +50,8 @@ final class OperatorSelectionViewController: UIViewController {
     private func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_topup_title_selectProvider")))
-            .setLeftAction(.back(action: #selector(goBack)))
+            .setLeftAction(.back(action: .selector(#selector(goBack))))
+            .setRightActions(.close(action: .selector(#selector(close))))
             .build(on: self, with: nil)
         navigationController?.addNavigationBarShadow()
     }
@@ -90,8 +91,14 @@ final class OperatorSelectionViewController: UIViewController {
     
     // MARK: Actions
     
-    @objc private func goBack() {
+    @objc
+    private func goBack() {
         presenter.didSelectBack()
+    }
+    
+    @objc
+    private func close() {
+        presenter.didSelectClose()
     }
 }
 

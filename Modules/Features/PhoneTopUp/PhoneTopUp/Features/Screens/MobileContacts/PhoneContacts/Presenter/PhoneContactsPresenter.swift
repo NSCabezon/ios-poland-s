@@ -33,6 +33,7 @@ final class PhoneContactsPresenter {
     private lazy var getPhoneContactsUseCase = dependenciesResolver.resolve(for: GetContactsUseCaseProtocol.self)
     private lazy var useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
     private lazy var searchFilter = dependenciesResolver.resolve(for: MobileContactsSearchFiltering.self)
+    private lazy var confirmationDialogFactory = dependenciesResolver.resolve(for: ConfirmationDialogProducing.self)
     private let allContacts: GroupedMobileContacts
     private var searchQuery = ""
     private var filteredContacts: GroupedMobileContacts {
@@ -54,7 +55,10 @@ extension PhoneContactsPresenter: PhoneContactsPresenterProtocol {
     }
     
     func didSelectClose() {
-        coordinator?.close()
+        let dialog = confirmationDialogFactory.createEndProcessDialog { [weak self] in
+            self?.coordinator?.close()
+        } declineAction: {}
+        view?.showDialog(dialog)
     }
     
     func getNumberOfSections() -> Int {

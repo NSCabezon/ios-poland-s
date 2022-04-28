@@ -151,6 +151,7 @@ public extension AcceptDomesticTransactionParameters {
         case ONEAPP_ZUS_TRANSACTION
         case ONEAPP_MOBILE_TRANSACTION
         case ONEAPP_BLIK_P2P_TRANSACTION
+        case ONEAPP_TAX_TRANSACTION
     }
     
 }

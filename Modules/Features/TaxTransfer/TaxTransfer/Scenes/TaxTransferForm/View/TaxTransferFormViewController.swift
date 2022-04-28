@@ -15,6 +15,7 @@ protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable, Co
     func disableDoneButton(with messages: TaxTransferFormValidity.InvalidFormMessages)
     func enableDoneButton()
     func getCurrentFormFields() -> TaxTransferFormFields
+    func clearForm()
 }
 
 final class TaxTransferFormViewController: UIViewController {
@@ -80,6 +81,11 @@ extension TaxTransferFormViewController: TaxTransferFormView {
     
     func getCurrentFormFields() -> TaxTransferFormFields {
         return formView.getFormFields()
+    }
+    
+    func clearForm() {
+        bottomButtonView.disableButton()
+        formView.clearForm()
     }
 }
 

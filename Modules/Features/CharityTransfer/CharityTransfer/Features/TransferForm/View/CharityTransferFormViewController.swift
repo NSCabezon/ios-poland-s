@@ -69,10 +69,12 @@ private extension CharityTransferFormViewController {
     }
     
     func prepareNavigationBar() {
-        NavigationBarBuilder(style: .white,
-                             title: .title(key: localized("pl_foundtrans_title_foundTransfer")))
-            .setLeftAction(.back(action: #selector(goBack))) //TODO: need to change back action to back send money screen
-            .setRightActions(.close(action: #selector(closeProcess)))
+        NavigationBarBuilder(
+            style: .white,
+            title: .title(key: presenter.getNavigationBarTitle())
+        )
+            .setLeftAction(.back(action: .selector(#selector(goBack))))
+            .setRightActions(.close(action: .selector(#selector(closeProcess))))
             .build(on: self, with: nil)
     }
     

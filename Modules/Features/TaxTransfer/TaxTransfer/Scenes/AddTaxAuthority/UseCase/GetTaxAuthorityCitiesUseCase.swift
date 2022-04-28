@@ -33,7 +33,7 @@ final class GetTaxAuthorityCitiesUseCase: UseCase<GetTaxAuthorityCitiesUseCaseIn
         switch result {
         case let .success(data):
             let output = GetTaxAuthorityCitiesUseCaseOkOutput(
-                taxAuthorityCities: data.cityNames.map { TaxAuthorityCity(cityName: $0) }
+                taxAuthorityCities: data.map { TaxAuthorityCity(cityName: $0) }
             )
             return .ok(output)
         case let .failure(error):

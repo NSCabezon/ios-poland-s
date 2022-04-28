@@ -28,7 +28,7 @@ final class TopUpSummaryViewController: OperativeSummaryViewController {
     
     override func setupNavigationBar() {
         let builder = NavigationBarBuilder(style: .sky, title: .title(key: "genericToolbar_title_confirmation"))
-        builder.setRightActions(.close(action: #selector(close)))
+        builder.setRightActions(.close(action: .selector(#selector(close))))
         builder.build(on: self, with: nil)
     }
     
