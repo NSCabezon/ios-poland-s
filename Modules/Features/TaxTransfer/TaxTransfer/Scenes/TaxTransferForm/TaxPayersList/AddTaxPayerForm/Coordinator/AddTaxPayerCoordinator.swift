@@ -105,6 +105,14 @@ private extension AddTaxPayerFormCoordinator {
         dependenciesEngine.register(for: TaxIdentifierMapping.self) { _ in
             return TaxIdentifierMapper()
         }
+        
+        dependenciesEngine.register(for: TaxIdentifierValidating.self) { _ in
+            return TaxIdentifierValidator()
+        }
+        
+        dependenciesEngine.register(for: AddTaxPayerFormValidating.self) { resolver in
+            return AddTaxPayerFormValidator(dependenciesResolver: resolver)
+        }
     }
     
     func handleSelectedTaxIdentifier(item: TaxIdentifierType) {
