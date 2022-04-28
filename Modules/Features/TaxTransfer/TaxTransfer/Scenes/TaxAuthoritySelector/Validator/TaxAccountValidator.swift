@@ -33,7 +33,8 @@ final class TaxAccountValidator {
             taxAccountNumberFilter: accountNumber,
             taxAccountNameFilter: nil,
             cityFilter: nil,
-            optionId: isAccountTypeIRP ? irpAccountOptionId : nil
+            optionId: isAccountTypeIRP ? irpAccountOptionId : nil,
+            taxFormType: nil
         )
         Scenario(useCase: getTaxAccountUseCase, input: input)
             .execute(on: useCaseHandler)
