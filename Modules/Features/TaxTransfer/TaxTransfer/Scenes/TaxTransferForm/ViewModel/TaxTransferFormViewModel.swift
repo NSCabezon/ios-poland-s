@@ -6,6 +6,7 @@
 //
 
 import PLScenes
+import SANPLLibrary
 
 struct TaxTransferFormViewModel {
     let account: Selectable<AccountViewModel>
@@ -23,6 +24,8 @@ extension TaxTransferFormViewModel {
         let maskedAccountNumber: String
         let unformattedAccountNumber: String
         let accountBalance: String
+        let accountSequenceNumber: Int
+        let accountType: Int
         let isEditButtonEnabled: Bool
     }
     

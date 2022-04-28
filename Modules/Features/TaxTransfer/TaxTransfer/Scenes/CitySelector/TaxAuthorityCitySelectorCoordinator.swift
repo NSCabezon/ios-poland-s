@@ -35,11 +35,11 @@ final class TaxAuthorityCitySelectorCoordinator {
         let storage = AddTaxAuthorityStorage(dependenciesResolver: dependenciesEngine)
         let lastSelectedCities = (try? storage.getLastSelectedCities()) ?? []
         let configuration = ItemSelectorConfiguration<TaxAuthorityCity>(
-            navigationTitle: "#Miasto",
+            navigationTitle: localized("generic_label_city"),
             searchMode: .enabled(
                 .init(
-                    searchBarPlaceholderText: "#Wyszukaj miasto",
-                    emptySearchResultMessage: "#Nie znaleźliśmy miasta o nazwie:"
+                    searchBarPlaceholderText: localized("generic_placeholder_typeCity"),
+                    emptySearchResultMessage: localized("pl_taxTransfer_text_unableToFindCity")
                 )
             ),
             sections: getSections(withLastSelectedCities: lastSelectedCities),
@@ -60,14 +60,14 @@ final class TaxAuthorityCitySelectorCoordinator {
         if lastSelectedCities.isNotEmpty {
             sections += [
                 .init(
-                    sectionTitle: "#Ostatnio wybrane:",
+                    sectionTitle: localized("generic_label_recentlySelected"),
                     items: lastSelectedCities
                 )
             ]
         }
         sections += [
             .init(
-                sectionTitle: "#Lista:",
+                sectionTitle: localized("generic_label_list"),
                 items: cities.sorted(by: { $0.cityName < $1.cityName })
             )
         ]

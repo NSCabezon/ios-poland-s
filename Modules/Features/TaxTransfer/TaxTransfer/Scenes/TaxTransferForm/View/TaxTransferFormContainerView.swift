@@ -12,6 +12,7 @@ import PLUI
 protocol TaxTransferFormContainerViewDelegate: AnyObject {
     func scrollToBottom()
     func didUpdateFields(withFields fields: TaxTransferFormFields)
+    func clearForm()
 }
 
 final class TaxTransferFormContainerView: UIView {
@@ -104,6 +105,10 @@ final class TaxTransferFormContainerView: UIView {
     
     func configureObligationIdentifierField(with viewModel: TaxTransferFormViewModel) {
         obligationIdentifierSection.configure(with: viewModel)
+    }
+    
+    func clearForm() {
+        // TODO - implementation will be added in next pr
     }
 }
 

@@ -109,7 +109,7 @@ final class AddTaxPayerInfoView: UIView {
     }
     
     private func configureDelegate() {
-        input.textField.updatableDelegate = self
+        input.textField.fieldDelegate = self
     }
     
     private func getSectionContainer() -> FormSectionContainer {
@@ -120,8 +120,8 @@ final class AddTaxPayerInfoView: UIView {
     }
 }
 
-extension AddTaxPayerInfoView: UpdatableTextFieldDelegate {
-    func updatableTextFieldDidUpdate() {
+extension AddTaxPayerInfoView: UITextFieldDelegate {
+    func didEndEditing() {
         delegate?.didUpdateText()
     }
     

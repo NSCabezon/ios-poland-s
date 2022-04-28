@@ -136,4 +136,3 @@ private extension AddTaxPayerFormPresenter {
         view?.setUp(isEmpty: form.isEmpty)
     }
 }
-

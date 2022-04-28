@@ -28,6 +28,8 @@ final class TaxTransferAccountViewModelMapper: TaxTransferAccountViewModelMappin
             maskedAccountNumber: formatAccountNumber(account.number),
             unformattedAccountNumber: account.number,
             accountBalance: accountBalance,
+            accountSequenceNumber: account.accountSequenceNumber,
+            accountType: account.accountType,
             isEditButtonEnabled: isEditButtonEnabled
         )
     }

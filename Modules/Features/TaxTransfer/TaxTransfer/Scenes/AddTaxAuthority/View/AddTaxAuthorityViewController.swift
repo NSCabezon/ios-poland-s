@@ -21,8 +21,6 @@ final class AddTaxAuthorityViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let bottomButtonView = BottomButtonView()
     private lazy var formView = AddTaxAuthorityContainerView(delegate: self)
-    
-    let keyboardManager = KeyboardManager()
 
     init(presenter: AddTaxAuthorityPresenterProtocol) {
         self.presenter = presenter
@@ -109,8 +107,8 @@ private extension AddTaxAuthorityViewController {
         configureNavigationItem()
         configureSubviews()
         configureBottomView()
-        configureKeyboardManager()
         configureStyling()
+        configureKeyboardDismissGesture()
     }
     
     func configureNavigationItem() {
@@ -148,11 +146,6 @@ private extension AddTaxAuthorityViewController {
         ])
     }
     
-    func configureKeyboardManager() {
-        keyboardManager.setDelegate(self)
-        keyboardManager.update()
-    }
-    
     func configureBottomView() {
         bottomButtonView.disableButton()
         bottomButtonView.configure(title: localized("generic_label_done")) { [weak self] in
@@ -170,12 +163,6 @@ private extension AddTaxAuthorityViewController {
     
     @objc func close() {
         presenter.didTapClose()
-    }
-}
-
-extension AddTaxAuthorityViewController: KeyboardManagerDelegate {
-    var associatedScrollView: UIScrollView? {
-        return scrollView
     }
 }
 
