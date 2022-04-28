@@ -75,7 +75,7 @@ public final class ConfirmationDialogFactory: ConfirmationDialogProducing {
                 ),
                 .margin(8),
                 .styledText(
-                    .init(text: localized("pl_blik_alert_repQuitTitle"),
+                    .init(text: localized("generic_alert_quitTitle"),
                           font: .santander(family: .headline, type: .bold, size: 28),
                           color: .lisboaGray,
                           alignament: .center,
@@ -84,7 +84,7 @@ public final class ConfirmationDialogFactory: ConfirmationDialogProducing {
                 .margin(16),
                 .styledText(
                     .init(
-                        text: localized("pl_creditCard_alert_repQuitText"),
+                        text: localized("generic_alert_quitText"),
                         font: UIFont.santander(
                             family: .micro,
                             type: .regular,
