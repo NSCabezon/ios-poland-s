@@ -57,7 +57,7 @@ public final class GetPhoneTopUpFormDataUseCase: UseCase<Void, GetPhoneTopUpForm
         let results = try phoneTopUpManager.getFormData()
         switch results {
         case .success(let formDataDTO):
-            let acccounts = try formDataDTO.accounts.map(accountMapper.map)
+            let acccounts = selectSingleAccount(with: try formDataDTO.accounts.map(accountMapper.map))
             let operators = operatorMapper.mapAndMerge(operatorDTOs: formDataDTO.operators, gsmOperatorDTOs: formDataDTO.gsmOperators)
             let internetContacts = formDataDTO.internetContacts.compactMap(contactsMapper.map)
             let topUpAccount = topUpAccountMapper.map(dto: formDataDTO.topUpAccount)
@@ -67,6 +67,23 @@ public final class GetPhoneTopUpFormDataUseCase: UseCase<Void, GetPhoneTopUpForm
                                                    topUpAccount: topUpAccount))
         case .failure(let error):
             return .error(.init(error.localizedDescription))
+        }
+    }
+    
+    private func selectSingleAccount(with accounts: [AccountForDebit]) -> [AccountForDebit] {
+        if accounts.count == 1, let firstAccount = accounts.first {
+            return [AccountForDebit(
+                id: firstAccount.id,
+                name: firstAccount.name,
+                number: firstAccount.number,
+                availableFunds: firstAccount.availableFunds,
+                defaultForPayments: true,
+                type: firstAccount.type,
+                accountSequenceNumber: firstAccount.accountSequenceNumber,
+                accountType: firstAccount.accountType,
+                taxAccountNumber: firstAccount.taxAccountNumber)]
+        } else {
+            return accounts
         }
     }
 }
