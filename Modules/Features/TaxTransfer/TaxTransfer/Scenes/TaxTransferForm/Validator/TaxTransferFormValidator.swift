@@ -35,7 +35,7 @@ final class TaxTransferFormValidator: TaxTransferFormValidating {
             return .invalid(invalidStateMessages)
         }
         
-        if fields.obligationIdentifier.isEmpty || fields.amount.isEmpty {
+        if fields.amount.isEmpty {
             let emptyMessages = TaxTransferFormValidity.InvalidFormMessages(
                 amountMessage: nil,
                 obligationIdentifierMessage: nil

@@ -80,7 +80,7 @@ struct TransfersDataRepository: PLTransfersRepository {
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
         let iban = input.destinationAccount
         let ibanFormatted = iban.countryCode + iban.checkDigits + iban.codBban
-        let parameters = CheckTransactionParameters(customerProfile: "SAN_PL", transactionAmount: input.transactionAmount, hasSplitPayment: false)
+        let parameters = CheckTransactionParameters(customerProfile: "SAN_PL", transactionAmount: "\(input.transactionAmount?.wholePart ?? "0").\(input.transactionAmount?.getDecimalPart() ?? "00")", hasSplitPayment: false)
         let response = try bsanTransferManager.checkTransaction(parameters: parameters, accountReceiver: ibanFormatted)
         switch response {
         case .success(let transactionAvailability):

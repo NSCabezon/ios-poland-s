@@ -5,27 +5,16 @@
 //  Created by Adrian Arcalá Ocón on 11/10/21.
 //
 
-import Foundation
+import CoreDomain
 
 public struct CheckTransactionParameters: Encodable {
     let customerProfile: String
-    let transactionAmount: Decimal
+    let transactionAmount: String
     let hasSplitPayment: Bool?
     
     enum CodingKeys: String, CodingKey {
         case customerProfile = "customer_profile"
         case transactionAmount = "transaction_amount"
         case hasSplitPayment
-    }
-    
-    func asDictionary() throws -> [String: Any] {
-        var dictionary: [String: Any] = [
-            CodingKeys.customerProfile.rawValue: self.customerProfile,
-            CodingKeys.transactionAmount.rawValue: self.transactionAmount.doubleValue
-        ]
-        if let hasSplitPayment = self.hasSplitPayment {
-            dictionary[CodingKeys.hasSplitPayment.rawValue] = hasSplitPayment
-        }
-        return dictionary
     }
 }
