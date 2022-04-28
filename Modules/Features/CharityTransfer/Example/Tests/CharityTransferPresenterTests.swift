@@ -5,7 +5,6 @@
 //  Created by 187125 on 14/12/2021.
 //  Copyright © 2021 CocoaPods. All rights reserved.
 //
-
 import CoreFoundationLib
 import CoreDomain
 import PLCommons
@@ -13,37 +12,40 @@ import SANPLLibrary
 import XCTest
 @testable import CharityTransfer
 
-class CharityTreasferPresenterTests: XCTestCase {
+final class CharityTransferPresenterTests: XCTestCase {
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
     private var SUT: CharityTransferFormPresenterProtocol!
-    private var coordinator: CharityTransferFormCoordinatorMock?
-
+    private var coordinator: CharityTransferFormCoordinatorMock!
+    private var view: CharityTransferFormViewMock?
+    
     override func setUp() {
         super.setUp()
+        coordinator = CharityTransferFormCoordinatorMock()
+        view = CharityTransferFormViewMock()
         dependencies = DependenciesDefault()
         setUpDependencies()
         SUT = dependencies.resolve(for: CharityTransferFormPresenterProtocol.self)
-        coordinator = dependencies.resolve(for: CharityTransferFormCoordinatorProtocol.self) as? CharityTransferFormCoordinatorMock
     }
     
     override func tearDown() {
         super.tearDown()
         dependencies = nil
         SUT = nil
+        coordinator = nil
+        view = nil
     }
     
     func test_showAccountSelector_is_called() {
         SUT.showAccountSelector()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.showAccountSelectorCalled == true)
-        }
+        XCTAssertTrue(coordinator.showAccountSelectorCalled)
     }
     
-    func test_showConfirmation_is_called() {
+    func test_showConfirmation_is_called() throws {
+        SUT.updateTransferFormViewModel(
+            with: CharityTransferFormViewModelBuilderMock.getCharityTransferFormViewModel()
+        )
         SUT.confirmTransfer()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.showConfirmationCalled == true)
-        }
+        XCTAssertTrue(coordinator.showConfirmationCalled)
     }
     
     func test_getting_selected_account_view_models() {
@@ -55,37 +57,40 @@ class CharityTreasferPresenterTests: XCTestCase {
         }
         XCTAssertEqual(viewModel.accountNumber, "*1234")
         XCTAssertEqual(viewModel.accountNumberUnformatted, "12123412341234123412341234")
-        XCTAssertEqual(viewModel.availableFunds, "1 500,00 PLN")
+        XCTAssertEqual(viewModel.availableFunds, "1500.00 PLN")
         XCTAssertEqual(viewModel.name, "Konto Jakie Chcesz")
         XCTAssertEqual(viewModel.isSelected, true)
     }
     
     func test_getting_selected_account_number() {
-        let selectedAccountNumber = SUT.getSelectedAccountNumber()
-        XCTAssertEqual(selectedAccountNumber, "12123412341234123412341234")
+        guard let selectedAccountViewModel = SUT.getSelectedAccountViewModels().first else {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(selectedAccountViewModel.accountNumberUnformatted, "12123412341234123412341234")
     }
     
-    func test_goBack_called_should_start_closeProcess_coordinator_function() throws {
+    func test_didSelectCloseProcess_called_should_show_dialog() throws {
+        let view = try XCTUnwrap(view)
+        SUT.view = view
         SUT.didSelectCloseProcess()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.closeProcessCalled == true)
-        }
+        XCTAssertTrue(view.showDialogCalled)
     }
     
-    func test_goBack_called_should_start_pop_coordinator_function() throws {
+    func test_goBack_called_should_start_pop_coordinator_function() {
         SUT.didSelectClose()
-        TestHelper.delay { [unowned self] in
-            XCTAssertTrue(self.coordinator?.popCalled == true)
-        }
+        XCTAssertTrue(coordinator.popCalled)
     }
 }
 
-private extension CharityTreasferPresenterTests {
+private extension CharityTransferPresenterTests {
     func setUpDependencies() {
-        
+        dependencies.register(for: CharityTransferFormCoordinatorProtocol.self) { [unowned self] _ in
+            self.coordinator
+        }
         dependencies.register(for: CharityTransferFormPresenterProtocol.self) { resolver in
             let presenter = CharityTransferFormPresenter(dependenciesResolver: resolver,
-                                                         accounts: AccountForDebitMockBuilder.getAccountForDebitMockMock(),
+                                                         accounts: [AccountForDebit.stub()],
                                                          selectedAccountNumber: "12123412341234123412341234",
                                                          formValidator: CharityTransferValidator(),
                                                          charityTransferSettings: CharityTransferSettings(
@@ -95,10 +100,6 @@ private extension CharityTreasferPresenterTests {
                                                          )
             )
             return presenter
-        }
-        
-        dependencies.register(for: CharityTransferFormCoordinatorProtocol.self) { _ in
-            CharityTransferFormCoordinatorMock()
         }
     }
 }

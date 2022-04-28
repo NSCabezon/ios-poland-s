@@ -1,8 +1,7 @@
-
+import PLCommons
 @testable import CharityTransfer
 
 final class CharityTransferFormCoordinatorMock: CharityTransferFormCoordinatorProtocol {
-    
     var showConfirmationCalled = false
     var showAccountSelectorCalled = false
     var closeProcessCalled = false
@@ -23,5 +22,6 @@ final class CharityTransferFormCoordinatorMock: CharityTransferFormCoordinatorPr
     func showConfirmation(with model: CharityTransferModel) {
         showConfirmationCalled = true
     }
-
+    
+    func updateAccounts(accounts: [AccountForDebit]) {}
 }

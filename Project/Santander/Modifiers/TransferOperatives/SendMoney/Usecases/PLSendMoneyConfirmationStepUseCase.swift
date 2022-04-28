@@ -69,11 +69,11 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
             }
         case .failure(let error):
             guard let errorDTO: PLErrorDTO = error.getErrorBody(),
-                  let parsedError = errorMessages[errorDTO.errorCode2]
+                  let parsedError = SendMoneyConfirmationErrorType(errorDTO.errorCode2)
             else {
                 return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
             }
-            return .ok(.error(title: parsedError.0, subtitle: parsedError.1))
+            return .ok(.error(title: "pl_summary_label_transactionNotCompleted", subtitle: parsedError.localizedDescription))
         }
     }
 }
@@ -109,34 +109,66 @@ enum ConfirmationResultType: String {
     case errorCheckSum = "ERROR_CHECK_SUM"
 }
 
-extension PLSendMoneyConfirmationStepUseCase: SendMoneyConfirmationStepUseCaseProtocol { }
-
-// MARK: - Service messages errors
-
-private extension PLSendMoneyConfirmationStepUseCase {
+enum SendMoneyConfirmationErrorType: Error {
+    case reLogApplication
+    case passwordExpired
+    case checkSenderRecipient
+    case currencyExchangeRates
+    case minimumTransferAmount
+    case transferTooLarge
+    case transferOnlyOurBranch
+    case blockedAccessingTransactionService
     
-    var errorMessages: [Int: (String, String)] {
-        var errorArray: [Int: (String, String)] = [:]
+    var localizedDescription: String {
+        switch self {
+        case .reLogApplication:
+            return "pl_summary_label_reLogApplication"
+        case .passwordExpired:
+            return "pl_summary_label_passwordExpired"
+        case .checkSenderRecipient:
+            return "pl_summary_label_checkSenderRecipient"
+        case .currencyExchangeRates:
+            return "pl_summary_label_currencyExchangeRates"
+        case .minimumTransferAmount:
+            return "pl_summary_label_minimumTransferAmount"
+        case .transferTooLarge:
+            return "pl_summary_label_TransferTooLarge"
+        case .transferOnlyOurBranch:
+            return "pl_summary_label_transferOnlyOurBranch"
+        case .blockedAccessingTransactionService:
+            return "pl_summary_label_blockedAccessingTransactionService"
+        }
+    }
+    
+    private static var errorCodes: [Int: SendMoneyConfirmationErrorType] {
+        var errorArray: [Int: SendMoneyConfirmationErrorType] = [:]
         let reLogCodes = [2, 3, 4, 5, 11, 13, 17, 21, 30, 79, 130, 170, 171, 172, 173, 174]
         reLogCodes.forEach {
-            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_reLogApplication")
+            errorArray[$0] = SendMoneyConfirmationErrorType.reLogApplication
         }
         let passwordExpiredCodes = [7, 8]
         passwordExpiredCodes.forEach {
-            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_passwordExpired")
+            errorArray[$0] = SendMoneyConfirmationErrorType.passwordExpired
         }
-        let exchangeCodes = [14, 15, 23, 100]
-        exchangeCodes.forEach {
-            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_currencyExchangeRates")
+        let checkSenderCodes = [14, 15, 23, 100]
+        checkSenderCodes.forEach {
+            errorArray[$0] = SendMoneyConfirmationErrorType.checkSenderRecipient
         }
-        errorArray[41] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_checkSenderRecipient")
-        errorArray[42] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_minimumTransferAmount")
-        errorArray[43] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_TransferTooLarge")
-        errorArray[99] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_transferOnlyOurBranch")
+        errorArray[41] = SendMoneyConfirmationErrorType.currencyExchangeRates
+        errorArray[42] = SendMoneyConfirmationErrorType.minimumTransferAmount
+        errorArray[43] = SendMoneyConfirmationErrorType.transferTooLarge
+        errorArray[99] = SendMoneyConfirmationErrorType.transferOnlyOurBranch
         let blockedCodes = [251, 252]
         blockedCodes.forEach {
-            errorArray[$0] = ("pl_summary_label_transactionNotCompleted", "pl_summary_label_blockedAccessingTransactionService")
+            errorArray[$0] = SendMoneyConfirmationErrorType.blockedAccessingTransactionService
         }
         return errorArray
     }
+    
+    init?(_ code: Int) {
+        guard let error = SendMoneyConfirmationErrorType.errorCodes[code] else { return nil }
+        self = error
+    }
 }
+
+extension PLSendMoneyConfirmationStepUseCase: SendMoneyConfirmationStepUseCaseProtocol { }

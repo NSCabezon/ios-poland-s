@@ -42,11 +42,10 @@ private extension PLGetInternalTransferOriginAccountsUseCase {
     /// - Returns: an array of Poland accounts filtered.
     func removeUniqueNonCreditCardAccount(polandAccounts: [PolandAccountRepresentable]) -> [PolandAccountRepresentable] {
         let creditCardAccounts = polandAccounts.filter { $0.type == .creditCard }
-        if creditCardAccounts.count == polandAccounts.count - 1 {
-            return creditCardAccounts
-        } else {
+        guard creditCardAccounts.count == polandAccounts.count - 1 else {
             return polandAccounts
         }
+        return creditCardAccounts
     }
     
     /// Remove all the credit card accounts of an array if the accounts that are
@@ -55,11 +54,11 @@ private extension PLGetInternalTransferOriginAccountsUseCase {
     /// - Returns: an array of Poland accounts filtered.
     func removeCreditCardAccountsIfNecessary(polandAccounts: [PolandAccountRepresentable]) -> [PolandAccountRepresentable] {
         let notCreditCardAccounts = polandAccounts.filter { $0.type != .creditCard }
-        if notCreditCardAccounts.contains(where: { $0.currencyCode == "PLN" }) {
+        guard !notCreditCardAccounts.isEmpty else { return polandAccounts }
+        guard !notCreditCardAccounts.contains(where: { $0.currencyCode == "PLN" }) else {
             return polandAccounts
-        } else {
-            return notCreditCardAccounts
         }
+        return notCreditCardAccounts
     }
     
     func reclassifyWithUserPrefs(polandAccounts: [PolandAccountRepresentable], input: GetInternalTransferOriginAccountsUseCaseInput) -> ([AccountRepresentable], [AccountRepresentable]) {
