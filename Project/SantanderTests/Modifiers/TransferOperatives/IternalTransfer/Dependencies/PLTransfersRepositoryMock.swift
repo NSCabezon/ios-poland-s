@@ -13,7 +13,7 @@ import OpenCombine
 @testable import IDZSwiftCommonCrypto
 
 struct PLTransfersRepositoryMock: PLTransfersRepository {
-    
+
     private var rates: [ExchangeRateRepresentable]!
     
     public init(rates: [ExchangeRateRepresentable]) {
@@ -32,11 +32,11 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
         fatalError()
     }
     
-    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], Error> {
+    func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error> {
         fatalError()
     }
     
-    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], Error> {
+    func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error> {
         fatalError()
     }
     
