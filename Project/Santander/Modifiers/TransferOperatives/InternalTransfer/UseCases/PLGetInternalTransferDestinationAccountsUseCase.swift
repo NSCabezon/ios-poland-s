@@ -10,41 +10,65 @@ import CoreDomain
 import TransferOperatives
 import SANPLLibrary
 
-struct PLGetInternalTransferDestAccountsUseCase {}
+struct PLGetInternalTransferDestAccountsUseCase {
+    let transfersRepository: PLTransfersRepository
+    let globalPositionRepository: GlobalPositionDataRepository
+    
+    init(dependencies: PLInternalTransferOperativeExternalDependenciesResolver) {
+        self.transfersRepository = dependencies.resolve()
+        self.globalPositionRepository = dependencies.resolve()
+    }
+}
 
 extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinationAccountsUseCase {
-    func fetchAccounts(input: GetInternalTransferDestinationAccountsInput) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, Never> {
-        let visibleAccounts = getFilteredAccounts(from: input.visibleAccounts, originAccount: input.originAccount)
-        let notVisibleAccounts = getFilteredAccounts(from: input.notVisibleAccounts, originAccount: input.originAccount)
-        return Just(filterDestinationAccounts(visibleAccounts: visibleAccounts,
-                                              notVisibleAccounts: notVisibleAccounts,
-                                              originAccount: input.originAccount)
-        ).eraseToAnyPublisher()
+    
+    func fetchAccounts(_ input: GetInternalTransferDestinationAccountsInput) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> {
+        let polandAccount = input.originAccount as? PolandAccountRepresentable
+        return Publishers.Zip(
+            globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
+            transfersRepository.getAccountsForCreditSwitch(polandAccount?.type?.rawValue ?? "")
+        )
+            .mapError { _ in
+                return InternalTransferOperativeError.network
+            }
+            .flatMap { globalPosition, creditAccounts -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> in
+                let notVisiblesPGAccounts = globalPosition.accounts.filter { $0.isVisible == false }
+                let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
+                    return account.product
+                }
+                let filterAccounts = getFilteredAccounts(from: creditAccounts, originAccount: input.originAccount)
+                if filterAccounts.isEmpty && gpNotVisibleAccounts.isEmpty {
+                    return Fail(error: InternalTransferOperativeError.destinationMinimunAccounts).eraseToAnyPublisher()
+                }
+                return Just(destinationAccounts(accounts: filterAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts))
+                    .setFailureType(to: InternalTransferOperativeError.self)
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
 }
 
 private extension PLGetInternalTransferDestAccountsUseCase {
+        func destinationAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> GetInternalTransferDestinationAccountsOutput {
+            var destinationAccountsVisibles: [AccountRepresentable] = []
+            var destinationAccountsNotVisibles: [AccountRepresentable] = []
+            accounts.forEach { account in
+                let polandAccount = account as? PolandAccountRepresentable
+                let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
+                    return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
+                }
+                guard containsAccountNotVisible else {
+                    destinationAccountsVisibles.append(account)
+                    return
+                }
+                destinationAccountsNotVisibles.append(account)
+            }
+            return (GetInternalTransferDestinationAccountsOutput(visibleAccounts: destinationAccountsVisibles, notVisibleAccounts: destinationAccountsNotVisibles))
+        }
+    
     func getFilteredAccounts(from accounts: [AccountRepresentable], originAccount: AccountRepresentable) -> [PolandAccountRepresentable] {
         let accounts = accounts.filter { !$0.equalsTo(other: originAccount) }
-        return filterCreditCardAccounts(from: accounts)
-    }
-    
-    func filterCreditCardAccounts(from accounts: [AccountRepresentable]) -> [PolandAccountRepresentable] {
-        guard let polandAccounts: [PolandAccountRepresentable] = accounts as? [PolandAccountRepresentable] else { return [] }
-        return polandAccounts.filter { $0.type != .creditCard }
-    }
-    
-    func filterDestinationAccounts(visibleAccounts: [PolandAccountRepresentable],
-                                   notVisibleAccounts: [PolandAccountRepresentable],
-                                   originAccount: AccountRepresentable) -> GetInternalTransferDestinationAccountsOutput {
-        guard let originAccount = originAccount as? PolandAccountRepresentable,
-            originAccount.type == .creditCard else {
-            return GetInternalTransferDestinationAccountsOutput(visibleAccounts: visibleAccounts,
-                                                                         notVisibleAccounts: notVisibleAccounts)
-        }
-        let visiblesFiltered = visibleAccounts.filter { $0.currencyRepresentable?.currencyType == .złoty }
-        let notVisiblesFiltered = notVisibleAccounts.filter { $0.currencyRepresentable?.currencyType == .złoty }
-        return GetInternalTransferDestinationAccountsOutput(visibleAccounts: visiblesFiltered,
-                                                                     notVisibleAccounts: notVisiblesFiltered)
+        return accounts as? [PolandAccountRepresentable] ?? []
+        
     }
 }

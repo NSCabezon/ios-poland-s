@@ -10,6 +10,8 @@ import CoreDomain
 public protocol PLTransfersManagerProtocol {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
@@ -51,8 +53,28 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         }
     }
     
+    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountsForDebitSwitch()
+        switch result {
+        case .success(let accountForDebitDTO):
+            return .success(accountForDebitDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
         let result = try self.transferDataSource.getAccountsForCredit()
+        switch result {
+        case .success(let accountForCreditDTO):
+            return .success(accountForCreditDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountsForCreditSwitch(accountType)
         switch result {
         case .success(let accountForCreditDTO):
             return .success(accountForCreditDTO)

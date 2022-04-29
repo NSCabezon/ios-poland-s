@@ -42,7 +42,7 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     }
 
     func resolve() -> GetInternalTransferDestinationAccountsUseCase {
-        return PLGetInternalTransferDestAccountsUseCase()
+        return PLGetInternalTransferDestAccountsUseCase(dependencies: self)
     }
     
     func resolve() -> CurrencyFormatterProvider {
