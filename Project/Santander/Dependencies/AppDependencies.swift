@@ -437,6 +437,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: PLOnlineAdvisorManagerProtocol.self) { resolver in
             return self.onlineAdvisor
         }
+        self.dependencieEngine.register(for: SecurityAreaViewProtocolModifier.self) { _ in
+            PLSecurityAreaViewProtocolModifier()
+        }
     }
 }
 
