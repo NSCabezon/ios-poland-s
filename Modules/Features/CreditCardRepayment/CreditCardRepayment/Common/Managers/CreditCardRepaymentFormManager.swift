@@ -29,7 +29,7 @@ class CreditCardRepaymentFormManager {
                                        date: Date())
         steps = []
         accountSelectionPossible = true
-        currency = Currency(currencyName: "", currencyType: .other)
+        currency = Currency(currencyName: "", currencyType: .other(""))
         summary = nil
         originalForm = form
     }

@@ -57,7 +57,7 @@ extension CCRAccountEntity {
         // All amount values are transformed to positive on this layer (similar solution is implemented on android side)
         let amountDTO = AmountDTO(
             value: Decimal(abs(money.value)),
-            currency: CurrencyDTO(currencyName: money.currencyCode, currencyType: .other)
+            currency: CurrencyDTO(currencyName: money.currencyCode, currencyType: .other(money.currencyCode))
         )
         return AmountEntity(amountDTO)
     }
@@ -67,7 +67,7 @@ extension CCRAccountEntity {
         // All amount values are transformed to positive on this layer (similar solution is implemented on android side)
         let amountDTO = AmountDTO(
             value: Decimal(abs(balance.value ?? 0)),
-            currency: CurrencyDTO(currencyName: balance.currencyCode ?? "PL", currencyType: .other)
+            currency: CurrencyDTO(currencyName: balance.currencyCode ?? "PL", currencyType: .other(balance.currencyCode ?? "PL"))
         )
         return AmountEntity(amountDTO)
     }
