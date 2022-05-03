@@ -3,6 +3,7 @@ import CoreDomain
 import UnitTestCommons
 
 struct MockCardDetail: CardDetailRepresentable {
+    var clientName: String?
     @Stub var holder: String?
     @Stub var linkedAccountShort: String
     @Stub var isCardBeneficiary: Bool
