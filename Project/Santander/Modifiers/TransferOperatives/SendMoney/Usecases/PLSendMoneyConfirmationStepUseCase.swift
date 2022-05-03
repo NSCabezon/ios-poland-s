@@ -73,7 +73,7 @@ final class PLSendMoneyConfirmationStepUseCase: UseCase<SendMoneyConfirmationSte
             else {
                 return .error(ValidateTransferUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
             }
-            return .ok(.error(title: "pl_summary_label_transactionNotCompleted", subtitle: parsedError.localizedDescription))
+            return .ok(.error(title: parsedError.title, subtitle: parsedError.subtitle))
         }
     }
 }
@@ -109,7 +109,7 @@ enum ConfirmationResultType: String {
     case errorCheckSum = "ERROR_CHECK_SUM"
 }
 
-enum SendMoneyConfirmationErrorType: Error {
+enum SendMoneyConfirmationErrorType: Error, InternalTransferConfirmationUseCaseSummaryError {
     case reLogApplication
     case passwordExpired
     case checkSenderRecipient
@@ -119,7 +119,11 @@ enum SendMoneyConfirmationErrorType: Error {
     case transferOnlyOurBranch
     case blockedAccessingTransactionService
     
-    var localizedDescription: String {
+    var title: String {
+        return "pl_summary_label_transactionNotCompleted"
+    }
+    
+    var subtitle: String {
         switch self {
         case .reLogApplication:
             return "pl_summary_label_reLogApplication"
