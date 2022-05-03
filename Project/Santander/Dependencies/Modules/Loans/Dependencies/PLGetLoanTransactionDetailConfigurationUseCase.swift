@@ -21,20 +21,26 @@ extension PLGetLoanTransactionDetailConfigurationUseCase: GetLoanTransactionDeta
 }
 
 extension PLGetLoanTransactionDetailConfigurationUseCase: GetLoanTransactionDetailActionUseCase {
-    func fetchLoanTransactionDetailActions() -> AnyPublisher<[LoanTransactionDetailActionRepresentable], Never> {
-        return Just(detailActions())
+    func fetchLoanTransactionDetailActions(transaction: LoanTransactionRepresentable?) -> AnyPublisher<[LoanTransactionDetailActionRepresentable], Never> {
+        return Just(detailActions(transaction: transaction))
             .eraseToAnyPublisher()
     }
 }
 
 private extension PLGetLoanTransactionDetailConfigurationUseCase {
-    func detailActions() -> [LoanTransactionDetailActionRepresentable] {
-        return [PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.pdfExtract(nil),
-                                              isDisabled: false,
-                                              isUserInteractionEnable: true),
-                PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
-                                              isDisabled: false,
-                                              isUserInteractionEnable: true)]
+    func detailActions(transaction: LoanTransactionRepresentable?) -> [LoanTransactionDetailActionRepresentable] {
+        if transaction?.receiptId != nil {
+            return [PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.pdfExtract(nil),
+                                                  isDisabled: false,
+                                                  isUserInteractionEnable: true),
+                    PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
+                                                  isDisabled: false,
+                                                  isUserInteractionEnable: true)]
+        } else {
+            return [PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
+                                                  isDisabled: false,
+                                                  isUserInteractionEnable: true)]
+        }
     }
 }
 

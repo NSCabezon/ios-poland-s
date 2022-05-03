@@ -27,8 +27,11 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
         .none
     }
 
-    func getCustomActions(for card: CardEntity) -> [CardActionType]? {
-        return [.pdfDetail, .share(nil)]
+    func getCustomActions(for card: CardEntity, forTransaction transaction: CardTransactionEntity) -> [CardActionType]? {
+        if transaction.dto.receiptId != nil {
+            return [.pdfDetail, .share(nil)]
+        }
+        return [.share(nil)]
     }
 
     func didSelectAction(_ action: CardActionType, forTransaction transaction: CardTransactionEntity, andCard card: CardEntity) -> Bool {
