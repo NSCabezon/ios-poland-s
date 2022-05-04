@@ -16,8 +16,7 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
 
     private let dependenciesResolver: DependenciesResolver
     private let drawer: BaseMenuController
-    var addPDFDetail: Bool = true
-
+    
     public init(dependenciesResolver: DependenciesResolver, drawer: BaseMenuController) {
         self.dependenciesResolver = dependenciesResolver
         self.drawer = drawer
@@ -25,6 +24,14 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
     
     func customViewType() -> ActionButtonFillViewType {
         .none
+    }
+    
+    func addPDFDetail(transaction: CardTransactionEntity) -> Bool {
+        if transaction.dto.receiptId != nil {
+            return true
+        }
+        
+        return false
     }
 
     func getCustomActions(for card: CardEntity, forTransaction transaction: CardTransactionEntity) -> [CardActionType]? {
