@@ -26,7 +26,7 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     
     func start() {
         guard let type: String = dataBinding.get(),
-              let actionType = PLSendMoneyActionTypeIdentifier(rawValue: type)
+              let actionType = PLSendMoneyHomeActionTypeIdentifier(rawValue: type)
         else { return }
         switch actionType {
         case .blik:
