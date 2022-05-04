@@ -1,0 +1,21 @@
+{
+  "generic": [
+    {
+      "question": "testujemy pytanie",
+      "answer": "test ok",
+      "keyWords": [
+        "test",
+        "faq",
+        "pytanie"
+      ]
+    },
+	 {
+      "question": "Jegor, działa?",
+      "answer": "tak",
+      "keyWords": [
+        "Jegor"
+      ]
+    }
+    
+  ]
+}

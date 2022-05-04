@@ -107,4 +107,11 @@ public enum PLLocalServiceName: String {
     case notificationPushDetailsBeforeLogin = "notificationPushDetailsBeforeLogin"
     case notificationPushStatusBeforeLogin = "notificationPushStatusBeforeLogin"
     case getExternalPopular = "getExternalPopular"
+    case activeEwallets = "activeEwallets"
+    case getTrnToConf = "getTrnToConf"
+    case pspTicket = "pspTicket"
+    case verifyContacts = "verifyContacts"
+    case p2pAlias = "p2pAlias"
+    case accountForDebit = "accountForDebit"
+    case acceptTransfer = "acceptTransfer"
 }
