@@ -121,7 +121,7 @@ final class AddTaxPayerInfoView: UIView {
 }
 
 extension AddTaxPayerInfoView: UITextFieldDelegate {
-    func didEndEditing() {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.didUpdateText()
     }
     

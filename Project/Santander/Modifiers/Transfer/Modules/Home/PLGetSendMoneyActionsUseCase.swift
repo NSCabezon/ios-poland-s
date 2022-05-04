@@ -10,7 +10,7 @@ import CoreDomain
 import Transfer
 import CoreFoundationLib
 
-enum PLSendMoneyActionTypeIdentifier: String {
+enum PLSendMoneyHomeActionTypeIdentifier: String {
     case blik
     case anotherBank
     case creditCard
@@ -27,57 +27,57 @@ struct PLGetSendMoneyActionsUseCase {
         self.candidateOfferUseCase = candidateOfferUseCase
     }
     
-    private let blik: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.blik.rawValue,
+    private let blik: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.blik.rawValue,
         title: "pl_transferOption_button_blik",
         description: "pl_transferOption_text_blik",
         icon: "oneIcnBlik"
     )
     
-    private let anotherBank: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.anotherBank.rawValue,
+    private let anotherBank: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.anotherBank.rawValue,
         title: "pl_transferOption_button_transferAnotherBank",
         description: "pl_transferOption_text_transferAnotherBank",
         icon: "oneIcnAnotherBank"
     )
     
-    private let creditCard: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.creditCard.rawValue,
+    private let creditCard: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.creditCard.rawValue,
         title: "pl_transferOption_button_creditCard",
         description: "pl_transferOption_text_creditCard",
         icon: "oneIcnCardRepayment"
     )
     
-    private let transferTax: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.transferTax.rawValue,
+    private let transferTax: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.transferTax.rawValue,
         title: "pl_transferOption_button_transferTax",
         description: "pl_transferOption_text_transferTax",
         icon: "oneIcnTransferTax"
     )
     
-    private let transferZus: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.transferZus.rawValue,
+    private let transferZus: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.transferZus.rawValue,
         title: "pl_transferOption_button_transferZus",
         description: "pl_transferOption_text_transferZus",
         icon: "oneIcnTransferZus"
     )
     
-    private let fxExchange: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.fxExchange.rawValue,
+    private let fxExchange: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.fxExchange.rawValue,
         title: "pl_transferOption_button_FxExchange",
         description: "pl_transferOption_text_FxExchange",
         icon: "oneIcnFxExchange"
     )
     
-    private let scanPay: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.scanPay.rawValue,
+    private let scanPay: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.scanPay.rawValue,
         title: "pl_transferOption_button_ScanPay",
         description: "pl_transferOption_text_ScanPay",
         icon: "oneIcnScanPay"
     )
     
-    private let topUpPhone: SendMoneyActionType = .custome(
-        identifier: PLSendMoneyActionTypeIdentifier.topUpPhone.rawValue,
+    private let topUpPhone: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.topUpPhone.rawValue,
         title: "pl_transferOption_button_topUpPhone",
         description: "pl_transferOption_text_topUpPhone",
         icon: "oneIcnMobileTopUp"
@@ -85,23 +85,19 @@ struct PLGetSendMoneyActionsUseCase {
 }
 
 extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
-    func fetchSendMoneyAction(_ location: PullOfferLocation) -> AnyPublisher<SendMoneyActionType?, Never> {
+    func fetchSendMoneyAction(_ location: PullOfferLocation) -> AnyPublisher<SendMoneyHomeActionType?, Never> {
         offersPublisher(location)
-            .map { offer -> SendMoneyActionType? in
+            .map { offer -> SendMoneyHomeActionType? in
                 switch location.stringTag {
-                case TransferPullOffers.fxpayTransferHomeOffer:
-                    return SendMoneyActionType.onePayFX(offer)
                 case TransferPullOffers.donationTransferOffer:
-                    return SendMoneyActionType.donations(offer)
-                case TransferPullOffers.correosCashOffer:
-                    return SendMoneyActionType.correosCash(offer)
+                    return SendMoneyHomeActionType.donations(offer)
                 default: return nil
                 }
             }
             .replaceError(with: nil)
             .eraseToAnyPublisher()
     }
-    public func fetchSendMoneyActions(_ locations: [PullOfferLocation]) -> AnyPublisher<[SendMoneyActionType], Never> {
+    public func fetchSendMoneyActions(_ locations: [PullOfferLocation], page: String?) -> AnyPublisher<[SendMoneyHomeActionType], Never> {
         let actions = locations.map(fetchSendMoneyAction)
         return Publishers.MergeMany(actions)
             .collect()
@@ -120,7 +116,7 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
 }
 
 private extension PLGetSendMoneyActionsUseCase {
-    func getHomeSendMoneyActions(_ offerActions: [SendMoneyActionType]) -> [SendMoneyActionType] {
+    func getHomeSendMoneyActions(_ offerActions: [SendMoneyHomeActionType]) -> [SendMoneyHomeActionType] {
         var actions = [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
         for action in offerActions {
             switch action {
