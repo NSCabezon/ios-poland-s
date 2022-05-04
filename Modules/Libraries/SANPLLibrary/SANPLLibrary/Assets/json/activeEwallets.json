@@ -1,0 +1,70 @@
+{
+    "12345678Z": {
+        "0": [
+            {
+                "ewId":3009712,
+                "phoneNo":"+48035596500",
+                "smsCodeAvailable":true,
+                "status":"ACTIVE",
+                "noPinTrnVisible":true,
+                "chequePinStatus":"SET",
+                "p2pPrompt":0,
+                "p2prPendCount":0,
+                "webpPendCount":0,
+                "tokenId":"REST",
+                "apmTokenId":null,
+                "limits":{
+                    "noPinLimit":0.00,
+                    "noConfLimit":0.00,
+                    "shopLimits":{
+                        "trnLimit":10000.00,
+                        "cycleLimit":10000.00,
+                        "cycleLimitRemaining":10000.00
+                    },
+                    "cashLimits":{
+                        "trnLimit":3000.00,
+                        "cycleLimit":1000.00,
+                        "cycleLimitRemaining":1000.00
+                    },
+                    "noPinTrnCnt":0
+                },
+                "service":{
+                    "id":null,
+                    "name":null,
+                    "status":null,
+                    "activationTime":null,
+                    "closeTime":null
+                },
+                "accounts":{
+                    "srcAccName":"Konto Jakie Chcę",
+                    "srcAccShortName":"Konto Jakie Chcę",
+                    "srcAccType":"CURRENT",
+                    "srcAccNo":"62109010140000000142714238",
+                    "srcAccSysId":"ICBS",
+                    "dstAccNo":null,
+                    "dstAccName":null,
+                    "dstTrnTitle":null
+                },
+                "customer":{
+                    "firstName":"REBEKA",
+                    "lastName":"BUCZEK",
+                    "street":"AL. ROSA",
+                    "property":"64",
+                    "zipCode":"79-660",
+                    "city":"RADZYMIN",
+                    "email":""
+                },
+                "alias":{
+                    "label":"SAN PL",
+                    "type":"EWALLET_AND_PSP_ALIAS",
+                    "isSynced":true
+                },
+                "aliasHCE":{
+                    "aliasValue":null,
+                    "aliasStatus":null,
+                    "aliasExpDate":null
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,42 @@
+{
+	"publicOffers": [{
+			"id": "123",
+			"banner": {
+				"background": "#ECECEC",
+				"relativeUrl": "/apps/SAN/img/public_offers/OHP_01.jpg",
+				"width": 720,
+				"height": 540
+			},
+			"action": {
+				"type": "video",
+				"youtubeVideoId": "56jYpd8MN6U"
+			}
+		},
+		{
+			"id": "123autonomos",
+			"banner": {
+				"background": "#ECECEC",
+				"relativeUrl": "/apps/SAN/img/public_offers/OHP_02.jpg",
+				"width": 720,
+				"height": 540
+			},
+			"action": {
+				"type": "video",
+				"youtubeVideoId": "-antAYFnHVA"
+			}
+		},
+		{
+			"id": "buscadorDeOficinas",
+			"banner": {
+				"background": "#ECECEC",
+				"relativeUrl": "/apps/SAN/img/public_offers/OHP_03.jpg",
+				"width": 720,
+				"height": 540
+			},
+			"action": {
+				"type": "urlExtern",
+				"absoluteUrl": "https://www.bancosantander.es/cssa/Satellite?pagename=BuscadorOficinas/Page/BOF_FrontEnd&empr=Santander&leng=es_ES"
+			}
+		}
+	]
+}
