@@ -10,6 +10,7 @@ import CoreFoundationLib
 import Account
 import SANPLLibrary
 import PLLegacyAdapter
+import CoreDomain
 
 final class PLGetAccountTransactionsUseCase: UseCase<GetAccountTransactionsUseCaseInput, GetAccountTransactionsUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
