@@ -39,7 +39,6 @@ extension AddTaxPayerFormPresenter: AddTaxPayerPresenterFormProtocol {
         selectedTaxIdentifier = item
         view?.setUp(with: getSelectableIdentifierType())
         refreshButtonView()
-        _ = isValid()
     }
     
     func didPressBack() {
@@ -80,12 +79,15 @@ extension AddTaxPayerFormPresenter: AddTaxPayerViewDelegate {
 
 private extension AddTaxPayerFormPresenter {
     var confirmationDialogFactory: ConfirmationDialogProducing {
-        return dependenciesResolver.resolve()
+        dependenciesResolver.resolve()
+    }
+    
+    var validator: AddTaxPayerFormValidating {
+        dependenciesResolver.resolve()
     }
     
     func isValid() -> Bool {
         guard let form = view?.getForm() else { return false }
-        let validator = AddTaxPayerFormValidator(type: form.identifierType)
         
         switch validator.validate(form) {
         case .valid:

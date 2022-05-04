@@ -62,7 +62,7 @@ extension PLCardHomeModifier: CardHomeModifierProtocol {
         return card.formattedPAN
     }
     
-    func validatePullOffersCandidates(values: CustomCardActionValues, offers: [PullOfferLocation: OfferEntity], entity: CardEntity, actionType: CardActionType, action: ((CardActionType, CardEntity) -> Void)?, candidateOffer: Bool) -> CardActionViewModel? {
+    func validatePullOffersCandidates(values: CustomCardActionValues, offers: [PullOfferLocation: OfferEntity], entity: CardEntity, actionType: OldCardActionType, action: ((OldCardActionType, CardEntity) -> Void)?, candidateOffer: Bool) -> CardActionViewModel? {
         return CardActionViewModel(entity: entity,
                                    type: actionType,
                                    action: action,

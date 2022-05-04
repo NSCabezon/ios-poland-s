@@ -248,7 +248,6 @@ private extension PLAuthorizationPresenter {
                 return Scenario(useCase: self.confirmPinUseCase, input: caseInput)
             })
             .onSuccess { representable in
-                self.coordinator.dismiss()
                 self.configuration.completion(.handled(representable))
             }
             .onError { _ in

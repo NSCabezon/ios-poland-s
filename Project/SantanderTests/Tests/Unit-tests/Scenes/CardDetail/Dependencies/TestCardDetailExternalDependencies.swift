@@ -104,4 +104,8 @@ struct TestCardDetailExternalDependencies: CardDetailExternalDependenciesResolve
     func resolve() -> TrackerManager {
         TrackerManagerMock()
     }
+    
+    func cardExternalDependenciesResolver() -> CardExternalDependenciesResolver {
+        fatalError()
+    }
 }
