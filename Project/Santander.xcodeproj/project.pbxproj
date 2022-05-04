@@ -175,6 +175,10 @@
 		7E9FD51227A3FA2300B36D7C /* PLUserSegmentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FD51127A3FA2300B36D7C /* PLUserSegmentProtocol.swift */; };
 		7EC5A29E26AECB5800E14C68 /* PLAccountDetailModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */; };
 		7EDB3AE3273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDB3AE2273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift */; };
+		823D0C122816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823D0C112816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift */; };
+		829C89BA280EEDFB00975BF4 /* PersonalAreaModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C89B9280EEDFB00975BF4 /* PersonalAreaModuleDependencies.swift */; };
+		829C89BC280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C89BB280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift */; };
+		829C89C2280F0C2200975BF4 /* PLGetUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C89C1280F0C2200975BF4 /* PLGetUsernameUseCase.swift */; };
 		82AED7852796F6BA00E6133D /* MenuModuleDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7842796F6B900E6133D /* MenuModuleDependencies.swift */; };
 		82AED7882796F80800E6133D /* PLHomeTipsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7872796F80800E6133D /* PLHomeTipsRepository.swift */; };
 		82AED78A2796F81C00E6133D /* PLPublicMenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AED7892796F81C00E6133D /* PLPublicMenuRepository.swift */; };
@@ -515,6 +519,10 @@
 		7EC5A29D26AECB5800E14C68 /* PLAccountDetailModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountDetailModifier.swift; sourceTree = "<group>"; };
 		7EDB3AE2273E71980018EBAC /* AtmsAndBranchesPGFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtmsAndBranchesPGFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		81C89E75F9BDAA536BCC7065 /* Pods-SantanderTests.uat-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.uat-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.uat-debug.xcconfig"; sourceTree = "<group>"; };
+		823D0C112816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetHomeUserPreferencesUseCase.swift; sourceTree = "<group>"; };
+		829C89B9280EEDFB00975BF4 /* PersonalAreaModuleDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalAreaModuleDependencies.swift; sourceTree = "<group>"; };
+		829C89BB280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetPersonalAreaHomeConfigurationUseCase.swift; sourceTree = "<group>"; };
+		829C89C1280F0C2200975BF4 /* PLGetUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetUsernameUseCase.swift; sourceTree = "<group>"; };
 		82AED7842796F6B900E6133D /* MenuModuleDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModuleDependencies.swift; sourceTree = "<group>"; };
 		82AED7872796F80800E6133D /* PLHomeTipsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLHomeTipsRepository.swift; sourceTree = "<group>"; };
 		82AED7892796F81C00E6133D /* PLPublicMenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPublicMenuRepository.swift; sourceTree = "<group>"; };
@@ -1049,6 +1057,7 @@
 		3A4B64D82796DDC4003FFE00 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				829C89B7280EEDD300975BF4 /* PersonalArea */,
 				45E05D0F27FDF98800CE7CBB /* Savings */,
 				3A4B64E32796DDC5003FFE00 /* ModuleDependencies.swift */,
 				44ABC30027E384A000815256 /* Cards */,
@@ -1596,6 +1605,25 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		829C89B7280EEDD300975BF4 /* PersonalArea */ = {
+			isa = PBXGroup;
+			children = (
+				829C89B8280EEDDC00975BF4 /* Dependencies */,
+			);
+			path = PersonalArea;
+			sourceTree = "<group>";
+		};
+		829C89B8280EEDDC00975BF4 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				829C89B9280EEDFB00975BF4 /* PersonalAreaModuleDependencies.swift */,
+				829C89BB280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift */,
+				829C89C1280F0C2200975BF4 /* PLGetUsernameUseCase.swift */,
+				823D0C112816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift */,
+			);
+			path = Dependencies;
+            sourceTree = "<group>";
+        };
 		851A7C7328211346005FD374 /* GPSimple */ = {
 			isa = PBXGroup;
 			children = (
@@ -2431,6 +2459,7 @@
 				669A37D8270F573F00C0F272 /* PLAccountOtherOperativesWebConfiguration.swift in Sources */,
 				900EECE0273E784E00B7AD95 /* ConfirmPinUseCase.swift in Sources */,
 				A3237D2828058B84004623C5 /* PLTransferZusSmeOperative.swift in Sources */,
+				829C89C2280F0C2200975BF4 /* PLGetUsernameUseCase.swift in Sources */,
 				446325442692E9530050334F /* PLCardHomeActionModifier.swift in Sources */,
 				7E50345627BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift in Sources */,
 				B0D77A55276B4CB500766705 /* PLCharityTransferSettingsDTO.swift in Sources */,
@@ -2493,10 +2522,12 @@
 				446C4F8E26D65A030080D7EC /* PLGetFilteredAccountTransactionsUseCase.swift in Sources */,
 				D5C5A90D273BF118003963CA /* PLPersonalAreaMainModuleModifier.swift in Sources */,
 				7E2CCA8726B80CDA00CBDB11 /* OpenGoalPGFrequentOperativeOption.swift in Sources */,
+				823D0C122816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift in Sources */,
 				66BC8C8E26407CD300654CC5 /* Compilation.swift in Sources */,
 				04741875279E9E670066B6B0 /* PLAppStoreInformationUseCase.swift in Sources */,
 				669A37DB270F575900C0F272 /* PLAccountOtherOperativesInfoRepository.swift in Sources */,
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
+				829C89BC280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift in Sources */,
 				A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */,
 				CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */,
 				B0D77A53276B4C3800766705 /* PLTransferSettingsDTO.swift in Sources */,
@@ -2586,6 +2617,7 @@
 				CCE45AA32732AC5400691E91 /* InputBiometricsView.swift in Sources */,
 				7E8AD11F26F0C1B100FC54D0 /* GetPLAccountOtherOperativesUseCase.swift in Sources */,
 				B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */,
+				829C89BA280EEDFB00975BF4 /* PersonalAreaModuleDependencies.swift in Sources */,
 				9CF5175626FB75A800332F8B /* CheckNewSendMoneyHomeEnabledUseCase.swift in Sources */,
 				EFE48D2727F1F3CD0010BEA5 /* OpinatorWebViewCoordinatorDependenciesResolver.swift in Sources */,
 				3A4B64E42796DDC5003FFE00 /* LoansModifier.swift in Sources */,

@@ -26,7 +26,7 @@ def core_dependencies
   pod 'Loans', :path => '../santander-one/Loans', :testspecs => ['Tests']
   pod 'Account', :path => '../santander-one/Accounts'
   pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
-  pod 'PersonalArea', :path => '../santander-one/PersonalArea'
+  pod 'PersonalArea', :path => '../santander-one/PersonalArea', :testspecs => ['Tests']
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
   pod 'Transfer', :path => '../santander-one/Transfer'
   pod 'Inbox', :path => '../santander-one/Inbox'
