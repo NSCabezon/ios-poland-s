@@ -12,7 +12,6 @@ import OneAuthorizationProcessor
 import CoreDomain
 import SANPLLibrary
 import PLCommons
-import CoreFoundationLib
 import BLIK
 
 public protocol PLAuthorizationCoordinatorProtocol {
