@@ -9,7 +9,7 @@ import UIKit
 import UI
 import PLUI
 
-class FormTextInputView: UIView {
+final class FormTextInputView: UIView {
     // MARK: Views
     
     private let mainContainer = UIStackView()
