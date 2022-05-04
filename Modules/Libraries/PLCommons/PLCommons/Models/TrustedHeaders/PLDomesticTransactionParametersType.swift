@@ -17,4 +17,5 @@ public enum PLDomesticTransactionParametersType {
     case charityTransfer(PLDomesticTransactionParametersInput)
     case zusTransfer(PLDomesticTransactionParametersInput)
     case topUpTransfer(PLDomesticTransactionParametersInput)
+    case taxTransfer(PLDomesticTransactionParametersInput)
 }

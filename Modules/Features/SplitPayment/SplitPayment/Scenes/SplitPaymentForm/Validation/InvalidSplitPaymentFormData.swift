@@ -7,6 +7,7 @@ struct InvalidSplitPaymentFormData {
     let invalidInvoiceTitleMessages: String?
     let invalidTitleMessages: String?
     let currentActiveField: TransferFormCurrentActiveField
+    let showWhiteListInfoSection: Bool
         
     var shouldContinueButtonBeEnabled: Bool {
         let validReciept = invalidRecieptMessages == nil

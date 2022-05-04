@@ -56,11 +56,14 @@ final class SelectablePayerCell: UITableViewCell {
         configureStyling(isSelected: isSelected)
 
         if let taxIdentifier = viewModel.taxPayer.taxIdentifier, !taxIdentifier.isEmpty {
-            payerTaxIdentifierLabel.text = localized("#NIP: ") + taxIdentifier
+            payerTaxIdentifierLabel.text = localized("pl_generic_docId_nip") + ": " + taxIdentifier
         }
         
         switch viewModel.taxPayerSecondaryIdentifier {
         case .available:
+            [extraTaxIdentifierLabel,
+             extraTaxNameLabel].forEach { $0.isHidden = !viewModel.hasDifferentTaxIdentifiers }
+            
             extraTaxIdentifierLabel.text = viewModel.taxPayer.secondaryTaxIdentifierNumber
             extraTaxNameLabel.text = viewModel.taxPayer.idType.displayableValue
         case .notAvailable:

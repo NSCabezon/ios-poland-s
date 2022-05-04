@@ -63,9 +63,8 @@ final class AddTaxPayerFormCoordinator {
 
 extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
     func didTapDone(with taxPayer: TaxPayer) {
-        coordinator.didAddTaxPayer(taxPayer)
         delegate?.didAddTaxPayer(taxPayer)
-        back()
+        backToForm()
     }
     
     func back() {
@@ -86,11 +85,10 @@ extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
     ) {
         let configuration = ItemSelectorConfiguration<TaxIdentifierType>(
             navigationTitle: localized("pl_toolbar_title_chooseID"),
-            isSearchEnabled: false,
+            searchMode: .disabled,
             sections: [section],
             selectedItem: selectedItem,
-            shouldShowDialogBeforeClose: true,
-            dialogMessage: localized("Czy na pewno chcesz zakończyć")
+            shouldShowDialogBeforeClose: true
         )
         let coordinator = ItemSelectorCoordinator<TaxIdentifierType>(
             navigationController: navigationController,
@@ -106,6 +104,14 @@ private extension AddTaxPayerFormCoordinator {
     func setUpDependencies() {
         dependenciesEngine.register(for: TaxIdentifierMapping.self) { _ in
             return TaxIdentifierMapper()
+        }
+        
+        dependenciesEngine.register(for: TaxIdentifierValidating.self) { _ in
+            return TaxIdentifierValidator()
+        }
+        
+        dependenciesEngine.register(for: AddTaxPayerFormValidating.self) { resolver in
+            return AddTaxPayerFormValidator(dependenciesResolver: resolver)
         }
     }
     

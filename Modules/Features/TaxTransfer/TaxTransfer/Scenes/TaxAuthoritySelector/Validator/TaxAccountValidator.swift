@@ -11,12 +11,15 @@ import SANPLLibrary
 import PLCommons
 
 final class TaxAccountValidator {
+    private let irpAccountOptionId = 4
     private let getTaxAccountUseCase: GetTaxAccountsUseCaseProtocol
     private let useCaseHandler: UseCaseHandler
+    private let accountTypeRecognizer: TaxAccountTypeRecognizing
 
     init(dependenciesResolver: DependenciesResolver) {
         self.getTaxAccountUseCase = dependenciesResolver.resolve(for: GetTaxAccountsUseCaseProtocol.self)
         self.useCaseHandler = dependenciesResolver.resolve(for: UseCaseHandler.self)
+        self.accountTypeRecognizer = dependenciesResolver.resolve(for: TaxAccountTypeRecognizing.self)
     }
     
     func validateAccount(
@@ -25,15 +28,23 @@ final class TaxAccountValidator {
         onInvalidResult: @escaping () -> Void,
         onError: @escaping (Error) -> Void
     ) {
+        let isAccountTypeIRP = (try? accountTypeRecognizer.recognizeType(of: accountNumber) == .IRP) ?? false
         let input = GetTaxAccountsUseCaseInput(
             taxAccountNumberFilter: accountNumber,
             taxAccountNameFilter: nil,
-            cityFilter: nil
+            cityFilter: nil,
+            optionId: isAccountTypeIRP ? irpAccountOptionId : nil,
+            taxFormType: nil
         )
         Scenario(useCase: getTaxAccountUseCase, input: input)
             .execute(on: useCaseHandler)
             .onSuccess { output in
-                let matchedTaxAccount = output.taxAccounts.first(where: { $0.accountNumber == accountNumber })
+                let matchedTaxAccount: TaxAccount? = {
+                    if isAccountTypeIRP {
+                        return output.taxAccounts.first
+                    }
+                    return output.taxAccounts.first(where: { $0.accountNumber == accountNumber })
+                }()
                 guard let taxAccount = matchedTaxAccount else {
                     onInvalidResult()
                     return
@@ -50,5 +61,16 @@ final class TaxAccountValidator {
             .onError { error in
                 onError(error)
             }
+    }
+    
+    private func getAccountType(for accountNumber: String) -> Int? {
+        guard
+            let accountType = try? accountTypeRecognizer.recognizeType(of: accountNumber),
+            accountType == .IRP
+        else {
+            return nil
+        }
+        
+        return irpAccountOptionId
     }
 }

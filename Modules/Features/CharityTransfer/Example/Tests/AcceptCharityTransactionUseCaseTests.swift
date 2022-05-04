@@ -28,7 +28,7 @@ class AcceptCharityTransactionUseCaseTests: XCTestCase {
     func test_sendConfirmation_transaction_use_case_success() throws {
         setUpPLTransfersManagerSuccessMock()
         let scenario = Scenario(useCase: SUT,
-                                input: .init(model: CharityTransferModelMockBuilder.getCharityTransferModelMock()))
+                                input: .init(model: CharityTransferModel.stub()))
             .execute(on: useCaseHandler)
 
         scenario.onSuccess { result in

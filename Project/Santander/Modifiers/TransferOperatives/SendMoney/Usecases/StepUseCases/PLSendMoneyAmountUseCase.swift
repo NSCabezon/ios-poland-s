@@ -110,7 +110,7 @@ private extension PLSendMoneyAmountUseCase {
         let availableResponse = try transfersRepository.checkTransactionAvailability(
             input: CheckTransactionAvailabilityInput(
                 destinationAccount: destinationAccount,
-                transactionAmount: requestValues.amount?.value ?? 0
+                transactionAmount: requestValues.amount
             )
         )
         var availableTransferTypes: [PolandTransferType] = []

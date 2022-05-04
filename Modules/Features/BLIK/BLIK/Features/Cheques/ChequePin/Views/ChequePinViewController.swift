@@ -10,6 +10,7 @@ import UI
 import CoreFoundationLib
 import PLUI
 import PLCommons
+import PLHelpCenter
 
 protocol ChequePinViewProtocol: DialogViewPresentationCapable, SnackbarPresentable, LoaderPresentable {
     var pin: String { get }
@@ -19,11 +20,12 @@ protocol ChequePinViewProtocol: DialogViewPresentationCapable, SnackbarPresentab
 
 final class ChequePinViewController: UIViewController {
     private lazy var chequePinView = makeChequePinView()
+    private let dependenciesResolver: DependenciesResolver
     private let presenter: ChequePinPresenterProtocol
-    
-    init(
-        presenter: ChequePinPresenterProtocol
-    ) {
+
+    init(dependenciesResolver: DependenciesResolver,
+        presenter: ChequePinPresenterProtocol) {
+        self.dependenciesResolver = dependenciesResolver
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,6 +43,18 @@ final class ChequePinViewController: UIViewController {
         setUp()
         presenter.viewDidLoad()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+         let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+         onlineAdvisor.pauseScreenSharing()
+     }
+    
+     override func viewWillDisappear(_ animated: Bool) {
+         super.viewWillDisappear(animated)
+         let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+         onlineAdvisor.resumeScreenSharing()
+     }
     
     private func configureNavigationItem() {
         NavigationBarBuilder(style: .white, title: .title(key: "PIN do czeków BLIK"))

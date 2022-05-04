@@ -15,7 +15,7 @@ import PLUI
 
 public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     func back()
-    func goToGlobalPosition()
+    func close()
 
     func showTaxPayerSelector(
         with taxPayers: [TaxPayer],
@@ -33,6 +33,7 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     )
     func showTaxBillingPeriodSelector()
     func didAddTaxPayer(_ taxPayer: TaxPayer)
+    func showTaxTransferConfirmation(with model: TaxTransferModel)
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
@@ -64,6 +65,15 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
 }
 
 extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
+    public func showTaxTransferConfirmation(with model: TaxTransferModel) {
+        let coordinator = TaxTransferConfirmationCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            model: model,
+            navigationController: navigationController
+        )
+        coordinator.start()
+    }
+    
     public func showAccountSelector(
         with accounts: [AccountForDebit],
         selectedAccountNumber: String?,
@@ -125,7 +135,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
         navigationController?.popViewController(animated: true)
     }
     
-    public func goToGlobalPosition() {
+    public func close() {
         navigationController?.popToRootViewController(animated: true)
     }
 }
@@ -133,6 +143,7 @@ extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
 extension TaxTransferFormCoordinator: TaxPayersListDelegate {
     public func didAddTaxPayer(_ taxPayer: TaxPayer) {
         taxFormPresenter.didAddTaxPayer(taxPayer)
+        taxFormPresenter.didSelectTaxPayer(taxPayer, selectedPayerInfo: nil)
     }
 }
 
@@ -239,8 +250,20 @@ private extension TaxTransferFormCoordinator {
             return GetTaxSymbolsUseCase(dependenciesResolver: resolver)
         }
         
+        dependenciesEngine.register(for: UserTaxAccountMapping.self) { _ in
+            return UserTaxAccountMapper(dateFormatter: PLTimeFormat.yyyyMMdd.createDateFormatter())
+        }
+        
+        dependenciesEngine.register(for: GetUserTaxAccountUseCaseProtocol.self) { resolver in
+            return GetUserTaxAccountUseCase(dependenciesResolver: resolver)
+        }
+        
         dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
             return TaxTransferFormDataProvider(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxTransferModelMapping.self) { _ in
+            return TaxTransferModelMapper()
         }
     }
 }

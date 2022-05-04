@@ -35,7 +35,7 @@ final class TaxTransferFormValidator: TaxTransferFormValidating {
             return .invalid(invalidStateMessages)
         }
         
-        if fields.obligationIdentifier.isEmpty || fields.amount.isEmpty {
+        if fields.amount.isEmpty {
             let emptyMessages = TaxTransferFormValidity.InvalidFormMessages(
                 amountMessage: nil,
                 obligationIdentifierMessage: nil
@@ -69,13 +69,13 @@ private extension TaxTransferFormValidator {
             return nil
         }
         guard amount >= minimalAmount else {
-            return "#Kwota minimalna przelewu wynosi 0,01 PLN"
+            return localized("pl_generic_validationText_amountMoreThan0")
         }
         return nil
     }
     
     func checkForIllegalCharacters(in text: String) throws -> Bool {
-        let regexText = "^[0-9A-Za-ząęćółńśżźĄĘĆÓŁŃŚŻŹ\\-\\.\\:\\;, ]+$"
+        let regexText = "^([0-9A-Za-ząęćółńśżźĄĘĆÓŁŃŚŻŹ\\-.:;,& ]*)$"
         let regex = try NSRegularExpression(pattern: regexText)
         let range = NSRange(location: 0, length: text.utf16.count)
         return regex.firstMatch(in: text, options: [], range: range) == nil

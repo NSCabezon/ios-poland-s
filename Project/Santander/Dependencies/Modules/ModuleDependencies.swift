@@ -21,7 +21,6 @@ struct ModuleDependencies {
     init(oldResolver: DependenciesInjector & DependenciesResolver, drawer: BaseMenuViewController) {
         self.oldResolver = oldResolver
         self.drawer = drawer
-        registerExternalDependencies()
     }
     
     func resolve() -> TimeManager {
@@ -66,15 +65,6 @@ struct ModuleDependencies {
     
     func resolve() -> NavigationBarItemBuilder {
         NavigationBarItemBuilder(dependencies: self)
-    }
-}
-
-// MARK: - Private
-private extension ModuleDependencies {
-    func registerExternalDependencies() {
-        oldResolver.register(for: OnboardingExternalDependenciesResolver.self) { _ in
-            return self
-        }
     }
 }
 

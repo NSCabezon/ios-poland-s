@@ -5,6 +5,8 @@
 //  Created by 185167 on 06/04/2022.
 //
 
+import CoreFoundationLib
+
 enum TaxAuthorityFormValidationResult {
     case valid
     case invalid(InvalidTaxAuthorityFormFormMessages)
@@ -65,8 +67,9 @@ private extension TaxAuthorityFormValidator {
     }
     
     func validateIrpForm(_ form: IrpTaxAuthorityForm) -> TaxAuthorityFormValidationResult {
+        let accountNumber = form.accountNumber?.filter { !$0.isWhitespace }
         let invalidTaxAuthorityNameMessage = getInvalidTaxAuthorityNameMessageIfNeeded(for: form.taxAuthorityName)
-        let invalidAccountNumberMessage = getInvalidAccountNumberMessageIfNeeded(for: form.accountNumber)
+        let invalidAccountNumberMessage = getInvalidAccountNumberMessageIfNeeded(for: accountNumber)
         
         let anyFormElementIsInvalid = !invalidTaxAuthorityNameMessage.isNil || !invalidAccountNumberMessage.isNil
         if anyFormElementIsInvalid {
@@ -78,7 +81,7 @@ private extension TaxAuthorityFormValidator {
             )
         }
         
-        let anyFormElementIsEmpty = (form.accountNumber ?? "").isEmpty || (form.taxAuthorityName ?? "").isEmpty
+        let anyFormElementIsEmpty = (accountNumber ?? "").isEmpty || (form.taxAuthorityName ?? "").isEmpty
         if anyFormElementIsEmpty {
             return invalidResultWithEmptyMessages
         }
@@ -92,7 +95,7 @@ private extension TaxAuthorityFormValidator {
         }
         
         guard taxAuthorityName.matches(Constants.taxAuthorityNameValidationRegex) else {
-            return "#Pole zawiera niedozwolone znaki"
+            return localized("pl_taxTransfer_validation_forbiddenCharacter")
         }
         
         return nil
@@ -108,14 +111,14 @@ private extension TaxAuthorityFormValidator {
         }
         
         guard CharacterSet(charactersIn: accountNumber).isSubset(of: CharacterSet.decimalDigits) else {
-            return "#Pole zawiera niedozwolone znaki"
+            return localized("pl_taxTransfer_validation_forbiddenCharacter")
         }
         
         guard
             let accountType = try? accountTypeRecognizer.recognizeType(of: accountNumber),
             accountType == .IRP
         else {
-            return "#Nieprawidłowy numer rachunku odbiorcy."
+            return localized("pl_generic_validationText_invalidAccNumber")
         }
         
         return nil

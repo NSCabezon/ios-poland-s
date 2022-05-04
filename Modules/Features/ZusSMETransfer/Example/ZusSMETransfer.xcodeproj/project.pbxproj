@@ -12,6 +12,9 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		A31469D3281817C900682964 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31469D0281817C900682964 /* Mocks.swift */; };
+		A31469D4281817C900682964 /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31469D1281817C900682964 /* PLAuthorizationCoordinatorMock.swift */; };
+		A31469D5281817C900682964 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31469D2281817C900682964 /* PLAuthorizationProcessorManagerMock.swift */; };
 		A323EA4627F1F7D4009EADC8 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA4527F1F7D4009EADC8 /* Delay.swift */; };
 		A323EA5227F32248009EADC8 /* RecipientSelectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA5127F32248009EADC8 /* RecipientSelectionPresenterTests.swift */; };
 		A323EA5427F32286009EADC8 /* RecipientSelectionViewCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA5327F32286009EADC8 /* RecipientSelectionViewCoordinatorMock.swift */; };
@@ -24,6 +27,22 @@
 		A323EA6427F341BB009EADC8 /* MaskAccountMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA6327F341BB009EADC8 /* MaskAccountMock.swift */; };
 		A323EA6627F34478009EADC8 /* GetRecipientsUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA6527F34478009EADC8 /* GetRecipientsUseCaseMock.swift */; };
 		A323EA6827F43228009EADC8 /* RecipientMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323EA6727F43228009EADC8 /* RecipientMapperTests.swift */; };
+		A3EB61F628083A1400269C97 /* ZusSmeTransferConfirmationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB61F528083A1400269C97 /* ZusSmeTransferConfirmationPresenterTests.swift */; };
+		A3EB61F928083B4400269C97 /* ZusSmeTransferSummaryMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB61F828083B4400269C97 /* ZusSmeTransferSummaryMapperTests.swift */; };
+		A3EB62022808557C00269C97 /* ConfirmationTransferDTOMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB62012808557C00269C97 /* ConfirmationTransferDTOMock.swift */; };
+		A3EB620428085B8F00269C97 /* AcceptZusTransactionUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB620328085B8F00269C97 /* AcceptZusTransactionUseCaseMock.swift */; };
+		A3EB62082808648B00269C97 /* PLTransfersRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB62072808648B00269C97 /* PLTransfersRepositoryMock.swift */; };
+		A3EB620A2808653300269C97 /* PLTransactionParametersProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB62092808653300269C97 /* PLTransactionParametersProviderMock.swift */; };
+		A3EB620C2808656E00269C97 /* ChallengeRepresentableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB620B2808656E00269C97 /* ChallengeRepresentableMock.swift */; };
+		A3EB620E2808659200269C97 /* AuthorizeTransactionUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB620D2808659200269C97 /* AuthorizeTransactionUseCaseMock.swift */; };
+		A3EB6210280865CA00269C97 /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB620F280865CA00269C97 /* PLAuthorizationCoordinatorMock.swift */; };
+		A3EB62132808662C00269C97 /* PLLoginManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB62122808662C00269C97 /* PLLoginManagerMock.swift */; };
+		A3EB62152808665B00269C97 /* ZusTransferConfirmationViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB62142808665B00269C97 /* ZusTransferConfirmationViewControllerMock.swift */; };
+		A3EB6217280866A100269C97 /* ZusSmeTransferConfirmationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6216280866A100269C97 /* ZusSmeTransferConfirmationCoordinatorMock.swift */; };
+		A3F7CA2628129D7D00B28083 /* ZusSmeTransferModelStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7CA2528129D7D00B28083 /* ZusSmeTransferModelStub.swift */; };
+		A3F7CA2828129DB000B28083 /* AccountForDebitStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7CA2728129DB000B28083 /* AccountForDebitStub.swift */; };
+		A3F7CA2A28129DDF00B28083 /* VATAccountDetailsStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7CA2928129DDF00B28083 /* VATAccountDetailsStub.swift */; };
+		A3F7CA2C28129F7300B28083 /* ZusSmeSummaryModelStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7CA2B28129F7300B28083 /* ZusSmeSummaryModelStub.swift */; };
 		C9CA6970B0201BB645DF9EC3 /* Pods_ZusSMETransfer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24106B954659537570FDB49 /* Pods_ZusSMETransfer_Tests.framework */; };
 		CF9A016F749652151D5931A7 /* Pods_ZusSMETransfer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DDC0029B9080B750BF960E /* Pods_ZusSMETransfer_Example.framework */; };
 /* End PBXBuildFile section */
@@ -54,6 +73,9 @@
 		7E5C635C37AA4A15A8FA1043 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		8C7AA008CECCCB010A69ADB9 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		9E33BB49FFC0C7E3C3BB2117 /* Pods-ZusSMETransfer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusSMETransfer_Example.debug.xcconfig"; path = "Target Support Files/Pods-ZusSMETransfer_Example/Pods-ZusSMETransfer_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		A31469D0281817C900682964 /* Mocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		A31469D1281817C900682964 /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
+		A31469D2281817C900682964 /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
 		A323EA4527F1F7D4009EADC8 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 		A323EA5127F32248009EADC8 /* RecipientSelectionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientSelectionPresenterTests.swift; sourceTree = "<group>"; };
 		A323EA5327F32286009EADC8 /* RecipientSelectionViewCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientSelectionViewCoordinatorMock.swift; sourceTree = "<group>"; };
@@ -66,6 +88,22 @@
 		A323EA6327F341BB009EADC8 /* MaskAccountMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskAccountMock.swift; sourceTree = "<group>"; };
 		A323EA6527F34478009EADC8 /* GetRecipientsUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecipientsUseCaseMock.swift; sourceTree = "<group>"; };
 		A323EA6727F43228009EADC8 /* RecipientMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientMapperTests.swift; sourceTree = "<group>"; };
+		A3EB61F528083A1400269C97 /* ZusSmeTransferConfirmationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferConfirmationPresenterTests.swift; sourceTree = "<group>"; };
+		A3EB61F828083B4400269C97 /* ZusSmeTransferSummaryMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferSummaryMapperTests.swift; sourceTree = "<group>"; };
+		A3EB62012808557C00269C97 /* ConfirmationTransferDTOMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTransferDTOMock.swift; sourceTree = "<group>"; };
+		A3EB620328085B8F00269C97 /* AcceptZusTransactionUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptZusTransactionUseCaseMock.swift; sourceTree = "<group>"; };
+		A3EB62072808648B00269C97 /* PLTransfersRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransfersRepositoryMock.swift; sourceTree = "<group>"; };
+		A3EB62092808653300269C97 /* PLTransactionParametersProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransactionParametersProviderMock.swift; sourceTree = "<group>"; };
+		A3EB620B2808656E00269C97 /* ChallengeRepresentableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeRepresentableMock.swift; sourceTree = "<group>"; };
+		A3EB620D2808659200269C97 /* AuthorizeTransactionUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeTransactionUseCaseMock.swift; sourceTree = "<group>"; };
+		A3EB620F280865CA00269C97 /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
+		A3EB62122808662C00269C97 /* PLLoginManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLoginManagerMock.swift; sourceTree = "<group>"; };
+		A3EB62142808665B00269C97 /* ZusTransferConfirmationViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusTransferConfirmationViewControllerMock.swift; sourceTree = "<group>"; };
+		A3EB6216280866A100269C97 /* ZusSmeTransferConfirmationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferConfirmationCoordinatorMock.swift; sourceTree = "<group>"; };
+		A3F7CA2528129D7D00B28083 /* ZusSmeTransferModelStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeTransferModelStub.swift; sourceTree = "<group>"; };
+		A3F7CA2728129DB000B28083 /* AccountForDebitStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitStub.swift; sourceTree = "<group>"; };
+		A3F7CA2928129DDF00B28083 /* VATAccountDetailsStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VATAccountDetailsStub.swift; sourceTree = "<group>"; };
+		A3F7CA2B28129F7300B28083 /* ZusSmeSummaryModelStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZusSmeSummaryModelStub.swift; sourceTree = "<group>"; };
 		B2AD42902076AAED42BDAAB8 /* Pods-ZusSMETransfer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZusSMETransfer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ZusSMETransfer_Tests/Pods-ZusSMETransfer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C0722CB30926DE071AB9AD14 /* ZusSMETransfer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZusSMETransfer.podspec; path = ../ZusSMETransfer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E24106B954659537570FDB49 /* Pods_ZusSMETransfer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZusSMETransfer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +153,7 @@
 		607FACD21AFB9204008FA782 /* Example for ZusSMETransfer */ = {
 			isa = PBXGroup;
 			children = (
+				A31469CF2818179F00682964 /* Mocks */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -137,6 +176,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A3EB62112808661700269C97 /* CommonMocks */,
+				A3EB61F32808391A00269C97 /* Confirmation */,
 				A323EA4D27F321E2009EADC8 /* RecipientSelection */,
 				A323EA4427F1F7B1009EADC8 /* Helpers */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -171,6 +212,16 @@
 				2F75F67A7B5885F718D14361 /* Pods-ZusSMETransfer_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A31469CF2818179F00682964 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A31469D0281817C900682964 /* Mocks.swift */,
+				A31469D1281817C900682964 /* PLAuthorizationCoordinatorMock.swift */,
+				A31469D2281817C900682964 /* PLAuthorizationProcessorManagerMock.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		A323EA4427F1F7B1009EADC8 /* Helpers */ = {
@@ -221,6 +272,68 @@
 				A323EA5127F32248009EADC8 /* RecipientSelectionPresenterTests.swift */,
 			);
 			name = Presenter;
+			sourceTree = "<group>";
+		};
+		A3EB61F32808391A00269C97 /* Confirmation */ = {
+			isa = PBXGroup;
+			children = (
+				A3F7CA2428129D5A00B28083 /* Stub */,
+				A3EB61FA280852AC00269C97 /* Mocks */,
+				A3EB61F728083B0C00269C97 /* Mapper */,
+				A3EB61F4280839DD00269C97 /* Presenter */,
+			);
+			name = Confirmation;
+			sourceTree = "<group>";
+		};
+		A3EB61F4280839DD00269C97 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A3EB61F528083A1400269C97 /* ZusSmeTransferConfirmationPresenterTests.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		A3EB61F728083B0C00269C97 /* Mapper */ = {
+			isa = PBXGroup;
+			children = (
+				A3EB61F828083B4400269C97 /* ZusSmeTransferSummaryMapperTests.swift */,
+			);
+			name = Mapper;
+			sourceTree = "<group>";
+		};
+		A3EB61FA280852AC00269C97 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A3EB62142808665B00269C97 /* ZusTransferConfirmationViewControllerMock.swift */,
+				A3EB62012808557C00269C97 /* ConfirmationTransferDTOMock.swift */,
+				A3EB620328085B8F00269C97 /* AcceptZusTransactionUseCaseMock.swift */,
+				A3EB62072808648B00269C97 /* PLTransfersRepositoryMock.swift */,
+				A3EB62092808653300269C97 /* PLTransactionParametersProviderMock.swift */,
+				A3EB620B2808656E00269C97 /* ChallengeRepresentableMock.swift */,
+				A3EB620D2808659200269C97 /* AuthorizeTransactionUseCaseMock.swift */,
+				A3EB620F280865CA00269C97 /* PLAuthorizationCoordinatorMock.swift */,
+				A3EB6216280866A100269C97 /* ZusSmeTransferConfirmationCoordinatorMock.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		A3EB62112808661700269C97 /* CommonMocks */ = {
+			isa = PBXGroup;
+			children = (
+				A3EB62122808662C00269C97 /* PLLoginManagerMock.swift */,
+			);
+			name = CommonMocks;
+			sourceTree = "<group>";
+		};
+		A3F7CA2428129D5A00B28083 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				A3F7CA2528129D7D00B28083 /* ZusSmeTransferModelStub.swift */,
+				A3F7CA2728129DB000B28083 /* AccountForDebitStub.swift */,
+				A3F7CA2928129DDF00B28083 /* VATAccountDetailsStub.swift */,
+				A3F7CA2B28129F7300B28083 /* ZusSmeSummaryModelStub.swift */,
+			);
+			name = Stub;
 			sourceTree = "<group>";
 		};
 		CE1FBB4311A04FEDBA08CEE8 /* Frameworks */ = {
@@ -557,6 +670,9 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				A31469D4281817C900682964 /* PLAuthorizationCoordinatorMock.swift in Sources */,
+				A31469D3281817C900682964 /* Mocks.swift in Sources */,
+				A31469D5281817C900682964 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,18 +680,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3EB620428085B8F00269C97 /* AcceptZusTransactionUseCaseMock.swift in Sources */,
 				A323EA5427F32286009EADC8 /* RecipientSelectionViewCoordinatorMock.swift in Sources */,
+				A3EB620C2808656E00269C97 /* ChallengeRepresentableMock.swift in Sources */,
+				A3EB62022808557C00269C97 /* ConfirmationTransferDTOMock.swift in Sources */,
 				A323EA5627F322AF009EADC8 /* RecipientSelectionViewControllerMock.swift in Sources */,
+				A3EB6217280866A100269C97 /* ZusSmeTransferConfirmationCoordinatorMock.swift in Sources */,
 				A323EA6627F34478009EADC8 /* GetRecipientsUseCaseMock.swift in Sources */,
+				A3EB62082808648B00269C97 /* PLTransfersRepositoryMock.swift in Sources */,
 				A323EA5E27F3242F009EADC8 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 				A323EA6027F3247A009EADC8 /* RecipientsBuilderMock.swift in Sources */,
+				A3F7CA2828129DB000B28083 /* AccountForDebitStub.swift in Sources */,
+				A3EB61F928083B4400269C97 /* ZusSmeTransferSummaryMapperTests.swift in Sources */,
+				A3EB62152808665B00269C97 /* ZusTransferConfirmationViewControllerMock.swift in Sources */,
+				A3F7CA2C28129F7300B28083 /* ZusSmeSummaryModelStub.swift in Sources */,
+				A3EB6210280865CA00269C97 /* PLAuthorizationCoordinatorMock.swift in Sources */,
+				A3F7CA2A28129DDF00B28083 /* VATAccountDetailsStub.swift in Sources */,
 				A323EA5827F323B3009EADC8 /* PLTransfersManagerSuccessMock.swift in Sources */,
+				A3EB62132808662C00269C97 /* PLLoginManagerMock.swift in Sources */,
+				A3EB620E2808659200269C97 /* AuthorizeTransactionUseCaseMock.swift in Sources */,
 				A323EA5227F32248009EADC8 /* RecipientSelectionPresenterTests.swift in Sources */,
+				A3F7CA2628129D7D00B28083 /* ZusSmeTransferModelStub.swift in Sources */,
 				A323EA5A27F323EB009EADC8 /* PLTransfersManagerNonConnectionFailureMock.swift in Sources */,
+				A3EB61F628083A1400269C97 /* ZusSmeTransferConfirmationPresenterTests.swift in Sources */,
 				A323EA6827F43228009EADC8 /* RecipientMapperTests.swift in Sources */,
 				A323EA6427F341BB009EADC8 /* MaskAccountMock.swift in Sources */,
 				A323EA5C27F32410009EADC8 /* PLManagersProviderMock.swift in Sources */,
 				A323EA4627F1F7D4009EADC8 /* Delay.swift in Sources */,
+				A3EB620A2808653300269C97 /* PLTransactionParametersProviderMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

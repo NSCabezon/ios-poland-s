@@ -40,6 +40,7 @@ public final class ChequesPinFactory: ChequesPinProducing {
             didSetPin: didSetPin
         )
         let controller = ChequePinViewController(
+            dependenciesResolver: dependenciesResolver,
             presenter: presenter
         )
         presenter.view = controller

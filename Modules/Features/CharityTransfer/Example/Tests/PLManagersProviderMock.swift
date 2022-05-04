@@ -84,4 +84,12 @@ final class PLManagersProviderMock: PLManagersProviderProtocol {
     func getFundsManager() -> PLFundManagerProtocol {
         fatalError()
     }
+    
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
+        fatalError()
+    }
+    
+    func getAuthorizationProcessorManager() -> PLAuthorizationProcessorManagerProtocol {
+        PLAuthorizationProcessorManagerMock()
+    }
 }

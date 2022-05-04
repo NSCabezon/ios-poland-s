@@ -12,7 +12,7 @@ import OneAuthorizationProcessor
 import CoreDomain
 import SANPLLibrary
 import PLCommons
-import CoreFoundationLib
+import BLIK
 
 public protocol PLAuthorizationCoordinatorProtocol {
     func dismiss()
@@ -22,7 +22,8 @@ public protocol PLAuthorizationCoordinatorProtocol {
 final class PLAuthorizationCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
-
+    private var progressTotalTime: Float?
+    
     public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
         self.dependenciesEngine = DependenciesDefault(father: dependenciesResolver)
@@ -31,6 +32,7 @@ final class PLAuthorizationCoordinator: ModuleCoordinator {
     
     public func start() {
         let viewController = self.dependenciesEngine.resolve(for: PLAuthorizationViewController.self)
+        viewController.presenter.updateRemainingProgressTime(progressTotalTime)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -48,7 +50,8 @@ private extension PLAuthorizationCoordinator {
         }
         self.dependenciesEngine.register(for: PLAuthorizationViewController.self) { resolver in
             let presenter = resolver.resolve(for: PLAuthorizationPresenterProtocol.self)
-            let viewController = PLAuthorizationViewController(presenter: presenter)
+            let viewController = PLAuthorizationViewController(dependenciesResolver: resolver,
+                                                               presenter: presenter)
             presenter.view = viewController
             return viewController
         }
@@ -80,6 +83,18 @@ extension PLAuthorizationCoordinator: ChallengesHandlerDelegate {
             return AuthorizationConfiguration(authorizationId: authorizationId, challenge: challenge.challenge, softwareTokenKeys: challenge.softwareTokenKeys, completion: completion)
         }
         self.start()
+    }
+}
+
+extension PLAuthorizationCoordinator: BlikChallengesHandlerDelegate {
+    func handle(
+        _ challenge: ChallengeRepresentable,
+        authorizationId: String,
+        progressTotalTime: Float?,
+        completion: @escaping (ChallengeResult) -> Void
+    ) {
+        self.progressTotalTime = progressTotalTime
+        handle(challenge, authorizationId: authorizationId, completion: completion)
     }
 }
 

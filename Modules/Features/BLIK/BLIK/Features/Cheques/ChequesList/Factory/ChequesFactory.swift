@@ -9,6 +9,7 @@ import CoreFoundationLib
 import Foundation
 import SANPLLibrary
 import PLCommons
+import PLUI
 
 public protocol ChequesProducing {
     func create(coordinator: ChequesCoordinator) -> UIViewController
@@ -23,6 +24,7 @@ public final class ChequesFactory: ChequesProducing {
     
     public func create(coordinator: ChequesCoordinator) -> UIViewController {
         return ChequesViewController(
+            dependenciesResolver: dependenciesResolver,
             dropdownPresenter: DropdownViewController(),
             coordinator: coordinator,
             activeChequesController: createChequeListController(

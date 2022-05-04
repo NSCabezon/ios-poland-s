@@ -10,6 +10,7 @@ import CoreFoundationLib
 import Foundation
 import PLUI
 import PLCommons
+import PLHelpCenter
 
 protocol BLIKHomeViewProtocol: SnackbarPresentable, ErrorPresentable, LoaderPresentable, DialogViewPresentationCapable {
     func setMenuItems(_ viewModels: [BLIKMenuViewModel])
@@ -23,6 +24,7 @@ protocol BLIKHomeViewProtocol: SnackbarPresentable, ErrorPresentable, LoaderPres
 }
 
 final class BLIKHomeViewController: UIViewController {
+    private let dependenciesResolver: DependenciesResolver
     private let presenter: BLIKHomePresenterProtocol
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
@@ -30,7 +32,8 @@ final class BLIKHomeViewController: UIViewController {
     private let blikView = BLIKView()
     private let menuView = BLIKMenuView()
 
-    init(presenter: BLIKHomePresenterProtocol) {
+    init(dependenciesResolver: DependenciesResolver, presenter: BLIKHomePresenterProtocol) {
+        self.dependenciesResolver = dependenciesResolver
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,6 +57,14 @@ final class BLIKHomeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.addNavigationBarShadow()
         presenter.viewWillAppear()
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.pauseScreenSharing()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let onlineAdvisor = self.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+        onlineAdvisor.resumeScreenSharing()
     }
 }
 

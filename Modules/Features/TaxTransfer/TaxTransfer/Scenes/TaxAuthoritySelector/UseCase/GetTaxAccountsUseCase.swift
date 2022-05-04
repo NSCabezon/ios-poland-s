@@ -14,6 +14,8 @@ struct GetTaxAccountsUseCaseInput {
     let taxAccountNumberFilter: String?
     let taxAccountNameFilter: String?
     let cityFilter: String?
+    let optionId: Int?
+    let taxFormType: Int?
 }
 
 struct GetTaxAccountsUseCaseOkOutput {
@@ -35,13 +37,21 @@ final class GetTaxAccountsUseCase: UseCase<GetTaxAccountsUseCaseInput, GetTaxAcc
         let queries = TaxAccountsRequestQueries(
             accountNumber: requestValues.taxAccountNumberFilter,
             accountName: requestValues.taxAccountNameFilter,
-            city: requestValues.cityFilter
+            city: requestValues.cityFilter,
+            optionId: requestValues.optionId
         )
         let result = try managersProvider.getTaxTransferManager().getTaxAccounts(requestQueries: queries)
         switch result {
         case let .success(data):
+            let taxAccounts: [TaxAccount] = try {
+                var accounts = try data.map { try mapper.map($0) }
+                if let taxFormType = requestValues.taxFormType {
+                    accounts = accounts.filter { $0.taxFormType == taxFormType }
+                }
+                return accounts
+            }()
             let output = GetTaxAccountsUseCaseOkOutput(
-                taxAccounts: try data.map { try mapper.map($0) }
+                taxAccounts: taxAccounts
             )
             return .ok(output)
         case let .failure(error):

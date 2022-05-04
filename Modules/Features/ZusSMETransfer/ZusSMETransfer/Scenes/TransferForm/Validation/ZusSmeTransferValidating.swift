@@ -74,8 +74,11 @@ private extension ZusSmeTransferValidator {
            let lastDigitIndex = maskAccount?.lastIndex(where: { Constants.digits.contains($0)}),
            let maskSubstring = maskAccount?[firstDigitIndex...lastDigitIndex] {
             let accountSubstring = account[firstDigitIndex...lastDigitIndex]
-            if accountSubstring != maskSubstring || !isValidIban(account) {
+            if !isValidIban(account) {
                 return localized("pl_generic_validationText_invalidAccNumber").text
+            }
+            if accountSubstring != maskSubstring {
+                return localized("pl_generic_validationText_onlyThirdpartyAcc").text
             }
         }
         return nil

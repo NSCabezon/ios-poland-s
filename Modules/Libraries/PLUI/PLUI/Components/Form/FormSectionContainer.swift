@@ -6,6 +6,7 @@
 //
 
 import UI
+import CoreFoundationLib
 
 public final class FormSectionContainer: UIView {
     private let sectionHeader = UILabel()
@@ -85,28 +86,25 @@ private extension FormSectionContainer {
     }
     
     @objc func didTapInfoButton(_ sender: UIButton) {
-        BubbleLabelView.startWith(
-            associated: sender,
-            text: infoButtonMode.buttonText,
-            position: .bottom
-        )
+        switch infoButtonMode {
+        case let .enabled(localizedTextKey):
+            let styledText: LocalizedStylableText = localized(localizedTextKey)
+            BubbleLabelView.startWith(
+                associated: sender,
+                localizedStyleText: styledText,
+                position: .bottom
+            )
+        case .disabled:
+            break
+        }
     }
 }
 
 extension FormSectionContainer {
     public enum InfoButtonMode {
-        case enabled(Text)
+        case enabled(LocalizedTextKey)
         case disabled
         
-        var buttonText: String {
-            switch self {
-            case let .enabled(text):
-                return text
-            case .disabled:
-                return ""
-            }
-        }
-        
-        public typealias Text = String
+        public typealias LocalizedTextKey = String
     }
 }

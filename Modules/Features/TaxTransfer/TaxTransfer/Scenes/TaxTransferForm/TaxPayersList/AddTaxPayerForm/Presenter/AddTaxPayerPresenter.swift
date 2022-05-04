@@ -46,8 +46,7 @@ extension AddTaxPayerFormPresenter: AddTaxPayerPresenterFormProtocol {
     }
     
     func didPressClose() {
-        let closeConfirmationDialog = confirmationDialogFactory.create(
-            message: localized("#Czy na pewno chcesz zakończyć"),
+        let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
             confirmAction: { [weak self] in
                 self?.coordinator.goToGlobalPosition()
             },
@@ -80,12 +79,15 @@ extension AddTaxPayerFormPresenter: AddTaxPayerViewDelegate {
 
 private extension AddTaxPayerFormPresenter {
     var confirmationDialogFactory: ConfirmationDialogProducing {
-        return dependenciesResolver.resolve()
+        dependenciesResolver.resolve()
+    }
+    
+    var validator: AddTaxPayerFormValidating {
+        dependenciesResolver.resolve()
     }
     
     func isValid() -> Bool {
         guard let form = view?.getForm() else { return false }
-        let validator = AddTaxPayerFormValidator(type: form.identifierType)
         
         switch validator.validate(form) {
         case .valid:
@@ -108,7 +110,7 @@ private extension AddTaxPayerFormPresenter {
                     .other]
         )
     }
-    
+
     func getSelectableIdentifierType() -> Selectable<TaxIdentifierType> {
         guard let selectedTaxIdentifier = selectedTaxIdentifier else {
             return .unselected
@@ -127,7 +129,8 @@ private extension AddTaxPayerFormPresenter {
             name: form.payerName,
             taxIdentifier: nil,
             secondaryTaxIdentifierNumber: form.identifierNumber,
-            idType: mapper.map(form.identifierType))
+            idType: mapper.map(form.identifierType)
+        )
     }
     
     func refreshButtonView() {
@@ -135,4 +138,3 @@ private extension AddTaxPayerFormPresenter {
         view?.setUp(isEmpty: form.isEmpty)
     }
 }
-

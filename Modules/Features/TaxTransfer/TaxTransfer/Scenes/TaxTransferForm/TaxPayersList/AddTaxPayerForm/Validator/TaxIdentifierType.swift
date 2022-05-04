@@ -23,24 +23,24 @@ enum TaxIdentifierType: SelectableItem {
     public var name: String {
         switch self {
         case .ID:
-            return "#Dowód osobisty"
+            return localized("pl_generic_docId_nationaIdentityCard")
         case .passport:
-            return "#Paszport"
+            return localized("pl_generic_docId_passport")
         case .other:
-            return "#Inny"
+            return localized("pl_generic_docId_other")
         case .PESEL:
-            return "#PESEL"
+            return localized("pl_generic_docId_pesel")
         case .NIP:
-            return "#NIP"
+            return localized("pl_generic_docId_nip")
         case .REGON:
-            return "#REGON"
+            return localized("pl_generic_docId_regon")
         }
     }
     
     var complementValue: Int {
         return 10
     }
-    
+
     var errorMessage: String {
         switch self {
         case .other:

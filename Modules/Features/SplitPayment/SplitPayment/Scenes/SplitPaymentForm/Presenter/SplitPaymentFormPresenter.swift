@@ -18,6 +18,7 @@ protocol SplitPaymentFormPresenterProtocol: RecipientSelectorDelegate, SplitPaym
     func getAccountRequiredLength() -> Int
     func clearForm()
     func reloadAccounts()
+    func showMoreInfoAboutWhiteList()
 }
 
 public protocol SplitPaymentFormAccountSelectable: AnyObject {
@@ -100,9 +101,7 @@ extension SplitPaymentFormPresenter: SplitPaymentFormPresenterProtocol {
     }
         
     func startValidation(with field: TransferFormCurrentActiveField) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.validationAction(with: field)
-        }
+        validationAction(with: field)
     }
     
     func validationAction(with field: TransferFormCurrentActiveField) {
@@ -116,6 +115,10 @@ extension SplitPaymentFormPresenter: SplitPaymentFormPresenterProtocol {
     
     func showRecipientSelection() {
         coordinator.showRecipientSelection()
+    }
+    
+    func showMoreInfoAboutWhiteList() {
+        coordinator.showMoreInfoAboutWhiteList()
     }
     
     func getAccountRequiredLength() -> Int {

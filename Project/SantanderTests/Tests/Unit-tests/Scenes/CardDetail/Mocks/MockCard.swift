@@ -12,6 +12,8 @@ import UnitTestCommons
 
 struct MockCard: CardRepresentable {
     var boxType: UserPrefBoxType = .card
+    var isBeneficiary: Bool = false
+    var isContractInactive: Bool = false
     var isDebitCard: Bool = true
     var isCreditCard: Bool = false
     var isPrepaidCard: Bool = false 
