@@ -39,7 +39,7 @@ final class PLSecurityActionBuilder {
     }
     
     func addQuickerBalance() -> Self {
-        let name: String = localized("quickBalance_title_quickBalance")
+        let name: String = "quickBalance_title_quickBalance"
         let action: () -> Void = {             Toast.show(localized("generic_alert_notAvailableOperation")) }
         let accessibilityIdentifiers: [SecurityActionAccessibilityIdentifierType: String] = [
             .container: AccessibilitySecurityAreaAction.quickBalanceContainer,
@@ -58,7 +58,7 @@ final class PLSecurityActionBuilder {
     }
     
     func addChangePin() -> Self {
-        let name: String = localized("pl_personalArea_label_changePIN")
+        let name: String = "pl_personalArea_label_changePIN"
         let action: () -> Void = {             Toast.show(localized("generic_alert_notAvailableOperation")) }
         let accessibilityIdentifiers: [SecurityActionAccessibilityIdentifierType: String] = [
             .container: AccessibilitySecurityAreaAction.changePinContainer,
@@ -78,7 +78,7 @@ final class PLSecurityActionBuilder {
     }
     
     func addChangePassword() -> Self {
-        let name: String = localized("personalArea_label_keyChange")
+        let name: String = "personalArea_label_keyChange"
         let action: () -> Void = {             Toast.show(localized("generic_alert_notAvailableOperation")) }
         let accessibilityIdentifiers: [SecurityActionAccessibilityIdentifierType: String] = [
             .container: AccessibilitySecurityAreaAction.passwordContainer,
@@ -93,20 +93,6 @@ final class PLSecurityActionBuilder {
             toolTip: nil,
             accessibilityIdentifiers: accessibilityIdentifiers,
             externalAction: action)
-        self.actions.append(viewModel)
-        return self
-    }
-
-    func addUser(_ safEnabled: Bool, externalAction: ExternalAction? = nil) -> Self {
-        let name: String = safEnabled ? localized("pt_personalArea_label_movements") : localized("pt_personalArea_label_activateMovements")
-        let value: String = safEnabled ? localized("generic_label_active") : ""
-        let externalActionValue = safEnabled ? nil : externalAction
-        let viewModel = self.securityActionComponents.addUser(
-            action: safEnabled ? .noAction : .accountMovement,
-            name: name,
-            value: value,
-            toolTip: localized("pt_personalArea_tooltip_movements"),
-            externalAction: externalActionValue)
         self.actions.append(viewModel)
         return self
     }
