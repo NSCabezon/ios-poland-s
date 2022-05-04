@@ -1,0 +1,21 @@
+{
+   "12345678Z":{
+      "0":[
+         {
+            "payeeId":{
+               "contractType":"PHONE",
+               "id":"2728"
+            },
+            "alias":"GSM MAMA",
+            "stamp":869981129,
+            "phone":{
+               "phoneNo":"603550853",
+               "gsmOperatorId":1,
+               "highAuthFlag":true
+            },
+            "recipientType":"PHONE_BENEFICIARY",
+            "trusted":false
+         }
+      ]
+   }
+}

@@ -107,4 +107,9 @@ public enum PLLocalServiceName: String {
     case notificationPushDetailsBeforeLogin = "notificationPushDetailsBeforeLogin"
     case notificationPushStatusBeforeLogin = "notificationPushStatusBeforeLogin"
     case getExternalPopular = "getExternalPopular"
+    case getTopUpAccounts = "getTopUpAccounts"
+    case getOperators = "getOperators"
+    case getGsmOperators = "getGsmOperators"
+    case getInternetContacts = "getInternetContacts"
+    case getTopUpAccount = "getTopUpAccount"
 }
