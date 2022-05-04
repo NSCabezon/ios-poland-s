@@ -60,14 +60,16 @@ class InputTextFieldView: UIView {
         ])
     }
     
-    private func clearErrorAppearance() {
+    // MARK: Methods
+    
+    func clearErrorAppearance() {
         headerLabel.textColor = .lisboaGray
         headerLabel.font = .santander(family: .micro, type: .regular, size: 14.0)
         errorLabel.isHidden = true
-        textField.borders(for: [.bottom], width: 1.0, color: .skyGray)
+        textField.borders(for: [.bottom], width: 1.0, color: .darkTurqLight)
     }
     
-    private func setErrorAppearance(message: String) {
+    func setErrorAppearance(message: String) {
         errorLabel.text = message
         errorLabel.isHidden = false
         headerLabel.textColor = .santanderRed
