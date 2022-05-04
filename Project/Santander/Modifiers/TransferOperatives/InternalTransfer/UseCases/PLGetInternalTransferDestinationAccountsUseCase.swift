@@ -22,8 +22,8 @@ struct PLGetInternalTransferDestAccountsUseCase {
 
 extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinationAccountsUseCase {
     
-    func fetchAccounts(_ input: GetInternalTransferDestinationAccountsInput) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> {
-        let polandAccount = input.originAccount as? PolandAccountRepresentable
+    func fetchAccounts(_ originAccount: AccountRepresentable) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> {
+        let polandAccount = originAccount as? PolandAccountRepresentable
         return Publishers.Zip(
             globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
             transfersRepository.getAccountsForCreditSwitch(polandAccount?.type?.rawValue ?? "")
@@ -36,7 +36,7 @@ extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinati
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                let filterAccounts = getFilteredAccounts(from: creditAccounts, originAccount: input.originAccount)
+                let filterAccounts = getFilteredAccounts(from: creditAccounts, originAccount: originAccount)
                 if filterAccounts.isEmpty && gpNotVisibleAccounts.isEmpty {
                     return Fail(error: InternalTransferOperativeError.destinationMinimunAccounts).eraseToAnyPublisher()
                 }
