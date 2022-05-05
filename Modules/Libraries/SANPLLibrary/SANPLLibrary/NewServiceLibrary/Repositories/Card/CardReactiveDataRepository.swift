@@ -20,7 +20,7 @@ public final class CardReactiveDataRepository {
 }
 
 extension CardReactiveDataRepository: CardRepository {
-    public func loadTransactions(card: CardRepresentable, page: PaginationRepresentable?, filter: CardFiltersRepresentable?) -> AnyPublisher<CardTransactionsListRepresentable, Error> {
+    public func loadTransactions(card: CardRepresentable, page: PaginationRepresentable?, filter: CardTransactionFiltersRepresentable?) -> AnyPublisher<CardTransactionsListRepresentable, Error> {
         Fail(error: NSError(description: "unknown")).eraseToAnyPublisher()
     }
     

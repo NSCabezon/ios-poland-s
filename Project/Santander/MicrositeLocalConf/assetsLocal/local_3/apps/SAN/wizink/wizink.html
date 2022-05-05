@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wizink test</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+		<script type="text/javascript" src="/ruxitagentjs_ICA2Vfqru_10237220328075400.js" data-dtconfig="rid=RID_-2089464986|rpid=-132191041|domain=santanderbankpolska.pl|reportUrl=/rb_7f01edd2-1060-487b-87d4-3acf42246e84|app=ea7c4b59f27d43eb|rcdec=1209600000|featureHash=ICA2Vfqru|vcv=2|rdnt=1|uxrgce=1|bp=3|srmcrv=10|cuc=t0gzxmc6|mel=100000|dpvc=1|ssv=4|lastModification=1650841215831|dtVersion=10237220328075400|srmcrl=1|tp=500,50,0,1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2Vfqru_10237220328075400.js"></script><link rel="stylesheet" href="css/fonts.css">
+		<link rel="stylesheet" href="css/page.css">
+		<link rel="stylesheet" href="css/loader_san.css" class="loader-style">
+
+		<script src="js/core.js"></script>
+		<script src="js/enc-base64.js"></script>
+		<script src="js/tripledes.js"></script>
+		<script src="js/mode-ecb.js"></script>
+		<script src="js/pad-nopadding.js"></script>
+		<script src="js/jquery-1.10.2.js"></script>
+		<script src="js/config.js?3"></script>
+	</head>
+	<body onload="getParams();">
+		<div id="xml"></div>
+		<div id="loader_container" style="display: none;"></div>
+	</body>
+	<script>
+		function handleClick() {
+			toggleLoader("block")
+			var t = '';
+			var form = document.getElementById("myform");
+			var bkey = getBkey(form.a.value);
+
+			var firm = getFirm(`${form.b.value}|${form.c.value}|${form.d.value}|${form.e.value}|${form.f.value}|${form.g.value}|${form.h.value}|${form.i.value}|${form.j.value}`, bkey);
+
+			var query = `${form.a.value}|${firm}`;
+
+			console.log(query);
+
+			window.location.href = "wizink.html?data=" + query;
+		}
+
+		function handleLogin() {
+			toggleLoader("block")
+			var t = '';
+			var form = document.getElementById("myform");
+			var u = form.u.value;
+			var p = form.p.value;
+
+			var env = appConfig.services.login_pro;
+			var xmlData = env.soap.format(p, u);
+			var ajaxurl = env.url;
+
+			callService(ajaxurl, xmlData, appConfig.contenttype.xml, function(result) {
+				var fault = result.documentElement.childNodes[1].getElementsByTagName("soap-env:Fault");
+
+				if (fault.length > 0) {
+					var error = fault[0].getElementsByTagName("faultstring")[0].innerHTML;
+					xml.innerHTML = error;
+				} else {
+				    token = result.documentElement.getElementsByTagName("soap-env:Body")[0].getElementsByTagName("prefixRigel0:authenticateCredentialResponse")[0].getElementsByTagName("methodResult")[0].getElementsByTagName("tokenCredential")[0].innerHTML;
+					window.location.href = "wizink.html?token=" + token;
+				}
+			});
+		}
+
+		function getParameterByName(name, url) {
+		    if (!url) url = window.location.href;
+		    name = name.replace(/[\[\]]/g, '\\$&');
+		    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+		        results = regex.exec(url);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2]);
+		}
+
+		function getParams() {
+			createLoader();
+
+			let data = getParameterByName('data');
+			let login = getParameterByName('login');
+			let token_bks = getParameterByName('token');
+
+			if (token_bks == null) { token_bks = "" }
+
+			var xml = document.getElementById("xml");
+
+			if (data != null) {
+				toggleLoader("block")
+
+				var data_fields = data.split('|');
+				if (data_fields.length > 1) {
+					var fields = null;
+					var bkey = getBkey(data_fields[0]);
+
+					if (bkey != null) {
+						fields = getData(data_fields[1], bkey);
+					}
+
+					if (fields != null) {
+						fields = fields.split('|');
+
+						var env = appConfig.services.bkswizink_mov_pro;
+						var xmlData = env.soap.format(data_fields[0],fields[0],fields[1],fields[3],fields[4],fields[5],fields[6],fields[7],fields[2],fields[8]);
+						var ajaxurl = env.url;
+
+						myLog("Esperando respuesta...");
+
+						callService(ajaxurl, xmlData, "text/xml",function(result) {
+							if (result.documentElement.childNodes.length > 1) {
+								var fault = result.documentElement.childNodes[1].getElementsByTagName("soap-env:Fault");
+								if (fault.length > 0) {
+									var error = fault[0].getElementsByTagName("faultstring")[0].innerHTML
+
+									var detail = fault[0].getElementsByTagName("detail")
+									if (detail != null && detail.length > 0) {
+										var descTree = detail[0].getElementsByTagName("prefixRigel0:com.isb.tarsan.tarjetaswizinkla.f.exc.General_TarjetasWizinkLa");
+										if (descTree != null && descTree.length > 0) {
+											var desc = descTree[0].getElementsByTagName("descripcion")[0].innerHTML;
+											xml.innerHTML = error + "<BR><HR><BR>" + desc;
+											toggleLoader("none")
+										} else {
+											xml.innerHTML = error;
+											toggleLoader("none")
+										}
+									} else {
+										xml.innerHTML = error;
+										toggleLoader("none")
+									}
+								} else {
+										myLog("Datos recibidos. Llamando a Wizink...");
+								    var token = result.documentElement.childNodes[1].childNodes[0].childNodes[0].getElementsByTagName("token")[0].innerHTML;
+								    var key = result.documentElement.childNodes[1].childNodes[0].childNodes[0].getElementsByTagName("key")[0].innerHTML;
+
+								    if (token != null && key != null) {
+											var env = appConfig.services.wizink_pro;
+											var ajaxurl = env.url;
+											var plain = env.soap.format(token, key);
+											xmlData = encodeURIComponent(encodeURIComponent(plain));
+
+											xml.innerHTML = `<form action="${ajaxurl}" id="frm" method="post" ><input id="campo" type="hidden" name="datosXML" value=${xmlData} /></form>`;
+
+											document.getElementById('frm').submit();
+
+								    } else {
+											myLog("No data to send to Wizink endpoint.");
+											toggleLoader("none")
+									}
+								}
+							}
+						});
+					} else {
+						myLog("Falló la optención del bkey");
+						toggleLoader("none")
+					}
+				}
+			} else if (login == null) {
+				xml.innerHTML = `
+					<form id="myform" action="JavaScript:handleClick()">
+					    <label>TOKEN</label>
+					    <input type="text" name="a" placeholder="token" value="${token_bks}"/>
+					    <label>Tipo de persona</label>
+					    <input type="text" name="b" placeholder="tipo persona" value="F"/>
+					    <label>C&oacute;digo de persona</label>
+					    <input type="text" name="c" placeholder="c&oacute;digo persona" value="128109666"/>
+							<label>Empresa</label>
+					    <input type="text" name="d" placeholder="empresa" value="0049"/>
+					    <label>Canal</label>
+					    <input type="text" name="e" placeholder="canal" value="RML"/>
+							<label>Empresa Contrato</label>
+					    <input type="text" name="f" placeholder="empresacontrato" value="0049"/>
+					    <label>Centro</label>
+					    <input type="text" name="g" placeholder="centro" value="6902"/>
+					    <label>Producto</label>
+					    <input type="text" name="h" placeholder="producto" value="339"/>
+					    <label>N&uacute;mero de contrato</label>
+					    <input type="text" name="i" placeholder="número de contrato" value="7008840"/>
+					    <label>Documento</label>
+					    <input type="text" name="j" placeholder="documento" value="60505110E"/>
+					    <input type="submit" value="Enviar">
+				</form>
+				`;
+			} else {
+				xml.innerHTML = `
+					<form id="myform" action="JavaScript:handleLogin()">
+					    <label>Usuario</label>
+					    <input type="text" name="u" placeholder="Usuario" value="60505110E"/>
+					    <label>Contrase&ntilde;a</label>
+					    <input type="password" name="p" placeholder="Contraseña" value="14725836"/>
+					    <input type="submit" value="Enviar">
+					</form>
+				`;
+			}
+		}
+
+		function callService(url, body, ctype, callback) {
+			$.ajax({
+			    url: url,
+			    data: body,
+			    type: 'POST',
+			    contentType: ctype,
+					crossDomain: false,
+			    dataType: "text",
+			    success : function(data) {
+	    			var xml = document.getElementById("xml");
+
+					callback(parserXMLElement(data), 200);
+				},
+				    error : function (xhr, ajaxOptions, thrownError){
+						myLog("¡Error de servicio! (Revise certificados autofirmados)")
+						toggleLoader("none");
+
+		        myLog(`Error code: ${xhr.status} - ${thrownError}`);
+
+		        callback(parserXMLElement(xhr.responseText), xhr.status);
+			    }
+			});
+		}
+	</script>
+</html>

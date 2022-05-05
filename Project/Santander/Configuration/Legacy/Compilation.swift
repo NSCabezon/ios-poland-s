@@ -91,7 +91,8 @@ struct PublicFilesHostProvider: PublicFilesHostProviderProtocol {
             PublicFilesEnvironmentDTO("FILES_PL_ROSE", "https://zt2.cdn.santanderbankpolska.pl/oneapp/rose/", false),
             PublicFilesEnvironmentDTO("PRO", "https://micrositeoneapp.santander.pl/filesFF/", false),
             PublicFilesEnvironmentDTO("LOCAL_1", "/assetsLocal/local_1/", true),
-            PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true)
+            PublicFilesEnvironmentDTO("LOCAL_2", "/assetsLocal/local_2/", true),
+            PublicFilesEnvironmentDTO("LOCAL_3", "/assetsLocal/local_3/", true)
         ]
         #elseif INTERN
         publicFilesEnvironments = [

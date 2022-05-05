@@ -52,18 +52,20 @@ final class SelectablePayerCell: UITableViewCell {
         payerShortNameLabel.text = viewModel.taxPayer.shortName
         
         tappableCard.onTap = onTap
-         
+        
         configureStyling(isSelected: isSelected)
-
+        
         if let taxIdentifier = viewModel.taxPayer.taxIdentifier, !taxIdentifier.isEmpty {
             payerTaxIdentifierLabel.text = localized("pl_generic_docId_nip") + ": " + taxIdentifier
         }
         
         switch viewModel.taxPayerSecondaryIdentifier {
         case .available:
-            [extraTaxIdentifierLabel,
-             extraTaxNameLabel].forEach { $0.isHidden = !viewModel.hasDifferentTaxIdentifiers }
+            let shouldShowExtraLabel = viewModel.hasDifferentTaxIdentifiers || payerTaxIdentifierLabel.text == nil
             
+            [extraTaxIdentifierLabel,
+             extraTaxNameLabel].forEach { $0.isHidden = !shouldShowExtraLabel }
+
             extraTaxIdentifierLabel.text = viewModel.taxPayer.secondaryTaxIdentifierNumber
             extraTaxNameLabel.text = viewModel.taxPayer.idType.displayableValue
         case .notAvailable:

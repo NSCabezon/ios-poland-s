@@ -1,0 +1,36 @@
+{
+    "publicProducts": [
+        {
+            "id": "accounts",
+            "text": "Cuentas",
+            "icon": "/apps/SAN/img/public_products/ic_accounts.png",
+            "absoluteUrl": "https://www.bancosantander.es/es/particulares/cuentas-y-tarjetas"
+        },
+        {
+            "id": "loans",
+            "text": "Préstamos",
+            "icon": "/apps/SAN/img/public_products/ic_loans.png",
+            "absoluteUrl": "https://www.bancosantander.es/es/particulares/prestamos"
+        },
+        {
+            "id": "funds",
+            "text": "Fondos",
+            "icon": "/apps/SAN/img/public_products/ic_funds.png",
+            "absoluteUrl": "https://www.bancosantander.es/es/particulares/fondos-de-inversion"
+        }
+    ],
+    "stockHolders":[
+        {
+            "id":"sh1",
+            "text":"Cotización Acciones Santander",
+            "icon":"/apps/SAN/img/NP/NPIC_accounts_cards.png",
+            "absoluteUrl":"https://www.bancosantander.es/es/particulares/cuentas-y-tarjetas"
+        },
+        {
+            "id":"sh2",
+            "text":"Dividendos",
+            "icon":"/apps/SAN/img/NP/NPIC_loans.png",
+            "absoluteUrl":"https://www.bancosantander.es/es/particulares/prestamos"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "loadingTips": [
+        {
+            "mainTitle": "DO YOU KNOW THAT...?",
+			"title": "In aplication", 
+			"boldTitle": "you will exchange currencies 24 hours a day",
+			"subtitle": "The Santander exchange office is accessible from the shortcuts on the home screen, from the account options and from the 'Bank's offer' side menu."
+        },
+         {
+            "mainTitle": "DO YOU KNOW THAT...?",
+			"title": "the application you have is currently being used by", 
+			"boldTitle": "millions of users in Europe.",
+			"subtitle": "It is now available in Spain and Portugal, and soon in the British Isles"
+        }, 
+        {
+            "mainTitle": "DO YOU KNOW THAT...?",
+			"title": "there are about 40 places in the app where you can leave your feedback?", 
+			"boldTitle": "Share your feedback and complete surveys",
+			"subtitle": "You will find the option of leaving feedback, among others on the desktop and in the 'Leave Feedback' menu"
+        },
+        {
+            "mainTitle": "DO YOU KNOW THAT...?",
+			"title": "you can use discreete mode,", 
+			"boldTitle": "to use the application even more freely",
+			"subtitle": "Do it by double clicking on Santander logo"
+        }
+    ]
+}
