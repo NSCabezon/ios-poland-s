@@ -44,7 +44,8 @@ final class PLSecurityActionBuilder {
         let accessibilityIdentifiers: [SecurityActionAccessibilityIdentifierType: String] = [
             .container: AccessibilitySecurityAreaAction.quickBalanceContainer,
             .action: AccessibilitySecurityAreaAction.quickBalanceAction,
-            .tooltip: AccessibilitySecurityAreaAction.quickBalanceTooltipAction
+            .tooltip: AccessibilitySecurityAreaAction.quickBalanceTooltipAction,
+            .chevron: AccessibilitySecurityAreaAction.quickBalanceChevron
         ]
         let viewModel = self.securityActionComponents.addCustom(
             action: .changePassword,
@@ -64,7 +65,8 @@ final class PLSecurityActionBuilder {
             .container: AccessibilitySecurityAreaAction.changePinContainer,
             .action: AccessibilitySecurityAreaAction.operativityAction,
             .tooltip: AccessibilitySecurityAreaAction.changePinTooltip,
-            .value: AccessibilitySecurityAreaAction.operativityFilledValue
+            .value: AccessibilitySecurityAreaAction.operativityFilledValue,
+            .chevron: AccessibilitySecurityAreaAction.changePinChevron
         ]
         let viewModel = self.securityActionComponents.addCustom(
             action: .changePassword,
@@ -84,7 +86,8 @@ final class PLSecurityActionBuilder {
             .container: AccessibilitySecurityAreaAction.passwordContainer,
             .action: AccessibilitySecurityAreaAction.passwordAction,
             .tooltip: AccessibilitySecurityAreaAction.operativityTooltipAction,
-            .value: AccessibilitySecurityAreaAction.operativityFilledValue
+            .value: AccessibilitySecurityAreaAction.operativityFilledValue,
+            .chevron: AccessibilitySecurityAreaAction.passwordChevron
         ]
         let viewModel = self.securityActionComponents.addCustom(
             action: .changePassword,
