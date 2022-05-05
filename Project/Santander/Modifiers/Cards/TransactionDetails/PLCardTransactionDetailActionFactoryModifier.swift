@@ -30,7 +30,6 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
         if transaction.dto.receiptId != nil {
             return true
         }
-        
         return false
     }
 
