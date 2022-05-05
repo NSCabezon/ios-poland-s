@@ -10,9 +10,11 @@ import Operative
 import CoreFoundationLib
 import UIOneComponents
 import UI
+import OpenCombine
 
 protocol SendMoneyAmountAllInternationalView: OperativeView {
     func addAccountSelector(_ viewModel: OneAccountsSelectedCardViewModel)
+    func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel)
     func setFloatingButtonEnabled(_ isEnabled: Bool)
 }
 
@@ -22,6 +24,39 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
     @IBOutlet weak var floatingButton: OneFloatingButton!
     
     private let presenter: SendMoneyAmountAllInternationalPresenterProtocol
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    private lazy var exchangeRateView: OneExchangeRateAmountView = {
+        let view = OneExchangeRateAmountView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var exchangeRateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.configureText(withKey: "sendMoney_label_amoundDate")
+        label.textColor = .oneLisboaGray
+        label.font = .typography(fontName: .oneH100Bold)
+        return label
+    }()
+    
+    private lazy var exchangeRateContainerView: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(self.exchangeRateLabel)
+        container.addSubview(self.exchangeRateView)
+        NSLayoutConstraint.activate([
+            self.exchangeRateLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+            self.exchangeRateLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 24),
+            self.exchangeRateLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
+            self.exchangeRateView.topAnchor.constraint(equalTo: self.exchangeRateLabel.bottomAnchor, constant: 24),
+            self.exchangeRateView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+            self.exchangeRateView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
+            self.exchangeRateView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -24)
+        ])
+        return container
+    }()
     
     private lazy var descriptionView: SMAmountAllInternationalDescriptionView = {
         let view = SMAmountAllInternationalDescriptionView()
@@ -43,6 +78,7 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
         self.configureTap()
         self.presenter.viewDidLoad()
         self.configureViews()
+        self.bindViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,10 +117,26 @@ private extension SendMoneyAmountAllInternationalViewController {
     }
     
     func configureViews() {
-        // TODO: add here new oneExangeView
         self.stackView.addArrangedSubview(self.swiftView)
+        self.stackView.addArrangedSubview(self.exchangeRateContainerView)
         self.stackView.addArrangedSubview(self.descriptionView)
         self.stackView.addArrangedSubview(self.simpleDateView)
+    }
+    
+    func bindViews() {
+        self.exchangeRateView.publisher
+            .case(OneExchangeRateAmountViewState.didChangeOriginAmount)
+            .sink { [unowned self] (originAmount, newDestinationAmount) in
+                self.presenter.saveAmounts(originAmount: originAmount, destinationAmount: newDestinationAmount)
+            }
+            .store(in: &subscriptions)
+        
+        self.exchangeRateView.publisher
+            .case(OneExchangeRateAmountViewState.didChangeDestinationAmount)
+            .sink { [unowned self] (newOriginAmount, destinationAmount) in
+                self.presenter.saveAmounts(originAmount: newOriginAmount, destinationAmount: destinationAmount)
+            }
+            .store(in: &subscriptions)
     }
     
     func configureFloattingButton() {
@@ -104,7 +156,7 @@ private extension SendMoneyAmountAllInternationalViewController {
         tap.cancelsTouchesInView = false
     }
     
-    func getOperativeStep() -> [String]{
+    func getOperativeStep() -> [String] {
         let stepOfSteps = self.presenter.getStepOfSteps()
         let step = String(stepOfSteps[0])
         let total = String(stepOfSteps[1])
@@ -131,6 +183,18 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
         oneAccountsSelectedCardView.setupAccountViewModel(viewModel)
         oneAccountsSelectedCardView.translatesAutoresizingMaskIntoConstraints = false
         self.stackView.addArrangedSubview(oneCardSelectedContainerView)
+    }
+    
+    func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel) {
+        guard case .exchange(let destination) = viewModel.type else { return }
+        self.exchangeRateView.setViewModel(
+            OneExchangeRateAmountViewModel(originAmount: viewModel.originAmount,
+                                           type: .exchange(destinationAmount:
+                                                            OneExchangeRateAmount(amount: destination.amount, buyRate: destination.buyRate, sellRate: destination.sellRate, currencySelector: UIView())
+                                                          ),
+                                           alert: OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate")
+                                          )
+        )
     }
     
     func setFloatingButtonEnabled(_ isEnabled: Bool) {

@@ -22,6 +22,7 @@ protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresente
     func changeDestinationAccount()
     func saveDescription(_ description: String?)
     func saveSwift(_ swift: String?)
+    func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable)
 }
 
 final class SendMoneyAmountAllInternationalPresenter {
@@ -59,8 +60,13 @@ private extension SendMoneyAmountAllInternationalPresenter {
         return swift.count > 7 && swift.count < 12
     }
     
+    var isAmountValid: Bool {
+        let amount = self.operativeData.amount?.value ?? 0
+        return amount > 0
+    }
+    
     var isFloatingButtonEnabled: Bool {
-        return self.isSwiftRangeValid && true // TODO: add here oneExangeRateValidations
+        return self.isSwiftRangeValid && self.isAmountValid
     }
     
     func setAccountSelectorView() {
@@ -87,25 +93,70 @@ private extension SendMoneyAmountAllInternationalPresenter {
         self.view?.addAccountSelector(viewModel)
     }
     
-    func loadExchangeRates() {
-        guard self.operativeData.exchangeRates == nil else { return }
+    func loadExchangeRates(completion: @escaping () -> Void) {
+        guard self.operativeData.exchangeRates == nil else {
+            completion()
+            return
+        }
         let useCase = self.sendMoneyUseCaseProvider.getExchangeRatesUseCase()
         Scenario(useCase: useCase)
             .execute(on: self.dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.operativeData.exchangeRates = output.exchangeRates
-                // TODO: configure oneExangeRateView
+                completion()
             }
             .onError { [weak self] _ in
                 self?.container?.showGenericError()
             }
+    }
+    
+    func getOneExchangeViewModel() -> OneExchangeRateAmountViewModel? {
+        if self.operativeData.amount == nil {
+            guard let originCurrency = self.operativeData.selectedAccount?.currencyRepresentable,
+                  let destinationCurrency = self.getDestinationCurrencyRepresentable()
+            else { return nil }
+            self.operativeData.amount = AmountRepresented(value: 0, currencyRepresentable: originCurrency)
+            self.operativeData.receiveAmount = AmountRepresented(value: 0, currencyRepresentable: destinationCurrency)
+        }
+        guard let originAmount = self.operativeData.amount,
+              let originCurrency = originAmount.currencyRepresentable,
+              let originRates = self.getBuySellRatesForCurrency(originCurrency),
+              let destinationAmount = self.operativeData.receiveAmount,
+              let destinationCurrency = destinationAmount.currencyRepresentable,
+              let destinationRates = self.getBuySellRatesForCurrency(destinationCurrency)
+        else { return nil }
+        return OneExchangeRateAmountViewModel(originAmount:
+                                        OneExchangeRateAmount(amount: originAmount, buyRate: originRates.buyRate, sellRate: originRates.sellRate),
+                                       type: .exchange(destinationAmount:
+                                                        OneExchangeRateAmount(amount: destinationAmount, buyRate: destinationRates.buyRate, sellRate: destinationRates.sellRate)))
+    }
+    
+    func getBuySellRatesForCurrency(_ currency: CurrencyRepresentable) -> (buyRate: AmountRepresentable, sellRate: AmountRepresentable)? {
+        if currency.currencyCode == "PLN" {
+            return (AmountRepresented(value: 1, currencyRepresentable: currency), AmountRepresented(value: 1, currencyRepresentable: currency))
+        } else {
+            guard let exchangeRates = self.operativeData.exchangeRates,
+                  let foundCurrency = exchangeRates.first(where: { $0.currencyCode == currency.currencyCode })
+            else { return nil }
+            return (foundCurrency.buyRateRepresentable, foundCurrency.sellRateRepresentable)
+        }
+    }
+    
+    func getDestinationCurrencyRepresentable() -> CurrencyRepresentable? {
+        // TODO: swap for hardcoded EUR when working change country
+//        guard let currencyCode = self.operativeData.currency?.code ?? self.operativeData.currencyName else { return nil }
+        let currencyCode = "EUR"
+        return CurrencyRepresented(currencyCode: currencyCode)
     }
 }
 
 extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternationalPresenterProtocol {
     func viewDidLoad() {
         self.setAccountSelectorView()
-        self.loadExchangeRates()
+        self.loadExchangeRates { [weak self] in
+            guard let viewModel = self?.getOneExchangeViewModel() else { return }
+            self?.view?.setExchangeRateViewModel(viewModel)
+        }
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
     }
     
@@ -149,6 +200,12 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
     
     func saveSwift(_ swift: String?) {
         self.operativeData.bicSwift = swift
+        self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
+    }
+    
+    func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable) {
+        self.operativeData.amount = originAmount
+        self.operativeData.receiveAmount = destinationAmount
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
     }
 }
