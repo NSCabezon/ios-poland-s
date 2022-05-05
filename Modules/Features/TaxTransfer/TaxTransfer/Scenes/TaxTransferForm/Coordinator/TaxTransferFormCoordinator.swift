@@ -222,7 +222,9 @@ private extension TaxTransferFormCoordinator {
         
         dependenciesEngine.register(for: TaxAuthorityMapping.self) { _ in
             return TaxAuthorityMapper(
-                taxAccountTypeRecognizer: TaxAccountTypeRecognizer()
+                taxAccountTypeRecognizer: TaxAccountTypeRecognizer(
+                    identifierValidator: TaxIdentifierValidator()
+                )
             )
         }
         
