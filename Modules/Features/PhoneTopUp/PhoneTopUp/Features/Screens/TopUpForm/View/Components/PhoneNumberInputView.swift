@@ -52,7 +52,7 @@ final class PhoneNumberInputView: UIView {
     }
     
     private func prepareStyles() {
-        textInputView.headerLabel.text = localized("pl_topup_text_recipPhoneNumb")
+        textInputView.setHeaderTitle(localized("pl_topup_text_recipPhoneNumb"))
         
         textInputView.textField.setRightAccessory(.uiImage(Images.Form.contactIcon, action: { [weak self] in
             self?.delegate?.didTouchContactsButton()

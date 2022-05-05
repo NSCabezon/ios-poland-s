@@ -13,9 +13,9 @@ final class FormTextInputView: UIView {
     // MARK: Views
     
     private let mainContainer = UIStackView()
-    let headerLabel = FormHeaderLabel()
+    private let headerLabel = FormHeaderLabel()
+    private let errorLabel = UILabel()
     let textField = LisboaTextField()
-    let errorLabel = UILabel()
 
     // MARK: Lifecycle
     
@@ -26,40 +26,6 @@ final class FormTextInputView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: Configuration
-
-    private func setUp() {
-        addSubviews()
-        prepareStyles()
-        setUpLayout()
-    }
-    
-    private func addSubviews() {
-        addSubviewConstraintToEdges(mainContainer)
-        mainContainer.addArrangedSubview(headerLabel)
-        mainContainer.addArrangedSubview(textField)
-        mainContainer.addArrangedSubview(errorLabel)
-    }
-    
-    private func prepareStyles() {
-        errorLabel.textColor = .santanderRed
-        errorLabel.font = .santander(family: .micro, type: .regular, size: 14.0)
-        clearErrorAppearance()
-    }
-    
-    private func setUpLayout() {
-        mainContainer.axis = .vertical
-        mainContainer.spacing = 8.0
-        headerLabel.setContentHuggingPriority(.required, for: .vertical)
-        errorLabel.setContentHuggingPriority(.required, for: .vertical)
-        errorLabel.adjustsFontSizeToFitWidth = true
-        errorLabel.minimumScaleFactor = 0.5
-        
-        NSLayoutConstraint.activate([
-            textField.heightAnchor.constraint(equalToConstant: 48.0),
-        ])
     }
     
     // MARK: Methods
@@ -77,5 +43,43 @@ final class FormTextInputView: UIView {
         headerLabel.textColor = .santanderRed
         headerLabel.font = .santander(family: .micro, type: .bold, size: 14.0)
         textField.borders(for: [.bottom], width: 1.0, color: .santanderRed)
+    }
+    
+    func setHeaderTitle(_ text: String) {
+        headerLabel.text = text
+    }
+}
+
+private extension FormTextInputView {
+    func setUp() {
+        addSubviews()
+        prepareStyles()
+        setUpLayout()
+    }
+    
+    func addSubviews() {
+        addSubviewConstraintToEdges(mainContainer)
+        mainContainer.addArrangedSubview(headerLabel)
+        mainContainer.addArrangedSubview(textField)
+        mainContainer.addArrangedSubview(errorLabel)
+    }
+    
+    func prepareStyles() {
+        errorLabel.textColor = .santanderRed
+        errorLabel.font = .santander(family: .micro, type: .regular, size: 14.0)
+        clearErrorAppearance()
+    }
+    
+    func setUpLayout() {
+        mainContainer.axis = .vertical
+        mainContainer.spacing = 8.0
+        headerLabel.setContentHuggingPriority(.required, for: .vertical)
+        errorLabel.setContentHuggingPriority(.required, for: .vertical)
+        errorLabel.adjustsFontSizeToFitWidth = true
+        errorLabel.minimumScaleFactor = 0.5
+        
+        NSLayoutConstraint.activate([
+            textField.heightAnchor.constraint(equalToConstant: 48.0),
+        ])
     }
 }

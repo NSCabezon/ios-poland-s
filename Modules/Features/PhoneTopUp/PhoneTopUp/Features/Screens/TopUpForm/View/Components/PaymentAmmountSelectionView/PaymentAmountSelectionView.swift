@@ -92,7 +92,7 @@ final class PaymentAmountSelectionView: UIView {
     
     private func prepareStyles() {
         amountHeaderLabel.text = localized("pl_topup_text_amountSelect")
-        customAmountTextInputView.headerLabel.text = localized("pl_topup_text_anothAmonut")
+        customAmountTextInputView.setHeaderTitle(localized("pl_topup_text_anothAmonut"))
         currencyAccessoryView.setText(CurrencyType.złoty.name)
         amountCollectionView.backgroundColor = .white
         amountCollectionView.clipsToBounds = false
