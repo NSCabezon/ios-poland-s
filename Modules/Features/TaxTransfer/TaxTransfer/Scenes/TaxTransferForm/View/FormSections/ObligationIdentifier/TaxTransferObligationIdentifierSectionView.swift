@@ -92,7 +92,7 @@ private extension TaxTransferObligationIdentifierSectionView {
     func configureStyling() {
         let formatter = UIFormattedCustomTextField()
         formatter.setMaxLength(maxLength: 40)
-        formatter.setAllowOnlyCharacters(.ascii)
+        formatter.setAllowOnlyCharacters(.ascii.union(.polishLetters))
         obligationIdentifier.textField.placeholder = localized("pl_taxTransfer_label_financialObligationId")
         obligationIdentifier.textField.setEditingStyle(
             .writable(
