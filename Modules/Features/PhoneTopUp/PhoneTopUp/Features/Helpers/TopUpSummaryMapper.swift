@@ -19,19 +19,19 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
     func mapConfirmationSummary(model: TopUpModel) -> [OperativeSummaryStandardBodyItemViewModel] {
         return [
             amountItemViewModel(from: model),
-            accountItemViewModel(from: model),
+            accountItemViewModel(from: model, title: localized("pl_topup_label_summaryAccountSender")),
             recipientItemViewModel(from: model),
-            dateItemViewModel(from: model)
+            dateItemViewModel(from: model, title: localized("pl_topup_text_dateTransfer"))
         ]
     }
     
     func mapSuccessSummary(model: TopUpModel) -> [OperativeSummaryStandardBodyItemViewModel] {
         return [
             amountItemViewModel(from: model),
-            accountItemViewModel(from: model),
+            accountItemViewModel(from: model, title: localized("pl_topup_label_accountTransfter")),
             recipientItemViewModel(from: model),
             transactionTypeItemViewModel(),
-            dateItemViewModel(from: model)
+            dateItemViewModel(from: model, title: localized("pl_topup_label_date"))
         ]
     }
     
@@ -42,10 +42,10 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
         )
     }
     
-    private func accountItemViewModel(from model: TopUpModel) -> OperativeSummaryStandardBodyItemViewModel {
+    private func accountItemViewModel(from model: TopUpModel, title: String) -> OperativeSummaryStandardBodyItemViewModel {
         let maskedAccountNumber = "*" + (model.account.number.substring(ofLast: 4) ?? "")
         return OperativeSummaryStandardBodyItemViewModel(
-            title: localized("pl_topup_label_summaryAccountSender"),
+            title: title,
             subTitle: model.account.name,
             info: attributedInfoString(maskedAccountNumber)
         )
@@ -68,11 +68,11 @@ final class TopUpSummaryMapper: TopUpSummaryMapping {
         )
     }
     
-    private func dateItemViewModel(from model: TopUpModel) -> OperativeSummaryStandardBodyItemViewModel {
+    private func dateItemViewModel(from model: TopUpModel, title: String) -> OperativeSummaryStandardBodyItemViewModel {
         let dateFormatter = PLTimeFormat.ddMMyyyyDotted.createDateFormatter()
         let dateString = dateFormatter.string(from: model.date)
         return OperativeSummaryStandardBodyItemViewModel(
-            title: localized("pl_topup_text_dateTransfer"),
+            title: title,
             subTitle: dateString
         )
     }

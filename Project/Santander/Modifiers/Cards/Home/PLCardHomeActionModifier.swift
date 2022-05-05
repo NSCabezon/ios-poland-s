@@ -15,15 +15,15 @@ import PersonalArea
 
 final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingActionModifierProtocol {
     
-    override func getCreditCardHomeActions() -> [CardActionType] {
+    override func getCreditCardHomeActions() -> [OldCardActionType] {
         return []
     }
     
-    override func getDebitCardHomeActions() -> [CardActionType] {
+    override func getDebitCardHomeActions() -> [OldCardActionType] {
         return []
     }
     
-    override func didSelectAction(_ action: CardActionType, _ entity: CardEntity) {
+    override func didSelectAction(_ action: OldCardActionType, _ entity: CardEntity) {
         
         switch action {
         case .offCard:

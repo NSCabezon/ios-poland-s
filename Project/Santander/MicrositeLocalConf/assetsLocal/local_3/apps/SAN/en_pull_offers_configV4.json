@@ -1,0 +1,162 @@
+{
+	"pullOffersConfig": {
+		"categories": [
+			{
+				"id": "cuentas",
+				"name": "Cuentas",
+				"iconRelativeURL": "/apps/SAN/img/pull_offer_categories/icons/icn_accounts_smart.png",
+				"offers": [
+					"offer1",
+					"offer2",
+					"offer3"
+				]
+			},
+			{
+				"id": "tarjetas",
+				"name": "Tarjetas",
+				"iconRelativeURL": "/apps/SAN/img/pull_offer_categories/icons/icn_cards_smart.png",
+				"offers": [
+					"offer1",
+					"offer2",
+					"offer3"
+				]
+			},
+			{
+				"id": "prestamos",
+				"name": "Préstamos",
+				"iconRelativeURL": "/apps/SAN/img/pull_offer_categories/icons/icn_pregranted_loans_smart.png",
+				"offers": [
+					"offer1",
+					"offer2",
+					"offer3"
+				]
+			},
+			{
+				"id": "renting_tecnologico",
+				"name": "Renting Tecnológico",
+				"iconRelativeURL": "/apps/SAN/img/pull_offer_categories/icons/icn_tech_renting_smart.png",
+				"offers": [
+					"offer1",
+					"offer2",
+					"offer3"
+				]
+			},
+			{
+				"id": "renting_autos",
+				"name": "Renting Autos",
+				"iconRelativeURL": "/apps/SAN/img/pull_offer_categories/icons/icn_auto_renting_smart.png",
+				"offers": [
+					"offer1",
+					"offer2",
+					"offer3"
+				]
+			},
+			{
+				"id": "otros",
+				"name": "Otros",
+				"iconRelativeURL": "/apps/SAN/img/pull_offer_categories/icons/icn_others_smart.png",
+				"offers": [
+					"offer1",
+					"offer2",
+					"offer3"
+				]
+			}
+		],
+		"tips": [
+			{
+				"title": "Financiación al instante",
+				"desc": "Inmediato y sin papeleos",
+				"icon": "/apps/SAN/img/tips/icn_pig_tip.png",
+				"offerId": "oferta_elab6"
+			},
+			{
+				"title": "Para ahorrar e invertir",
+				"desc": "Saca partido a tu dinero hoy y disfruta mañana",
+				"icon": "/apps/SAN/img/tips/icn_pregranted_loans_tip.png",
+				"offerId": "oferta_elab2"
+			},
+			{
+				"title": "Más funcionalidades",
+				"desc": "Operativas y servicios que ayudarán a gestionar mejor tus finanzas",
+				"icon": "/apps/SAN/img/tips/icn_question_tip.png",
+				"offerId": "89_Debito_PB"
+			},
+			{
+				"title": "Otros consejos",
+				"desc": "Para que cada día tu experiencia sea mejor y más fácil",
+				"icon": "/apps/SAN/img/tips/icn_san_red_tip.png",
+				"offerId": "PG_DEP_NO"
+			},
+			{
+				"title": "Te ayudamos",
+				"desc": "Elige la forma de contactar con nosotros",
+				"icon": "/apps/SAN/img/tips/icn_services_tip.png",
+				"offerId": "123_Debito_PB"
+			}
+		],
+		"securityTips": [
+			{
+				"title": "Financiación al instante",
+				"desc": "Inmediato y sin papeleos",
+				"icon": "/apps/SAN/img/tips/icn_pig_tip.png",
+				"offerId": "oferta_elab6"
+			}
+		],
+		"santanderExperiences": [
+			{
+				"title": "Para el día a día",
+				"desc": "Tu oficina en el móvil 24 horas, 365 días, allí donde estés",
+				"icon": "/apps/SAN/img/tips/icn_info_tip.png",
+				"offerId": "analisis_financiero"
+			}
+		],
+		"atmTips": [
+			{
+				"title": "SEGUNDOS PASOS",
+				"desc": "Saca más partido {{BOLD}}a tu nueva aplicación{{/BOLD}}",
+				"icon": "/apps/SAN/img/tips/icn_pig_tip.png",
+				"tag": "",
+				"offerId": "GDPR"
+			},
+			{
+				"title": "TERCEROS PASOS",
+				"desc": "Saca más partido {{BOLD}}a tu nueva aplicación{{/BOLD}}",
+				"icon": "/apps/SAN/img/tips/icn_services_tip.png",
+				"tag": "",
+				"offerId": "GDPR"
+			}
+		],
+		"pgTopOffers": [
+			{
+				"id":"TestPolandOffer_PG_NPS",
+				"expireOnClick":false,
+				"priority":1
+			}
+    ],
+		"locations": {
+			"GDPR" : [
+				"PL_GDPR"
+				],
+			"PG_CTA_BELOW": [
+				"PG_CTA_BELOW_SMART_OFFER",
+				"PG_CTA_BELOW_OFFER"
+			],
+			"MENU_CONTRATAR_SANFLIX": [
+				"PG_CTA_BELOW_OFFER"
+			],  
+			"CONTRATAR_SANFLIX": [
+   				"PG_CTA_BELOW_OFFER"
+			],
+			"LOGOUT_DIALOG":[
+				"AYUDANOS_LOGOUT",
+				"AYUDANOS_2_LOGOUT"
+			],
+			"BUZON_CORRESPONDENCIA": ["Buzon_Correspondencia"],
+  			"INBOX_SETUP": ["Inbox_Setup"],
+			"AREA_PERSONAL_CONFIG_ALERTAS": [
+				"Config_Alert"
+			]
+	},
+    "offersBookmarksPG": []
+  }
+}

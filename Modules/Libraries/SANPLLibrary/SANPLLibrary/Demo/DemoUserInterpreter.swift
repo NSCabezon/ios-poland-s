@@ -112,4 +112,11 @@ public enum PLLocalServiceName: String {
     case getGsmOperators = "getGsmOperators"
     case getInternetContacts = "getInternetContacts"
     case getTopUpAccount = "getTopUpAccount"
+    case activeEwallets = "activeEwallets"
+    case getTrnToConf = "getTrnToConf"
+    case pspTicket = "pspTicket"
+    case verifyContacts = "verifyContacts"
+    case p2pAlias = "p2pAlias"
+    case accountForDebit = "accountForDebit"
+    case acceptTransfer = "acceptTransfer"
 }

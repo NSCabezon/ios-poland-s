@@ -1,0 +1,89 @@
+{
+   "searchKeywords": [
+      {
+         "word": "Pago",
+         "lexeme": "pag",
+         "errorWords": ["pajo", "pag", "paga", "pagus", "pafo"]
+      },
+      {
+         "word": "Movil",
+         "lexeme": "mov",
+         "errorWords": ["movi", "movus", "ovil", "mobile", "mvl"]
+      },
+      {
+         "word": "Tarjeta",
+         "lexeme": "tar",
+         "errorWords": ["tjta", "torjeta", "targeta", "trjeta", "tarjta"]
+      },
+      {
+         "word": "Cuenta",
+         "lexeme": "cue",
+         "errorWords": ["conta", "cunta", "cta", "cuemta", "qenta"]
+      },
+      {
+         "word": "Transferencia",
+         "lexeme": "tran",
+         "errorWords": ["traferencia", "tranferecia", "trasferencia", "transf", "ransferencia"]
+      },
+      {
+         "word": "Trasasos",
+         "lexeme": "tras",
+         "errorWords": ["raspaso", "trasp", "trapaso", "trapas", "raspasos"]
+      },
+      {
+         "word": "Hipoteca",
+         "lexeme": "hip",
+         "errorWords": ["ipoteca", "hiteca", "poteca", "hipotteca", "hptc"]
+      },
+      {
+         "word": "Prestamo",
+         "lexeme": "pre",
+         "errorWords": ["pretamos", "prestumos", "prestanos", "pretanos", "prtmo"]
+      },
+      {
+         "word": "Comisiones",
+         "lexeme": "comi",
+         "errorWords": ["comiones", "comasiones", "camisiones", "conisiones", "comis"]
+      },
+      {
+         "word": "Seguridad",
+         "lexeme": "seg",
+         "errorWords": ["segrdad", "seguridod", "segridad", "sejuridad", "seguridas"]
+      },
+      {
+         "word": "Recibos",
+         "lexeme": "reci",
+         "errorWords": ["recivos", "rcibos", "ricivos", "reccibos", "recib"]
+      },
+      {
+         "word": "Domiciliacion",
+         "lexeme": "domi",
+         "errorWords": ["domicilic", "miciliacione", "donimiciliaciones", "doniciliaciones", "domicl"]
+      },
+      {
+         "word": "Gasto",
+         "lexeme": "gast",
+         "errorWords": ["gatos", "gustos", "gts", "gtos", "fastos"]
+      },
+      {
+         "word": "Contrato",
+         "lexeme": "cont",
+         "errorWords": ["cotrato", "ontrato", "contato", "contatro", "cotro"]
+      },
+      {
+         "word": "Certificado",
+         "lexeme": "cert",
+         "errorWords": ["cetificado", "cerificado", "crtificado", "ertificado", "cerrtificaod"]
+      },
+      {
+         "word": "Financiacion",
+         "lexeme": "fina",
+         "errorWords": ["finaciacion", "inanciacion", "fananciacion", "fimanciacion", "finaccion"]
+      },
+      {
+         "word": "Inversion",
+         "lexeme": "inv",
+         "errorWords": ["inbersion", "iversion", "ibersion", "innversion", "innercion"]
+      }
+   ]
+}
