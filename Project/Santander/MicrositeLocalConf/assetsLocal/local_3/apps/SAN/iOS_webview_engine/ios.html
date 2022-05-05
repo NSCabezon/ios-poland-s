@@ -1,0 +1,44 @@
+
+<html>
+    <head>
+    <script type="text/javascript" src="/ruxitagentjs_ICA2Vfqru_10237220328075400.js" data-dtconfig="rid=RID_-979369039|rpid=-1216635709|domain=santanderbankpolska.pl|reportUrl=/rb_7f01edd2-1060-487b-87d4-3acf42246e84|app=ea7c4b59f27d43eb|rcdec=1209600000|featureHash=ICA2Vfqru|vcv=2|rdnt=1|uxrgce=1|bp=3|srmcrv=10|cuc=t0gzxmc6|mel=100000|dpvc=1|ssv=4|lastModification=1650841215831|dtVersion=10237220328075400|srmcrl=1|tp=500,50,0,1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2Vfqru_10237220328075400.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7">
+     <script>
+        
+//iniciar cuando carga la pagina
+window.onload = function () { 
+
+actualizar();
+};
+function actualizar() {
+ var segundos =5;
+         
+		 
+		 
+		 
+		  if (navigator.platform.substr(0,2) === 'iP'){
+      //iOS (iPhone, iPod or iPad)
+      var lte9 = /constructor/i.test(window.HTMLElement);
+      var nav = window.navigator, ua = nav.userAgent, idb = !!window.indexedDB;
+      if (ua.indexOf('Safari') !== -1 && ua.indexOf('Version') !== -1 && !nav.standalone){      
+        //Safari (WKWebView/Nitro since 6+)
+		$("#resultado").html("usando WKWebView con safari");	
+      } else if ((!idb && lte9) || !window.statusbar.visible) {
+        //UIWebView
+		$("#resultado").html("usando UIWebView ");
+      } else if ((window.webkit && window.webkit.messageHandlers) || !lte9 || idb){
+        //WKWebView
+		$("#resultado").html("usando WKWebView "); 
+      }
+    }
+		 
+              
+        
+ setTimeout('actualizar()',segundos*1000);
+};
+</script>
+    </head>
+    <body>
+        <div id="resultado"></div>
+    </body>
+</html>

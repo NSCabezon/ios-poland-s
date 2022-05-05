@@ -1,0 +1,51 @@
+{
+   "main-window-category-title":"Co chcesz zrobić?",
+   "sections":[
+      {
+         "profiles":[
+            "klient_indywidualny"
+         ],
+         "questions":[
+            {
+               "name":"Zgłosić błąd, sugestię lub reklamację",
+               "answer":"Skorzystaj z formularza, który udostępniliśmy tutaj: <a href=\"https://bledywoneapp.webankieta.pl\">https://bledywoneapp.webankieta.pl</a> Zgłaszaj wszystkie swoje spostrzeżenia na bieżąco. Dzięki temu dobrze przygotujemy nową aplikację dla klientów. Jeśli błąd pilotażowej aplikacji ma wpływ na Twoje finanse (np. błędnie prezentowane saldo), w formularzu zaznacz priorytet Krytyczny. Takie zgłoszenia traktujemy jako reklamacje."
+            },
+            {
+               "name":"Zatwierdzić mobilną autoryzacją przelew internetowy",
+               "answer":"Wszystkie przelewy, które zlecasz w internecie (np. zakupy internetowe), zatwierdzasz mobilną autoryzacją w obecnej aplikacji Santander mobile."
+            },
+            {
+               "name":"Dowiedzieć się więcej o aplikacji pilotażowej",
+               "answer":"Więcej informacji o aplikacji pilotażowej znajdziesz w Suflerze. Link do strony jest w zaproszeniu do pilotażu, które Ci wysłaliśmy."
+            },
+            {
+               "name":"Skorzystać z obecnej aplikacji Santander mobile",
+               "answer":"Obecna aplikacja Santander mobile jest nadal dostępna. Korzystaj z niej jak dotąd. Obecna aplikacja przyda Ci się szczególnie wtedy, gdy w aplikacji pilotażowej nie znajdziesz funkcji, której potrzebujesz."
+            }
+         ]
+      },
+      {
+         "profiles":[
+            "klient_firmowy"
+         ],
+         "questions":[
+            {
+               "name":"Zgłosić błąd, sugestię lub reklamację",
+               "answer":"Skorzystaj z formularza, który udostępniliśmy tutaj: <a href=\"https://bledywoneapp.webankieta.pl\">https://bledywoneapp.webankieta.pl</a> Zgłaszaj wszystkie swoje spostrzeżenia na bieżąco. Dzięki temu dobrze przygotujemy nową aplikację dla klientów. Jeśli błąd pilotażowej aplikacji ma wpływ na Twoje finanse (np. błędnie prezentowane saldo), w formularzu zaznacz priorytet Krytyczny. Takie zgłoszenia traktujemy jako reklamacje."
+            },
+            {
+               "name":"Zatwierdzić mobilną autoryzacją przelew internetowy",
+               "answer":"Wszystkie przelewy, które zlecasz w internecie (np. zakupy internetowe), zatwierdzasz mobilną autoryzacją w obecnej aplikacji Santander mobile."
+            },
+            {
+               "name":"Dowiedzieć się więcej o aplikacji pilotażowej",
+               "answer":"Więcej informacji o aplikacji pilotażowej znajdziesz w Suflerze. Link do strony jest w zaproszeniu do pilotażu, które Ci wysłaliśmy."
+            },
+            {
+               "name":"Skorzystać z obecnej aplikacji Santander mobile",
+               "answer":"Obecna aplikacja Santander mobile jest nadal dostępna. Korzystaj z niej jak dotąd. Obecna aplikacja przyda Ci się szczególnie wtedy, gdy w aplikacji pilotażowej nie znajdziesz funkcji, której potrzebujesz."
+            }
+         ]
+      }
+   ]
+}

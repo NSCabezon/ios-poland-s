@@ -70,7 +70,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-        
+    
     enum Error: Swift.Error {
         case noBaseURL
     }
@@ -90,7 +90,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .get,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .activeEwallets)
         )
     }
     
@@ -104,7 +105,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .get,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .pspTicket)
         )
     }
     
@@ -118,10 +120,11 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .get,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .getTrnToConf)
         )
     }
-
+    
     func getActiveCheques() throws -> Result<[BlikChequeDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
@@ -237,7 +240,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         bodyEncoding: .form)
         )
     }
-
+    
     func getPinPublicKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
         guard let authBaseUrl = self.blikAuthBaseUrl() else {
             return .failure(NetworkProviderError.other)
@@ -278,7 +281,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .post,
                         request: data,
-                        bodyEncoding: .form)
+                        bodyEncoding: .form,
+                        localServiceName: .verifyContacts)
         )
     }
     
@@ -294,10 +298,11 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .get,
                         queryParams: queryParams,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .p2pAlias)
         )
     }
-
+    
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(parameters) else {
             return .failure(NetworkProviderError.other)
@@ -401,7 +406,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         bodyEncoding: .form)
         )
     }
-
+    
     func acceptTransfer(
         _ parameters: AcceptDomesticTransactionParameters,
         transactionParameters: TransactionParameters?
@@ -416,10 +421,10 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                                           serviceUrl: serviceUrl,
                                           method: .post,
                                           jsonBody: parameters,
+                                          localServiceName: .acceptTransfer,
                                           authorization: .twoFactorOperation(
                                             transactionParameters: transactionParameters
                                           )
-                                        
             )
         )
     }
@@ -466,7 +471,7 @@ private struct BlikRequest: NetworkProviderRequest {
     let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
-
+    
     init(serviceName: String,
          serviceUrl: String,
          method: NetworkProviderMethod,

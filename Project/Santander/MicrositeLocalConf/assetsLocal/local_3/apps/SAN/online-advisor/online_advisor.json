@@ -1,0 +1,220 @@
+{
+    "check-interval": "2",
+    "messages": {
+        "pl": "Testowy komunikat o niedostępności usługi Doradca online",
+        "en": "The service „Online advisor” is available only in Polish",
+        "uk": "Послуга „Онлайн консультант” доступна тільки польскою мовою",
+        "ru": "Услуга „Онлайн консультант” доступна только на польском языке"
+    },
+    "services-base-address": "https://doradca2.centrum24.pl/doradca-online/proxyserver/",
+    "icon-base-address": "https://zt2.cdn.santanderbankpolska.pl/oneapp/scarlet/apps/SAN/online-advisor/",
+    "channels": [
+        {
+            "profiles": [
+                "klient_indywidualny",
+                "klient_niezalogowany"
+            ],
+            "channel-name": "Wideo rozmowa przez aplikację",
+            "medium-type": "V",
+		 "ico": "OnlineAdvisorVideoIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "produktymobile",
+                    "subject-id": "produkt",
+                    "required-logging-in": "true",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktów",
+                    "entry-type": "zakupymobile",
+                    "subject-id": "zakup",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "bzwbk24mobile",
+                    "subject-id": "internet",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_indywidualny"
+            ],
+            "channel-name": "Czat tekstowy przez aplikację",
+            "medium-type": "C",
+            "ico": "OnlineAdvisorChatIco.png",
+		 "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "produktymobile",
+                    "subject-id": "produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktów",
+                    "entry-type": "zakupymobile",
+                    "subject-id": "zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "bzwbk24mobile",
+                    "subject-id": "internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_indywidualny",
+                "klient_niezalogowany"
+            ],
+            "channel-name": "Audio rozmowa przez aplikację",
+            "medium-type": "A",
+		 "ico": "OnlineAdvisorAudioIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "produktymobile",
+                    "subject-id": "produkt",
+                    "required-logging-in": "true",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktów",
+                    "entry-type": "zakupymobile",
+                    "subject-id": "zakup",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "bzwbk24mobile",
+                    "subject-id": "internet",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_firmowy"
+            ],
+            "channel-name": "Wideo rozmowa przez aplikację",
+            "medium-type": "V",
+		 "ico": "OnlineAdvisorVideoIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktów",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_firmowy"
+            ],
+            "channel-name": "Czat tekstowy przez aplikację",
+            "medium-type": "C",
+		 "ico": "OnlineAdvisorChatIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktów",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_firmowy"
+            ],
+            "channel-name": "Audio rozmowa przez aplikację",
+            "medium-type": "A",
+		 "ico": "OnlineAdvisorAudioIco.png",
+            "subjects": [
+                {
+                    "name": "Twoje produkty",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_produkt",
+                    "ico": "OnlineAdvisorMyProductsIco.png"
+                },
+                {
+                    "name": "Zakup nowych produktów",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_zakup",
+                    "ico": "OnlineAdvisorNewProductsIco.png"
+                },
+                {
+                    "name": "Pomoc Santander online",
+                    "entry-type": "smemobile",
+                    "subject-id": "SME_internet",
+                    "ico": "OnlineAdvisorHelpInternetIco.png"
+                }
+            ]
+        },
+        {
+            "profiles": [
+                "klient_indywidualny",
+                "klient_niezalogowany",
+                "klient_firmowy"
+            ],
+            "channel-name": "Obsługa w języku migowym",
+            "medium-type": "V",
+		 "ico": "OnlineAdvisorHelpDisabilityIco.png",
+            "subjects": [
+                {
+                    "name": "",
+                    "entry-type": "pjmmobile",
+                    "subject-id": "pjm",
+                    "required-logging-in": "false",
+                    "ico": "OnlineAdvisorHelpDisabilityIco.png"
+                }
+            ]
+        }
+    ],
+    "order-product-online-advisor": {
+        "individual": {
+            "entry-type": "weryfikacja",
+            "subject-id": "konto_wideo",
+            "medium-type": "V"
+        },
+        "corporate": {
+            "entry-type": "weryfikacja_SME",
+            "subject-id": "konto_wideo_SME",
+            "medium-type": "V"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Test de Idioma</title>
+<script type="text/javascript" src="/ruxitagentjs_ICA2Vfqru_10237220328075400.js" data-dtconfig="rid=RID_970129985|rpid=-1863513908|domain=santanderbankpolska.pl|reportUrl=/rb_7f01edd2-1060-487b-87d4-3acf42246e84|app=ea7c4b59f27d43eb|rcdec=1209600000|featureHash=ICA2Vfqru|vcv=2|rdnt=1|uxrgce=1|bp=3|srmcrv=10|cuc=t0gzxmc6|mel=100000|dpvc=1|ssv=4|lastModification=1650841215831|dtVersion=10237220328075400|srmcrl=1|tp=500,50,0,1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2Vfqru_10237220328075400.js"></script><script type="text/javascript">
+	function capitalize(s) {
+	    return s[0].toUpperCase() + s.slice(1);
+	}
+	function onload() {
+			var user = location.search.split('language=')[1];
+			if (typeof user != 'undefined' && user) {
+				var decodeUser = decodeURI(user);
+				document.getElementById("language").innerHTML = capitalize(decodeUser.toLowerCase());
+			}
+	}
+</script>
+</head>
+
+<body onload="onload();">
+		<div><center>
+			<p class="name">idioma <span id="language"></span></p>
+		</br>
+		<p>pon al final de de la url -> ?language="ca"</p>
+
+		</center>
+		</div>
+	
+
+</body>
+</html>
