@@ -13,6 +13,13 @@ final class TaxAccountTypeRecognizer: TaxAccountTypeRecognizing {
     enum Error: Swift.Error {
         case invalidAccountLength
         case illegalCharacters
+        case invalidIdentifier
+    }
+    
+    private let identifierValidator: TaxIdentifierValidating
+    
+    init(identifierValidator: TaxIdentifierValidating) {
+        self.identifierValidator = identifierValidator
     }
     
     func recognizeType(of accountNumber: String) throws -> TaxAccountType {
@@ -50,13 +57,17 @@ final class TaxAccountTypeRecognizer: TaxAccountTypeRecognizing {
     // Y -> IRP Identifier Type (1 digit long, only possible values are 1 (PESEL), 2 (NIP) or 3)
     // XXXXXXXXXXXX -> IRP identifier (12 digits long)
     //
+    private enum IrpIdentifierType: String {
+        case pesel = "1"
+        case nip = "2"
+        case other = "3"
+    }
+    private let irpMaskConstant = "10100071222"
+    private let controlNumberLength = 2
+    private let irpIdentifierTypeLength = 1
+    private let irpIdentifierLength = 12
+    private let legalIrpIdentifierTypeCharacterSet = CharacterSet(charactersIn: "123")
     private func checkIfAccountIsIrpType(_ accountNumber: String) -> Bool {
-        let irpMaskConstant = "10100071222"
-        let controlNumberLength = 2
-        let irpIdentifierTypeLength = 1
-        let irpIdentifierLength = 12
-        let legalIrpIdentifierTypeCharacterSet = CharacterSet(charactersIn: "123")
-        
         let potentialIrpMaskConstant = String(
             accountNumber
                 .dropFirst(controlNumberLength)
@@ -73,6 +84,39 @@ final class TaxAccountTypeRecognizer: TaxAccountTypeRecognizing {
         let isIrpIdentifierTypeLegal = legalIrpIdentifierTypeCharacterSet.isSuperset(
             of: CharacterSet(charactersIn: irpIdentifierType)
         )
+        do {
+            let irpIdentifier = String(
+                accountNumber.dropFirst(controlNumberLength + irpMaskConstant.count + irpIdentifierTypeLength)
+            )
+            if irpIdentifierType == IrpIdentifierType.pesel.rawValue {
+                try validatePesel(in: irpIdentifier)
+            }
+            if irpIdentifierType == IrpIdentifierType.nip.rawValue {
+                try validateNIP(in: irpIdentifier)
+            }
+        } catch {
+            return false
+        }
         return (potentialIrpMaskConstant == irpMaskConstant) && isIrpIdentifierTypeLegal
+    }
+    
+    private func validatePesel(in identifier: String) throws {
+        guard identifier.last == "0" else {
+            throw Error.invalidIdentifier
+        }
+        let trimmedIdentifier = String(identifier.dropLast(1))
+        guard identifierValidator.validate(type: .PESEL, value: trimmedIdentifier) == .valid else {
+            throw Error.invalidIdentifier
+        }
+    }
+    
+    private func validateNIP(in identifier: String) throws {
+        guard identifier.substring(ofLast: 2) == "00" else {
+            throw Error.invalidIdentifier
+        }
+        let trimmedIdentifier = String(identifier.dropLast(2))
+        guard identifierValidator.validate(type: .NIP, value: trimmedIdentifier) == .valid else {
+            throw Error.invalidIdentifier
+        }
     }
 }
