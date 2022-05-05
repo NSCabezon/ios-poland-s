@@ -249,13 +249,14 @@ private extension TaxTransferFormPresenter {
     }
     
     func showEmptyAccountsListAlert() {
-        view?.showErrorMessage(
+        let dialog = InfoDialogBuilder(
             title: localized("pl_popup_noSourceAccTitle"),
-            message: localized("pl_popup_noSourceAccParagraph"),
-            actionButtonTitle: localized("generic_button_understand"),
-            closeButton: .none,
-            onConfirm: { [weak self] in self?.coordinator.back() }
-        )
+            description: localized("pl_popup_noSourceAccParagraph"),
+            image: PLAssets.image(named: "info_black") ?? UIImage()
+        ) { [weak self] in
+            self?.coordinator.back()
+        }.build()
+        view?.showDialog(dialog)
     }
     
     func updateViewWithLatestViewModel() {
@@ -307,8 +308,9 @@ private extension TaxTransferFormPresenter {
     }
     
     func getSelectedInfo(from payer: TaxPayer) -> SelectedTaxPayerInfo {
+        let taxIdentifier = (payer.taxIdentifier?.isEmpty ?? true) ? payer.secondaryTaxIdentifierNumber : (payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber)
         return SelectedTaxPayerInfo(
-            taxIdentifier: payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber,
+            taxIdentifier: taxIdentifier,
             idType: payer.idType
         )
     }

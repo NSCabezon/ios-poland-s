@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TaxIdentifierValidatonResult {
+enum TaxIdentifierValidatonResult: Equatable {
     case valid
     case invalid(String?)
 }

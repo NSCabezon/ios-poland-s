@@ -1,0 +1,29 @@
+
+{
+    "loadingTips": [
+        {
+            "mainTitle": "CZY WIESZ, ŻE...?",
+			"title": "W aplikacji", 
+			"boldTitle": "wymienisz waluty 24h na dobę",
+			"subtitle": "Kantor Santander jest dostępy ze skrótów na ekranie głównym, z opcji konta i z bocznego menu 'Oferta banku'"
+        },
+         {
+            "mainTitle": "CZY WIESZ, ŻE...?",
+			"title": "aplikacja, z której właśnie korzystasz służy", 
+			"boldTitle": "milionom użytkowników w Europie.",
+			"subtitle": "Jest już dostępna w Hiszpanii i Portugalii, a niedługo też na Wyspach Brytyjskich"
+        }, 
+        {
+            "mainTitle": "CZY WIESZ, ŻE...?",
+			"title": "w aplikacji jest około 40 miejsc, gdzie możesz zostawić opinie?", 
+			"boldTitle": "Dziel się feedbackiem i wypełniaj ankiety",
+			"subtitle": "Opcję zostawienia feedbacku znajdziesz m.in. na pulpicie oraz w menu „Zostaw opinię”"
+        },
+        {
+            "mainTitle": "CZY WIESZ, ŻE...?",
+			"title": "możesz używać trybu dyskretnego,", 
+			"boldTitle": "by korzystać z aplikacji jeszcze swobodniej",
+			"subtitle": "Zrób to w menu boczne Strefa osobista/ Ustawienia aplikacji/ Wybierz swój pulpit"
+        }
+    ]
+}
