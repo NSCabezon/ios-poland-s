@@ -307,8 +307,9 @@ private extension TaxTransferFormPresenter {
     }
     
     func getSelectedInfo(from payer: TaxPayer) -> SelectedTaxPayerInfo {
+        let taxIdentifier = (payer.taxIdentifier?.isEmpty ?? true) ? payer.secondaryTaxIdentifierNumber : (payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber)
         return SelectedTaxPayerInfo(
-            taxIdentifier: payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber,
+            taxIdentifier: taxIdentifier,
             idType: payer.idType
         )
     }
