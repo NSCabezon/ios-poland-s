@@ -1622,8 +1622,8 @@
 				823D0C112816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift */,
 			);
 			path = Dependencies;
-            sourceTree = "<group>";
-        };
+			sourceTree = "<group>";
+		};
 		851A7C7328211346005FD374 /* GPSimple */ = {
 			isa = PBXGroup;
 			children = (
@@ -1671,7 +1671,6 @@
 		903E5BF42799628F000BE389 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				EFFA0E0927C6819A0057EAE5 /* Internal Transfer */,
 				903E5BF52799628F000BE389 /* Home */,
 			);
 			path = Modules;
@@ -2135,13 +2134,6 @@
 				EFE9103D27CD40B1006D8FF7 /* OtherOperativesModifierDependenciesResolver.swift */,
 			);
 			path = GlobalPosition;
-			sourceTree = "<group>";
-		};
-		EFFA0E0927C6819A0057EAE5 /* Internal Transfer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Internal Transfer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

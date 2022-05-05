@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>Test de cache persistente</title>
+
+<script type="text/javascript" src="/ruxitagentjs_ICA2Vfqru_10237220328075400.js" data-dtconfig="rid=RID_1203148342|rpid=-1568546217|domain=santanderbankpolska.pl|reportUrl=/rb_7f01edd2-1060-487b-87d4-3acf42246e84|app=ea7c4b59f27d43eb|rcdec=1209600000|featureHash=ICA2Vfqru|vcv=2|rdnt=1|uxrgce=1|bp=3|srmcrv=10|cuc=t0gzxmc6|mel=100000|dpvc=1|ssv=4|lastModification=1650841215831|dtVersion=10237220328075400|srmcrl=1|tp=500,50,0,1|uxdcw=1500|agentUri=/ruxitagentjs_ICA2Vfqru_10237220328075400.js"></script><script type="text/javascript">
+
+function addProducto(){
+
+localStorage.setItem('myCat', 'Tom');
+mostrarDatos();
+}
+
+ 
+
+function mostrarDatos(){
+
+var datosDisponibles=document.getElementById('datosDisponibles');
+
+datosDisponibles.innerHTML='';
+
+datosDisponibles.innerHTML += '<div>'+localStorage.getItem('myCat')+'</div>';
+
+}
+
+ 
+
+function limpiarVista() {
+
+localStorage.removeItem('myCat');
+localStorage.clear();
+mostrarDatos();
+}
+
+
+
+ 
+
+</script>
+
+</head>
+
+<body onload='mostrarDatos()'>
+
+<form name="formulario">
+
+<p><input type="button" onclick="addProducto()" name="guardar" id="guardar" value="Añadir a cache"></p>
+
+<p><input type="button" onclick="limpiarVista()" name="limpiar" id="limpiar" value="Limpiar cache"></p>
+
+<br>
+<br>
+<p>Estado de la cache <div id='datosDisponibles'></div></p>
+</form>
+<br/>
+<a href="https://www.bancosantander.es">https://www.bancosantander.es</a>
+</body>
+</html>
