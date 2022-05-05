@@ -48,10 +48,10 @@ extension TaxTransferFormViewModel {
         }
 
         var hasDifferentTaxIdentifiers: Bool {
-            guard let identifier = taxPayer.taxIdentifier, !identifier.isEmpty else {
+            guard let taxIdentifier = taxPayer.taxIdentifier, !taxIdentifier.isEmpty else {
                 return false
             }
-            return identifier != taxPayer.secondaryTaxIdentifierNumber
+            return taxIdentifier != taxPayer.secondaryTaxIdentifierNumber
         }
         
         static func == (lhs: TaxTransferFormViewModel.TaxPayerViewModel, rhs: TaxTransferFormViewModel.TaxPayerViewModel) -> Bool {
