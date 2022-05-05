@@ -48,17 +48,15 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
                 if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
                     return Fail(error: InternalTransferOperativeError.originMinimunAccounts).eraseToAnyPublisher()
                 }
-                let data = PreSetupData(originAccountsVisibles: originAccountsVisibles,
-                                    originAccountsNotVisibles: originAccountsNotVisibles,
-                                    destinationAccountsVisibles: nil,
-                                    destinationAccountsNotVisibles: nil)
+                let data = PreSetupData(accountsVisibles: originAccountsVisibles,
+                                        accountsNotVisibles: originAccountsNotVisibles)
                 return Just(data).setFailureType(to: InternalTransferOperativeError.self).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
     func isMinimunAccounts(accounts: [AccountRepresentable]) -> Bool {
-        if accounts.count > 1 {
+        if !accounts.isEmpty {
             return true
         } else {
             return false
