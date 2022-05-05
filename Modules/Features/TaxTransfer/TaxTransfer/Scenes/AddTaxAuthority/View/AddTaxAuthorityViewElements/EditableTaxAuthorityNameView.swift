@@ -80,7 +80,7 @@ private extension EditableTaxAuthorityNameView {
     func configureStyling() {
         let nameFormatter = UIFormattedCustomTextField()
         nameFormatter.setMaxLength(maxLength: 80)
-        nameFormatter.setAllowOnlyCharacters(.ascii)
+        nameFormatter.setAllowOnlyCharacters(.ascii.union(.polishLetters))
         authorityNameTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
