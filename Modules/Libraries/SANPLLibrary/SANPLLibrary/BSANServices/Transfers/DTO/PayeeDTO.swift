@@ -14,7 +14,6 @@ public struct PayeeDTO: Codable {
     public let alias: String?
     public let account: AccountPayeeDTO?
     public let phone: PayeePhoneDTO?
-    public var countryCode: String?
 
     enum CodingKeys: String, CodingKey {
         case payeeID = "payeeId"
@@ -49,7 +48,7 @@ extension PayeeDTO: PayeeRepresentable {
     }
     
     public var payeeName: String? {
-        return account?.payeeName
+        return nil
     }
     
     public var payeeCode: String? {
@@ -89,7 +88,11 @@ extension PayeeDTO: PayeeRepresentable {
     }
     
     public var formattedAccount: String? {
-        return ibanRepresentable?.formatted
+        guard let ibanRepresentable = ibanRepresentable else { return nil }
+        if !["ES", "PT", "PL"].contains(ibanRepresentable.countryCode.uppercased()) {
+            return ibanRepresentable.countryCode + ibanRepresentable.checkDigits + " " + ibanRepresentable.codBban
+        }
+        return ibanRepresentable.ibanPapel
     }
     
     public var isNoSepa: Bool {
@@ -113,6 +116,13 @@ extension PayeeDTO: PayeeRepresentable {
     
     public var recipientType: String? {
         return nil
+    }
+    
+    public var countryCode: String? {
+        get {
+            return self.ibanRepresentable?.countryCode
+        }
+        set {}
     }
 }
 
