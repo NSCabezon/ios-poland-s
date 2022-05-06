@@ -178,7 +178,9 @@ private extension AddTaxAuthorityCoordinator {
         }
         
         dependenciesEngine.register(for: TaxAccountTypeRecognizing.self) { _ in
-            return TaxAccountTypeRecognizer()
+            return TaxAccountTypeRecognizer(
+                identifierValidator: TaxIdentifierValidator()
+            )
         }
         
         dependenciesEngine.register(for: TaxAuthorityFormValidating.self) { resolver in

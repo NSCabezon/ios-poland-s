@@ -6,7 +6,6 @@ extension UIViewController {
             target: self,
             action: #selector(hideKeyboard)
         )
-        dismissGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(dismissGesture)
     }
     
