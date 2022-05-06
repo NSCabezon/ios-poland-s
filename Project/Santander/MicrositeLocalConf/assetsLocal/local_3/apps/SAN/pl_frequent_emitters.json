@@ -1,0 +1,80 @@
+
+{
+   "frequentEmitters":[
+      {
+         "name":"A. RENDELSUR",
+         "code":"4180955",
+         "statusCode":"A"
+      },
+      {
+         "name":"IBERDROLA CLIENTES ",
+         "code":"9575838",
+         "statusCode":"A"
+      },
+      {
+         "name":"IBERDROLA DISTRIB. ELECTRICA ",
+         "code":"9507557",
+         "statusCode":"A"
+      },
+      {
+         "name":"AGUAS TELDE G.I.S",
+         "code":"3549931",
+         "statusCode":"A"
+      },
+      {
+         "name":"AGUAS Y RESIDUOS DEL CAMPO GIBRALTA",
+         "code":"1176854",
+         "statusCode":"A"
+      },
+      {
+         "name":"Ayuntamiento de Valdilecha",
+         "code":"5460941",
+         "statusCode":"A"
+      },
+      {
+         "name":"Seguros Bilbao",
+         "code":"0016482",
+         "statusCode":"A"
+      },
+      {
+         "name":"Seguros Catalana Occidente",
+         "code":"2811922",
+         "statusCode":"A"
+      },
+      {
+         "name":"Seguros Vitalicio",
+         "code":"0816818",
+         "statusCode":"A"  
+      },
+      {
+         "name":"SEGURO DIRECTO PARTICULARES",
+         "code":"8260117",
+         "statusCode":"A"
+      },
+      {
+         "name":"AY. MADRID MULTAS",
+         "code":"0289929",
+         "statusCode":"A"
+      },
+      {
+         "name":"AY. MADRID OTRAS MULTAS",
+         "code":"0289840",
+         "statusCode":"A"
+      },
+      {
+         "name":"AYTO LIQUDACIONES ERESA",
+         "code":"0289954",
+         "statusCode":"A"
+      },
+      {
+         "name":"AY. MADRID LIQUID. GIIM AY.",
+         "code":"0289905",
+         "statusCode":"A"
+      },
+      {
+         "name":"AYTO TASA POR OCUPACION DE SUELO",
+         "code":"0289978",
+         "statusCode":"A"
+      }
+   ]
+}

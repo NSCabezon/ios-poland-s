@@ -1,0 +1,72 @@
+{
+    "12345678Z": {
+        "0": {
+            "customerAddressData":{
+                "customerName":"",
+                "city":"",
+                "street":"",
+                "zipCode":"",
+                "baseAddress":""
+            },
+            "debitAmountData":{
+                "currency":"PLN",
+                "amount":-1.00,
+                "currencyRate":"",
+                "currencyUnit":0
+            },
+            "creditAmountData":{
+                "currency":"PLN",
+                "amount":1.00,
+                "currencyRate":"",
+                "currencyUnit":0
+            },
+            "debitAccountData":{
+                "accountType":101,
+                "accountSequenceNumber":1,
+                "branchId":"10901014",
+                "accountNo":"62109010140000000142714238",
+                "accountName":"Konto Jakie Chcę"
+            },
+            "creditAccountData":{
+                "accountType":90,
+                "accountSequenceNumber":0,
+                "branchId":"10040003",
+                "accountNo":"68100400032222000033330001",
+                "accountName":"48XXXXXX001"
+            },
+            "transactionAmountData":{
+                "baseAmount":-1.00
+            },
+            "title":"Przelew na telefon",
+            "type":"BLIK_P2P_TRANSACTION",
+            "valueDate":"2022-04-27",
+            "sendApplicationId":21,
+            "timestamp":303688751,
+            "options":32768,
+            "dstPhoneNo":"48574100001",
+            "ownerCifNumber":1015906104,
+            "transactionSide":"TRN_NO_SIDE",
+            "noFixedRate":0,
+            "customerRef":"",
+            "transferType":"BLIK_P2P",
+            "key":{
+                "id":457506,
+                "date":"2022-04-27"
+            },
+            "signHistoryData":[
+                {
+                    "signLoginId":35596500,
+                    "signResult":0,
+                    "signTime":"2022-04-27T12:57:34.000",
+                    "signTrnState":"ACCEPTED",
+                    "signCifNumber":1015906104,
+                    "signApplicationId":21
+                }
+            ],
+            "state":"ACCEPTED",
+            "sendError":0,
+            "postingId":0,
+            "acceptanceTime":"2022-04-27T12:57:34.000"
+        }
+    }
+}

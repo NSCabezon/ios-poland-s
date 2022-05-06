@@ -17,8 +17,8 @@ public protocol AccountForDebitSelectorCoordinatorProtocol {
 
 open class AccountForDebitSelectorCoordinator: ModuleCoordinator, AccountForDebitSelectorCoordinatorProtocol {
     weak public var navigationController: UINavigationController?
+    public let mode: AccountForDebitSelectorMode
     private let dependenciesEngine: DependenciesDefault
-    private let mode: AccountForDebitSelectorMode
     private let accounts: [AccountForDebit]
     private let screenLocationConfiguration: AccountSelectorViewController.ScreenLocationConfiguration
     private let selectedAccountNumber: String?
@@ -57,7 +57,7 @@ open class AccountForDebitSelectorCoordinator: ModuleCoordinator, AccountForDebi
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    public func back() {
+    open func back() {
         switch mode {
         case .mustSelectDefaultAccount:
             navigationController?.popToRootViewController(animated: true)

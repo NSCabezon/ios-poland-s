@@ -12,4 +12,13 @@ final class TopUpAccountSelectorCoordinator: AccountForDebitSelectorCoordinator 
     override func closeProcess() {
         navigationController?.closeTopUpProces()
     }
+    
+    override func back() {
+        switch mode {
+        case .mustSelectDefaultAccount:
+            navigationController?.closeTopUpProces()
+        case .changeDefaultAccount:
+            navigationController?.popViewController(animated: true)
+        }
+    }
 }

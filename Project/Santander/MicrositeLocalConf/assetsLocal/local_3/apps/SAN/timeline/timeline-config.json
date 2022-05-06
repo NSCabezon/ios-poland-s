@@ -1,0 +1,4389 @@
+{
+  "textProductCodes" : {
+    "003" : {
+      "en" : "loan",
+      "es" : "préstamo",
+      "ca" : "préstec",
+      "gl" : "empréstito",
+      "fr" : "emprunt",
+      "eu" : "mailegua",
+      "it" : "prestito"
+    },
+    "000" : {
+      "en" : "Unknown",
+      "es" : "Desconocido",
+      "ca" : "Desconegut",
+      "gl" : "Descoñecido",
+      "fr" : "Inconnu",
+      "eu" : "Ezezaguna",
+      "it" : "Sconosciuto"
+    },
+    "004" : {
+      "en" : "mortage",
+      "es" : "hipoteca",
+      "ca" : "hipoteca",
+      "gl" : "hipoteca",
+      "fr" : "hypothèque",
+      "eu" : "Hipoteka",
+      "it" : "Mutuo"
+    },
+    "001" : {
+      "en" : "account",
+      "es" : "cuenta",
+      "ca" : "compte",
+      "gl" : "conta",
+      "fr" : "compte",
+      "eu" : "kontua",
+      "it" : "conto"
+    },
+    "002" : {
+      "en" : "card",
+      "es" : "tarjeta",
+      "ca" : "targeta",
+      "gl" : "tarxeta",
+      "fr" : "carte",
+      "eu" : "txartela",
+      "it" : "carta"
+    }
+  },
+  "timelineProperties" : {
+    "showMonthsSelector" : true,
+    "previousEventsPages" : 1,
+    "showDetails" : true,
+    "showDetailGraph" : true,
+    "comingEventsPages" : 2
+  },
+  "textTransactions" : [
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Transfer to %merchantName% of %amount%"
+            },
+            {
+              "iban" : " from the account %iban%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Transferencia emitida a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " desde la cuenta %iban%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Transferència emesa a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " des del compte %iban%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Transferencia emitida a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " desde a conta %iban%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Virement de %amount% émis à destination de %merchantName%"
+            },
+            {
+              "iban" : " depuis le compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "iban" : "%iban% kontutik"
+            },
+            {
+              "text" : " %merchantName% kontura bidalitako %amount%-ko transferentzia"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Bonifico di %amount% emesso a favore di %merchantName%"
+            },
+            {
+              "iban" : " dal conto %iban%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Transfer",
+        "es" : "Transferencia puntual",
+        "ca" : "Transferència puntual",
+        "gl" : "Transferencia puntual",
+        "fr" : "Virement ponctuel",
+        "eu" : "Aldi bateko transferentzia",
+        "it" : "Bonifico singolo"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last month's transactions",
+        "es" : "Estimado en base a los movimientos de tu último mes",
+        "ca" : "Estimat a partir dels moviments de l'últim mes",
+        "gl" : "Estimado en función dos movementos do teu último mes",
+        "fr" : "Estimation sur la base des mouvements de votre dernier mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "100",
+      "analyticsReference" : "transfer",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Transfer to %merchantName% of %amount%"
+            },
+            {
+              "iban" : " from the account %iban%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Transferencia emitida a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " desde la cuenta %iban%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Transferència emesa a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " des del compte %iban%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Transferencia emitida a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " desde a conta %iban%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Virement de %amount% émis à destination de %merchantName%"
+            },
+            {
+              "iban" : " depuis le compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "iban" : "%iban% kontutik"
+            },
+            {
+              "text" : " %merchantName% kontura bidalitako %amount%-ko transferentzia"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Bonifico di %amount% emesso a favore di %merchantName%"
+            },
+            {
+              "iban" : " dal conto %iban%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Scheduled transfer of %amount%"
+            },
+            {
+              "iban" : " from the account %iban%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Transferencia programada de %amount%"
+            },
+            {
+              "iban" : " desde la cuenta %iban%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Transferència programada de %amount%"
+            },
+            {
+              "iban" : " des del compte %iban%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Transferencia programada de %amount%"
+            },
+            {
+              "iban" : " desde a conta %iban%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Virement de %amount% programmé"
+            },
+            {
+              "iban" : " depuis le compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "iban" : "%iban% kontutik"
+            },
+            {
+              "text" : " %merchantName% kontura bidalitako %amount%-ko programatutako transferentzia"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Bonifico di %amount% programmato"
+            },
+            {
+              "iban" : " dal conto %iban%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Scheduled transfer",
+        "es" : "Transferencia programada",
+        "ca" : "Transferència programada",
+        "gl" : "Transferencia programada",
+        "fr" : "Virement programmé",
+        "eu" : "Programatutako transferentzia",
+        "it" : "Bonifico programmato"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last month's transactions",
+        "es" : "Estimado en base a los movimientos de tu último mes",
+        "ca" : "Estimat a partir dels moviments de l'últim mes",
+        "gl" : "Estimado en función dos movementos do teu último mes",
+        "fr" : "Estimation sur la base des mouvements de votre dernier mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "101",
+      "analyticsReference" : "programmed transfer",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Scheduled transfer to %merchantName% of %amount%"
+            },
+            {
+              "iban" : " from the account %iban%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Transferencia programada a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " desde la cuenta %iban%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Transferència programada a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " des del compte %iban%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Transferencia programada a %merchantName% de %amount%"
+            },
+            {
+              "iban" : " desde a conta %iban%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Virement de %amount% programmé à destination de %merchantName% "
+            },
+            {
+              "iban" : " depuis le compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "iban" : "%iban% kontutik"
+            },
+            {
+              "text" : " %merchantName% kontura bidalitako %amount%-ko programatutako transferentzia"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Bonifico di %amount% programmato a favore di %merchantName%"
+            },
+            {
+              "iban" : " dal conto %iban%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Possible receipt of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : ". The last receipt was %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Posible recibo de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : ". El último recibo fue de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Possible rebut de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : ". L'últim rebut va ser de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Posible recibo de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : ". O último recibo foi de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Reçu possible de %merchantName%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            },
+            {
+              "text" : ". Le dernier reçu a été de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName% -ren ordainagiri posiblea"
+            },
+            {
+              "iban" : " zure %iban% kontuan"
+            },
+            {
+              "text" : ". Azken ordainagiria %amount% -koa izan zen"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Possibile fattura di %merchantName%"
+            },
+            {
+              "iban" : " sul conto %iban%"
+            },
+            {
+              "text" : ". L'importo dell'ultima fattura è stato di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Receipt",
+        "es" : "Recibo",
+        "ca" : "Rebut",
+        "gl" : "Recibo",
+        "fr" : "Reçu",
+        "eu" : "Ordainagiria",
+        "it" : "Fatture"
+      },
+      "disclaimer" : {
+        "en" : "Estimated based on previous receipts. The dates and amounts in the future are indicative and informative, with the possibility that they will vary once the movements are settled in your account or card",
+        "es" : "Estimado en base a los recibos anteriores. Las fechas e importes a futuro son orientativos y tienen carácter informativo, con la posibilidad de que varíen una vez los movimientos se liquiden en tu cuenta o tarjeta.",
+        "ca" : "Estimat a partir dels rebuts anteriors. Les dates i els imports a futur són orientatius i tenen caràcter informatiu, amb la possibilitat que variïn quan es liquidin els moviments al compte o a la targeta.",
+        "gl" : "Estimado en función dos recibos anteriores. As datas e importes a futuro son aproximados e teñen carácter informativo, coa posibilidade de que varíen unha vez que os movementos se liquiden na túa conta ou tarxeta.",
+        "fr" : "Estimation sur la base des reçus antérieurs. Les dates et montants futurs sont à titre indicatif et à caractère informatif. Il est possible qu'ils soient différents une fois les mouvements liquidés sur votre compte ou votre carte.",
+        "eu" : "Aurreko ordainagirietan oinarrituz kalkulatua. Etorkizunerako data eta zenbatekoak orientagarria baino ez dira eta helburu bakarra informatze da, eta mugimenduak zure kontu edo txartelean likidatzen direnean aldaketan egon daitezke.",
+        "it" : "Stima in base alle fatture precedenti. Le date e gli importi futuri sono orientativi e hanno carattere informativo, potranno quindi essere soggetti a variazioni una volta liquidati tutti i movimenti sul tuo conto o sulla carta."
+      },
+      "transactionType" : "102",
+      "analyticsReference" : "receipt",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Direct debit of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Recibo domiciliado de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Rebut domiciliat de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Recibo domiciliado de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Reçu domicilié de %merchantName%"
+            },
+            {
+              "text" : " d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "iban" : "Zure %iban% kontuan"
+            },
+            {
+              "text" : " helbideratutako %merchantName% -ren ordainagiria %amount%-koa"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Fattura domiciliata di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Possible suscription payment to %merchantName% on your card. Last payment was %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Posible pago de suscripción a %merchantName% en tu tarjeta. El último pago fue de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Possible pagament de subscripció a %merchantName% a la teva targeta. L'últim pagament va ser de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Posible pagamento de subscrición a %merchantName% na túa tarxeta. O último pagamento foi de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Possible paiement de l'abonnement à %merchantName% sur votre carte. Le dernier paiement a été de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName%-(r)i egindako harpidetzako ordainketa posiblea zure txartelean. Azken ordainketan %amount%-koa izan zen"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Possibile pagamento dell'abbonamento a %merchantName% con addebito su carta. L'importo dell'ultimo pagamento è stato di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Suscription",
+        "es" : "Subscripción de tarjeta",
+        "ca" : "Subscripció de targeta",
+        "gl" : "Subscrición de tarxeta",
+        "fr" : "Souscription d'une carte",
+        "eu" : "Txartelaren harpidetza",
+        "it" : "Abbonamento con carta"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months purchases",
+        "es" : "Estimado en base a los cargos de tus últimos meses",
+        "ca" : "Estimat a partir dels càrrecs dels últims mesos",
+        "gl" : "Estimado en función dos cargos dos teus últimos meses",
+        "fr" : "Estimation sur la base des prélèvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako zordunketetan oinarrituz kalkulatua",
+        "it" : "Stima in base agli addebiti degli ultimi mesi"
+      },
+      "transactionType" : "103",
+      "analyticsReference" : "susbscription",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Suscription payment to %merchantName% on your card for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Pago de suscripción a %merchantName% en tu tarjeta por %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Pagament de subscripció a %merchantName% a la teva targeta per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Pagamento de subscrición a %merchantName% na túa tarxeta por %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Paiement de l'abonnement à %merchantName% sur votre carte à hauteur du montant de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%amount%-ko harpidetzaren ordainketa %merchantName%-(r)i zure txartelarekin"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Pagamento abbonamento a %merchantName% con addebito su carta di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "004"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Mortage fee of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cuota de hipoteca de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Quota d'hipoteca de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cota de hipoteca de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Mensualité d'hypothèque de %merchantName%"
+            },
+            {
+              "text" : " d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure"
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren hipoteka-kuota"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Rata del mutuo di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Mortage",
+        "es" : "Hipoteca",
+        "ca" : "Hipoteca",
+        "gl" : "Hipoteca",
+        "fr" : "Hypothèque",
+        "eu" : "Hipoteka",
+        "it" : "Mutuo"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "104",
+      "analyticsReference" : "mortage",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Mortage fee of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cuota de hipoteca de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Quota d'hipoteca de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cota de hipoteca de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Mensualité d'hypothèque de %merchantName%"
+            },
+            {
+              "text" : " d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure "
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren hipoteka-kuota"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Rata del mutuo di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Loan fee of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cuota de préstamo de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Quota de préstec de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cota de empréstito de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Mensualité d'emprunt de %merchantName% d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure"
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren mailegu-kuota"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Rata del prestito di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Loan",
+        "es" : "Préstamo",
+        "ca" : "Préstec",
+        "gl" : "Empréstito",
+        "fr" : "Emprunt",
+        "eu" : "Mailegua",
+        "it" : "Prestito"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "105",
+      "analyticsReference" : "loan",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Loan fee of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cuota de préstamo de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Quota de préstec de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cota de empréstito de %merchantName%"
+            },
+            {
+              "iban" : "  na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Mensualité d'emprunt de %merchantName% d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure"
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren mailegu-kuota"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Rata del prestito di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Insurance payment of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : ". Last payment was %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cobro de seguro de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : ". El último pago fue de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Cobrament d'assegurança de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : ". L'últim pagament va ser de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cobro seguro de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : ". O último pagamento foi de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Recouvrement d'assurance de %merchantName%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            },
+            {
+              "text" : ". Le dernier paiement a été de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName%-ren aseguru-kobrantza"
+            },
+            {
+              "iban" : " zure %iban% kontuan"
+            },
+            {
+              "text" : ". Azken ordainketa %amount%-koa izan zen"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Pagamento polizza assicurativa %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : ". L'ultimo pagamento è stato di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Insurance",
+        "es" : "Seguro",
+        "ca" : "Assegurança",
+        "gl" : "Seguro",
+        "fr" : "Sûr",
+        "eu" : "Asegurua",
+        "it" : "Polizza assicurativa"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "106",
+      "analyticsReference" : "insurance",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Insurance payment of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cobro de seguro de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Cobrament d'assegurança de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cobro de seguro de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Recouvrement d'assurance de %merchantName% d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure"
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren aseguru-kobrantza"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Pagamento della polizza assicurativa %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Contribution to your pension plan %merchantName% for an amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Aportación a tu plan de pensiones %merchantName% por un importe de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Aportació al teu pla de pensions %merchantName% per un import de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Achega ao teu plan de pensións %merchantName% por un importe de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Versement sur votre plan de retraite %merchantName% d'un montant de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure %merchantName% pentsio-planera egindako %amount%-ko ekarpena"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Versamento su fondo pensione %merchantName% per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Pension plan",
+        "es" : "Plan de pensiones",
+        "ca" : "Pla de pensions",
+        "gl" : "Plan de pensións",
+        "fr" : "Plan de retraite",
+        "eu" : "Pentsio-plana",
+        "it" : "Fondo pensione"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "107",
+      "analyticsReference" : "pension plan",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Contribution to your pension plan %merchantName% for an amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Aportación a tu plan de pensiones %merchantName% por un importe de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Aportació al teu pla de pensions %merchantName% per un import de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Achega ao teu plan de pensións %merchantName% por un importe de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Versement sur votre plan de retraite %merchantName% d'un montant de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure %merchantName% pentsio-planera egindako %amount%-ko ekarpena"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Versamento su fondo pensione %merchantName% per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Monthly liquidation of your card %merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Liquidación mensual de tu tarjeta de crédito %merchantName%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Liquidació mensual de la teva targeta de crèdit %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Liquidación mensual da túa tarxeta de crédito %merchantName%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Liquidation mensuelle de votre carte de crédit %merchantName%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure %merchantName% kreditu-txartelaren hileroko likidazioa"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Liquidazione mensile della carta di credito %merchantName%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Card settlement",
+        "es" : "Liquidación de tarjeta",
+        "ca" : "Liquidació de targeta",
+        "gl" : "Liquidación de tarxeta",
+        "fr" : "Liquidation de carte",
+        "eu" : "Txartelaren likidazioa",
+        "it" : "Liquidazione della carta"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "108",
+      "analyticsReference" : "card liquidation",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Monthly liquidation of your card %merchantName% for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Liquidación mensual de tu tarjeta de crédito %merchantName% por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Liquidació mensual de la teva targeta de crèdit %merchantName% per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Liquidación mensual da túa tarxeta de crédito %merchantName% por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Liquidation mensuelle de votre carte de crédit %merchantName% d'une valeur de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure %merchantName% kreditu-txartelaren hileroko likidazioa %amount%-koa da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Liquidazione mensile della carta di credito %merchantName% per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "004"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+          ]
+        ],
+        "es" : [
+          [
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Bizum",
+        "es" : "Bizum",
+        "ca" : "Bizum",
+        "gl" : "Bizum",
+        "fr" : "Bizum",
+        "eu" : "Bizum",
+        "it" : "Bizum"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "109",
+      "analyticsReference" : "Bizum",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Bizum of %amount% to %merchantName% of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Bizum de %amount% para %merchantName%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Bizum de %amount% per a %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Bizum de %amount% para %merchantName%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Paiement Bizum de %amount% pour %merchantName%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%amount%-ko Bizum %merchantName%-(r)entzat"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Bizum di %amount% a favore di %merchantName%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "004"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Renting fee of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cuota de Renting de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Quota d'Renting de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cota de aluguer de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Frais de location de %merchantName%"
+            },
+            {
+              "text" : " d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure"
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren Alokairua-kuota"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Canone di locazione di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Renting & Leasing",
+        "es" : "Renting & Leasing",
+        "ca" : "Renting i leasing",
+        "gl" : "Aluguer e arrendamento",
+        "fr" : "Location et crédit-bail",
+        "eu" : "Alokairua eta errentamendua",
+        "it" : "Affitto e leasing"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "110",
+      "analyticsReference" : "Renting & Leasing",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Renting fee of %merchantName%"
+            },
+            {
+              "iban" : " in your account %iban%"
+            },
+            {
+              "text" : " for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Cuota de Renting de %merchantName%"
+            },
+            {
+              "iban" : " en tu cuenta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Quota d'Renting de %merchantName%"
+            },
+            {
+              "iban" : " al teu compte %iban%"
+            },
+            {
+              "text" : " per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Cota de aluguer de %merchantName%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            },
+            {
+              "text" : " por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Frais de location de %merchantName%"
+            },
+            {
+              "text" : " d'une valeur de %amount%"
+            },
+            {
+              "iban" : " sur votre compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure "
+            },
+            {
+              "iban" : " %iban%"
+            },
+            {
+              "text" : " kontuan egindako %amount%-ko %merchantName%-ren Alokairua-kuota"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Canone di locazione di %merchantName%"
+            },
+            {
+              "iban" : " sul tuo conto %iban%"
+            },
+            {
+              "text" : " per un importo di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+          ]
+        ],
+        "es" : [
+          [
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Received transfer",
+        "es" : "Transferencia recibida",
+        "ca" : "Transferència rebuda",
+        "gl" : "Transferencia recibida",
+        "fr" : "Virement reçu",
+        "eu" : "Jaso da transferentzia",
+        "it" : "Accredito ricevuto"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "111",
+      "analyticsReference" : "Received transfer",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Received transfer from %merchantName% for the amount of %amount%"
+            },
+            {
+              "iban" : " in the account %iban%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Transferencia recibida de %merchantName% por importe de %amount%"
+            },
+            {
+              "iban" : " en la cuenta %iban%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Transferència rebuda de %merchantName% per import de %amount%"
+            },
+            {
+              "iban" : " al compte %iban%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Transferencia emitida a %merchantName% por importe de %amount%"
+            },
+            {
+              "iban" : " na conta %iban%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Virement de %amount% reçu de %merchantName%"
+            },
+            {
+              "iban" : " sur le compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName%-(e)k bidalitako %amount%-ko transferentzia"
+            },
+            {
+              "iban" : " %iban% kontuan"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Accredito ricevuto da %merchantName% per un importo dii %amount%"
+            },
+            {
+              "iban" : " sul conto %iban%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "004"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+          ]
+        ],
+        "es" : [
+          [
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Received Bizum",
+        "es" : "Bizum recibido",
+        "ca" : "Bizum rebut",
+        "gl" : "Bizum recibido",
+        "fr" : "Paiement Bizum reçu",
+        "eu" : "Jaso da Bizum",
+        "it" : "Bizum ricevuto"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "112",
+      "analyticsReference" : "Received Bizum",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Bizum received from %merchantName% of %amount%"
+            },
+            {
+              "iban" : " in the account %iban%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Bizum recibido de %merchantName% por %amount%"
+            },
+            {
+              "iban" : " en la cuenta %iban%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Bizum rebut de %merchantName% per %amount%"
+            },
+            {
+              "iban" : " al compte %iban%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Bizum recibido de %merchantName% por %amount%"
+            },
+            {
+              "iban" : " na túa conta %iban%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Paiement Bizum de %amount% reçu de %merchantName%"
+            },
+            {
+              "iban" : " sur le compte %iban%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName%-(e)k bidalitako %amount%-ko Bizum jaso da zure"
+            },
+            {
+              "iban" : " %iban% kontuan"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Bizum ricevuto da %merchantName% per un importo di %amount%"
+            },
+            {
+              "iban" : " sul conto %iban%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "004"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Salary income. Last salary income was %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Recibo de nómina. La última nómina fue por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Rebut de nòmina. L'última nòmina va ser per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Recibo de nómina. A última nómina foi por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Reçu de bulletin de paie. Le dernier bulletin de paie a été d'une valeur de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Nominaren ordainagiria. Azken nomina %amount%-koa izan zen"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Accredito stipendio. L'importo dell'ultimo stipendio è stato di %amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Salary",
+        "es" : "Nómina",
+        "ca" : "Nòmina",
+        "gl" : "Nómina",
+        "fr" : "Bulletin de paie",
+        "eu" : "Nomina",
+        "it" : "Stipendio"
+      },
+      "disclaimer" : {
+        "en" : "Estimated according to your last months transactions",
+        "es" : "Estimado en base a los movimientos de tus últimos meses",
+        "ca" : "Estimat a partir dels moviments dels últims mesos",
+        "gl" : "Estimado en función dos movementos dos teus últimos meses",
+        "fr" : "Estimation sur la base des mouvements de vos derniers mois",
+        "eu" : "Azken hilabeteetako mugimenduetan oinarrituz balioetsia",
+        "it" : "Stima in base ai tuoi movimenti dell'ultimo mese"
+      },
+      "transactionType" : "200",
+      "analyticsReference" : "salary",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Salary income for the amount of %amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Recibo de nómina por valor de %amount%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Rebut de nòmina per valor de %amount%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Recibo de nómina por valor de %amount%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Reçu de bulletin de paie d'une valeur de %amount%"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Nominaren ordainagiria. Azken nomina %amount%-koa izan zen"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Accredito stipendio. L'importo dell'ultimo stipendio è stato di %amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+
+        ],
+        "es" : [
+
+        ]
+      },
+      "transactionName" : {
+        "en" : "Enrollment",
+        "es" : "Alta",
+        "ca" : "Alta",
+        "gl" : "Alta",
+        "fr" : "Inscription"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated based on your current products",
+        "es" : "Aviso generado en base a tus productos contratados",
+        "ca" : "Avís generat a partir dels teus productes contractats",
+        "gl" : "Aviso xerado en función dos teus produtos contratados",
+        "fr" : "Avertissement généré sur la base des produits auxquels vous avez souscrits",
+        "eu" : "Kontratatuta dituzun produktuetan oinarrituz sortutako abisua",
+        "it" : "Il presente avviso è stato generato in base ai prodotti sottoscritti"
+      },
+      "transactionType" : "300",
+      "analyticsReference" : "enrollment",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "You opened"
+            },
+            {
+              "productType" : " your %productType%"
+            },
+            {
+              "!productType" : " a product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " with us"
+            }
+          ],
+          [
+            {
+              "text" : "You applied and signed"
+            },
+            {
+              "productType" : " your %productType%"
+            },
+            {
+              "!productType" : " a product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " with us"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Abriste con nosotros"
+            },
+            {
+              "productType" : " tu %productType%"
+            },
+            {
+              "!productType" : " un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Contrataste con nosotros"
+            },
+            {
+              "productType" : " tu %productType%"
+            },
+            {
+              "!productType" : " un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Abriste"
+            },
+            {
+              "productType" : " tu %productType%"
+            },
+            {
+              "!productType" : " un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " con nosotros"
+            }
+          ],
+          [
+            {
+              "text" : "Contrataste"
+            },
+            {
+              "productType" : " tu %productType%"
+            },
+            {
+              "!productType" : " un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " con nosotros"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Vas obrir amb nosaltres"
+            },
+            {
+              "productType" : " el producte %productType%"
+            },
+            {
+              "!productType" : " un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Vas contractar amb nosaltres"
+            },
+            {
+              "productType" : " el producte %productType%"
+            },
+            {
+              "!productType" : " un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Vas obrir"
+            },
+            {
+              "productType" : " el producte %productType%"
+            },
+            {
+              "!productType" : " un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " con nosotros"
+            }
+          ],
+          [
+            {
+              "text" : "Contrataste"
+            },
+            {
+              "productType" : " tu %productType%"
+            },
+            {
+              "!productType" : " un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " con nosotros"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Abriches connosco"
+            },
+            {
+              "productType" : " o teu %productType%"
+            },
+            {
+              "!productType" : " un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Contrataches connosco"
+            },
+            {
+              "productType" : " o teu %productType%"
+            },
+            {
+              "!productType" : " un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Abriches"
+            },
+            {
+              "productType" : " o teu %productType%"
+            },
+            {
+              "!productType" : "un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " connosco"
+            }
+          ],
+          [
+            {
+              "text" : "Contrataches"
+            },
+            {
+              "productType" : " o teu %productType%"
+            },
+            {
+              "!productType" : " un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " connosco"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Vous avez ouvert"
+            },
+            {
+              "productType" : " votre %productType%"
+            },
+            {
+              "!productType" : " un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " chez nous"
+            }
+          ],
+          [
+            {
+              "text" : "Vous avez souscrit"
+            },
+            {
+              "productType" : " votre %productType%"
+            },
+            {
+              "!productType" : " un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " chez nous"
+            }
+          ],
+          [
+            {
+              "text" : "Vous avez ouvert"
+            },
+            {
+              "productType" : " votre %productType%"
+            },
+            {
+              "!productType" : " un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " chez nous"
+            }
+          ],
+          [
+            {
+              "text" : "Vous avez souscrit"
+            },
+            {
+              "productType" : " votre %productType%"
+            },
+            {
+              "!productType" : " un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " chez nous"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "productType" : "Gurekin ireki zenuen zure %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Gurekin ireki zenuen zure %productDisplayNumber% produktu bat"
+            }
+          ],
+          [
+            {
+              "productType" : "Gurean kontratatu zenuen zure %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Gurean kontratatu zenuen zure %productDisplayNumber% produktu bat"
+            }
+          ],
+          [
+            {
+              "productType" : "Gurean ireki zenuen zure %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Gurean ireki zenuen %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "productType" : "Gurean kontratatu zenuen zure %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Gurean kontratatu zenuen %productDisplayNumber% produktu bat"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "productType" : "Hai aperto presso di noi %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Hai aperto presso di noi un prodotto %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "productType" : "Hai sottoscritto presso di noi %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Hai sottoscritto presso di noi un prodotto %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "productType" : "Hai aperto presso di noi %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Hai aperto un %productDisplayNumber% presso di noi"
+            }
+          ],
+          [
+            {
+              "productType" : "Hai sottoscritto %productType% %productDisplayNumber% presso di noi"
+            },
+            {
+              "!productType" : "Hai sottoscritto un %productDisplayNumber% presso di noi"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+
+        ],
+        "es" : [
+
+        ]
+      },
+      "transactionName" : {
+        "en" : "Cancellation",
+        "es" : "Baja",
+        "ca" : "Baixa",
+        "gl" : "Baixa",
+        "fr" : "Annulation",
+        "eu" : "Baja",
+        "it" : "Disdetta"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated based on your current products",
+        "es" : "Aviso generado en base a tus productos contratados",
+        "ca" : "Avís generat a partir dels teus productes contractats",
+        "gl" : "Aviso xerado en función dos teus produtos contratados",
+        "fr" : "Avertissement généré sur la base des produits auxquels vous avez souscrits",
+        "eu" : "Kontratatuta dituzun produktuetan oinarrituz sortutako abisua",
+        "it" : "Il presente avviso è stato generato in base ai prodotti sottoscritti"
+      },
+      "transactionType" : "301",
+      "analyticsReference" : "cancellation",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "You cancelled"
+            },
+            {
+              "productType" : " your %productType%"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Diste de baja con nosotros"
+            },
+            {
+              "productType" : " tu %productType%"
+            },
+            {
+              "!productType" : " un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Diste de baja tu %productType%"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " con nosotros"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Vas donar de baixa amb nosaltres"
+            },
+            {
+              "productType" : " el producte %productType%"
+            },
+            {
+              "!productType" : " un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Vas donar de baixa el producte %productType%"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " amb nosaltres"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Deches de baixa connosco"
+            },
+            {
+              "productType" : " o teu %productType%"
+            },
+            {
+              "!productType" : " un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Deches de baixa o teu %productType%"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " connosco"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Vous avez annulé"
+            },
+            {
+              "productType" : " votre %productType%"
+            },
+            {
+              "!productType" : " un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " chez nous"
+            }
+          ],
+          [
+            {
+              "text" : "Vous avez annulé votre %productType%"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " chez nous"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "productType" : "Gurean bajan eman zenuen zure %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Gurean baja eman zenuen %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Gurean baja eman zenuen zure %productType% %productDisplayNumber%"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "productType" : "Hai disdetto presso di noi %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Hai disdetto presso di noi un %productDisplayNumber%"
+            }
+          ],
+          [
+            {
+              "text" : "Hai disdetto %productType% %productDisplayNumber% presso di noi"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "productType" : "Your %productType%"
+            },
+            {
+              "!productType" : "A product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " will expire"
+            }
+          ],
+          [
+            {
+              "productType" : "Your %productType%"
+            },
+            {
+              "!productType" : "A product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " will mature"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "productType" : "Tu %productType%"
+            },
+            {
+              "!productType" : "Un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " caducará"
+            }
+          ],
+          [
+            {
+              "productType" : "Caducará tu %productType%"
+            },
+            {
+              "!productType" : "Caducará un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "productType" : "El producte %productType%"
+            },
+            {
+              "!productType" : "Un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " caducarà"
+            }
+          ],
+          [
+            {
+              "productType" : "Caducarà el producte %productType%"
+            },
+            {
+              "!productType" : "Caducarà un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "productType" : "O teu %productType%"
+            },
+            {
+              "!productType" : "O produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " caducará"
+            }
+          ],
+          [
+            {
+              "productType" : "Caducará o teu %productType%"
+            },
+            {
+              "!productType" : "Caducará o produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "productType" : "Votre %productType%"
+            },
+            {
+              "!productType" : "Un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " expirera"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "productType" : "Zure %productType% %productDisplayNumber% iraungitzear dago"
+            },
+            {
+              "!productType" : "%productDisplayNumber% produktu bat iraungitzear dago"
+            }
+          ],
+          [
+            {
+              "productType" : "Zure %productType% %productDisplayNumber% iraungitzear dago"
+            },
+            {
+              "!productType" : "%productDisplayNumber% bat iraungitzear dago"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "productType" : "Il tuo %productType% %productDisplayNumber% è in scadenza"
+            },
+            {
+              "!productType" : "Un prodotto %productDisplayNumber% è in scadenza"
+            }
+          ],
+          [
+            {
+              "productType" : "È in scadenza %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "È in scadenza un prodotto %productDisplayNumber%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Expiration",
+        "es" : "Caducidad",
+        "ca" : "Caducitat",
+        "gl" : "Caducidade",
+        "fr" : "Expiration",
+        "eu" : "Iraungitze-data",
+        "it" : "Scadenza"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated based on your current products",
+        "es" : "Aviso generado en base a tus productos contratados",
+        "ca" : "Avís generat a partir dels teus productes contractats",
+        "gl" : "Aviso xerado en función dos teus produtos contratados",
+        "fr" : "Avertissement généré sur la base des produits auxquels vous avez souscrits",
+        "eu" : "Kontratatuta dituzun produktuetan oinarrituz sortutako abisua",
+        "it" : "Il presente avviso è stato generato in base ai prodotti sottoscritti"
+      },
+      "transactionType" : "302",
+      "analyticsReference" : "expiration",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "productType" : "Your %productType%"
+            },
+            {
+              "!productType" : "A product"
+            },
+            {
+              "productDisplayNumber" : "%productDisplayNumber%"
+            },
+            {
+              "text" : "expired"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "productType" : "Tu %productType%"
+            },
+            {
+              "!productType" : "Un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " ha caducado"
+            }
+          ],
+          [
+            {
+              "productType" : "Caducó tu %productType%"
+            },
+            {
+              "!productType" : "Caducó un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "productType" : "El producte %productType%"
+            },
+            {
+              "!productType" : "Un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " ha caducat"
+            }
+          ],
+          [
+            {
+              "productType" : "Ha caducat el producte %productType%"
+            },
+            {
+              "!productType" : "Ha caducat un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "productType" : "O teu produto %productType%"
+            },
+            {
+              "!productType" : "Un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " caducou"
+            }
+          ],
+          [
+            {
+              "productType" : "Caducou o teu %productType%"
+            },
+            {
+              "!productType" : "Caducó un produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "productType" : "Votre %productType%"
+            },
+            {
+              "!productType" : "Un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " a expiré"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "productType" : "Zure %productType% %productDisplayNumber% iraungita dago"
+            },
+            {
+              "!productType" : "%productDisplayNumber% bat iraungita dago"
+            }
+          ],
+          [
+            {
+              "productType" : "%productType% %productDisplayNumber% iraungita dago"
+            },
+            {
+              "!productType" : "%productDisplayNumber% produktu bat iraungita dago"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "productType" : "Il tuo %productType% %productDisplayNumber% è scaduto"
+            },
+            {
+              "!productType" : "Un prodotto %productDisplayNumber% è scaduto"
+            }
+          ],
+          [
+            {
+              "productType" : "È scaduto il tuo %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "È scaduto un prodotto %productDisplayNumber%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "productType" : "Your %productType%"
+            },
+            {
+              "!productType" : "A product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " will expire"
+            }
+          ],
+          [
+            {
+              "productType" : "Your %productType%"
+            },
+            {
+              "!productType" : "A product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " will mature"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "productType" : "Tu %productType%"
+            },
+            {
+              "!productType" : "Un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " ha vencido"
+            }
+          ],
+          [
+            {
+              "productType" : "Vencerá tu %productType%"
+            },
+            {
+              "!productType" : "Vencerá un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "productType" : "El producte %productType%"
+            },
+            {
+              "!productType" : "Un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " ha vençut"
+            }
+          ],
+          [
+            {
+              "productType" : "Vencerà el producte %productType%"
+            },
+            {
+              "!productType" : "Vencerà un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "productType" : "O teu %productType%"
+            },
+            {
+              "!productType" : "O produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " venceu"
+            }
+          ],
+          [
+            {
+              "productType" : "Vencerá o teu %productType%"
+            },
+            {
+              "!productType" : "Vencerá o produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "productType" : "Votre %productType%"
+            },
+            {
+              "!productType" : "Un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " a expiré"
+            }
+          ],
+          [
+            {
+              "productType" : "Votre %productType%"
+            },
+            {
+              "!productType" : "Un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " expirera"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "productType" : "Zure %productType% %productDisplayNumber% muga-eguneratu egin da"
+            },
+            {
+              "!productType" : "%productDisplayNumber% produktu bat muga-eguneratu egin da"
+            }
+          ],
+          [
+            {
+              "productType" : "Zure %productType% %productDisplayNumber% muga-eguneratuko da"
+            },
+            {
+              "!productType" : "%productDisplayNumber% bat muga-eguneratuko da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "productType" : "Il tuo %productType% %productDisplayNumber% è scaduto"
+            },
+            {
+              "!productType" : "Un prodotto %productDisplayNumber% è scaduto"
+            }
+          ],
+          [
+            {
+              "productType" : "Il tuo %productType% %productDisplayNumber% è in scadenza"
+            },
+            {
+              "!productType" : "Un prodotto è in scadenza%productDisplayNumber%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Expiration",
+        "es" : "Vencimiento",
+        "ca" : "Venciment",
+        "gl" : "Vencemento",
+        "fr" : "Échéance",
+        "eu" : "Muga-eguna",
+        "it" : "Scadenza"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated based on your current products",
+        "es" : "Aviso generado en base a tus productos contratados",
+        "ca" : "Avís generat a partir dels teus productes contractats",
+        "gl" : "Aviso xerado en función dos teus produtos contratados",
+        "fr" : "Avertissement généré sur la base des produits auxquels vous avez souscrits",
+        "eu" : "Kontratatuta dituzun produktuetan oinarrituz sortutako abisua",
+        "it" : "Il presente avviso è stato generato in base ai prodotti sottoscritti"
+      },
+      "transactionType" : "303",
+      "analyticsReference" : "card settlement",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "productType" : "Your %productType%"
+            },
+            {
+              "!productType" : "A product"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " expired"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "productType" : "Tu %productType%"
+            },
+            {
+              "!productType" : "Un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " ha vencido"
+            }
+          ],
+          [
+            {
+              "productType" : "Ha vencido tu %productType%"
+            },
+            {
+              "!productType" : "Ha vencido un producto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "productType" : "El producte %productType%"
+            },
+            {
+              "!productType" : "Un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " ha vençut"
+            }
+          ],
+          [
+            {
+              "productType" : "Ha vençut el producte %productType%"
+            },
+            {
+              "!productType" : "Ha vençut un producte"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "productType" : "O teu %productType%"
+            },
+            {
+              "!productType" : "O produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " venceu"
+            }
+          ],
+          [
+            {
+              "productType" : "Venceu o teu %productType%"
+            },
+            {
+              "!productType" : "Venceu o produto"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "productType" : "Votre %productType%"
+            },
+            {
+              "!productType" : "Un produit"
+            },
+            {
+              "productDisplayNumber" : " %productDisplayNumber%"
+            },
+            {
+              "text" : " a expiré"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "productType" : "Muga-eguneratu egin da %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "Muga-eguneratu da %productDisplayNumber% produktu bat"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "productType" : "È scaduto il tuo %productType% %productDisplayNumber%"
+            },
+            {
+              "!productType" : "È scaduto un prodotto %productDisplayNumber%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Personal event",
+        "es" : "Evento personal",
+        "ca" : "Esdeveniment personal",
+        "gl" : "Evento persoal",
+        "fr" : "Évènement personnel",
+        "eu" : "Gertaera pertsonala",
+        "it" : "Evento personale"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated courtesy of Banco Santander",
+        "es" : "Aviso generado por cortesía del Banco Santander",
+        "ca" : "Avís generat per gentilesa de Banco Santander",
+        "gl" : "Aviso xerado por cortesía do Banco Santander",
+        "fr" : "Avertissement généré à titre gratuit par Banco Santander",
+        "eu" : "Banco Santander-ek sortutako abisua",
+        "it" : "Avviso generato a cura di Banco Santander"
+      },
+      "transactionType" : "900",
+      "analyticsReference" : "personal event",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "025",
+        "026"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "External event",
+        "es" : "Evento externo",
+        "ca" : "Esdeveniment extern",
+        "gl" : "Evento externo",
+        "fr" : "Évènement externe",
+        "eu" : "Kanpoko gertaera",
+        "it" : "Evento esterno"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated courtesy of Banco Santander",
+        "es" : "Aviso generado por cortesía del Banco Santander",
+        "ca" : "Avís generat per gentilesa de Banco Santander",
+        "gl" : "Aviso xerado por cortesía do Banco Santander",
+        "fr" : "Avertissement généré à titre gratuit par Banco Santander",
+        "eu" : "Banco Santander-ek sortutako abisua",
+        "it" : "Avviso generato a cura di Banco Santander"
+      },
+      "transactionType" : "901",
+      "analyticsReference" : "external event",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Begins the %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Is starting the %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Beggining of the %merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Comienza %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Empieza %merchantName%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Comença %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "S'inicia %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Comeza %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Empeza %merchantName%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "%merchantName% commence"
+            }
+          ],
+          [
+            {
+              "text" : "%merchantName% débute"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : " %merchantName% hasiko da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Comincia %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Inizia %merchantName%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Externa event begins",
+        "es" : "Evento externo empieza",
+        "ca" : "Esdeveniment extern comença",
+        "gl" : "Evento externo comeza",
+        "fr" : "Évènement externe débute",
+        "eu" : "Kanpoko gertaera hasiko da",
+        "it" : "Evento esterno inizia"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated courtesy of Banco Santander",
+        "es" : "Aviso generado por cortesía del Banco Santander",
+        "ca" : "Avís generat per gentilesa de Banco Santander",
+        "gl" : "Aviso xerado por cortesía do Banco Santander",
+        "fr" : "Avertissement généré à titre gratuit par Banco Santander",
+        "eu" : "Banco Santander-ek sortutako abisua",
+        "it" : "Avviso generato a cura di Banco Santander"
+      },
+      "transactionType" : "902",
+      "analyticsReference" : "external event",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Has begun the %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Has started the %merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Ha comenzado %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Ha empezado %merchantName%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Ha començat %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "S'ha iniciat %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Comezou %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Empezou %merchantName%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "%merchantName% a commencé"
+            }
+          ],
+          [
+            {
+              "text" : "%merchantName% a débuté"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName% hasi da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "È cominciato %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "È iniziato %merchantName%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "The %merchantName% ends"
+            }
+          ],
+          [
+            {
+              "text" : "Deadline of the %merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Termina %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Concluye %merchantName%"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Acaba %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Conclou %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Remata %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Conclúe %merchantName%"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "%merchantName% termine"
+            }
+          ],
+          [
+            {
+              "text" : "%merchantName% conclut"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName% bukatuko da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Termina %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Finisce %merchantName%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "External event ends",
+        "es" : "Evento externo termina",
+        "ca" : "Esdeveniment extern acaba",
+        "gl" : "Evento externo remata",
+        "fr" : "Évènement externe termine",
+        "eu" : "Kanpoko gertaera bukatuko da",
+        "it" : "Evento esterno termina"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated courtesy of Banco Santander",
+        "es" : "Aviso generado por cortesía del Banco Santander",
+        "ca" : "Avís generat per gentilesa de Banco Santander",
+        "gl" : "Aviso xerado por cortesía do Banco Santander",
+        "fr" : "Avertissement généré à titre gratuit par Banco Santander",
+        "eu" : "Banco Santander-ek sortutako abisua",
+        "it" : "Avviso generato a cura di Banco Santander"
+      },
+      "transactionType" : "903",
+      "analyticsReference" : "external event",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Has ended the %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "The %merchantName% has ended"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Ha terminado %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "%merchantName% ha terminado"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Ha acabat %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "%merchantName% ha acabat"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Rematou %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "%merchantName% rematou"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "%merchantName% a terminé"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "%merchantName% bukatu da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "È terminato %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : " %merchantName% è terminato"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "text" : "Your %merchantName% expires"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Caduca tu %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Tu %merchantName% caduca"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Caduca %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Caduca o teu %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "O teu %merchantName% caduca"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Votre %merchantName% expire"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure %merchantName% iraungiko da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "Scade il tuo %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Il tuo %merchantName% scade"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "External event expires",
+        "es" : "Evento externo caduca",
+        "ca" : "Esdeveniment extern caduca",
+        "gl" : "Evento externo caduca",
+        "fr" : "Évènement externe expire",
+        "eu" : "Kanpoko gertaera iraungiko da",
+        "it" : "Evento esterno scade"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated courtesy of Banco Santander",
+        "es" : "Aviso generado por cortesía del Banco Santander",
+        "ca" : "Avís generat per gentilesa de Banco Santander",
+        "gl" : "Aviso xerado por cortesía do Banco Santander",
+        "fr" : "Avertissement généré à titre gratuit par Banco Santander",
+        "eu" : "Banco Santander-ek sortutako abisua",
+        "it" : "Avviso generato a cura di Banco Santander"
+      },
+      "transactionType" : "904",
+      "analyticsReference" : "external event",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "Your %merchantName% expired"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "Ha caducado tu %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Tu %merchantName% ha caducado"
+            }
+          ]
+        ],
+        "ca" : [
+          [
+            {
+              "text" : "Ha caducat %merchantName%"
+            }
+          ]
+        ],
+        "gl" : [
+          [
+            {
+              "text" : "Caducou o teu %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "O teu %merchantName% caducou"
+            }
+          ]
+        ],
+        "fr" : [
+          [
+            {
+              "text" : "Votre %merchantName% a expiré"
+            }
+          ]
+        ],
+        "eu" : [
+          [
+            {
+              "text" : "Zure %merchantName% iraungi da"
+            }
+          ]
+        ],
+        "it" : [
+          [
+            {
+              "text" : "È scaduto il tuo %merchantName%"
+            }
+          ],
+          [
+            {
+              "text" : "Il tuo %merchantName% è scaduto"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+
+            }
+          ]
+        ]
+      },
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ]
+      },
+      "analyticsReference" : "Master custom event",
+      "CTA" : [
+        "025",
+        "026"
+      ],
+      "transactionType" : "906",
+      "transactionName" : {
+        "en" : "Master custom event",
+        "es" : "Máster de evento personalizado",
+        "ca" : "Màster d'esdeveniment personalitzat",
+        "gl" : "Máster de evento personalizado",
+        "fr" : "Master d'évènement personnalisé",
+        "eu" : "Gertaera pertsonalizatuaren masterra",
+        "it" : "Master evento personalizzato"
+      }
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+
+            }
+          ]
+        ]
+      },
+      "previous" : {
+        "en" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "text" : "%merchantName%"
+            }
+          ]
+        ]
+      },
+      "analyticsReference" : "Custom event",
+      "CTA" : [
+        "001",
+        "002"
+      ],
+      "transactionType" : "905",
+      "transactionName" : {
+        "en" : "Custom event",
+        "es" : "Evento personalizado",
+        "ca" : "Esdeveniment personalitzat",
+        "gl" : "Evento personalizado",
+        "fr" : "Évènement personnalisé",
+        "eu" : "Gertaera pertsonalizatua",
+        "it" : "Evento personalizzato"
+      }
+    },
+    {
+      "coming" : {
+        "en" : [
+          [
+            {
+              "merchantName" : "%merchantName%"
+            },
+            {
+              "amount" : "%amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "merchantName" : "%merchantName%"
+            },
+            {
+              "amount" : "%amount%"
+            }
+          ]
+        ]
+      },
+      "transactionName" : {
+        "en" : "Unknown",
+        "es" : "Desconocido",
+        "ca" : "Desconegut",
+        "gl" : "Descoñecido",
+        "fr" : "Inconnu",
+        "eu" : "Ezezaguna",
+        "it" : "Sconosciuto"
+      },
+      "disclaimer" : {
+        "en" : "Notice generated courtesy of Banco Santander",
+        "es" : "Aviso generado por cortesía del Banco Santander",
+        "ca" : "Avís generat per gentilesa de Banco Santander",
+        "gl" : "Aviso xerado por cortesía do Banco Santander",
+        "fr" : "Avertissement généré à titre gratuit par Banco Santander",
+        "eu" : "Banco Santander-ek sortutako abisua",
+        "it" : "Avviso generato a cura di Banco Santander"
+      },
+      "transactionType" : "000",
+      "analyticsReference" : "unknown",
+      "previous" : {
+        "en" : [
+          [
+            {
+              "merchantName" : "%merchantName%"
+            },
+            {
+              "amount" : "%amount%"
+            }
+          ]
+        ],
+        "es" : [
+          [
+            {
+              "merchantName" : "%merchantName%"
+            },
+            {
+              "amount" : "%amount%"
+            }
+          ]
+        ]
+      },
+      "CTA" : [
+        "001",
+        "002",
+        "003"
+      ]
+    }
+  ],
+  "v" : "1.1.8",
+  "filterProperties" : {
+    "enabled" : true,
+    "comingMonthMaxFilter" : 3,
+    "previousMonthsMaxFilter" : 1
+  },
+  "groupedMonthsDisclaimer" : {
+    "en" : "The following graph shows the sum of all your monthly changes",
+    "es" : "El siguiente gráfico muestra la suma de todos sus cambios mensuales",
+    "ca" : "El gràfic següent mostra la suma de tots els canvis mensuals",
+    "gl" : "O seguinte gráfico amosa a suma de todos os teus cambios mensuais",
+    "fr" : "Le graphique suivant montre la somme de tous vos changements mensuels",
+    "eu" : "Grafiko honek hileroko aldaketa guztien batura erakusten du",
+    "it" : "Il grafico seguente mostra tutte le modifiche avvenute nel corso del mese"
+  },
+  "merchantIconBaseUrl": "https://microsite.bancosantander.es/filesFF/apps/SAN/timeline/merchants/"
+}

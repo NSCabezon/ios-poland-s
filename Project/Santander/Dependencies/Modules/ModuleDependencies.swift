@@ -75,8 +75,14 @@ struct ModuleDependencies {
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     func resolve() -> FeatureFlagsRepository {
         return asShared {
-            DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
+            DefaultFeatureFlagsRepository(features: coreFeatureFlags())
         }
+    }
+    
+    private func coreFeatureFlags() -> [FeatureFlagRepresentable] {
+        let toRemove: Set<CoreFeatureFlag> = [.cardTransactionFilters]
+        let all: Set<CoreFeatureFlag> = Set(CoreFeatureFlag.allCases)
+        return Array(all.subtracting(toRemove))
     }
 }
 

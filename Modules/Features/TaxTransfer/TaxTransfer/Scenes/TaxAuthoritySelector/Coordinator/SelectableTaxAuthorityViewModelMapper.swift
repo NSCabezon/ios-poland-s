@@ -6,6 +6,7 @@
 //
 
 import PLCommons
+import CoreFoundationLib
 
 protocol SelectableTaxAuthorityViewModelMapping {
     func map(_ taxAuthority: TaxAuthority, selectedTaxAuthority: TaxAuthority?) -> SelectableTaxAuthorityViewModel
@@ -24,7 +25,7 @@ final class SelectableTaxAuthorityViewModelMapper: SelectableTaxAuthorityViewMod
     
     private func getLocationText(of taxAuthority: TaxAuthority) -> String? {
         if case .IRP = taxAuthority.taxAccountType {
-            return "#Centrum rozliczeniowe"
+            return localized("pl_taxTransfer_label_settlementCentre")
         }
         
         return taxAuthority.address

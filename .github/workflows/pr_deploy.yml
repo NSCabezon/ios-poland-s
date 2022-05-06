@@ -7,28 +7,15 @@ on:
 jobs:
   build:
     if: ${{ github.event.label.name == 'deploy' }}
-    runs-on: macos-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           submodules: recursive
 
-      - name: Setup - Xcode
-        run: sudo xcode-select -s /Applications/Xcode_13.2.1.app
-
-      - name: Gems packages
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gem-
-      
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7'
-          bundler-cache: true
+      - name: Install Gems
+        run: bundle install
       
       - name: Cache Pods packages
         uses: actions/cache@v2

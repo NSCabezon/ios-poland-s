@@ -1,0 +1,99 @@
+<transfers>
+        <swift>
+            <countries>
+                <!-- Swift country codes. Values: activeInSwift|europeanEconomicAreaMember|countryName|validate|countryCode|numberLength.
+                    Remember: to add key 'countryType.XXX' to 'enum_(pl|en).properties' resource
+                    file, where XXX is country name, where non alphabetical characters are replaced
+                    by '_'. -->
+                <country>true|false|ARGENTINA|false|AR|0</country>
+                <country>true|false|ARMENIA|false|AM|0</country>
+               <country>true|false|AUSTRALIA|false|AU|0</country>
+                <country>true|true|AUSTRIA|true|AT|18</country>
+                <country>true|false|AZERBAIJAN|true|AZ|26</country>
+                <country>true|false|BANGLADESH|false|BD|0</country>
+                <country>true|false|BELARUS|false|BY|0</country>
+                <country>true|true|BELGIUM|true|BE|14</country>
+                <country>true|false|BOSNIA AND HERZEGOVINA|false|BA|0</country>
+                <country>true|false|BRAZIL|false|BR|0</country>
+                <country>true|true|BULGARIA|true|BG|20</country>
+                <country>true|false|CANADA|false|CA|0</country>
+                <country>true|false|CHILE|false|CL|0</country>
+                <country>true|false|CHINA|false|CN|0</country>
+                <country>true|true|CROATIA|true|HR|19</country>
+                <country>true|true|CYPRUS|true|CY|26</country>
+                <country>true|true|CZECHIA|true|CZ|22</country>
+                <country>false|true|CZECH REPUBLIC|true|CZ|22</country>
+                <country>true|true|DENMARK|true|DK|16</country>
+                <country>true|false|EGYPT|false|EG|0</country>
+                <country>true|true|ESTONIA|true|EE|18</country>
+                <country>true|false|FAROE ISLANDS|false|FO|0</country>
+                <country>true|true|FINLAND|true|FI|16</country>
+                <country>true|true|FRANCE|true|FR|25</country>
+                <country>true|false|GEORGIA|false|GE|0</country>
+                <country>true|true|GERMANY|true|DE|20</country>
+                <country>true|false|GIBRALTAR|true|GI|21</country>
+                <country>true|true|GREECE|true|GR|25</country>
+                <country>true|false|HONG KONG|false|HK|0</country>
+                <country>true|true|HUNGARY|true|HU|26</country>
+                <country>true|true|ICELAND|true|IS|24</country>
+                <country>true|false|INDIA|false|IN|0</country>
+                <country>true|false|INDONESIA|false|ID|0</country>
+                <country>true|true|IRELAND|true|IE|20</country>
+                <country>false|false|ISLE OF MAN|false|IM|0</country>
+                <country>true|false|ISRAEL|false|IL|0</country>
+                <country>true|true|ITALY|true|IT|25</country>
+                <country>true|false|JAPAN|false|JP|0</country>
+                <country>true|false|JERSEY|false|JE|0</country>
+                <country>false|false|JERSEY\, C.I.|false|JE|0</country>
+                <country>true|false|KAZAKHSTAN|false|KZ|0</country>
+                <country>true|false|KOREA\, REPUBLIC OF|false|KR|0</country>
+                <country>true|true|LATVIA|true|LV|19</country>
+                <country>true|true|LIECHTENSTEIN|true|LI|19</country>
+                <country>true|true|LITHUANIA|true|LT|18</country>
+                <country>true|true|LUXEMBOURG|true|LU|18</country>
+                <country>true|false|MALAYSIA|false|MY|0</country>
+                <country>true|true|MALTA|true|MT|29</country>
+                <country>true|false|NORTH MACEDONIA|false|MK|0</country>
+                <country>false|false|MACEDONIA\,THE FORMER YUGOSLAV REP.|false|MK|0</country>
+                <country>true|false|MARTINIQUE|true|MQ\,FR|25</country>
+                <country>true|false|MEXICO|false|MX|0</country>
+                <country>true|false|MOLDOVA\, REPUBLIC OF|true|MD|22</country>
+                <country>false|false|MOLDOVA|true|MD|22</country>
+                <country>true|false|MONACO|true|MC|25</country>
+                <country>true|false|MONTENEGRO|true|ME|20</country>
+                <country>false|false|MONTENEGRO\, REPUBLIC OF|true|ME|20</country>
+                <country>true|false|MOROCCO|false|MA|0</country>
+                <country>true|true|NETHERLANDS|true|NL|16</country>
+                <country>true|false|NEW ZEALAND|false|NZ|0</country>
+                <country>true|true|NORWAY|true|NO|13</country>
+                <country>true|false|PERU|false|PE|0</country>
+                <country>true|false|PHILIPPINES|false|PH|0</country>
+                <country>true|true|POLAND|true|PL|26</country>
+                <country>true|true|PORTUGAL|true|PT|23</country>
+                <country>true|false|REUNION|true|RE\,FR|25</country>
+                <country>true|false|RUSSIAN FEDERATION|false|RU|0</country>
+                <country>true|true|ROMANIA|true|RO|22</country>
+                <country>true|false|SERBIA|true|RS|20</country>
+                <country>false|false|SERBIA\, REPUBLIC OF|true|RS|20</country>
+                <country>true|false|SINGAPORE|false|SG|0</country>
+                <country>true|true|SLOVAKIA|true|SK|22</country>
+                <country>true|false|SOUTH AFRICA|false|ZA|0</country>
+                <country>true|true|SLOVENIA|true|SI|17</country>
+                <country>true|true|SPAIN|true|ES|22</country>
+                <country>true|true|SWEDEN|true|SE|22</country>
+                <country>true|false|SWITZERLAND|true|CH|19</country>
+                <country>false|false|TAIWAN\, PROVINCE OF CHINA|false|TW|0</country>
+                <country>true|false|TAIWAN|false|TW|0</country>
+                <country>true|false|TANZANIA\, UNITED REPUBLIC OF|false|TZ|0</country>
+                <country>true|false|THAILAND|false|TH|0</country>
+                <country>true|false|TUNISIA|true|TN|22</country>
+                <country>true|false|TURKEY|true|TR|24</country>
+                <country>true|false|UNITED ARAB EMIRATES|true|AE|21</country>
+                <country>true|true|UNITED KINGDOM|true|GB|20</country>
+                <country>true|false|UNITED STATES OF AMERICA|false|US|0</country>
+                <country>false|false|UNITED STATES|false|US|0</country>
+                <country>true|false|UKRAINE|false|UA|0</country>
+                <country>true|false|VIET NAM|false|VN|0</country>
+            </countries>
+        </swift>
+        </transfers>

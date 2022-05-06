@@ -73,14 +73,14 @@ private extension EditableTaxAuthorityNameView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: "#Nazwa Organu"
+            sectionTitle: localized("pl_taxTransfer_label_TaxAuthorityName")
         )
     }
     
     func configureStyling() {
         let nameFormatter = UIFormattedCustomTextField()
         nameFormatter.setMaxLength(maxLength: 80)
-        nameFormatter.setAllowOnlyCharacters(.ascii)
+        nameFormatter.setAllowOnlyCharacters(.ascii.union(.polishLetters))
         authorityNameTextField.textField.setEditingStyle(
             .writable(
                 configuration: .init(
@@ -95,7 +95,7 @@ private extension EditableTaxAuthorityNameView {
                 )
             )
         )
-        authorityNameTextField.textField.placeholder = "#Nazwa Organu"
+        authorityNameTextField.textField.placeholder = localized("pl_taxTransfer_label_TaxAuthorityName")
         nameFormatter.delegate = textFieldDelegate
     }
 }

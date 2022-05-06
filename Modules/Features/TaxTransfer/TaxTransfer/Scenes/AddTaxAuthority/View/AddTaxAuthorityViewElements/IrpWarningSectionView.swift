@@ -6,6 +6,7 @@
 //
 
 import PLUI
+import CoreFoundationLib
 
 final class IrpWarningSectionView: UIView {
     private let warningView = WarningBubbleView()
@@ -22,7 +23,7 @@ final class IrpWarningSectionView: UIView {
     
     private func setUp() {
         configureLayout()
-        warningView.configure(with: "#Uwaga! Od 01.01.2020 zmienia się sposób składania przelewów podatkowych. Wybrany przelew podatkowy powinien zostać zrealizowany na indywidualny rachunek podatnika. Jeśli masz NIP lub PESEL podatnika, możesz uzyskać taki numer na stronie Ministerstwa Finansów lub we właściwym Urzędzie Skarbowym.")
+        warningView.configure(with: localized("pl_taxTransfer_notice"))
     }
     
     private func configureLayout() {

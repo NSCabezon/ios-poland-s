@@ -78,12 +78,18 @@ final class AddTaxAuthorityPresenter: AddTaxAuthorityPresenterProtocol {
     }
     
     func didTapTaxAuthoritySelector() {
-        guard let selectedCity = form.selectedCity else { return }
+        guard
+            let selectedTaxSymbol = form.selectedTaxSymbol,
+            let selectedCity = form.selectedCity
+        else {
+            return
+        }
         let input = GetTaxAccountsUseCaseInput(
             taxAccountNumberFilter: nil,
             taxAccountNameFilter: nil,
             cityFilter: selectedCity.cityName,
-            optionId: nil
+            optionId: nil,
+            taxFormType: selectedTaxSymbol.symbolType
         )
         
         view?.showLoader()

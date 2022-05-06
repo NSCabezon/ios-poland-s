@@ -38,11 +38,11 @@ final class TaxAccountSelectorCoordinator {
             return taxAccounts.first { $0.accountNumber == accountNumber }
         }
         let configuration = ItemSelectorConfiguration<TaxAccount>(
-            navigationTitle: "#Nazwa organu",
+            navigationTitle: localized("pl_toolbar_taxAuthority"),
             searchMode: .enabled(
                 .init(
-                    searchBarPlaceholderText: "#Wyszukaj nazwę organu",
-                    emptySearchResultMessage: "#Nie znaleźliśmy organu o nazwie:"
+                    searchBarPlaceholderText: localized("pl_taxTransfer_placeholder_searchTaxAuthority"),
+                    emptySearchResultMessage: localized("pl_taxTransfer_text_unableToFindTaxAutohirty")
                 )
             ),
             sections: getSections(withLastSelectedTaxAccounts: lastSelectedTaxAccounts),
@@ -63,7 +63,7 @@ final class TaxAccountSelectorCoordinator {
         if lastSelectedTaxAccounts.isNotEmpty {
             sections += [
                 .init(
-                    sectionTitle: "#Ostatnio wybrane:",
+                    sectionTitle: localized("generic_label_recentlySelected"),
                     items: lastSelectedTaxAccounts
                 )
             ]
@@ -73,7 +73,7 @@ final class TaxAccountSelectorCoordinator {
             .sorted { $0.accountName < $1.accountName }
         sections += [
             .init(
-                sectionTitle: "#Lista:",
+                sectionTitle: localized("generic_label_list"),
                 items: taxAccounts
             )
         ]

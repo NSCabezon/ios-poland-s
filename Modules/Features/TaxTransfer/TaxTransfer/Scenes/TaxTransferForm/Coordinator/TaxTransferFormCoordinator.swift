@@ -33,6 +33,7 @@ public protocol TaxTransferFormCoordinatorProtocol: ModuleCoordinator {
     )
     func showTaxBillingPeriodSelector()
     func didAddTaxPayer(_ taxPayer: TaxPayer)
+    func showTaxTransferConfirmation(with model: TaxTransferModel)
 }
 
 public final class TaxTransferFormCoordinator: ModuleCoordinator {
@@ -64,6 +65,15 @@ public final class TaxTransferFormCoordinator: ModuleCoordinator {
 }
 
 extension TaxTransferFormCoordinator: TaxTransferFormCoordinatorProtocol {
+    public func showTaxTransferConfirmation(with model: TaxTransferModel) {
+        let coordinator = TaxTransferConfirmationCoordinator(
+            dependenciesResolver: dependenciesEngine,
+            model: model,
+            navigationController: navigationController
+        )
+        coordinator.start()
+    }
+    
     public func showAccountSelector(
         with accounts: [AccountForDebit],
         selectedAccountNumber: String?,
@@ -212,7 +222,9 @@ private extension TaxTransferFormCoordinator {
         
         dependenciesEngine.register(for: TaxAuthorityMapping.self) { _ in
             return TaxAuthorityMapper(
-                taxAccountTypeRecognizer: TaxAccountTypeRecognizer()
+                taxAccountTypeRecognizer: TaxAccountTypeRecognizer(
+                    identifierValidator: TaxIdentifierValidator()
+                )
             )
         }
         
@@ -250,6 +262,10 @@ private extension TaxTransferFormCoordinator {
         
         dependenciesEngine.register(for: TaxTransferFormDataProviding.self) { resolver in
             return TaxTransferFormDataProvider(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxTransferModelMapping.self) { _ in
+            return TaxTransferModelMapper()
         }
     }
 }

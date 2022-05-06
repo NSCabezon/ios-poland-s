@@ -10,6 +10,7 @@ import CoreFoundationLib
 import Cards
 import SANPLLibrary
 import PLLegacyAdapter
+import CoreDomain
 
 final class PLGetFilteredCardTransactionsUseCase: UseCase<GetFilteredCardTransactionsUseCaseInput, GetFilteredCardTransactionsUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
