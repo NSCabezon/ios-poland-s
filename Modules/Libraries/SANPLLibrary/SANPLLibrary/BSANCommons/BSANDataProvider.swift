@@ -239,6 +239,81 @@ public class BSANDataProvider {
         return sessionData.loanInfo.loanDetailDictionary[loanId]
     }
 
+    // MARK: - Fund Detail
+    public func store(fundDetail: FundDetailsDTO, forFundId fundId: String) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            sessionData.fundInfo.fundDetailDictionary[fundId] = fundDetail
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+
+    public func getFundDetail(withFundId fundId: String) -> FundDetailsDTO? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.fundInfo.fundDetailDictionary[fundId]
+    }
+
+    // MARK: - Fund Movements
+    public func store(fundMovements: FundTransactionListDTO, forFundId fundId: String) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            if sessionData.fundInfo.fundMovements[fundId] == nil {
+                sessionData.fundInfo.fundMovements[fundId] = []
+            }
+            sessionData.fundInfo.fundMovements[fundId]?.append(contentsOf: fundMovements.entries ?? [])
+            sessionData.fundInfo.hasMoreMovements[fundId] = fundMovements.more ?? false
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+
+    public func store(fundMovements: FundTransactionListDTO, forFundId fundId: String, andFilter filter: FundTransactionsParameters) {
+        objc_sync_enter(self.dataRepository)
+        if let sessionData = try? self.getSessionData() {
+            let fundFilteredMovements = FundFilteredMovement(fund: fundId, filters: filter)
+            if sessionData.fundInfo.fundFilteredMovements[fundFilteredMovements] == nil {
+                sessionData.fundInfo.fundFilteredMovements[fundFilteredMovements] = []
+            }
+            sessionData.fundInfo.fundFilteredMovements[fundFilteredMovements]?.append(contentsOf: fundMovements.entries ?? [])
+            sessionData.fundInfo.hasMoreFilteredMovements[fundFilteredMovements] = fundMovements.more ?? false
+            self.updateSessionData(sessionData)
+        }
+        objc_sync_exit(dataRepository)
+    }
+
+    public func getFundMovements(withFundId fundId: String) -> [FundTransactionDTO]? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.fundInfo.fundMovements[fundId]
+    }
+
+    public func getFundMoreMovements(withFundId fundId: String) -> Bool? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        return sessionData.fundInfo.hasMoreMovements[fundId]
+    }
+
+    public func getFundFilteredMovements(withFundId fundId: String, andFilter filter: FundTransactionsParameters) -> [FundTransactionDTO]? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        let fundFilteredMovements = FundFilteredMovement(fund: fundId, filters: filter)
+        return sessionData.fundInfo.fundFilteredMovements[fundFilteredMovements]
+    }
+
+    public func getFundMoreMovements(withFundId fundId: String, andFilter filter: FundTransactionsParameters) -> Bool? {
+        guard let sessionData = try? self.getSessionData() else {
+            return nil
+        }
+        let fundFilteredMovements = FundFilteredMovement(fund: fundId, filters: filter)
+        return sessionData.fundInfo.hasMoreFilteredMovements[fundFilteredMovements]
+    }
+
     // MARK: - Card PAN
     public func getCardPAN(cardId: String) -> String? {
         // TODO: Cards - To be implemented when Card PAN API is implemented and PANs are saved into SessionData
