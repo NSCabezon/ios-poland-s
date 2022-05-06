@@ -108,7 +108,9 @@ final class TaxTransferFormContainerView: UIView {
     }
     
     func clearForm() {
-        // TODO - implementation will be added in next pr
+        amountSection.clear()
+        obligationIdentifierSection.clear()
+        dateSection.clear()
     }
 }
 
