@@ -10,10 +10,12 @@ import Foundation
 @testable import PhoneTopUp
 
 final class MockTopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtocol {
+    
     var navigationController: UINavigationController?
     var didCallShowForm = false
     var didCallClose = false
     var didCallStart = false
+    var didStartNewTransfer = false
     
     func showForm(with formData: TopUpPreloadedFormData) {
         didCallShowForm = true
@@ -27,5 +29,7 @@ final class MockTopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtocol {
         didCallStart = true
     }
     
-    
+    func startNewTransfer() {
+        didStartNewTransfer = true
+    }
 }
