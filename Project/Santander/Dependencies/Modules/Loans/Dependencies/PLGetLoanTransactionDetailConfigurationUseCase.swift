@@ -29,17 +29,16 @@ extension PLGetLoanTransactionDetailConfigurationUseCase: GetLoanTransactionDeta
 
 private extension PLGetLoanTransactionDetailConfigurationUseCase {
     func detailActions(transaction: LoanTransactionRepresentable?) -> [LoanTransactionDetailActionRepresentable] {
+        let pdfExtractAction = PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.pdfExtract(nil),
+                                                             isDisabled: false,
+                                                             isUserInteractionEnable: true)
+        let shareAction = PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
+                                                        isDisabled: false,
+                                                        isUserInteractionEnable: true)
         if transaction?.receiptId != nil {
-            return [PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.pdfExtract(nil),
-                                                  isDisabled: false,
-                                                  isUserInteractionEnable: true),
-                    PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
-                                                  isDisabled: false,
-                                                  isUserInteractionEnable: true)]
+            return [pdfExtractAction, shareAction]
         } else {
-            return [PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
-                                                  isDisabled: false,
-                                                  isUserInteractionEnable: true)]
+            return [shareAction]
         }
     }
 }
