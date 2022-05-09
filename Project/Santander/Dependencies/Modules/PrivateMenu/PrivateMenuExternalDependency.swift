@@ -11,6 +11,7 @@ import Foundation
 import RetailLegacy
 import CoreFoundationLib
 import PrivateMenu
+import BLIK
 
 extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     func resolve() -> GetMyProductSubMenuUseCase {
@@ -71,6 +72,10 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
 
     func helpCenterCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
+    }
+    
+    func blikCoordinator() -> BindableCoordinator {
+        oldResolver.resolve(for: BLIKHomeCoordinator.self)
     }
 
     func branchLocatorCoordinator() -> BindableCoordinator {
