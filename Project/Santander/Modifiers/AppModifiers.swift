@@ -28,7 +28,7 @@ final class AppModifiers {
         return depositModifier
     }()
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
-        let fundModifier = PLFundModifier(dependenciesResolver: self.legacyDependenciesResolver)
+        let fundModifier = FundModifier(dependenciesResolver: self.legacyDependenciesResolver)
         return fundModifier
     }()
     private lazy var cardHomeActionModifier: PLCardHomeActionModifier = {
@@ -66,7 +66,7 @@ final class AppModifiers {
         return GetGPOtherOperativeModifier()
     }()
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
-        return OtherOperativesModifier(dependencies: dependencies)
+        return OtherOperativesModifier(dependencies: dependencies, dependenciesResolver: legacyDependenciesResolver)
     }()
     private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
         return PLCardTransactionsSearchModifier()
@@ -92,6 +92,12 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: FundModifier.self) { _ in
             return self.fundModifiers
+        }
+        self.legacyDependenciesInjector.register(for: SecurityAreaActionProtocol.self) { resolver in
+            return PLSecurityActionFactory(dependenciesResolver: resolver)
+        }
+        self.legacyDependenciesInjector.register(for: GlobalSecurityViewContainerProtocol.self) { resolver in
+            return PLGlobalSecurityViewContainer(dependenciesResolver: resolver)
         }
         self.legacyDependenciesInjector.register(for: AccountNumberFormatterProtocol.self) { _ in
             return PLAccountNumberFormatter()

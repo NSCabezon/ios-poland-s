@@ -54,12 +54,15 @@ extension TopUpDataLoaderPresenter: TopUpDataLoaderPresenterProtocol {
     private func handleSuccessfulDataFetch(with fetchedData: GetPhoneTopUpFormDataOutput) {
         guard !fetchedData.accounts.isEmpty else {
             view?.hideLoader(completion: { [weak self] in
-                self?.view?.showErrorMessage(title: localized("pl_popup_noSourceAccTitle"),
-                                            message: localized("pl_popup_noSourceAccParagraph"),
-                                            image: "icnInfoGray",
-                                            onConfirm: {
-                    self?.coordinator?.close()
-                })
+                let noAccountDialog = InfoDialogBuilder(
+                    title: .plain(text: localized("pl_popup_noSourceAccTitle")),
+                    description: .plain(text: localized("pl_popup_noSourceAccParagraph")),
+                    image: PLAssets.image(named: "info_black") ?? UIImage(),
+                    buttontTapAction: {
+                        self?.coordinator?.close()
+                    }
+                ).build()
+                self?.view?.showDialog(noAccountDialog)
             })
             return
         }

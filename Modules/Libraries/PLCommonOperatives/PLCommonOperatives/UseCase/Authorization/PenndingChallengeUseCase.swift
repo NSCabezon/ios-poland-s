@@ -19,8 +19,8 @@ public final class PenndingChallengeUseCase: UseCase<Void, PenndingChallengeUseC
     public override func executeUseCase(requestValues: Void) throws -> UseCaseResponse<PenndingChallengeUseCaseOutput, StringErrorOutput> {
         let result = try managersProvider.getAuthorizationProcessorManager().getPendingChallenge()
         switch result {
-        case .success(let pennding):
-            return .ok(PenndingChallengeUseCaseOutput(penndingChallenge: pennding))
+        case .success(let challenge):
+            return .ok(PenndingChallengeUseCaseOutput(challenge: challenge))
         case .failure(_):
             return .error(.init(PenndingChallengeErrorResult.generalErrorMessages.rawValue))
         }
@@ -30,9 +30,9 @@ public final class PenndingChallengeUseCase: UseCase<Void, PenndingChallengeUseC
 extension PenndingChallengeUseCase: PenndingChallengeUseCaseProtocol {}
 
 public struct PenndingChallengeUseCaseOutput {
-    public let penndingChallenge: ChallengeRepresentable
+    public let challenge: ChallengeRepresentable
     
-    public init(penndingChallenge: ChallengeRepresentable) {
-        self.penndingChallenge = penndingChallenge
+    public init(challenge: ChallengeRepresentable) {
+        self.challenge = challenge
     }
 }

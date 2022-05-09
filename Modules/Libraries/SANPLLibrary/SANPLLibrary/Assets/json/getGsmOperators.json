@@ -1,0 +1,76 @@
+{
+   "12345678Z":{
+      "0":[
+         {
+            "id":0,
+            "blueMediaId":"0",
+            "name":"Niezdefiniowany"
+         },
+         {
+            "id":1,
+            "blueMediaId":"1",
+            "name":"Plus (+ MIX)"
+         },
+         {
+            "id":2,
+            "blueMediaId":"2",
+            "name":"T-Mobile"
+         },
+         {
+            "id":3,
+            "blueMediaId":"3",
+            "name":"Orange (+ MIX)"
+         },
+         {
+            "id":4,
+            "blueMediaId":"4",
+            "name":"HEYAH"
+         },
+         {
+            "id":5,
+            "blueMediaId":"5",
+            "name":"Sami Swoi"
+         },
+         {
+            "id":6,
+            "blueMediaId":"6",
+            "name":"Play"
+         },
+         {
+            "id":7,
+            "blueMediaId":"7",
+            "name":"Gadu Air"
+         },
+         {
+            "id":8,
+            "blueMediaId":"8",
+            "name":"Cyfrowy Polsat"
+         },
+         {
+            "id":9,
+            "blueMediaId":"9",
+            "name":"Dialog"
+         },
+         {
+            "id":10,
+            "blueMediaId":"10",
+            "name":"Virgin Mobile"
+         },
+         {
+            "id":11,
+            "blueMediaId":"11",
+            "name":"Lycamobile"
+         },
+         {
+            "id":12,
+            "blueMediaId":"12",
+            "name":"NJU mobile"
+         },
+         {
+            "id":13,
+            "blueMediaId":"13",
+            "name":"Red Bull MOBILE"
+         }
+      ]
+   }
+}

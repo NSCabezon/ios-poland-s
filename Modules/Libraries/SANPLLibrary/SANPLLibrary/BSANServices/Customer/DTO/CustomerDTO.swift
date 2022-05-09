@@ -20,6 +20,7 @@ public struct CustomerDTO: Codable {
     public let pesel: String?
     public let citizenship: String?
     public let customerContexts: [ContextDTO]?
+    public let smsTokenNo: String?
 }
 
 public struct ContactDetailDTO: Codable {
@@ -111,5 +112,9 @@ extension CustomerDTO: PersonalBasicInfoRepresentable {
 
     public var email: String? {
         return contactData?.email
+    }
+    
+    public var smsPhoneNumber: String? {
+        smsTokenNo
     }
 }

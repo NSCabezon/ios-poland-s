@@ -18,6 +18,7 @@ class TopUpSummaryCoordinatorTests: XCTestCase {
     
     var mockDependenciesResolver: DependenciesDefault!
     var mockNavigationController: UINavigationController!
+    var mockDataLoaderCoordinator: MockTopUpDataLoaderCoordinator!
     let mockMenuController = MockMenuViewController()
     let mockFormController = PhoneTopUpFormViewController(presenter: MockPhoneTopUpFormPresenterProtocol())
     var coordinator: TopUpSummaryCoordinator!
@@ -25,10 +26,12 @@ class TopUpSummaryCoordinatorTests: XCTestCase {
     override func setUpWithError() throws {
         mockDependenciesResolver = DependenciesDefault.mockInstance()
         mockNavigationController = MockNavigationController()
+        mockDataLoaderCoordinator = MockTopUpDataLoaderCoordinator()
         mockNavigationController.viewControllers = [mockMenuController, mockFormController]
         coordinator = TopUpSummaryCoordinator(dependenciesResolver: mockDependenciesResolver,
                                               navigationController: mockNavigationController,
                                               summary: TopUpModel.mockInstance())
+        registerDependencies()
     }
     
     func testNotShowingSummaryControllerBeforeStart() throws {
@@ -63,7 +66,14 @@ class TopUpSummaryCoordinatorTests: XCTestCase {
         coordinator.start()
         coordinator.makeAnotherTopUp()
         
-        XCTAssert(mockNavigationController.viewControllers.count == 2, "There should be one controller on the stack")
-        XCTAssert(mockNavigationController.topViewController is PhoneTopUpFormViewController, "The top controller should be an instance of PhoneTopUpFormViewController")
+        XCTAssert(mockDataLoaderCoordinator.didStartNewTransfer, "New transfer should be started")
+    }
+}
+
+private extension TopUpSummaryCoordinatorTests {
+    func registerDependencies() {
+        mockDependenciesResolver.register(for: TopUpDataLoaderCoordinatorProtocol.self) { resolver in
+            return self.mockDataLoaderCoordinator
+        }
     }
 }

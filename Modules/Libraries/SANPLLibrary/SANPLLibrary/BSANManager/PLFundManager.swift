@@ -9,7 +9,10 @@ import Foundation
 import SANLegacyLibrary
 
 public protocol PLFundManagerProtocol {
-	func changeAlias(fundDTO: SANLegacyLibrary.FundDTO, newAlias: String) throws -> Result<FundChangeAliasDTO, NetworkProviderError>
+    func getFundDetails(registerId: String) -> Result<FundDetailsDTO, NetworkProviderError>
+    func getFundTransactions(registerId: String, language: String) -> Result<FundTransactionListDTO, NetworkProviderError>
+    func getFundTransactionsFiltered(registerId: String, language: String, parameters: FundTransactionsParameters) -> Result<FundTransactionListDTO, NetworkProviderError>
+    func changeAlias(fundDTO: SANLegacyLibrary.FundDTO, newAlias: String) throws -> Result<FundChangeAliasDTO, NetworkProviderError>
 }
 
 final class PLFundManager {
@@ -25,6 +28,19 @@ final class PLFundManager {
 }
 
 extension PLFundManager: PLFundManagerProtocol {
+
+    func getFundDetails(registerId: String) -> Result<FundDetailsDTO, NetworkProviderError> {
+        fundDataSource.getFundDetails(registerId: registerId)
+    }
+
+    func getFundTransactions(registerId: String, language: String) -> Result<FundTransactionListDTO, NetworkProviderError> {
+        fundDataSource.getFundTransactions(registerId: registerId, language: language)
+    }
+
+    func getFundTransactionsFiltered(registerId: String, language: String, parameters: FundTransactionsParameters) -> Result<FundTransactionListDTO, NetworkProviderError> {
+        fundDataSource.getFundTransactionsFiltered(registerId: registerId, language: language, parameters: parameters)
+    }
+
 	func changeAlias(fundDTO: SANLegacyLibrary.FundDTO, newAlias: String) throws -> Result<FundChangeAliasDTO, NetworkProviderError> {
 		try fundDataSource.changeAlias(fundDTO: fundDTO, newAlias: newAlias)
 	}

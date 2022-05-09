@@ -1,5 +1,7 @@
 import CoreFoundationLib
 import PLUI
+import PLCommonOperatives
+import SANLegacyLibrary
 
 let BLIK_WEB_PURCHASE_DURATION: TimeInterval = 40
 let BLIK_OTHER_DURATION: TimeInterval = 27
@@ -7,7 +9,7 @@ let BLIK_OTHER_DURATION: TimeInterval = 27
 protocol BLIKConfirmationPresenterProtocol: MenuTextWrapperProtocol {
     var view: BLIKConfirmationViewProtocol? { get set }
     func viewDidLoad()
-    
+    func viewWillAppear()
     func didSelectClose()
     func didSelectBack()
     func didSelectConfirm()
@@ -20,11 +22,15 @@ final class BLIKConfirmationPresenter {
     let dependenciesResolver: DependenciesResolver
     private let timer = TimerHandler()
     private let confirmationDialogFactory: ConfirmationDialogProducing = ConfirmationDialogFactory()
-
+    private let notificationSchemaId = "466"
+    private var totalDuration: TimeInterval?
     private var cancelBLIKTransactionUseCase: CancelBLIKTransactionProtocol {
         dependenciesResolver.resolve()
     }
     private var acceptBLIKTransactionUseCase: AcceptBLIKTransactionProtocol {
+        dependenciesResolver.resolve()
+    }
+    private var blikPrepareChallengeUseCase: BlikPrepareChallengeUseCaseProtocol {
         dependenciesResolver.resolve()
     }
     private var viewModelProvider: BLIKTransactionViewModelProviding {
@@ -32,6 +38,15 @@ final class BLIKConfirmationPresenter {
     }
     private var useCaseHandler: UseCaseHandler {
         return self.dependenciesResolver.resolve(for: UseCaseHandler.self)
+    }
+    private var authorizationHandler: BlikChallengesHandlerDelegate {
+        dependenciesResolver.resolve(for: BlikChallengesHandlerDelegate.self)
+    }
+    private var notifyDeviceUseCase: NotifyDeviceUseCaseProtocol {
+        dependenciesResolver.resolve(for: NotifyDeviceUseCaseProtocol.self)
+    }
+    private var penndingChallengeUseCase: PenndingChallengeUseCaseProtocol {
+        dependenciesResolver.resolve(for: PenndingChallengeUseCaseProtocol.self)
     }
 
     init(dependenciesResolver: DependenciesResolver) {
@@ -52,6 +67,14 @@ extension BLIKConfirmationPresenter: BLIKConfirmationPresenterProtocol {
                 }
             })
         }
+    }
+    
+    func viewWillAppear() {
+        guard let totalDuration = totalDuration else { return }
+        if self.timer.counter <= 0 {
+            self.cancelTransaction(type: .timeout)
+        }
+        view?.startProgressAnimation(totalDuration: totalDuration, remainingDuration: TimeInterval(timer.counter))
     }
     
     func didSelectClose() {
@@ -79,6 +102,7 @@ private extension BLIKConfirmationPresenter {
     func handleFetchedViewModel(_ viewModel: BLIKTransactionViewModel) {
         self.viewModel = viewModel
         let time = viewModel.remainingTime + (viewModel.transferType == .blikWebPurchases ? BLIK_WEB_PURCHASE_DURATION : BLIK_OTHER_DURATION)
+        totalDuration = time
         startCountdown(totalDuration: time , remainingDuration: time)
         view?.setViewModel(viewModel)
     }
@@ -97,10 +121,10 @@ private extension BLIKConfirmationPresenter {
     }
     
     func cancelTransaction(type: TransactionCancelationData.CancelType) {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel = viewModel,
+              coordinator.isBlikConfirmationViewControllerPresented() else { return }
         timer.stopTimer()
         view?.showLoader()
-        
         Scenario(useCase: cancelBLIKTransactionUseCase,
                  input: .init(trnId: viewModel.trnId,
                               trnDate: viewModel.transactionDate,
@@ -113,7 +137,7 @@ private extension BLIKConfirmationPresenter {
                     self?.coordinator.cancelTransfer(withData: cancelationData)
                 }
             }
-            .onError {[weak self] _ in
+            .onError { [weak self] _ in
                 self?.view?.hideLoader {
                     self?.showServiceInaccessibleError()
                 }
@@ -122,9 +146,77 @@ private extension BLIKConfirmationPresenter {
     
     func confirmTransaction() {
         guard let viewModel = viewModel else { return }
-        timer.stopTimer()
+        var notifyDeviceUseCaseOutput: NotifyDeviceUseCaseOutput?
         view?.showLoader()
-        
+        Scenario(useCase: blikPrepareChallengeUseCase, input: .init(model: viewModel.transaction))
+            .execute(on: useCaseHandler)
+            .then(scenario: { [weak self] output ->Scenario<NotifyDeviceUseCaseInput, NotifyDeviceUseCaseOutput, StringErrorOutput>? in
+                guard let self = self else { return nil }
+                let notifyDeviceUseCaseInput = NotifyDeviceUseCaseInput(
+                    challenge: output.challenge,
+                    softwareTokenType: nil,
+                    alias: "",
+                    iban: IBANRepresented(ibanString: ""),
+                    amount: AmountDTO(
+                        value: viewModel.transaction.amount,
+                        currency: CurrencyDTO(
+                            currencyName: CurrencyType.złoty.name,
+                            currencyType: .złoty
+                        )
+                    ),
+                    notificationSchemaId: self.notificationSchemaId,
+                    variables: []
+                )
+                return Scenario(useCase: self.notifyDeviceUseCase, input: notifyDeviceUseCaseInput)
+            })
+            .then(scenario: { [weak self] output ->Scenario<Void, PenndingChallengeUseCaseOutput, StringErrorOutput>? in
+                guard let self = self else { return nil }
+                notifyDeviceUseCaseOutput = output
+                return Scenario(useCase: self.penndingChallengeUseCase)
+            })
+            .onSuccess({ [weak self] output in
+                self?.view?.hideLoader {
+                    guard let authorizationId = notifyDeviceUseCaseOutput?.authorizationId else { return }
+                    self?.showAuthorization(
+                        with: AuthorizationModel(
+                            authorizationId: authorizationId,
+                            challenge: output.challenge
+                        )
+                    )
+                }
+            })
+            .onError { [weak self] error in
+                self?.timer.stopTimer()
+                self?.view?.hideLoader(completion: {
+                    self?.showServiceInaccessibleError()
+                })
+            }
+    }
+    
+    func showAuthorization(with model: AuthorizationModel) {
+        authorizationHandler.handle(
+            model.challenge,
+            authorizationId: "\(model.authorizationId)",
+            progressTotalTime: Float(timer.counter)
+        ) { [weak self] challengeResult in
+            switch(challengeResult) {
+            case .handled(_):
+                self?.startAcceptTransaction()
+            default:
+                self?.timer.stopTimer()
+                self?.showServiceInaccessibleError()
+            }
+        } bottomSheetDismissedClosure: { [weak self] in
+            guard let self = self else { return }
+            if self.timer.counter <= 0 {
+                self.coordinator.closeControllerIfOtherThanBlikConfirmationVC()
+            }
+        }
+    }
+    
+    func startAcceptTransaction() {
+        guard let viewModel = viewModel else { return }
+        timer.stopTimer()
         Scenario(useCase: acceptBLIKTransactionUseCase,
                  input: .init(trnId: viewModel.trnId,
                               trnDate: viewModel.transactionDate))
