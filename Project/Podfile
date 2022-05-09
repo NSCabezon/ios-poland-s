@@ -40,6 +40,7 @@ def core_dependencies
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'Funds', :path => '../santander-one/Funds'
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'

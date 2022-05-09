@@ -1,5 +1,6 @@
 import UI
 import CoreFoundationLib
+import PLCommonOperatives
 
 /**
     #Add method that must be handle by the BLIKConfirmationCoordinator like 
@@ -9,6 +10,8 @@ protocol BLIKConfirmationCoordinatorProtocol {
     func cancelTransfer(withData: TransactionCancelationData)
     func goToSummary(with viewModel: BLIKTransactionViewModel)
     func goToGlobalPosition()
+    func isBlikConfirmationViewControllerPresented() -> Bool
+    func closeControllerIfOtherThanBlikConfirmationVC()
 }
 
 final class BLIKConfirmationCoordinator: ModuleCoordinator {
@@ -52,6 +55,19 @@ extension BLIKConfirmationCoordinator: BLIKConfirmationCoordinatorProtocol {
                                                  viewModel: viewModel)
         
         coordinator.start()
+    }
+    
+    func isBlikConfirmationViewControllerPresented() -> Bool {
+        if navigationController?.viewControllers.last is BLIKConfirmationViewController {
+            return true
+        }
+        return false
+    }
+    
+    func closeControllerIfOtherThanBlikConfirmationVC() {
+        if !isBlikConfirmationViewControllerPresented() {
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
 
@@ -99,6 +115,16 @@ private extension BLIKConfirmationCoordinator {
             let viewController = BLIKConfirmationViewController(presenter: presenter)
             presenter.view = viewController
             return viewController
+        }
+        
+        dependenciesEngine.register(for: BlikPrepareChallengeUseCaseProtocol.self) { resolver in
+            BlikPrepareChallengeUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: NotifyDeviceUseCaseProtocol.self) { resolver in
+            NotifyDeviceUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PenndingChallengeUseCaseProtocol.self) { resolver in
+            PenndingChallengeUseCase(dependenciesResolver: resolver)
         }
     }
 }

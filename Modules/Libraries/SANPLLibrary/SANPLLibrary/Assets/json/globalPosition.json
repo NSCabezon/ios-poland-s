@@ -821,6 +821,25 @@
                         "currencyCode": "PLN",
                         "valueInBaseCurrency": 15450.94
                     }
+                },
+                {
+                    "number": "00071503-09-0020",
+                    "accountId": {
+                        "id": "109728588",
+                        "systemId": 6
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "SANTANDER WSCHODNIEJ - PRODUKT STANDARDOWY",
+                        "userDefined": "SANTANDER WSCHODNIEJ - PRODUKT STANDARDOWY"
+                    },
+                    "role": "OWNER",
+                    "type": "INVESTMENT",
+                    "currentValue": {
+                        "value": 11419.93,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 11419.93
+                    }
                 }
             ],
             "insurances": [

@@ -16,6 +16,7 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate,
     var view: TaxTransferFormView? { get set }
     
     func viewDidLoad()
+    func clearForm()
     func getTaxFormConfiguration() -> TaxFormConfiguration
     func didTapAccountSelector()
     func didTapTaxPayer()
@@ -92,7 +93,19 @@ private extension TaxTransferFormPresenter {
     }
 }
 
-extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {    
+extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
+    func clearForm() {
+        selectedAccount = nil
+        selectedTaxPayer = nil
+        selectedTaxAuthority = nil
+        selectedPayerInfo = nil
+        selectedPeriod = nil
+        selectedBillingYear = nil
+        selectedPeriodNumber = nil
+        
+        updateViewWithLatestViewModel()
+    }
+    
     func didSelectTaxBillingPeriod(form: TaxTransferBillingPeriodForm) {
         selectedPeriod = form.periodType
         selectedBillingYear = form.year
@@ -249,13 +262,14 @@ private extension TaxTransferFormPresenter {
     }
     
     func showEmptyAccountsListAlert() {
-        view?.showErrorMessage(
+        let dialog = InfoDialogBuilder(
             title: localized("pl_popup_noSourceAccTitle"),
-            message: localized("pl_popup_noSourceAccParagraph"),
-            actionButtonTitle: localized("generic_button_understand"),
-            closeButton: .none,
-            onConfirm: { [weak self] in self?.coordinator.back() }
-        )
+            description: localized("pl_popup_noSourceAccParagraph"),
+            image: PLAssets.image(named: "info_black") ?? UIImage()
+        ) { [weak self] in
+            self?.coordinator.back()
+        }.build()
+        view?.showDialog(dialog)
     }
     
     func updateViewWithLatestViewModel() {

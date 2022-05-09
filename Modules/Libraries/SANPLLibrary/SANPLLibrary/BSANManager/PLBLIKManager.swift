@@ -28,6 +28,7 @@ public protocol PLBLIKManagerProtocol {
         transactionParameters: TransactionParameters?
     ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
     func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
+    func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError>
 }
 
 public final class PLBLIKManager {
@@ -141,5 +142,9 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
     
     public func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError> {
         try dataSource.getTransactions()
+    }
+    
+    public func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError> {
+        try dataSource.getChallenge(parameters)
     }
 }
