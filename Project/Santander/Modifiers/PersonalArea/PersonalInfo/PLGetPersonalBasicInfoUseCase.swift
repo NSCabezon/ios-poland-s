@@ -46,6 +46,7 @@ private extension PLGetPersonalBasicInfoUseCase {
                                      contactHourTo: representable.contactHourTo,
                                      email: representable.email,
                                      emailAlternative: localized("personalArea_text_uninformed"))
+        dto.smsPhoneNumber = representable.smsPhoneNumber
         dto.correspondenceAddressNodes = representable.correspondenceAddressNodes
         return PersonalInformationEntity(dto)
     }

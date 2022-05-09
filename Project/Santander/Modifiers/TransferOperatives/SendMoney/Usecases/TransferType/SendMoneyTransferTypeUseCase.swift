@@ -102,7 +102,7 @@ private extension SendMoneyTransferTypeUseCase {
         let availableResponse = try transfersRepository.checkTransactionAvailability(
             input: CheckTransactionAvailabilityInput(
                 destinationAccount: requestValues.destinationIban,
-                transactionAmount: requestValues.amount.value ?? 0
+                transactionAmount: requestValues.amount
             )
         )
         var availableTransferTypes: [PolandTransferType] = []

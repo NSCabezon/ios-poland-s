@@ -54,7 +54,7 @@ final class PhoneTopUpFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     // MARK: Configuration
@@ -65,13 +65,14 @@ final class PhoneTopUpFormViewController: UIViewController {
         setUpLayout()
         prepareStyles()
         formView.delegate = self
+        configureKeyboardDismissGesture()
     }
     
     private func prepareNavigationBar() {
         NavigationBarBuilder(style: .white,
                              title: .title(key: localized("pl_topup_title_topup")))
-            .setLeftAction(.back(action: #selector(goBack)))
-            .setRightActions(.close(action: #selector(closeProcess)))
+        .setLeftAction(.back(action: .selector(#selector(goBack))))
+        .setRightActions(.close(action: .selector(#selector(closeProcess))))
             .build(on: self, with: nil)
     }
     

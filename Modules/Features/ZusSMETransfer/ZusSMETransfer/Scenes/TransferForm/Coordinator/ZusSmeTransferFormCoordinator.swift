@@ -116,7 +116,7 @@ private extension ZusSmeTransferFormCoordinator {
         dependenciesEngine.register(for: GetPopularAccountsUseCase.self) { resolver in
             GetPopularAccountsUseCase(dependenciesResolver: resolver)
         }
-        dependenciesEngine.register(for: GetVATAccountUseCase.self) { resolver in
+        dependenciesEngine.register(for: GetVATAccountUseCaseProtocol.self) { resolver in
             GetVATAccountUseCase(dependenciesResolver: resolver)
         }
         dependenciesEngine.register(for: ZusSmeTransferFormPresenterProtocol.self) { [accounts, selectedAccountNumber] resolver in

@@ -8,7 +8,7 @@
 import PLScenes
 import CoreFoundationLib
 
-enum TaxTransferBillingPeriodType: SelectableItem {
+public enum TaxTransferBillingPeriodType: SelectableItem {
     case year
     case halfYear
     case quarter
@@ -16,11 +16,11 @@ enum TaxTransferBillingPeriodType: SelectableItem {
     case decade
     case day
     
-    var identifier: String {
+    public var identifier: String {
         return String(describing: self)
     }
     
-    var name: String {
+    public var name: String {
         switch self {
         case .day:
             return localized("pl_taxTransfer_tab_day")
@@ -37,7 +37,7 @@ enum TaxTransferBillingPeriodType: SelectableItem {
         }
     }
     
-    var periodNumbers: [Int] {
+    public var periodNumbers: [Int] {
         switch self {
         case .halfYear:
             return [01, 02]
@@ -63,7 +63,24 @@ enum TaxTransferBillingPeriodType: SelectableItem {
         }
     }
     
-    var shouldChoosePeriodNumber: Bool {
+    public var short: String {
+        switch self {
+        case .year:
+            return "R"
+        case .halfYear:
+            return "P"
+        case .quarter:
+            return "K"
+        case .month:
+            return "M"
+        case .decade:
+            return "D"
+        case .day:
+            return "J"
+        }
+    }
+    
+    public var shouldChoosePeriodNumber: Bool {
         switch self {
         case .year,
              .day:

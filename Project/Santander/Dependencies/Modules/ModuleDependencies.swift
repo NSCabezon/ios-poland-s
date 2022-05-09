@@ -10,6 +10,7 @@ import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
+import Menu
 import Onboarding
 import SANLegacyLibrary
 
@@ -21,7 +22,6 @@ struct ModuleDependencies {
     init(oldResolver: DependenciesInjector & DependenciesResolver, drawer: BaseMenuViewController) {
         self.oldResolver = oldResolver
         self.drawer = drawer
-        registerExternalDependencies()
     }
     
     func resolve() -> TimeManager {
@@ -69,20 +69,17 @@ struct ModuleDependencies {
     }
 }
 
-// MARK: - Private
-private extension ModuleDependencies {
-    func registerExternalDependencies() {
-        oldResolver.register(for: OnboardingExternalDependenciesResolver.self) { _ in
-            return self
-        }
-    }
-}
-
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     func resolve() -> FeatureFlagsRepository {
         return asShared {
-            DefaultFeatureFlagsRepository(features: CoreFeatureFlag.allCases)
+            DefaultFeatureFlagsRepository(features: coreFeatureFlags())
         }
+    }
+    
+    private func coreFeatureFlags() -> [FeatureFlagRepresentable] {
+        let toRemove: Set<CoreFeatureFlag> = []
+        let all: Set<CoreFeatureFlag> = Set(CoreFeatureFlag.allCases)
+        return Array(all.subtracting(toRemove))
     }
 }
 

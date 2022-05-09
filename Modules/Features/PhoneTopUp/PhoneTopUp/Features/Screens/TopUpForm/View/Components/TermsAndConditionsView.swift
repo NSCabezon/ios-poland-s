@@ -100,7 +100,7 @@ final class TermsAndConditionsView: UIView {
             termsLabel.numberOfLines = 0
         } else {
             expandOrFoldButton.setTitle(localized("pl_topup_link_fullTextRegulations"), for: .normal)
-            termsLabel.numberOfLines = 2
+            termsLabel.numberOfLines = 4
         }
     }
     

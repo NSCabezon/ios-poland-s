@@ -26,10 +26,19 @@ extension PLFundsManagerAdapter: BSANFundsManager {
     }
 
     func getFundDetail(forFund fundDTO: FundDTO) throws -> BSANResponse<FundDetailDTO> {
-        return BSANErrorResponse(nil)
+        guard let registerId = fundDTO.productId?.id else { return BSANErrorResponse(nil) }
+        let result = fundManager.getFundDetails(registerId: registerId)
+
+        switch result {
+        case .success(let fundDetail):
+            let adaptedFundDetail = FundDetailDTOAdapter.adaptPLFundDetailToFundDetail(fundDetail)
+            return BSANOkResponse(adaptedFundDetail)
+        case .failure( _):
+            return BSANErrorResponse(nil)
+        }
     }
 
-    func getFundTransactionDetail(forFund fundDTO: FundDTO, fundTransactionDTO: FundTransactionDTO) throws -> BSANResponse<FundTransactionDetailDTO> {
+    func getFundTransactionDetail(forFund fundDTO: FundDTO, fundTransactionDTO: SANLegacyLibrary.FundTransactionDTO) throws -> BSANResponse<FundTransactionDetailDTO> {
         return BSANErrorResponse(nil)
     }
 

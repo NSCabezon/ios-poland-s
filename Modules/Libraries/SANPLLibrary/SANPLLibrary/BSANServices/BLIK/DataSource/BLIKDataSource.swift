@@ -27,6 +27,7 @@ protocol BLIKDataSourceProtocol {
     ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
     func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
+    func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError>
 }
 
 private extension BLIKDataSource {
@@ -62,6 +63,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         case registerAlias = "/oc/register-alias"
         case unregisterAlias = "/oc/unregister-alias"
         case acceptTransfer = "/domestic/create/accepted"
+        case challenge = "/transactions/challenge"
     }
     
     private let blikPath = "/api/blik"
@@ -70,7 +72,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
-        
+    
     enum Error: Swift.Error {
         case noBaseURL
     }
@@ -90,7 +92,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .get,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .activeEwallets)
         )
     }
     
@@ -104,7 +107,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .get,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .pspTicket)
         )
     }
     
@@ -118,8 +122,30 @@ class BLIKDataSource: BLIKDataSourceProtocol {
             BlikRequest(serviceName: serviceName,
                         serviceUrl: serviceUrl,
                         method: .get,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .getTrnToConf)
         )
+    }
+    
+    func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let parametersData = try? JSONEncoder().encode(parameters),
+              let queryParams = try? JSONSerialization.jsonObject(
+                with: parametersData, options: []
+              ) as? [String: Any] else {
+                  return .failure(NetworkProviderError.other)
+              }
+        let serviceUrl = baseUrl + blikPath
+        let serviceName = BlikServiceType.challenge.rawValue
+        let result: Result<BlikChallengeDTO, NetworkProviderError> = self.networkProvider.request(
+            BlikRequest(serviceName: serviceName,
+                        serviceUrl: serviceUrl,
+                        method: .get,
+                        queryParams: queryParams,
+                        contentType: nil,
+                        localServiceName: .challenge)
+        )
+        return result
     }
 
     func getActiveCheques() throws -> Result<[BlikChequeDTO], NetworkProviderError> {
@@ -237,7 +263,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         bodyEncoding: .form)
         )
     }
-
+    
     func getPinPublicKey() throws -> Result<PubKeyDTO, NetworkProviderError> {
         guard let authBaseUrl = self.blikAuthBaseUrl() else {
             return .failure(NetworkProviderError.other)
@@ -278,7 +304,8 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .post,
                         request: data,
-                        bodyEncoding: .form)
+                        bodyEncoding: .form,
+                        localServiceName: .verifyContacts)
         )
     }
     
@@ -294,10 +321,11 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         serviceUrl: serviceUrl,
                         method: .get,
                         queryParams: queryParams,
-                        contentType: nil)
+                        contentType: nil,
+                        localServiceName: .p2pAlias)
         )
     }
-
+    
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(parameters) else {
             return .failure(NetworkProviderError.other)
@@ -401,7 +429,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                         bodyEncoding: .form)
         )
     }
-
+    
     func acceptTransfer(
         _ parameters: AcceptDomesticTransactionParameters,
         transactionParameters: TransactionParameters?
@@ -416,10 +444,10 @@ class BLIKDataSource: BLIKDataSourceProtocol {
                                           serviceUrl: serviceUrl,
                                           method: .post,
                                           jsonBody: parameters,
+                                          localServiceName: .acceptTransfer,
                                           authorization: .twoFactorOperation(
                                             transactionParameters: transactionParameters
                                           )
-                                        
             )
         )
     }
@@ -466,7 +494,7 @@ private struct BlikRequest: NetworkProviderRequest {
     let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization?
-
+    
     init(serviceName: String,
          serviceUrl: String,
          method: NetworkProviderMethod,

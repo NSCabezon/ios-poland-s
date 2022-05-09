@@ -25,6 +25,7 @@ protocol SendMoneyTransferTypePresenterProtocol: OperativeStepPresenterProtocol 
     func didPressedFloatingButton()
     func didTapTooltip()
     func getSubtitleInfo() -> String
+    func getStepOfSteps() -> [Int]
 }
 
 final class SendMoneyTransferTypePresenter {
@@ -103,6 +104,10 @@ extension SendMoneyTransferTypePresenter: SendMoneyTransferTypePresenterProtocol
     
     func getSubtitleInfo() -> String {
         self.container?.getSubtitleInfo(presenter: self) ?? ""
+    }
+    
+    func getStepOfSteps() -> [Int] {
+        self.container?.getStepOfSteps(presenter: self) ?? []
     }
     
     func didTapTooltip() {
@@ -204,7 +209,7 @@ private extension SendMoneyTransferTypePresenter {
 
 extension SendMoneyTransferTypePresenter: AutomaticScreenActionTrackable {
     var trackerPage: SendMoneyTransferTypePage {
-        SendMoneyTransferTypePage(national: self.operativeData.type == .national, type: self.operativeData.type.trackerName)
+        SendMoneyTransferTypePage()
     }
     
     var trackerManager: TrackerManager {

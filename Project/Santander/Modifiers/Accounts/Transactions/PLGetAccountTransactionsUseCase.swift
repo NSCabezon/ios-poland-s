@@ -10,6 +10,7 @@ import CoreFoundationLib
 import Account
 import SANPLLibrary
 import PLLegacyAdapter
+import CoreDomain
 
 final class PLGetAccountTransactionsUseCase: UseCase<GetAccountTransactionsUseCaseInput, GetAccountTransactionsUseCaseOkOutput, StringErrorOutput> {
     private let dependenciesResolver: DependenciesResolver
@@ -42,8 +43,8 @@ final class PLGetAccountTransactionsUseCase: UseCase<GetAccountTransactionsUseCa
         let filters = requestValues.filters
         let description = filters?.getTransactionDescription()
         let dateInterval = filters?.getDateRange()
-        let fromDate = dateInterval?.fromDate.toString(format: "yyyy-MM-dd")
-        let toDate = dateInterval?.toDate.toString(format: "yyyy-MM-dd")
+        let fromDate = dateInterval?.fromDate?.toString(format: "yyyy-MM-dd")
+        let toDate = dateInterval?.toDate?.toString(format: "yyyy-MM-dd")
         let movementType = self.adaptMovementType(filters?.getMovementType())
         let parameters = AccountTransactionsParameters(accountNumbers: [accountNumber],
                                                     from: fromDate,

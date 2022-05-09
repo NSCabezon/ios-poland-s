@@ -36,7 +36,7 @@ final class TaxTransferPayerIdentifiersViewModel {
 
     func identifier(for index: Int) -> String? {
         if index == 0, let taxIdentifier = taxPayer.taxIdentifier {
-            return localized("#NIP: ") + taxIdentifier
+            return localized("pl_generic_docId_nip") + ": " + taxIdentifier
         } else {
             return taxPayer.idType.displayableValue + ": " + taxPayer.secondaryTaxIdentifierNumber
         }

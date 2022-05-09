@@ -1,0 +1,182 @@
+/* ----- LOADER ----- */
+#loader, #loader-i {
+  bottom: 50%;
+  height: 220px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  width: 290px; }
+
+.organic {
+  bottom: 0;
+  height: 220px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 290px; }
+
+.loader-logo {
+  height: 22px;
+  left: 50%;
+  width: 22px;
+  margin-left: -11px;
+  margin-top: -12px;
+  position: absolute;
+  top: 50%;
+  z-index: 200;
+  fill: white; }
+
+.dot {
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 0; }
+  .dot:before {
+    background: #ec0000;
+    border-radius: 50px;
+    content: '';
+    height: 22px;
+    left: 50%;
+    margin-left: -11px;
+    margin-top: -11px;
+    position: absolute;
+    transform: translateY(0) rotate(0deg);
+    width: 22px; }
+@keyframes dot-move {
+  0% {
+    transform: translateY(0); }
+  18%, 22% {
+    transform: translateY(-45px); }
+  40%, 100% {
+    transform: translateY(0); } }
+  .dot:nth-child(5):before {
+    z-index: 100;
+    width: 43px;
+    height: 43px;
+    margin-left: -21.5px;
+    margin-top: -21.5px;
+    animation: dot-colors 5s ease infinite; }
+@keyframes dot-rotate-1 {
+  0% {
+    transform: rotate(-105deg); }
+  100% {
+    transform: rotate(270deg); } }
+  .dot:nth-child(1) {
+    animation: dot-rotate-1 5s 0s linear infinite; }
+    .dot:nth-child(1):before {
+      animation: dot-move 5s 0s ease infinite; }
+@keyframes dot-rotate-2 {
+  0% {
+    transform: rotate(165deg); }
+  100% {
+    transform: rotate(540deg); } }
+  .dot:nth-child(2) {
+    animation: dot-rotate-2 5s 1.25s linear infinite; }
+    .dot:nth-child(2):before {
+      animation: dot-move 5s 1.25s ease infinite; }
+@keyframes dot-rotate-3 {
+  0% {
+    transform: rotate(435deg); }
+  100% {
+    transform: rotate(810deg); } }
+  .dot:nth-child(3) {
+    animation: dot-rotate-3 5s 2.5s linear infinite; }
+    .dot:nth-child(3):before {
+      animation: dot-move 5s 2.5s ease infinite; }
+@keyframes dot-rotate-4 {
+  0% {
+    transform: rotate(705deg); }
+  100% {
+    transform: rotate(1080deg); } }
+  .dot:nth-child(4) {
+    animation: dot-rotate-4 5s 3.75s linear infinite; }
+    .dot:nth-child(4):before {
+      animation: dot-move 5s 3.75s ease infinite; }
+
+.info {
+  position: absolute;
+  bottom: 0;
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  right: 0;
+  left: 0; }
+  .info .title {
+    font-size: 22px;
+    color: #333;
+    line-height: 1.5; }
+  .info .subtitle {
+    font-size: 14px;
+    color: #999;
+    line-height: 1.6; }
+
+/* ----- AÃ‘ADIR PARA LOADER-i ----- */
+.invert .loader-logo {
+  fill: #ec0000; }
+.invert .dot:before {
+  background-color: white; }
+.invert .info .title {
+  color: #f0f0f0; }
+.invert .info .subtitle {
+  font-size: 14px;
+  color: #ddd;
+  line-height: 1.6; }
+
+/* ----- SMALL LOADER ----- */
+.bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 3rem;
+  border-radius: 100%;
+  margin: auto;
+  filter: url(#organic);
+  animation: bubbles-rotate ease-in-out 1s infinite; }
+
+@keyframes bubbles-rotate {
+  0% {
+    transform: rotate(0deg); }
+  50% {
+    transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg); } }
+.bubble {
+  background: #ec0000;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -6px;
+  margin-left: -6px;
+  border-radius: 100%; }
+
+@keyframes bubble-anim-left {
+  0% {
+    transform: translateX(0px) scale(1.06); }
+  25% {
+    transform: translateX(0px) scale(1.06); }
+  100% {
+    transform: translateX(-24px) scale(1); } }
+.bubble:first-child {
+  animation: bubble-anim-left ease-in-out 1s infinite alternate; }
+
+@keyframes bubble-anim-right {
+  0% {
+    transform: translateX(0px) scale(1.06); }
+  25% {
+    transform: translateX(0px) scale(1.06); }
+  100% {
+    transform: translateX(24px) scale(1); } }
+.bubble:last-child {
+  animation: bubble-anim-right ease-in-out 1s infinite alternate; }
+
+/* ----- AÃ‘ADIR PARA SMALL LOADER-i ----- */
+.invert .bubble {
+  background-color: white; }

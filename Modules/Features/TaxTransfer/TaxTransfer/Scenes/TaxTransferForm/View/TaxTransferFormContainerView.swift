@@ -12,6 +12,7 @@ import PLUI
 protocol TaxTransferFormContainerViewDelegate: AnyObject {
     func scrollToBottom()
     func didUpdateFields(withFields fields: TaxTransferFormFields)
+    func clearForm()
 }
 
 final class TaxTransferFormContainerView: UIView {
@@ -86,10 +87,16 @@ final class TaxTransferFormContainerView: UIView {
     }
     
     func configureTaxBillingPeriodSelector(
-        with viewModel: Selectable<TaxTransferFormViewModel.TaxBillingPeriodViewModel>,
+        with viewModel: TaxTransferFormViewModel.BillingPeriodVisibility,
         onTap: @escaping () -> Void
     ) {
-        taxBillingPeriodSection.configure(with: viewModel, onTap: onTap)
+        switch viewModel {
+        case let .visible(selectableViewModel):
+            taxBillingPeriodSection.configure(with: selectableViewModel, onTap: onTap)
+            taxBillingPeriodSection.isHidden = false
+        case .hidden:
+            taxBillingPeriodSection.isHidden = true
+        }
     }
     
     func configureAmountField(with viewModel: TaxTransferFormViewModel.AmountViewModel) {
@@ -98,6 +105,12 @@ final class TaxTransferFormContainerView: UIView {
     
     func configureObligationIdentifierField(with viewModel: TaxTransferFormViewModel) {
         obligationIdentifierSection.configure(with: viewModel)
+    }
+    
+    func clearForm() {
+        amountSection.clear()
+        obligationIdentifierSection.clear()
+        dateSection.clear()
     }
 }
 
@@ -138,6 +151,7 @@ private extension TaxTransferFormContainerView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        taxBillingPeriodSection.isHidden = true
     }
     
     func configureDelegates() {

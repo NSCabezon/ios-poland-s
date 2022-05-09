@@ -7,6 +7,7 @@
 
 import CoreFoundationLib
 import UI
+import PLUI
 import PLScenes
 import PLCommons
 
@@ -177,13 +178,19 @@ private extension AddTaxAuthorityCoordinator {
         }
         
         dependenciesEngine.register(for: TaxAccountTypeRecognizing.self) { _ in
-            return TaxAccountTypeRecognizer()
+            return TaxAccountTypeRecognizer(
+                identifierValidator: TaxIdentifierValidator()
+            )
         }
         
         dependenciesEngine.register(for: TaxAuthorityFormValidating.self) { resolver in
             return TaxAuthorityFormValidator(
                 accountTypeRecognizer: resolver.resolve(for: TaxAccountTypeRecognizing.self)
             )
+        }
+    
+        dependenciesEngine.register(for: ConfirmationDialogProducing.self) { _ in
+            return ConfirmationDialogFactory()
         }
         
         dependenciesEngine.register(for: AddTaxAuthorityPresenterProtocol.self) { [prepareInitialForm] resolver in

@@ -2,7 +2,7 @@ name: iOS CI
 
 on:
   pull_request:
-    branches: [ develop, master, release/** ]
+    branches: [develop, master, release/**]
 
 jobs:
   swift-lint:
@@ -13,7 +13,8 @@ jobs:
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           submodules: recursive
-     
+          lfs: true
+
       - name: Cache Pods packages
         uses: actions/cache@v2
         with:
@@ -28,7 +29,7 @@ jobs:
 
       - name: Static Analysis
         working-directory: ./Project
-        run: bundle exec fastlane ios swift_lint 
+        run: bundle exec fastlane ios swift_lint
 
   tests:
     runs-on: self-hosted
@@ -42,7 +43,7 @@ jobs:
       # Setup ruby
       - name: Setup - Ruby and bundler dependencies
         run: bundle install
-          
+
       - name: Cache Pods packages
         uses: actions/cache@v2
         with:
@@ -50,7 +51,7 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('Project/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
-      
+
       - name: Pods update
         working-directory: ./Project
         run: bundle exec pod install

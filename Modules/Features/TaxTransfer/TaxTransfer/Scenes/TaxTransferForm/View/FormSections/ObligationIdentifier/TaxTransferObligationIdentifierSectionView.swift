@@ -8,6 +8,7 @@
 import CoreFoundationLib
 import UI
 import PLUI
+import PLCommons
 
 final class TaxTransferObligationIdentifierSectionView: UIView {
     private lazy var sectionContainer = getSectionContainer()
@@ -36,6 +37,10 @@ final class TaxTransferObligationIdentifierSectionView: UIView {
     
     func getIdentifier() -> String {
         return obligationIdentifier.textField.text ?? ""
+    }
+    
+    func clear() {
+        obligationIdentifier.textField.setText(nil)
     }
     
     func setInvalidFieldMessage(_ message: String?) {
@@ -80,17 +85,18 @@ private extension TaxTransferObligationIdentifierSectionView {
     }
     
     func getSectionContainer() -> FormSectionContainer {
-        let infoButtonText: String = localized("pl_taxTransfer_tooltip_financialObligationId")
+        let infoButtonTextKey = "pl_taxTransfer_tooltip_financialObligationId"
         return FormSectionContainer(
             containedView: containerView,
             sectionTitle: localized("pl_taxTransfer_tooltip_financialObligationIdTitle"),
-            infoButtonMode: .enabled(infoButtonText)
+            infoButtonMode: .enabled(infoButtonTextKey)
         )
     }
     
     func configureStyling() {
         let formatter = UIFormattedCustomTextField()
         formatter.setMaxLength(maxLength: 40)
+        formatter.setAllowOnlyCharacters(.ascii.union(.polishLetters))
         obligationIdentifier.textField.placeholder = localized("pl_taxTransfer_label_financialObligationId")
         obligationIdentifier.textField.setEditingStyle(
             .writable(

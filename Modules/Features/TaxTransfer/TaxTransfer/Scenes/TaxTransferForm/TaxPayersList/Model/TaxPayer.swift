@@ -6,6 +6,7 @@
 //
 
 import SANPLLibrary
+import CoreFoundationLib
 
 public struct TaxPayer: Equatable {
     let identifier: Int
@@ -27,19 +28,19 @@ public struct TaxPayer: Equatable {
         var displayableValue: String {
             switch self {
             case .nationalIdentityCard:
-                return "#Dowód osobisty"
+                return localized("pl_generic_docId_nationaIdentityCard")
             case .passport:
-                return "#Paszport"
+                return localized("pl_generic_docId_passport")
             case .other:
-                return "#Inny"
+                return localized("pl_generic_docId_other")
             case .socialSecurityNumber:
-                return "#PESEL"
+                return localized("pl_generic_docId_pesel")
             case .taxPayerIdentificationNumber:
-                return "#NIP"
+                return localized("pl_generic_docId_nip")
             case .nationalBusinessRegistryNumber:
-                return "#REGON"
+                return localized("pl_generic_docId_regon")
             case .closed:
-                return "#Zamknięty"
+                return localized("pl_generic_docId_closed")
             }
         }
     }

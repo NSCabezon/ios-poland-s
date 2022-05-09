@@ -13,6 +13,7 @@ import UI
 public protocol TopUpDataLoaderCoordinatorProtocol: AnyObject, ModuleCoordinator {
     func showForm(with formData: TopUpPreloadedFormData)
     func close()
+    func startNewTransfer()
 }
 
 public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtocol {
@@ -89,6 +90,11 @@ public final class TopUpDataLoaderCoordinator: TopUpDataLoaderCoordinatorProtoco
                                                         navigationController: navigationController,
                                                         formData: formData)
         formCoordinator.start()
+    }
+    
+    public func startNewTransfer() {
+        let controller = self.dependenciesEngine.resolve(for: TopUpDataLoaderViewController.self)
+        self.navigationController?.popToViewControllerOfType(PhoneTopUpFormViewController.self, replaceWith: controller, animated: true)
     }
 }
 

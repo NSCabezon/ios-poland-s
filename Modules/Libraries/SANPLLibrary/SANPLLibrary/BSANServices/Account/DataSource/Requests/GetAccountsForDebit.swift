@@ -21,7 +21,7 @@ struct GetAccountsForDebitRequest: NetworkProviderRequest {
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
          headers: [String: String]? = [:],
          contentType: NetworkProviderContentType? = .json,
-         localServiceName: PLLocalServiceName = .authenticateInit,
+         localServiceName: PLLocalServiceName = .accountForDebit,
          authorization: NetworkProviderRequestAuthorization? = .oauth) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

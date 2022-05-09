@@ -22,7 +22,7 @@ class PLAccountTransactionDetailAction: AccountTransactionDetailActionProtocol {
     }
     
     func getTransactionActions(for transaction: AccountTransactionEntity) -> [AccountTransactionDetailAction]? {
-        if transaction.dto.status?.uppercased() == AccountTransactionState.executed.rawValue {
+        if transaction.dto.receiptId != nil {
             return [.pdf, .share(nil)]
         }
         return [.share(nil)]

@@ -151,7 +151,7 @@ private extension TaxAuthoritySelectorCoordinator {
             .margin(12),
             .styledText(
                 LisboaDialogTextItem(
-                    text: localized("#Informacja"),
+                    text: localized("pl_taxTransfer_informationTitle_authorityNoAccNum"),
                     font: .santander(family: .micro, type: .bold, size: 28),
                     color: .black,
                     alignament: .center,
@@ -161,7 +161,7 @@ private extension TaxAuthoritySelectorCoordinator {
             .margin(12),
             .styledText(
                 LisboaDialogTextItem(
-                    text: localized("Nie możesz wpłacić podatku na numer rachunku wybranego urzędu. Zaktualizuj numer rachunku - zaloguj się do Santander Internet i wejdź w zakładkę Przelewy / Lista odbiorców."),
+                    text: localized("pl_taxTransfer_information_invalidAccNum"),
                     font: .santander(family: .micro, type: .regular, size: 16),
                     color: .lisboaGray,
                     alignament: .center,
@@ -193,6 +193,12 @@ private extension TaxAuthoritySelectorCoordinator {
         
         dependenciesEngine.register(for: GetTaxAccountsUseCaseProtocol.self) { resolver in
             return GetTaxAccountsUseCase(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxAccountTypeRecognizing.self) { _ in
+            return TaxAccountTypeRecognizer(
+                identifierValidator: TaxIdentifierValidator()
+            )
         }
     }
 }

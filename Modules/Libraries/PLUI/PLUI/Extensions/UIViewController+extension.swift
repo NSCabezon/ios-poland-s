@@ -1,12 +1,12 @@
 import UI
 
 extension UIViewController {
-    public func configureKeyboardDismissGesture() {
+    public func configureKeyboardDismissGesture(shouldCancelTouchesInView: Bool = true) {
         let dismissGesture = UITapGestureRecognizer(
             target: self,
             action: #selector(hideKeyboard)
         )
-        dismissGesture.cancelsTouchesInView = false
+        dismissGesture.cancelsTouchesInView = shouldCancelTouchesInView
         view.addGestureRecognizer(dismissGesture)
     }
     

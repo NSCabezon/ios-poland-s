@@ -6,12 +6,13 @@
 //
 
 import PLScenes
+import SANPLLibrary
 
 struct TaxTransferFormViewModel {
     let account: Selectable<AccountViewModel>
     let taxPayer: Selectable<TaxPayerViewModel>
     let taxAuthority: Selectable<TaxAuthorityViewModel>
-    let billingPeriod: Selectable<TaxBillingPeriodViewModel>
+    let billingPeriod: BillingPeriodVisibility
     let sendAmount: AmountViewModel
     let obligationIdentifier: String
 }
@@ -23,6 +24,8 @@ extension TaxTransferFormViewModel {
         let maskedAccountNumber: String
         let unformattedAccountNumber: String
         let accountBalance: String
+        let accountSequenceNumber: Int
+        let accountType: Int
         let isEditButtonEnabled: Bool
     }
     
@@ -45,10 +48,10 @@ extension TaxTransferFormViewModel {
         }
 
         var hasDifferentTaxIdentifiers: Bool {
-            guard let identifier = taxPayer.taxIdentifier, !identifier.isEmpty else {
+            guard let taxIdentifier = taxPayer.taxIdentifier, !taxIdentifier.isEmpty else {
                 return false
             }
-            return identifier != taxPayer.secondaryTaxIdentifierNumber
+            return taxIdentifier != taxPayer.secondaryTaxIdentifierNumber
         }
         
         static func == (lhs: TaxTransferFormViewModel.TaxPayerViewModel, rhs: TaxTransferFormViewModel.TaxPayerViewModel) -> Bool {
@@ -84,5 +87,10 @@ extension TaxTransferFormViewModel {
     struct AmountViewModel {
         let amount: String
         let currency: String
+    }
+    
+    enum BillingPeriodVisibility {
+        case visible(Selectable<TaxBillingPeriodViewModel>)
+        case hidden
     }
 }

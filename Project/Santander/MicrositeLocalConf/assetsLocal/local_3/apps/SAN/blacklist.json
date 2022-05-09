@@ -1,0 +1,12 @@
+{
+    "blacklistedPackages": [{
+            "name": "facebook.com.lite"
+        },
+        {
+            "name": "kali.logo.com"
+        },
+        {
+            "name": "com.easybrain.block.puzzle.games"
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 import Foundation
 import SANPLLibrary
 import SANLegacyLibrary
+import PLCommons
 
 protocol TransactionMapping {
     func map(dto: GetTrnToConfDTO) throws -> Transaction
@@ -15,7 +16,9 @@ final class TransactionMapper: TransactionMapping {
 extension TransactionMapper {
     func map(dto: GetTrnToConfDTO) throws -> Transaction {
         let date = DateFormats.toDate(string: dto.date, output: .YYYYMMDD)
-        let timeDate = DateFormats.toDate(string: dto.time, output: .YYYYMMDD_HHmmssSSSZ)
+        let dateFormatter = PLTimeFormat.YYYYMMDD_HHmmssSSS.createDateFormatter()
+        dateFormatter.locale = Locale(identifier: "pl_pl")  //This date will always 
+        let timeDate = dateFormatter.date(from: dto.time)   //come in polish time zone
         
         guard let transferType = Transaction.TransferType(rawValue: dto.transferType.rawValue) else {
             throw Error.wrongDateFormat
@@ -28,7 +31,8 @@ extension TransactionMapper {
                            transferType: transferType,
                            aliasContext: getAliasContext(from: dto),
                            amount: dto.amount.amount,
-                           merchant: dto.merchant
+                           merchant: dto.merchant,
+                           transactionRawValue: dto
         )
     }
     

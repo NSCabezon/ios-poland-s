@@ -1,5 +1,12 @@
 import CoreFoundationLib
 import UI
+import PLCommons
+
+public protocol PLOnlineAdvisorManagerProtocol {
+    func open(initialParams: String)
+    func pauseScreenSharing()
+    func resumeScreenSharing()
+}
 
 protocol HelpCenterConversationTopicPresenterProtocol: MenuTextWrapperProtocol {
     var view: HelpCenterConversationTopicViewProtocol? { get set }
@@ -51,8 +58,18 @@ extension HelpCenterConversationTopicPresenter: HelpCenterConversationTopicPrese
     
     func performActionFor(subjectDetails: HelpCenterConfig.SubjectDetails, mediumType: String, baseAddress: String) {
         if subjectDetails.loginActionRequired {
-            // TODO: Implement the flow that requires user to log-in [MOBILE-7891]
-            Toast.show(localized("generic_alert_notAvailableOperation"))
+            let deeplinkManager = self.dependenciesResolver.resolve(for: DeepLinkManagerProtocol.self)
+            view?.makeLoginInfoDialog(loginAction: { [weak self] in
+                let deeplink = PolandDeepLink.myProducts(
+                    entryType: subjectDetails.entryType,
+                    mediumType: mediumType,
+                    subjectID: subjectDetails.subjectId,
+                    baseAddress: baseAddress
+                )
+                deeplinkManager.registerDeepLink(deeplink)
+                self?.coordinator.close()
+             })
+
         } else {
             loadUserContextThenGoToOnlineAdvisor(
                 subjectDetails: subjectDetails,
@@ -76,11 +93,11 @@ extension HelpCenterConversationTopicPresenter: HelpCenterConversationTopicPrese
         )
         Scenario(useCase: getUserContextForOnlineAdvisorUseCase, input: input)
             .execute(on: dependenciesResolver.resolve())
-            .onSuccess { [weak self] _ in
+            .onSuccess { [weak self] response in
                 self?.view?.dismissLoading {
-                    // TODO:
-                    // Should be implemented in [MOBILE-8288]
-                    Toast.show(localized("generic_alert_notAvailableOperation"))
+                    let initialParams = response.pdata
+                    let onlineAdvisor = self?.dependenciesResolver.resolve(for: PLOnlineAdvisorManagerProtocol.self)
+                    onlineAdvisor?.open(initialParams: initialParams)
                 }
             }
             .onError { [weak self] _ in
@@ -99,4 +116,3 @@ extension HelpCenterConversationTopicPresenter: AutomaticScreenActionTrackable {
         self.dependenciesResolver.resolve(for: TrackerManager.self)
     }
 }
-

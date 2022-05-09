@@ -7,12 +7,13 @@
 
 import UI
 import CoreFoundationLib
+import PLUI
 
 public final class ItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let configuration: ItemSelectorConfiguration<Item>
     private let itemSelectionHandler: (Item) -> ()
-    private let dependenciesResolver: DependenciesResolver
+    private let dependenciesResolver: DependenciesDefault
     
     public init(
         navigationController: UINavigationController?,
@@ -23,7 +24,8 @@ public final class ItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordina
         self.navigationController = navigationController
         self.configuration = configuration
         self.itemSelectionHandler = itemSelectionHandler
-        self.dependenciesResolver = dependenciesResolver
+        self.dependenciesResolver = DependenciesDefault(father: dependenciesResolver)
+        setUpDependencies()
     }
     
     public func start() {
@@ -50,5 +52,11 @@ public final class ItemSelectorCoordinator<Item: SelectableItem>: ModuleCoordina
     
     func close() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    private func setUpDependencies() {
+        dependenciesResolver.register(for: ConfirmationDialogProducing.self) { _ in
+            return ConfirmationDialogFactory()
+        }
     }
 }

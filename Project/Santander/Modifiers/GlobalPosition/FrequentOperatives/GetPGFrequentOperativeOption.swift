@@ -21,7 +21,12 @@ final class GetPGFrequentOperativeOption {
 
 extension GetPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol {
     func get(globalPositionType: GlobalPositionOptionEntity?) -> [PGFrequentOperativeOptionProtocol] {
-        return self.getPGFrecuenteOperatives()
+        switch globalPositionType {
+        case .simple:
+            return self.getPGSimpleFrecuenteOperatives()
+        default:
+            return self.getPGFrecuenteOperatives()
+        }
     }
     
     func getDefault() -> [PGFrequentOperativeOptionProtocol] {
@@ -30,6 +35,15 @@ extension GetPGFrequentOperativeOption: GetPGFrequentOperativeOptionProtocol {
 }
 
 private extension GetPGFrequentOperativeOption {
+    func getPGSimpleFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
+        return [
+            PGFrequentOperativeOption.operate,
+            PGFrequentOperativeOption.sendMoney,
+            TransactionHistoryPGSimpleFrequentOperativeOption(),
+            BLIKPGSimpleFrequentOperativeOption(dependencyResolver: legacyDependenciesResolver)
+        ]
+    }
+    
     func getPGFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
         var options: [PGFrequentOperativeOptionProtocol] = [
             PGFrequentOperativeOption.operate,

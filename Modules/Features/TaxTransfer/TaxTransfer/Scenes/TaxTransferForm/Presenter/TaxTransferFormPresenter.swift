@@ -6,6 +6,7 @@
 //
 
 import CoreFoundationLib
+import PLUI
 import PLCommons
 import PLCommonOperatives
 
@@ -15,11 +16,13 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate,
     var view: TaxTransferFormView? { get set }
     
     func viewDidLoad()
+    func clearForm()
     func getTaxFormConfiguration() -> TaxFormConfiguration
     func didTapAccountSelector()
     func didTapTaxPayer()
     func didTapTaxAuthority()
     func didTapBack()
+    func didTapClose()
     func didTapBillingPeriod()
     func didTapDone(with data: TaxTransferFormFields)
     func didUpdateFields(with fields: TaxTransferFormFields)
@@ -82,9 +85,27 @@ private extension TaxTransferFormPresenter {
     var taxBillingPeriodViewModelMapper: TaxBillingPeriodViewModelMapping {
         dependenciesResolver.resolve()
     }
+    var confirmationDialogFactory: ConfirmationDialogProducing {
+        dependenciesResolver.resolve()
+    }
+    var taxTransferModelMapper: TaxTransferModelMapping {
+        dependenciesResolver.resolve()
+    }
 }
 
-extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {    
+extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
+    func clearForm() {
+        selectedAccount = nil
+        selectedTaxPayer = nil
+        selectedTaxAuthority = nil
+        selectedPayerInfo = nil
+        selectedPeriod = nil
+        selectedBillingYear = nil
+        selectedPeriodNumber = nil
+        
+        updateViewWithLatestViewModel()
+    }
+    
     func didSelectTaxBillingPeriod(form: TaxTransferBillingPeriodForm) {
         selectedPeriod = form.periodType
         selectedBillingYear = form.year
@@ -150,8 +171,20 @@ extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
         coordinator.back()
     }
     
-    func didTapDone(with data: TaxTransferFormFields) {
-        // TODO:- Implement in TAP-2186
+    func didTapClose() {
+        let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
+            confirmAction: { [weak self] in
+                self?.coordinator.close()
+            },
+            declineAction: {}
+        )
+        view?.showDialog(closeConfirmationDialog)
+    }
+
+    func didTapDone(with fields: TaxTransferFormFields) {
+        guard let model = getTaxTransferModel() else { return }
+        
+        coordinator.showTaxTransferConfirmation(with: model)
     }
     
     func didUpdateFields(with fields: TaxTransferFormFields) {
@@ -202,9 +235,10 @@ private extension TaxTransferFormPresenter {
         case let .success(data):
             handleFetchedTaxFormData(data)
         case .failure:
-            view?.showServiceInaccessibleMessage(onConfirm: { [weak self] in
+            view?.showErrorMessage(localized("pl_generic_randomError"), onConfirm: { [weak self] in
                 self?.coordinator.back()
             })
+            break
         }
     }
     
@@ -228,13 +262,14 @@ private extension TaxTransferFormPresenter {
     }
     
     func showEmptyAccountsListAlert() {
-        view?.showErrorMessage(
+        let dialog = InfoDialogBuilder(
             title: localized("pl_popup_noSourceAccTitle"),
-            message: localized("pl_popup_noSourceAccParagraph"),
-            actionButtonTitle: localized("generic_button_understand"),
-            closeButton: .none,
-            onConfirm: { [weak self] in self?.coordinator.back() }
-        )
+            description: localized("pl_popup_noSourceAccParagraph"),
+            image: PLAssets.image(named: "info_black") ?? UIImage()
+        ) { [weak self] in
+            self?.coordinator.back()
+        }.build()
+        view?.showDialog(dialog)
     }
     
     func updateViewWithLatestViewModel() {
@@ -286,24 +321,53 @@ private extension TaxTransferFormPresenter {
     }
     
     func getSelectedInfo(from payer: TaxPayer) -> SelectedTaxPayerInfo {
+        let taxIdentifier = (payer.taxIdentifier?.isEmpty ?? true) ? payer.secondaryTaxIdentifierNumber : (payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber)
         return SelectedTaxPayerInfo(
-            taxIdentifier: payer.taxIdentifier ?? payer.secondaryTaxIdentifierNumber,
+            taxIdentifier: taxIdentifier,
             idType: payer.idType
         )
     }
     
-    func getBillingPeriod() -> Selectable<TaxTransferFormViewModel.TaxBillingPeriodViewModel> {
-        guard let period = selectedPeriod else {
-            return .unselected
+    func getBillingPeriod() -> TaxTransferFormViewModel.BillingPeriodVisibility {
+        guard
+            let taxSymbol = selectedTaxAuthority?.selectedTaxSymbol,
+            taxSymbol.isTimePeriodRequired
+        else {
+            return .hidden
         }
+            
+        guard let period = selectedPeriod else {
+            return .visible(.unselected)
+        }
+        
         let viewModel = taxBillingPeriodViewModelMapper.map(
             period,
             year: selectedBillingYear ?? "",
             periodNumber: selectedPeriodNumber
         )
         
-        return .selected(viewModel)
+        return .visible(.selected(viewModel))
+    }
+    
+    func getTaxTransferModel() -> TaxTransferModel? {
+        guard let account = selectedAccount,
+              let currentFormData = view?.getCurrentFormFields(),
+              let taxAuthority = selectedTaxAuthority,
+              let taxPayer = selectedTaxPayer,
+              let taxPayerInfo = selectedPayerInfo,
+              let period = selectedPeriod else {
+                  return nil
+              }
+        
+        return taxTransferModelMapper.map(
+            account: account,
+            formData: currentFormData,
+            taxAuthority: taxAuthority,
+            taxPayer: taxPayer,
+            taxPayerInfo: taxPayerInfo,
+            billingPeriod: period,
+            selectedBillingYear: selectedBillingYear,
+            selectedPeriodNumber: selectedPeriodNumber
+        )
     }
 }
-
-

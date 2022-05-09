@@ -1,0 +1,61 @@
+{
+    "charity_transfer": {
+    "windowTitle": "Transfer to the Santander Foundation",
+    "infoText": "At the Santander Foundation we think about the future, but act today. Help us create opportunities",
+    "transferRecipientName": "Santander Foundation",
+    "transferAccountNumber" : "79109010140000000142708985",
+    "transferTitle": "Donation to the Santander Foundation"
+  },
+  "topup": [
+  {
+   "id": 1,
+    "defValue" : 30,
+    "reqAcceptance": false
+  },
+  {
+    "id": 2,
+    "defValue" : 50,
+    "reqAcceptance": false
+  },
+  {
+    "id": 3,
+    "defValue" : 30,
+    "reqAcceptance": false
+  },
+  {
+    "id": 4,
+    "defValue" : 20,
+    "reqAcceptance": false
+  },
+  {
+    "id": 6,
+    "defValue" : 30,
+    "reqAcceptance": true
+  },
+  {
+    "id": 8,
+    "defValue" : 50,
+    "reqAcceptance": true
+  },
+  {
+    "id": 10,
+    "defValue" : 30,
+    "reqAcceptance": true
+  },
+  {
+    "id": 11,
+    "defValue" : 30,
+    "reqAcceptance": true
+  },
+  {
+    "id": 12,
+    "defValue" : 30,
+    "reqAcceptance": false
+  },
+  {
+    "id": 13,
+    "defValue" : 25,
+    "reqAcceptance": true
+  }
+  ]
+}

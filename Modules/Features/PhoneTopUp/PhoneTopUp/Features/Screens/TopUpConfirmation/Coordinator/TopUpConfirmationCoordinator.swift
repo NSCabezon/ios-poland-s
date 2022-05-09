@@ -80,7 +80,7 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     }
     
     func close() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.closeTopUpProces()
     }
     
     func showSummary(with model: TopUpModel) {

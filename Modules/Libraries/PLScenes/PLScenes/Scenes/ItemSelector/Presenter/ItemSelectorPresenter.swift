@@ -13,7 +13,6 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
     
     private let coordinator: ItemSelectorCoordinator<Item>
     private let navigationTitle: String
-    private let isSearchEnabled: Bool
     private let sectionViewModels: [SelectableItemSectionViewModel<Item>]
     private let configuration: ItemSelectorConfiguration<Item>
     private let dependenciesResolver: DependenciesResolver
@@ -26,7 +25,6 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
     ) {
         self.coordinator = coordinator
         self.navigationTitle = configuration.navigationTitle
-        self.isSearchEnabled = configuration.isSearchEnabled
         self.sectionViewModels = viewModelMapper.map(configuration)
         self.configuration = configuration
         self.dependenciesResolver = dependenciesResolver
@@ -36,16 +34,24 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
         return navigationTitle
     }
     
-    func shouldDisableSearch() -> Bool {
-        return !isSearchEnabled
+    func getSearchMode() -> ItemSelectorConfiguration<Item>.SearchMode {
+        return configuration.searchMode
     }
     
-    func getViewModels(filteredBy filter: SelectableItemFilter) -> [SelectableItemSectionViewModel<Item>] {
-        switch filter {
-        case .unfiltered:
-            return sectionViewModels
-        case let .text(searchPhrase):
-            return getFilteredViewModels(with: searchPhrase)
+    func getViewModel(filteredBy filter: SelectableItemFilter) -> ItemSelectorViewModel<Item> {
+        switch (filter, configuration.searchMode) {
+        case (.unfiltered, _), (.text, .disabled):
+            return .sections(sectionViewModels)
+        case (let .text(searchPhrase), let .enabled(configuration)):
+            let filteredSections = getFilteredViewModels(with: searchPhrase)
+            
+            guard filteredSections.isNotEmpty else {
+                return .emptySearchResultMessage(
+                    .init(titleMessage: configuration.emptySearchResultMessage)
+                )
+            }
+            
+            return .sections(filteredSections)
         }
     }
     
@@ -59,8 +65,7 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
     
     func didTapClose() {
         if configuration.shouldShowDialogBeforeClose {
-            let closeConfirmationDialog = confirmationDialogFactory.create(
-                message: configuration.dialogMessage,
+            let closeConfirmationDialog = confirmationDialogFactory.createEndProcessDialog(
                 confirmAction: { [weak self] in
                     self?.coordinator.close()
                 },

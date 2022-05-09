@@ -5,7 +5,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 # --------- General Core dependencies
 def core_dependencies
-  
+
   # Common
   pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
   pod 'Operative', :path => '../santander-one/Operative'
@@ -19,14 +19,14 @@ def core_dependencies
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
-  
+
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
   pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib', :testspecs => ['Tests']
   pod 'Loans', :path => '../santander-one/Loans', :testspecs => ['Tests']
   pod 'Account', :path => '../santander-one/Accounts'
   pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
-  pod 'PersonalArea', :path => '../santander-one/PersonalArea'
+  pod 'PersonalArea', :path => '../santander-one/PersonalArea', :testspecs => ['Tests']
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
   pod 'Transfer', :path => '../santander-one/Transfer'
   pod 'Inbox', :path => '../santander-one/Inbox'
@@ -40,6 +40,7 @@ def core_dependencies
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'Funds', :path => '../santander-one/Funds'
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
@@ -59,7 +60,7 @@ def core_thirdparty_dependencies
   pod 'TealiumIOS', '5.6.6'
   pod 'RxSwift', '6.2.0'
 end
- 
+
 # --------- Poland only dependencies
 def pl_features
   pod 'PLLogin', :path => '../Modules/Features/PLLogin'
@@ -95,6 +96,7 @@ end
 def pl_thirdparty_dependencies
   pod 'SwiftLint', '0.43.1'
   pod 'Dynatrace', '~> 8.227'
+  pod 'Vcc', :git => 'git@github.com:santander-group-europe/ios-poland-onlineAdvisor.git', :tag => '5.10.20220330150017.3809'
 end
 
 #------------ Tests ----------------
@@ -110,7 +112,7 @@ target 'Santander' do
   core_dependencies
   legacy_libraries
   core_thirdparty_dependencies
-  
+
   pl_features
   pl_libraries
   pl_thirdparty_dependencies
@@ -136,4 +138,16 @@ post_install do |installer|
 	  end
 	end
   end
+end
+
+$static_framework = ['Vcc']
+pre_install do |installer|
+  Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+  installer.pod_targets.each do |pod|
+    if $static_framework.include?(pod.name)
+      def pod.build_type;
+      Pod::BuildType.static_framework
+    end
+  end
+end
 end

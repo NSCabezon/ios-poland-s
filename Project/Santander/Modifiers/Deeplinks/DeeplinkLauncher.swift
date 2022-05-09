@@ -52,6 +52,13 @@ private extension DeeplinkLauncher {
             Toast.show(localized("generic_alert_notAvailableOperation"))
         case .blik:
             dependenciesResolver.resolve(for: BLIKHomeCoordinator.self).start()
+        case .myProducts(let entryType, let mediumType, let subjectID, let baseAddress):
+            let cordinator = dependenciesResolver.resolve(for: OnlineAdvisorCoordinatorProtocol.self)
+            cordinator.startAfterLogin(entryType: entryType, mediumType: mediumType, subjectId: subjectID, baseAddress: baseAddress)
+        case .onlineAdvisor(let params):
+            var cordinator = dependenciesResolver.resolve(for: OnlineAdvisorCoordinatorProtocol.self)
+            cordinator.presenter?.onlineAdvisorParameters = params
+            cordinator.start()
         }
     }
     
