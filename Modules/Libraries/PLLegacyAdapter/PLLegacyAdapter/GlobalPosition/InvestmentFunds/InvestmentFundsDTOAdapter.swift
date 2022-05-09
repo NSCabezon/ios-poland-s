@@ -15,6 +15,7 @@ final class InvestmentFundsDTOAdapter {
         fundDTO.currency = currencyDapter.adaptStringToCurrency(plInvestmentFunds.currentValue?.currencyCode)
         fundDTO.valueAmount = AmountAdapter.adaptBalanceToAmount(plInvestmentFunds.currentValue)
         fundDTO.countervalueAmount = AmountAdapter.adaptBalanceToCounterValueAmount(plInvestmentFunds.currentValue)
+        fundDTO.ownershipType = plInvestmentFunds.role
         fundDTO.contract = ContractDTO(bankCode: "", branchCode: "", product: "", contractNumber: plInvestmentFunds.accountId?.id)
         fundDTO.accountId = SANLegacyLibrary.FundDTO.ProductId(id: plInvestmentFunds.accountId?.id, systemId: plInvestmentFunds.accountId?.systemId)
         fundDTO.productId = SANLegacyLibrary.FundDTO.ProductId(id: plInvestmentFunds.productId?.id, systemId: plInvestmentFunds.productId?.systemId)

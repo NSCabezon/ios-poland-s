@@ -7,22 +7,27 @@
 
 import CoreDomain
 import SANLegacyLibrary
+import CoreFoundationLib
 
 public final class ServicesLibrary {
     
     var bsanManagersProvider: PLManagersProviderProtocol
     private let bsanDataProvider: BSANDataProvider
     private let networkProvider: NetworkProvider
+    private let oldResolver: DependenciesResolver
     private let loansManagerAdapter: PLLoansManagerAdapterProtocol
     private let cardManagerAdapter: PLCardManagerAdapterProtocol
     
     public init(bsanManagersProvider: PLManagersProviderProtocol,
                 bsanDataProvider: BSANDataProvider,
                 networkProvider: NetworkProvider,
-                loansManagerAdapter: PLLoansManagerAdapterProtocol, cardManagerAdapter: PLCardManagerAdapterProtocol) {
+                oldResolver: DependenciesResolver,
+                loansManagerAdapter: PLLoansManagerAdapterProtocol,
+                cardManagerAdapter: PLCardManagerAdapterProtocol) {
         self.bsanManagersProvider = bsanManagersProvider
         self.bsanDataProvider = bsanDataProvider
         self.networkProvider = networkProvider
+        self.oldResolver = oldResolver
         self.loansManagerAdapter = loansManagerAdapter
         self.cardManagerAdapter = cardManagerAdapter
     }
@@ -40,10 +45,13 @@ public final class ServicesLibrary {
                                           networkProvider: networkProvider,
                                           loansManager: loansManagerAdapter)
     }
-    
+
+    public var fundReactiveDataRepository: FundReactiveRepository {
+        return FundReactiveDataRepository(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, oldResolver: oldResolver)
+    }
+
     public var onboardingDataRepository: OnboardingRepository {
-        return OnboardingDataRepository(customerManager: bsanManagersProvider.getCustomerManager(),
-                                        bsanDataProvider: bsanDataProvider)
+        return OnboardingDataRepository(customerManager: bsanManagersProvider.getCustomerManager(), bsanDataProvider: bsanDataProvider)
     }
     
     public var cardReactiveDataRepository: CardReactiveDataRepository {

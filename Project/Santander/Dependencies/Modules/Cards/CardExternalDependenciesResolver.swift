@@ -36,12 +36,12 @@ extension ModuleDependencies: CardExternalDependenciesResolver {
         let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
-
+    
+    func resolve() -> CardTransactionAvailableFiltersUseCase {
+        return PLCardTransactionAvailableFiltersUseCase()
+    }
+    
     func showPANCoordinator() -> BindableCoordinator {
         ToastCoordinator()
-    }
-
-    func resolve() -> Bool {
-        return true
     }
 }

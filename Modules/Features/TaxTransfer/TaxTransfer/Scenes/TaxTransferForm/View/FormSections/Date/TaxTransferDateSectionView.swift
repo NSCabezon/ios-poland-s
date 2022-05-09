@@ -34,6 +34,10 @@ final class TaxTransferDateSectionView: UIView {
     func getSelectedDate() -> Date {
         return dateSelector.getSelectedDate()
     }
+    
+    func clear() {
+        dateSelector.resetToToday()
+    }
 }
 
 private extension TaxTransferDateSectionView {

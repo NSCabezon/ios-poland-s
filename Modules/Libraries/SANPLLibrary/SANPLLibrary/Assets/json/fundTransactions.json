@@ -1,0 +1,150 @@
+{
+    "12345678Z": {
+        "0": {
+            "entries": [
+                {
+                    "executionDate": "2017-05-17",
+                    "submittedDate": "2017-05-14",
+                    "operName": "ZAMIANA WCHODZĄCA 1",
+                    "amount": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "108.901000"
+                },
+                {
+                    "executionDate": "2015-11-30",
+                    "submittedDate": "2015-11-29",
+                    "operName": "PRZEŁĄCZNIK WEJŚCIA NIE MA PIENIĄDZE, ALE SZCZĘŚLIWY",
+                    "amount": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "2.902000"
+                },
+                {
+                    "executionDate": "2017-05-17",
+                    "submittedDate": "2017-05-14",
+                    "operName": "ZAMIANA WCHODZĄCA 1",
+                    "amount": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "108.901000"
+                },
+                {
+                    "executionDate": "2015-11-30",
+                    "submittedDate": "2015-11-29",
+                    "operName": "PRZEŁĄCZNIK WEJŚCIA NIE MA PIENIĄDZE, ALE SZCZĘŚLIWY",
+                    "amount": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "2.902000"
+                },
+                {
+                    "executionDate": "2017-05-17",
+                    "submittedDate": "2017-05-14",
+                    "operName": "ZAMIANA WCHODZĄCA 1",
+                    "amount": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "108.901000"
+                },
+                {
+                    "executionDate": "2015-11-30",
+                    "submittedDate": "2015-11-29",
+                    "operName": "PRZEŁĄCZNIK WEJŚCIA NIE MA PIENIĄDZE, ALE SZCZĘŚLIWY",
+                    "amount": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "2.902000"
+                },
+                {
+                    "executionDate": "2017-05-17",
+                    "submittedDate": "2017-05-14",
+                    "operName": "ZAMIANA WCHODZĄCA 1",
+                    "amount": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "108.901000"
+                },
+                {
+                    "executionDate": "2015-11-30",
+                    "submittedDate": "2015-11-29",
+                    "operName": "PRZEŁĄCZNIK WEJŚCIA NIE MA PIENIĄDZE, ALE SZCZĘŚLIWY",
+                    "amount": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "2.902000"
+                },
+                {
+                    "executionDate": "2017-05-17",
+                    "submittedDate": "2017-05-14",
+                    "operName": "ZAMIANA WCHODZĄCA 1",
+                    "amount": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": -4018.45,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "108.901000"
+                },
+                {
+                    "executionDate": "2015-11-30",
+                    "submittedDate": "2015-11-29",
+                    "operName": "PRZEŁĄCZNIK WEJŚCIA NIE MA PIENIĄDZE, ALE SZCZĘŚLIWY",
+                    "amount": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "amountPln": {
+                        "value": 3343.27,
+                        "currencyCode": "PLN"
+                    },
+                    "units": "2.902000"
+                }
+            ],
+            "more": false
+        }
+        
+    }
+}

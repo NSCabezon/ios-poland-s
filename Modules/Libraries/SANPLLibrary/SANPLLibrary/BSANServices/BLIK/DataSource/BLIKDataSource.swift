@@ -27,6 +27,7 @@ protocol BLIKDataSourceProtocol {
     ) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError>
     func registerAlias(_ parameters: RegisterBlikAliasParameters) throws -> Result<Void, NetworkProviderError>
     func getTransactions() throws -> Result<BlikTransactionDTO, NetworkProviderError>
+    func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError>
 }
 
 private extension BLIKDataSource {
@@ -62,6 +63,7 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         case registerAlias = "/oc/register-alias"
         case unregisterAlias = "/oc/unregister-alias"
         case acceptTransfer = "/domestic/create/accepted"
+        case challenge = "/transactions/challenge"
     }
     
     private let blikPath = "/api/blik"
@@ -125,6 +127,27 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         )
     }
     
+    func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl(),
+              let parametersData = try? JSONEncoder().encode(parameters),
+              let queryParams = try? JSONSerialization.jsonObject(
+                with: parametersData, options: []
+              ) as? [String: Any] else {
+                  return .failure(NetworkProviderError.other)
+              }
+        let serviceUrl = baseUrl + blikPath
+        let serviceName = BlikServiceType.challenge.rawValue
+        let result: Result<BlikChallengeDTO, NetworkProviderError> = self.networkProvider.request(
+            BlikRequest(serviceName: serviceName,
+                        serviceUrl: serviceUrl,
+                        method: .get,
+                        queryParams: queryParams,
+                        contentType: nil,
+                        localServiceName: .challenge)
+        )
+        return result
+    }
+
     func getActiveCheques() throws -> Result<[BlikChequeDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
