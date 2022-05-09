@@ -67,6 +67,6 @@ class TopUpFormValidatorTests: XCTestCase {
     }
     
     private func mockAccount() -> AccountForDebit {
-        return AccountForDebit(id: "0", name: "some", number: "1234", availableFunds: Money(amount: 50, currency: "PLN"), defaultForPayments: true, type: .PERSONAL, accountSequenceNumber: 0, accountType: 0)
+        return AccountForDebit.mockInstance()
     }
 }
