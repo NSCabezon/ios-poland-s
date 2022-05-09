@@ -65,8 +65,12 @@ private extension SendMoneyAmountAllInternationalPresenter {
         return amount > 0
     }
     
+    var isDescriptionValid: Bool {
+        return self.operativeData.description?.isNotEmpty ?? false
+    }
+    
     var isFloatingButtonEnabled: Bool {
-        return self.isSwiftRangeValid && self.isAmountValid
+        return self.isSwiftRangeValid && self.isAmountValid && self.isDescriptionValid
     }
     
     func setAccountSelectorView() {
@@ -196,6 +200,7 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
     
     func saveDescription(_ description: String?) {
         self.operativeData.description = description
+        self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
     }
     
     func saveSwift(_ swift: String?) {

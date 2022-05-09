@@ -49,8 +49,9 @@ private extension SMAmountAllInternationalDescriptionView {
             OneInputRegularViewModel(status: .activated, placeholder: "sendMoney_hint_description")
         )
         self.oneInputDescription.maxCounter = 140
-        self.oneInputDescription.regularExpression = try? NSRegularExpression(pattern: "[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ`!@#$%^&*()_+-=\\[\\]{};:,.?/ –\\\\]+$")
+        self.oneInputDescription.regularExpression = try? NSRegularExpression(pattern: "[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ`!@#$%^&*()_+-=\\[\\]{};:,.?/ –\\\\]+$")
         self.oneInputDescription.charactersDelegate = self
+        self.oneInputDescription.delegate = self
     }
     
     func setupAccessibilityIds() {
