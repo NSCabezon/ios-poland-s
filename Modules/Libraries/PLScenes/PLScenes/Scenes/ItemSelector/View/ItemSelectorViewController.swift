@@ -141,10 +141,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
             return UITableViewCell()
         }
         
-        cell.configure(
-            titleMessageText: viewModel.titleMessage,
-            searchPhraseText: viewModel.searchPhrase
-        )
+        cell.configure(titleMessageText: viewModel.titleMessage)
         
         return cell
     }
