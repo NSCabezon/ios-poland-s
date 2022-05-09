@@ -155,7 +155,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
         configureSearch()
         configureTableView()
         configureStyling()
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
     }
     
     private func configureNavigationItem() {
