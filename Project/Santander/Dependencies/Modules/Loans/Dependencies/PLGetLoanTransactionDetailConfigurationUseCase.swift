@@ -21,21 +21,21 @@ extension PLGetLoanTransactionDetailConfigurationUseCase: GetLoanTransactionDeta
 }
 
 extension PLGetLoanTransactionDetailConfigurationUseCase: GetLoanTransactionDetailActionUseCase {
-    func fetchLoanTransactionDetailActions(transaction: LoanTransactionRepresentable?) -> AnyPublisher<[LoanTransactionDetailActionRepresentable], Never> {
+    func fetchLoanTransactionDetailActions(transaction: LoanTransactionRepresentable) -> AnyPublisher<[LoanTransactionDetailActionRepresentable], Never> {
         return Just(detailActions(transaction: transaction))
             .eraseToAnyPublisher()
     }
 }
 
 private extension PLGetLoanTransactionDetailConfigurationUseCase {
-    func detailActions(transaction: LoanTransactionRepresentable?) -> [LoanTransactionDetailActionRepresentable] {
+    func detailActions(transaction: LoanTransactionRepresentable) -> [LoanTransactionDetailActionRepresentable] {
         let pdfExtractAction = PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.pdfExtract(nil),
                                                              isDisabled: false,
                                                              isUserInteractionEnable: true)
         let shareAction = PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
                                                         isDisabled: false,
                                                         isUserInteractionEnable: true)
-        if transaction?.receiptId != nil {
+        if transaction.receiptId != nil {
             return [pdfExtractAction, shareAction]
         } else {
             return [shareAction]
