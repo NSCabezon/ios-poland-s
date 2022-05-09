@@ -11,7 +11,7 @@ import UI
 import PLUI
 import PLCommons
 
-protocol TopUpDataLoaderViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable {
+protocol TopUpDataLoaderViewProtocol: AnyObject, LoaderPresentable, ErrorPresentable, ConfirmationDialogPresentable {
 }
 
 final class TopUpDataLoaderViewController: UIViewController {
