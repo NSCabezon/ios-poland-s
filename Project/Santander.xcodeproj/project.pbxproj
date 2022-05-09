@@ -280,6 +280,7 @@
 		BB29665126CFB5210012599D /* PLGetPersonalBasicInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29665026CFB5200012599D /* PLGetPersonalBasicInfoUseCase.swift */; };
 		BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */; };
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
+		C4C3389B28254D4300FF727D /* PLChangeProductAliasOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */; };
 		C49F39A3281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F39A2281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift */; };
 		CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */; };
 		CC8E9F85273BEEE500F967A6 /* BottomSheetErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */; };
@@ -646,6 +647,7 @@
 		BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionManager.swift; sourceTree = "<group>"; };
 		BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLMonthlyBalanceUseCase.swift; sourceTree = "<group>"; };
 		C12DA6A3977724B3A1EF154D /* Pods-SantanderTests.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-debug.xcconfig"; sourceTree = "<group>"; };
+		C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLChangeProductAliasOperative.swift; sourceTree = "<group>"; };
 		C49F39A2281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSecurityAreaViewProtocolModifier.swift; sourceTree = "<group>"; };
 		CA16056EE927AFF76FA97838 /* Pods-Santander.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-release.xcconfig"; sourceTree = "<group>"; };
 		CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBiometricsViewModel.swift; sourceTree = "<group>"; };
@@ -958,6 +960,7 @@
 			children = (
 				0DAA4D5426C3CB5F005A921C /* GetGPOtherOperativeModifier.swift */,
 				0DAA4D5626C3CDA7005A921C /* PLOfficeAppointmentOperative.swift */,
+				C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -2768,6 +2771,7 @@
 				0D2D0D0627FC4B4C004FA253 /* PLFundsHomeMovementsModifier.swift in Sources */,
 				EFF1301327317B1400ECE22E /* PolandTransactionType.swift in Sources */,
 				44ABC30427E384A100815256 /* CardExternalDependenciesResolver.swift in Sources */,
+				C4C3389B28254D4300FF727D /* PLChangeProductAliasOperative.swift in Sources */,
 				669A37D4270F566600C0F272 /* PLProductOperativesDTO.swift in Sources */,
 				D54D2EE727201CC400781580 /* PLOpinatorInfoOption.swift in Sources */,
 				BA5B257027C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift in Sources */,
