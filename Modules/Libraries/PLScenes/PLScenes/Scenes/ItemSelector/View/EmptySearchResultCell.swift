@@ -12,7 +12,6 @@ final class EmptySearchResultCell: UITableViewCell {
     
     private let backgroundImage = UIImageView()
     private let titleMessageLabel = UILabel()
-    private let searchPhraseLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,9 +22,8 @@ final class EmptySearchResultCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(titleMessageText: String, searchPhraseText: String) {
+    func configure(titleMessageText: String) {
         titleMessageLabel.text = titleMessageText
-        searchPhraseLabel.text = searchPhraseText
     }
     
     private func setUp() {
@@ -35,7 +33,7 @@ final class EmptySearchResultCell: UITableViewCell {
     }
     
     private func configureLayout() {
-        [backgroundImage, titleMessageLabel, searchPhraseLabel].forEach {
+        [backgroundImage, titleMessageLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -46,13 +44,9 @@ final class EmptySearchResultCell: UITableViewCell {
             backgroundImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             backgroundImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
             
-            titleMessageLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: -16),
+            titleMessageLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            
-            searchPhraseLabel.topAnchor.constraint(equalTo: titleMessageLabel.bottomAnchor, constant: 20),
-            searchPhraseLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            searchPhraseLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            titleMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
@@ -63,15 +57,6 @@ final class EmptySearchResultCell: UITableViewCell {
         titleMessageLabel.font = .santander(
             family: .micro,
             type: .regular,
-            size: 18
-        )
-        
-        searchPhraseLabel.textAlignment = .center
-        searchPhraseLabel.numberOfLines = 1
-        searchPhraseLabel.textColor = .lisboaGray
-        searchPhraseLabel.font = .santander(
-            family: .micro,
-            type: .bold,
             size: 18
         )
     }

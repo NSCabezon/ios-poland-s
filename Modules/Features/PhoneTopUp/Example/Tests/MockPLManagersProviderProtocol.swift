@@ -33,4 +33,8 @@ final class MockPLManagersProvider: PLManagersProviderProtocol {
     func getExpensesChartManager() -> PLExpensesChartManagerProtocol {
         fatalError()
     }
+    
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
+        fatalError()
+    }
 }
