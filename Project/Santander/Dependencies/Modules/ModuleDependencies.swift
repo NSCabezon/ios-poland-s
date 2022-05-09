@@ -10,6 +10,7 @@ import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
+import Menu
 import Onboarding
 import SANLegacyLibrary
 

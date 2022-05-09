@@ -28,7 +28,7 @@ final class AppModifiers {
         return depositModifier
     }()
     private lazy var fundModifiers: GlobalPosition.FundModifier = {
-        let fundModifier = PLFundModifier(dependenciesResolver: self.legacyDependenciesResolver)
+        let fundModifier = FundModifier(dependenciesResolver: self.legacyDependenciesResolver)
         return fundModifier
     }()
     private lazy var cardHomeActionModifier: PLCardHomeActionModifier = {

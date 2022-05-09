@@ -40,6 +40,10 @@ final class TaxTransferAmountSectionView: UIView {
         return amount.textField.text ?? ""
     }
     
+    func clear() {
+        amount.textField.setText(nil)
+    }
+    
     func setInvalidFieldMessage(_ message: String?) {
         if let message = message {
             amount.showError(message)
