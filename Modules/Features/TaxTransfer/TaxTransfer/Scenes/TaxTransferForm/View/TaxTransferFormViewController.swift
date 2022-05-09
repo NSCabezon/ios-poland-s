@@ -86,6 +86,7 @@ extension TaxTransferFormViewController: TaxTransferFormView {
     func clearForm() {
         bottomButtonView.disableButton()
         formView.clearForm()
+        presenter.clearForm()
     }
 }
 

@@ -13,7 +13,6 @@ protocol BLIKConfirmationViewProtocol: AnyObject, ErrorPresentable, LoaderPresen
 
 final class BLIKConfirmationViewController: UIViewController {
     private let presenter: BLIKConfirmationPresenterProtocol
-    
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     private let aliasInfoBanner = BLIKConfirmationAliasInfoBannerView()
@@ -41,6 +40,11 @@ final class BLIKConfirmationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.viewWillAppear()
     }
 }
 

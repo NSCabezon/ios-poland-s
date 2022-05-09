@@ -132,7 +132,9 @@ final class AppDependencies {
             bsanManagersProvider: self.managersProviderAdapter.getPLManagerProvider(),
             bsanDataProvider: self.bsanDataProvider,
             networkProvider: networkProvider,
-            loansManagerAdapter: self.managersProviderAdapter.getLoansManager(), cardManagerAdapter: self.managersProviderAdapter.getCardsManager()
+            oldResolver: self.dependencieEngine,
+            loansManagerAdapter: self.managersProviderAdapter.getLoansManager(),
+            cardManagerAdapter: self.managersProviderAdapter.getCardsManager()
         )
     }()
     private lazy var sessionDataManagerModifier: SessionDataManagerModifier = {
@@ -396,7 +398,6 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: AccountAvailableBalanceDelegate.self) { _ in
             PLAccountAvailableBalanceModifier()
         }
-        
         self.dependencieEngine.register(for: EditBudgetHelperModifier.self) { _ in
             PLEditBudgetHelperModifier()
         }
@@ -406,13 +407,17 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: CorePushNotificationsManagerProtocol.self) { _ in
             return self.coreNotificationsService
         }
-        
         self.dependencieEngine.register(for: CustomPushLauncherProtocol.self) { _ in
             return self.customPushLauncher
         }
-        
         self.dependencieEngine.register(for: LoanReactiveRepository.self) { _ in
             return self.servicesLibrary.loanReactiveDataRepository
+        }
+        self.dependencieEngine.register(for: FundReactiveRepository.self) { _ in
+            return self.servicesLibrary.fundReactiveDataRepository
+        }
+        self.dependencieEngine.register(for: ProductAliasManagerProtocol.self) { _ in
+            PLChangeAliasManager()
         }
         self.dependencieEngine.register(for: CardRepository.self) { _ in
             return self.servicesLibrary.cardReactiveDataRepository

@@ -29,7 +29,7 @@ final class TaxTransferSelectedPayerView: UIView {
     }
     
     func configure(with viewModel: TaxTransferFormViewModel.TaxPayerViewModel, onTap: @escaping () -> Void) {
-        nameLabel.text = viewModel.taxPayer.name
+        nameLabel.text = (viewModel.taxPayer.name?.isEmpty ?? true) ? viewModel.taxPayer.shortName : viewModel.taxPayer.name
         tappableCard.onTap = onTap
         
         guard let taxIdentifier = viewModel.selectedInfo?.taxIdentifier,
@@ -124,7 +124,6 @@ private extension TaxTransferSelectedPayerView {
 
         let attributedKey = NSMutableAttributedString(string: key)
         attributedKey.addAttribute(.font(.santander(family: .micro, type: .regular, size: 12)))
-        attributedKey.append(.init(string: ": "))
 
         let attributedValue = NSMutableAttributedString(string: value)
         attributedValue.addAttribute(.font(.santander(family: .micro, type: .bold, size: 12)))

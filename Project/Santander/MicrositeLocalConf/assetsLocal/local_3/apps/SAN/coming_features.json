@@ -1,0 +1,66 @@
+{
+    "comingFeatures": [
+        {
+            "identifier": "001",
+            "title": "Compartir gastos con amigos",
+            "description": "Al final tu {{BOLD}}amigo{{/BOLD}} se retrasara en el pago",
+            "logo": "/apps/SAN/img/tips/icn_info_tip.png",
+            "owner": "Luis G.",
+            "date": "12/2020",
+            "offerPayload": {
+                "preview": "/apps/SAN/img/dummys/astronauta.png",
+                "offerId": "buena_oferta"
+            }
+        },
+        {
+            "identifier": "002",
+            "title": "QA revisa",
+            "description": "{{BOLD}}Hola{{/BOLD}} issue {{BOLD}}de{{/BOLD}} colores.",
+            "logo": "/apps/SAN/img/tips/icn_info_tip.png",
+            "owner": "Luis G.",
+            "date": "01/2021",
+            "offerPayload": {
+                "preview": "/apps/SAN/img/banner_creativity.png",
+                "offerId": "buena_oferta"
+            }
+        },
+        {
+            "identifier": "005",
+            "title": "QA revisa fecha año futuro",
+            "description": "{{BOLD}}Hola{{/BOLD}} issue {{BOLD}}de{{/BOLD}} colores.",
+            "logo": "/apps/SAN/img/tips/icn_info_tip.png",
+            "owner": "Juan QA.",
+            "date": "03/2021",
+            "offerPayload": {
+                "preview": "/apps/SAN/img/banner_creativity.png",
+                "offerId": "buena_oferta"
+            }
+        },
+        {
+            "identifier": "003",
+            "title": "Compensar tu huella de carbono",
+            "description": "Usa el {{BOLD}}Hammer{{/BOLD}} hasta para ir a comprar el pan.",
+            "logo": "/apps/SAN/img/tips/icn_info_tip.png",
+            "owner": "Jose Z.",
+            "date": "03/2020"
+        },
+        {
+            "identifier": "004",
+            "title": "Compensar tu huella de carbono",
+            "description": "Usa el {{BOLD}}Hammer{{/BOLD}} hasta para ir a comprar el pan en el pueblo.",
+            "logo": "/apps/SAN/img/tips/icn_info_tip.png",
+            "owner": "Juan QA.",
+            "date": "09/2020"
+        }
+    ],
+    "alreadyImplementedFeatures": [
+        {
+            "identifier": "010",
+            "title": "Pagar facturas de la luz",
+            "description": "Lorem ipsum dolor lorem ipsum dolorLorem ipsum {{BOLD}}dolor lorem ipsum.{{/BOLD}}",
+            "logo": "/apps/SAN/img/tips/icn_info_tip.png",
+            "owner": "Santander",
+            "date": "01/12/2020"
+        }
+    ]
+}

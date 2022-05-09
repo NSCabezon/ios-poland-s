@@ -75,7 +75,7 @@ final public class CardTransactionsDTOAdapter {
                 case "PLN":
                     currencyType = .złoty
                 default:
-                    currencyType = .other
+                    currencyType = .other(currencyOth)
                 }
             } else {
                 currencyType = .złoty
@@ -126,7 +126,7 @@ final public class CardTransactionsDTOAdapter {
                 case "PLN":
                     currencyType = .złoty
                 default:
-                    currencyType = .other
+                    currencyType = .other(currencyOth)
                 }
             } else {
                 currencyType = .złoty

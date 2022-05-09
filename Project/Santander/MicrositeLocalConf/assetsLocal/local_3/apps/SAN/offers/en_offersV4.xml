@@ -1,0 +1,171 @@
+<offers>
+   <product>
+    <id>Buzon_Correspondencia</id>
+    <start_date_utc>2016-08-05</start_date_utc>
+    <end_date_utc>2030-06-12</end_date_utc>
+    <never_expires>true</never_expires>
+    <iterations>999999</iterations>
+    <banners>
+        <banner app="ios,android" height="150" width="720"><![CDATA[<http://serverftp.ciber-es.com/one_app/pt/files_pre/apps/SAN/img/imgCar_Smart.png]]></banner>>
+    </banners>
+    <action type="external_url">
+        <action_value><![CDATA[<https://www.santander.pl]]></action_value>>
+    </action>
+</product>
+
+<product>
+    <id>Inbox_Setup</id>
+    <start_date_utc>2016-08-05</start_date_utc>
+    <end_date_utc>2030-06-12</end_date_utc>
+    <never_expires>true</never_expires>
+    <iterations>999999</iterations>
+    <banners>
+        <banner app="ios,android" height="150" width="720"><![CDATA[<http://serverftp.ciber-es.com/one_app/pt/files_pre/apps/SAN/img/imgCar_Smart.png]]></banner>>
+    </banners>
+    <action type="external_url">
+        <action_value><![CDATA[<https://www.santander.pl]]></action_value>>
+    </action>
+</product>
+
+    <product>
+    <id>AYUDANOS_2_LOGOUT</id>
+    <rules/>
+    <title/>
+    <long_title/>
+    <short_text/>
+    <description/>
+    <start_date_utc/>
+    <end_date_utc/>
+    <iterations>10000</iterations>
+    <banners>
+        <banner height="656" width="750" app="android,ios">
+            <![CDATA[https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/apps/SAN/img/logout/EN_20_salida_ayudanos_2.png]]>
+        </banner>
+    </banners>
+    <action type="open_webview">
+        <method>GET</method>
+        <top_title>Pomóż nam ulepszyć</top_title>
+        <title>Pomóż nam ulepszyć</title>
+        <open_url>https://santanderone.opinator.com/PL/opi/appnew-npsparticulares/ </open_url>
+        <close_url>www.santander.pl</close_url>
+        
+    </action>
+</product>
+
+<product>
+    <id>AYUDANOS_LOGOUT</id>
+    <rules/>
+    <title/>
+    <long_title/>
+    <short_text/>
+    <description/>
+    <start_date_utc/>
+    <end_date_utc/>
+    <iterations>10000</iterations>
+    <banners>
+        <banner height="656" width="750" app="android,ios">
+            <![CDATA[https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/apps/SAN/img/logout/EN_20_salida_ayudanos.png]]>
+        </banner>
+    </banners>
+    <action type="open_webview">
+        <method>GET</method>
+        <top_title>Pomóż nam ulepszyć</top_title>
+        <title>Pomóż nam ulepszyć</title>
+        <open_url>https://santanderone.opinator.com/PL/opi/appnew-general/</open_url>
+        <close_url>www.santander.pl</close_url>
+        
+    </action>
+</product>
+
+    <product>
+   <id>Config_Alert</id>
+   <start_date_utc>2016-08-05</start_date_utc>
+   <end_date_utc>2030-06-12</end_date_utc>
+   <never_expires>true</never_expires>
+   <iterations>999998</iterations>
+   <banners>
+      <banner app="ios,android" height="150" width="720">
+         <![CDATA[ serverftp.ciber-es.com/one_app/pt/files_pre/apps/SAN/img/imgCar_Smart.png ]]>
+      </banner>
+   </banners>
+   <action type="navigate_screen">
+      <action_value>alerts_notification</action_value>
+   </action>
+</product>
+
+    <product>
+   <id>TestPolandOffer_PG_NPS</id>
+   <rules>
+   </rules>
+   <start_date_utc>2016-01-01</start_date_utc>
+   <end_date_utc>2060-12-31</end_date_utc>
+   <never_expires>true</never_expires>
+   <iterations>100000</iterations>
+   <banners>
+      <banner app="android,ios" height="200" width="720">
+         <![CDATA[https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/apps/SAN/img/banner_nps_688x80_PL.png]]>
+      </banner>
+   </banners>
+   <action type="open_webview">
+        <method>GET</method>
+        <top_title>Zostaw opinię</top_title>
+        <title>Zostaw opinię</title>
+        <open_url>https://santanderone.opinator.com/PL/opi/appnew-general/</open_url>
+        <close_url>www.santander.pl</close_url>
+        <parameters>
+        
+        </parameters>
+    </action>
+    </product>
+    
+    <product>
+    <id>PL_GDPR</id>
+    <rules>
+        <rule>no_nwpt</rule>
+    </rules>
+    <start_date_utc>2016-08-05</start_date_utc>
+    <end_date_utc>2099-12-31</end_date_utc>
+    <iterations>1000000</iterations>
+    <never_expires>true</never_expires>
+    <action type="external_url">
+        <action_value><![CDATA[<https://www.santander.pl]]></action_value>>
+    </action>
+</product>
+
+<product>
+    <id>PG_CTA_BELOW_OFFER</id>
+    <rules>
+    </rules>
+    <start_date_utc>2016-01-01</start_date_utc>
+    <end_date_utc>2060-12-31</end_date_utc>
+    <never_expires>true</never_expires>
+    <iterations>100000</iterations>
+    <banners>
+        <banner app="android,ios" height="200" width="720" view="classic,simple">
+            <![CDATA[https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/apps/SAN/img/PG_CTA_BELOW_oferta_EN_03.2022.png]]>
+        </banner>
+    </banners>
+    <action type="navigate_screen">
+        <action_value>new_bbc_offer</action_value>
+    </action>
+</product>
+<product>
+    <id>PG_CTA_BELOW_SMART_OFFER</id>
+    <rules>
+        <rule>pgSmartOffer</rule>
+    </rules>
+    <start_date_utc>2016-01-01</start_date_utc>
+    <end_date_utc>2060-12-31</end_date_utc>
+    <never_expires>true</never_expires>
+    <iterations>100000</iterations>
+    <banners>
+        <banner app="android,ios" height="200" width="720" view="smart">
+            <![CDATA[https://zt1.cdn.santanderbankpolska.pl/oneapp/scarlet/apps/SAN/img/PG_CTA_BELOW_oferta_smart_EN_03.2022.png]]>
+        </banner>
+    </banners>
+    <action type="navigate_screen">
+        <action_value>new_bbc_offer</action_value>
+    </action>
+</product>
+
+</offers>

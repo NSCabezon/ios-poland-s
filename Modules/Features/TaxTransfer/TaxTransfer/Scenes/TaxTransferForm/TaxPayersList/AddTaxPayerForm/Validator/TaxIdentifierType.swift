@@ -40,7 +40,7 @@ enum TaxIdentifierType: SelectableItem {
     var complementValue: Int {
         return 10
     }
-    
+
     var errorMessage: String {
         switch self {
         case .other:

@@ -1,0 +1,66 @@
+{
+    "12345678Z": {
+        "0": [
+            {
+                "number":"62109010140000000142714238",
+                "id":"142714238",
+                "currencyCode":"PLN",
+                "name":{
+                    "source":"Konto Jakie Chcę",
+                    "description":"Konto Jakie Chcę",
+                    "userDefined":""
+                },
+                "type":"PERSONAL",
+                "balance":{
+                    "value":6000.00,
+                    "currencyCode":"PLN"
+                },
+                "availableFunds":{
+                    "value":6000.00,
+                    "currencyCode":"PLN"
+                },
+                "lastUpdate":"2022-04-12",
+                "systemId":3,
+                "defaultForPayments":false,
+                "role":"OWNER",
+                "accountDetails":{
+                    "interestRateIndicator":"VALUE",
+                    "accountType":-101,
+                    "sequenceNumber":1,
+                    "interestRateIncreased":false
+                },
+                "taxAccountNumber":"40109014894000000121576252"
+            },
+            {
+                "number":"36109010140000000142752342",
+                "id":"142752342",
+                "currencyCode":"PLN",
+                "name":{
+                    "source":"Konto Jakie Chcę",
+                    "description":"Konto Jakie Chcę"
+                    ,"userDefined":""
+                },
+                "type":"PERSONAL",
+                "balance":{
+                    "value":23258.50,
+                    "currencyCode":"PLN"
+                },
+                "availableFunds":{
+                    "value":23258.50,
+                    "currencyCode":"PLN"
+                },
+                "lastUpdate":"2022-04-25",
+                "systemId":3,
+                "defaultForPayments":false,
+                "role":"OWNER",
+                "accountDetails":{
+                    "interestRateIndicator":"VALUE",
+                    "accountType":-101,
+                    "sequenceNumber":4,
+                    "interestRateIncreased":false
+                },
+                "taxAccountNumber":"40109014894000000121576252"
+            }
+        ]
+    }
+}

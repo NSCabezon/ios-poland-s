@@ -27,7 +27,7 @@ public final class PLCardActionFactory: CardActionFactoryProtocol {
         static let defaultCardActions: [PLCardActionIdentifier] = [.cardDetails, .alerts24, .blockedFunds, .changeAlias]
     }
 
-    private lazy var defaultCardActions: [CardActionType] = {
+    private lazy var defaultCardActions: [OldCardActionType] = {
         return Constants.defaultCardActions.compactMap { return Self.cardActionType(for: $0, isDisabled: false) }
     }()
 
@@ -59,7 +59,7 @@ public final class PLCardActionFactory: CardActionFactoryProtocol {
 
 private extension PLCardActionFactory {
 
-    func cardActions(for entity: CardEntity) -> [CardActionType] {
+    func cardActions(for entity: CardEntity) -> [OldCardActionType] {
 
         guard let productActionMatrix = self.dependenciesResolver.resolve(forOptionalType: ProductActionsShortcutsMatrix.self),
               let actionsFromService = productActionMatrix.getOperationsProducts(type: .cards, contract: entity.cardContract) else {
@@ -67,7 +67,7 @@ private extension PLCardActionFactory {
         }
 
         let filteredCardActionsFromService = actionsFromService.filter { $0.state == ProductActionsShortcutsState.enabled.rawValue }
-        let cardActions: [CardActionType] = filteredCardActionsFromService.compactMap {
+        let cardActions: [OldCardActionType] = filteredCardActionsFromService.compactMap {
             guard let cardActionIdentifier = PLCardActionIdentifier.mapped($0.id) else { return nil }
             if cardActionIdentifier == .addToPay {
                 return cardActionApplePay(for: entity, isDisabled: ($0.state == ProductActionsShortcutsState.disabled.rawValue))
@@ -79,7 +79,7 @@ private extension PLCardActionFactory {
     }
 
     static func cardActionType(for actionIdentifier: PLCardActionIdentifier,
-                               isDisabled: Bool) -> CardActionType? {
+                               isDisabled: Bool) -> OldCardActionType? {
 
         switch actionIdentifier {
         case .addToPay:
@@ -94,7 +94,7 @@ private extension PLCardActionFactory {
             return nil
         case .activate, .cardActivation:
             guard let values = actionIdentifier.customCardActionValues() else { return nil }
-            let customAction: CardActionType = .custome(CustomCardActionValues(identifier: PLCardActionIdentifier.cardActivation.rawValue,
+            let customAction: OldCardActionType = .custome(CustomCardActionValues(identifier: PLCardActionIdentifier.cardActivation.rawValue,
                                                                                localizedKey: values.localizedKey,
                                                                                icon: values.icon,
                                                                                section: values.section,
@@ -122,7 +122,7 @@ private extension PLCardActionFactory {
                 .viewStatements:
 
             guard let values = actionIdentifier.customCardActionValues() else { return nil }
-            let customAction: CardActionType = .custome(CustomCardActionValues(identifier: actionIdentifier.rawValue,
+            let customAction: OldCardActionType = .custome(CustomCardActionValues(identifier: actionIdentifier.rawValue,
                                                                                localizedKey: values.localizedKey,
                                                                                icon: values.icon,
                                                                                section: values.section,
@@ -133,7 +133,7 @@ private extension PLCardActionFactory {
     }
 
     func cardActionApplePay(for entity: CardEntity,
-                            isDisabled: Bool) -> CardActionType? {
+                            isDisabled: Bool) -> OldCardActionType? {
 
         var addedApple = false
         if let virtualPan = entity.dto.contract?.contractNumber,
@@ -156,7 +156,7 @@ private extension PLCardActionFactory {
             icon = "icnApay"
         }
 
-        return CardActionType.custome(CustomCardActionValues(identifier: PLCardActionIdentifier.addToPay.rawValue,
+        return OldCardActionType.custome(CustomCardActionValues(identifier: PLCardActionIdentifier.addToPay.rawValue,
                                                              localizedKey: localizedKey,
                                                              icon: icon,
                                                              section: "otherOperatives",
@@ -165,14 +165,14 @@ private extension PLCardActionFactory {
     }
 }
 
-private extension Array where Element == CardActionType {
+private extension Array where Element == OldCardActionType {
 
     enum Constants {
         static let creditCardActionsHomePriority: [PLCardActionIdentifier] = [.activate, .unblock, .block, .sendMoneyFromSrc, .repayment]
         static let debitCardActionsHomePriority: [PLCardActionIdentifier] = [.activate, .unblock, .block, .managePin, .modifyLimits, .addToPay]
     }
 
-    func sortedCardActions(for cardType: CardDOType) -> [CardActionType] {
+    func sortedCardActions(for cardType: CardDOType) -> [OldCardActionType] {
         let actionsIds: [PLCardActionIdentifier]
         switch cardType {
         case .debit:

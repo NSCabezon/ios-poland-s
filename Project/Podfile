@@ -26,7 +26,7 @@ def core_dependencies
   pod 'Loans', :path => '../santander-one/Loans', :testspecs => ['Tests']
   pod 'Account', :path => '../santander-one/Accounts'
   pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
-  pod 'PersonalArea', :path => '../santander-one/PersonalArea'
+  pod 'PersonalArea', :path => '../santander-one/PersonalArea', :testspecs => ['Tests']
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
   pod 'Transfer', :path => '../santander-one/Transfer'
   pod 'Inbox', :path => '../santander-one/Inbox'
@@ -40,6 +40,7 @@ def core_dependencies
   pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
   pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
+  pod 'Funds', :path => '../santander-one/Funds'
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
