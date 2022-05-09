@@ -10,9 +10,10 @@ protocol TaxAccountTypeRecognizing {
 }
 
 final class TaxAccountTypeRecognizer: TaxAccountTypeRecognizing {
-    enum Error: Swift.Error {
-        case invalidAccountLength
-        case illegalCharacters
+    private let identifierValidator: TaxIdentifierValidating
+    
+    init(identifierValidator: TaxIdentifierValidating) {
+        self.identifierValidator = identifierValidator
     }
     
     func recognizeType(of accountNumber: String) throws -> TaxAccountType {
@@ -51,12 +52,6 @@ final class TaxAccountTypeRecognizer: TaxAccountTypeRecognizing {
     // XXXXXXXXXXXX -> IRP identifier (12 digits long)
     //
     private func checkIfAccountIsIrpType(_ accountNumber: String) -> Bool {
-        let irpMaskConstant = "10100071222"
-        let controlNumberLength = 2
-        let irpIdentifierTypeLength = 1
-        let irpIdentifierLength = 12
-        let legalIrpIdentifierTypeCharacterSet = CharacterSet(charactersIn: "123")
-        
         let potentialIrpMaskConstant = String(
             accountNumber
                 .dropFirst(controlNumberLength)
@@ -73,6 +68,79 @@ final class TaxAccountTypeRecognizer: TaxAccountTypeRecognizing {
         let isIrpIdentifierTypeLegal = legalIrpIdentifierTypeCharacterSet.isSuperset(
             of: CharacterSet(charactersIn: irpIdentifierType)
         )
+        do {
+            let irpIdentifier = String(
+                accountNumber.dropFirst(controlNumberLength + irpMaskConstant.count + irpIdentifierTypeLength)
+            )
+            if irpIdentifierType == IrpIdentifierType.pesel.rawValue {
+                try validateIdentifier(irpIdentifier, ofType: .pesel)
+            }
+            if irpIdentifierType == IrpIdentifierType.nip.rawValue {
+                try validateIdentifier(irpIdentifier, ofType: .nip)
+            }
+        } catch {
+            return false
+        }
         return (potentialIrpMaskConstant == irpMaskConstant) && isIrpIdentifierTypeLegal
+    }
+    
+    private func validateIdentifier(_ identifier: String, ofType type: IrpIdentifierType) throws {
+        try verifyIdentifierSuffix(in: identifier, ofType: type)
+        let trimmedIdentifier = String(identifier.dropLast(identifier.count - type.identifierLength))
+        guard identifierValidator.validate(type: type.taxIdentifierType, value: trimmedIdentifier) == .valid else {
+            throw Error.invalidIdentifier
+        }
+    }
+    
+    private func verifyIdentifierSuffix(in identifier: String, ofType type: IrpIdentifierType) throws {
+        let suffixLength = identifier.count - type.identifierLength
+        let expectedSuffix = String(repeating: "0", count: suffixLength)
+        guard identifier.substring(ofLast: suffixLength) == expectedSuffix else {
+            throw Error.invalidIdentifier
+        }
+    }
+}
+
+extension TaxAccountTypeRecognizer {
+    enum Error: Swift.Error {
+        case invalidAccountLength
+        case illegalCharacters
+        case invalidIdentifier
+    }
+    
+    private var irpMaskConstant: String { "10100071222" }
+    private var controlNumberLength: Int { 2 }
+    private var irpIdentifierTypeLength: Int { 1 }
+    private var irpIdentifierLength: Int { 12 }
+    private var legalIrpIdentifierTypeCharacterSet: CharacterSet {
+        CharacterSet(charactersIn: "123")
+    }
+    
+    private enum IrpIdentifierType: String {
+        case pesel = "1"
+        case nip = "2"
+        case other = "3"
+        
+        var identifierLength: Int {
+            switch self {
+            case .pesel:
+                return 11
+            case .nip:
+                return 10
+            case .other:
+                return 12
+            }
+        }
+        
+        var taxIdentifierType: TaxIdentifierType {
+            switch self {
+            case .pesel:
+                return .PESEL
+            case .nip:
+                return .NIP
+            case .other:
+                return .other
+            }
+        }
     }
 }

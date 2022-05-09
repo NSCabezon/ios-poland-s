@@ -151,8 +151,8 @@ private extension LoanReactiveDataRepository {
     func getLoanTransactionParameters(filters: TransactionFiltersRepresentable?) -> LoanTransactionParameters? {
         if let filters = filters {
             let paramsWithFilters = LoanTransactionParameters(
-                dateFrom: filters.dateInterval.start.toString(.YYYYMMDD),
-                dateTo: filters.dateInterval.end.toString(.YYYYMMDD),
+                dateFrom: filters.dateInterval?.start.toString(.YYYYMMDD),
+                dateTo: filters.dateInterval?.end.toString(.YYYYMMDD),
                 amountFrom: filters.fromAmount,
                 amountTo: filters.toAmount
             )

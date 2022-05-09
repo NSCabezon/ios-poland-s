@@ -196,7 +196,9 @@ private extension TaxAuthoritySelectorCoordinator {
         }
         
         dependenciesEngine.register(for: TaxAccountTypeRecognizing.self) { _ in
-            return TaxAccountTypeRecognizer()
+            return TaxAccountTypeRecognizer(
+                identifierValidator: TaxIdentifierValidator()
+            )
         }
     }
 }
