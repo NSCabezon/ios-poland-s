@@ -289,6 +289,9 @@ private extension AppDependencies {
             self.notificationsHandler.addService(self.firebaseNotificationsService)
             return self.notificationsHandler
         }
+        self.dependencieEngine.register(for: GetContactPhonesUseCaseProtocol.self) { _ in
+            return PLGetContactPhonesUseCase()
+        }
         self.dependencieEngine.register(for: InboxActionBuilderProtocol.self) { resolver in
             return PLInboxActionBuilder(resolver: resolver)
         }
@@ -438,6 +441,9 @@ private extension AppDependencies {
 
         self.dependencieEngine.register(for: PLOnlineAdvisorManagerProtocol.self) { resolver in
             return self.onlineAdvisor
+        }
+        self.dependencieEngine.register(for: SecurityAreaViewProtocolModifier.self) { _ in
+            PLSecurityAreaViewProtocolModifier()
         }
     }
 }
