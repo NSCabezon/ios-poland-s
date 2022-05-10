@@ -22,7 +22,7 @@ final class TaxTransferBillingPeriodContainerView: UIView {
         with: localized("pl_taxTransfer_tab_year")
     )
     private let daySelector = TaxTransferBillingPeriodInputView(
-        with: "#Numer okresu (DDMM)"
+        with: localized("pl_taxTransfer_text_periodNumberDdMm")
     )
     private let periodSelector = TaxTransferBillingPeriodSelectorView(
         with: localized("pl_taxTransfer_text_periodType")
