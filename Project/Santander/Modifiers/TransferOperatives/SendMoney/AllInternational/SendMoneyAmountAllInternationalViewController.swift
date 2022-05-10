@@ -11,8 +11,9 @@ import CoreFoundationLib
 import UIOneComponents
 import UI
 import OpenCombine
+import TransferOperatives
 
-protocol SendMoneyAmountAllInternationalView: OperativeView {
+protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHelperViewProtocol {
     func addAccountSelector(_ viewModel: OneAccountsSelectedCardViewModel)
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel)
     func setFloatingButtonEnabled(_ isEnabled: Bool)
@@ -71,6 +72,14 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
     }()
     
     private lazy var simpleDateView = SMAmountAllInternationalSimpleDateView()
+    
+    internal lazy var currenciesSelectionView: SelectionListView = {
+        let currenciesSelectionView = SelectionListView()
+        currenciesSelectionView.setSelectionType(.currencies)
+        currenciesSelectionView.delegate = self
+        currenciesSelectionView.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        return currenciesSelectionView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +146,12 @@ private extension SendMoneyAmountAllInternationalViewController {
                 self.presenter.saveAmounts(originAmount: newOriginAmount, destinationAmount: destinationAmount)
             }
             .store(in: &subscriptions)
+        self.exchangeRateView.publisher
+            .case(OneExchangeRateAmountViewState.didSelectedShowCurrencies)
+            .sink { [unowned self] isTransaccionalOriginCurrency in
+                self.presenter.didPressedShowCurrencies(isTransaccionalOriginCurrency)
+            }
+            .store(in: &subscriptions)
     }
     
     func configureFloattingButton() {
@@ -170,8 +185,17 @@ private extension SendMoneyAmountAllInternationalViewController {
 }
 
 extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInternationalView {
+    
     var operativePresenter: OperativeStepPresenterProtocol {
         return self.presenter
+    }
+    
+    var loadingContainerView: UIView! {
+        return UIView()
+    }
+    
+    var loadingImageView: UIImageView! {
+        return UIImageView()
     }
     
     func addAccountSelector(_ viewModel: OneAccountsSelectedCardViewModel) {
@@ -221,5 +245,15 @@ extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationa
 extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationalSwiftViewDelegate {
     func saveSwift(_ swift: String?) {
         self.presenter.saveSwift(swift)
+    }
+}
+
+extension SendMoneyAmountAllInternationalViewController: SelectionListViewDelegate {
+    func didSearchItem(_ searchItem: String) {
+        self.presenter.didSearchCurrency(searchItem)
+    }
+    
+    func didSelectItem(_ item: String) {
+        self.presenter.didSelectCurrency(item)
     }
 }

@@ -75,7 +75,7 @@ private extension PLSendMoneyAmountUseCase {
         let matrix = TranferTypeMatrixEvaluator(
             isSourceCurrencyPLN: sourceAccount.currencyRepresentable?.currencyType == .złoty,
             isDestinationAccountInternal: !checkInternalAccountRepresentable.isExternal,
-            isDestinationAccountCurrencyPLN: requestValues.destinationAccountCurrency?.code == Constants.plnCurrencyCode,
+            isDestinationAccountCurrencyPLN: requestValues.currency?.code == Constants.plnCurrencyCode,
             isOwner: requestValues.isOwner,
             isCountryPLN: requestValues.country?.code == Constants.plCountryCode
         )

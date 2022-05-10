@@ -9,8 +9,9 @@ import CoreFoundationLib
 import Operative
 import CoreDomain
 import TransferOperatives
+import UIKit
 
-protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresenterProtocol {
+protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresenterProtocol, SendMoneyCurrencyHelperPresenterProtocol {
     var view: SendMoneyAmountAllInternationalView? { get set }
     func viewDidLoad()
     func didSelectBack()
@@ -31,15 +32,21 @@ final class SendMoneyAmountAllInternationalPresenter {
     var isCancelButtonEnabled: Bool = false
     var container: OperativeContainerProtocol?
     weak var view: SendMoneyAmountAllInternationalView?
-    private let dependenciesResolver: DependenciesResolver
+    internal let dependenciesResolver: DependenciesResolver
     lazy var operativeData: SendMoneyOperativeData = {
         guard let container = self.container else { fatalError() }
         return container.get()
     }()
     
+    public var sendMoneyUseCaseProvider: SendMoneyUseCaseProviderProtocol {
+        return self.dependenciesResolver.resolve()
+    }
+    
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
+    
+    var isOriginCurrency = true
 }
 
 private extension SendMoneyAmountAllInternationalPresenter {
@@ -49,10 +56,6 @@ private extension SendMoneyAmountAllInternationalPresenter {
     
     var sendMoneyModifier: SendMoneyModifierProtocol? {
         return self.dependenciesResolver.resolve(forOptionalType: SendMoneyModifierProtocol.self)
-    }
-    
-    var sendMoneyUseCaseProvider: SendMoneyUseCaseProviderProtocol {
-        return self.dependenciesResolver.resolve()
     }
     
     var isSwiftRangeValid: Bool {
@@ -115,13 +118,6 @@ private extension SendMoneyAmountAllInternationalPresenter {
     }
     
     func getOneExchangeViewModel() -> OneExchangeRateAmountViewModel? {
-        if self.operativeData.amount == nil {
-            guard let originCurrency = self.operativeData.selectedAccount?.currencyRepresentable,
-                  let destinationCurrency = self.getDestinationCurrencyRepresentable()
-            else { return nil }
-            self.operativeData.amount = AmountRepresented(value: 0, currencyRepresentable: originCurrency)
-            self.operativeData.receiveAmount = AmountRepresented(value: 0, currencyRepresentable: destinationCurrency)
-        }
         guard let originAmount = self.operativeData.amount,
               let originCurrency = originAmount.currencyRepresentable,
               let originRates = self.getBuySellRatesForCurrency(originCurrency),
@@ -130,13 +126,33 @@ private extension SendMoneyAmountAllInternationalPresenter {
               let destinationRates = self.getBuySellRatesForCurrency(destinationCurrency)
         else { return nil }
         return OneExchangeRateAmountViewModel(originAmount:
-                                        OneExchangeRateAmount(amount: originAmount, buyRate: originRates.buyRate, sellRate: originRates.sellRate),
-                                       type: .exchange(destinationAmount:
-                                                        OneExchangeRateAmount(amount: destinationAmount, buyRate: destinationRates.buyRate, sellRate: destinationRates.sellRate)))
+                                                OneExchangeRateAmount(amount: originAmount,
+                                                                      buyRate: originRates.buyRate,
+                                                                      sellRate: originRates.sellRate,
+                                                                      currencySelector: getOriginCurrenciesView()),
+                                              type: .exchange(destinationAmount:
+                                                                OneExchangeRateAmount(amount: destinationAmount,
+                                                                                      buyRate: destinationRates.buyRate,
+                                                                                      sellRate: destinationRates.sellRate,
+                                                                                      currencySelector: getDestinationCurrenciesView())))
+    }
+    
+    func getOriginCurrenciesView() -> UIView? {
+        guard operativeData.transactionalOriginCurrency?.code != Constants.plnCurrencyCode else {
+            return nil
+        }
+        return self.view?.currenciesSelectionView
+    }
+    
+    func getDestinationCurrenciesView() -> UIView? {
+        guard operativeData.currency?.code != Constants.plnCurrencyCode else {
+            return nil
+        }
+        return self.view?.currenciesSelectionView
     }
     
     func getBuySellRatesForCurrency(_ currency: CurrencyRepresentable) -> (buyRate: AmountRepresentable, sellRate: AmountRepresentable)? {
-        if currency.currencyCode == "PLN" {
+        if currency.currencyCode == Constants.plnCurrencyCode {
             return (AmountRepresented(value: 1, currencyRepresentable: currency), AmountRepresented(value: 1, currencyRepresentable: currency))
         } else {
             guard let exchangeRates = self.operativeData.exchangeRates,
@@ -146,22 +162,45 @@ private extension SendMoneyAmountAllInternationalPresenter {
         }
     }
     
-    func getDestinationCurrencyRepresentable() -> CurrencyRepresentable? {
+    func getTransactionalOriginCurrencyRepresentable() -> CurrencyRepresentable? {
         // TODO: swap for hardcoded EUR when working change country
 //        guard let currencyCode = self.operativeData.currency?.code ?? self.operativeData.currencyName else { return nil }
         let currencyCode = "EUR"
+        self.operativeData.transactionalOriginCurrency = self.currenciesList.first(where: { $0.code == currencyCode })
         return CurrencyRepresented(currencyCode: currencyCode)
+    }
+    
+    enum Constants {
+        static let plnCurrencyCode: String = "PLN"
     }
 }
 
 extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternationalPresenterProtocol {
+    
     func viewDidLoad() {
         self.setAccountSelectorView()
+        self.resetDestinationAmount()
+        self.reloadExchangeRateView()
+        self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
+        self.isOriginCurrency = false
+    }
+    
+    func resetDestinationAmount() {
+        //TODO: Check correct place
+        guard self.operativeData.amount == nil,
+              let originCurrency = self.getTransactionalOriginCurrencyRepresentable(),
+              let destinationCurrency = self.operativeData.selectedAccount?.currencyRepresentable else {
+            return
+        }
+        self.operativeData.amount = AmountRepresented(value: 0, currencyRepresentable: originCurrency)
+        self.operativeData.receiveAmount = AmountRepresented(value: 0, currencyRepresentable: destinationCurrency)
+    }
+    
+    func reloadExchangeRateView() {
         self.loadExchangeRates { [weak self] in
             guard let viewModel = self?.getOneExchangeViewModel() else { return }
             self?.view?.setExchangeRateViewModel(viewModel)
         }
-        self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
     }
     
     func didSelectClose() {
@@ -212,5 +251,21 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         self.operativeData.amount = originAmount
         self.operativeData.receiveAmount = destinationAmount
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
+    }
+}
+
+extension SendMoneyAmountAllInternationalPresenter {
+    var viewCurrencyHelper: SendMoneyCurrencyHelperViewProtocol? {
+        return self.view
+    }
+}
+
+extension SendMoneyAmountAllInternationalPresenter: AutomaticScreenTrackable {
+    var trackerPage: SendMoneyAmountAndDatePage {
+        SendMoneyAmountAndDatePage(national: self.operativeData.type == .national, type: self.operativeData.type.trackerName)
+    }
+    
+    var trackerManager: TrackerManager {
+        dependenciesResolver.resolve(for: TrackerManager.self)
     }
 }
