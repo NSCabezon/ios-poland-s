@@ -8,6 +8,7 @@
 import UI
 import PLUI
 import IQKeyboardManagerSwift
+import CoreFoundationLib
 
 protocol AddTaxPayerViewDelegate: AnyObject {
     func didTapIdentifiersSelector()
@@ -106,7 +107,7 @@ final class AddTaxPayerFormViewController: UIViewController {
     
     private func configureBottomView() {
         bottomButtonView.disableButton()
-        bottomButtonView.configure(title: "#Gotowe") {
+        bottomButtonView.configure(title: localized("generic_label_done")) {
             self.presenter.didTapDone()
         }
     }
