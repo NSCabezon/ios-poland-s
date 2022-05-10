@@ -63,7 +63,7 @@ extension TaxTransferConfirmationViewController: TaxTransferConfirmationView {
             withAmountSize: 36.0
         )
         footer.setAmount(amount)
-        footer.setTitle(localized("#Suma"))
+        footer.setTitle(localized("pl_generic_label_total"))
     }
 }
 

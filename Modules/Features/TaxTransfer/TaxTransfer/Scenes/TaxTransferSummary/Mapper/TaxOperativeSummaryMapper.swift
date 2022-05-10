@@ -24,7 +24,7 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
         let recipientName = model.recipientName ?? localized("pl_foundtrans_text_RecipFoudSant")
         let recipientAccountNumber = IBANFormatter.format(iban: model.recipientAccountNumber)
         let accountNumber = IBANFormatter.format(iban: model.account.number)
-        let transferType: String = localized("#Przelew zewnętrzny")
+        let transferType: String = localized("pl_generic_label_exTransfer")
         let taxIdentifier = model.taxPayerInfo.idType.displayableValue + " - " + model.taxPayerInfo.taxIdentifier
         let billingPeriod = getBillingPeriod(
             year: model.billingYear ?? "",
@@ -33,38 +33,38 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
         )
         
         var items: [OperativeSummaryStandardBodyItemViewModel] = [
-            .init(title: localized("#Kwota"),
+            .init(title: localized("pl_generic_label_amount"),
                   subTitle: amountValueString(model.amount, size: 32),
                   info: title),
-            .init(title: localized("#Konto, z którego robisz przelew"),
+            .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: model.account.name,
                   info: accountNumber),
-            .init(title: localized("#Dane organu podatkowego"),
+            .init(title: localized("pl_generic_label_taxAuthority"),
                   subTitle: recipientName,
                   info: recipientAccountNumber),
-            .init(title: "#Dane płatnika",
+            .init(title: localized("pl_generic_label_payer"),
                   subTitle: model.taxPayer.name ?? model.taxPayer.shortName,
                   info: taxIdentifier),
-            .init(title: "#Symbol formularza lub płatności",
+            .init(title: localized("pl_generic_label_formSymbol"),
                   subTitle: model.taxSymbol.name),
         ]
         
         if !billingPeriod.isEmpty {
-            items.append(.init(title: "#Okres",
+            items.append(.init(title: localized("pl_generic_label_period"),
                                subTitle: billingPeriod)
             )
         }
         
         if !model.obligationIdentifier.isEmpty {
-            items.append(.init(title: "#Identyfikacja zobowiązania",
+            items.append(.init(title: localized("pl_taxTransfer_label_financialObligationId"),
                                subTitle: model.obligationIdentifier)
             )
         }
 
-        items.append(.init(title: localized("#Typ transakcji"),
+        items.append(.init(title: localized("pl_generic_label_transactionType"),
                            subTitle: transferType)
         )
-        items.append(.init(title: localized("#Data"),
+        items.append(.init(title: localized("pl_generic_label_data"),
                            subTitle: dateString)
         )
         return items
@@ -83,7 +83,7 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
         
         var items: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(
-                title: "#Kwota",
+                title: localized("pl_generic_label_amount"),
                 subTitle: PLAmountFormatter.amountString(
                     amount: summaryModel.amount,
                     currency: summaryModel.currency,
@@ -91,33 +91,33 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
                 ),
                 info: summaryModel.title
             ),
-            .init(title: localized("#Konto, z którego robisz przelew"),
+            .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: summaryModel.accountName,
                   info: summaryModel.accountNumber),
-            .init(title: "#Dane organu podatkowego",
+            .init(title: localized("pl_generic_label_taxAuthority"),
                   subTitle: summaryModel.recipientName,
                   info: summaryModel.recipientAccountNumber),
-            .init(title: "#Dane płatnika",
+            .init(title: localized("pl_generic_label_payer"),
                   subTitle: taxPayer,
                   info: taxIdentifier),
-            .init(title: "#Symbol formularza lub płatności",
+            .init(title: localized("pl_generic_label_formSymbol"),
                   subTitle: transferModel.taxSymbol.name)
         ]
 
         if !billingPeriod.isEmpty {
-            items.append(.init(title: "#Okres",
+            items.append(.init(title: localized("pl_generic_label_period"),
                                subTitle: billingPeriod)
             )
         }
         
         if !transferModel.obligationIdentifier.isEmpty {
-            items.append(.init(title: "#Identyfikacja zobowiązania",
+            items.append(.init(title: localized("pl_taxTransfer_label_financialObligationId"),
                                subTitle: transferModel.obligationIdentifier)
             )
         }
-        items.append(.init(title: "#Typ transakcji",
-                               subTitle: "#Przelew zewnętrzny"))
-        items.append(.init(title: "#Data",
+        items.append(.init(title: localized("pl_generic_label_transactionType"),
+                               subTitle: localized("pl_generic_label_exTransfer")))
+        items.append(.init(title: localized("pl_generic_label_data"),
                                subTitle: summaryModel.dateString))
         return items
     }
