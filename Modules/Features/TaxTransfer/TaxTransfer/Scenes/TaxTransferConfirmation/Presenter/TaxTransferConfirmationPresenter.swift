@@ -163,9 +163,9 @@ private extension TaxTransferConfirmationPresenter {
         case .noConnection:
             self.showError(with: "pl_generic_alert_textUnstableConnection")
         case .accountOnBlacklist:
-            self.showError(with: "#Sprawdź poprawność wprowadzonego numeru rachunku. Przelew na wskazany rachunek może być zrealizowany wyłącznie w Oddziale Banku.")
+            self.showError(with: "pl_generic_error_transferAcceptedOnlyAtBranch")
         case .expressRecipientInactive:
-            self.showError(with: "#Bank odbiorcy nie obsługuje tego typu przelewów.")
+            self.showError(with: "pl_generic_error_transferNotAcceptedInBeneficiaryBank")
         case .limitExceeded:
             self.showError(with: "pl_blik_alert_text_dayLimit", nameImage: "icnAlert")
         default:
