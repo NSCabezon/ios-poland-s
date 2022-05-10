@@ -19,6 +19,7 @@ def core_dependencies
   pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
   pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
+  pod 'SANServicesLibrary', :path => '../santander-one/Modules/Libraries/SANServicesLibrary'
 
   # Core Features
   pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
