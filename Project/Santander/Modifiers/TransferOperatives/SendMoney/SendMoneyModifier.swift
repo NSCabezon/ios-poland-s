@@ -54,7 +54,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
         return subtype
     }
     
-    var isEditConfirmationEnabled: Bool = false
+    let confirmationNotifyEmail = false
     
     func addSendType(operativeData: SendMoneyOperativeData) -> String? {
         let isCreditCardAccount: Bool? = {
