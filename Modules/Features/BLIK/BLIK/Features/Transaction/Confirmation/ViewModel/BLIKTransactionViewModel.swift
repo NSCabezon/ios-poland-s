@@ -6,7 +6,7 @@ import SANLegacyLibrary
 
 struct BLIKTransactionViewModel {
     
-    private var transaction: Transaction
+    private(set) var transaction: Transaction
 
     init(transaction: Transaction) {
         self.transaction = transaction

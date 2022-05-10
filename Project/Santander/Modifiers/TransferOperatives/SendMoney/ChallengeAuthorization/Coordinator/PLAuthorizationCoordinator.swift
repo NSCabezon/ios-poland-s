@@ -23,6 +23,7 @@ final class PLAuthorizationCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private var progressTotalTime: Float?
+    private var bottomSheetDismissedClosure: (() -> Void)?
     
     public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -33,6 +34,7 @@ final class PLAuthorizationCoordinator: ModuleCoordinator {
     public func start() {
         let viewController = self.dependenciesEngine.resolve(for: PLAuthorizationViewController.self)
         viewController.presenter.updateRemainingProgressTime(progressTotalTime)
+        viewController.bottomSheetDismissedClosure = bottomSheetDismissedClosure
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -91,9 +93,11 @@ extension PLAuthorizationCoordinator: BlikChallengesHandlerDelegate {
         _ challenge: ChallengeRepresentable,
         authorizationId: String,
         progressTotalTime: Float?,
-        completion: @escaping (ChallengeResult) -> Void
+        completion: @escaping (ChallengeResult) -> Void,
+        bottomSheetDismissedClosure: (() -> Void)?
     ) {
         self.progressTotalTime = progressTotalTime
+        self.bottomSheetDismissedClosure = bottomSheetDismissedClosure
         handle(challenge, authorizationId: authorizationId, completion: completion)
     }
 }

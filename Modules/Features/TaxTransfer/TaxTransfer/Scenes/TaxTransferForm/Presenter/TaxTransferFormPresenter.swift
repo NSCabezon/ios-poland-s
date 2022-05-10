@@ -16,6 +16,7 @@ protocol TaxTransferFormPresenterProtocol: AccountForDebitSelectorDelegate,
     var view: TaxTransferFormView? { get set }
     
     func viewDidLoad()
+    func clearForm()
     func getTaxFormConfiguration() -> TaxFormConfiguration
     func didTapAccountSelector()
     func didTapTaxPayer()
@@ -92,7 +93,19 @@ private extension TaxTransferFormPresenter {
     }
 }
 
-extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {    
+extension TaxTransferFormPresenter: TaxTransferFormPresenterProtocol {
+    func clearForm() {
+        selectedAccount = nil
+        selectedTaxPayer = nil
+        selectedTaxAuthority = nil
+        selectedPayerInfo = nil
+        selectedPeriod = nil
+        selectedBillingYear = nil
+        selectedPeriodNumber = nil
+        
+        updateViewWithLatestViewModel()
+    }
+    
     func didSelectTaxBillingPeriod(form: TaxTransferBillingPeriodForm) {
         selectedPeriod = form.periodType
         selectedBillingYear = form.year

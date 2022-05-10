@@ -54,7 +54,7 @@ final class PhoneTopUpFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
     // MARK: Configuration
@@ -65,6 +65,7 @@ final class PhoneTopUpFormViewController: UIViewController {
         setUpLayout()
         prepareStyles()
         formView.delegate = self
+        configureKeyboardDismissGesture()
     }
     
     private func prepareNavigationBar() {

@@ -11,6 +11,7 @@ public struct Transaction {
     public let aliasContext: AliasContext
     public let amount: Decimal
     public let merchant: GetTrnToConfDTO.Merchant?
+    public let transactionRawValue: GetTrnToConfDTO
     
     public enum TransferType: String, Decodable {
         case blikPurchases = "BLIK_PURCHASES"

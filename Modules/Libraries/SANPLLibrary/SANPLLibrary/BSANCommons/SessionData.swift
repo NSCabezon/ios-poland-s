@@ -10,6 +10,7 @@ public class SessionData: Codable {
     public var loggedUserDTO: UserDTO
     public var globalPositionDTO: GlobalPositionDTO?
     public var loanInfo: LoanInfo = LoanInfo()
+    public var fundInfo: FundInfo = FundInfo()
     public var accountInfo: AccountInfo = AccountInfo()
     public var creditCardRepaymentInfo: CreditCardRepaymentInfo = CreditCardRepaymentInfo()
     public var helpCenterInfo: HelpCenterInfo = HelpCenterInfo()

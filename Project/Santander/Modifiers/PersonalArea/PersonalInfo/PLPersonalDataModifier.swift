@@ -13,11 +13,12 @@ class PLPersonalDataModifier: PersonalDataModifier {
         guard let personalInfo = personalInfo else { return nil }
         let address = polandAddress(personalInfo.addressNodes)
         let phone = maskedPhone(personalInfo.phone) ?? " "
+        let smsPhone = maskedPhone(personalInfo.smsPhone) ?? " "
         var personalDataInfo = PersonalDataInfo()
         personalDataInfo.mainAddress = address
         personalDataInfo.correspondenceAddress = polandAddress(personalInfo.correspondenceAddressNodes)
         personalDataInfo.phone = phone
-        personalDataInfo.smsPhone = phone
+        personalDataInfo.smsPhone = smsPhone
         personalDataInfo.email = personalInfo.email
         personalDataInfo.emailAlternative = localized("personalArea_text_uninformed")
         personalDataInfo.correspondenceAddressMode = .web

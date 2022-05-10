@@ -47,10 +47,7 @@ final class ItemSelectorPresenter<Item: SelectableItem> {
             
             guard filteredSections.isNotEmpty else {
                 return .emptySearchResultMessage(
-                    .init(
-                        titleMessage: configuration.emptySearchResultMessage,
-                        searchPhrase: "\"\(searchPhrase)\""
-                    )
+                    .init(titleMessage: configuration.emptySearchResultMessage)
                 )
             }
             
