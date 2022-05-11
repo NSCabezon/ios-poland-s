@@ -141,10 +141,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
             return UITableViewCell()
         }
         
-        cell.configure(
-            titleMessageText: viewModel.titleMessage,
-            searchPhraseText: viewModel.searchPhrase
-        )
+        cell.configure(titleMessageText: viewModel.titleMessage)
         
         return cell
     }
@@ -155,7 +152,7 @@ final class ItemSelectorViewController<Item: SelectableItem>: UIViewController,
         configureSearch()
         configureTableView()
         configureStyling()
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
     }
     
     private func configureNavigationItem() {

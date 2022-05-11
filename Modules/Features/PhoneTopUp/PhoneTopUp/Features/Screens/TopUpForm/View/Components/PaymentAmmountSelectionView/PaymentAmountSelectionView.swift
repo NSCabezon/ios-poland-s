@@ -26,9 +26,7 @@ final class PaymentAmountSelectionView: UIView {
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
-    private let otherAmountContainer = UIStackView()
-    private let otherAmountHeaderLabel = FormHeaderLabel()
-    private let otherAmountTextField = LisboaTextFieldWithErrorView()
+    private let customAmountTextInputView = FormTextInputView()
     private let currencyAccessoryView = CurrencyLabel()
     private lazy var collectionViewHeightConstraint = amountCollectionView.heightAnchor.constraint(equalToConstant: 0.0)
     
@@ -67,7 +65,11 @@ final class PaymentAmountSelectionView: UIView {
     }
     
     func showInvalidCustomAmountError(_ error: String?) {
-        otherAmountTextField.showError(error)
+        if let error = error, !error.isEmpty {
+            customAmountTextInputView.setErrorAppearance(message: error)
+        } else {
+            customAmountTextInputView.clearErrorAppearance()
+        }
     }
     
     private func setUp() {
@@ -82,18 +84,15 @@ final class PaymentAmountSelectionView: UIView {
         addSubviewConstraintToEdges(mainStackView)
         
         mainStackView.addArrangedSubview(amountContainer)
-        mainStackView.addArrangedSubview(otherAmountContainer)
+        mainStackView.addArrangedSubview(customAmountTextInputView)
         
         amountContainer.addArrangedSubview(amountHeaderLabel)
         amountContainer.addArrangedSubview(amountCollectionView)
-        
-        otherAmountContainer.addArrangedSubview(otherAmountHeaderLabel)
-        otherAmountContainer.addArrangedSubview(otherAmountTextField)
     }
     
     private func prepareStyles() {
         amountHeaderLabel.text = localized("pl_topup_text_amountSelect")
-        otherAmountHeaderLabel.text = localized("pl_topup_text_anothAmonut")
+        customAmountTextInputView.setHeaderTitle(localized("pl_topup_text_anothAmonut"))
         currencyAccessoryView.setText(CurrencyType.złoty.name)
         amountCollectionView.backgroundColor = .white
         amountCollectionView.clipsToBounds = false
@@ -105,11 +104,6 @@ final class PaymentAmountSelectionView: UIView {
         
         amountContainer.axis = .vertical
         amountContainer.spacing = 8.0
-        
-        otherAmountContainer.axis = .vertical
-        otherAmountContainer.spacing = 8.0
-        
-        otherAmountTextField.setHeight(48.0)
         
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -142,7 +136,7 @@ final class PaymentAmountSelectionView: UIView {
     }
     
     private func setUpAmountTextField() {
-        otherAmountTextField.textField.setRightAccessory(.view(currencyAccessoryView))
+        customAmountTextInputView.textField.setRightAccessory(.view(currencyAccessoryView))
         let amountFormatter = PLAmountTextFieldFormatter(maximumIntegerDigits: 4,
                                                          maximumFractionDigits: 0,
                                                          usesGroupingSeparator: true)
@@ -151,8 +145,8 @@ final class PaymentAmountSelectionView: UIView {
                                                               disabledActions: [],
                                                               keyboardReturnAction: nil,
                                                               textfieldCustomizationBlock: amountTextFieldCustomization)
-        otherAmountTextField.textField.setEditingStyle(.writable(configuration: configuration))
-        otherAmountTextField.textField.updatableDelegate = self
+        customAmountTextInputView.textField.setEditingStyle(.writable(configuration: configuration))
+        customAmountTextInputView.textField.updatableDelegate = self
     }
     
     private func amountTextFieldCustomization(for component: LisboaTextField.CustomizableComponents) {
@@ -164,17 +158,17 @@ final class PaymentAmountSelectionView: UIView {
     private func adjustOtherAmountVisibility() {
         switch selectedAmount {
         case .custom:
-            otherAmountContainer.isHidden = false
+            customAmountTextInputView.isHidden = false
         default:
-            otherAmountContainer.isHidden = true
+            customAmountTextInputView.isHidden = true
         }
     }
     
     private func updateOtherAmountTextField() {
         if case .custom(let amount) = selectedAmount, let amountText = amount {
-            otherAmountTextField.textField.setText("\(amountText)")
+            customAmountTextInputView.textField.setText("\(amountText)")
         } else {
-            otherAmountTextField.textField.setText(nil)
+            customAmountTextInputView.textField.setText(nil)
         }
     }
 }
@@ -223,7 +217,7 @@ extension PaymentAmountSelectionView: UICollectionViewDelegateFlowLayout {
 
 extension PaymentAmountSelectionView: UpdatableTextFieldDelegate {
     func updatableTextFieldDidUpdate() {
-        let amount = Int(otherAmountTextField.textField.text ?? "")
+        let amount = Int(customAmountTextInputView.textField.text ?? "")
         delegate?.didSelectTopUpAmount(.custom(amount: amount))
     }
 }

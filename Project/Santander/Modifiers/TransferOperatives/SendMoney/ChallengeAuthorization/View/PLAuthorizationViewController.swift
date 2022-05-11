@@ -22,6 +22,7 @@ protocol PLAuthorizationView: AnyObject {
 }
 
 final class PLAuthorizationViewController: UIViewController {
+    var bottomSheetDismissedClosure: (() -> Void)?
     private let dependenciesResolver: DependenciesResolver
     @IBOutlet private weak var floattingButtonConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackView: UIStackView!
@@ -123,6 +124,7 @@ extension PLAuthorizationViewController: PLAuthorizationView {
         let view = self.setGenericErrorView(viewModel)
         let type: SizablePresentationType = .custom(isPan: false)
         bottomSheet.show(in: self, type: type, view: view)
+        topVisibleViewController.transitioningDelegate = self
     }
 }
 
@@ -220,5 +222,12 @@ extension PLAuthorizationViewController: BottomSheetErrorDelegate {
     func didTapAcceptError() {
         self.navigationController?.dismiss(animated: true)
         self.presenter.didSelectBack()
+    }
+}
+
+extension PLAuthorizationViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        bottomSheetDismissedClosure?()
+        return nil
     }
 }

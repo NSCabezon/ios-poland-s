@@ -39,6 +39,10 @@ final class TaxTransferObligationIdentifierSectionView: UIView {
         return obligationIdentifier.textField.text ?? ""
     }
     
+    func clear() {
+        obligationIdentifier.textField.setText(nil)
+    }
+    
     func setInvalidFieldMessage(_ message: String?) {
         if let message = message {
             obligationIdentifier.showError(message)

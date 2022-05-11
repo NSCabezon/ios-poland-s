@@ -10,6 +10,7 @@ import CoreFoundationLib
 import RetailLegacy
 import CoreDomain
 import Foundation
+import Menu
 import Onboarding
 import SANLegacyLibrary
 
@@ -76,7 +77,7 @@ extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
     }
     
     private func coreFeatureFlags() -> [FeatureFlagRepresentable] {
-        let toRemove: Set<CoreFeatureFlag> = [.cardTransactionFilters]
+        let toRemove: Set<CoreFeatureFlag> = []
         let all: Set<CoreFeatureFlag> = Set(CoreFeatureFlag.allCases)
         return Array(all.subtracting(toRemove))
     }
