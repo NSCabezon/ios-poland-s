@@ -194,7 +194,7 @@ final class AppNavigationDependencies {
         }
 
         appSideMenuNavigationDependencies.registerDependencies()
-        DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
+        DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine, moduleDependencies: moduleDependencies).registerDependencies()
         self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in
             PLInsuranceProtectionModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
