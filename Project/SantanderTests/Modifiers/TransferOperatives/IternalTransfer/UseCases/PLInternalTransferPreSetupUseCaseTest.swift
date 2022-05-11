@@ -36,15 +36,14 @@ class PLInternalTransferPreSetupUseCaseTest: XCTestCase {
         }
     }
     
-    func test_Given_NotPolandAccounts_Then_61_ONEAPP_OWN_CURRENCY_TRANSACTION() {
-        accounts.forEach { account in
-            let polandAccount = account as? PolandAccountRepresentable
-            if polandAccount?.type != .creditCard {
-                notOriginCreditCardAccount.append(account)
-            }
-        }
-        let value = sut.creditCardAccountConditions(notOriginCreditCardAccount)
+    func test_Given_ManyAccounts_Then_success() {
+        let value = sut.isMinimunAccounts(accounts: accounts)
         XCTAssertTrue(value == true)
+    }
+    
+    func test_Given_ManyAccounts_Then_failure() {
+        let value = sut.isMinimunAccounts(accounts: [])
+        XCTAssertTrue(value == false)
     }
 }
 
