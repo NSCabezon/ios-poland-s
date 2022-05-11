@@ -53,7 +53,11 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
 
 private extension PLSendMoneyDestinationUseCase {
     func getTransferType(requestValues: SendMoneyOperativeData) -> SendMoneyTransferType {
-        // TODO: make logic with source/destination accounts country/currency
-        return .allInternational
+        // TODO: countryCode
+        guard requestValues.countryCode == "PL" else {
+            return .allInternational
+        }
+        return .national
+        
     }
 }

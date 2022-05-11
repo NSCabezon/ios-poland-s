@@ -7,7 +7,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     private let legacyDependenciesResolver: DependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     
-    var isEnabledChangeCountry: Bool = false
+    var isEnabledChangeCountry: Bool = true
     
     init(legacyDependenciesResolver: DependenciesResolver) {
         self.legacyDependenciesResolver = legacyDependenciesResolver

@@ -23,6 +23,8 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
     
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet weak var floatingButton: OneFloatingButton!
+    @IBOutlet weak var loadingContainerView: UIView!
+    @IBOutlet weak var loadingImageView: UIImageView!
     
     private let presenter: SendMoneyAmountAllInternationalPresenterProtocol
     private var subscriptions: Set<AnyCancellable> = []
@@ -188,14 +190,6 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     
     var operativePresenter: OperativeStepPresenterProtocol {
         return self.presenter
-    }
-    
-    var loadingContainerView: UIView! {
-        return UIView()
-    }
-    
-    var loadingImageView: UIImageView! {
-        return UIImageView()
     }
     
     func addAccountSelector(_ viewModel: OneAccountsSelectedCardViewModel) {
