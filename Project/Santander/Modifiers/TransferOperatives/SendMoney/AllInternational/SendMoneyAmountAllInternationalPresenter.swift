@@ -165,8 +165,10 @@ private extension SendMoneyAmountAllInternationalPresenter {
     func getTransactionalOriginCurrencyRepresentable() -> CurrencyRepresentable? {
         // TODO: swap for hardcoded EUR when working change country
 //        guard let currencyCode = self.operativeData.currency?.code ?? self.operativeData.currencyName else { return nil }
-        let currencyCode = "EUR"
-        self.operativeData.transactionalOriginCurrency = self.currenciesList.first(where: { $0.code == currencyCode })
+        guard let currencyCode = self.operativeData.transactionalOriginCurrency?.code else {
+            return nil
+        }
+//        self.operativeData.transactionalOriginCurrency = self.currenciesList.first(where: { $0.code == currencyCode })
         return CurrencyRepresented(currencyCode: currencyCode)
     }
     
@@ -179,22 +181,22 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
     
     func viewDidLoad() {
         self.setAccountSelectorView()
-        self.resetDestinationAmount()
+//        self.resetDestinationAmount()
         self.reloadExchangeRateView()
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
         self.isOriginCurrency = false
     }
     
-    func resetDestinationAmount() {
-        //TODO: Check correct place
-        guard self.operativeData.amount == nil,
-              let originCurrency = self.getTransactionalOriginCurrencyRepresentable(),
-              let destinationCurrency = self.operativeData.selectedAccount?.currencyRepresentable else {
-            return
-        }
-        self.operativeData.amount = AmountRepresented(value: 0, currencyRepresentable: originCurrency)
-        self.operativeData.receiveAmount = AmountRepresented(value: 0, currencyRepresentable: destinationCurrency)
-    }
+//    func resetDestinationAmount() {
+//        //TODO: Check correct place
+//        guard self.operativeData.amount == nil,
+//              let originCurrency = self.getTransactionalOriginCurrencyRepresentable(),
+//              let destinationCurrency = self.operativeData.selectedAccount?.currencyRepresentable else {
+//            return
+//        }
+//        self.operativeData.amount = AmountRepresented(value: 0, currencyRepresentable: originCurrency)
+//        self.operativeData.receiveAmount = AmountRepresented(value: 0, currencyRepresentable: destinationCurrency)
+//    }
     
     func reloadExchangeRateView() {
         self.loadExchangeRates { [weak self] in
