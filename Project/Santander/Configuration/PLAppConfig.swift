@@ -29,7 +29,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = true
     let isEnabledPlusButtonPG = true
-    let isEnabledMagnifyingGlass = false
+    let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true
     let languageList: [LanguageType] = [.polish, .english, .russian, .ukrainian]
