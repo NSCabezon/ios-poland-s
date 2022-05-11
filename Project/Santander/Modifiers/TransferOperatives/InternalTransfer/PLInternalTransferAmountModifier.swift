@@ -6,6 +6,7 @@
 //
 
 import TransferOperatives
+import CoreFoundationLib
 
 public class PLInternalTransferAmountModifier: InternalTransferAmountModifierProtocol {
 
@@ -24,5 +25,11 @@ public class PLInternalTransferAmountModifier: InternalTransferAmountModifierPro
     
     public var inputDescriptionKey: String? {
         return "transfer_label_transferOwnAccount"
+    }
+    
+    public func selectionDateOneFilterViewModel(_ index: Int) -> SelectionDateOneFilterViewModel? {
+        let labelViewModel = OneLabelViewModel(type: .normal, mainTextKey: "transfer_label_periodicity", accessibilitySuffix: AccessibilitySendMoneyAmount.periodicitySuffix)
+        let viewModel = SelectionDateOneFilterViewModel(oneLabelViewModel: labelViewModel, options: ["sendMoney_tab_today", "sendMoney_tab_chooseDay"], selectedIndex: index)
+        return viewModel
     }
 }
