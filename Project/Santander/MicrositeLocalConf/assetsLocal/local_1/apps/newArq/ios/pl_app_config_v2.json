@@ -140,6 +140,7 @@
 		"easyPayCardsModeClassic": "true",
 		"enabledEnvioDineroPGClasica": "false",
         "enableTrusteer": "false",
+        "enableComingFeatures": "true",
         "enableFinancingZone": "false",
         "enabledCarruselFavoritosDestinatario": "false",
         "enabledWhatsNew": "false",
