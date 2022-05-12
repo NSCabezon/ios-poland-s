@@ -11,6 +11,5 @@ enum ItemSelectorViewModel<Item> {
     
     struct EmptySearchResultMessageViewModel {
         let titleMessage: String
-        let searchPhrase: String
     }
 }

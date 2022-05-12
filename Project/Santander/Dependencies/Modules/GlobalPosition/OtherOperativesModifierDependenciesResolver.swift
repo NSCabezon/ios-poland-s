@@ -1,5 +1,6 @@
 import CreditCardRepayment
 import PersonalArea
+import GlobalPosition
 
 extension ModuleDependencies: OtherOperativesModifierDependenciesResolver {
     func resolve() -> PersonalAreaModuleCoordinator {
@@ -7,6 +8,10 @@ extension ModuleDependencies: OtherOperativesModifierDependenciesResolver {
     }
     
     func resolve() -> CreditCardRepaymentModuleCoordinator {
+        return oldResolver.resolve()
+    }
+
+    func resolve() -> GlobalPositionModuleCoordinatorDelegate {
         return oldResolver.resolve()
     }
 }

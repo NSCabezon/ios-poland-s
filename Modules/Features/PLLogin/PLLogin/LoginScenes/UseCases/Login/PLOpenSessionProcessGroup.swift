@@ -49,6 +49,8 @@ final class PLOpenSessionProcessGroup: ProcessGroup<Void, PLOpenSessionProcessGr
             .onSuccess( { [weak self] output in
                 self?.globalPositionScene = output.globalPositionOption
                 self?.userId = output.userId
+                let appRepository = self?.dependenciesEngine.resolve(for: AppRepositoryProtocol.self)
+                _ = appRepository?.startSession()
             })
             .finally( { [weak self] in
                 self?.sessionDataManager.load()

@@ -16,6 +16,7 @@ import SANLegacyLibrary
      var birthdayDate: Date? { get }
      var birthString: String? { get }
      var phoneNumber: String? { get }
+     var smsPhoneNumber: String? { get }
      var contactHourFrom: Date? { get }
      var contactHourTo: Date? { get }
      var email: String? { get }

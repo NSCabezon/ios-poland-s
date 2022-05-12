@@ -26,7 +26,8 @@ public final class NotifyDeviceUseCase: UseCase<NotifyDeviceUseCaseInput, Notify
                                       notificationSchemaId: requestValues.notificationSchemaId,
                                       alias: requestValues.alias,
                                       iban: requestValues.iban,
-                                      amount: requestValues.amount)
+                                      amount: requestValues.amount,
+                                      variables: requestValues.variables)
         let result = try self.transferRepository.notifyDevice(input)
         switch result {
         case .success(let authorizationId):
@@ -49,6 +50,7 @@ public struct NotifyDeviceUseCaseInput {
     let alias: String
     let iban: IBANRepresentable
     let amount: AmountRepresentable
+    let variables: [String]?
     
     public init(
         challenge: String,
@@ -56,7 +58,8 @@ public struct NotifyDeviceUseCaseInput {
         alias: String,
         iban: IBANRepresentable,
         amount: AmountRepresentable,
-        notificationSchemaId: String = "195"
+        notificationSchemaId: String = "195",
+        variables: [String]? = nil
     ) {
         self.challenge = challenge
         self.softwareTokenType = softwareTokenType
@@ -64,6 +67,7 @@ public struct NotifyDeviceUseCaseInput {
         self.alias = alias
         self.iban = iban
         self.amount = amount
+        self.variables = variables
     }
 }
 

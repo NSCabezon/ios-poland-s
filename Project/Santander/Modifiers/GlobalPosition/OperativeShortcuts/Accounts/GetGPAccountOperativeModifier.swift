@@ -28,7 +28,6 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
             PLMakeDonationOperative(dependenciesResolver: legacyDependenciesResolver),
             PLPayTaxOperative(dependenciesResolver: legacyDependenciesResolver),
             PLCurrencyExchangeOperative(),
-            AccountOperativeActionType.changeAlias,
             PLAccountNotificationsOperative(),
             PLTransportTicketsServicesOperative(),
             PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver)
@@ -45,7 +44,6 @@ public final class GetGPAccountOperativeModifier: GetGPAccountOperativeOptionPro
             PLMakeDonationOperative(dependenciesResolver: legacyDependenciesResolver),
             PLPayTaxOperative(dependenciesResolver: legacyDependenciesResolver),
             PLCurrencyExchangeOperative(),
-            AccountOperativeActionType.changeAlias,
             PLAccountNotificationsOperative(),
             PLTransportTicketsServicesOperative(),
             PLTransferZusOperative(dependenciesResolver: legacyDependenciesResolver)

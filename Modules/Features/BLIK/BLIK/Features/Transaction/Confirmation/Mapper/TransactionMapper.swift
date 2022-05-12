@@ -31,7 +31,8 @@ extension TransactionMapper {
                            transferType: transferType,
                            aliasContext: getAliasContext(from: dto),
                            amount: dto.amount.amount,
-                           merchant: dto.merchant
+                           merchant: dto.merchant,
+                           transactionRawValue: dto
         )
     }
     

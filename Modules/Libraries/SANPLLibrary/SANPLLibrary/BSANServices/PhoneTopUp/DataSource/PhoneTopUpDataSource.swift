@@ -61,7 +61,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
                                         method: .get,
-                                        contentType: nil)
+                                        contentType: nil,
+                                        localServiceName: .getTopUpAccounts)
         return networkProvider.request(request)
     }
     
@@ -74,7 +75,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
                                         method: .get,
-                                        contentType: nil)
+                                        contentType: nil,
+                                        localServiceName: .getOperators)
         return networkProvider.request(request)
     }
     
@@ -87,7 +89,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
                                         method: .get,
-                                        contentType: nil)
+                                        contentType: nil,
+                                        localServiceName: .getGsmOperators)
         return networkProvider.request(request)
     }
     
@@ -100,7 +103,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
         let request = PhoneTopUpRequest(serviceName: serviceName,
                                         serviceUrl: serviceUrl,
                                         method: .get,
-                                        contentType: nil)
+                                        contentType: nil,
+                                        localServiceName: .getInternetContacts)
         return networkProvider.request(request)
             .flatMapError({ _ in return .success([]) })
     }
@@ -115,7 +119,8 @@ extension PhoneTopUpDataSource: PhoneTopUpDataSourceProtocol {
                                         serviceUrl: serviceUrl,
                                         method: .get,
                                         queryParams: ["accountType": 70],
-                                        contentType: nil)
+                                        contentType: nil,
+                                        localServiceName: .getTopUpAccount)
         let results: Result<[PopularAccountDTO], NetworkProviderError> = networkProvider.request(request)
         
         return results.flatMap { accounts in

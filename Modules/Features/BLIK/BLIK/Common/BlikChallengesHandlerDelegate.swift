@@ -13,6 +13,7 @@ public protocol BlikChallengesHandlerDelegate {
         _ challenge: ChallengeRepresentable,
         authorizationId: String,
         progressTotalTime: Float?,
-        completion: @escaping (ChallengeResult) -> Void
+        completion: @escaping (ChallengeResult) -> Void,
+        bottomSheetDismissedClosure: (() -> Void)?
     )
-}
+} 

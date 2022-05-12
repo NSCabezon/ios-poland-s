@@ -5,6 +5,7 @@
 //  Created by 187831 on 26/04/2022.
 //
 
+import UI
 import Operative
 import PLCommons
 import CoreFoundationLib
@@ -19,110 +20,91 @@ protocol TaxOperativeSummaryMapping {
 
 final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
     func map(_ model: TaxTransferModel) -> [OperativeSummaryStandardBodyItemViewModel] {
-        let title = model.title ?? ""
         let dateString = getDateString(from: model.date)
         let recipientName = model.recipientName ?? localized("pl_foundtrans_text_RecipFoudSant")
         let recipientAccountNumber = IBANFormatter.format(iban: model.recipientAccountNumber)
         let accountNumber = IBANFormatter.format(iban: model.account.number)
-        let transferType: String = localized("#Przelew zewnętrzny")
+        let transferType: String = localized("pl_generic_label_exTransfer")
         let taxIdentifier = model.taxPayerInfo.idType.displayableValue + " - " + model.taxPayerInfo.taxIdentifier
-        let billingPeriod = getBillingPeriod(
-            year: model.billingYear ?? "",
-            periodType: model.billingPeriodType,
-            billingPeriodNumber: model.billingPeriodNumber
-        )
         
         var items: [OperativeSummaryStandardBodyItemViewModel] = [
-            .init(title: localized("#Kwota"),
+            .init(title: localized("pl_generic_label_amount"),
                   subTitle: amountValueString(model.amount, size: 32),
-                  info: title),
-            .init(title: localized("#Konto, z którego robisz przelew"),
+                  info: localized("pl_transferOption_button_transferTax")),
+            .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: model.account.name,
                   info: accountNumber),
-            .init(title: localized("#Dane organu podatkowego"),
+            .init(title: localized("pl_generic_label_taxAuthority"),
                   subTitle: recipientName,
                   info: recipientAccountNumber),
-            .init(title: "#Dane płatnika",
+            .init(title: localized("pl_generic_label_payer"),
                   subTitle: model.taxPayer.name ?? model.taxPayer.shortName,
                   info: taxIdentifier),
-            .init(title: "#Symbol formularza lub płatności",
-                  subTitle: model.taxSymbol.name),
+            .init(title: localized("pl_generic_label_formSymbol"),
+                  subTitle: getTaxInfo(transferModel: model)),
         ]
-        
-        if !billingPeriod.isEmpty {
-            items.append(.init(title: "#Okres",
-                               subTitle: billingPeriod)
-            )
-        }
-        
-        if !model.obligationIdentifier.isEmpty {
-            items.append(.init(title: "#Identyfikacja zobowiązania",
-                               subTitle: model.obligationIdentifier)
-            )
-        }
 
-        items.append(.init(title: localized("#Typ transakcji"),
+        items.append(.init(title: localized("pl_generic_label_transactionType"),
                            subTitle: transferType)
         )
-        items.append(.init(title: localized("#Data"),
+        items.append(.init(title: localized("pl_generic_label_data"),
                            subTitle: dateString)
         )
         return items
     }
     
     func map(_ transferModel: TaxTransferModel, summaryModel: TaxTransferSummary) -> [OperativeSummaryStandardBodyItemViewModel] {
-        
-        let billingPeriod = getBillingPeriod(
-            year: transferModel.billingYear ?? "",
-            periodType: transferModel.billingPeriodType,
-            billingPeriodNumber: transferModel.billingPeriodNumber
-        )
-        
         let taxIdentifier = transferModel.taxPayerInfo.idType.displayableValue + " - " + transferModel.taxPayerInfo.taxIdentifier
         let taxPayer = transferModel.taxPayer.name ?? transferModel.taxPayer.shortName
         
         var items: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(
-                title: "#Kwota",
+                title: localized("pl_generic_label_amount"),
                 subTitle: PLAmountFormatter.amountString(
                     amount: summaryModel.amount,
                     currency: summaryModel.currency,
                     withAmountSize: 32
                 ),
-                info: summaryModel.title
+                info: localized("pl_transferOption_button_transferTax")
             ),
-            .init(title: localized("#Konto, z którego robisz przelew"),
+            .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: summaryModel.accountName,
                   info: summaryModel.accountNumber),
-            .init(title: "#Dane organu podatkowego",
+            .init(title: localized("pl_generic_label_taxAuthority"),
                   subTitle: summaryModel.recipientName,
                   info: summaryModel.recipientAccountNumber),
-            .init(title: "#Dane płatnika",
+            .init(title: localized("pl_generic_label_payer"),
                   subTitle: taxPayer,
                   info: taxIdentifier),
-            .init(title: "#Symbol formularza lub płatności",
-                  subTitle: transferModel.taxSymbol.name)
+            .init(title: localized("pl_generic_label_formSymbol"),
+                  subTitle: getTaxInfo(transferModel: transferModel))
         ]
 
-        if !billingPeriod.isEmpty {
-            items.append(.init(title: "#Okres",
-                               subTitle: billingPeriod)
-            )
-        }
-        
-        if !transferModel.obligationIdentifier.isEmpty {
-            items.append(.init(title: "#Identyfikacja zobowiązania",
-                               subTitle: transferModel.obligationIdentifier)
-            )
-        }
-        items.append(.init(title: "#Typ transakcji",
-                               subTitle: "#Przelew zewnętrzny"))
-        items.append(.init(title: "#Data",
+        items.append(.init(title: localized("pl_generic_label_transactionType"),
+                               subTitle: localized("pl_generic_label_exTransfer")))
+        items.append(.init(title: localized("pl_generic_label_data"),
                                subTitle: summaryModel.dateString))
         return items
     }
+
+}
     
-    private func amountValueString(_ amount: Decimal, size: CGFloat) -> NSAttributedString {
+private extension TaxOperativeSummaryMapper {
+    var attributedTitle: [NSAttributedString.Key: NSObject] {
+        [
+            NSAttributedString.Key.foregroundColor: UIColor.grafite,
+            NSAttributedString.Key.font: UIFont.santander(family: .text, type: .regular, size: 13)
+        ]
+    }
+    
+    var attributedSubtitle: [NSAttributedString.Key: NSObject] {
+        [
+            NSAttributedString.Key.foregroundColor: UIColor.lisboaGray,
+            NSAttributedString.Key.font: UIFont.santander(family: .text, type: .bold, size: 14)
+        ]
+    }
+
+    func amountValueString(_ amount: Decimal, size: CGFloat) -> NSAttributedString {
         PLAmountFormatter.amountString(
             amount: amount,
             currency: .złoty,
@@ -130,13 +112,13 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
         )
     }
     
-    private func getDateString(from date: Date) -> String {
+    func getDateString(from date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         return dateFormatter.string(from: date)
     }
     
-    private func getBillingPeriod(
+    func getBillingPeriod(
         year: String,
         periodType: TaxTransferBillingPeriodType,
         billingPeriodNumber: Int?
@@ -147,5 +129,62 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
             billingPeriod = billingPeriod.appending("\n" + periodType.name + ": " + "\(billingPeriodNumber ?? 0)")
         }
         return billingPeriod
+    }
+    
+    func getTaxInfo(transferModel: TaxTransferModel) -> NSAttributedString {
+        let formSymbolSubtitle = AttributedStringBuilder(
+            string: transferModel.taxSymbol.name,
+            properties: attributedSubtitle
+        ).build()
+        
+        let billingPeriod = getBillingPeriod(
+            year: transferModel.billingYear ?? "",
+            periodType: transferModel.billingPeriodType,
+            billingPeriodNumber: transferModel.billingPeriodNumber
+        )
+        let period = getAttributedString(
+            billingPeriod,
+            title: localized("pl_generic_label_period")
+        )
+        let obligationIdentifier = getAttributedString(
+            transferModel.obligationIdentifier,
+            title: localized("pl_taxTransfer_label_financialObligationId")
+        )
+        let attributedAccountDetails = NSMutableAttributedString()
+        
+        [
+            formSymbolSubtitle,
+            period,
+            obligationIdentifier
+        ].forEach {
+            attributedAccountDetails.append($0)
+        }
+        
+        return attributedAccountDetails
+    }
+
+    func getAttributedString(_ text: String, title: String) -> NSAttributedString {
+        guard text.isNotEmpty else {
+            return NSAttributedString(string: "")
+        }
+        
+        let title = AttributedStringBuilder(
+            string: ["\n", title].joined(),
+            properties: attributedTitle
+        ).build()
+        
+        let subtitle = AttributedStringBuilder(
+            string: ["\n", text].joined(),
+            properties: attributedSubtitle
+        ).build()
+        
+        let attributedAccountDetails = NSMutableAttributedString()
+        [
+            title,
+            subtitle
+        ].forEach {
+            attributedAccountDetails.append($0)
+        }
+        return attributedAccountDetails
     }
 }
