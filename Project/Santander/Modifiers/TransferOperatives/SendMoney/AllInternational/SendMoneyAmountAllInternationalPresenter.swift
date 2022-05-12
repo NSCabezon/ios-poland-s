@@ -174,7 +174,7 @@ private extension SendMoneyAmountAllInternationalPresenter {
         guard let localCurrencyCode = self.operativeData.sepaList?.allCountriesRepresentable.first?.currency else {
             return ""
         }
-        return "PLN"
+        return localCurrencyCode
     }
 }
 
