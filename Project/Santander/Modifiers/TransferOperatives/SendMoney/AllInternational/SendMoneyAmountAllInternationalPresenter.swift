@@ -125,12 +125,13 @@ private extension SendMoneyAmountAllInternationalPresenter {
               let destinationCurrency = destinationAmount.currencyRepresentable,
               let destinationRates = self.getBuySellRatesForCurrency(destinationCurrency)
         else { return nil }
-        let checkSameCurrenciesButNotLocal = (originCurrency.currencyCode == destinationCurrency.currencyCode) && (destinationCurrency.currencyCode != getLocalCurrency())
+        let checkSameCurrencies = originCurrency.currencyCode == destinationCurrency.currencyCode
+        let checkSameCurrenciesButNotLocal = checkSameCurrencies && (destinationCurrency.currencyCode != getLocalCurrency())
         let typeExchange = getTypeTransactionExchange(destinationAmount: destinationAmount, destinationRates: destinationRates)
         let originExchangeAmount = OneExchangeRateAmount(amount: originAmount,
                                                  buyRate: originRates.buyRate,
                                                  sellRate: originRates.sellRate,
-                                                 currencySelector: getOriginCurrenciesView(checkSameCurrenciesButNotLocal))
+                                                 currencySelector: getOriginCurrenciesView(checkSameCurrencies))
         let alert = checkSameCurrenciesButNotLocal ? OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate") : nil
         return OneExchangeRateAmountViewModel(originAmount: originExchangeAmount,
                                               type: typeExchange,
@@ -138,8 +139,8 @@ private extension SendMoneyAmountAllInternationalPresenter {
         )
     }
     
-    func getOriginCurrenciesView(_ checkSameCurrenciesButNotLocal: Bool) -> UIView? {
-        guard operativeData.transactionalOriginCurrency?.code != getLocalCurrency() || checkSameCurrenciesButNotLocal else {
+    func getOriginCurrenciesView(_ checkSameCurrencies: Bool) -> UIView? {
+        guard operativeData.transactionalOriginCurrency?.code != getLocalCurrency() || (checkSameCurrencies && self.operativeData.country?.code != getLocalCode()) else {
             return nil
         }
         return self.view?.currenciesSelectionView
@@ -175,9 +176,13 @@ private extension SendMoneyAmountAllInternationalPresenter {
     }
     
     func getLocalCurrency() -> String {
-        let countryCode = self.dependenciesResolver.resolve(for: LocalAppConfig.self).countryCode
+        let countryCode = getLocalCode()
         let realCurrency = self.operativeData.sepaList?.allCountriesRepresentable.first(where: { $0.code == countryCode })
         return realCurrency?.currency ?? ""
+    }
+    
+    func getLocalCode() -> String {
+        return self.dependenciesResolver.resolve(for: LocalAppConfig.self).countryCode
     }
 }
 
