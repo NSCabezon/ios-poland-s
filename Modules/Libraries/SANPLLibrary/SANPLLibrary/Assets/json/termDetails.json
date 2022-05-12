@@ -1,0 +1,30 @@
+{
+    "12345678Z": {
+        "0": {
+            "name": {
+                "description": "Lokata terminowa",
+                "userDefined": null
+            },
+            "number": "03109010430000000142814770",
+            "depositRateData": {
+                "interestRate": 0.4900,
+                "interestRateURL": "officia mollit in aute",
+                "interestRateIndicator": "VALUE"
+            },
+            "currentBalance": {
+                "currencyCode": "PLN",
+                "value": 123.45
+            },
+            "renewal": true,
+            "interestCapitalization": true,
+            "openingDate": "2022-04-21",
+            "nextCapitalizationDate": "2022-07-21",
+            "lastCapitalizationDate": "2023-09-15",
+            "tenor": {
+                "period": 3,
+                "unit": "MONTH"
+            },
+            "interestRateIncreased": false
+        }
+    }
+}

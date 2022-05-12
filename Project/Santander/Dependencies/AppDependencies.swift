@@ -361,6 +361,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetCardDetailConfigurationUseCase.self) { resolver in
             PLGetCardDetailConfigurationUseCase(dependenciesEngine: resolver)
         }
+        self.dependencieEngine.register(for: SimpleGlobalPositionModifierProtocol.self) { resolver in
+            PLSimpleGlobalPositionModifier(resolver: resolver)
+        }
         registerDependenciesPL()
     }
     
@@ -444,6 +447,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: SecurityAreaViewProtocolModifier.self) { _ in
             PLSecurityAreaViewProtocolModifier()
+		}
+        self.dependencieEngine.register(for: PGGeneralCellViewConfigUseCase.self) { _ in
+            PLPGProductModifierUseCase()
         }
     }
 }
