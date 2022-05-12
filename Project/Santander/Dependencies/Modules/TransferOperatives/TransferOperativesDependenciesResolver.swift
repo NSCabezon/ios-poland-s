@@ -29,7 +29,7 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
         return PLAccountNumberFormatter()
     }
     
-    func resolve() -> InternalTransferAmountModifierProtocol? {
+    func resolve() -> InternalTransferAmountModifierProtocol {
         return PLInternalTransferAmountModifier()
     }
 
