@@ -27,24 +27,7 @@ extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinati
                 .eraseToAnyPublisher()
         )
         .map { globalPosition, accounts in
-            var visibleAccounts: [PolandAccountRepresentable] = []
-            var notVisibleAccounts: [PolandAccountRepresentable] = []
-            let gpNotVisibleAccounts = globalPosition.accounts.filter { !$0.isVisible }.map { $0.product }
-            accounts.forEach { account in
-                guard let polandAccount = account as? PolandAccountRepresentable else { return }
-                let containsAccountNotVisible = gpNotVisibleAccounts.contains { notVisibleAccount in
-                    guard let lhsIban = polandAccount.ibanRepresentable,
-                          let rhsIban = notVisibleAccount.ibanRepresentable
-                    else { return false }
-                    return lhsIban.codBban.contains(rhsIban.codBban)
-                }
-                if containsAccountNotVisible {
-                    notVisibleAccounts.append(polandAccount)
-                } else {
-                    visibleAccounts.append(polandAccount)
-                }
-            }
-            return (globalPosition.accounts.count, visibleAccounts, notVisibleAccounts)
+            return getAccounts(globalPosition, accounts: accounts)
         }
         .map { accountsCount, visibleAccounts, notVisibleAccounts in
             return (
@@ -66,6 +49,28 @@ extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinati
 }
 
 private extension PLGetInternalTransferDestAccountsUseCase {
+    
+    func getAccounts(_ globalPosition: GlobalPositionAndUserPrefMergedRepresentable, accounts: [AccountRepresentable]) -> (Int, [AccountRepresentable], [AccountRepresentable]) {
+        var visibleAccounts: [PolandAccountRepresentable] = []
+        var notVisibleAccounts: [PolandAccountRepresentable] = []
+        let gpNotVisibleAccounts = globalPosition.accounts.filter { !$0.isVisible }.map { $0.product }
+        accounts.forEach { account in
+            guard let polandAccount = account as? PolandAccountRepresentable else { return }
+            let containsAccountNotVisible = gpNotVisibleAccounts.contains { notVisibleAccount in
+                guard let lhsIban = polandAccount.ibanRepresentable,
+                      let rhsIban = notVisibleAccount.ibanRepresentable
+                else { return false }
+                return lhsIban.codBban.contains(rhsIban.codBban)
+            }
+            if containsAccountNotVisible {
+                notVisibleAccounts.append(polandAccount)
+            } else {
+                visibleAccounts.append(polandAccount)
+            }
+        }
+        return (globalPosition.accounts.count, visibleAccounts, notVisibleAccounts)
+        
+    }
     func getFilteredAccounts(from accounts: [AccountRepresentable], originAccount: AccountRepresentable) -> [PolandAccountRepresentable] {
         let accounts = accounts.filter { !$0.equalsTo(other: originAccount) }
         return filterCreditCardAccounts(from: accounts)
