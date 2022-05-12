@@ -204,15 +204,7 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     }
     
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel) {
-        guard case .exchange(let destination) = viewModel.type else { return }
-        self.exchangeRateView.setViewModel(
-            OneExchangeRateAmountViewModel(originAmount: viewModel.originAmount,
-                                           type: .exchange(destinationAmount:
-                                                            OneExchangeRateAmount(amount: destination.amount, buyRate: destination.buyRate, sellRate: destination.sellRate, currencySelector: UIView())
-                                                          ),
-                                           alert: OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate")
-                                          )
-        )
+        self.exchangeRateView.setViewModel(viewModel)
     }
     
     func setFloatingButtonEnabled(_ isEnabled: Bool) {

@@ -13,10 +13,12 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
     
     private var bankingUtils: BankingUtilsProtocol
     private var transfersRepository: PLTransfersRepository
+    private var localAppconfig: LocalAppConfig
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.bankingUtils = dependenciesResolver.resolve()
         self.transfersRepository = dependenciesResolver.resolve()
+        self.localAppconfig = dependenciesResolver.resolve()
     }
     
     override func executeUseCase(requestValues: SendMoneyOperativeData) throws -> UseCaseResponse<SendMoneyOperativeData, DestinationAccountSendMoneyUseCaseErrorOutput> {
@@ -53,8 +55,7 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
 
 private extension PLSendMoneyDestinationUseCase {
     func getTransferType(requestValues: SendMoneyOperativeData) -> SendMoneyTransferType {
-        // TODO: countryCode
-        guard requestValues.countryCode == "PL" else {
+        guard requestValues.countryCode == localAppconfig.countryCode else {
             return .allInternational
         }
         return .national

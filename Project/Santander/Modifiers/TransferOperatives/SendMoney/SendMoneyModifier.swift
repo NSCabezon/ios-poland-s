@@ -90,7 +90,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     }
     
     func getAmountStep(operativeData: SendMoneyOperativeData, dependencies: DependenciesResolver) -> OperativeStep {
-        if operativeData.type == .allInternational {
+        if operativeData.type == .allInternational || operativeData.type == .noSepa {
             return SendMoneyAmountAllInternationalStep(legacyDependenciesResolver: dependencies)
         } else {
             return SendMoneyAmountStep(dependenciesResolver: dependencies)
