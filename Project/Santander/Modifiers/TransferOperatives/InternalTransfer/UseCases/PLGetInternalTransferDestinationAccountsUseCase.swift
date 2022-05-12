@@ -1,72 +1,112 @@
-//
-//  PLGetInternalTransferDestinationAccountsUseCase.swift
-//  Santander
-//
-//  Created by Carlos Monfort Gómez on 21/2/22.
-//
-
-import OpenCombine
-import CoreDomain
 import TransferOperatives
 import SANPLLibrary
+import OpenCombine
+import CoreDomain
+
+protocol PLGetInternalTransferDestAccountsUseCaseDependenciesResolver {
+    func resolve() -> PLTransfersRepository
+    func resolve() -> GlobalPositionDataRepository
+}
 
 struct PLGetInternalTransferDestAccountsUseCase {
     let transfersRepository: PLTransfersRepository
     let globalPositionRepository: GlobalPositionDataRepository
     
-    init(dependencies: PLInternalTransferOperativeExternalDependenciesResolver) {
+    init(dependencies: PLGetInternalTransferDestAccountsUseCaseDependenciesResolver) {
         self.transfersRepository = dependencies.resolve()
         self.globalPositionRepository = dependencies.resolve()
     }
 }
 
 extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinationAccountsUseCase {
-    func fetchAccounts(_ originAccount: AccountRepresentable) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> {
+    func fetchAccounts(_ originAccount: AccountRepresentable) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, Never> {
         return Publishers.Zip(
-            globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
+            globalPositionRepository.getMergedGlobalPosition(),
             transfersRepository.getAccountsForCredit()
+                .replaceError(with: [])
+                .eraseToAnyPublisher()
         )
-            .mapError { _ in
-                return InternalTransferOperativeError.network
-            }
-            .flatMap { globalPosition, creditAccounts -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> in
-                let notVisiblesPGAccounts = globalPosition.accounts.filter { $0.isVisible == false }
-                let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
-                    return account.product
+        .map { globalPosition, accounts in
+            var visibleAccounts: [PolandAccountRepresentable] = []
+            var notVisibleAccounts: [PolandAccountRepresentable] = []
+            let gpNotVisibleAccounts = globalPosition.accounts.filter { !$0.isVisible }.map { $0.product }
+            accounts.forEach { account in
+                guard let polandAccount = account as? PolandAccountRepresentable else { return }
+                let containsAccountNotVisible = gpNotVisibleAccounts.contains { notVisibleAccount in
+                    guard let lhsIban = polandAccount.ibanRepresentable,
+                          let rhsIban = notVisibleAccount.ibanRepresentable
+                    else { return false }
+                    return lhsIban.codBban.contains(rhsIban.codBban)
                 }
-                let filterAccounts = getFilteredAccounts(from: creditAccounts, originAccount: originAccount)
-                if filterAccounts.isEmpty && gpNotVisibleAccounts.isEmpty {
-                    return Fail(error: InternalTransferOperativeError.minimunAccounts).eraseToAnyPublisher()
+                if containsAccountNotVisible {
+                    notVisibleAccounts.append(polandAccount)
+                } else {
+                    visibleAccounts.append(polandAccount)
                 }
-                return Just(destinationAccounts(accounts: filterAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts))
-                    .setFailureType(to: InternalTransferOperativeError.self)
-                    .eraseToAnyPublisher()
             }
-            .eraseToAnyPublisher()
+            return (globalPosition.accounts.count, visibleAccounts, notVisibleAccounts)
+        }
+        .map { accountsCount, visibleAccounts, notVisibleAccounts in
+            return (
+                accountsCount,
+                getFilteredAccounts(from: visibleAccounts, originAccount: originAccount),
+                getFilteredAccounts(from: notVisibleAccounts, originAccount: originAccount)
+            )
+        }
+        .map { accountsCount, visibleAccounts, notVisibleAccounts in
+            return filterDestinationAccounts(
+                originalAccountsCount: accountsCount,
+                visibleAccounts: visibleAccounts,
+                notVisibleAccounts: notVisibleAccounts,
+                originAccount: originAccount
+            )
+        }
+        .eraseToAnyPublisher()
     }
 }
 
 private extension PLGetInternalTransferDestAccountsUseCase {
-        func destinationAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> GetInternalTransferDestinationAccountsOutput {
-            var destinationAccountsVisibles: [AccountRepresentable] = []
-            var destinationAccountsNotVisibles: [AccountRepresentable] = []
-            accounts.forEach { account in
-                let polandAccount = account as? PolandAccountRepresentable
-                let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
-                    return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
-                }
-                guard containsAccountNotVisible else {
-                    destinationAccountsVisibles.append(account)
-                    return
-                }
-                destinationAccountsNotVisibles.append(account)
-            }
-            return (GetInternalTransferDestinationAccountsOutput(visibleAccounts: destinationAccountsVisibles, notVisibleAccounts: destinationAccountsNotVisibles, didFilterAccounts: true))
-        }
-    
     func getFilteredAccounts(from accounts: [AccountRepresentable], originAccount: AccountRepresentable) -> [PolandAccountRepresentable] {
         let accounts = accounts.filter { !$0.equalsTo(other: originAccount) }
-        return accounts as? [PolandAccountRepresentable] ?? []
-        
+        return filterCreditCardAccounts(from: accounts)
+    }
+    
+    func filterCreditCardAccounts(from accounts: [AccountRepresentable]) -> [PolandAccountRepresentable] {
+        guard let polandAccounts: [PolandAccountRepresentable] = accounts as? [PolandAccountRepresentable] else { return [] }
+        return polandAccounts.filter { $0.type != .creditCard }
+    }
+    
+    func filterDestinationAccounts(originalAccountsCount: Int,
+                                   visibleAccounts: [PolandAccountRepresentable],
+                                   notVisibleAccounts: [PolandAccountRepresentable],
+                                   originAccount: AccountRepresentable) -> GetInternalTransferDestinationAccountsOutput {
+        guard let originAccount = originAccount as? PolandAccountRepresentable,
+              originAccount.type == .creditCard else {
+            return GetInternalTransferDestinationAccountsOutput(
+                visibleAccounts: visibleAccounts,
+                notVisibleAccounts: notVisibleAccounts,
+                didFilterAccounts: hasFilteredAccounts(
+                    originalAccountsCount: originalAccountsCount,
+                    visibleAccounts: visibleAccounts,
+                    notVisibleAccounts: notVisibleAccounts
+                )
+            )
+        }
+        let visiblesFiltered = visibleAccounts.filter { $0.currencyRepresentable?.currencyType == .złoty }
+        let notVisiblesFiltered = notVisibleAccounts.filter { $0.currencyRepresentable?.currencyType == .złoty }
+        return GetInternalTransferDestinationAccountsOutput(
+            visibleAccounts: visiblesFiltered,
+            notVisibleAccounts: notVisiblesFiltered,
+            didFilterAccounts: hasFilteredAccounts(
+                originalAccountsCount: originalAccountsCount,
+                visibleAccounts: visibleAccounts,
+                notVisibleAccounts: notVisibleAccounts
+            )
+        )
+    }
+    
+    func hasFilteredAccounts(originalAccountsCount: Int, visibleAccounts: [AccountRepresentable], notVisibleAccounts: [AccountRepresentable]) -> Bool {
+        let totalItems = visibleAccounts.count + notVisibleAccounts.count
+        return (originalAccountsCount - 1) > totalItems
     }
 }
