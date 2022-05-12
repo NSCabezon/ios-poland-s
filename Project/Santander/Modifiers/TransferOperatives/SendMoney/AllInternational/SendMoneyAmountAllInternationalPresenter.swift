@@ -125,34 +125,42 @@ private extension SendMoneyAmountAllInternationalPresenter {
               let destinationCurrency = destinationAmount.currencyRepresentable,
               let destinationRates = self.getBuySellRatesForCurrency(destinationCurrency)
         else { return nil }
-        return OneExchangeRateAmountViewModel(originAmount:
-                                                OneExchangeRateAmount(amount: originAmount,
-                                                                      buyRate: originRates.buyRate,
-                                                                      sellRate: originRates.sellRate,
-                                                                      currencySelector: getOriginCurrenciesView()),
-                                              type: .exchange(destinationAmount:
-                                                                OneExchangeRateAmount(amount: destinationAmount,
-                                                                                      buyRate: destinationRates.buyRate,
-                                                                                      sellRate: destinationRates.sellRate,
-                                                                                      currencySelector: getDestinationCurrenciesView())))
+        let typeExchange = getTypeTransactionExchange(destinationAmount: destinationAmount, destinationRates: destinationRates)
+        let originExchangeAmount = OneExchangeRateAmount(amount: originAmount,
+                                                 buyRate: originRates.buyRate,
+                                                 sellRate: originRates.sellRate,
+                                                 currencySelector: getOriginCurrenciesView())
+        return OneExchangeRateAmountViewModel(originAmount: originExchangeAmount,
+                                              type: typeExchange)
     }
     
     func getOriginCurrenciesView() -> UIView? {
-        guard operativeData.transactionalOriginCurrency?.code != Constants.plnCurrencyCode else {
+        guard operativeData.transactionalOriginCurrency?.code != getLocalCurrency() else {
             return nil
         }
         return self.view?.currenciesSelectionView
     }
     
     func getDestinationCurrenciesView() -> UIView? {
-        guard operativeData.currency?.code != Constants.plnCurrencyCode else {
+        guard operativeData.currency?.code != getLocalCurrency() else {
             return nil
         }
         return self.view?.currenciesSelectionView
     }
     
+    func getTypeTransactionExchange(destinationAmount: AmountRepresentable, destinationRates: (buyRate: AmountRepresentable, sellRate: AmountRepresentable)) -> OneExchangeRateAmountViewType {
+        let destinationView = getDestinationCurrenciesView()
+        let typeExchange = destinationView == nil ? OneExchangeRateAmountViewType.noExchange
+        : .exchange(destinationAmount:
+                        OneExchangeRateAmount(amount: destinationAmount,
+                                              buyRate: destinationRates.buyRate,
+                                              sellRate: destinationRates.sellRate,
+                                              currencySelector: getDestinationCurrenciesView()))
+        return typeExchange
+    }
+    
     func getBuySellRatesForCurrency(_ currency: CurrencyRepresentable) -> (buyRate: AmountRepresentable, sellRate: AmountRepresentable)? {
-        if currency.currencyCode == Constants.plnCurrencyCode {
+        if currency.currencyCode == getLocalCurrency() {
             return (AmountRepresented(value: 1, currencyRepresentable: currency), AmountRepresented(value: 1, currencyRepresentable: currency))
         } else {
             guard let exchangeRates = self.operativeData.exchangeRates,
@@ -162,18 +170,11 @@ private extension SendMoneyAmountAllInternationalPresenter {
         }
     }
     
-    func getTransactionalOriginCurrencyRepresentable() -> CurrencyRepresentable? {
-        // TODO: swap for hardcoded EUR when working change country
-//        guard let currencyCode = self.operativeData.currency?.code ?? self.operativeData.currencyName else { return nil }
-        guard let currencyCode = self.operativeData.transactionalOriginCurrency?.code else {
-            return nil
+    func getLocalCurrency() -> String {
+        guard let localCurrencyCode = self.operativeData.sepaList?.allCountriesRepresentable.first?.currency else {
+            return ""
         }
-//        self.operativeData.transactionalOriginCurrency = self.currenciesList.first(where: { $0.code == currencyCode })
-        return CurrencyRepresented(currencyCode: currencyCode)
-    }
-    
-    enum Constants {
-        static let plnCurrencyCode: String = "PLN"
+        return "PLN"
     }
 }
 
@@ -181,22 +182,10 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
     
     func viewDidLoad() {
         self.setAccountSelectorView()
-//        self.resetDestinationAmount()
         self.reloadExchangeRateView()
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
         self.isOriginCurrency = false
     }
-    
-//    func resetDestinationAmount() {
-//        //TODO: Check correct place
-//        guard self.operativeData.amount == nil,
-//              let originCurrency = self.getTransactionalOriginCurrencyRepresentable(),
-//              let destinationCurrency = self.operativeData.selectedAccount?.currencyRepresentable else {
-//            return
-//        }
-//        self.operativeData.amount = AmountRepresented(value: 0, currencyRepresentable: originCurrency)
-//        self.operativeData.receiveAmount = AmountRepresented(value: 0, currencyRepresentable: destinationCurrency)
-//    }
     
     func reloadExchangeRateView() {
         self.loadExchangeRates { [weak self] in
