@@ -36,12 +36,12 @@ class PLInternalTransferPreSetupUseCaseTest: XCTestCase {
         }
     }
     
-    func test_Given_ManyAccounts_Then_success() {
+    func test_Given_ManyAccounts_When_AllCases_Then_success() {
         let value = sut.isMinimunAccounts(accounts: accounts)
         XCTAssertTrue(value == true)
     }
     
-    func test_Given_ManyAccounts_Then_failure() {
+    func test_Given_ManyAccounts_Whwn_AllCases_Then_failure() {
         let value = sut.isMinimunAccounts(accounts: [])
         XCTAssertTrue(value == false)
     }

@@ -22,7 +22,6 @@ struct PLGetInternalTransferDestAccountsUseCase {
 
 extension PLGetInternalTransferDestAccountsUseCase: GetInternalTransferDestinationAccountsUseCase {
     func fetchAccounts(_ originAccount: AccountRepresentable) -> AnyPublisher<GetInternalTransferDestinationAccountsOutput, InternalTransferOperativeError> {
-        let polandAccount = originAccount as? PolandAccountRepresentable
         return Publishers.Zip(
             globalPositionRepository.getMergedGlobalPosition().setFailureType(to: Error.self),
             transfersRepository.getAccountsForCredit()

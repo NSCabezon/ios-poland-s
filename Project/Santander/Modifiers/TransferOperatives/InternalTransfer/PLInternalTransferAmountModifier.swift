@@ -28,8 +28,12 @@ public class PLInternalTransferAmountModifier: InternalTransferAmountModifierPro
     }
     
     public func selectionDateOneFilterViewModel(_ index: Int) -> SelectionDateOneFilterViewModel? {
-        let labelViewModel = OneLabelViewModel(type: .normal, mainTextKey: "transfer_label_periodicity", accessibilitySuffix: AccessibilitySendMoneyAmount.periodicitySuffix)
-        let viewModel = SelectionDateOneFilterViewModel(oneLabelViewModel: labelViewModel, options: ["sendMoney_tab_today", "sendMoney_tab_chooseDay"], selectedIndex: index)
+        let labelViewModel = OneLabelViewModel(type: .normal,
+                                               mainTextKey: "transfer_label_periodicity",
+                                               accessibilitySuffix: AccessibilitySendMoneyAmount.periodicitySuffix)
+        let viewModel = SelectionDateOneFilterViewModel(oneLabelViewModel: labelViewModel,
+                                                        options: ["sendMoney_tab_today", "sendMoney_tab_chooseDay"],
+                                                        selectedIndex: index)
         return viewModel
     }
 }
