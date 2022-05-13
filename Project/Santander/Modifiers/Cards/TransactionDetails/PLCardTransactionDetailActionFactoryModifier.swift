@@ -27,14 +27,14 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
     }
     
     func addPDFDetail(transaction: CardTransactionEntity) -> Bool {
-        if transaction.dto.receiptId != nil {
+        if let receiptId = transaction.dto.receiptId, receiptId.isNotEmpty {
             return true
         }
         return false
     }
 
     func getCustomActions(for card: CardEntity, forTransaction transaction: CardTransactionEntity) -> [CardActionType]? {
-        if transaction.dto.receiptId != nil {
+        if let receiptId = transaction.dto.receiptId, receiptId.isNotEmpty {
             return [.pdfDetail, .share(nil)]
         }
         return [.share(nil)]

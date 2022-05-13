@@ -23,7 +23,7 @@ final class PLLoanTransactionActionsModifier: LoanTransactionActionsModifier {
     func didSelectAction(_ action: LoanTransactionDetailActionType, forTransaction transaction: LoanTransactionEntity, andLoan loan: LoanEntity) -> Bool {
         switch action {
         case .pdfExtract:
-            if let receiptId = transaction.receiptId {
+            if let receiptId = transaction.dto.receiptId, receiptId.isNotEmpty {
                 self.showPdfViewer(receiptId: receiptId)
             } else {
                 self.showError()
