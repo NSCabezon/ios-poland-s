@@ -1,0 +1,27 @@
+{
+    "12345678Z": {
+        "0": {
+            "number": "38425232-03-0010",
+            "id": 140922901,
+            "valuationDate": "2021-06-21",
+            "unitCategory": "Test category",
+            "units": "633.914422",
+            "amount": {
+                "value": 19930.27,
+                "currencyCode": "PLN"
+            },
+            "amountPln": {
+                "value": 19930.27,
+                "currencyCode": "PLN"
+            },
+            "amountPerUnit": {
+                "value": 31.44,
+                "currencyCode": "PLN"
+            },
+            "amountPerUnitPln": {
+                "value": 31.44,
+                "currencyCode": "PLN"
+            }
+        }
+    }
+}

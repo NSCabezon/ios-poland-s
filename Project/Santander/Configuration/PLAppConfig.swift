@@ -40,7 +40,7 @@ class PLAppConfig: LocalAppConfig {
     let clickableStockAccount = true
     let clickableLoan = true
     let isEnabledGoToManager: Bool = false
-    let isEnabledGoToPersonalArea: Bool = false
+    let isEnabledGoToPersonalArea: Bool = true
     let isEnabledGoToATMLocator: Bool = true
     let isEnabledGoToHelpCenter: Bool = true
     let isEnabledDigitalProfileView: Bool = false

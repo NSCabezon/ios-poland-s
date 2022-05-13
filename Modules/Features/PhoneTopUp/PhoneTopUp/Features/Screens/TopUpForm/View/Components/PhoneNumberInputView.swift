@@ -20,9 +20,7 @@ protocol PhoneNumberInputViewDelegate: AnyObject {
 final class PhoneNumberInputView: UIView {
     // MARK: Views
     
-    private let mainContainer = UIStackView()
-    private let headerLabel = FormHeaderLabel()
-    private let lisboaPhoneNumberTextField = LisboaTextFieldWithErrorView()
+    private let textInputView = FormTextInputView()
     
     // MARK: Properties
     
@@ -47,20 +45,16 @@ final class PhoneNumberInputView: UIView {
     private func setUp() {
         addSubviews()
         prepareStyles()
-        setUpLayout()
     }
     
     private func addSubviews() {
-        addSubviewConstraintToEdges(mainContainer)
-        mainContainer.addArrangedSubview(headerLabel)
-        mainContainer.addArrangedSubview(lisboaPhoneNumberTextField)
+        addSubviewConstraintToEdges(textInputView)
     }
     
     private func prepareStyles() {
-        headerLabel.text = localized("pl_topup_text_recipPhoneNumb")
+        textInputView.setHeaderTitle(localized("pl_topup_text_recipPhoneNumb"))
         
-        lisboaPhoneNumberTextField.setHeight(48.0)
-        lisboaPhoneNumberTextField.textField.setRightAccessory(.uiImage(Images.Form.contactIcon, action: { [weak self] in
+        textInputView.textField.setRightAccessory(.uiImage(Images.Form.contactIcon, action: { [weak self] in
             self?.delegate?.didTouchContactsButton()
         }))
         let configuration = LisboaTextField.WritableTextField(type: .simple,
@@ -70,29 +64,24 @@ final class PhoneNumberInputView: UIView {
                                                               textFieldDelegate: nil) { component in
             component.textField.keyboardType = .phonePad
         }
-        lisboaPhoneNumberTextField.textField.setEditingStyle(.writable(configuration: configuration))
-        lisboaPhoneNumberTextField.textField.fieldDelegate = self
-        lisboaPhoneNumberTextField.textField.setText(phoneNumberPrefix)
-    }
-    
-    private func setUpLayout() {
-        mainContainer.axis = .vertical
-        mainContainer.spacing = 8.0
+        textInputView.textField.setEditingStyle(.writable(configuration: configuration))
+        textInputView.textField.fieldDelegate = self
+        textInputView.textField.setText(phoneNumberPrefix)
     }
     
     // MARK: Methods
     
     func showInvalidPhoneNumberError(_ showError: Bool) {
         if showError {
-            lisboaPhoneNumberTextField.showError(localized("pl_topup_text_valid_wrongNumb"))
+            textInputView.setErrorAppearance(message: localized("pl_topup_text_valid_wrongNumb"))
         } else {
-            lisboaPhoneNumberTextField.hideError()
+            textInputView.clearErrorAppearance()
         }
     }
     
     func updatePhoneInput(with phoneNumber: String) {
         let formattedPhoneNumber = phoneNumberPrefix + phoneNumberFormatter.formatPhoneNumberText(phoneNumber)
-        lisboaPhoneNumberTextField.textField.setText(formattedPhoneNumber)
+        textInputView.textField.setText(formattedPhoneNumber)
     }
 }
 

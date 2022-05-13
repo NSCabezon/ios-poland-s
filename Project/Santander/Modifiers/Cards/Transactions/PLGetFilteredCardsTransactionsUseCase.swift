@@ -29,8 +29,8 @@ final class PLGetFilteredCardTransactionsUseCase: UseCase<GetFilteredCardTransac
         }
         let filters = requestValues.filters
         let dateInterval = filters?.getDateRange()
-        let fromDate = dateInterval?.fromDate.toString(format: "yyyy-MM-dd")
-        let toDate = dateInterval?.toDate.toString(format: "yyyy-MM-dd")
+        let fromDate = dateInterval?.fromDate?.toString(format: "yyyy-MM-dd")
+        let toDate = dateInterval?.toDate?.toString(format: "yyyy-MM-dd")
         let movementType = adaptMovementType(filters?.getMovementType())
         let cardPagination = TransactionsLinksDTO(next: requestValues.pagination?.dto?.repositionXML, previous: requestValues.pagination?.dto?.accountAmountXML)
 

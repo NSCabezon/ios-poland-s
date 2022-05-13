@@ -6,6 +6,7 @@
 //
 
 import PLUI
+import CoreFoundationLib
 
 final class TaxTransferSelectorView: UIView {
     typealias SelectableItemName = String
@@ -28,7 +29,7 @@ final class TaxTransferSelectorView: UIView {
         case let .selected(elementName):
             label.text = elementName
         case .unselected:
-            label.text = "#Wybierz"
+            label.text = localized("pl_taxTransfer_buttonPlaceHolder_choose")
         }
         tappableCard.onTap = onTap
     }

@@ -1,0 +1,26 @@
+{
+   "12345678Z":{
+      "0":[
+         {
+            "number":"40109014890000000048087486",
+            "type":70,
+            "currencyCode":"PLN",
+            "branchCode":"10901489",
+            "name":"Rachunek Top-Up",
+            "address":{
+               "street":"-",
+               "city":"-",
+               "zipCode":"-"
+            },
+            "transactionTitle":"Rachunek Top-Up",
+            "transferType":"INTERNAL",
+            "options":1,
+            "timestamp":0,
+            "typeName":"Pre-paid",
+            "typeOptions":-2147483644,
+            "drTransactionMask":0,
+            "crTransactionMask":50331648
+         }
+      ]
+   }
+}
