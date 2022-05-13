@@ -9,7 +9,7 @@ import UI
 import CoreFoundationLib
 
 final class ItemSearchView: UIView {
-    private let searchField = LisboaTextField()
+    private let searchView = SearchFieldView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,56 +22,32 @@ final class ItemSearchView: UIView {
     }
     
     func setUpdateDelegate(_ delegate: UpdatableTextFieldDelegate) {
-        searchField.updatableDelegate = delegate
+        searchView.textField.updatableDelegate = delegate
     }
     
     func getSearchText() -> String {
-        return searchField.text ?? ""
+        return searchView.textField.text ?? ""
     }
     
     func setPlaceholderText(_ placeholderText: String) {
-        searchField.setPlaceholder(placeholderText)
+        searchView.updateTitle(placeholderText)
     }
     
     private func setUp() {
         configureLayout()
-        configureStyling()
     }
     
     private func configureLayout() {
-        addSubview(searchField)
-        searchField.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(searchView)
+        searchView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            searchField.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            searchField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            searchField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            searchField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            searchField.heightAnchor.constraint(equalToConstant: 48)
+            searchView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            searchView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            searchView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            searchView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            searchView.heightAnchor.constraint(equalToConstant: 48)
         ])
-    }
-    
-    private func configureStyling() {
-        backgroundColor = .white
-    
-        let formatter = UIFormattedCustomTextField()
-        formatter.setAllowOnlyCharacters(CharacterSet(charactersIn: localized("digits_operative")))
-        
-        searchField.setEditingStyle(
-            .writable(
-                configuration: .init(
-                    type: .floatingTitle,
-                    formatter: formatter,
-                    disabledActions: [],
-                    keyboardReturnAction: nil,
-                    textFieldDelegate: nil,
-                    textfieldCustomizationBlock: nil
-                )
-            )
-        )
-        searchField.setStyle(LisboaTextFieldStyle.default)
-        searchField.setRightAccessory(.image("icnSearch", action: {}))
-        searchField.setClearAccessory(.clearDefault)
     }
 }
 
