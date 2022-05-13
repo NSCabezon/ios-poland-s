@@ -32,7 +32,7 @@ final class IbanValidationSendMoneyUseCase: UseCase<IbanValidationSendMoneyUseCa
             guard let alias = requestValues.alias, alias.trim().count > 0 else {
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noAlias))
             }
-            let duplicate = requestValues.favouriteList.first { return $0.payeeAlias?.trim() == alias.trim() }
+            let duplicate = requestValues.favouriteList.first { return $0.payeeDisplayName?.trim() == alias.trim() }
             guard duplicate == nil else {
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
             }
