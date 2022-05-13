@@ -1,10 +1,9 @@
-import CoreFoundationLib
 @testable import BLIK
 import CoreFoundationLib
 import SANPLLibrary
 import XCTest
 
-class BLIKConfirmationPresenterTests: XCTestCase {
+final class BLIKConfirmationPresenterTests: XCTestCase {
     
     private var SUT: BLIKConfirmationPresenterProtocol!
     private var dependencies: (DependenciesResolver & DependenciesInjector)!
@@ -49,6 +48,34 @@ class BLIKConfirmationPresenterTests: XCTestCase {
         XCTAssertEqual(view.viewModel?.transferTypeString, localized("pl_blik_text_shopOnlineStatus"))
         XCTAssertEqual(view.viewModel?.address, "Sklep Miastowa 8 Kraków")
         
+    }
+    
+    func test_initial_timer_time_for_type_blikWebPurchases() {
+        dependencies.register(for: BLIKTransactionViewModelProviding.self) { [unowned self] resolver in
+            let transaction = Transaction.stub(
+                transferType: .blikWebPurchases,
+                transactionRawValue: self.transaction
+            )
+            return BLIKTransactionViewModelProviderMock(transaction: transaction)
+        }
+        SUT.viewDidLoad()
+        XCTAssertEqual(view.viewModel?.transferType, .blikWebPurchases)
+        XCTAssertEqual(round(view.remainingDuration), BLIK_WEB_PURCHASE_DURATION)
+        XCTAssertEqual(round(view.totalDuration), BLIK_WEB_PURCHASE_DURATION)
+    }
+    
+    func test_initial_timer_time_for_other_type_than_blikWebPurchases() {
+        dependencies.register(for: BLIKTransactionViewModelProviding.self) { [unowned self] resolver in
+            let transaction = Transaction.stub(
+                transferType: .blikAtmWithdrawal,
+                transactionRawValue: self.transaction
+            )
+            return BLIKTransactionViewModelProviderMock(transaction: transaction)
+        }
+        SUT.viewDidLoad()
+        XCTAssertEqual(view.viewModel?.transferType, .blikAtmWithdrawal)
+        XCTAssertEqual(round(view.remainingDuration), BLIK_OTHER_DURATION)
+        XCTAssertEqual(round(view.totalDuration), BLIK_OTHER_DURATION)
     }
 }
 

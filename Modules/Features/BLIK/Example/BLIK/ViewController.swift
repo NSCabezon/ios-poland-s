@@ -10,6 +10,8 @@ import UIKit
 import BLIK
 import CoreFoundationLib
 import SANPLLibrary
+import PLHelpCenter
+import Operative
 
 class ViewController: UIViewController {
 
@@ -27,6 +29,27 @@ class ViewController: UIViewController {
         defaultResolver.register(for: UseCaseHandler.self) { _ in
             return UseCaseHandler(maxConcurrentOperationCount: 8)
         }
+        
+        defaultResolver.register(for: PLOnlineAdvisorManagerProtocol.self) { resolver in
+            return OnlineAdvisorManagerMock()
+        }
+        
+        defaultResolver.register(for: PLTransfersRepository.self) { _ in
+            PLTransfersRepositoryMock()
+        }
+        
+        defaultResolver.register(for: BlikChallengesHandlerDelegate.self) { _ in
+            PLAuthorizationCoordinatorMock(challengeVerification: ChallengeVerificationStub())
+        }
+        
+        defaultResolver.register(for: CoreSessionManager.self) { _ in
+            CoreSessionManagerMock()
+        }
+        
+        defaultResolver.register(for: OperativeContainerCoordinatorDelegate.self) { _ in
+            OperativeContainerCoordinatorDelegateMock()
+        }
+        
         return defaultResolver
     }()
 
