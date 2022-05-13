@@ -11,17 +11,22 @@ import CoreFoundationLib
 import UIOneComponents
 import UI
 import OpenCombine
+import TransferOperatives
 
-protocol SendMoneyAmountAllInternationalView: OperativeView {
+protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHelperViewProtocol {
     func addAccountSelector(_ viewModel: OneAccountsSelectedCardViewModel)
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel)
     func setFloatingButtonEnabled(_ isEnabled: Bool)
+    func setSwiftText(_ text: String?)
+    func setDescriptionText(_ text: String?)
 }
 
 final class SendMoneyAmountAllInternationalViewController: UIViewController {
     
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet weak var floatingButton: OneFloatingButton!
+    @IBOutlet weak var loadingContainerView: UIView!
+    @IBOutlet weak var loadingImageView: UIImageView!
     
     private let presenter: SendMoneyAmountAllInternationalPresenterProtocol
     private var subscriptions: Set<AnyCancellable> = []
@@ -71,6 +76,14 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
     }()
     
     private lazy var simpleDateView = SMAmountAllInternationalSimpleDateView()
+    
+    internal lazy var currenciesSelectionView: SelectionListView = {
+        let currenciesSelectionView = SelectionListView()
+        currenciesSelectionView.setSelectionType(.currencies)
+        currenciesSelectionView.delegate = self
+        currenciesSelectionView.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        return currenciesSelectionView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +150,12 @@ private extension SendMoneyAmountAllInternationalViewController {
                 self.presenter.saveAmounts(originAmount: newOriginAmount, destinationAmount: destinationAmount)
             }
             .store(in: &subscriptions)
+        self.exchangeRateView.publisher
+            .case(OneExchangeRateAmountViewState.didSelectedShowCurrencies)
+            .sink { [unowned self] isTransaccionalOriginCurrency in
+                self.presenter.didPressedShowCurrencies(isTransaccionalOriginCurrency)
+            }
+            .store(in: &subscriptions)
     }
     
     func configureFloattingButton() {
@@ -170,6 +189,7 @@ private extension SendMoneyAmountAllInternationalViewController {
 }
 
 extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInternationalView {
+    
     var operativePresenter: OperativeStepPresenterProtocol {
         return self.presenter
     }
@@ -186,19 +206,19 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     }
     
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel) {
-        guard case .exchange(let destination) = viewModel.type else { return }
-        self.exchangeRateView.setViewModel(
-            OneExchangeRateAmountViewModel(originAmount: viewModel.originAmount,
-                                           type: .exchange(destinationAmount:
-                                                            OneExchangeRateAmount(amount: destination.amount, buyRate: destination.buyRate, sellRate: destination.sellRate, currencySelector: UIView())
-                                                          ),
-                                           alert: OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate")
-                                          )
-        )
+        self.exchangeRateView.setViewModel(viewModel)
     }
     
     func setFloatingButtonEnabled(_ isEnabled: Bool) {
         self.floatingButton.isEnabled = isEnabled
+    }
+    
+    func setSwiftText(_ text: String?) {
+        self.swiftView.setSwiftText(text)
+    }
+    
+    func setDescriptionText(_ text: String?) {
+        self.descriptionView.setDescriptionText(text)
     }
 }
 
@@ -221,5 +241,15 @@ extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationa
 extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationalSwiftViewDelegate {
     func saveSwift(_ swift: String?) {
         self.presenter.saveSwift(swift)
+    }
+}
+
+extension SendMoneyAmountAllInternationalViewController: SelectionListViewDelegate {
+    func didSearchItem(_ searchItem: String) {
+        self.presenter.didSearchCurrency(searchItem)
+    }
+    
+    func didSelectItem(_ item: String) {
+        self.presenter.didSelectCurrency(item)
     }
 }

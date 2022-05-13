@@ -34,6 +34,10 @@ final class SMAmountAllInternationalDescriptionView: UIView {
         self.setupViews()
         self.setupAccessibilityIds()
     }
+    
+    func setDescriptionText(_ text: String?) {
+        self.oneInputDescription.setInputText(text)
+    }
 }
 
 private extension SMAmountAllInternationalDescriptionView {

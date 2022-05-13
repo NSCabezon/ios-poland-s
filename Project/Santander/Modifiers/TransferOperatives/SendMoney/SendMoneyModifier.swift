@@ -7,7 +7,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     private let legacyDependenciesResolver: DependenciesResolver
     private var subscriptions: Set<AnyCancellable> = []
     
-    var isEnabledChangeCountry: Bool = false
+    var isEnabledChangeCountry: Bool = true
     
     init(legacyDependenciesResolver: DependenciesResolver) {
         self.legacyDependenciesResolver = legacyDependenciesResolver
@@ -90,7 +90,7 @@ final class SendMoneyModifier: SendMoneyModifierProtocol {
     }
     
     func getAmountStep(operativeData: SendMoneyOperativeData, dependencies: DependenciesResolver) -> OperativeStep {
-        if operativeData.type == .allInternational {
+        if operativeData.type == .allInternational || operativeData.type == .noSepa {
             return SendMoneyAmountAllInternationalStep(legacyDependenciesResolver: dependencies)
         } else {
             return SendMoneyAmountStep(dependenciesResolver: dependencies)
