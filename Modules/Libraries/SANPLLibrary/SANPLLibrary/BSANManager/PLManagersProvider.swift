@@ -19,6 +19,7 @@ public protocol PLManagersProviderProtocol {
 	func getLoansManager() -> PLLoanManagerProtocol
 	func getDepositsManager() -> PLDepositManagerProtocol
 	func getFundsManager() -> PLFundManagerProtocol
+    func getSavingManager() -> PLSavingManagerProtocol
     func getCardTransactionsManager() -> PLCardTransactionsManagerProtocol
     func getCustomerManager() -> PLCustomerManagerProtocol
     func getNotificationManager() -> PLNotificationManagerProtocol
@@ -47,6 +48,7 @@ public final class PLManagersProvider {
     private let trustedDeviceManager: PLTrustedDeviceManager
     private let globalPositionManager: PLGlobalPositionManagerProtocol
     private let accountManager: PLAccountManager
+    private let savingManager: PLSavingManager
     private let cardsManager: PLCardsManager
     private let cardTransactionsManager: PLCardTransactionsManager
 	private let loansManager: PLLoanManager
@@ -86,6 +88,7 @@ public final class PLManagersProvider {
                                            networkProvider: networkProvider)
         self.cardTransactionsManager = PLCardTransactionsManager(dataProvider: bsanDataProvider, networkProvider: networkProvider)
         self.accountManager = PLAccountManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
+        self.savingManager = PLSavingManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.loansManager = PLLoanManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 		self.depositsManager = PLDepositManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
 		self.fundsManager = PLFundManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
@@ -139,6 +142,10 @@ extension PLManagersProvider: PLManagersProviderProtocol {
 
     public func getAccountsManager() -> PLAccountManagerProtocol {
         self.accountManager
+    }
+    
+    public func getSavingManager() -> PLSavingManagerProtocol{
+        self.savingManager
     }
 
     public func getCardsManager() -> PLCardsManagerProtocol {

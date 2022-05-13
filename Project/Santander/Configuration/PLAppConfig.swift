@@ -29,7 +29,7 @@ class PLAppConfig: LocalAppConfig {
     let isEnabledConfigureWhatYouSee = true
     let isPortugal = true
     let isEnabledPlusButtonPG = true
-    let isEnabledMagnifyingGlass = false
+    let isEnabledMagnifyingGlass = true
     let isEnabledTimeline = true
     let isEnabledPregranted = true
     let languageList: [LanguageType] = [.polish, .english, .russian, .ukrainian]
@@ -40,7 +40,7 @@ class PLAppConfig: LocalAppConfig {
     let clickableStockAccount = true
     let clickableLoan = true
     let isEnabledGoToManager: Bool = false
-    let isEnabledGoToPersonalArea: Bool = false
+    let isEnabledGoToPersonalArea: Bool = true
     let isEnabledGoToATMLocator: Bool = true
     let isEnabledGoToHelpCenter: Bool = true
     let isEnabledDigitalProfileView: Bool = false
@@ -78,5 +78,5 @@ class PLAppConfig: LocalAppConfig {
     var isAnalysisAreaHomeEnabled = false
     var countryCode = "PL"
     var isEnabledConsentManagement = false
-    let isEnabledSavings = false
+    let isEnabledSavings = true
 }

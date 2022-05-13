@@ -8,6 +8,7 @@
 import RetailLegacy
 import CoreFoundationLib
 import GlobalPosition
+import GlobalSearch
 import Transfer
 import Cards
 import Account
@@ -66,7 +67,7 @@ final class AppModifiers {
         return GetGPOtherOperativeModifier()
     }()
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
-        return OtherOperativesModifier(dependencies: dependencies)
+        return OtherOperativesModifier(dependencies: dependencies, dependenciesResolver: legacyDependenciesResolver)
     }()
     private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
         return PLCardTransactionsSearchModifier()
@@ -92,6 +93,12 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: FundModifier.self) { _ in
             return self.fundModifiers
+        }
+        self.legacyDependenciesInjector.register(for: SecurityAreaActionProtocol.self) { resolver in
+            return PLSecurityActionFactory(dependenciesResolver: resolver)
+        }
+        self.legacyDependenciesInjector.register(for: GlobalSecurityViewContainerProtocol.self) { resolver in
+            return PLGlobalSecurityViewContainer(dependenciesResolver: resolver)
         }
         self.legacyDependenciesInjector.register(for: AccountNumberFormatterProtocol.self) { _ in
             return PLAccountNumberFormatter()
@@ -210,6 +217,9 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: InternalTransferAmountModifierProtocol.self) { _ in
             return PLInternalTransferAmountModifier()
+        }
+        self.legacyDependenciesInjector.register(for: GlobalSearchConfigurationModifierProtocol.self) { _ in
+            return PLGlobalSearchConfigurationModifier()
         }
     }
 }

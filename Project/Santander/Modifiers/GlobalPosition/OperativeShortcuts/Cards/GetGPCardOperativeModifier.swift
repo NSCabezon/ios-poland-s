@@ -19,9 +19,9 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
         if cards.isNotEmpty {
             self.shortcutsOperativesAvailable.append(PLRepaymentOperative().getActionType())
         }
-        self.shortcutsOperativesAvailable.append(contentsOf: [PLApplePayOperative().getActionType(),
-                                                             PLPostponeBuyOperative().getAtionType(),
-                                                              .changeAlias, PLMobilePaymentsOperative().getActionType()])
+        self.shortcutsOperativesAvailable.append(contentsOf: [
+                                                              PLPostponeBuyOperative().getAtionType()
+        ])
         return self.shortcutsOperativesAvailable
     }
 
@@ -34,9 +34,8 @@ public final class GetGPCardOperativeModifier: GetGPCardsOperativeOptionProtocol
             actionTypes.append(.onCard)
         }
         actionTypes.append(contentsOf: [PLRepaymentOperative().getActionType(),
-                                        PLApplePayOperative().getActionType(),
-                                        PLPostponeBuyOperative().getAtionType(),
-                                        .changeAlias, PLMobilePaymentsOperative().getActionType()])
+                                        PLPostponeBuyOperative().getAtionType()
+                                       ])
         return actionTypes
     }
 

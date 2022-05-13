@@ -12,19 +12,22 @@ public final class GetGPLoanOperativeModifier: GetGPLoanOperativeOptionProtocol 
     private var shortcutsOperativesAvailable: [LoanActionType] = [.partialAmortization, .changeAccount]
 
     public func getAllLoanOperativeActionType() -> [LoanActionType] {
-        return [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType(), PLLoansAliasOperative().getActionType()]
+        return [.partialAmortization,
+                .changeAccount,
+                PLCashLoanOperative().getActionType()
+        ]
     }
 
     public func getCountryLoanOperativeActionType(loans: [LoanEntity]) -> [LoanActionType] {
-        var shortcutsOperativesAvailable: [LoanActionType] = [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType()]
+        let shortcutsOperativesAvailable: [LoanActionType] = [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType()]
 
-        if loans.isNotEmpty {
-            shortcutsOperativesAvailable.append(PLLoansAliasOperative().getActionType())
-        }
         return shortcutsOperativesAvailable
     }
 
     public func isOtherOperativeEnabled(_ option: LoanActionType) -> Bool {
-        return [.partialAmortization, .changeAccount, PLCashLoanOperative().getActionType(), PLLoansAliasOperative().getActionType()].contains(option)
+        return [.partialAmortization,
+                .changeAccount,
+                PLCashLoanOperative().getActionType()
+        ].contains(option)
     }
 }
