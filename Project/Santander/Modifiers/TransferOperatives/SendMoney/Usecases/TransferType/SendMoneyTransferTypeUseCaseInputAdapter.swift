@@ -5,7 +5,7 @@ struct SendMoneyTransferTypeUseCaseInputAdapter: SendMoneyTransferTypeUseCaseInp
     func toUseCaseInput(operativeData: SendMoneyOperativeData) -> SendMoneyTransferTypeUseCaseInputProtocol? {
         guard let selectedAccount = operativeData.selectedAccount,
               let destinationIban = operativeData.destinationIBANRepresentable,
-              let destinationAccountCurrency = operativeData.currency,
+              let destinationAccountCurrency = operativeData.destinationCurrency,
               let amount = operativeData.amount,
               let country = operativeData.country,
               case .data(let data) = operativeData.ibanValidationOutput,

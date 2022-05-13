@@ -58,7 +58,15 @@ private extension PLSendMoneyDestinationUseCase {
         guard requestValues.countryCode == localAppconfig.countryCode else {
             return .allInternational
         }
+        let localCurrency = requestValues.sepaList?.allCountriesRepresentable.first(where: { $0.code == localAppconfig.countryCode  })
+        if let selectedAccount = requestValues.selectedAccount,
+           selectedAccount.currencyRepresentable?.currencyCode != localCurrency?.code {
+            return .allInternational
+        }
+        if let receiveAmount = requestValues.receiveAmount,
+           receiveAmount.currencyRepresentable?.currencyCode != localCurrency?.code {
+            return .allInternational
+        }
         return .national
-        
     }
 }

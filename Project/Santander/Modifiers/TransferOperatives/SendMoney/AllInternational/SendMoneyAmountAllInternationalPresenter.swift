@@ -9,7 +9,6 @@ import CoreFoundationLib
 import Operative
 import CoreDomain
 import TransferOperatives
-import UIKit
 
 protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresenterProtocol, SendMoneyCurrencyHelperPresenterProtocol {
     var view: SendMoneyAmountAllInternationalView? { get set }
@@ -45,8 +44,6 @@ final class SendMoneyAmountAllInternationalPresenter {
     init(dependenciesResolver: DependenciesResolver) {
         self.dependenciesResolver = dependenciesResolver
     }
-    
-    var isOriginCurrency = true
 }
 
 private extension SendMoneyAmountAllInternationalPresenter {
@@ -147,7 +144,7 @@ private extension SendMoneyAmountAllInternationalPresenter {
     }
     
     func getDestinationCurrenciesView() -> UIView? {
-        guard operativeData.currency?.code != getLocalCurrency() else {
+        guard operativeData.destinationCurrency?.code != getLocalCurrency() else {
             return nil
         }
         return self.view?.currenciesSelectionView
@@ -177,8 +174,8 @@ private extension SendMoneyAmountAllInternationalPresenter {
     
     func getLocalCurrency() -> String {
         let countryCode = getLocalCode()
-        let realCurrency = self.operativeData.sepaList?.allCountriesRepresentable.first(where: { $0.code == countryCode })
-        return realCurrency?.currency ?? ""
+        let countryCurrency = self.operativeData.sepaList?.allCountriesRepresentable.first(where: { $0.code == countryCode })
+        return countryCurrency?.currency ?? ""
     }
     
     func getLocalCode() -> String {
@@ -192,7 +189,6 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         self.setAccountSelectorView()
         self.reloadExchangeRateView()
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
-        self.isOriginCurrency = false
     }
     
     func reloadExchangeRateView() {
