@@ -35,6 +35,10 @@ final class SMAmountAllInternationalSwiftView: UIView {
         self.setupViews()
         self.setupAccessibilityIds()
     }
+    
+    func setSwiftText(_ text: String?) {
+        self.oneInpuntSwiftValue.setInputText(text)
+    }
 }
 
 private extension SMAmountAllInternationalSwiftView {

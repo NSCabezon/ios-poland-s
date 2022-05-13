@@ -17,6 +17,8 @@ protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHe
     func addAccountSelector(_ viewModel: OneAccountsSelectedCardViewModel)
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel)
     func setFloatingButtonEnabled(_ isEnabled: Bool)
+    func setSwiftText(_ text: String?)
+    func setDescriptionText(_ text: String?)
 }
 
 final class SendMoneyAmountAllInternationalViewController: UIViewController {
@@ -209,6 +211,14 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     
     func setFloatingButtonEnabled(_ isEnabled: Bool) {
         self.floatingButton.isEnabled = isEnabled
+    }
+    
+    func setSwiftText(_ text: String?) {
+        self.swiftView.setSwiftText(text)
+    }
+    
+    func setDescriptionText(_ text: String?) {
+        self.descriptionView.setDescriptionText(text)
     }
 }
 

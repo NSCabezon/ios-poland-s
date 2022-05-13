@@ -189,6 +189,8 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         self.setAccountSelectorView()
         self.reloadExchangeRateView()
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
+        self.view?.setSwiftText(self.operativeData.bicSwift)
+        self.view?.setDescriptionText(self.operativeData.description)
     }
     
     func reloadExchangeRateView() {
