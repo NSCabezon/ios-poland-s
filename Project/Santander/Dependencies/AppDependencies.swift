@@ -30,6 +30,7 @@ import BLIK
 import WebKit
 import PLNotificationsInbox
 import PLHelpCenter
+import Authorization
 
 final class AppDependencies {
     #if DEBUG
@@ -527,7 +528,6 @@ class CustomPushLauncher: CustomPushLauncherProtocol {
     }
     
     private func launchActionTypeAuth(_ actionType: CustomPushLaunchActionTypeAuth) {
-         let coordinator = dependenciesResolver.resolve(for: CustomPushNotificationCoordinator.self)
-         coordinator.start(actionType: actionType)
+        dependenciesResolver.resolve(for: AuthorizationModuleCoordinator.self).start()
     }
 }
