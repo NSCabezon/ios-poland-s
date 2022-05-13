@@ -46,7 +46,7 @@ public struct AddressDetailDTO: Codable {
 public struct ContextDTO: Codable {
     public let name: String?
     public let type: ContextType?
-    public let ownerId: Decimal?
+    public let ownerId: Int?
     public let selected: Bool?
 }
 
