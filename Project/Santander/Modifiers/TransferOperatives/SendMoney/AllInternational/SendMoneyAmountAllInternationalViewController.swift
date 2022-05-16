@@ -70,6 +70,13 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
         return view
     }()
     
+    private lazy var swiftInfoView: OneAlertView = {
+        // TODO: TRAERSE DEVELOP PARA TENER DISPONIBLE LO ÚLTIMO DEL COMPONENTE
+        let view = OneAlertView()
+        view.setType(.textAndImage(imageKey: "Santander Consumer Bank SA\nCentrala\n42 C, UL. Strzegomska\n53-611 Wroclaw, Poland", stringKey: "oneIcnFlagSpain"))
+        return view
+    }()
+    
     private lazy var simpleDateView = SMAmountAllInternationalSimpleDateView()
 
     override func viewDidLoad() {
@@ -118,6 +125,7 @@ private extension SendMoneyAmountAllInternationalViewController {
     
     func configureViews() {
         self.stackView.addArrangedSubview(self.swiftView)
+        self.stackView.addArrangedSubview(self.swiftInfoView)
         self.stackView.addArrangedSubview(self.exchangeRateContainerView)
         self.stackView.addArrangedSubview(self.descriptionView)
         self.stackView.addArrangedSubview(self.simpleDateView)
