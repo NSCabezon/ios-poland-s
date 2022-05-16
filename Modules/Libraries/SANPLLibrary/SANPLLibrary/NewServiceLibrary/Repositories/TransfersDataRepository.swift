@@ -98,6 +98,9 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
+        guard selectedCountry == "PL" && selectedCurrerncy == "PLN" else {
+            return.success(.INTERNATIONAL_NO_SEPA)
+        }
         return .success(.NATIONAL_SEPA)
     }
     
