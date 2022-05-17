@@ -27,7 +27,7 @@ public class PLInternalTransferAmountModifier: InternalTransferAmountModifierPro
         return "transfer_label_transferOwnAccount"
     }
     
-    public func selectionDateOneFilterViewModel(_ index: Int) -> SelectionDateOneFilterViewModel? {
+    public func getSelectionDateOneFilterData(_ index: Int) -> SelectionDateOneFilterViewModel? {
         let labelViewModel = OneLabelViewModel(type: .normal,
                                                mainTextKey: "transfer_label_periodicity",
                                                accessibilitySuffix: AccessibilitySendMoneyAmount.periodicitySuffix)
