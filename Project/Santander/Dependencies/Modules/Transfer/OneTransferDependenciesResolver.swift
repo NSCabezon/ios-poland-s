@@ -30,8 +30,4 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     func resolve() -> OneTransferHomeVisibilityModifier {
         return PLOneTransferHomeVisibilityModifier()
     }
-
-    func opinatorCoordinator() -> BindableCoordinator {
-        fatalError()
-    }
 }
