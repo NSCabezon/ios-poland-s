@@ -74,8 +74,8 @@
 		0DCED39C268B0B40001D38CC /* PLAccountHomeActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39B268B0B40001D38CC /* PLAccountHomeActionModifier.swift */; };
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
 		0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */; };
-		180E15F4C4CFEF45D67C330D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		0DE48B3B27C7A5300080E71F /* FundsExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE48B3A27C7A5300080E71F /* FundsExternalDependenciesResolver.swift */; };
+		180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		1C8B3EEB270DEF1F00868449 /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEA270DEF1F00868449 /* SendMoneyCoordinator.swift */; };
 		1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEC270DEF3000868449 /* SendMoneyModifier.swift */; };
 		26014B4127EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26014B4027EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift */; };
@@ -136,6 +136,20 @@
 		45D378FE27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D378FD27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift */; };
 		5F02263D27328E0C005161B6 /* LoadPfmSessionStartedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */; };
 		5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */; };
+		5F803078282BF54E008206D1 /* PLGetCardTransactionDetailActionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803077282BF54E008206D1 /* PLGetCardTransactionDetailActionsUseCase.swift */; };
+		5F80307C282BF5B3008206D1 /* PLCardTransactionDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F80307B282BF5B3008206D1 /* PLCardTransactionDetailUseCase.swift */; };
+		5F80307E282BF5E8008206D1 /* PLGetCardTransactionDetailViewConfigurationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F80307D282BF5E8008206D1 /* PLGetCardTransactionDetailViewConfigurationUseCase.swift */; };
+		5F803082282CE6F2008206D1 /* PLCardPdfDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803081282CE6F2008206D1 /* PLCardPdfDetailCoordinator.swift */; };
+		5F803086282D4146008206D1 /* TestCardTransactionExternalDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803085282D4146008206D1 /* TestCardTransactionExternalDependencies.swift */; };
+		5F803088282D4177008206D1 /* TestCardTransactionDetailDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803087282D4177008206D1 /* TestCardTransactionDetailDependencies.swift */; };
+		5F80308A282D41D8008206D1 /* TestCardTransactionDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803089282D41D8008206D1 /* TestCardTransactionDetailUseCase.swift */; };
+		5F80308C282D41F4008206D1 /* TestGetCardTransactionDetailActionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F80308B282D41F4008206D1 /* TestGetCardTransactionDetailActionsUseCase.swift */; };
+		5F80308F282D4225008206D1 /* MockDataInjector+Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F80308E282D4225008206D1 /* MockDataInjector+Cards.swift */; };
+		5F803092282D425B008206D1 /* PullOffersInterpreterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803091282D425B008206D1 /* PullOffersInterpreterMock.swift */; };
+		5F803094282D4320008206D1 /* MockCardTransactionDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803093282D4320008206D1 /* MockCardTransactionDetailCoordinator.swift */; };
+		5F803096282D4350008206D1 /* MockCardTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803095282D4350008206D1 /* MockCardTransaction.swift */; };
+		5F803098282D43D2008206D1 /* MockCardTransactionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803097282D43D2008206D1 /* MockCardTransactionViewItem.swift */; };
+		5F80309A282D44C2008206D1 /* MockCardTransactionDetailConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F803099282D44C2008206D1 /* MockCardTransactionDetailConfig.swift */; };
 		669A37CE270F564800C0F272 /* PLProductOperativesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37CC270F564800C0F272 /* PLProductOperativesData.swift */; };
 		669A37D3270F566600C0F272 /* PLProductOperativesDTOList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37D1270F566600C0F272 /* PLProductOperativesDTOList.swift */; };
 		669A37D4270F566600C0F272 /* PLProductOperativesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669A37D2270F566600C0F272 /* PLProductOperativesDTO.swift */; };
@@ -224,7 +238,7 @@
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712718CC1199B6EE214A84E5 /* Pods_SantanderTests.framework */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		A94EF0032816C6E000A84585 /* PLGlobalSecurityViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EF0022816C6E000A84585 /* PLGlobalSecurityViewContainer.swift */; };
 		A94EF0062816E1A500A84585 /* PLGetContactPhonesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EF0052816E1A500A84585 /* PLGetContactPhonesUseCase.swift */; };
 		A94EF0082816E9D400A84585 /* PLSecurityActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EF0072816E9D400A84585 /* PLSecurityActionBuilder.swift */; };
@@ -247,6 +261,7 @@
 		B01155F7271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155F5271581D800A4C175 /* DeepLinkDebugLauncherMenuViewController.swift */; };
 		B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155F6271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift */; };
 		B01155FD2715935900A4C175 /* DeeplinkDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FA2715935900A4C175 /* DeeplinkDependencies.swift */; };
+		B01155FF2715935900A4C175 /* PolandDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01155FC2715935900A4C175 /* PolandDeepLink.swift */; };
 		B0115602271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115600271594BF00A4C175 /* PLDebugMenuFrequentOperativeOption.swift */; };
 		B0115603271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0115601271594BF00A4C175 /* PLHelpCenterFrequentOperativeOption.swift */; };
 		B01156052715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01156042715A6EC00A4C175 /* AppSideMenuNavigationDependencies.swift */; };
@@ -282,8 +297,12 @@
 		BB29665126CFB5210012599D /* PLGetPersonalBasicInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29665026CFB5200012599D /* PLGetPersonalBasicInfoUseCase.swift */; };
 		BBB8E70C26A990EF00E54B2F /* NotificationPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */; };
 		BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */; };
-		C4C3389B28254D4300FF727D /* PLChangeProductAliasOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */; };
+		CC43F43827D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */; };
+		CC43F43C27D7B20600FFA78A /* PLPrivateMenuGetNameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */; };
+		CC5C4AF928116C1000C2A313 /* PLGetDigitalProfilePercentageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5C4AF828116C1000C2A313 /* PLGetDigitalProfilePercentageUseCase.swift */; };
+		CC7BDC9627BA85590023B37A /* PrivateMenuExternalDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */; };
 		C49F39A3281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F39A2281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift */; };
+		C4C3389B28254D4300FF727D /* PLChangeProductAliasOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */; };
 		CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */; };
 		CC8E9F85273BEEE500F967A6 /* BottomSheetErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */; };
 		CC8E9F87273BEF0000F967A6 /* BottomSheetErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC8E9F86273BEF0000F967A6 /* BottomSheetErrorView.xib */; };
@@ -299,6 +318,9 @@
 		CCE45AA32732AC5400691E91 /* InputBiometricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45A972732AC5300691E91 /* InputBiometricsView.swift */; };
 		CCE45AAF2735208800691E91 /* RemainingTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */; };
 		D0DA552827FDDDC800A231AA /* PLFundsDetailFieldsModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA552727FDDDC800A231AA /* PLFundsDetailFieldsModifier.swift */; };
+		CCE52FD527ABF96200E16690 /* PLPrivateMenuFooterOptionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */; };
+		CCE52FD727ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */; };
+		D23C3FA22816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */; };
 		D27C31ED0663323E0C7994AB /* Pods_Santander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A17194677FA9103CB795DDB /* Pods_Santander.framework */; };
 		D2AEF96227EC6C6F0043F32D /* ru.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2AEF96127EC6C6E0043F32D /* ru.strings */; };
 		D2AEF96427EC6C7E0043F32D /* uk.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2AEF96327EC6C7D0043F32D /* uk.strings */; };
@@ -486,6 +508,20 @@
 		5841768F674728B7B1F8B465 /* Pods-SantanderTests.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.regression-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.regression-release.xcconfig"; sourceTree = "<group>"; };
 		5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPfmSessionStartedAction.swift; sourceTree = "<group>"; };
 		5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPfmSessionFinishedAction.swift; sourceTree = "<group>"; };
+		5F803077282BF54E008206D1 /* PLGetCardTransactionDetailActionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetCardTransactionDetailActionsUseCase.swift; sourceTree = "<group>"; };
+		5F80307B282BF5B3008206D1 /* PLCardTransactionDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardTransactionDetailUseCase.swift; sourceTree = "<group>"; };
+		5F80307D282BF5E8008206D1 /* PLGetCardTransactionDetailViewConfigurationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetCardTransactionDetailViewConfigurationUseCase.swift; sourceTree = "<group>"; };
+		5F803081282CE6F2008206D1 /* PLCardPdfDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardPdfDetailCoordinator.swift; sourceTree = "<group>"; };
+		5F803085282D4146008206D1 /* TestCardTransactionExternalDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestCardTransactionExternalDependencies.swift; path = Santander/Dependencies/Modules/Cards/TransactionDetail/TestCardTransactionExternalDependencies.swift; sourceTree = SOURCE_ROOT; };
+		5F803087282D4177008206D1 /* TestCardTransactionDetailDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCardTransactionDetailDependencies.swift; sourceTree = "<group>"; };
+		5F803089282D41D8008206D1 /* TestCardTransactionDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCardTransactionDetailUseCase.swift; sourceTree = "<group>"; };
+		5F80308B282D41F4008206D1 /* TestGetCardTransactionDetailActionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGetCardTransactionDetailActionsUseCase.swift; sourceTree = "<group>"; };
+		5F80308E282D4225008206D1 /* MockDataInjector+Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockDataInjector+Cards.swift"; sourceTree = "<group>"; };
+		5F803091282D425B008206D1 /* PullOffersInterpreterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullOffersInterpreterMock.swift; sourceTree = "<group>"; };
+		5F803093282D4320008206D1 /* MockCardTransactionDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardTransactionDetailCoordinator.swift; sourceTree = "<group>"; };
+		5F803095282D4350008206D1 /* MockCardTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardTransaction.swift; sourceTree = "<group>"; };
+		5F803097282D43D2008206D1 /* MockCardTransactionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardTransactionViewItem.swift; sourceTree = "<group>"; };
+		5F803099282D44C2008206D1 /* MockCardTransactionDetailConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCardTransactionDetailConfig.swift; sourceTree = "<group>"; };
 		6334327FA32CA3DE8394090C /* Pods-SantanderTests.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.uat-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.uat-release.xcconfig"; sourceTree = "<group>"; };
 		669A37CC270F564800C0F272 /* PLProductOperativesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProductOperativesData.swift; sourceTree = "<group>"; };
 		669A37D1270F566600C0F272 /* PLProductOperativesDTOList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProductOperativesDTOList.swift; sourceTree = "<group>"; };
@@ -649,9 +685,13 @@
 		BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionManager.swift; sourceTree = "<group>"; };
 		BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLMonthlyBalanceUseCase.swift; sourceTree = "<group>"; };
 		C12DA6A3977724B3A1EF154D /* Pods-SantanderTests.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-debug.xcconfig"; sourceTree = "<group>"; };
-		C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLChangeProductAliasOperative.swift; sourceTree = "<group>"; };
 		C49F39A2281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSecurityAreaViewProtocolModifier.swift; sourceTree = "<group>"; };
+		C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLChangeProductAliasOperative.swift; sourceTree = "<group>"; };
 		CA16056EE927AFF76FA97838 /* Pods-Santander.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-release.xcconfig"; sourceTree = "<group>"; };
+		CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuMyProductsUseCase.swift; sourceTree = "<group>"; };
+		CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuGetNameUseCase.swift; sourceTree = "<group>"; };
+		CC5C4AF828116C1000C2A313 /* PLGetDigitalProfilePercentageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetDigitalProfilePercentageUseCase.swift; sourceTree = "<group>"; };
+		CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMenuExternalDependency.swift; sourceTree = "<group>"; };
 		CC8E9F82273BC71100F967A6 /* InputBiometricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBiometricsViewModel.swift; sourceTree = "<group>"; };
 		CC8E9F84273BEEE500F967A6 /* BottomSheetErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetErrorView.swift; sourceTree = "<group>"; };
 		CC8E9F86273BEF0000F967A6 /* BottomSheetErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomSheetErrorView.xib; sourceTree = "<group>"; };
@@ -668,6 +708,9 @@
 		CCE45A972732AC5300691E91 /* InputBiometricsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBiometricsView.swift; sourceTree = "<group>"; };
 		CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTimeViewModel.swift; sourceTree = "<group>"; };
 		D0DA552727FDDDC800A231AA /* PLFundsDetailFieldsModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLFundsDetailFieldsModifier.swift; sourceTree = "<group>"; };
+		CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuFooterOptionsUseCase.swift; sourceTree = "<group>"; };
+		CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOptionsUseCase.swift; sourceTree = "<group>"; };
+		D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOtherServicesUseCase.swift; sourceTree = "<group>"; };
 		D251359BAB670A4CFC01DEBC /* Pods-SantanderTests.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.intern-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.intern-debug.xcconfig"; sourceTree = "<group>"; };
 		D2AEF96127EC6C6E0043F32D /* ru.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru.strings; path = "../../i18n-poland/clients/iOS/ru.strings"; sourceTree = "<group>"; };
 		D2AEF96327EC6C7D0043F32D /* uk.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = uk.strings; path = "../../i18n-poland/clients/iOS/uk.strings"; sourceTree = "<group>"; };
@@ -715,7 +758,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180E15F4C4CFEF45D67C330D /* (null) in Frameworks */,
+				180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */,
 				A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1148,6 +1191,7 @@
 				EFE48D2527F1F3C00010BEA5 /* Opinator */,
 				EFE0418F27B5705800FB8BF3 /* Transfer */,
 				90B594FB27BE8A4A00719FEA /* TransferOperatives */,
+				CC7BDC9427BA85320023B37A /* PrivateMenu */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1288,6 +1332,8 @@
 		444424A527EB7ADB0020E735 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				5F80308D282D4206008206D1 /* Commons */,
+				5F803083282D411D008206D1 /* CardTransactionDetail */,
 				44AC8A4C2822D4F000CB3B1C /* CardTransactionFilter */,
 				444424A627EB7ADB0020E735 /* CardDetail */,
 			);
@@ -1358,6 +1404,7 @@
 				D54D2EE527201CC400781580 /* Opinator */,
 				0D59D636272017EC007BF898 /* Opinator */,
 				BB29664E26CFB38B0012599D /* PersonalArea */,
+				CCE52FD327ABF8DA00E16690 /* PrivateMenu */,
 				5FBDB730273BB47D00FB6DAF /* Session */,
 				0D7A923727B3F02600C2BEC6 /* ShortcutItems */,
 				903E5BF32799628F000BE389 /* Transfer */,
@@ -1419,6 +1466,7 @@
 		44ABC30027E384A000815256 /* Cards */ = {
 			isa = PBXGroup;
 			children = (
+				5F803076282BF52B008206D1 /* TransactionDetail */,
 				44ABC30127E384A000815256 /* CardExternalDependenciesResolver.swift */,
 				44ABC30227E384A000815256 /* UseCase */,
 			);
@@ -1468,6 +1516,60 @@
 				5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		5F803076282BF52B008206D1 /* TransactionDetail */ = {
+			isa = PBXGroup;
+			children = (
+				5F803077282BF54E008206D1 /* PLGetCardTransactionDetailActionsUseCase.swift */,
+				5F80307B282BF5B3008206D1 /* PLCardTransactionDetailUseCase.swift */,
+				5F80307D282BF5E8008206D1 /* PLGetCardTransactionDetailViewConfigurationUseCase.swift */,
+				5F803081282CE6F2008206D1 /* PLCardPdfDetailCoordinator.swift */,
+			);
+			path = TransactionDetail;
+			sourceTree = "<group>";
+		};
+		5F803083282D411D008206D1 /* CardTransactionDetail */ = {
+			isa = PBXGroup;
+			children = (
+				5F803084282D412A008206D1 /* Dependencies */,
+				5F803089282D41D8008206D1 /* TestCardTransactionDetailUseCase.swift */,
+				5F80308B282D41F4008206D1 /* TestGetCardTransactionDetailActionsUseCase.swift */,
+			);
+			path = CardTransactionDetail;
+			sourceTree = "<group>";
+		};
+		5F803084282D412A008206D1 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				5F803085282D4146008206D1 /* TestCardTransactionExternalDependencies.swift */,
+				5F803087282D4177008206D1 /* TestCardTransactionDetailDependencies.swift */,
+			);
+			name = Dependencies;
+			path = "../New Group/Dependencies";
+			sourceTree = "<group>";
+		};
+		5F80308D282D4206008206D1 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				5F803090282D4232008206D1 /* Mocks */,
+				5F80308E282D4225008206D1 /* MockDataInjector+Cards.swift */,
+			);
+			name = Commons;
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
+		5F803090282D4232008206D1 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				5F803091282D425B008206D1 /* PullOffersInterpreterMock.swift */,
+				5F803093282D4320008206D1 /* MockCardTransactionDetailCoordinator.swift */,
+				5F803095282D4350008206D1 /* MockCardTransaction.swift */,
+				5F803097282D43D2008206D1 /* MockCardTransactionViewItem.swift */,
+				5F803099282D44C2008206D1 /* MockCardTransactionDetailConfig.swift */,
+			);
+			name = Mocks;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		5FBDB730273BB47D00FB6DAF /* Session */ = {
@@ -2065,6 +2167,14 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
+		CC7BDC9427BA85320023B37A /* PrivateMenu */ = {
+			isa = PBXGroup;
+			children = (
+				CC7BDC9527BA85580023B37A /* PrivateMenuExternalDependency.swift */,
+			);
+			path = PrivateMenu;
+			sourceTree = "<group>";
+		};
 		CCE45A882732AC5300691E91 /* ChallengeAuthorization */ = {
 			isa = PBXGroup;
 			children = (
@@ -2126,6 +2236,19 @@
 				CCE45AAE2735208800691E91 /* RemainingTimeViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CCE52FD327ABF8DA00E16690 /* PrivateMenu */ = {
+			isa = PBXGroup;
+			children = (
+				CC5C4AF828116C1000C2A313 /* PLGetDigitalProfilePercentageUseCase.swift */,
+				CCE52FD427ABF96100E16690 /* PLPrivateMenuFooterOptionsUseCase.swift */,
+				CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */,
+				CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */,
+				CCE52FD627ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift */,
+				D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */,
+			);
+			path = PrivateMenu;
 			sourceTree = "<group>";
 		};
 		D2F5C33326E6262A002431DE /* Search */ = {
@@ -2516,23 +2639,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F803088282D4177008206D1 /* TestCardTransactionDetailDependencies.swift in Sources */,
 				444424AE27EB7ADC0020E735 /* MockCardDetail.swift in Sources */,
+				5F803086282D4146008206D1 /* TestCardTransactionExternalDependencies.swift in Sources */,
+				5F80308F282D4225008206D1 /* MockDataInjector+Cards.swift in Sources */,
 				444424B127EB7ADC0020E735 /* TestCardDetailDependencies.swift in Sources */,
 				444424AF27EB7ADC0020E735 /* MockCard.swift in Sources */,
 				44AC8A532822D4F100CB3B1C /* TestCardTransactionFilterDependencies.swift in Sources */,
 				444424B227EB7ADC0020E735 /* TestCardDetailExternalDependencies.swift in Sources */,
 				444424B027EB7ADC0020E735 /* TestPLCardDetailConfiguration.swift in Sources */,
 				44AC8A522822D4F100CB3B1C /* TestCardTransactionFilterExternalDependencies.swift in Sources */,
+				5F803096282D4350008206D1 /* MockCardTransaction.swift in Sources */,
 				04A66E8627D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift in Sources */,
+				5F80308A282D41D8008206D1 /* TestCardTransactionDetailUseCase.swift in Sources */,
 				04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */,
 				04A66E7E27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift in Sources */,
+				5F80309A282D44C2008206D1 /* MockCardTransactionDetailConfig.swift in Sources */,
 				BAA2FF2E27F10D1F00A38456 /* OnboardingPermissionOptionsTests.swift in Sources */,
 				909262F027E34B4D00A754AF /* PLInternalTransferPreSetupUseCaseTest.swift in Sources */,
 				909262F227E3649700A754AF /* PLGlobalPositionDataRepositoryMock.swift in Sources */,
 				9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */,
+				5F803098282D43D2008206D1 /* MockCardTransactionViewItem.swift in Sources */,
+				5F803092282D425B008206D1 /* PullOffersInterpreterMock.swift in Sources */,
 				04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */,
 				EF6BFCB327FE11110019E702 /* PLGetInternalTransferOriginAccountsUseCaseTest.swift in Sources */,
 				44AC8A512822D4F100CB3B1C /* PLGetCardAvailableFiltersUseCaseTest.swift in Sources */,
+				5F80308C282D41F4008206D1 /* TestGetCardTransactionDetailActionsUseCase.swift in Sources */,
+				5F803094282D4320008206D1 /* MockCardTransactionDetailCoordinator.swift in Sources */,
 				BAA2FF3027F10D4800A38456 /* PLOnboardingConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2542,7 +2675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* (null) in Sources */,
+				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -2619,8 +2752,10 @@
 				04304E2B276773C900AF0A99 /* PLPrivateMenuModifier.swift in Sources */,
 				A97543392784BA4F00400A0A /* PLMobilePaymentsOperative.swift in Sources */,
 				82AED7852796F6BA00E6133D /* MenuModuleDependencies.swift in Sources */,
+				5F80307C282BF5B3008206D1 /* PLCardTransactionDetailUseCase.swift in Sources */,
 				34F6B1C827C6811A002CF2E5 /* SendMoneyValidationProtocol.swift in Sources */,
 				669A37D6270F571B00C0F272 /* GetPLAccountOtherOperativesWebConfigurationUseCase.swift in Sources */,
+				5F803078282BF54E008206D1 /* PLGetCardTransactionDetailActionsUseCase.swift in Sources */,
 				A94EF0082816E9D400A84585 /* PLSecurityActionBuilder.swift in Sources */,
 				446E0C25265FE42400847FCA /* BillTaxPGFrequentOperativeOption.swift in Sources */,
 				82C9D2D527CEA0C100A31C7B /* PLGetLoanTransactionDetailConfigurationUseCase.swift in Sources */,
@@ -2641,12 +2776,14 @@
 				66BC8A60263FFD7C00654CC5 /* XCConfig.swift in Sources */,
 				829C89BC280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift in Sources */,
 				A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */,
+				5F80307E282BF5E8008206D1 /* PLGetCardTransactionDetailViewConfigurationUseCase.swift in Sources */,
 				CC8E9F83273BC71100F967A6 /* InputBiometricsViewModel.swift in Sources */,
 				B0D77A53276B4C3800766705 /* PLTransferSettingsDTO.swift in Sources */,
 				BBD08195269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift in Sources */,
 				EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */,
 				5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */,
 				EFF13011273177F500ECE22E /* PolandTransferType.swift in Sources */,
+				CC5C4AF928116C1000C2A313 /* PLGetDigitalProfilePercentageUseCase.swift in Sources */,
 				A94EF00A2816EA1E00A84585 /* PLSecurityActionFactory.swift in Sources */,
 				7E2CCA8B26B80CF500CBDB11 /* BuyInsurancePGFrequentOperativeOption.swift in Sources */,
 				42BF471526495D3400136E8D /* HostModule.swift in Sources */,
@@ -2671,6 +2808,7 @@
 				34939ACE2727DCD50010F987 /* SendMoneyTransferTypeRadioButtonsContainerViewModel.swift in Sources */,
 				CCE45A9F2732AC5400691E91 /* InputSignatureView.swift in Sources */,
 				0D6E289726BA75D700F50A18 /* PLDepositModifier.swift in Sources */,
+				D23C3FA22816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift in Sources */,
 				7E974B0A2757704B002CA9C6 /* GetGPInvestmentFundOperativeOptionModifier.swift in Sources */,
 				BB19B24F26E9FE70000C1E83 /* PLPersonalAreaSectionsSecurityModifier.swift in Sources */,
 				0409C91527E488B900009C2D /* FloatingButtonController.swift in Sources */,
@@ -2699,6 +2837,7 @@
 				A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */,
 				04B894EE270F334100289CF5 /* PLWebViewCoordinatorNavigator.swift in Sources */,
 				78A4071327344CBF002DEBF0 /* DeeplinkLauncher.swift in Sources */,
+				CCE52FD727ABF9D800E16690 /* PLPrivateMenuOptionsUseCase.swift in Sources */,
 				0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */,
 				3AEC673E277F0D2300919FC2 /* PLLoanTransactionDetailUseCase.swift in Sources */,
 				B01155F8271581D800A4C175 /* DeepLinkDebugLauncherMenuCoordinator.swift in Sources */,
@@ -2722,6 +2861,7 @@
 				0409C91327E4889C00009C2D /* FloatingButtonWindow.swift in Sources */,
 				EF0CDC0327C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift in Sources */,
 				9CA9EEBC270DFFD700D783AE /* PreSetupSendMoneyUseCase.swift in Sources */,
+				5F803082282CE6F2008206D1 /* PLCardPdfDetailCoordinator.swift in Sources */,
 				B02F92FF27A00AF0005F2B66 /* PLZusTransferSettingsDTO.swift in Sources */,
 				3462BDBC27200A7D00FAA715 /* SendMoneyTransferTypeFeeView.swift in Sources */,
 				446C4F9226D798640080D7EC /* PLAccountTransaction.swift in Sources */,
@@ -2762,6 +2902,7 @@
 				A94EF0032816C6E000A84585 /* PLGlobalSecurityViewContainer.swift in Sources */,
 				0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */,
 				0D2D0D0627FC4B4C004FA253 /* PLFundsHomeMovementsModifier.swift in Sources */,
+				CCE52FD527ABF96200E16690 /* PLPrivateMenuFooterOptionsUseCase.swift in Sources */,
 				EFF1301327317B1400ECE22E /* PolandTransactionType.swift in Sources */,
 				44ABC30427E384A100815256 /* CardExternalDependenciesResolver.swift in Sources */,
 				C4C3389B28254D4300FF727D /* PLChangeProductAliasOperative.swift in Sources */,
@@ -2790,6 +2931,8 @@
 				4446D0CC2701B789008B45A0 /* PLAccountHomePresenterModifier.swift in Sources */,
 				D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */,
 				0D59D63827201813007BF898 /* PLOpinatorInfoOption.swift in Sources */,
+				CC43F43C27D7B20600FFA78A /* PLPrivateMenuGetNameUseCase.swift in Sources */,
+				CC7BDC9627BA85590023B37A /* PrivateMenuExternalDependency.swift in Sources */,
 				EFFDC0CA27355DE800978668 /* IbanValidationSendMoneyUseCase.swift in Sources */,
 				BB1D29F326EA336D00684846 /* AppModifiers.swift in Sources */,
 				04BAA0CE27AA9B4300AFDC2E /* PLCardActionFactory.swift in Sources */,
@@ -2799,6 +2942,7 @@
 				04A66E9D27E9C8DB00EE107F /* PLInternalTransferSummaryModifier.swift in Sources */,
 				66B3CFAA2639C6C5000AAD0F /* AppDelegate.swift in Sources */,
 				0D38C7E826DE3CB70062C02C /* PLTurnOffOperative.swift in Sources */,
+				CC43F43827D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift in Sources */,
 				7E1B7DE027216100002CC226 /* PLGetCardOnOffPredefinedSCAUseCase.swift in Sources */,
 				CCE45AAF2735208800691E91 /* RemainingTimeViewModel.swift in Sources */,
 				669A37E02717508300C0F272 /* PLEditBudgetHelperModifier.swift in Sources */,
@@ -2877,7 +3021,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2954,7 +3098,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3025,7 +3169,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3096,7 +3240,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3167,7 +3311,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3238,7 +3382,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3309,7 +3453,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3380,7 +3524,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3451,7 +3595,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3522,7 +3666,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3593,7 +3737,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3664,7 +3808,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3735,7 +3879,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3806,7 +3950,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3912,7 +4056,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -3920,7 +4064,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = Santander;
@@ -3968,7 +4112,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4130,7 +4274,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4138,7 +4282,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.santander.oneapp.prod";
@@ -4158,7 +4302,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4166,7 +4310,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.prod";
@@ -4248,7 +4392,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4256,7 +4400,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4339,7 +4483,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Dev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEFAULT_DEMO_USER = 12345678Z;
 				DEMO_AVAILABLE = YES;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -4349,7 +4493,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4432,7 +4576,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4440,7 +4584,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4517,7 +4661,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: CIBER SOLUTIONS SL (EXTINGUIDA)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4525,7 +4669,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4602,7 +4746,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: CIBER SOLUTIONS SL (EXTINGUIDA)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4610,7 +4754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4693,7 +4837,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Preprod.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4701,7 +4845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4778,7 +4922,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Preprod.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4786,7 +4930,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4869,7 +5013,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/UAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4877,7 +5021,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4954,7 +5098,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/UAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4962,7 +5106,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5039,7 +5183,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Regression.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5047,7 +5191,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5130,7 +5274,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Regression.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5138,7 +5282,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5221,7 +5365,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Dev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14014;
+				CURRENT_PROJECT_VERSION = 101005;
 				DEFAULT_DEMO_USER = 12345678Z;
 				DEMO_AVAILABLE = YES;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -5231,7 +5375,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.14.14;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";

@@ -28,6 +28,10 @@ final class PLAccountNumberFormatter: AccountNumberFormatterProtocol {
         return IBANFormatter.format(iban: iban?.ibanString)
     }
     
+    func getIBANFormatted(_ iban: IBANRepresentable?) -> String {
+        return IBANFormatter.format(iban: iban?.ibanString)
+    }
+    
     func accountNumberShortFormat(_ account: AccountEntity?) -> String {
         guard let accountId = account?.contractNumber?.replace(" ", ""), accountId.count > 4 else {
             return ""

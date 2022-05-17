@@ -52,6 +52,8 @@ extension TaxTransferFormViewController: TaxTransferFormView {
                 self?.presenter.didTapAccountSelector()
             }
             
+            self.formView.configureRelatedVatAccountSection()
+            
             self.formView.configureTaxPayerSelector(with: viewModel.taxPayer) { [weak self] in
                 self?.presenter.didTapTaxPayer()
             }

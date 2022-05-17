@@ -62,7 +62,7 @@ final class TaxTransferBillingPeriodViewController: UIViewController {
         configureSubviews()
         configureBottomView()
         configureDelegate()
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
     }
     
     private func configureNavigationItem() {
