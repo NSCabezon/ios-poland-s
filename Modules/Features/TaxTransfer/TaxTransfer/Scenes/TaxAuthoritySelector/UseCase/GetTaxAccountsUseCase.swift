@@ -27,6 +27,7 @@ protocol GetTaxAccountsUseCaseProtocol: UseCase<GetTaxAccountsUseCaseInput, GetT
 final class GetTaxAccountsUseCase: UseCase<GetTaxAccountsUseCaseInput, GetTaxAccountsUseCaseOkOutput, StringErrorOutput> {
     private let managersProvider: PLManagersProviderProtocol
     private let mapper: TaxAccountMapping
+    private let defaultFilterOptionId = 2
 
     init(dependenciesResolver: DependenciesResolver) {
         self.managersProvider = dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
@@ -38,7 +39,7 @@ final class GetTaxAccountsUseCase: UseCase<GetTaxAccountsUseCaseInput, GetTaxAcc
             accountNumber: requestValues.taxAccountNumberFilter,
             accountName: requestValues.taxAccountNameFilter,
             city: requestValues.cityFilter,
-            optionId: requestValues.optionId
+            optionId: requestValues.optionId ?? defaultFilterOptionId
         )
         let result = try managersProvider.getTaxTransferManager().getTaxAccounts(requestQueries: queries)
         switch result {
