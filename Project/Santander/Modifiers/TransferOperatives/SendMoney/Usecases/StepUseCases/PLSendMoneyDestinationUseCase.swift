@@ -13,42 +13,27 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
     
     private var bankingUtils: BankingUtilsProtocol
     private var transfersRepository: PLTransfersRepository
+    private var managersProvider: PLManagersProviderProtocol
     private var localAppconfig: LocalAppConfig
 
     public init(dependenciesResolver: DependenciesResolver) {
         self.bankingUtils = dependenciesResolver.resolve()
         self.transfersRepository = dependenciesResolver.resolve()
+        self.managersProvider = dependenciesResolver.resolve()
         self.localAppconfig = dependenciesResolver.resolve()
     }
     
     override func executeUseCase(requestValues: SendMoneyOperativeData) throws -> UseCaseResponse<SendMoneyOperativeData, DestinationAccountSendMoneyUseCaseErrorOutput> {
-        guard let iban = requestValues.destinationIBANRepresentable,
-              !iban.ibanString.isEmpty,
-              bankingUtils.isValidIban(ibanString: iban.ibanString) else {
-            return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.ibanInvalid))
+        requestValues.type = self.getTransferType(requestValues: requestValues)
+        if let error = try self.checkInternalTransfer(requestValues: requestValues) {
+            return .error(error)
         }
-        let response = try transfersRepository.checkInternalAccount(input: CheckInternalAccountInput(destinationAccount: iban))
-        let checkInternalAccountDto: CheckInternalAccountRepresentable
-        switch response {
-        case .success(let dto):
-            checkInternalAccountDto = dto
-        case .failure(let error):
-            return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription)))
-        }
-        requestValues.ibanValidationOutput = .data(checkInternalAccountDto)
         guard let name = requestValues.destinationName, name.trim().count > 0 else {
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noToName))
         }
-        if requestValues.saveToFavorite {
-            guard let alias = requestValues.destinationAlias, alias.trim().count > 0 else {
-                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noAlias))
-            }
-            let duplicate = requestValues.fullFavorites?.first { return $0.payeeName?.trim() == alias.trim() }
-            guard duplicate == nil else {
-                return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
-            }
+        if let error = try self.getSwiftBranch(requestValues: requestValues) {
+            return .error(error)
         }
-        requestValues.type = self.getTransferType(requestValues: requestValues)
         return .ok(requestValues)
     }
 }
@@ -68,5 +53,45 @@ private extension PLSendMoneyDestinationUseCase {
             return .allInternational
         }
         return .national
+    }
+    
+    func checkInternalTransfer(requestValues: SendMoneyOperativeData) throws -> DestinationAccountSendMoneyUseCaseErrorOutput? {
+        guard requestValues.type == .national else { return nil }
+        guard let iban = requestValues.destinationIBANRepresentable,
+              !iban.ibanString.isEmpty,
+              bankingUtils.isValidIban(ibanString: iban.ibanString) else {
+            return DestinationAccountSendMoneyUseCaseErrorOutput(.ibanInvalid)
+        }
+        let response = try transfersRepository.checkInternalAccount(input: CheckInternalAccountInput(destinationAccount: iban))
+        let checkInternalAccountDto: CheckInternalAccountRepresentable
+        switch response {
+        case .success(let dto):
+            checkInternalAccountDto = dto
+        case .failure(let error):
+            return DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription))
+        }
+        requestValues.ibanValidationOutput = .data(checkInternalAccountDto)
+        return nil
+    }
+    
+    func getSwiftBranch(requestValues: SendMoneyOperativeData) throws -> DestinationAccountSendMoneyUseCaseErrorOutput? {
+        guard requestValues.type != .national else { return nil }
+        let accountsManager = self.managersProvider.getAccountsManager()
+        let response2 = try accountsManager.getSwiftBranches(accountNumber: requestValues.destinationAccount ?? "")
+        switch response2 {
+        case .success(let dto):
+            // TODO: STORE DATA
+            guard let swiftBranch = dto.swiftBranchList?.first else {
+                // TODO: DEVOLVER UN MEJOR ERROR
+                return DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: ""))
+            }
+            requestValues.bicSwift = swiftBranch.bic
+            requestValues.bankName = swiftBranch.bankName
+            // TODO: CONSULTAR
+            requestValues.bankAddress = (swiftBranch.shortName ?? "") + "\n" + (swiftBranch.address ?? "") + "\n" + (swiftBranch.city ?? "")
+            return nil
+        case .failure(let error):
+            return DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription))
+        }
     }
 }

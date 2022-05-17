@@ -30,3 +30,20 @@ public struct ChangeAliasParameters: Encodable {
         self.userDefined = userDefined
     }
 }
+
+public struct SwiftBranchesParameters: Encodable {
+    public let countryCode: String
+    public let customerType: String
+    public let currencyCode: String
+    public let bicSwift: String
+    
+    public init(countryCode: String,
+                customerType: String = "PERSONAL",
+                currencyCode: String,
+                bicSwift: String) {
+        self.countryCode = countryCode
+        self.customerType = customerType
+        self.currencyCode = currencyCode
+        self.bicSwift = bicSwift
+    }
+}

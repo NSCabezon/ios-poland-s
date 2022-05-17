@@ -18,6 +18,7 @@ protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHe
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel)
     func setFloatingButtonEnabled(_ isEnabled: Bool)
     func setSwiftText(_ text: String?)
+    func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?)
     func setDescriptionText(_ text: String?)
 }
 
@@ -78,8 +79,19 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
     private lazy var swiftInfoView: OneAlertView = {
         // TODO: TRAERSE DEVELOP PARA TENER DISPONIBLE LO ÚLTIMO DEL COMPONENTE
         let view = OneAlertView()
-        view.setType(.textAndImage(imageKey: "Santander Consumer Bank SA\nCentrala\n42 C, UL. Strzegomska\n53-611 Wroclaw, Poland", stringKey: "oneIcnFlagSpain"))
+        view.setType(.textAndImage(imageKey: "oneIcnFlagSpain", stringKey: "Santander Consumer Bank SA\nCentrala\n42 C, UL. Strzegomska\n53-611 Wroclaw, Poland"))
         return view
+    }()
+    
+    private lazy var swiftInfoContainerView: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(self.swiftInfoView)
+        self.swiftInfoView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16.0).isActive = true
+        self.swiftInfoView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16.0).isActive = true
+        self.swiftInfoView.topAnchor.constraint(equalTo: container.topAnchor, constant: 12.0).isActive = true
+        self.swiftInfoView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: .zero).isActive = true
+        return container
     }()
     
     private lazy var simpleDateView = SMAmountAllInternationalSimpleDateView()
@@ -138,7 +150,7 @@ private extension SendMoneyAmountAllInternationalViewController {
     
     func configureViews() {
         self.stackView.addArrangedSubview(self.swiftView)
-        self.stackView.addArrangedSubview(self.swiftInfoView)
+        self.stackView.addArrangedSubview(self.swiftInfoContainerView)
         self.stackView.addArrangedSubview(self.exchangeRateContainerView)
         self.stackView.addArrangedSubview(self.descriptionView)
         self.stackView.addArrangedSubview(self.simpleDateView)
@@ -225,6 +237,18 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
         self.swiftView.setSwiftText(text)
     }
     
+    func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?) {
+        // TODO: SETEAR EN EL ONEALERT
+        guard let bankName = bankName,
+              let bankAddress = bankAddress else {
+                  self.swiftInfoContainerView.isHidden = true
+                  return
+              }
+        self.swiftInfoContainerView.isHidden = false
+        // TODO: CHANGE
+        self.swiftInfoView.setType(.textAndImage(imageKey: countryFlag ?? "", stringKey: "\(bankName)\n\(bankAddress)"))
+    }
+    
     func setDescriptionText(_ text: String?) {
         self.descriptionView.setDescriptionText(text)
     }
@@ -249,6 +273,10 @@ extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationa
 extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationalSwiftViewDelegate {
     func saveSwift(_ swift: String?) {
         self.presenter.saveSwift(swift)
+    }
+    
+    func reloadSwiftInfo() {
+        self.presenter.reloadSwiftInfo()
     }
 }
 
