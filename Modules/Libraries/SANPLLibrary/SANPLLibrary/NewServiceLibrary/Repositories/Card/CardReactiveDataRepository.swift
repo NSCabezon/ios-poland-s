@@ -7,11 +7,12 @@ import SANLegacyLibrary
 public protocol PLCardManagerAdapterProtocol {
     func getCardDetail(cardDTO: SANLegacyLibrary.CardDTO) throws -> BSANResponse<SANLegacyLibrary.CardDetailDTO>
     func changeCardAlias(cardDTO: SANLegacyLibrary.CardDTO, newAlias: String) throws -> BSANResponse<Void>
+    func getCardTransactionDetail(cardDTO: SANLegacyLibrary.CardDTO, cardTransactionDTO: SANLegacyLibrary.CardTransactionDTO) throws -> BSANResponse<CardTransactionDetailDTO>
 }
 
 public final class CardReactiveDataRepository {
     private let bsanDataProvider: BSANDataProvider
-    private let cardManager: PLCardManagerAdapterProtocol
+    let cardManager: PLCardManagerAdapterProtocol
     
     public init(bsanDataProvider: BSANDataProvider, networkProvider: NetworkProvider, cardManager: PLCardManagerAdapterProtocol) {
         self.bsanDataProvider = bsanDataProvider

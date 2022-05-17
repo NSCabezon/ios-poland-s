@@ -268,6 +268,7 @@ private extension PLRememberedLoginPinPresenter {
             switch result {
             case .success(let output):
                 self?.identifyUser(output.userId)
+                self?.view?.dismissLoading()
                 self?.coordinator.goToGlobalPositionScene(output.globalPositionOption)
             case .failure(_):
                 self?.coordinator.goToGlobalPositionScene(.classic)
