@@ -122,14 +122,29 @@ private extension RemainingTimeView {
 
 private extension RemainingTimeView {
     func startTimer() {
+        let localDate = Date()
         self.timer = Timer.scheduledTimer(withTimeInterval: (1.0 / Constants.smoothDivision), repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.timerCounter -= Float(1.0 / Constants.smoothDivision)
+            self.checkBackgroundTime(localDate)
             self.updateSeconds(self.timerCounter)
             if self.timerCounter <= 0 {
                 self.didTimerEnd()
             }
         }
+    }
+    
+    func checkBackgroundTime(_ localDate: Date) {
+        let realSeconds = self.secondsFromCurrentDate(localDate)
+        let currentSeconds = self.totalTime - realSeconds
+        guard Int(self.timerCounter) > Int(currentSeconds) else {
+            return
+        }
+        self.timerCounter = currentSeconds
+    }
+    
+    func secondsFromCurrentDate(_ date: Date) -> Float {
+        return Float(Date().timeIntervalSince(date))
     }
     
     func didTimerEnd() {
