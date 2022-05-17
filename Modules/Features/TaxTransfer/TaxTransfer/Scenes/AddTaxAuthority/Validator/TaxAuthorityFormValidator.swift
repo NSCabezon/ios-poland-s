@@ -107,7 +107,7 @@ private extension TaxAuthorityFormValidator {
         }
         
         guard accountNumber.count > 25 else {
-            return "#Minimalna liczba znaków wynosi 26"
+            return localized("pl_generic_validationText_upTo26Characters")
         }
         
         guard CharacterSet(charactersIn: accountNumber).isSubset(of: CharacterSet.decimalDigits) else {

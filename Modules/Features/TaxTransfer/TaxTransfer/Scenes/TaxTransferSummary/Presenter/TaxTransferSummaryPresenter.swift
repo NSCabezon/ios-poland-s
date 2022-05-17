@@ -62,8 +62,8 @@ private extension TaxTransferSummaryPresenter {
     func prepareViewModel() {
         let headerViewModel = OperativeSummaryStandardHeaderViewModel(
             image: "icnCheckOval1",
-            title: "#Gotowe",
-            description: "#Twój przelew jest już w drodze"
+            title: localized("generic_label_done"),
+            description: localized("summary_label_amountOf")
         )
         
         let bodyItems = mapper.map(transferModel, summaryModel: summaryModel)
@@ -93,7 +93,7 @@ private extension TaxTransferSummaryPresenter {
         view?.setupStandardBody(withItems: viewModel.bodyItems,
                                 actions: viewModel.bodyActionItems,
                                 collapsableSections: .defaultCollapsable(visibleSections: 3))
-        view?.setupStandardFooterWithTitle(localized("#A teraz..."), items: viewModel.footerItems)
+        view?.setupStandardFooterWithTitle(localized("summary_label_nowThat"), items: viewModel.footerItems)
         view?.build()
     }
 }

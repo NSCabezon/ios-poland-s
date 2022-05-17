@@ -43,7 +43,7 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
             guard let alias = requestValues.destinationAlias, alias.trim().count > 0 else {
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noAlias))
             }
-            let duplicate = requestValues.fullFavorites?.first { return $0.payeeName?.trim() == alias.trim() }
+            let duplicate = requestValues.fullFavorites?.first { return $0.payeeDisplayName?.trim() == alias.trim() }
             guard duplicate == nil else {
                 return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.duplicateAlias))
             }
