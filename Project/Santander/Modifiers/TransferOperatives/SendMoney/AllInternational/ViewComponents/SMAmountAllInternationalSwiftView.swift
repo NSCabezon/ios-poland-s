@@ -12,6 +12,7 @@ import UIKit
 
 protocol SMAmountAllInternationalSwiftViewDelegate: AnyObject {
     func saveSwift(_ swift: String?)
+    func reloadSwiftInfo()
 }
 
 final class SMAmountAllInternationalSwiftView: UIView {
@@ -82,4 +83,8 @@ extension SMAmountAllInternationalSwiftView: OneInputRegularViewDelegate {
     }
     
     func shouldReturn() {}
+    
+    func didEndEditing(_ view: OneInputRegularView) {
+        self.delegate?.reloadSwiftInfo()
+    }
 }

@@ -22,6 +22,7 @@ protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresente
     func changeDestinationAccount()
     func saveDescription(_ description: String?)
     func saveSwift(_ swift: String?)
+    func reloadSwiftInfo()
     func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable)
 }
 
@@ -181,6 +182,18 @@ private extension SendMoneyAmountAllInternationalPresenter {
     func getLocalCode() -> String {
         return self.dependenciesResolver.resolve(for: LocalAppConfig.self).countryCode
     }
+    
+    func getCountryFlag() -> String? {
+        guard let baseUrl = self.dependenciesResolver.resolve(for: BaseURLProvider.self).baseURL else {
+            return nil
+        }
+        // TODO: MOVE TO CONSTANTS
+        return String(format: "%@%@%@%@",
+                      baseUrl,
+                      "RWD/country/icons/",
+                      self.operativeData.destinationIBANRepresentable?.countryCode.lowercased() ?? "",
+                      ".png")
+    }
 }
 
 extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternationalPresenterProtocol {
@@ -190,6 +203,9 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         self.reloadExchangeRateView()
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
         self.view?.setSwiftText(self.operativeData.bicSwift)
+        self.view?.setSwiftInfo(countryFlag: self.getCountryFlag(),
+                                bankName: self.operativeData.bankName,
+                                bankAddress: self.operativeData.bankAddress)
         self.view?.setDescriptionText(self.operativeData.description)
     }
     
@@ -242,6 +258,11 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
     func saveSwift(_ swift: String?) {
         self.operativeData.bicSwift = swift
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
+    }
+    
+    func reloadSwiftInfo() {
+        // TODO: LLAMAR A SERVICIO PASANDO BIC/SWIFT
+        // TODO: MOSTRAR LOADER
     }
     
     func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable) {
