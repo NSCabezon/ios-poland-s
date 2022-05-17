@@ -26,6 +26,9 @@ protocol BLIKHomeCoordinatorProtocol {
 public final class BLIKHomeCoordinator: ModuleCoordinator {
     public weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    public var onFinish: (() -> Void)?
+    public var dataBinding: DataBinding = DataBindingObject()
+    public var childCoordinators: [Coordinator] = []
 
     public init(dependenciesResolver: DependenciesResolver, navigationController: UINavigationController?) {
         self.navigationController = navigationController
@@ -174,3 +177,5 @@ private extension BLIKHomeCoordinator {
         }
     }
 }
+
+extension BLIKHomeCoordinator: BindableCoordinator {}

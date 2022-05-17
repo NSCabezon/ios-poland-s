@@ -18,6 +18,7 @@ protocol TaxTransferFormContainerViewDelegate: AnyObject {
 final class TaxTransferFormContainerView: UIView {
     private let stackView = UIStackView()
     private let accountSection = TaxTransferAccountSectionView()
+    private let relatedVatAccountSection = RelatedVatAccountSectionView()
     private let taxPayerSection = TaxTransferPayerSectionView()
     private let taxAuthoritySection = TaxTransferAuthoritySectionView()
     private let taxBillingPeriodSection = TaxTransferBillingPeriodView()
@@ -70,6 +71,12 @@ final class TaxTransferFormContainerView: UIView {
         onTap: @escaping () -> Void
     ) {
         accountSection.configure(with: viewModel, onTap: onTap)
+    }
+    
+    func configureRelatedVatAccountSection() { // TODO:- Pass actual viewModel
+        relatedVatAccountSection.configure(
+            withVatAccountBalanceText: "#Rachunek VAT 1234 (1 670,98 PLN)"
+        )
     }
     
     func configureTaxPayerSelector(
@@ -134,6 +141,7 @@ private extension TaxTransferFormContainerView {
         
         [
             accountSection,
+            relatedVatAccountSection,
             taxPayerSection,
             taxAuthoritySection,
             taxBillingPeriodSection,
