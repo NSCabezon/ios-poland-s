@@ -30,7 +30,7 @@ final class PLSavingsCustomOptionCoordinator: BindableCoordinator {
               }
 
         switch identifier {
-        case PLGetSavingProductOption.savingDetails.rawValue.lowercased(), PLGetSavingProductOption.termDetails.rawValue.lowercased():
+        case PLSavingProductOption.savingDetails.rawValue.lowercased(), PLSavingProductOption.termDetails.rawValue.lowercased():
             didSelectSavingDetail()
         default:
             Toast.show(localized("generic_alert_notAvailableOperation"))

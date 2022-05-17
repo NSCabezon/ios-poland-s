@@ -63,7 +63,7 @@ private extension PLGetSavingProductOptionsUseCase {
     func getSavingOptionsBaseList(productMatrixShortcuts: [OperationsProductsStatesDTO], savingsProductTypeString: String) -> [SavingProductOptionRepresentable] {
 
         var optionsArray = [(options: SavingProductOption, order: Int)]()
-        for savingProductType in PLGetSavingProductOption.allCases {
+        for savingProductType in PLSavingProductOption.allCases {
             guard let accountSubtype = PLSavingTransactionsRepositoryProductType(rawValue: savingsProductTypeString),
                 savingProductType.isValidAccountSubType(typeToCheck: accountSubtype) else {
                 continue

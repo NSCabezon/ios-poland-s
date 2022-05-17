@@ -1,10 +1,10 @@
 //
-//  PLGetSavingProductOptionsOrder.swift
+//  PLSavingProductOption.swift
 //  Santander
 import CoreDomain
 import CoreFoundationLib
 
-enum PLGetSavingProductOption: String, CaseIterable {
+enum PLSavingProductOption: String, CaseIterable {
 
     case sendMoney = "SEND_MONEY"
     case sendMoneyFromSrc = "SEND_MONEY_FROM_SRC"
@@ -69,7 +69,7 @@ enum PLGetSavingProductOption: String, CaseIterable {
     }
 }
 
-extension PLGetSavingProductOption {
+extension PLSavingProductOption {
     public var title: String {
        switch self {
        case .sendMoney:

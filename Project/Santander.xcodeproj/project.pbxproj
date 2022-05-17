@@ -89,7 +89,7 @@
 		0DCED39F268B2893001D38CC /* PLAccountNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED39E268B2893001D38CC /* PLAccountNumberFormatter.swift */; };
 		0DCED3A1268B2E6E001D38CC /* ShareIbanFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCED3A0268B2E6E001D38CC /* ShareIbanFormatter.swift */; };
 		0DE48B3B27C7A5300080E71F /* FundsExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE48B3A27C7A5300080E71F /* FundsExternalDependenciesResolver.swift */; };
-		180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		180E15F4C4CFEF45D67C330D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		1C8B3EEB270DEF1F00868449 /* SendMoneyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEA270DEF1F00868449 /* SendMoneyCoordinator.swift */; };
 		1C8B3EED270DEF3000868449 /* SendMoneyModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8B3EEC270DEF3000868449 /* SendMoneyModifier.swift */; };
 		26014B4127EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26014B4027EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift */; };
@@ -154,7 +154,7 @@
 		45D378FE27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D378FD27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift */; };
 		5F02263D27328E0C005161B6 /* LoadPfmSessionStartedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */; };
 		5F02263F27328E20005161B6 /* StopPfmSessionFinishedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */; };
-		662018352826D90200359338 /* PLGetSavingProductOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662018342826D90200359338 /* PLGetSavingProductOption.swift */; };
+		662018352826D90200359338 /* PLSavingProductOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662018342826D90200359338 /* PLSavingProductOption.swift */; };
 		6620183728270B5100359338 /* SavingProductOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6620183628270B5000359338 /* SavingProductOption.swift */; };
 		665C14DD282CE88B0001CD35 /* ModuleDependencies+SavingsExternalDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665C14DC282CE88B0001CD35 /* ModuleDependencies+SavingsExternalDependenciesResolver.swift */; };
 		66755AD02823E1F1001A4075 /* BLIKPGSimpleFrequentOperativeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66755ACE2823E1F1001A4075 /* BLIKPGSimpleFrequentOperativeOption.swift */; };
@@ -244,7 +244,7 @@
 		A3237D2828058B84004623C5 /* PLTransferZusSmeOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3237D2728058B84004623C5 /* PLTransferZusSmeOperative.swift */; };
 		A3DD2B0627AAA83200CC8085 /* PLTransferZusOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */; };
 		A9134FBC26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */; };
-		A936F1E126CD256A0038D52D /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		A936F1E126CD256A0038D52D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A94EF0032816C6E000A84585 /* PLGlobalSecurityViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EF0022816C6E000A84585 /* PLGlobalSecurityViewContainer.swift */; };
 		A94EF0062816E1A500A84585 /* PLGetContactPhonesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EF0052816E1A500A84585 /* PLGetContactPhonesUseCase.swift */; };
 		A94EF0082816E9D400A84585 /* PLSecurityActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EF0072816E9D400A84585 /* PLSecurityActionBuilder.swift */; };
@@ -468,7 +468,6 @@
 		1D4FCCD2F29DA4E7DA8C66B6 /* Pods-SantanderTests.preprod-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-release.xcconfig"; sourceTree = "<group>"; };
 		26014B4027EA3C0A00742B36 /* PLInternalTransferConfirmationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLInternalTransferConfirmationModifier.swift; sourceTree = "<group>"; };
 		2637FD21280009A20052A901 /* PLGetSavingProductOptionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetSavingProductOptionsUseCase.swift; sourceTree = "<group>"; };
-		2B74322E19EC006D04DBE6D9 /* Pods-Santander.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.test.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.test.xcconfig"; sourceTree = "<group>"; };
 		3462BDB5271FFB5900FAA715 /* SendMoneyTransferTypeRadioButtonsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeRadioButtonsContainerView.swift; sourceTree = "<group>"; };
 		3462BDB7271FFB6C00FAA715 /* SendMoneyTransferTypeRadioButtonsContainerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendMoneyTransferTypeRadioButtonsContainerView.xib; sourceTree = "<group>"; };
 		3462BDBB27200A7D00FAA715 /* SendMoneyTransferTypeFeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeFeeView.swift; sourceTree = "<group>"; };
@@ -537,8 +536,7 @@
 		5F02263C27328E0B005161B6 /* LoadPfmSessionStartedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPfmSessionStartedAction.swift; sourceTree = "<group>"; };
 		5F02263E27328E20005161B6 /* StopPfmSessionFinishedAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPfmSessionFinishedAction.swift; sourceTree = "<group>"; };
 		61DC024854F55445A4FC6A60 /* Pods-Santander.preprod-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.preprod-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.preprod-release.xcconfig"; sourceTree = "<group>"; };
-		6334327FA32CA3DE8394090C /* Pods-SantanderTests.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.uat-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.uat-release.xcconfig"; sourceTree = "<group>"; };
-		662018342826D90200359338 /* PLGetSavingProductOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetSavingProductOption.swift; sourceTree = "<group>"; };
+		662018342826D90200359338 /* PLSavingProductOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSavingProductOption.swift; sourceTree = "<group>"; };
 		6620183628270B5000359338 /* SavingProductOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingProductOption.swift; sourceTree = "<group>"; };
 		665C14DC282CE88B0001CD35 /* ModuleDependencies+SavingsExternalDependenciesResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModuleDependencies+SavingsExternalDependenciesResolver.swift"; sourceTree = "<group>"; };
 		66755ACE2823E1F1001A4075 /* BLIKPGSimpleFrequentOperativeOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLIKPGSimpleFrequentOperativeOption.swift; sourceTree = "<group>"; };
@@ -609,9 +607,6 @@
 		82AED7892796F81C00E6133D /* PLPublicMenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPublicMenuRepository.swift; sourceTree = "<group>"; };
 		82C9D2D427CEA0C100A31C7B /* PLGetLoanTransactionDetailConfigurationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetLoanTransactionDetailConfigurationUseCase.swift; sourceTree = "<group>"; };
 		82C9D2D827CF75B200A31C7B /* PLGetLoanPDFInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetLoanPDFInfoUseCase.swift; sourceTree = "<group>"; };
-		8365E8487AEACB9E75E3615A /* Pods-SantanderTests.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.dev-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.dev-release.xcconfig"; sourceTree = "<group>"; };
-		851A7C7428211360005FD374 /* BLIKPGSimpleFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKPGSimpleFrequentOperativeOption.swift; sourceTree = "<group>"; };
-		851A7C76282114B1005FD374 /* TransactionHistoryPGSimpleFrequentOperativeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryPGSimpleFrequentOperativeOption.swift; sourceTree = "<group>"; };
 		85E19B5B270E295C00EFA1CC /* SendMoneyTransferTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypeViewController.swift; sourceTree = "<group>"; };
 		85E19B5C270E295C00EFA1CC /* SendMoneyTransferTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendMoneyTransferTypeViewController.xib; sourceTree = "<group>"; };
 		85E19B5D270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMoneyTransferTypePresenter.swift; sourceTree = "<group>"; };
@@ -633,7 +628,6 @@
 		9CDAE3B32743F93700984155 /* PLSendMoneyConfirmationStepUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSendMoneyConfirmationStepUseCase.swift; sourceTree = "<group>"; };
 		9CF5175526FB75A800332F8B /* CheckNewSendMoneyHomeEnabledUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNewSendMoneyHomeEnabledUseCase.swift; sourceTree = "<group>"; };
 		9EE7AF442800746700D7A9DD /* PLGetSavingProductComplimentaryDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetSavingProductComplimentaryDataUseCase.swift; sourceTree = "<group>"; };
-		A0B28FE992C727737CB0595B /* Pods-SantanderTests.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.pro-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.pro-release.xcconfig"; sourceTree = "<group>"; };
 		A0C6D17C99138CB7EE941A5C /* Pods-Santander.intern-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-debug.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-debug.xcconfig"; sourceTree = "<group>"; };
 		A10AC764272A9FBC00050CF9 /* PREPROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PREPROD.xcconfig; sourceTree = "<group>"; };
 		A1192F74272805B600B83B42 /* UAT.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UAT.xcconfig; sourceTree = "<group>"; };
@@ -643,11 +637,11 @@
 		A3DD2B0527AAA83200CC8085 /* PLTransferZusOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLTransferZusOperative.swift; sourceTree = "<group>"; };
 		A44018708A45986E8428E36D /* Pods-SantanderTests.pre-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.pre-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.pre-debug.xcconfig"; sourceTree = "<group>"; };
 		A9134FBB26F0E0890013A109 /* PLAccountOtherOperativesActionModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAccountOtherOperativesActionModifier.swift; sourceTree = "<group>"; };
+		A93F5E59F57A00FA9ADA5E61 /* Pods-SantanderTests.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-debug.xcconfig"; sourceTree = "<group>"; };
 		A94EF0022816C6E000A84585 /* PLGlobalSecurityViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGlobalSecurityViewContainer.swift; sourceTree = "<group>"; };
 		A94EF0052816E1A500A84585 /* PLGetContactPhonesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetContactPhonesUseCase.swift; sourceTree = "<group>"; };
 		A94EF0072816E9D400A84585 /* PLSecurityActionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSecurityActionBuilder.swift; sourceTree = "<group>"; };
 		A94EF0092816EA1E00A84585 /* PLSecurityActionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSecurityActionFactory.swift; sourceTree = "<group>"; };
-		A93F5E59F57A00FA9ADA5E61 /* Pods-SantanderTests.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-debug.xcconfig"; sourceTree = "<group>"; };
 		A962AAA927173AE600CA6F26 /* GetPLCardsOtherOperativesWebConfigurationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPLCardsOtherOperativesWebConfigurationUseCase.swift; sourceTree = "<group>"; };
 		A962AAAC2718228100CA6F26 /* PLCardsOtherOperativesWebConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardsOtherOperativesWebConfiguration.swift; sourceTree = "<group>"; };
 		A97543342784805A00400A0A /* PLCashLoanOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCashLoanOperative.swift; sourceTree = "<group>"; };
@@ -707,12 +701,10 @@
 		BB8718FBF267B1410FED7C1A /* Pods-Santander.uat-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.uat-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.uat-release.xcconfig"; sourceTree = "<group>"; };
 		BBB8E70B26A990EF00E54B2F /* NotificationPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionManager.swift; sourceTree = "<group>"; };
 		BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLMonthlyBalanceUseCase.swift; sourceTree = "<group>"; };
-		C12DA6A3977724B3A1EF154D /* Pods-SantanderTests.preprod-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.preprod-debug.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.preprod-debug.xcconfig"; sourceTree = "<group>"; };
+		BEE56BBB4FC61232879D5A65 /* Pods-SantanderTests.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.pro-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.pro-release.xcconfig"; sourceTree = "<group>"; };
 		C43A6F732805BCE10082BD7A /* PLGlobalSearchConfigurationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLGlobalSearchConfigurationModifier.swift; sourceTree = "<group>"; };
 		C49F39A2281C17BE0012CF51 /* PLSecurityAreaViewProtocolModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSecurityAreaViewProtocolModifier.swift; sourceTree = "<group>"; };
 		C4C3389A28254D4300FF727D /* PLChangeProductAliasOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLChangeProductAliasOperative.swift; sourceTree = "<group>"; };
-		CA16056EE927AFF76FA97838 /* Pods-Santander.regression-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.regression-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.regression-release.xcconfig"; sourceTree = "<group>"; };
-		BEE56BBB4FC61232879D5A65 /* Pods-SantanderTests.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.pro-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.pro-release.xcconfig"; sourceTree = "<group>"; };
 		C9B0447AADCA817C933BCCE2 /* Pods-Santander.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.dev-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.dev-release.xcconfig"; sourceTree = "<group>"; };
 		CC43F43727D600D300FFA78A /* PLPrivateMenuMyProductsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuMyProductsUseCase.swift; sourceTree = "<group>"; };
 		CC43F43B27D7B20500FFA78A /* PLPrivateMenuGetNameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuGetNameUseCase.swift; sourceTree = "<group>"; };
@@ -783,8 +775,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180E15F4C4CFEF45D67C330D /* BuildFile in Frameworks */,
-				A7D26EE6879BB1775B59EDF6 /* Pods_SantanderTests.framework in Frameworks */,
+				180E15F4C4CFEF45D67C330D /* (null) in Frameworks */,
 				2A337CBF2CA1032BDC1463B3 /* Pods_SantanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -921,6 +912,7 @@
 				04E10A80280DA4A700859684 /* PLSavingsHomeTransactionsActionsUseCase.swift */,
 				04E10A82280FE0E700859684 /* PLGetSavingProductsUsecase.swift */,
 				9EE7AF442800746700D7A9DD /* PLGetSavingProductComplimentaryDataUseCase.swift */,
+				2637FD21280009A20052A901 /* PLGetSavingProductOptionsUseCase.swift */,
 				048F93D22817C7B000D1E188 /* PLGoalsWebViewConfiguration.swift */,
 				66962D7D281D938D00E90890 /* PLSavingsHomeConfiguration.swift */,
 			);
@@ -936,6 +928,8 @@
 				04E10A7527FEF9DC00859684 /* PLSavingAmountRepresentable.swift */,
 				04E10A7727FF034A00859684 /* PLSavingTransactionSupplementaryDataRepresentable.swift */,
 				04E10A7B27FF5B8900859684 /* PLSavingTransactionBalanceRepresentable.swift */,
+				662018342826D90200359338 /* PLSavingProductOption.swift */,
+				6620183628270B5000359338 /* SavingProductOption.swift */,
 			);
 			path = Representables;
 			sourceTree = "<group>";
@@ -1219,16 +1213,6 @@
 			path = SendMoney;
 			sourceTree = "<group>";
 		};
-		2637FD1E27FF39FB0052A901 /* SavingProducts */ = {
-			isa = PBXGroup;
-			children = (
-				2637FD21280009A20052A901 /* PLGetSavingProductOptionsUseCase.swift */,
-				662018342826D90200359338 /* PLGetSavingProductOption.swift */,
-				6620183628270B5000359338 /* SavingProductOption.swift */,
-			);
-			path = SavingProducts;
-			sourceTree = "<group>";
-		};
 		342822218E46CAD9AC5F3560 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1488,7 +1472,6 @@
 			isa = PBXGroup;
 			children = (
 				C43A6F722805BC490082BD7A /* GlobalSearch */,
-				2637FD1E27FF39FB0052A901 /* SavingProducts */,
 				0409C91127E46C2700009C2D /* OnlineAdvisor */,
 				04BAA0CF27AA9B8400AFDC2E /* ProductActionsShortcuts */,
 				42BF4875264A8E5700136E8D /* AppModifiers.swift */,
@@ -2728,7 +2711,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BF486D264A88B200136E8D /* TealiumCompilation.swift in Sources */,
-				A936F1E126CD256A0038D52D /* BuildFile in Sources */,
+				A936F1E126CD256A0038D52D /* (null) in Sources */,
 				66BC8A58263FEDF600654CC5 /* AppDependencies.swift in Sources */,
 				34949640271EAD710029E276 /* SendMoneyTransferTypeErrorView.swift in Sources */,
 				3A4B64E62796DDC5003FFE00 /* PLLoanModifier.swift in Sources */,
@@ -2748,7 +2731,7 @@
 				B01155F3271581BD00A4C175 /* CreditCardRepaymentMockInjector.swift in Sources */,
 				0D7A923927B3F05200C2BEC6 /* PLShortcutItems.swift in Sources */,
 				82AED78A2796F81C00E6133D /* PLPublicMenuRepository.swift in Sources */,
-				662018352826D90200359338 /* PLGetSavingProductOption.swift in Sources */,
+				662018352826D90200359338 /* PLSavingProductOption.swift in Sources */,
 				85E19B63270E295C00EFA1CC /* SendMoneyTransferTypePresenter.swift in Sources */,
 				04E10A83280FE0E700859684 /* PLGetSavingProductsUsecase.swift in Sources */,
 				B7BF53D527A7E95000EDDE88 /* PublicMenuCustomActionCoordinator.swift in Sources */,
