@@ -164,8 +164,8 @@ final class AppNavigationDependencies {
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
-        dependenciesEngine.register(for: AuthorizationCoordinatorProtocol.self) { resolver in
-            AuthorizationCoordinator(
+        dependenciesEngine.register(for: AuthorizationModuleCoordinator.self) { resolver in
+            AuthorizationModuleCoordinator(
                 dependenciesResolver: resolver,
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
