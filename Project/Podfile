@@ -29,6 +29,7 @@ def core_dependencies
   pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
   pod 'PersonalArea', :path => '../santander-one/PersonalArea', :testspecs => ['Tests']
   pod 'PersonalManager', :path => '../santander-one/PersonalManager'
+  pod 'PrivateMenu', :path => '../santander-one/PrivateMenu', :testspecs => ['Tests']
   pod 'Transfer', :path => '../santander-one/Transfer'
   pod 'Inbox', :path => '../santander-one/Inbox'
   pod 'Bills', :path => '../santander-one/Bills'
@@ -45,6 +46,7 @@ def core_dependencies
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
+  pod 'SANServicesLibrary', :path => '../santander-one/Modules/Libraries/SANServicesLibrary'
 end
 
 def legacy_libraries

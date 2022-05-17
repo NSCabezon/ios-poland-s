@@ -47,6 +47,7 @@ extension PLTrustedDeviceSuccessPresenter: PLTrustedDeviceSuccessPresenterProtoc
     func continueButtonDidPressed() {
         self.trackEvent(.clickContinue)
         self.view?.showLoading(completion: { [weak self] in
+            self?.view?.dismissLoading()
             self?.openSessionAndNavigateToGlobalPosition()
         })
         self.notificationTokenRegisterProcessGroup.execute { _ in }

@@ -77,6 +77,10 @@ struct ModuleDependencies {
     func resolve() -> PLGetSavingProductMatrixUseCase {
         return PLGetSavingProductMatrixUseCase(resolver: oldResolver)
     }
+    
+    func resolve() -> GetDigitalProfilePercentageUseCase {
+        return PLGetDigitalProfilePercentageUseCase(dependencies: self)
+    }
 }
 
 extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
