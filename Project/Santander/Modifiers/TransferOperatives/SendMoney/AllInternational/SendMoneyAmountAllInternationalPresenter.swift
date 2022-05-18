@@ -198,6 +198,15 @@ private extension SendMoneyAmountAllInternationalPresenter {
 
 extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternationalPresenterProtocol {
     
+    var currenciesList: [CurrencyInfoRepresentable] {
+        let filter: [CurrencyInfoRepresentable]? = self.operativeData.sepaList?.allCurrenciesRepresentable.filter { sepaListItem in
+            self.operativeData.exchangeRates?.contains(where: { exchangeRate in
+                exchangeRate.currencyCode == sepaListItem.code
+            }) ?? false
+        }
+        return filter ?? []
+    }
+    
     func viewDidLoad() {
         self.setAccountSelectorView()
         self.reloadExchangeRateView()
