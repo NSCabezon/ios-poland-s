@@ -61,7 +61,8 @@ private extension GetPGFrequentOperativeOption {
             OpenDepositPGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
             BuyInsurancePGFrequentOperativeOption(),
             CustomerServicePGFrequentOperativeOption(dependenciesResolver: legacyDependenciesResolver),
-            AccountStatementPGFrequentOperativeOption()
+            AccountStatementPGFrequentOperativeOption(),
+            PGFrequentOperativeOption.carbonFootprint
         ]
         #if DEBUG
         options.append(PLDebugMenuFrequentOperativeOption(dependencyResolver: legacyDependenciesResolver))
