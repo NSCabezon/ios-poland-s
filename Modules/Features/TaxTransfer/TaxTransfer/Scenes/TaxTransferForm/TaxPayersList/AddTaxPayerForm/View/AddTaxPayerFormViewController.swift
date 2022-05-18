@@ -50,7 +50,7 @@ final class AddTaxPayerFormViewController: UIViewController {
         super.viewWillAppear(animated)
         
         configureNavigationItem()
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
     
