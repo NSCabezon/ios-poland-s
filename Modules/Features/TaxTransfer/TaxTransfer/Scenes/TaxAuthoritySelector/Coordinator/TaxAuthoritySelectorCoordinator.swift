@@ -84,9 +84,12 @@ private extension TaxAuthoritySelectorCoordinator {
         presenter.showLoader()
         TaxAccountValidator(dependenciesResolver: dependenciesEngine).validateAccount(
             withNumber: taxAuthorityViewModel.taxAuthority.accountNumber,
-            onValidResult: { [weak self] in
+            onValidResult: { [weak self] associatedTaxFormType in
                 presenter.hideLoader(completion: {
-                    self?.showTaxSymbolSelector(for: taxAuthorityViewModel.taxAuthority)
+                    self?.showTaxSymbolSelector(
+                        taxAuthority: taxAuthorityViewModel.taxAuthority,
+                        associatedTaxFormType: associatedTaxFormType
+                    )
                 })
             },
             onInvalidResult: { [weak self] in
@@ -102,8 +105,11 @@ private extension TaxAuthoritySelectorCoordinator {
         )
     }
     
-    func showTaxSymbolSelector(for taxAuthority: TaxAuthority) {
-        let filteredTaxSymbols = taxSymbols.filter { $0.destinationAccountType == taxAuthority.taxAccountType }
+    func showTaxSymbolSelector(
+        taxAuthority: TaxAuthority,
+        associatedTaxFormType: Int
+    ) {
+        let filteredTaxSymbols = taxSymbols.filter { $0.symbolType == associatedTaxFormType }
         let coordinator = TaxSymbolSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
