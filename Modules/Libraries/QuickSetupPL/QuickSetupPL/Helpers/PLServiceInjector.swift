@@ -1,5 +1,4 @@
 import CoreTestData
-import QuickSetup
 
 public final class PLServiceInjector: CustomServiceInjector {
     public init() {}
