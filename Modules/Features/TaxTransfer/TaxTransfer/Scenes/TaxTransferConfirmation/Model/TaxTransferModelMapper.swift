@@ -14,7 +14,7 @@ protocol TaxTransferModelMapping {
         taxAuthority: SelectedTaxAuthority,
         taxPayer: TaxPayer,
         taxPayerInfo: SelectedTaxPayerInfo,
-        billingPeriod: TaxTransferBillingPeriodType,
+        billingPeriod: TaxTransferBillingPeriodType?,
         selectedBillingYear: String?,
         selectedPeriodNumber: Int?
     ) -> TaxTransferModel
@@ -37,7 +37,7 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
         taxAuthority: SelectedTaxAuthority,
         taxPayer: TaxPayer,
         taxPayerInfo: SelectedTaxPayerInfo,
-        billingPeriod: TaxTransferBillingPeriodType,
+        billingPeriod: TaxTransferBillingPeriodType?,
         selectedBillingYear: String?,
         selectedPeriodNumber: Int?
     ) -> TaxTransferModel {
@@ -69,7 +69,7 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
     private func getTitle(
         formData: TaxTransferFormFields,
         taxAuthority: SelectedTaxAuthority,
-        period: TaxTransferBillingPeriodType,
+        period: TaxTransferBillingPeriodType?,
         selectedBillingYear: String?,
         selectedPeriodNumber: Int?
     ) -> String {
@@ -80,11 +80,11 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
         
         switch period {
         case .year:
-            billingPeriod = "\(formattedYear)\(period.short)"
+            billingPeriod = "\(formattedYear)\(period?.short)"
         default:
-            billingPeriod = "\(formattedYear)\(period.short)\(selectedPeriodNumber ?? 0)"
+            billingPeriod = "\(formattedYear)\(period?.short)\(selectedPeriodNumber ?? 0)"
         }
-        
+
         guard obligationIdentifier.count <= Constants.firstArgMaxLenght,
               billingPeriod.count <= Constants.secondArgMaxLenght,
               taxAuthority.count <= Constants.thirdArgMaxLength else {
