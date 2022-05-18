@@ -109,7 +109,10 @@ private extension TaxAuthoritySelectorCoordinator {
         taxAuthority: TaxAuthority,
         associatedTaxFormType: Int
     ) {
-        let filteredTaxSymbols = taxSymbols.filter { $0.symbolType == associatedTaxFormType }
+        let filteredTaxSymbols = taxSymbols.filter {
+            $0.symbolType == associatedTaxFormType &&
+            $0.isActive
+        }.sorted { $0.name < $1.name }
         let coordinator = TaxSymbolSelectorCoordinator(
             dependenciesResolver: dependenciesEngine,
             navigationController: navigationController,
