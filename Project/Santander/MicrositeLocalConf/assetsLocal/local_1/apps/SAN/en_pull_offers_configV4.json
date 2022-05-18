@@ -235,7 +235,8 @@
             "WHATSNEW_PRECON": ["SOFIA_ORIENTA"],
             "WHATSNEW_NO_PRECON": ["offer_analysis_zone_piggyBox"],
             "ZF_FINANCING_CARDS": ["offer_analysis_zone_piggyBox"],
-            "ACCOUNTS_HOME_HUCHA": ["offer_analysis_zone_piggyBox"]
+            "ACCOUNTS_HOME_HUCHA": ["offer_analysis_zone_piggyBox"],
+            "CARBON_FOOTPRINT": ["SanFlix_Contratar"]
         },
         "securityTips": [
             {
