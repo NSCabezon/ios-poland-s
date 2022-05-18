@@ -50,7 +50,7 @@ extension ContextSelectorPresenter: ContextSelectorPresenterProtocol {
                     }
                     let abbreviationColorType = colorsEngine.get(context.name ?? "")
                     let abbreviationColor = ColorsByNameViewModel(abbreviationColorType).color
-                    return ContextSelectorViewModel(ownerId: context.ownerId?.getStringValue() ?? "", name: context.name ?? "", type: context.type, abbreviationColor: abbreviationColor, selected: context.selected ?? false)
+                    return ContextSelectorViewModel(ownerId: String(context.ownerId ?? 0), name: context.name ?? "", type: context.type, abbreviationColor: abbreviationColor, selected: context.selected ?? false)
                 })
                 self.view?.setupUI(with: contextViewModels)
             }
@@ -60,7 +60,7 @@ extension ContextSelectorPresenter: ContextSelectorPresenterProtocol {
     }
     
     func didSelectContext(with ownerId: String) {
-        guard ownerId != firstSelectedContext?.ownerId?.getStringValue() else {
+        guard ownerId != String(firstSelectedContext?.ownerId ?? 0) else {
             self.trackEvent(.selectSame)
             self.contextSelectorCoordinator.dismiss()
             return

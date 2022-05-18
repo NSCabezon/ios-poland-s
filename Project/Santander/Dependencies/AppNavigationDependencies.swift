@@ -164,17 +164,14 @@ final class AppNavigationDependencies {
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
-        dependenciesEngine.register(for: AuthorizationCoordinatorProtocol.self) { resolver in
-            AuthorizationCoordinator(
+        dependenciesEngine.register(for: AuthorizationModuleCoordinator.self) { resolver in
+            AuthorizationModuleCoordinator(
                 dependenciesResolver: resolver,
                 navigationController: self.drawer.currentRootViewController as? UINavigationController
             )
         }
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
-        }
-        dependenciesEngine.register(for: LoanTransactionActionsModifier.self) { resolver in
-            return PLLoanTransactionActionsModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
         dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
             return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
@@ -194,7 +191,7 @@ final class AppNavigationDependencies {
         }
 
         appSideMenuNavigationDependencies.registerDependencies()
-        DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine).registerDependencies()
+        DeeplinkDependencies(drawer: drawer, dependenciesEngine: dependenciesEngine, moduleDependencies: moduleDependencies).registerDependencies()
         self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in
             PLInsuranceProtectionModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }

@@ -22,7 +22,7 @@ final class PhoneTopUpDataSource {
     // MARK: Endpoints
     
     private enum PhoneTopUpServiceType: String {
-        case accounts = "/accounts/for-debit/34"
+        case accounts = "/accounts/for-debit/67"
         case operators = "/topup/ws/operators"
         case gsmOperators = "/topup/gsm-operator"
         case internetContacts = "/payees/phone"

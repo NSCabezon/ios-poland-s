@@ -62,7 +62,7 @@ final public class CardTransactionsDTOAdapter {
             cardTransaction.operationDate = DateFormats.toDate(string: plCardTransaction.sourceDate ?? "", output: .YYYYMMDD)
 
             let currencyType: CurrencyType
-            if let currencyOth = plCardTransaction.currencyOth {
+            if let currencyOth = plCardTransaction.currency {
                 switch currencyOth {
                 case "EUR":
                     currencyType = .eur
@@ -81,7 +81,7 @@ final public class CardTransactionsDTOAdapter {
                 currencyType = .złoty
             }
             
-            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: currencyType)
+            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currency ?? "", currencyType: currencyType)
             var amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
             if plCardTransaction.debitFlag?.lowercased() == "debit" {
                 amount.value?.negate()
@@ -113,7 +113,7 @@ final public class CardTransactionsDTOAdapter {
             pendingCardTransaction.annotationDate = DateFormats.toDate(string: plCardTransaction.sourceDate ?? "", output: .YYYYMMDD)
 
             let currencyType: CurrencyType
-            if let currencyOth = plCardTransaction.currencyOth {
+            if let currencyOth = plCardTransaction.currency {
                 switch currencyOth {
                 case "EUR":
                     currencyType = .eur
@@ -132,7 +132,7 @@ final public class CardTransactionsDTOAdapter {
                 currencyType = .złoty
             }
             
-            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currencyOth ?? "", currencyType: currencyType)
+            let currencyDTO = CurrencyDTO(currencyName: plCardTransaction.currency ?? "", currencyType: currencyType)
             pendingCardTransaction.amount = AmountDTO(value: plCardTransaction.amount ?? 0, currency: currencyDTO)
             pendingCardTransaction.description = plCardTransaction.transTitle
             pendingCardTransactions.append(pendingCardTransaction)
