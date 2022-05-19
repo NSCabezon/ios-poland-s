@@ -18,7 +18,11 @@ protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHe
     func setExchangeRateViewModel(_ viewModel: OneExchangeRateAmountViewModel)
     func setFloatingButtonEnabled(_ isEnabled: Bool)
     func setSwiftText(_ text: String?)
+    func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?)
+    func setSwiftError(_ error: SMAmountAllInternationalSwiftError)
     func setDescriptionText(_ text: String?)
+    func showSwiftInfoLoading()
+    func hideSwiftInfoLoading()
 }
 
 final class SendMoneyAmountAllInternationalViewController: UIViewController {
@@ -217,8 +221,29 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
         self.swiftView.setSwiftText(text)
     }
     
+    func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?) {
+        guard let bankName = bankName,
+              let bankAddress = bankAddress else {
+            self.swiftView.show(.none)
+            return
+        }
+        self.swiftView.show(.information(flag: countryFlag, text: "\(bankName)\n\(bankAddress)"))
+    }
+    
+    func setSwiftError(_ error: SMAmountAllInternationalSwiftError) {
+        self.swiftView.show(.error(error))
+    }
+    
     func setDescriptionText(_ text: String?) {
         self.descriptionView.setDescriptionText(text)
+    }
+    
+    func showSwiftInfoLoading() {
+        _ = self.showJumpingGreenLoadingPublisher()
+    }
+    
+    func hideSwiftInfoLoading() {
+        _ = self.dismissJumpingGreenLoadingPublisher()
     }
 }
 
@@ -239,7 +264,7 @@ extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationa
 }
 
 extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationalSwiftViewDelegate {
-    func saveSwift(_ swift: String?) {
+    func didEndEditing(_ swift: String?) {
         self.presenter.saveSwift(swift)
     }
 }
@@ -253,3 +278,5 @@ extension SendMoneyAmountAllInternationalViewController: SelectionListViewDelega
         self.presenter.didSelectCurrency(item)
     }
 }
+
+extension SendMoneyAmountAllInternationalViewController: JumpingGreenCirclesLoadingViewPresentationCapable {}
