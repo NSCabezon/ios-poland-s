@@ -20,7 +20,6 @@ protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable, Co
 
 final class TaxTransferFormViewController: UIViewController {
     private let presenter: TaxTransferFormPresenterProtocol
-    internal let keyboardManager = KeyboardManager()
     private let scrollView = UIScrollView()
     private let bottomButtonView = BottomButtonView()
     private lazy var formView = TaxTransferFormContainerView(
@@ -95,7 +94,6 @@ private extension TaxTransferFormViewController {
         configureNavigationItem()
         configureSubviews()
         configureBottomView()
-        configureKeyboardManager()
         configureStyling()
     }
     
@@ -134,11 +132,6 @@ private extension TaxTransferFormViewController {
         ])
     }
     
-    func configureKeyboardManager() {
-        keyboardManager.setDelegate(self)
-        keyboardManager.update()
-    }
-    
     func configureBottomView() {
         bottomButtonView.disableButton()
         bottomButtonView.configure(title: localized("pl_generic_button_done")) { [weak self] in
@@ -157,12 +150,6 @@ private extension TaxTransferFormViewController {
     
     @objc func close() {
         presenter.didTapClose()
-    }
-}
-
-extension TaxTransferFormViewController: KeyboardManagerDelegate {
-    var associatedScrollView: UIScrollView? {
-        return scrollView
     }
 }
 
