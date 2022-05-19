@@ -50,12 +50,14 @@ private extension PLGetCardTransactionDetailViewConfigurationUseCase {
             sourceDate = dateFrom(dateStr: date)
         }
         return CardTransactionDetailView(title: localized("transaction_label_operationDate"),
-                                         value: sourceDate ?? "")
+                                         value: sourceDate ?? "",
+                                         accessibilityLabel: AccessibilityCardTransactionsDetail.operartionDate.rawValue)
     }
     
     func getStatusDetailView(transaction: CardTransactionRepresentable) -> CardTransactionDetailView {
         return CardTransactionDetailView(title: localized("transaction_label_statusDetail"),
-                                         value: localized(transaction.stateTitle ?? ""))
+                                         value: localized(transaction.stateTitle ?? ""),
+                                         accessibilityLabel: AccessibilityCardTransactionsDetail.status.rawValue)
     }
     
     func getAnnotationDateView(transaction: CardTransactionRepresentable) -> CardTransactionDetailView {
@@ -64,22 +66,26 @@ private extension PLGetCardTransactionDetailViewConfigurationUseCase {
             postedDate = dateFrom(dateStr: date)
         }
         return CardTransactionDetailView(title: localized("transaction_label_annotationDate"),
-                                         value: postedDate ?? "")
+                                         value: postedDate ?? "",
+                                         accessibilityLabel: AccessibilityCardTransactionsDetail.annotationDate.rawValue)
     }
     
     func getRecipientView(transaction: CardTransactionRepresentable) -> CardTransactionDetailView {
         return CardTransactionDetailView(title: localized("transaction_label_recipient"),
-                                         value: transaction.recipient ?? "")
+                                         value: transaction.recipient ?? "",
+                                         accessibilityLabel: AccessibilityCardTransactionsDetail.recipient.rawValue)
     }
     
     func getCardAccountView(transaction: CardTransactionRepresentable) -> CardTransactionDetailView {
         return CardTransactionDetailView(title: localized("transaction_label_cardAccountNumber"),
-                                  value: accountNumber(str: transaction.cardAccountNumber ?? ""))
+                                  value: accountNumber(str: transaction.cardAccountNumber ?? ""),
+                                         accessibilityLabel: AccessibilityCardTransactionsDetail.cardNumber.rawValue)
     }
     
     func getOperationTypeView(transaction: CardTransactionRepresentable) -> CardTransactionDetailView {
         return CardTransactionDetailView(title: localized("transaction_label_operationType"),
-                                         value: transaction.operationType?.capitalized ?? "")
+                                         value: transaction.operationType?.capitalized ?? "",
+                                         accessibilityLabel: AccessibilityCardTransactionsDetail.type.rawValue)
     }
 }
 
