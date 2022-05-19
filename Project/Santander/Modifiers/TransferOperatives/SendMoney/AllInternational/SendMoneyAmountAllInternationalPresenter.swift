@@ -23,6 +23,8 @@ protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresente
     func saveDescription(_ description: String?)
     func saveSwift(_ swift: String?)
     func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable)
+    func didSelectIssueDate(_ date: Date)
+    func didSelecteOneFilterSegment(_ type: SendMoneyDateTypeViewModel)
 }
 
 final class SendMoneyAmountAllInternationalPresenter {
@@ -36,6 +38,8 @@ final class SendMoneyAmountAllInternationalPresenter {
         guard let container = self.container else { fatalError() }
         return container.get()
     }()
+    
+    private var selectedIssueDate: Date?
     
     public var sendMoneyUseCaseProvider: SendMoneyUseCaseProviderProtocol {
         return self.dependenciesResolver.resolve()
@@ -217,11 +221,59 @@ private extension SendMoneyAmountAllInternationalPresenter {
                 self.view?.setSwiftError(.invalidSwift)
             }
     }
+    
+    func setSelectDateOneViewModels() {
+        guard let selectionDateOneFilterViewModel = self.sendMoneyModifier?.selectionDateOneFilterViewModel,
+              let freqOneInputSelectViewModel = self.sendMoneyModifier?.freqOneInputSelectViewModel,
+              let selectionIssueDateViewModel = self.sendMoneyModifier?.selectionIssueDateViewModel
+        else { return }
+        let bussinessOneInputSelectViewModel = self.sendMoneyModifier?.bussinessOneInputSelectViewModel
+        let settedSelectionDateOneFilterViewModel = self.setSelectionDateOneFilterViewModel(selectionDateOneFilterViewModel)
+        let issueDateViewModel = OneInputDateViewModel(dependenciesResolver: self.dependenciesResolver,
+                                                       status: .activated,
+                                                       firstDate: self.operativeData.issueDate,
+                                                       minDate: selectionIssueDateViewModel.minDate,
+                                                       maxDate: selectionIssueDateViewModel.maxDate)
+        self.selectedIssueDate = self.operativeData.transferDateType == .day ? self.operativeData.issueDate : nil
+        let viewModel = SelectDateOneContainerViewModel(selectionDateOneFilterViewModel: settedSelectionDateOneFilterViewModel,
+                                                        oneInputSelectFrequencyViewModel: freqOneInputSelectViewModel,
+                                                        oneInputSelectViewModel: bussinessOneInputSelectViewModel,
+                                                        oneInputDateViewModel: issueDateViewModel,
+                                                        dependenciesResolver: self.dependenciesResolver)
+        self.view?.addSelectDateOneContainerView(viewModel, isSelectDeadlineCheckbox: false, endDate: self.operativeData.endDate)
+    }
+    
+    func setSelectionDateOneFilterViewModel(_ selectionDateOneFilterViewModel: SelectionDateOneFilterViewModel) -> SelectionDateOneFilterViewModel {
+        var viewModel = selectionDateOneFilterViewModel
+        var index = 0
+        if let tranferType = self.operativeData.transferDateType {
+            switch tranferType {
+            case .day: index = 1
+            case .periodic: index = 2
+            default: index = 0
+            }
+        } else {
+            index = 0
+        }
+        viewModel.setSelectedIndex(index)
+        return viewModel
+    }
 }
 
 extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternationalPresenterProtocol {
     
+    var currenciesList: [CurrencyInfoRepresentable] {
+        let filter: [CurrencyInfoRepresentable]? = self.operativeData.sepaList?.allCurrenciesRepresentable.filter { sepaListItem in
+            guard sepaListItem.code != getLocalCurrency() else { return true }
+            return self.operativeData.exchangeRates?.contains(where: { exchangeRate in
+                exchangeRate.currencyCode == sepaListItem.code
+            }) ?? false
+        }
+        return filter ?? []
+    }
+    
     func viewDidLoad() {
+        self.setSelectDateOneViewModels()
         self.setAccountSelectorView()
         self.reloadExchangeRateView()
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
@@ -236,6 +288,8 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         self.loadExchangeRates { [weak self] in
             guard let viewModel = self?.getOneExchangeViewModel() else { return }
             self?.view?.setExchangeRateViewModel(viewModel)
+            self?.checkSimpleDate()
+            self?.checkSwiftVew()
         }
     }
     
@@ -292,6 +346,34 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         self.operativeData.amount = originAmount
         self.operativeData.receiveAmount = destinationAmount
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
+    }
+    
+    func didSelectIssueDate(_ date: Date) {
+        self.operativeData.issueDate = date
+        self.selectedIssueDate = date
+    }
+    
+    func didSelecteOneFilterSegment(_ type: SendMoneyDateTypeViewModel) {
+        self.operativeData.transferDateType = type
+        guard type == .day && self.selectedIssueDate == nil else {
+            return
+        }
+        let date = self.sendMoneyModifier?.selectionIssueDateViewModel.minDate
+        self.selectedIssueDate = date
+        self.operativeData.issueDate = date ?? Date()
+    }
+    
+    func checkSimpleDate() {
+        let originCurrency = self.operativeData.amount?.currencyRepresentable?.currencyCode
+        let recivedCurrency = self.operativeData.receiveAmount?.currencyRepresentable?.currencyCode
+        let isSameCurrency = originCurrency == recivedCurrency && originCurrency != getLocalCurrency()
+        self.view?.setSimpleDate(!isSameCurrency)
+    }
+    
+    func checkSwiftVew() {
+        let recivedCurrency = self.operativeData.receiveAmount?.currencyRepresentable?.currencyCode == getLocalCurrency()
+        let isLocalCountry = getLocalCode() == operativeData.countryCode
+        self.view?.setHiddenSwiftView(recivedCurrency && isLocalCountry)
     }
 }
 
