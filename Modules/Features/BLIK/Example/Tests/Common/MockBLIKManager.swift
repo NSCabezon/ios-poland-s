@@ -132,4 +132,12 @@ struct MockBLIKManager: PLBLIKManagerProtocol {
     func acceptTransfer(_ parameters: AcceptDomesticTransactionParameters, transactionParameters: String?) throws -> Result<AcceptDomesticTransferSummaryDTO, NetworkProviderError> {
         fatalError()
     }
+    
+    func setTransactionDataVisibility(_ parameters: SetNoPinTrnVisibleParameters) throws -> Result<Void, NetworkProviderError> {
+        fatalError()
+    }
+    
+    func getChallenge(_ parameters: BlikChallengeParameters) throws -> Result<BlikChallengeDTO, NetworkProviderError> {
+        fatalError()
+    }
 }
