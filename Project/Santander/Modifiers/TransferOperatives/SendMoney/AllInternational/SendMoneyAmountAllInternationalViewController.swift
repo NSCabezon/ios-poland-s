@@ -20,6 +20,8 @@ protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHe
     func setSwiftText(_ text: String?)
     func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?)
     func setDescriptionText(_ text: String?)
+    func addSelectDateOneContainerView(_ viewModel: SelectDateOneContainerViewModel, isSelectDeadlineCheckbox: Bool, endDate: Date?)
+    func setSimpleDate(_ isSimple: Bool)
 }
 
 final class SendMoneyAmountAllInternationalViewController: UIViewController {
@@ -95,6 +97,7 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
     }()
     
     private lazy var simpleDateView = SMAmountAllInternationalSimpleDateView()
+    private let selectDateOneContainerView = SelectDateOneContainerView()
     
     internal lazy var currenciesSelectionView: SelectionListView = {
         let currenciesSelectionView = SelectionListView()
@@ -154,6 +157,7 @@ private extension SendMoneyAmountAllInternationalViewController {
         self.stackView.addArrangedSubview(self.exchangeRateContainerView)
         self.stackView.addArrangedSubview(self.descriptionView)
         self.stackView.addArrangedSubview(self.simpleDateView)
+        self.stackView.addArrangedSubview(self.selectDateOneContainerView)
     }
     
     func bindViews() {
@@ -252,6 +256,17 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     func setDescriptionText(_ text: String?) {
         self.descriptionView.setDescriptionText(text)
     }
+    
+    func addSelectDateOneContainerView(_ viewModel: SelectDateOneContainerViewModel, isSelectDeadlineCheckbox: Bool, endDate: Date?) {
+        self.selectDateOneContainerView.delegate = self
+        self.selectDateOneContainerView.setViewModels(viewModel, isSelectDeadlineCheckbox: isSelectDeadlineCheckbox, endDate: endDate)
+        self.selectDateOneContainerView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func setSimpleDate(_ isSimple: Bool) {
+        self.simpleDateView.isHidden = !isSimple
+        self.selectDateOneContainerView.isHidden = isSimple
+    }
 }
 
 extension SendMoneyAmountAllInternationalViewController: OneAccountsSelectedCardDelegate {
@@ -288,4 +303,25 @@ extension SendMoneyAmountAllInternationalViewController: SelectionListViewDelega
     func didSelectItem(_ item: String) {
         self.presenter.didSelectCurrency(item)
     }
+}
+
+extension SendMoneyAmountAllInternationalViewController: SelectDateOneContainerViewDelegate {
+    
+    func didSelecteOneFilterSegment(_ type: SendMoneyDateTypeViewModel) {
+        self.presenter.didSelecteOneFilterSegment(type)
+    }
+    
+    func didSelectIssueDate(_ date: Date) {
+        self.presenter.didSelectIssueDate(date)
+    }
+    
+    func getSendMoneyPeriodicity(_ index: Int) -> SendMoneyPeriodicityTypeViewModel {
+        return .month
+    }
+    
+    func didSelectDeadlineCheckbox(_ isDeadLine: Bool) {}
+    func didSelectFrequency(_ type: SendMoneyPeriodicityTypeViewModel) {}
+    func didSelectBusinessDay(_ type: SendMoneyEmissionTypeViewModel) {}
+    func didSelectStartDate(_ date: Date) {}
+    func didSelectEndDate(_ date: Date) {}
 }
