@@ -13,7 +13,7 @@ import SANLegacyLibrary
 import OpenCombine
 import UnitTestCommons
 import CoreDomain
-import SANPLLibrary
+@testable import SANPLLibrary
 @testable import Santander
 @testable import TransferOperatives
 
@@ -26,24 +26,20 @@ class PLInternalTransferPreSetupUseCaseTest: XCTestCase {
     private var notPolandAccount: AccountRepresentable!
     var notOriginCreditCardAccount: [AccountRepresentable] = []
     var accounts: [AccountRepresentable] = []
+    
     override func setUp() {
-        self.registrationManyAccounts()
+        registrationManyAccounts()
         globalPositionMock = self.getGlobalPositionMock()
-        dependencies = PLInternalTransferExternalDependenciesResolverMock()
-        self.sut = PLInternalTransferPreSetupUseCase(dependencies: dependencies)
+        dependencies = PLInternalTransferExternalDependenciesResolverMock(rates: [], accounts: getAccountForDebit(), mockDataInjector: mockDataInjector)
+        sut = PLInternalTransferPreSetupUseCase(dependencies: dependencies)
         accounts = globalPositionMock.accounts.map { entity in
             entity.representable
         }
     }
     
-    func test_Given_ManyAccounts_When_AllCases_Then_success() {
-        let value = sut.isMinimunAccounts(accounts: accounts)
-        XCTAssertTrue(value == true)
-    }
-    
-    func test_Given_ManyAccounts_Whwn_AllCases_Then_failure() {
-        let value = sut.isMinimunAccounts(accounts: [])
-        XCTAssertTrue(value == false)
+    func test_Given_EmptyAccounts_When_AllCases_Then_getEmptyAccountsError() throws {
+        let value = try sut.fetchPreSetup().sinkAwaitError()
+        XCTAssertTrue(value == .minimunAccounts)
     }
 }
 
@@ -53,6 +49,10 @@ private extension PLInternalTransferPreSetupUseCaseTest {
             for: \.gpData.getGlobalPositionMock,
                filename: "PLobtenerPosGlobal"
         )
+    }
+    
+    func getAccountForDebit() -> [AccountForDebitDTO] {
+        return self.mockDataInjector.loadFromFile("getEmptyAccounts")
     }
     
     func getGlobalPositionMock() -> GlobalPositionMock {
