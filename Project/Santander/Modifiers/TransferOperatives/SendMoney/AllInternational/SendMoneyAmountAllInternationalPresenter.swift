@@ -266,6 +266,7 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
             guard let viewModel = self?.getOneExchangeViewModel() else { return }
             self?.view?.setExchangeRateViewModel(viewModel)
             self?.checkSimpleDate()
+            self?.checkSwiftVew()
         }
     }
     
@@ -344,6 +345,12 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
         let recivedCurrency = self.operativeData.receiveAmount?.currencyRepresentable?.currencyCode
         let isSameCurrency = originCurrency == recivedCurrency && originCurrency != getLocalCurrency()
         self.view?.setSimpleDate(!isSameCurrency)
+    }
+    
+    func checkSwiftVew() {
+        let recivedCurrency = self.operativeData.receiveAmount?.currencyRepresentable?.currencyCode == getLocalCurrency()
+        let isLocalCountry = getLocalCode() == operativeData.countryCode
+        self.view?.setHiddenSwiftView(recivedCurrency && isLocalCountry)
     }
 }
 

@@ -22,6 +22,7 @@ protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHe
     func setDescriptionText(_ text: String?)
     func addSelectDateOneContainerView(_ viewModel: SelectDateOneContainerViewModel, isSelectDeadlineCheckbox: Bool, endDate: Date?)
     func setSimpleDate(_ isSimple: Bool)
+    func setHiddenSwiftView(_ isHiden: Bool)
 }
 
 final class SendMoneyAmountAllInternationalViewController: UIViewController {
@@ -266,6 +267,10 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     func setSimpleDate(_ isSimple: Bool) {
         self.simpleDateView.isHidden = !isSimple
         self.selectDateOneContainerView.isHidden = isSimple
+    }
+    
+    func setHiddenSwiftView(_ isHiden: Bool) {
+        self.swiftView.isHidden = isHiden
     }
 }
 
