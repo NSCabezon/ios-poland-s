@@ -135,13 +135,12 @@ private extension SendMoneyAmountAllInternationalPresenter {
               let destinationRates = self.getBuySellRatesForCurrency(destinationCurrency)
         else { return nil }
         let checkSameCurrencies = originCurrency.currencyCode == destinationCurrency.currencyCode
-        let checkSameCurrenciesButNotLocal = checkSameCurrencies && (destinationCurrency.currencyCode != getLocalCurrency())
         let typeExchange = getTypeTransactionExchange(destinationAmount: destinationAmount, destinationRates: destinationRates)
         let originExchangeAmount = OneExchangeRateAmount(amount: originAmount,
                                                  buyRate: originRates.buyRate,
                                                  sellRate: originRates.sellRate,
                                                  currencySelector: getOriginCurrenciesView(checkSameCurrencies))
-        let alert = checkSameCurrenciesButNotLocal ? OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate") : nil
+        let alert = checkSameCurrencies ? nil : OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate")
         return OneExchangeRateAmountViewModel(originAmount: originExchangeAmount,
                                               type: typeExchange,
                                               alert: alert
@@ -163,8 +162,8 @@ private extension SendMoneyAmountAllInternationalPresenter {
     }
     
     func getTypeTransactionExchange(destinationAmount: AmountRepresentable, destinationRates: (buyRate: AmountRepresentable, sellRate: AmountRepresentable)) -> OneExchangeRateAmountViewType {
-        let destinationView = getDestinationCurrenciesView()
-        let typeExchange = destinationView == nil ? OneExchangeRateAmountViewType.noExchange
+        let sameCurrencies = self.operativeData.transactionalOriginCurrency?.code == self.operativeData.destinationCurrency?.code
+        let typeExchange = sameCurrencies ? OneExchangeRateAmountViewType.noExchange
         : .exchange(destinationAmount:
                         OneExchangeRateAmount(amount: destinationAmount,
                                               buyRate: destinationRates.buyRate,
