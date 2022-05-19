@@ -173,9 +173,6 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: AccountTransactionDetailActionProtocol.self) { resolver in
             return PLAccountTransactionDetailAction(dependenciesResolver: resolver, drawer: self.drawer)
         }
-        dependenciesEngine.register(for: LoanTransactionActionsModifier.self) { resolver in
-            return PLLoanTransactionActionsModifier(dependenciesResolver: resolver, drawer: self.drawer)
-        }
         dependenciesEngine.register(for: CardTransactionDetailActionFactoryModifierProtocol.self) { resolver in
             return PLCardTransactionDetailActionFactoryModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }

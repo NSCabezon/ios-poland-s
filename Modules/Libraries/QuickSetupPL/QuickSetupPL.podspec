@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.resources = "QuickSetupPL/Assets/**/*.{json,xml}"
 
   spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  spec.dependency "QuickSetup/standard"
+  spec.dependency "CoreTestData"
   spec.dependency "SANPLLibrary"
   spec.dependency "CoreFoundationLib"
   spec.dependency "Localization"

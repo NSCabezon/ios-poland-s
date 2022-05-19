@@ -28,6 +28,19 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		A3AC59F128295751009615A3 /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC59F028295751009615A3 /* PLAuthorizationCoordinatorMock.swift */; };
+		A3AC59F528295B28009615A3 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC59F428295B28009615A3 /* PLAuthorizationProcessorManagerMock.swift */; };
+		A3AC59F728295D69009615A3 /* CoreSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC59F628295D69009615A3 /* CoreSessionManagerMock.swift */; };
+		A3AC59F928296087009615A3 /* OperativeContainerCoordinatorDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC59F828296087009615A3 /* OperativeContainerCoordinatorDelegateMock.swift */; };
+		A3AC59FE282AAA68009615A3 /* BLIKTransactionViewModelProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC59FD282AAA68009615A3 /* BLIKTransactionViewModelProviderMock.swift */; };
+		A3AC5A01282BBBB2009615A3 /* SendMoneyChallengeStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A00282BBBB2009615A3 /* SendMoneyChallengeStub.swift */; };
+		A3AC5A03282BBC71009615A3 /* AuthorizationIdStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A02282BBC71009615A3 /* AuthorizationIdStub.swift */; };
+		A3AC5A05282BBDF5009615A3 /* ChallengeVerificationStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A04282BBDF5009615A3 /* ChallengeVerificationStub.swift */; };
+		A3AC5A07282BBE7B009615A3 /* SessionConfiguration+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A06282BBE7B009615A3 /* SessionConfiguration+Stub.swift */; };
+		A3AC5A09282CDB96009615A3 /* PendingChallengeStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A08282CDB96009615A3 /* PendingChallengeStub.swift */; };
+		A3AC5A0D282CDDC1009615A3 /* BLIKSummaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A0C282CDDC0009615A3 /* BLIKSummaryPresenterTests.swift */; };
+		A3AC5A10282CE036009615A3 /* BLIKSummaryViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A0F282CE036009615A3 /* BLIKSummaryViewControllerMock.swift */; };
+		A3AC5A12282CE236009615A3 /* BLIKSummaryCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5A11282CE236009615A3 /* BLIKSummaryCoordinatorMock.swift */; };
 		B044452826E0AA0300F66799 /* P2pAliasUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044452626E0A9E000F66799 /* P2pAliasUseCaseTests.swift */; };
 		B044452C26E0C75600F66799 /* MobileTransferFormPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044452A26E0C44400F66799 /* MobileTransferFormPresenterTests.swift */; };
 		B044453026E0D39600F66799 /* MobileTransferFormViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044452E26E0CA8400F66799 /* MobileTransferFormViewMock.swift */; };
@@ -76,6 +89,19 @@
 		6DD23CFB15FBBA7B13A549CD /* Pods-BLIK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLIK_Example.release.xcconfig"; path = "Target Support Files/Pods-BLIK_Example/Pods-BLIK_Example.release.xcconfig"; sourceTree = "<group>"; };
 		8133ECB6183979282FA301EF /* Pods_BLIK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLIK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E36D73FFF7E82003F732F7A /* Pods_BLIK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLIK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3AC59F028295751009615A3 /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
+		A3AC59F428295B28009615A3 /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
+		A3AC59F628295D69009615A3 /* CoreSessionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSessionManagerMock.swift; sourceTree = "<group>"; };
+		A3AC59F828296087009615A3 /* OperativeContainerCoordinatorDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperativeContainerCoordinatorDelegateMock.swift; sourceTree = "<group>"; };
+		A3AC59FD282AAA68009615A3 /* BLIKTransactionViewModelProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKTransactionViewModelProviderMock.swift; sourceTree = "<group>"; };
+		A3AC5A00282BBBB2009615A3 /* SendMoneyChallengeStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyChallengeStub.swift; sourceTree = "<group>"; };
+		A3AC5A02282BBC71009615A3 /* AuthorizationIdStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationIdStub.swift; sourceTree = "<group>"; };
+		A3AC5A04282BBDF5009615A3 /* ChallengeVerificationStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeVerificationStub.swift; sourceTree = "<group>"; };
+		A3AC5A06282BBE7B009615A3 /* SessionConfiguration+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionConfiguration+Stub.swift"; sourceTree = "<group>"; };
+		A3AC5A08282CDB96009615A3 /* PendingChallengeStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingChallengeStub.swift; sourceTree = "<group>"; };
+		A3AC5A0C282CDDC0009615A3 /* BLIKSummaryPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKSummaryPresenterTests.swift; sourceTree = "<group>"; };
+		A3AC5A0F282CE036009615A3 /* BLIKSummaryViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKSummaryViewControllerMock.swift; sourceTree = "<group>"; };
+		A3AC5A11282CE236009615A3 /* BLIKSummaryCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLIKSummaryCoordinatorMock.swift; sourceTree = "<group>"; };
 		B044452626E0A9E000F66799 /* P2pAliasUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2pAliasUseCaseTests.swift; sourceTree = "<group>"; };
 		B044452A26E0C44400F66799 /* MobileTransferFormPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileTransferFormPresenterTests.swift; sourceTree = "<group>"; };
 		B044452E26E0CA8400F66799 /* MobileTransferFormViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileTransferFormViewMock.swift; sourceTree = "<group>"; };
@@ -153,6 +179,7 @@
 				B044452426E0A3BE00F66799 /* Form */,
 				30CC5C1326CD298C004664B8 /* Contacts */,
 				30EB6AC426B1440000BFAFE7 /* Confirmation */,
+				A3AC5A0A282CDD00009615A3 /* Summary */,
 				30EB6AB126B040B600BFAFE7 /* Cancel */,
 			);
 			path = Transaction;
@@ -231,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				30EB6AD026B1579C00BFAFE7 /* BLIKConfirmationViewMock.swift */,
+				A3AC59FD282AAA68009615A3 /* BLIKTransactionViewModelProviderMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -268,6 +296,8 @@
 		607FACD21AFB9204008FA782 /* Example for BLIK */ = {
 			isa = PBXGroup;
 			children = (
+				A3AC59FF282BBB1C009615A3 /* Stubs */,
+				A3AC59EF28295742009615A3 /* Mocks */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				021C1FE726808A35009D96F7 /* Mocks.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
@@ -315,6 +345,55 @@
 				31994980555F5E3315821F34 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		A3AC59EF28295742009615A3 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC59F028295751009615A3 /* PLAuthorizationCoordinatorMock.swift */,
+				A3AC59F428295B28009615A3 /* PLAuthorizationProcessorManagerMock.swift */,
+				A3AC59F628295D69009615A3 /* CoreSessionManagerMock.swift */,
+				A3AC59F828296087009615A3 /* OperativeContainerCoordinatorDelegateMock.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		A3AC59FF282BBB1C009615A3 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC5A00282BBBB2009615A3 /* SendMoneyChallengeStub.swift */,
+				A3AC5A02282BBC71009615A3 /* AuthorizationIdStub.swift */,
+				A3AC5A04282BBDF5009615A3 /* ChallengeVerificationStub.swift */,
+				A3AC5A06282BBE7B009615A3 /* SessionConfiguration+Stub.swift */,
+				A3AC5A08282CDB96009615A3 /* PendingChallengeStub.swift */,
+			);
+			name = Stubs;
+			sourceTree = "<group>";
+		};
+		A3AC5A0A282CDD00009615A3 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC5A0E282CDFD6009615A3 /* Mocks */,
+				A3AC5A0B282CDDA9009615A3 /* Presenter */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
+		A3AC5A0B282CDDA9009615A3 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC5A0C282CDDC0009615A3 /* BLIKSummaryPresenterTests.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		A3AC5A0E282CDFD6009615A3 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				A3AC5A0F282CE036009615A3 /* BLIKSummaryViewControllerMock.swift */,
+				A3AC5A11282CE236009615A3 /* BLIKSummaryCoordinatorMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		B044452426E0A3BE00F66799 /* Form */ = {
@@ -486,12 +565,14 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/LoginCommon/LoginCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
 				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
+				"${BUILT_PRODUCTS_DIR}/PLHelpCenter/PLHelpCenter.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
@@ -503,8 +584,10 @@
 				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
 				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/UIOneComponents/UIOneComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
@@ -522,12 +605,14 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLHelpCenter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
@@ -539,8 +624,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIOneComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
@@ -590,12 +677,14 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Localization/Localization.framework",
 				"${BUILT_PRODUCTS_DIR}/Locker/Locker.framework",
+				"${BUILT_PRODUCTS_DIR}/LoginCommon/LoginCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombine/OpenCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/OpenCombineDispatch/OpenCombineDispatch.framework",
 				"${BUILT_PRODUCTS_DIR}/Operative/Operative.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommonOperatives/PLCommonOperatives.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCommons/PLCommons.framework",
 				"${BUILT_PRODUCTS_DIR}/PLCryptography/PLCryptography.framework",
+				"${BUILT_PRODUCTS_DIR}/PLHelpCenter/PLHelpCenter.framework",
 				"${BUILT_PRODUCTS_DIR}/PLUI/PLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCombine/RxCombine.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
@@ -607,8 +696,10 @@
 				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
 				"${BUILT_PRODUCTS_DIR}/SelfSignedCertificate/SelfSignedCertificate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftBytes/SwiftBytes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/UI/UI.framework",
+				"${BUILT_PRODUCTS_DIR}/UIOneComponents/UIOneComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/WebViews/WebViews.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
@@ -626,12 +717,14 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenCombineDispatch.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Operative.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommonOperatives.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCommons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLCryptography.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLHelpCenter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCombine.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
@@ -643,8 +736,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SelfSignedCertificate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBytes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIOneComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebViews.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
@@ -683,9 +778,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3AC59F928296087009615A3 /* OperativeContainerCoordinatorDelegateMock.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				A3AC5A01282BBBB2009615A3 /* SendMoneyChallengeStub.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				A3AC59F128295751009615A3 /* PLAuthorizationCoordinatorMock.swift in Sources */,
+				A3AC5A03282BBC71009615A3 /* AuthorizationIdStub.swift in Sources */,
+				A3AC5A05282BBDF5009615A3 /* ChallengeVerificationStub.swift in Sources */,
+				A3AC5A07282BBE7B009615A3 /* SessionConfiguration+Stub.swift in Sources */,
 				021C1FE826808A35009D96F7 /* Mocks.swift in Sources */,
+				A3AC59F528295B28009615A3 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
+				A3AC59F728295D69009615A3 /* CoreSessionManagerMock.swift in Sources */,
+				A3AC5A09282CDB96009615A3 /* PendingChallengeStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,8 +797,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3AC5A12282CE236009615A3 /* BLIKSummaryCoordinatorMock.swift in Sources */,
 				30CC5C1926CD322A004664B8 /* GetContactsUseCaseTests.swift in Sources */,
 				30CC5C2026CE21B1004664B8 /* ContactsPresenterTests.swift in Sources */,
+				A3AC5A0D282CDDC1009615A3 /* BLIKSummaryPresenterTests.swift in Sources */,
+				A3AC5A10282CE036009615A3 /* BLIKSummaryViewControllerMock.swift in Sources */,
 				30EB6ABA26B0460C00BFAFE7 /* ManagerProviderMock.swift in Sources */,
 				30EB6AB726B0435000BFAFE7 /* CancelBLIKTransactionUseCaseTests.swift in Sources */,
 				B044452826E0AA0300F66799 /* P2pAliasUseCaseTests.swift in Sources */,
@@ -707,6 +814,7 @@
 				30EB6AC726B1442D00BFAFE7 /* GetTrnToConfUseCaseTests.swift in Sources */,
 				30EB6ABF26B12BB100BFAFE7 /* DecodeFile.swift in Sources */,
 				30EB6ACE26B1559D00BFAFE7 /* BLIKConfirmationPresenterTests.swift in Sources */,
+				A3AC59FE282AAA68009615A3 /* BLIKTransactionViewModelProviderMock.swift in Sources */,
 				30CC5C1626CD2A56004664B8 /* CNContactStoreMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
