@@ -37,7 +37,7 @@
         "accountTransactionsPFMDays": "8",
         "isInternationalUsualsActive": "true",
         "enableManagerVideoCall": "true",
-        "enableComingFeatures": "false",
+        "enableComingFeatures": "true",
         "enableFinancingZone": "false",
         "enableStockholders": "false",
         "managerVideoCallSubtitle": "De lunes a jueves de 9:00 a 18:00\nViernes de 9:00 a 16:00",

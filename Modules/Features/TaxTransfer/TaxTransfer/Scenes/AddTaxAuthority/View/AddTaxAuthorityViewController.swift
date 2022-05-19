@@ -108,7 +108,7 @@ private extension AddTaxAuthorityViewController {
         configureSubviews()
         configureBottomView()
         configureStyling()
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
     }
     
     func configureNavigationItem() {
