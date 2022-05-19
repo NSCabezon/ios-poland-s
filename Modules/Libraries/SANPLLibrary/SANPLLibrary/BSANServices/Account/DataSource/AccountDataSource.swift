@@ -96,7 +96,6 @@ extension AccountDataSource: AccountDataSourceProtocol {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
-        self.queryParams = nil
         let serviceName = AccountServiceType.swiftBranches.rawValue
         let absoluteUrl = baseUrl + self.basePath
         let result: Result<SwiftBranchesDTO, NetworkProviderError> = self.networkProvider.request(SwiftBranchesRequest(serviceName: serviceName,
@@ -104,7 +103,7 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                        method: .post,
                                                                                                                        jsonBody: parameters,
                                                                                                                        headers: self.headers,
-                                                                                                                       contentType: nil,
+                                                                                                                       contentType: .json,
                                                                                                                        localServiceName: .swiftBranches)
         )
         return result

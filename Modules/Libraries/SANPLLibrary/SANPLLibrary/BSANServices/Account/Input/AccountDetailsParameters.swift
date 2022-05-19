@@ -35,7 +35,7 @@ public struct SwiftBranchesParameters: Encodable {
     public let countryCode: String
     public let customerType: String
     public let currencyCode: String
-    public let bicSwift: String
+    public let bic: String
     
     public init(countryCode: String,
                 customerType: String = "PERSONAL",
@@ -44,6 +44,6 @@ public struct SwiftBranchesParameters: Encodable {
         self.countryCode = countryCode
         self.customerType = customerType
         self.currencyCode = currencyCode
-        self.bicSwift = bicSwift
+        self.bic = bicSwift
     }
 }
