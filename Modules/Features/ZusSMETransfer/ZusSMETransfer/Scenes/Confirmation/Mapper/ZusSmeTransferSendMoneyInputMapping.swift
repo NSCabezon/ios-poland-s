@@ -29,7 +29,7 @@ final class ZusSmeTransferSendMoneyInputMapper: ZusSmeTransferSendMoneyInputMapp
                                                 amount: model.amount)
         
         let debitAccounData = ItAccountDataParameters(accountNo: debitAccountFormated,
-                                                      accountName: model.account.name,
+                                                      accountName: nil,
                                                       accountSequenceNumber: model.account.accountSequenceNumber,
                                                       accountType: model.account.accountType)
         

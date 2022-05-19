@@ -19,7 +19,10 @@ protocol SendMoneyAmountAllInternationalView: OperativeView, SendMoneyCurrencyHe
     func setFloatingButtonEnabled(_ isEnabled: Bool)
     func setSwiftText(_ text: String?)
     func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?)
+    func setSwiftError(_ error: SMAmountAllInternationalSwiftError)
     func setDescriptionText(_ text: String?)
+    func showSwiftInfoLoading()
+    func hideSwiftInfoLoading()
     func addSelectDateOneContainerView(_ viewModel: SelectDateOneContainerViewModel, isSelectDeadlineCheckbox: Bool, endDate: Date?)
     func setSimpleDate(_ isSimple: Bool)
     func setHiddenSwiftView(_ isHiden: Bool)
@@ -79,24 +82,6 @@ final class SendMoneyAmountAllInternationalViewController: UIViewController {
         return view
     }()
     
-    private lazy var swiftInfoView: OneAlertView = {
-        // TODO: TRAERSE DEVELOP PARA TENER DISPONIBLE LO ÚLTIMO DEL COMPONENTE
-        let view = OneAlertView()
-        view.setType(.textAndImage(imageKey: "oneIcnFlagSpain", stringKey: "Santander Consumer Bank SA\nCentrala\n42 C, UL. Strzegomska\n53-611 Wroclaw, Poland"))
-        return view
-    }()
-    
-    private lazy var swiftInfoContainerView: UIView = {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(self.swiftInfoView)
-        self.swiftInfoView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16.0).isActive = true
-        self.swiftInfoView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16.0).isActive = true
-        self.swiftInfoView.topAnchor.constraint(equalTo: container.topAnchor, constant: 12.0).isActive = true
-        self.swiftInfoView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: .zero).isActive = true
-        return container
-    }()
-    
     private lazy var simpleDateView = SMAmountAllInternationalSimpleDateView()
     private let selectDateOneContainerView = SelectDateOneContainerView()
     
@@ -154,7 +139,6 @@ private extension SendMoneyAmountAllInternationalViewController {
     
     func configureViews() {
         self.stackView.addArrangedSubview(self.swiftView)
-        self.stackView.addArrangedSubview(self.swiftInfoContainerView)
         self.stackView.addArrangedSubview(self.exchangeRateContainerView)
         self.stackView.addArrangedSubview(self.descriptionView)
         self.stackView.addArrangedSubview(self.simpleDateView)
@@ -243,19 +227,28 @@ extension SendMoneyAmountAllInternationalViewController: SendMoneyAmountAllInter
     }
     
     func setSwiftInfo(countryFlag: String?, bankName: String?, bankAddress: String?) {
-        // TODO: SETEAR EN EL ONEALERT
         guard let bankName = bankName,
               let bankAddress = bankAddress else {
-                  self.swiftInfoContainerView.isHidden = true
-                  return
-              }
-        self.swiftInfoContainerView.isHidden = false
-        // TODO: CHANGE
-        self.swiftInfoView.setType(.textAndImage(imageKey: countryFlag ?? "", stringKey: "\(bankName)\n\(bankAddress)"))
+            self.swiftView.show(.none)
+            return
+        }
+        self.swiftView.show(.information(flag: countryFlag, text: "\(bankName)\n\(bankAddress)"))
+    }
+    
+    func setSwiftError(_ error: SMAmountAllInternationalSwiftError) {
+        self.swiftView.show(.error(error))
     }
     
     func setDescriptionText(_ text: String?) {
         self.descriptionView.setDescriptionText(text)
+    }
+    
+    func showSwiftInfoLoading() {
+        _ = self.showJumpingGreenLoadingPublisher()
+    }
+    
+    func hideSwiftInfoLoading() {
+        _ = self.dismissJumpingGreenLoadingPublisher()
     }
     
     func addSelectDateOneContainerView(_ viewModel: SelectDateOneContainerViewModel, isSelectDeadlineCheckbox: Bool, endDate: Date?) {
@@ -291,12 +284,8 @@ extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationa
 }
 
 extension SendMoneyAmountAllInternationalViewController: SMAmountAllInternationalSwiftViewDelegate {
-    func saveSwift(_ swift: String?) {
+    func didEndEditing(_ swift: String?) {
         self.presenter.saveSwift(swift)
-    }
-    
-    func reloadSwiftInfo() {
-        self.presenter.reloadSwiftInfo()
     }
 }
 
@@ -330,3 +319,5 @@ extension SendMoneyAmountAllInternationalViewController: SelectDateOneContainerV
     func didSelectStartDate(_ date: Date) {}
     func didSelectEndDate(_ date: Date) {}
 }
+
+extension SendMoneyAmountAllInternationalViewController: JumpingGreenCirclesLoadingViewPresentationCapable {}
