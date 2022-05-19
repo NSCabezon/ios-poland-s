@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SANLegacyLibrary
 
 public struct GlobalPositionDTO: Codable {
     public let accounts: [AccountDTO]?
@@ -14,4 +15,5 @@ public struct GlobalPositionDTO: Codable {
     public let deposits: [DepositDTO]?
     public let investmentFunds: [InvestmentFundsDTO]?
     public let insurances: [InsuranceDTO]?
+    public let savings:[SavingDTO]?
 }

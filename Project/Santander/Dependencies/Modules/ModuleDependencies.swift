@@ -13,6 +13,8 @@ import Foundation
 import Menu
 import Onboarding
 import SANLegacyLibrary
+import SANPLLibrary
+import PLCommons
 
 struct ModuleDependencies {
     let oldResolver: DependenciesInjector & DependenciesResolver
@@ -68,6 +70,14 @@ struct ModuleDependencies {
         NavigationBarItemBuilder(dependencies: self)
     }
     
+    func resolve() -> PLWebViewCoordinatorDelegate {
+        return PLWebViewCoordinatorNavigator(dependenciesResolver: oldResolver, drawer: drawer)
+    }
+    
+    func resolve() -> PLGetSavingProductMatrixUseCase {
+        return PLGetSavingProductMatrixUseCase(resolver: oldResolver)
+    }
+    
     func resolve() -> GetDigitalProfilePercentageUseCase {
         return PLGetDigitalProfilePercentageUseCase(dependencies: self)
     }
@@ -84,12 +94,6 @@ extension ModuleDependencies: RetailLegacyExternalDependenciesResolver {
         let toRemove: Set<CoreFeatureFlag> = []
         let all: Set<CoreFeatureFlag> = Set(CoreFeatureFlag.allCases)
         return Array(all.subtracting(toRemove))
-    }
-}
-
-extension ModuleDependencies: RetailLegacySavingsExternalDependenciesResolver {
-    func savingsHomeCoordinator() -> BindableCoordinator {
-        return ToastCoordinator()
     }
 }
 

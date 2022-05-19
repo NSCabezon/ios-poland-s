@@ -22,7 +22,7 @@ class PLAccountTransactionDetailAction: AccountTransactionDetailActionProtocol {
     }
     
     func getTransactionActions(for transaction: AccountTransactionEntity) -> [AccountTransactionDetailAction]? {
-        if transaction.dto.receiptId != nil {
+        if let receiptId = transaction.dto.receiptId, receiptId.isNotEmpty {
             return [.pdf, .share(nil)]
         }
         return [.share(nil)]

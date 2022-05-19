@@ -35,7 +35,7 @@ private extension PLGetLoanTransactionDetailConfigurationUseCase {
         let shareAction = PLLoanTransactionDetailAction(type: LoanTransactionDetailActionType.share,
                                                         isDisabled: false,
                                                         isUserInteractionEnable: true)
-        if transaction.receiptId != nil {
+        if let receiptId = transaction.receiptId, receiptId.isNotEmpty {
             return [pdfExtractAction, shareAction]
         } else {
             return [shareAction]

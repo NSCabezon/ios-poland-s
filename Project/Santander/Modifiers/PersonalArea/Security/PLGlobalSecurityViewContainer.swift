@@ -54,7 +54,7 @@ private extension PLGlobalSecurityViewContainer {
         stackViewColumnSecond.axis = .vertical
         stackViewColumnSecond.spacing = 8
         stackViewColumnSecond.distribution = .fillEqually
-        let stolenView = self.viewComponent.setStolenView(phoneLocalizedTheft, viewStyle: .hideNumberLabel)
+        let stolenView = self.viewComponent.setStolenView(phoneLocalizedTheft, viewStyle: .showNumberLabel)
         stackViewColumnSecond.addArrangedSubview(stolenView)
         let alertView = self.viewComponent.setSmallAlertView { [weak self] in
             self?.didSelectSmallAlertView()

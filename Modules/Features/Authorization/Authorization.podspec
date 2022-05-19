@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '12.3'
     s.source_files = 'Authorization/**/*.{swift}'
     s.resource_bundles = {
-     'Authorization' => ['Authorization/Assets/*.png']
+     'Authorization' => ['Authorization/**/*{xib,xcassets}']
     }
 
     s.dependency "UI"
@@ -34,5 +34,4 @@ Pod::Spec.new do |s|
     s.dependency "Operative"
     s.dependency "PLCryptography"
     s.dependency "PLCommonOperatives"
-    s.dependency "PLLogin"
 end

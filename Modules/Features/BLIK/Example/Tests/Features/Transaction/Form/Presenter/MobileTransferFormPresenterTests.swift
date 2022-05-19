@@ -36,7 +36,8 @@ class MobileTransferFormPresenterTests: XCTestCase {
                                        defaultForPayments: defaultForPayments,
                                        type: type,
                                        accountSequenceNumber: accountSequenceNumber,
-                                       accountType: accountType)
+                                       accountType: accountType,
+                                       taxAccountNumber: "")
         dependencies = DependenciesDefault()
         setUpDependencies(account: accounts)
         queue = DispatchQueue(label: "MobileTransferFormPresenterTests")

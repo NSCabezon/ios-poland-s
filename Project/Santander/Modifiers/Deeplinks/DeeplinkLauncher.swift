@@ -12,12 +12,17 @@ import PLCommonOperatives
 import UI
 import PLHelpCenter
 import BLIK
+import OpenCombine
+
+private var currentCancellable: AnyCancellable?
 
 struct DeeplinkLauncher {
     private let dependenciesResolver: DependenciesResolver
+    private let dependencies: ModuleDependencies
     
-    init(dependenciesResolver: DependenciesResolver) {
+    init(dependenciesResolver: DependenciesResolver, dependencies: ModuleDependencies) {
         self.dependenciesResolver = dependenciesResolver
+        self.dependencies = dependencies
     }
 }
 
@@ -47,7 +52,7 @@ private extension DeeplinkLauncher {
         case .alertsNotification:
             openAlertsNotification()
         case .sendMoney:
-            dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+            goToSendMoney()
         case .services:
             Toast.show(localized("generic_alert_notAvailableOperation"))
         case .blik:
@@ -98,4 +103,22 @@ private extension DeeplinkLauncher {
                 Toast.show(error.getErrorDesc() ?? "")
             }
     }
+
+    func goToSendMoney() {
+        let checkNewSendMoneyHomeIsEnabled: CheckNewSendMoneyHomeEnabledUseCase = dependencies.resolve()
+        currentCancellable = checkNewSendMoneyHomeIsEnabled
+            .fetchEnabled()
+            .receive(on: Schedulers.main)
+            .sink(receiveCompletion: { _ in
+                    currentCancellable = nil
+                  },
+                  receiveValue: { isEnabled in
+                    if isEnabled {
+                        dependencies.oneTransferHomeCoordinator().start()
+                    } else {
+                        dependenciesResolver.resolve(for: SendMoneyCoordinatorProtocol.self).start()
+                    }
+                  })
+    }
 }
+
