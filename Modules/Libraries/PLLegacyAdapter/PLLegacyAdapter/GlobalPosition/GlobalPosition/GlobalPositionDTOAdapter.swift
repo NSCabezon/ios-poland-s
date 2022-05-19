@@ -16,12 +16,14 @@ final class GlobalPositionDTOAdapter {
         let loans = plGlobalPosition.loans?.compactMap(LoanDTOAdapter.adaptPLLoanToLoan)
         let deposits = plGlobalPosition.deposits?.compactMap(DepositDTOAdapter.adaptPLDepositToDeposit)
         let insurances = plGlobalPosition.insurances?.compactMap(InsuranceDTOAdapter.adaptPLInsuranceToInsurance)
+        let savings = plGlobalPosition.savings?.compactMap(SavingsDTOAdapter.adaptPLSavingsToSavings)
         globalPositionDTO.accounts = accounts
         globalPositionDTO.cards = cards
         globalPositionDTO.funds = funds
         globalPositionDTO.loans = loans
         globalPositionDTO.deposits = deposits
         globalPositionDTO.protectionInsurances = insurances
+        globalPositionDTO.savingProducts = savings
         var userDataDTO: UserDataDTO = UserDataDTO()
         userDataDTO.clientPersonType = ""
         userDataDTO.clientPersonCode = clientPersonCode

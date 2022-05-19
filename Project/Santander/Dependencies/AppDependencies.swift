@@ -30,6 +30,7 @@ import BLIK
 import WebKit
 import PLNotificationsInbox
 import PLHelpCenter
+import Authorization
 
 final class AppDependencies {
     #if DEBUG
@@ -361,6 +362,9 @@ private extension AppDependencies {
         self.dependencieEngine.register(for: GetCardDetailConfigurationUseCase.self) { resolver in
             PLGetCardDetailConfigurationUseCase(dependenciesEngine: resolver)
         }
+        self.dependencieEngine.register(for: SimpleGlobalPositionModifierProtocol.self) { resolver in
+            PLSimpleGlobalPositionModifier(resolver: resolver)
+        }
         registerDependenciesPL()
     }
     
@@ -444,6 +448,9 @@ private extension AppDependencies {
         }
         self.dependencieEngine.register(for: SecurityAreaViewProtocolModifier.self) { _ in
             PLSecurityAreaViewProtocolModifier()
+		}
+        self.dependencieEngine.register(for: PGGeneralCellViewConfigUseCase.self) { _ in
+            PLPGProductModifierUseCase()
         }
     }
 }
@@ -521,7 +528,6 @@ class CustomPushLauncher: CustomPushLauncherProtocol {
     }
     
     private func launchActionTypeAuth(_ actionType: CustomPushLaunchActionTypeAuth) {
-         let coordinator = dependenciesResolver.resolve(for: CustomPushNotificationCoordinator.self)
-         coordinator.start(actionType: actionType)
+        dependenciesResolver.resolve(for: AuthorizationModuleCoordinator.self).start()
     }
 }
