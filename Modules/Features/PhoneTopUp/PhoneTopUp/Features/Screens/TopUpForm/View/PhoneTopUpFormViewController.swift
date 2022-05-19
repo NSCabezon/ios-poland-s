@@ -65,7 +65,7 @@ final class PhoneTopUpFormViewController: UIViewController {
         setUpLayout()
         prepareStyles()
         formView.delegate = self
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
     }
     
     private func prepareNavigationBar() {

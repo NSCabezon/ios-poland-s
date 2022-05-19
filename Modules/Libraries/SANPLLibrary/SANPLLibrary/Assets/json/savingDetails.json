@@ -1,0 +1,43 @@
+{
+    "12345678Z": {
+        "0":
+        [
+            {
+                "accountNo": "28109028350000000142214433",
+                "productPromotionId": "23623",
+                "bonusDescription": "Nowe środki na koncie oszczędnościowym - edycja V",
+                "bonusStatus": "ACTIVE",
+                "bonusCategory": "INTEREST_RATES",
+                "productId": "22026",
+                "promoCodeRequired": false,
+                "bonusCalculationMethod": "2",
+                "bonusId": "2005",
+                "fundsDetails": {
+                    "calculateDay": "2018-07-10",
+                    "bonusInterestRate": 2.10,
+                    "assetsBalance": 70112.18,
+                    "bonusBalance": 15741.72,
+                    "newFundsBalance": 536.76
+                }
+            },
+            {
+                "accountNo": "28109028350000000142214433",
+                "productPromotionId": "23623",
+                "bonusDescription": "Nowe środki na koncie oszczędnościowym - edycja V",
+                "bonusStatus": "POTENTIALLY_AVAILABLE",
+                "bonusCategory": "INTEREST_RATES",
+                "productId": "22026",
+                "promoCodeRequired": false,
+                "bonusCalculationMethod": "2",
+                "bonusId": "2005",
+                "fundsDetails": {
+                    "calculateDay": "2018-07-10",
+                    "bonusInterestRate": 2.10,
+                    "assetsBalance": 70112.18,
+                    "bonusBalance": 15741.72,
+                    "newFundsBalance": 536.76
+                }
+            }
+        ]
+    }
+}

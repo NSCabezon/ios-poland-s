@@ -7,11 +7,16 @@ final class BLIKConfirmationViewMock: UIViewController, BLIKConfirmationViewProt
     var updateCounterCalled = false
     var showLoaderCalled = false
     var hideLoaderCalled = false
+    var startProgressAnimationCalled = false
+    var totalDuration: TimeInterval = 0
+    var remainingDuration: TimeInterval = 0
     
     func showDialog(_ dialog: LisboaDialog) {}
     
     func startProgressAnimation(totalDuration: TimeInterval, remainingDuration: TimeInterval) {
-        
+        startProgressAnimationCalled = true
+        self.totalDuration = totalDuration
+        self.remainingDuration = remainingDuration
     }
     
     func updateCounter(remainingSeconds: Int) {

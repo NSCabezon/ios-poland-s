@@ -37,7 +37,8 @@ final class PLAccountOtherOperativesActionModifier: AccountOtherOperativesAction
                     .openDeposit,
                     .multicurrency,
                     .memberGetMember,
-                    .ourOffer:
+                    .ourOffer,
+                    .savingGoals:
                 showWebView(identifier: identifier, entity: entity)
             case .changeAliases:
                 goToPGProductsCustomization()

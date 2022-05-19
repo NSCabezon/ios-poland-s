@@ -11,6 +11,7 @@ import SANPLLibrary
 import PLCommons
 
 final class TaxAccountValidator {
+    typealias AssociatedTaxFormType = Int
     private let irpAccountOptionId = 4
     private let getTaxAccountUseCase: GetTaxAccountsUseCaseProtocol
     private let useCaseHandler: UseCaseHandler
@@ -24,7 +25,7 @@ final class TaxAccountValidator {
     
     func validateAccount(
         withNumber accountNumber: String,
-        onValidResult: @escaping () -> Void,
+        onValidResult: @escaping (AssociatedTaxFormType) -> Void,
         onInvalidResult: @escaping () -> Void,
         onError: @escaping (Error) -> Void
     ) {
@@ -53,7 +54,7 @@ final class TaxAccountValidator {
                 let isAccountValid = taxAccount.isActive && taxAccount.validToDate.timeIntervalSinceNow.sign == .plus
                 
                 if isAccountValid {
-                    onValidResult()
+                    onValidResult(taxAccount.taxFormType)
                 } else {
                     onInvalidResult()
                 }

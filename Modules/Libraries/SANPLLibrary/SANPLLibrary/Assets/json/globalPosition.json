@@ -760,48 +760,310 @@
                     "lastUpdate": "2021-01-01"
                 }
             ],
-            "deposits": [
-                    {
-                        "number": "36109010140000000142717713",
-                        "accountId": {
-                            "id": "142717713",
-                            "systemId": 3
-                        },
-                        "currencyCode": "PLN",
-                        "name": {
-                            "description": "Lokata Mobilna",
-                            "userDefined": "Lokata Mobilna"
-                        },
-                        "role": "OWNER",
-                        "type": "TERM",
-                        "currentBalance": {
-                            "value": 10025.78,
-                            "currencyCode": "PLN",
-                            "valueInBaseCurrency": 10025.78
-                        },
-                        "lastUpdate": "2021-01-19"
+            "savings": [{
+                    "number": "11109010140000000142814775",
+                    "accountId": {
+                        "id": "1500411285",
+                        "systemId": 3
                     },
-                    {
-                        "number": "21109010140000000142729235",
-                        "accountId": {
-                            "id": "142729235",
-                            "systemId": 3
-                        },
+                    "productId": {
+                        "id": "11109010140000000142814775",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "userDefined",
+                        "userDefined": "Samochód"
+                    },
+                    "role": "OWNER",
+                    "permissionList": null,
+                    "type": "GOAL",
+                    "currentBalance": {
+                        "value": 1.0,
                         "currencyCode": "PLN",
-                        "name": {
-                            "description": "eLokata",
-                            "userDefined": "eLokata"
-                        },
-                        "role": "OWNER",
-                        "type": "TERM",
-                        "currentBalance": {
-                            "value": 1000.27,
-                            "currencyCode": "PLN",
-                            "valueInBaseCurrency": 1000.27
-                        },
-                        "lastUpdate": "2021-04-03"
-                    }
-                ],
+                        "valueInBaseCurrency": 1.0
+                    },
+                    "lastUpdate": "2022-04-22",
+                    "interestRateData": null,
+                    "percentageCompletion": 0
+                }, {
+                    "number": "92109010140000000142814772",
+                    "accountId": {
+                        "id": "1500411282",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "92109010140000000142814772",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "userDefined",
+                        "userDefined": "Lifebuoy ⬛"
+                    },
+                    "role": "OWNER",
+                    "permissionList": null,
+                    "type": "GOAL",
+                    "currentBalance": {
+                        "value": 23.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 23.0
+                    },
+                    "lastUpdate": "2022-04-22",
+                    "interestRateData": null,
+                    "percentageCompletion": 0
+                }, {
+                    "number": "54109010140000000142814777",
+                    "accountId": {
+                        "id": "1500411287",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "54109010140000000142814777",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "userDefined",
+                        "userDefined": "ForAYellowSubmarineWeAllLiveIn"
+                    },
+                    "role": "OWNER",
+                    "permissionList": null,
+                    "type": "GOAL",
+                    "currentBalance": {
+                        "value": 2.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 2.0
+                    },
+                    "lastUpdate": "2022-04-22",
+                    "interestRateData": null,
+                    "percentageCompletion": 18
+                }, {
+                    "number": "81109010140000000142814776",
+                    "accountId": {
+                        "id": "1500411286",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "81109010140000000142814776",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "userDefined",
+                        "userDefined": "Charity \uD83C\uDF6D"
+                    },
+                    "role": "OWNER",
+                    "permissionList": null,
+                    "type": "GOAL",
+                    "currentBalance": {
+                        "value": 70.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 70.0
+                    },
+                    "lastUpdate": "2022-04-22",
+                    "interestRateData": null,
+                    "percentageCompletion": 70
+                }, {
+                    "number": "65109010140000000142814773",
+                    "accountId": {
+                        "id": "1500411283",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "65109010140000000142814773",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "userDefined",
+                        "userDefined": "Biscuits"
+                    },
+                    "role": "OWNER",
+                    "permissionList": null,
+                    "type": "GOAL",
+                    "currentBalance": {
+                        "value": 9.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 9.0
+                    },
+                    "lastUpdate": "2022-04-22",
+                    "interestRateData": null,
+                    "percentageCompletion": 90
+                }, {
+                    "number": "38109010140000000142814774",
+                    "accountId": {
+                        "id": "1500411284",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "38109010140000000142814774",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "userDefined",
+                        "userDefined": "\uD83D\uDC34\uD83D\uDE0Di\uD83D\uDC2D\uD83D\uDC25"
+                    },
+                    "role": "OWNER",
+                    "permissionList": null,
+                    "type": "GOAL",
+                    "currentBalance": {
+                        "value": 11.0,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 11.0
+                    },
+                    "lastUpdate": "2022-04-22",
+                    "interestRateData": null,
+                    "percentageCompletion": 100
+                }, {
+                    "number": "36109010140000000142753797",
+                    "accountId": {
+                        "id": "142753797",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "36109010140000000142753797",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Konto systematyczne",
+                        "userDefined": "Konto systematyczne"
+                    },
+                    "role": "OWNER",
+                    "permissionList": ["TRANSACT", "STATEMENT"],
+                    "type": "SAVINGS",
+                    "currentBalance": {
+                        "value": 265.85,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 265.85
+                    },
+                    "lastUpdate": "2022-04-04",
+                    "interestRateData": {
+                        "interestRate": 0.2000,
+                        "interestRateURL": "https://www.santander.pl/przydatne-informacje/oprocentowanie#oszczednosciowe",
+                        "interestRateIndicator": "URL"
+                    },
+                    "percentageCompletion": null
+                }, {
+                    "number": "03109010430000000142814770",
+                    "accountId": {
+                        "id": "142814770",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "03109010430000000142814770",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Lokata terminowa",
+                        "userDefined": "Lokata terminowa"
+                    },
+                    "role": "OWNER",
+                    "permissionList": ["TRANSACT", "STATEMENT"],
+                    "type": "TERM",
+                    "currentBalance": {
+                        "value": 5010.29,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 5010.29
+                    },
+                    "lastUpdate": "2022-04-21",
+                    "interestRateData": {
+                        "interestRate": 0.4900,
+                        "interestRateIndicator": "VALUE"
+                    },
+                    "percentageCompletion": null
+                }, {
+                    "number": "30109010430000000142814769",
+                    "accountId": {
+                        "id": "142814769",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "30109010430000000142814769",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "Lokata terminowa",
+                        "userDefined": "Lokata terminowa"
+                    },
+                    "role": "OWNER",
+                    "permissionList": ["TRANSACT", "STATEMENT"],
+                    "type": "TERM",
+                    "currentBalance": {
+                        "value": 1000.11,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 1000.11
+                    },
+                    "lastUpdate": "2022-04-21",
+                    "interestRateData": {
+                        "interestRate": 0.5100,
+                        "interestRateIndicator": "VALUE"
+                    },
+                    "percentageCompletion": null
+                }, {
+                    "number": "15109010430000000142753832",
+                    "accountId": {
+                        "id": "142753832",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "15109010430000000142753832",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "eLokata",
+                        "userDefined": "eLokata"
+                    },
+                    "role": "OWNER",
+                    "permissionList": ["TRANSACT", "STATEMENT"],
+                    "type": "TERM",
+                    "currentBalance": {
+                        "value": 3008.25,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 3008.25
+                    },
+                    "lastUpdate": "2022-04-09",
+                    "interestRateData": {
+                        "interestRate": 0.4000,
+                        "interestRateIndicator": "VALUE"
+                    },
+                    "percentageCompletion": null
+                }, {
+                    "number": "55109010430000000142753791",
+                    "accountId": {
+                        "id": "142753791",
+                        "systemId": 3
+                    },
+                    "productId": {
+                        "id": "55109010430000000142753791",
+                        "systemId": 3
+                    },
+                    "currencyCode": "PLN",
+                    "name": {
+                        "description": "eLokata",
+                        "userDefined": "eLokata"
+                    },
+                    "role": "OWNER",
+                    "permissionList": ["TRANSACT", "STATEMENT"],
+                    "type": "TERM",
+                    "currentBalance": {
+                        "value": 10049.07,
+                        "currencyCode": "PLN",
+                        "valueInBaseCurrency": 10049.07
+                    },
+                    "lastUpdate": "2022-04-08",
+                    "interestRateData": {
+                        "interestRate": 0.1000,
+                        "interestRateIndicator": "VALUE"
+                    },
+                    "percentageCompletion": null
+                }
+            ],
             "investmentFunds": [
                 {
                     "number": "00060402-08-0010",

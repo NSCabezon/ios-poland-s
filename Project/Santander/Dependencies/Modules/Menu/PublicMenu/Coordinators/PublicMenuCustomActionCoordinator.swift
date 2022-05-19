@@ -11,6 +11,7 @@ import CoreFoundationLib
 import Menu
 import UIKit
 import PLHelpCenter
+import Authorization
 
 public final class DefaultPublicMenuCustomActionCoordinator {
     weak public var navigationController: UINavigationController?
@@ -53,9 +54,11 @@ extension DefaultPublicMenuCustomActionCoordinator: BindableCoordinator {
         case .offer:
             coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
         case .mobileAuthorization:
-            coordinator = ToastCoordinator("generic_alert_notAvailableOperation")
+            coordinator = PLPublicMenuAuthorizationCoordinator(dependenciesResolver: dependenciesResolver,
+                                                               navigationController: navigationController)
         case .contactMenu:
-            coordinator = PLPublicMenuHelpCenterCoordinator(dependenciesResolver: dependenciesResolver, navigationController: navigationController)
+            coordinator = PLPublicMenuHelpCenterCoordinator(dependenciesResolver: dependenciesResolver,
+                                                            navigationController: navigationController)
         }
         coordinator.start()
         append(child: coordinator)
