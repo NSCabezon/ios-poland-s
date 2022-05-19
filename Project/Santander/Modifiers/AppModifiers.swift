@@ -199,9 +199,6 @@ private extension AppModifiers {
         self.legacyDependenciesInjector.register(for: GenericDialogAddBranchLocatorActionCapable.self) { _ in
             GenericDialogActionsModifier()
         }
-        self.legacyDependenciesInjector.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
-            PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
-        }
         self.legacyDependenciesInjector.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
             return self.getPGFrequentOperativeOption
         }
