@@ -22,7 +22,6 @@ protocol SendMoneyAmountAllInternationalPresenterProtocol: OperativeStepPresente
     func changeDestinationAccount()
     func saveDescription(_ description: String?)
     func saveSwift(_ swift: String?)
-    func reloadSwiftInfo()
     func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable)
 }
 
@@ -48,6 +47,14 @@ final class SendMoneyAmountAllInternationalPresenter {
 }
 
 private extension SendMoneyAmountAllInternationalPresenter {
+    enum Constants {
+        enum Flags {
+            static let format: String = "%@%@%@%@"
+            static let urlExtension: String = "RWD/country/icons/"
+            static let imageExtension: String = ".png"
+        }
+    }
+    
     var destinationIban: IBANRepresentable? {
         return self.operativeData.destinationIBANRepresentable
     }
@@ -187,12 +194,28 @@ private extension SendMoneyAmountAllInternationalPresenter {
         guard let baseUrl = self.dependenciesResolver.resolve(for: BaseURLProvider.self).baseURL else {
             return nil
         }
-        // TODO: MOVE TO CONSTANTS
-        return String(format: "%@%@%@%@",
+        return String(format: Constants.Flags.format,
                       baseUrl,
-                      "RWD/country/icons/",
+                      Constants.Flags.urlExtension,
                       self.operativeData.destinationIBANRepresentable?.countryCode.lowercased() ?? "",
-                      ".png")
+                      Constants.Flags.imageExtension)
+    }
+    
+    func getSwiftBranch() {
+        self.view?.showSwiftInfoLoading()
+        let useCase = self.sendMoneyUseCaseProvider.getSwiftBranchesUseCase()
+        Scenario(useCase: useCase, input: self.operativeData)
+            .execute(on: self.dependenciesResolver.resolve())
+            .onSuccess { [unowned self] output in
+                self.view?.setSwiftInfo(countryFlag: self.getCountryFlag(),
+                                        bankName: output.bankName,
+                                        bankAddress: output.bankAddress)
+                self.view?.hideSwiftInfoLoading()
+            }
+            .onError { [unowned self] _ in
+                self.view?.hideSwiftInfoLoading()
+                self.view?.setSwiftError(.invalidSwift)
+            }
     }
 }
 
@@ -257,12 +280,12 @@ extension SendMoneyAmountAllInternationalPresenter: SendMoneyAmountAllInternatio
     
     func saveSwift(_ swift: String?) {
         self.operativeData.bicSwift = swift
+        guard self.isSwiftRangeValid else {
+            self.view?.setSwiftError(.invalidLength)
+            return
+        }
         self.view?.setFloatingButtonEnabled(self.isFloatingButtonEnabled)
-    }
-    
-    func reloadSwiftInfo() {
-        // TODO: LLAMAR A SERVICIO PASANDO BIC/SWIFT
-        // TODO: MOSTRAR LOADER
+        self.getSwiftBranch()
     }
     
     func saveAmounts(originAmount: AmountRepresentable, destinationAmount: AmountRepresentable) {

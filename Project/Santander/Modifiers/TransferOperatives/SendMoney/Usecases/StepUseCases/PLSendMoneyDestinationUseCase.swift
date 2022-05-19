@@ -31,9 +31,7 @@ final class PLSendMoneyDestinationUseCase: UseCase<SendMoneyOperativeData, SendM
         guard let name = requestValues.destinationName, name.trim().count > 0 else {
             return .error(DestinationAccountSendMoneyUseCaseErrorOutput(.noToName))
         }
-        if let error = try self.getSwiftBranch(requestValues: requestValues) {
-            return .error(error)
-        }
+        try self.getSwiftBranch(requestValues: requestValues)
         return .ok(requestValues)
     }
 }
@@ -74,24 +72,21 @@ private extension PLSendMoneyDestinationUseCase {
         return nil
     }
     
-    func getSwiftBranch(requestValues: SendMoneyOperativeData) throws -> DestinationAccountSendMoneyUseCaseErrorOutput? {
-        guard requestValues.type != .national else { return nil }
+    func getSwiftBranch(requestValues: SendMoneyOperativeData) throws {
+        guard requestValues.type != .national else { return }
         let accountsManager = self.managersProvider.getAccountsManager()
-        let response2 = try accountsManager.getSwiftBranches(accountNumber: requestValues.destinationAccount ?? "")
-        switch response2 {
-        case .success(let dto):
-            // TODO: STORE DATA
-            guard let swiftBranch = dto.swiftBranchList?.first else {
-                // TODO: DEVOLVER UN MEJOR ERROR
-                return DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: ""))
-            }
-            requestValues.bicSwift = swiftBranch.bic
-            requestValues.bankName = swiftBranch.bankName
-            // TODO: CONSULTAR
-            requestValues.bankAddress = (swiftBranch.shortName ?? "") + "\n" + (swiftBranch.address ?? "") + "\n" + (swiftBranch.city ?? "")
-            return nil
-        case .failure(let error):
-            return DestinationAccountSendMoneyUseCaseErrorOutput(.serviceError(errorDesc: error.localizedDescription))
-        }
+        let accountNumber: String = {
+            guard let ibanString = requestValues.destinationIBANRepresentable?.ibanString,
+                  ibanString.isNotEmpty else {
+                      return requestValues.destinationAccount ?? ""
+                  }
+            return ibanString
+        }()
+        let response = try accountsManager.getSwiftBranches(accountNumber: accountNumber)
+        guard case .success(let dto) = response,
+              let swiftBranch = dto.swiftBranchList?.first else { return }
+        requestValues.bicSwift = swiftBranch.bic
+        requestValues.bankName = swiftBranch.bankName?.camelCasedString
+        requestValues.bankAddress = (swiftBranch.city?.camelCasedString ?? "") + "\n" + (swiftBranch.address?.camelCasedString ?? "") + "\n" + (swiftBranch.shortName?.camelCasedString ?? "")
     }
 }
