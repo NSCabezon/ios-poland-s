@@ -27,13 +27,13 @@ public class PLInternalTransferAmountModifier: InternalTransferAmountModifierPro
         return "transfer_label_transferOwnAccount"
     }
     
-    public func getSelectionDateOneFilterData(_ index: Int) -> SelectionDateOneFilterViewModel? {
-        let labelViewModel = OneLabelViewModel(type: .normal,
+    public func getSelectionDateOneFilterData(_ index: Int) -> SelectionDateOneFilterData? {
+        let labelData = OneLabelViewModel(type: .normal,
                                                mainTextKey: "transfer_label_periodicity",
                                                accessibilitySuffix: AccessibilitySendMoneyAmount.periodicitySuffix)
-        let viewModel = SelectionDateOneFilterViewModel(oneLabelViewModel: labelViewModel,
+        let data = SelectionDateOneFilterData(oneLabelData: labelData,
                                                         options: ["sendMoney_tab_today", "sendMoney_tab_chooseDay"],
                                                         selectedIndex: index)
-        return viewModel
+        return data
     }
 }
