@@ -30,7 +30,7 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
         var items: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(title: localized("pl_generic_label_amount"),
                   subTitle: amountValueString(model.amount, size: 32),
-                  info: localized("pl_transferOption_button_transferTax")),
+                  info: model.title),
             .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: model.account.name,
                   info: accountNumber),
@@ -65,7 +65,7 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
                     currency: summaryModel.currency,
                     withAmountSize: 32
                 ),
-                info: localized("pl_transferOption_button_transferTax")
+                info: transferModel.title
             ),
             .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: summaryModel.accountName,
