@@ -21,14 +21,12 @@ final class PLSendMoneySwiftBranchesUseCase: UseCase<SendMoneyOperativeData, Sen
         guard let countryCode = requestValues.countryCode,
               let currencyCode = requestValues.destinationCurrency?.code,
               let bicSwift = requestValues.bicSwift else {
-                  // TODO: CHANGE
                   return .error(StringErrorOutput(""))
               }
         let accountsManager = self.managersProvider.getAccountsManager()
         let response = try accountsManager.getSwiftBranches(parameters: SwiftBranchesParameters(countryCode: countryCode, currencyCode: currencyCode, bicSwift: bicSwift))
         guard case .success(let dto) = response,
               let swiftBranch = dto.swiftBranchList?.first else {
-                  // TODO: CHANGE
                   return .error(StringErrorOutput(""))
               }
         requestValues.bicSwift = swiftBranch.bic
