@@ -31,7 +31,10 @@ final class PLSendMoneySwiftBranchesUseCase: UseCase<SendMoneyOperativeData, Sen
               }
         requestValues.bicSwift = swiftBranch.bic
         requestValues.bankName = swiftBranch.bankName?.camelCasedString
-        requestValues.bankAddress = (swiftBranch.city?.camelCasedString ?? "") + "\n" + (swiftBranch.address?.camelCasedString ?? "") + "\n" + (swiftBranch.shortName?.camelCasedString ?? "")
+        let city = swiftBranch.city?.camelCasedString
+        let address = swiftBranch.address?.camelCasedString
+        let shortName = swiftBranch.shortName?.camelCasedString
+        requestValues.bankAddress = "\([city, address, shortName].compactMap { $0 }.joined(separator: "\n"))"
         return .ok(requestValues)
     }
 }
