@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-               BuildableName = "PL-INTERN-1.1.9.app"
+               BuildableName = "PL-INTERN-1.1.10.app"
                BlueprintName = "Santander"
                ReferencedContainer = "container:Santander.xcodeproj">
             </BuildableReference>
@@ -159,6 +159,16 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E4583A7A16DF224B7A9C480293BC831B"
+               BuildableName = "PersonalArea-Unit-Tests.xctest"
+               BlueprintName = "PersonalArea-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -176,7 +186,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-1.1.9.app"
+            BuildableName = "PL-INTERN-1.1.10.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>
@@ -193,7 +203,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "66B3CFA52639C6C5000AAD0F"
-            BuildableName = "PL-INTERN-1.1.9.app"
+            BuildableName = "PL-INTERN-1.1.10.app"
             BlueprintName = "Santander"
             ReferencedContainer = "container:Santander.xcodeproj">
          </BuildableReference>

@@ -95,25 +95,23 @@ private extension PLAuthorizationPresenter {
     }
     
     func onBiometrySuccess() {
-        print("Biometry succeeded")
         self.confirmPin(accessType: .biometrics)
     }
     
     func onBiometryError(_ error: Error? = nil) {
-        if let error = error {
-            print("An error ocurred \(error)")
-        } else {
-            print("An unknown error ocurred")
-        }
         self.showGenericError()
     }
 }
 
 private extension PLAuthorizationPresenter {
     func showGenericError() {
+        self.showError("sendMoney_title_somethingIsWrong", textKey: "sendMoney_text_somethingIsWrong")
+    }
+    
+    func showError(_ titleKey: String, textKey: String) {
         let viewModel = BottomSheetErrorViewModel(imageKey: "oneIcnAlert",
-                                                  titleKey: "sendMoney_title_somethingIsWrong",
-                                                  textKey: "sendMoney_text_somethingIsWrong",
+                                                  titleKey: titleKey,
+                                                  textKey: textKey,
                                                   mainButtonKey: "generic_link_ok")
         self.view?.showGenericError(viewModel)
     }
@@ -162,7 +160,7 @@ extension PLAuthorizationPresenter: PLAuthorizationPresenterProtocol {
     }
     
     func didTimerEnd() {
-        self.showGenericError()
+        self.showError("sendMoney_title_timeIsOver", textKey: "sendMoney_text_timeIsOver")
     }
     
     func didUpdateSignature(isInputSignatureComplete: Bool) {
