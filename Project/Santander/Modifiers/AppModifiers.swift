@@ -5,19 +5,20 @@
 //  Created by Juan Carlos López Robles on 04/02/2021.
 //
 
-import RetailLegacy
-import CoreFoundationLib
-import GlobalPosition
-import Transfer
-import Cards
-import Account
-import PLCommons
-import Loans
-import PersonalArea
-import SANLegacyLibrary
-import TransferOperatives
-import UI
 import PLNotificationsInbox
+import TransferOperatives
+import CoreFoundationLib
+import SANLegacyLibrary
+import GlobalPosition
+import PersonalArea
+import RetailLegacy
+import PrivateMenu
+import PLCommons
+import Transfer
+import Account
+import Cards
+import Loans
+import UI
 
 final class AppModifiers {
     private let legacyDependenciesInjector: DependenciesInjector
@@ -204,9 +205,6 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: PrivateMenuProtocol.self) { _ in
             PLPrivateMenuModifier(dependencies: self.dependencies)
-        }
-        self.legacyDependenciesInjector.register(for: PrivateMenuTransferOptionProtocol.self) { _ in
-            PLPrivateMenuTransferOption(dependencies: self.dependencies)
         }
         self.legacyDependenciesInjector.register(for: ShortcutItemsProviderProtocol.self) { _ in
             return PLShortcutItems()
