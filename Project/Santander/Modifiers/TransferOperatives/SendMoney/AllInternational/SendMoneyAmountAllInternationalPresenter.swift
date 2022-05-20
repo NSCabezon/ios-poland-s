@@ -139,7 +139,7 @@ private extension SendMoneyAmountAllInternationalPresenter {
         let originExchangeAmount = OneExchangeRateAmount(amount: originAmount,
                                                  buyRate: originRates.buyRate,
                                                  sellRate: originRates.sellRate,
-                                                 currencySelector: getOriginCurrenciesView(checkSameCurrencies))
+                                                         currencySelector: getOriginCurrenciesView(checkSameCurrencies, type: typeExchange))
         let alert = checkSameCurrencies ? nil : OneExchangeRateAmountAlert(iconName: "icnInfo", titleKey: "sendMoney_label_conversionExchangeRate")
         return OneExchangeRateAmountViewModel(originAmount: originExchangeAmount,
                                               type: typeExchange,
@@ -147,7 +147,8 @@ private extension SendMoneyAmountAllInternationalPresenter {
         )
     }
     
-    func getOriginCurrenciesView(_ checkSameCurrencies: Bool) -> UIView? {
+    func getOriginCurrenciesView(_ checkSameCurrencies: Bool, type: OneExchangeRateAmountViewType) -> UIView? {
+        guard case .noExchange = type else { return nil }
         guard operativeData.transactionalOriginCurrency?.code != getLocalCurrency() || (checkSameCurrencies && self.operativeData.country?.code != getLocalCode()) else {
             return nil
         }
@@ -155,9 +156,6 @@ private extension SendMoneyAmountAllInternationalPresenter {
     }
     
     func getDestinationCurrenciesView() -> UIView? {
-        guard operativeData.destinationCurrency?.code != getLocalCurrency() else {
-            return nil
-        }
         return self.view?.currenciesSelectionView
     }
     
