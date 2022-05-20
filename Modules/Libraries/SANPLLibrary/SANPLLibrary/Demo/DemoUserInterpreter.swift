@@ -121,4 +121,5 @@ public enum PLLocalServiceName: String {
     case p2pAlias = "p2pAlias"
     case accountForDebit = "accountForDebit"
     case acceptTransfer = "acceptTransfer"
+    case accountOwnerDetail
 }

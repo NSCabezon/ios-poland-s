@@ -256,4 +256,21 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
         .eraseToAnyPublisher()
     }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) -> AnyPublisher<PLAccountDetailRepresentable, Error> {
+        Future { promise in
+            do {
+                let result = try self.bsanTransferManager.getAccountDetail(parameters)
+                switch result {
+                case .success(let account):
+                    promise(.success(account))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }

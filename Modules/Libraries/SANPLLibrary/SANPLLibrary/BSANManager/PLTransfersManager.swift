@@ -21,6 +21,7 @@ public protocol PLTransfersManagerProtocol {
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
     func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError>
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) throws -> Result<PLAccountDetailDTO, NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -192,6 +193,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     
     func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
         let result = try self.transferDataSource.getExchangeRates()
+        switch result {
+        case .success(let exchangeRatesDTO):
+            return .success(exchangeRatesDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) throws -> Result<PLAccountDetailDTO, NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountDetail(parameters)
         switch result {
         case .success(let exchangeRatesDTO):
             return .success(exchangeRatesDTO)
