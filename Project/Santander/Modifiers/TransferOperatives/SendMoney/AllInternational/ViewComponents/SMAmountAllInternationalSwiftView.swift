@@ -89,10 +89,7 @@ private extension SMAmountAllInternationalSwiftView {
                               helperAction: { Toast.show(localized("generic_alert_notAvailableOperation")) },
                               accessibilitySuffix: AccessibilitySendMoneyAmountNoSepa.bicSuffix)
         )
-        self.oneInpuntSwiftValue.setupTextField(
-            OneInputRegularViewModel(status: .activated,
-                                     accessibilitySuffix: AccessibilitySendMoneyAmountNoSepa.bicSuffix)
-        )
+        self.setupSwiftTextField(status: .activated)
         self.oneInpuntSwiftValue.delegate = self
         self.swiftErrorIcon.image = Assets.image(named: "oneIcnAlert")
         self.swiftErrorLabel.font = .typography(fontName: .oneB300Regular)
@@ -117,10 +114,19 @@ private extension SMAmountAllInternationalSwiftView {
         return nib.instantiate(withOwner: self, options: nil)[0] as? UIView ?? UIView()
     }
     
+    func setupSwiftTextField(status: OneInputRegularViewModel.Status) {
+        self.oneInpuntSwiftValue.setupTextField(
+            OneInputRegularViewModel(status: status,
+                                     text: self.oneInpuntSwiftValue.getInputText(),
+                                     accessibilitySuffix: AccessibilitySendMoneyAmountNoSepa.bicSuffix)
+        )
+    }
+    
     func showNone() {
         self.swiftErrorContainer.isHidden = true
         self.swiftInfoAlert.isHidden = true
         self.swiftInfoAlertTopSpaceView.isHidden = true
+        self.setupSwiftTextField(status: .activated)
     }
     
     func showInfo(flag: String?, text: String) {
@@ -131,6 +137,7 @@ private extension SMAmountAllInternationalSwiftView {
         self.swiftErrorContainer.isHidden = true
         self.swiftInfoAlert.isHidden = false
         self.swiftInfoAlertTopSpaceView.isHidden = false
+        self.setupSwiftTextField(status: .activated)
     }
     
     func showError(_ error: SMAmountAllInternationalSwiftError) {
@@ -145,6 +152,7 @@ private extension SMAmountAllInternationalSwiftView {
         self.swiftErrorContainer.isHidden = false
         self.swiftInfoAlertTopSpaceView.isHidden = true
         self.swiftInfoAlert.isHidden = true
+        self.setupSwiftTextField(status: .error)
     }
 }
 
