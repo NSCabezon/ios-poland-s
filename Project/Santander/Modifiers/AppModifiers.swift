@@ -10,6 +10,7 @@ import TransferOperatives
 import CoreFoundationLib
 import SANLegacyLibrary
 import GlobalPosition
+import GlobalSearch
 import PersonalArea
 import RetailLegacy
 import PrivateMenu
@@ -211,6 +212,9 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: InternalTransferAmountModifierProtocol.self) { _ in
             return PLInternalTransferAmountModifier()
+        }
+        self.legacyDependenciesInjector.register(for: GlobalSearchConfigurationModifierProtocol.self) { _ in
+            return PLGlobalSearchConfigurationModifier()
         }
     }
 }
