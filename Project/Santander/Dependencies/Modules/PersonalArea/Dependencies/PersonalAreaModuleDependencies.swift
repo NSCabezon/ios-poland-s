@@ -32,4 +32,8 @@ extension ModuleDependencies: PersonalAreaExternalDependenciesResolver {
         let oldResolver: DependenciesResolver = resolve()
         return oldResolver.resolve()
     }
+    
+    func resolve() -> GetPersonalAreaConfigurationPreferencesUseCase {
+        return PLGetPersonalAreaConfigurationPreferencesUseCase(dependencies: self)
+    }
 }

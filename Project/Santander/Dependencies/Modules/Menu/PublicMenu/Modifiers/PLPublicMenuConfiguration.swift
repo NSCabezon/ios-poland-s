@@ -74,12 +74,12 @@ struct PLPublicMenuConfiguration {
                               type: .bigButton(style: PLBigButtonType(fontSize: 20.0))),
         bottom: nil
     )
-    // TODO: - Replace the action with .custom(action: PLCustomActions.mobileAuthorization.rawValue) when will be available
+    
     private let mobileAuthorizationItem = PublicMenuElement(
         top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
                               titleKey: KindOfPublicMenuNode.mobileAuthorizationViewModel.titleKey,
                               iconKey: KindOfPublicMenuNode.mobileAuthorizationViewModel.iconKey,
-                              action: .comingSoon,
+                              action: .custom(action: PLCustomActions.mobileAuthorization.rawValue),
                               accessibilityIdentifier: KindOfPublicMenuNode.mobileAuthorizationViewModel.accessibility,
                               type: .smallButton(style: PLSmallButtonType())),
         bottom: nil

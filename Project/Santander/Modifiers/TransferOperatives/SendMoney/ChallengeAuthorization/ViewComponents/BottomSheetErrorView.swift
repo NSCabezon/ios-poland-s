@@ -59,8 +59,7 @@ private extension BottomSheetErrorView {
     
     func configureImage(_ viewModel: BottomSheetErrorViewModel) {
         self.imageView.image = Assets.image(named: viewModel.imageKey)
-        self.imageView.image = self.imageView.image?.withRenderingMode(.alwaysTemplate)
-        self.imageView.tintColor = .oneLisboaGray
+        self.imageView.image = self.imageView.image
     }
     
     func configureLabels(_ viewModel: BottomSheetErrorViewModel) {

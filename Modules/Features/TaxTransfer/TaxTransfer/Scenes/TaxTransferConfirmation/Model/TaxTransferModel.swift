@@ -18,7 +18,7 @@ public struct TaxTransferModel {
     public let taxSymbol: TaxSymbol
     public let taxPayer: TaxPayer
     public let taxPayerInfo: SelectedTaxPayerInfo
-    public let billingPeriodType: TaxTransferBillingPeriodType
+    public let billingPeriodType: TaxTransferBillingPeriodType?
     public let billingYear: String?
     public let billingPeriodNumber: Int?
     public let obligationIdentifier: String
