@@ -28,7 +28,7 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
         
         static var firstArgMaxLenght = 15
         static var secondArgMaxLenght = 7
-        static var thirdArgMaxLength = 6
+        static var thirdArgMaxLength = 7
     }
 
     func map(
@@ -84,7 +84,11 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
         case .year:
             billingPeriod = "\(formattedYear)\(period?.short)"
         default:
-            billingPeriod = "\(formattedYear)\(period?.short)\(selectedPeriodNumber ?? 0)"
+            if let period = period?.short, let selectedPeriodNumber = selectedPeriodNumber {
+                billingPeriod = "\(formattedYear)\(period)\(selectedPeriodNumber)"
+            } else {
+                billingPeriod = ""
+            }
         }
 
         guard obligationIdentifier.count <= Constants.firstArgMaxLenght,
