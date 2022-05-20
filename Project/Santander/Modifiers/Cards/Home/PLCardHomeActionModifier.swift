@@ -53,7 +53,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
                     .viewStatements,
                     .cancelCard,
                     .creditLimitIncrease,
-                    .cardActivation:
+                    .cardActivation,
+                    .offer:
                 self.openWebViewIfProceeds(for: identifier,
                                               entity: entity)
             default:
