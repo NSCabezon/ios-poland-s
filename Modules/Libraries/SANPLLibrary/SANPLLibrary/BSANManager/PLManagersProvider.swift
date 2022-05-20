@@ -33,6 +33,7 @@ public protocol PLManagersProviderProtocol {
     func getHistoryManager() -> PLHistoryManagerProtocol
     func getExpensesChartManager() -> PLExpensesChartManagerProtocol
     func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol
+    func getQuickBalanceManager() -> PLQuickBalanceManagerProtocol
 }
 
 public protocol PLManagersProviderReactiveProtocol {
@@ -66,6 +67,8 @@ public final class PLManagersProvider {
     private let historyManager: PLHistoryManagerProtocol
     private let expensesChartManager: PLExpensesChartManagerProtocol
     private let splitPaymentManager: PLSplitPaymentManagerProtocol
+    private let quickBalanceManager: PLQuickBalanceManagerProtocol
+    
 
     public init(bsanDataProvider: BSANDataProvider,
                 hostProvider: PLHostProviderProtocol,
@@ -105,6 +108,7 @@ public final class PLManagersProvider {
         self.expensesChartManager = PLExpensesChartManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
         self.splitPaymentManager = PLSplitPaymentManager(bsanDataProvider: bsanDataProvider,
                                                          networkProvider: networkProvider)
+        self.quickBalanceManager = PLQuickBalanceManager(bsanDataProvider: bsanDataProvider, networkProvider: networkProvider, demoInterpreter: demoInterpreter)
     }
 }
 
@@ -215,6 +219,11 @@ extension PLManagersProvider: PLManagersProviderProtocol {
     public func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
         self.splitPaymentManager
     }
+
+    public func getQuickBalanceManager() -> PLQuickBalanceManagerProtocol {
+        self.quickBalanceManager
+    }
+
 }
 
 public extension PLManagersProviderProtocol {
@@ -292,6 +301,10 @@ public extension PLManagersProviderProtocol {
     }
     
     func getOperationsProductsManager() -> PLOperationsProductsManagerProtocol {
+        fatalError("Missing manager implementation")
+    }
+     
+    func getQuickBalanceLastTransactionManager() -> PLQuickBalanceManagerProtocol {
         fatalError("Missing manager implementation")
     }
 }

@@ -30,6 +30,8 @@ import ZusSMETransfer
 import SplitPayment
 import ScanAndPay
 import Authorization
+import PLQuickBalance
+
 
 final class AppNavigationDependencies {
     private let drawer: BaseMenuViewController
@@ -198,6 +200,14 @@ final class AppNavigationDependencies {
         self.dependenciesEngine.register(for: InsuranceProtectionModifier.self) { resolver in
             PLInsuranceProtectionModifier(dependenciesResolver: resolver, drawer: self.drawer)
         }
+
+        dependenciesEngine.register(for: PLQuickBalanceCoordinatorProtocol.self) { resolver in
+            return PLQuickBalanceCoordinator(
+                dependenciesResolver: resolver,
+                navigationController: self.drawer.currentRootViewController as? UINavigationController
+            )
+        }
+
     }
 }
 

@@ -82,6 +82,7 @@ def pl_features
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
   pod 'SplitPayment', :path => '../Modules/Features/SplitPayment'
   pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
+  pod 'PLQuickBalance', :path => '../Modules/Features/PLQuickBalance'
 end
 
 def pl_libraries

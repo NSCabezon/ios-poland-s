@@ -12,6 +12,8 @@ import PLCommonOperatives
 import UI
 import PLHelpCenter
 import BLIK
+import PLHelpCenter
+import PLQuickBalance
 import OpenCombine
 
 private var currentCancellable: AnyCancellable?
@@ -64,6 +66,9 @@ private extension DeeplinkLauncher {
             var cordinator = dependenciesResolver.resolve(for: OnlineAdvisorCoordinatorProtocol.self)
             cordinator.presenter?.onlineAdvisorParameters = params
             cordinator.start()
+        case .quickBalance:
+            let cordinator = dependenciesResolver.resolve(for: PLQuickBalanceCoordinatorProtocol.self)
+            cordinator.showEnableQuickBalanceView()
         }
     }
     

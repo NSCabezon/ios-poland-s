@@ -32,4 +32,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'PLCryptography'
   spec.dependency 'PLNotifications'
   spec.dependency 'Dynatrace'
+  spec.dependency 'PLQuickBalance'
 end
