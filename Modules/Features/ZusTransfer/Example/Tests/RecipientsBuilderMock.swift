@@ -32,6 +32,6 @@ struct RecipientsBuilderMock {
     }
     
     static func getRecipientMock() -> Recipient {
-        Recipient(name: "ZUS", accountNumber: "02600000020260006109165886")
+        Recipient(name: "ZUS", accountNumber: "02600000020260006109165886", transactionTitle: "Przelew na ZUS maj")
     }
 }

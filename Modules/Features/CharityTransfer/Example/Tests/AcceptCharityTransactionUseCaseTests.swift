@@ -47,7 +47,7 @@ class AcceptCharityTransactionUseCaseTests: XCTestCase {
     func test_sendConfirmation_transaction_use_case_nonConnection_failure() throws {
         setUpPLTransfersManagerNonConnectionFailureMock()
         let scenario = Scenario(useCase: SUT,
-                                input: .init(model: CharityTransferModelMockBuilder.getCharityTransferModelMock()))
+                                input: .init(model: CharityTransferModel.stub()))
             .execute(on: useCaseHandler)
         scenario.onError { error in
             XCTAssertEqual(error.getErrorDesc(),

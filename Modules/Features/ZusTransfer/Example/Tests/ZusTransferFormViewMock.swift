@@ -24,7 +24,7 @@ final class ZusTransferFormViewMock: ZusTransferFormViewProtocol {
         showValidationMessagesCalled = true
     }
     
-    func updateRecipient(name: String, accountNumber: String) {
+    func updateRecipient(name: String, accountNumber: String, transactionTitle: String) {
         updateRecipientCalled = true
     }
     

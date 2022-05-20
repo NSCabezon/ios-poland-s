@@ -57,7 +57,7 @@ final class CharityTransferPresenterTests: XCTestCase {
         }
         XCTAssertEqual(viewModel.accountNumber, "*1234")
         XCTAssertEqual(viewModel.accountNumberUnformatted, "12123412341234123412341234")
-        XCTAssertEqual(viewModel.availableFunds, "1500.00 PLN")
+        XCTAssertEqual(viewModel.availableFunds, "1 500,00 PLN")
         XCTAssertEqual(viewModel.name, "Konto Jakie Chcesz")
         XCTAssertEqual(viewModel.isSelected, true)
     }
@@ -96,7 +96,9 @@ private extension CharityTransferPresenterTests {
                                                          charityTransferSettings: CharityTransferSettings(
                                                             transferRecipientName: "Fundacja Santander",
                                                             transferAccountNumber: "26 1090 0088 0000 0001 4223 0553",
-                                                            transferTitle: "Darowizna dla Fundacji Santander"
+                                                            transferTitle: "Darowizna dla Fundacji Santander",
+                                                            windowTitle: "Przelew na Fundację Santander",
+                                                            infoText: "W Fundacji Santander myślimy o przyszłości, działamy dziś. Pomóż nam stwarzać możliwości"
                                                          )
             )
             return presenter
