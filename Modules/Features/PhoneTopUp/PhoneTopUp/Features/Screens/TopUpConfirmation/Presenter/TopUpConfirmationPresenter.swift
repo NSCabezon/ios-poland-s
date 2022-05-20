@@ -98,6 +98,7 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
             .execute(on: dependenciesResolver.resolve())
             .onSuccess { [weak self] output in
                 self?.view?.hideLoader(completion: {
+                    self?.coordinator.closeAuthorization()
                     guard let self = self, output.reloadSuccessful else {
                         self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
                         return
@@ -106,6 +107,7 @@ extension TopUpConfirmationPresenter: TopUpConfirmationPresenterProtocol {
                 })
             }.onError { [weak self] error in
                 self?.view?.hideLoader(completion: {
+                    self?.coordinator.closeAuthorization()
                     self?.view?.showErrorMessage(localized("pl_generic_alert_textTryLater"), onConfirm: {})
                 })
             }
