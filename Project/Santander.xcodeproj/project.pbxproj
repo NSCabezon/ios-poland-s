@@ -65,7 +65,6 @@
 		0D9441E727E363B10042FCB8 /* PLFundsHomeHeaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9441E627E363B10042FCB8 /* PLFundsHomeHeaderModifier.swift */; };
 		0D9ACF2D27352416001D6D51 /* GetGPLoanOperativeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9ACF2C27352416001D6D51 /* GetGPLoanOperativeModifier.swift */; };
 		0D9B5E6127EB452400D20B61 /* FundCustomeOptionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9B5E6027EB452400D20B61 /* FundCustomeOptionCoordinator.swift */; };
-		0D9E176526B96A9B00781A95 /* PLFundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9E176426B96A9B00781A95 /* PLFundModifier.swift */; };
 		0DA4CC8F269C5692008E2E4F /* PLSetupActivateCardUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */; };
 		0DA71E8F276B7CE300C90A51 /* PLContextSelectorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA71E8E276B7CE200C90A51 /* PLContextSelectorModifier.swift */; };
 		0DAA4D5226C3BA53005A921C /* PLBuyInsuranceOperative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA4D5126C3BA53005A921C /* PLBuyInsuranceOperative.swift */; };
@@ -436,7 +435,6 @@
 		0D9441E627E363B10042FCB8 /* PLFundsHomeHeaderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLFundsHomeHeaderModifier.swift; sourceTree = "<group>"; };
 		0D9ACF2C27352416001D6D51 /* GetGPLoanOperativeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGPLoanOperativeModifier.swift; sourceTree = "<group>"; };
 		0D9B5E6027EB452400D20B61 /* FundCustomeOptionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FundCustomeOptionCoordinator.swift; sourceTree = "<group>"; };
-		0D9E176426B96A9B00781A95 /* PLFundModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLFundModifier.swift; sourceTree = "<group>"; };
 		0DA4CC8D269C5692008E2E4F /* PLSetupActivateCardUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSetupActivateCardUseCase.swift; sourceTree = "<group>"; };
 		0DA71E8E276B7CE200C90A51 /* PLContextSelectorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLContextSelectorModifier.swift; sourceTree = "<group>"; };
 		0DAA4D5126C3BA53005A921C /* PLBuyInsuranceOperative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLBuyInsuranceOperative.swift; sourceTree = "<group>"; };
@@ -1509,7 +1507,6 @@
 				0DA71E8E276B7CE200C90A51 /* PLContextSelectorModifier.swift */,
 				0D6E289626BA75D700F50A18 /* PLDepositModifier.swift */,
 				669A37DF2717508300C0F272 /* PLEditBudgetHelperModifier.swift */,
-				0D9E176426B96A9B00781A95 /* PLFundModifier.swift */,
 				7E50345527BA7E4400B5FE2D /* PLInsuranceProtectionModifier.swift */,
 				BBD08194269DB59F00A02FA3 /* PLMonthlyBalanceUseCase.swift */,
 				7E9FD51127A3FA2300B36D7C /* PLUserSegmentProtocol.swift */,
@@ -2751,7 +2748,6 @@
 				45D378FC27AA9859002C47E9 /* PLPhoneTopUpOperative.swift in Sources */,
 				2637FD22280009A20052A901 /* PLGetSavingProductOptionsUseCase.swift in Sources */,
 				B7BF53D927A7EF6B00EDDE88 /* PublicMenuCustomActionDependenciesResolver.swift in Sources */,
-				0D9E176526B96A9B00781A95 /* PLFundModifier.swift in Sources */,
 				04BAA0D327AA9B8400AFDC2E /* ProductActionsShortcutsMatrix.swift in Sources */,
 				447D7D30268F009300F9A70D /* PLCardHomeModifier.swift in Sources */,
 				66BC8D9D264092B500654CC5 /* AppNavigationDependencies.swift in Sources */,

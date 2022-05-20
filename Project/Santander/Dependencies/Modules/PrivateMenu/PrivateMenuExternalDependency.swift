@@ -54,10 +54,6 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func fundsHomeCoordinator() -> BindableCoordinator {
-        ToastCoordinator("generic_alert_notAvailableOperation")
-    }
-    
     func insuranceSavingsHomeCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
