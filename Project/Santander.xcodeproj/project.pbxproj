@@ -306,6 +306,9 @@
 		B780E94727E4B579001C1B7F /* PLGetLoanTransactionSearchConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B780E94627E4B579001C1B7F /* PLGetLoanTransactionSearchConfig.swift */; };
 		B7BF53D527A7E95000EDDE88 /* PublicMenuCustomActionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BF53D427A7E94F00EDDE88 /* PublicMenuCustomActionCoordinator.swift */; };
 		B7BF53D927A7EF6B00EDDE88 /* PublicMenuCustomActionDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BF53D827A7EF6B00EDDE88 /* PublicMenuCustomActionDependenciesResolver.swift */; };
+		B7C07C57282A4E0B00D4B0D8 /* TestPLGetPersonalAreaConfigurationPreferencesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C07C53282A4E0B00D4B0D8 /* TestPLGetPersonalAreaConfigurationPreferencesUseCase.swift */; };
+		B7C07C58282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationExternalDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C07C55282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationExternalDependencies.swift */; };
+		B7C07C59282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C07C56282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationDependencies.swift */; };
 		B7C84CE727D6180A00692EFE /* LoanDetailConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C84CE627D6180A00692EFE /* LoanDetailConfig.swift */; };
 		B7D59A3127A004C700E2D777 /* PLPublicMenuConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3027A004C700E2D777 /* PLPublicMenuConfiguration.swift */; };
 		B7D59A3327A007D000E2D777 /* PublicMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3227A007D000E2D777 /* PublicMenuOption.swift */; };
@@ -315,6 +318,7 @@
 		B7D59A3B27A009E700E2D777 /* PublicMenuElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3A27A009E700E2D777 /* PublicMenuElement.swift */; };
 		B7D59A3D27A00A8B00E2D777 /* SelectOptionButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3C27A00A8B00E2D777 /* SelectOptionButtonModel.swift */; };
 		B7D59A3F27A00E6900E2D777 /* PLSmallButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */; };
+		B7EFB4A12822C090005E4BC2 /* PLGetPersonalAreaConfigurationPreferencesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFB4A02822C090005E4BC2 /* PLGetPersonalAreaConfigurationPreferencesUseCase.swift */; };
 		BA5B257027C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5B256F27C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift */; };
 		BAA2FF2E27F10D1F00A38456 /* OnboardingPermissionOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2FF2D27F10D1F00A38456 /* OnboardingPermissionOptionsTests.swift */; };
 		BAA2FF3027F10D4800A38456 /* PLOnboardingConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA2FF2F27F10D4800A38456 /* PLOnboardingConfigurationTests.swift */; };
@@ -729,6 +733,9 @@
 		B780E94627E4B579001C1B7F /* PLGetLoanTransactionSearchConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetLoanTransactionSearchConfig.swift; sourceTree = "<group>"; };
 		B7BF53D427A7E94F00EDDE88 /* PublicMenuCustomActionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicMenuCustomActionCoordinator.swift; sourceTree = "<group>"; };
 		B7BF53D827A7EF6B00EDDE88 /* PublicMenuCustomActionDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicMenuCustomActionDependenciesResolver.swift; sourceTree = "<group>"; };
+		B7C07C53282A4E0B00D4B0D8 /* TestPLGetPersonalAreaConfigurationPreferencesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPLGetPersonalAreaConfigurationPreferencesUseCase.swift; sourceTree = "<group>"; };
+		B7C07C55282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationExternalDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPersonalAreaConfigurationExternalDependencies.swift; sourceTree = "<group>"; };
+		B7C07C56282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPersonalAreaConfigurationDependencies.swift; sourceTree = "<group>"; };
 		B7C84CE627D6180A00692EFE /* LoanDetailConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoanDetailConfig.swift; sourceTree = "<group>"; };
 		B7D59A3027A004C700E2D777 /* PLPublicMenuConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPublicMenuConfiguration.swift; sourceTree = "<group>"; };
 		B7D59A3227A007D000E2D777 /* PublicMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicMenuOption.swift; sourceTree = "<group>"; };
@@ -738,6 +745,7 @@
 		B7D59A3A27A009E700E2D777 /* PublicMenuElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicMenuElement.swift; sourceTree = "<group>"; };
 		B7D59A3C27A00A8B00E2D777 /* SelectOptionButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOptionButtonModel.swift; sourceTree = "<group>"; };
 		B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLSmallButtonType.swift; sourceTree = "<group>"; };
+		B7EFB4A02822C090005E4BC2 /* PLGetPersonalAreaConfigurationPreferencesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetPersonalAreaConfigurationPreferencesUseCase.swift; sourceTree = "<group>"; };
 		B932E50AF04136BD1FA5177A /* Pods-Santander.intern-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.intern-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.intern-release.xcconfig"; sourceTree = "<group>"; };
 		BA5B256F27C3B09700EEB210 /* PLGetInternalTransferDestinationAccountsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGetInternalTransferDestinationAccountsUseCase.swift; sourceTree = "<group>"; };
 		BAA2FF2D27F10D1F00A38456 /* OnboardingPermissionOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionOptionsTests.swift; sourceTree = "<group>"; };
@@ -1463,6 +1471,7 @@
 				5F80308D282D4206008206D1 /* Commons */,
 				5F803083282D411D008206D1 /* CardTransactionDetail */,
 				44AC8A4C2822D4F000CB3B1C /* CardTransactionFilter */,
+				B7C07C51282A4E0B00D4B0D8 /* PersonalArea */,
 				444424A627EB7ADB0020E735 /* CardDetail */,
 			);
 			path = Scenes;
@@ -1951,6 +1960,7 @@
 				829C89BB280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift */,
 				829C89C1280F0C2200975BF4 /* PLGetUsernameUseCase.swift */,
 				823D0C112816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift */,
+				B7EFB4A02822C090005E4BC2 /* PLGetPersonalAreaConfigurationPreferencesUseCase.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -2256,6 +2266,32 @@
 				B7D59A3E27A00E6900E2D777 /* PLSmallButtonType.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		B7C07C51282A4E0B00D4B0D8 /* PersonalArea */ = {
+			isa = PBXGroup;
+			children = (
+				B7C07C52282A4E0B00D4B0D8 /* Configuration */,
+			);
+			path = PersonalArea;
+			sourceTree = "<group>";
+		};
+		B7C07C52282A4E0B00D4B0D8 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				B7C07C53282A4E0B00D4B0D8 /* TestPLGetPersonalAreaConfigurationPreferencesUseCase.swift */,
+				B7C07C54282A4E0B00D4B0D8 /* Dependencies */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		B7C07C54282A4E0B00D4B0D8 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				B7C07C55282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationExternalDependencies.swift */,
+				B7C07C56282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationDependencies.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 		BAA2FF2627F0BF6600A38456 /* Recovered References */ = {
@@ -2817,6 +2853,7 @@
 				444424AE27EB7ADC0020E735 /* MockCardDetail.swift in Sources */,
 				5F803086282D4146008206D1 /* TestCardTransactionExternalDependencies.swift in Sources */,
 				5F80308F282D4225008206D1 /* MockDataInjector+Cards.swift in Sources */,
+				B7C07C57282A4E0B00D4B0D8 /* TestPLGetPersonalAreaConfigurationPreferencesUseCase.swift in Sources */,
 				444424B127EB7ADC0020E735 /* TestCardDetailDependencies.swift in Sources */,
 				444424AF27EB7ADC0020E735 /* MockCard.swift in Sources */,
 				44AC8A532822D4F100CB3B1C /* TestCardTransactionFilterDependencies.swift in Sources */,
@@ -2827,6 +2864,7 @@
 				04A66E8627D9FAAA00EE107F /* ExchangeRateRepresentableMock.swift in Sources */,
 				5F80308A282D41D8008206D1 /* TestCardTransactionDetailUseCase.swift in Sources */,
 				04A66E8127D9F9C100EE107F /* PLTransfersRepositoryMock.swift in Sources */,
+				B7C07C58282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationExternalDependencies.swift in Sources */,
 				04A66E7E27D9DEF100EE107F /* PLGetInternalTransferAmountExchangeRateUseCaseTest.swift in Sources */,
 				5F80309A282D44C2008206D1 /* MockCardTransactionDetailConfig.swift in Sources */,
 				BAA2FF2E27F10D1F00A38456 /* OnboardingPermissionOptionsTests.swift in Sources */,
@@ -2835,6 +2873,7 @@
 				9092539D27E207DB0034A5E0 /* PLInternalTransferConfirmationUseCaseTest.swift in Sources */,
 				5F803098282D43D2008206D1 /* MockCardTransactionViewItem.swift in Sources */,
 				5F803092282D425B008206D1 /* PullOffersInterpreterMock.swift in Sources */,
+				B7C07C59282A4E0B00D4B0D8 /* TestPersonalAreaConfigurationDependencies.swift in Sources */,
 				04A66E8327D9FA3B00EE107F /* PLInternalTransferExternalDependenciesResolverMock.swift in Sources */,
 				EF6BFCB327FE11110019E702 /* PLGetInternalTransferOriginAccountsUseCaseTest.swift in Sources */,
 				44AC8A512822D4F100CB3B1C /* PLGetCardAvailableFiltersUseCaseTest.swift in Sources */,
@@ -2905,6 +2944,7 @@
 				B7D59A3527A0082600E2D777 /* PLKindOfPublicMenuNode.swift in Sources */,
 				CCE45A9B2732AC5400691E91 /* PLAuthorizationPresenter.swift in Sources */,
 				669A37CE270F564800C0F272 /* PLProductOperativesData.swift in Sources */,
+				B7EFB4A12822C090005E4BC2 /* PLGetPersonalAreaConfigurationPreferencesUseCase.swift in Sources */,
 				4211A6BB27B3AFED0034214E /* PLSendMoneyAmountUseCase.swift in Sources */,
 				423015DE27AC2BBE00A7E585 /* PLSendMoneyDestinationUseCase.swift in Sources */,
 				669A37CE270F564800C0F272 /* PLProductOperativesData.swift in Sources */,
@@ -3224,7 +3264,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3301,7 +3341,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3372,7 +3412,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3443,7 +3483,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3514,7 +3554,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3585,7 +3625,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3656,7 +3696,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3727,7 +3767,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3798,7 +3838,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3869,7 +3909,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3940,7 +3980,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4011,7 +4051,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4082,7 +4122,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4153,7 +4193,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4259,7 +4299,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4267,7 +4307,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = Santander;
@@ -4315,7 +4355,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4477,7 +4517,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4485,7 +4525,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development pl.santander.oneapp.prod";
@@ -4505,7 +4545,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Release.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4513,7 +4553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc pl.santander.oneapp.prod";
@@ -4595,7 +4635,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4603,7 +4643,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4686,7 +4726,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Dev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEFAULT_DEMO_USER = 12345678Z;
 				DEMO_AVAILABLE = YES;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -4696,7 +4736,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4779,7 +4819,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Daniel Juarez Moro (9K2X43NG89)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4787,7 +4827,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4864,7 +4904,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: CIBER SOLUTIONS SL (EXTINGUIDA)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4872,7 +4912,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -4949,7 +4989,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Intern.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: CIBER SOLUTIONS SL (EXTINGUIDA)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = JFX6PVNK48;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -4957,7 +4997,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5040,7 +5080,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Preprod.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5048,7 +5088,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5125,7 +5165,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Preprod.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5133,7 +5173,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5216,7 +5256,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/UAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5224,7 +5264,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5301,7 +5341,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/UAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5309,7 +5349,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5386,7 +5426,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Regression.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5394,7 +5434,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5477,7 +5517,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Regression.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEVELOPMENT_TEAM = 6E95WJX594;
 				INFOPLIST_FILE = Santander/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
@@ -5485,7 +5525,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
@@ -5568,7 +5608,7 @@
 				CODE_SIGN_ENTITLEMENTS = Santander/Entitlement/Dev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 101009;
+				CURRENT_PROJECT_VERSION = 101010;
 				DEFAULT_DEMO_USER = 12345678Z;
 				DEMO_AVAILABLE = YES;
 				DEVELOPMENT_TEAM = 6E95WJX594;
@@ -5578,7 +5618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 1.1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_MODULE_NAME = Santander;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
