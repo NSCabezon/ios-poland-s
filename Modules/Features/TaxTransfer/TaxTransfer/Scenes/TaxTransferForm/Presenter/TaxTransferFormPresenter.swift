@@ -354,8 +354,7 @@ private extension TaxTransferFormPresenter {
               let currentFormData = view?.getCurrentFormFields(),
               let taxAuthority = selectedTaxAuthority,
               let taxPayer = selectedTaxPayer,
-              let taxPayerInfo = selectedPayerInfo,
-              let period = selectedPeriod else {
+              let taxPayerInfo = selectedPayerInfo else {
                   return nil
               }
         
@@ -365,7 +364,7 @@ private extension TaxTransferFormPresenter {
             taxAuthority: taxAuthority,
             taxPayer: taxPayer,
             taxPayerInfo: taxPayerInfo,
-            billingPeriod: period,
+            billingPeriod: selectedPeriod,
             selectedBillingYear: selectedBillingYear,
             selectedPeriodNumber: selectedPeriodNumber
         )

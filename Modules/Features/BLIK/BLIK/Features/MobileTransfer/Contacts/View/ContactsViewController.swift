@@ -114,7 +114,7 @@ private extension ContactsViewController {
         prepareNavigationBar()
         prepareLayout()
         configureTableView()
-        configureKeyboardDismissGesture()
+        configureKeyboardDismissGesture(shouldCancelTouchesInView: false)
     }
     
     func showAllResults() {

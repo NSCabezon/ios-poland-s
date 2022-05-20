@@ -201,7 +201,7 @@ extension OneAppInitCoordinator: OneAppInitCoordinatorDelegate {
             coordinator.start()
         case .authorization:
             let coordinator = dependenciesEngine.resolve(
-                for: AuthorizationCoordinatorProtocol.self
+                for: AuthorizationModuleCoordinator.self
             )
             coordinator.start()
         case .charityTransfer:

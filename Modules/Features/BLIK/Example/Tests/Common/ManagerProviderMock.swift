@@ -2,7 +2,7 @@ import SANPLLibrary
 import CoreFoundationLib
 
 final class PLManagersProviderMock: PLManagersProviderProtocol {
-  
+    
     private let dependenciesResolver: DependenciesResolver
     
     init(dependenciesResolver: DependenciesResolver) {
@@ -82,6 +82,10 @@ final class PLManagersProviderMock: PLManagersProviderProtocol {
     }
     
     func getPhoneTopUpManager() -> PLPhoneTopUpManagerProtocol {
+        fatalError()
+    }
+    
+    func getSplitPaymentManager() -> PLSplitPaymentManagerProtocol {
         fatalError()
     }
 }

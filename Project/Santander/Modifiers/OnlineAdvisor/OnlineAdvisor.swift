@@ -10,12 +10,19 @@ import Vcc
 import CoreFoundationLib
 import PLHelpCenter
 import UIKit
+import UI
+import OpenCombine
+import UIOneComponents
 
 public class OnlineAdvisorManager: NSObject, PLOnlineAdvisorManagerProtocol {
     var viewController: VccViewController?
     var floatingButtonWindow: FloatingButtonWindow?
+    var initialParams: String?
+    
+    private var subscriptions: Set<AnyCancellable> = []
     
     public func open(initialParams: String) {
+        self.initialParams = initialParams
         viewController = VccViewController()
         guard let viewController = viewController else { return }
         let configuration = VccConfiguration()
@@ -36,6 +43,26 @@ public class OnlineAdvisorManager: NSObject, PLOnlineAdvisorManagerProtocol {
     public func resumeScreenSharing() {
         viewController?.resumeScreenSharingAfterSensitiveData()
     }
+    
+    func showNewMessageToastView() {
+        let toast = OneToastView()
+        let model = OneToastViewModel(leftIconKey: "oneIcnAlert",
+                                     titleKey: nil,
+                                     subtitleKey: localized("pl_onlineAdvisor_toast_backToConversation"),
+                                     linkKey: localized("pl_onlineAdvisor_button_backToConversation"),
+                                     type: .large,
+                                     position: .top,
+                                     duration: .custom(5))
+    
+        toast.setViewModel(model)
+        toast.publisher
+            .case(ReactiveOneToastViewState.didPressOptionalLink)
+            .sink { [weak self ] _ in
+                guard let initialParams = self?.initialParams else { return }
+                self?.open(initialParams: initialParams)
+                }.store(in: &subscriptions)
+        toast.present()
+    }
 }
 
 extension OnlineAdvisorManager: VccViewControllerDelegate {
@@ -52,6 +79,10 @@ extension OnlineAdvisorManager: VccViewControllerDelegate {
     }
     
     public func vccViewControllerDidMinimize() {
+    }
+    
+    public func vccViewControllerNewMessageArrived() {
+        showNewMessageToastView()
     }
     
     public func vccViewControllerDidStopScreenSharing() {

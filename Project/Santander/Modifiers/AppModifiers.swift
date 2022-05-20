@@ -8,6 +8,7 @@
 import RetailLegacy
 import CoreFoundationLib
 import GlobalPosition
+import GlobalSearch
 import Transfer
 import Cards
 import Account
@@ -199,9 +200,6 @@ private extension AppModifiers {
         self.legacyDependenciesInjector.register(for: GenericDialogAddBranchLocatorActionCapable.self) { _ in
             GenericDialogActionsModifier()
         }
-        self.legacyDependenciesInjector.register(for: LoanTransactionDetailUseCaseProtocol.self) { dependenciesResolver in
-            PLLoanTransactionDetailUseCase(dependenciesResolver: dependenciesResolver)
-        }
         self.legacyDependenciesInjector.register(for: GetPGFrequentOperativeOptionProtocol.self) { _ in
             return self.getPGFrequentOperativeOption
         }
@@ -216,6 +214,9 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: InternalTransferAmountModifierProtocol.self) { _ in
             return PLInternalTransferAmountModifier()
+        }
+        self.legacyDependenciesInjector.register(for: GlobalSearchConfigurationModifierProtocol.self) { _ in
+            return PLGlobalSearchConfigurationModifier()
         }
     }
 }

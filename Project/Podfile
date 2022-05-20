@@ -46,6 +46,7 @@ def core_dependencies
   pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
   pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
   pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
+  pod 'SANServicesLibrary', :path => '../santander-one/Modules/Libraries/SANServicesLibrary'
 end
 
 def legacy_libraries
