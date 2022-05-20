@@ -73,7 +73,7 @@ private extension EditableTaxAccountView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: localized("generic_label_taxAuthorityAcc")
+            sectionTitle: localized("generic_label_taxPayerAccNum")
         )
     }
     
