@@ -99,6 +99,16 @@ private extension PLQuickBalanceSelectableView {
         self.subtitleLabel.textColor = self.status.titleTextColor
         self.subtitleLabel.font = self.status.subtitleTextFont
         self.cornerIconImageView.isHidden = self.status != .activated
+
+        if self.status != .activated {
+            self.contentView.layer.shadowColor = UIColor.black.cgColor
+            self.contentView.layer.shadowOpacity = 0.1
+            self.contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+            self.contentView.layer.shadowRadius = 2
+        } else {
+            self.contentView.layer.shadowColor = nil
+            self.contentView.layer.shadowOpacity = 0.0
+        }
     }
     
     @objc func didTapOnContentView() {

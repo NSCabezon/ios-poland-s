@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U91-2e-IEO">
-                    <rect key="frame" x="0.0" y="10" width="458" height="128"/>
+                    <rect key="frame" x="0.0" y="10" width="458" height="124"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ev-XM-0VP">
                             <rect key="frame" x="16" y="12" width="426" height="21"/>
@@ -31,7 +31,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sir-Xt-pfl">
-                            <rect key="frame" x="16" y="37" width="426" height="79"/>
+                            <rect key="frame" x="16" y="37" width="426" height="75"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -63,7 +63,7 @@
                 <constraint firstAttribute="trailing" secondItem="U91-2e-IEO" secondAttribute="trailing" id="MCi-Em-Rab"/>
                 <constraint firstItem="U91-2e-IEO" firstAttribute="leading" secondItem="gSg-KI-UNK" secondAttribute="leading" id="TGM-JW-wac"/>
                 <constraint firstItem="U91-2e-IEO" firstAttribute="top" secondItem="gSg-KI-UNK" secondAttribute="top" constant="10" id="mfu-Rd-k5a"/>
-                <constraint firstAttribute="bottom" secondItem="U91-2e-IEO" secondAttribute="bottom" id="svn-2a-B8W"/>
+                <constraint firstAttribute="bottom" secondItem="U91-2e-IEO" secondAttribute="bottom" constant="4" id="svn-2a-B8W"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="60.869565217391312" y="12.723214285714285"/>

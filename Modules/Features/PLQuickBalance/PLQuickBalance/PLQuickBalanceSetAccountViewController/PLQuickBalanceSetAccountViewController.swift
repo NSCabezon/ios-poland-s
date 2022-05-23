@@ -41,12 +41,16 @@ class PLQuickBalanceSetAccountViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+
+        NavigationBarBuilder(style: .white, title: .title(key: localized("pl_quickView_label_selectAcc")))
+            .setLeftAction(.back(action: #selector(close)))
+            .build(on: self, with: nil)
+
         view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = localized("pl_quickView_label_selectAcc")
-        titleLabel.font =  UIFont.santander(family: .text, type: .bold, size: 18)
-        
+        titleLabel.text = localized("pl_quickView_label_selectAcc") + ":"
+        titleLabel.font = UIFont.santander(family: .text, type: .regular, size: 18)
+
         view.addSubview(tableView)
         tableView.estimatedRowHeight = 88.0
         tableView.rowHeight = UITableView.automaticDimension
@@ -59,11 +63,15 @@ class PLQuickBalanceSetAccountViewController: UIViewController{
         
         configureSubviews()
     }
+
+    @objc private func close() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func configureSubviews() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor)
@@ -71,7 +79,7 @@ class PLQuickBalanceSetAccountViewController: UIViewController{
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
