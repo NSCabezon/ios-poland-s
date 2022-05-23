@@ -15,6 +15,7 @@ import PLCommonOperatives
 protocol TaxTransferConfirmationCoordinatorProtocol {
     func goToGlobalPosition()
     func backToForm()
+    func closeAuthorizationFlow()
     func showSummary(
         with summaryModel: TaxTransferSummary,
         transferModel: TaxTransferModel
@@ -70,6 +71,15 @@ extension TaxTransferConfirmationCoordinator: TaxTransferConfirmationCoordinator
             navigationController: navigationController
         )
         coordinator.start()
+    }
+    
+    func closeAuthorizationFlow() {
+        guard let confirmationVC = navigationController?.viewControllers.first(where: {
+            $0 is TaxTransferConfirmationViewController
+        }) else {
+            return
+        }
+        navigationController?.popToViewController(confirmationVC, animated: false)
     }
 }
 

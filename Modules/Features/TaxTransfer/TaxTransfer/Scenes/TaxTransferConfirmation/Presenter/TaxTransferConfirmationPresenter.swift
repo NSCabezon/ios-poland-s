@@ -144,6 +144,7 @@ private extension TaxTransferConfirmationPresenter {
             .onSuccess { [weak self] result in
                 guard let self = self else { return }
                 self.view?.hideLoader {
+                    self.coordinator.closeAuthorizationFlow()
                     self.coordinator.showSummary(
                         with: result.summary,
                         transferModel: self.model
@@ -152,6 +153,7 @@ private extension TaxTransferConfirmationPresenter {
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
+                    self?.coordinator.closeAuthorizationFlow()
                     self?.showErrorMessage(error: error.getErrorDesc() ?? "")
                 }
             }
