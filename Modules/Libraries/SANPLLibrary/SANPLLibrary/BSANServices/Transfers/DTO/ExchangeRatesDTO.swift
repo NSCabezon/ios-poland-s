@@ -33,12 +33,11 @@ extension ExchangeRatesDTO: ExchangeRatesRepresentable {
 }
 
 extension ExchangeRateDTO: ExchangeRateRepresentable {
-
     public var buyRate: Decimal {
         return foreignCurrencyRate.buyRate / Decimal(currencyUnit)
     }
 
     public var sellRate: Decimal {
-        foreignCurrencyRate.sellRate / Decimal(currencyUnit)
+        return foreignCurrencyRate.sellRate / Decimal(currencyUnit)
     }
 }
