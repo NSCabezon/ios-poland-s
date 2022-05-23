@@ -23,8 +23,8 @@ final class SavingDataSource {
     private enum SavingServiceType: String {
         case transactionsSearch = "/history/search"
         case transactions = "/history"
-        case savingDetails = "/deposits/product/bonuses-by-account"
-        case termDetails = "/deposits"
+        case savingDetails = "/deposits/product/bonuses-by-account/"
+        case termDetails = "/deposits/"
     }
     
     private let networkProvider: NetworkProvider
@@ -91,15 +91,14 @@ extension SavingDataSource: SavingDataSourceProtocol {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
-        let serviceName = SavingServiceType.savingDetails.rawValue + "/\(accountId)"
+        let serviceName = SavingServiceType.savingDetails.rawValue + "\(accountId)"
         let absoluteUrl = baseUrl + self.basePath
         let result: Result<[SavingDetailsDTO], NetworkProviderError> = self.networkProvider.request(SavingDetailsRequest(serviceName: serviceName,
-                                                                                                                       serviceUrl: absoluteUrl,
-                                                                                                                       method: .post,
-                                                                                                                       jsonBody: nil,
-                                                                                                                       headers: self.headers,
-                                                                                                                       contentType: .json,
-                                                                                                                       localServiceName: .savingDetails))
+                                                                                                                         serviceUrl: absoluteUrl,
+                                                                                                                         method: .get,
+                                                                                                                         headers: self.headers,
+                                                                                                                         contentType: nil,
+                                                                                                                         localServiceName: .savingDetails))
         return result
     }
 
@@ -107,14 +106,13 @@ extension SavingDataSource: SavingDataSourceProtocol {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
         }
-        let serviceName = SavingServiceType.termDetails.rawValue + "/\(accountId)"
+        let serviceName = SavingServiceType.termDetails.rawValue + "\(accountId)"
         let absoluteUrl = baseUrl + self.basePath
         let result: Result<TermDetailsDTO, NetworkProviderError> = self.networkProvider.request(TermDetailsRequest(serviceName: serviceName,
                                                                                                                    serviceUrl: absoluteUrl,
-                                                                                                                   method: .post,
-                                                                                                                   jsonBody: nil,
+                                                                                                                   method: .get,
                                                                                                                    headers: self.headers,
-                                                                                                                   contentType: .json,
+                                                                                                                   contentType: nil,
                                                                                                                    localServiceName: .termDetails))
         return result
     }
@@ -197,10 +195,10 @@ private struct SavingDetailsRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: Any]?
-    let jsonBody: SavingsTransactionsParameters?
-    let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding? = .body
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding? = .none
     let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
@@ -209,18 +207,13 @@ private struct SavingDetailsRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
-         jsonBody: SavingsTransactionsParameters?,
          headers: [String: String]?,
-         queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
-        self.formData = body
-        self.jsonBody = jsonBody
         self.headers = headers
-        self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
     }
@@ -231,10 +224,10 @@ private struct TermDetailsRequest: NetworkProviderRequest {
     let serviceUrl: String
     let method: NetworkProviderMethod
     let headers: [String: String]?
-    let queryParams: [String: Any]?
-    let jsonBody: SavingsTransactionsParameters?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NetworkProviderRequestBodyEmpty? = nil
     let formData: Data?
-    let bodyEncoding: NetworkProviderBodyEncoding? = .body
+    let bodyEncoding: NetworkProviderBodyEncoding? = nil
     let contentType: NetworkProviderContentType?
     let localServiceName: PLLocalServiceName
     let authorization: NetworkProviderRequestAuthorization? = .oauth
@@ -243,18 +236,14 @@ private struct TermDetailsRequest: NetworkProviderRequest {
          serviceUrl: String,
          method: NetworkProviderMethod,
          body: Data? = nil,
-         jsonBody: SavingsTransactionsParameters?,
          headers: [String: String]?,
-         queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl
         self.method = method
         self.formData = body
-        self.jsonBody = jsonBody
         self.headers = headers
-        self.queryParams = queryParams
         self.contentType = contentType
         self.localServiceName = localServiceName
     }
