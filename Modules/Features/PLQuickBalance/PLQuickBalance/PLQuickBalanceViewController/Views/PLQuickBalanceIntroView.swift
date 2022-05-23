@@ -48,9 +48,9 @@ class PLQuickBalanceIntroView: UIView {
     }
 
     func configireView(){
-        backgroundColor = UIColor(red: 242/255.0,
-                                  green: 244/255.0,
-                                  blue: 246/255.0,
+        backgroundColor = UIColor(red: 244/255.0,
+                                  green: 246/255.0,
+                                  blue: 247/255.0,
                                   alpha: 1)
         addSubview(backLogin)
         addSubview(close)
@@ -96,7 +96,7 @@ class PLQuickBalanceIntroView: UIView {
 
         close.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            close.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            close.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
             close.topAnchor.constraint(equalTo: topAnchor, constant: 48),
             close.heightAnchor.constraint(equalToConstant: 24),
             close.widthAnchor.constraint(equalToConstant: 24)
@@ -112,7 +112,7 @@ class PLQuickBalanceIntroView: UIView {
 
         logo.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            logo.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 24),
+            logo.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
             logo.topAnchor.constraint(equalTo: topAnchor, constant: 64),
             logo.heightAnchor.constraint(equalToConstant: 50),
             logo.widthAnchor.constraint(equalToConstant: 50)
@@ -120,44 +120,44 @@ class PLQuickBalanceIntroView: UIView {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 24),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
             titleLabel.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 8)
         ])
 
         seperator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            seperator.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 24),
-            seperator.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            seperator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
+            seperator.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
             seperator.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 22),
             seperator.heightAnchor.constraint(equalToConstant: 1)
         ])
 
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            subtitleLabel.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 24),
-            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
+            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
             subtitleLabel.topAnchor.constraint(equalTo: seperator.bottomAnchor, constant: 22)
         ])
 
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            descriptionLabel.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 24),
-            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
             descriptionLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 8)
         ])
 
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            button.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 24),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -64),
             button.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 32),
             button.heightAnchor.constraint(equalToConstant: 48)
         ])
 
         icon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            icon.leadingAnchor.constraint(equalTo: backLogin.trailingAnchor, constant: 0),
+            icon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             icon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             icon.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 16),
             icon.bottomAnchor.constraint(equalTo: bottomAnchor)
