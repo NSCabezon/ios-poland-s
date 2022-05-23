@@ -38,7 +38,7 @@ private extension GetPGFrequentOperativeOption {
     func getPGSimpleFrecuenteOperatives() -> [PGFrequentOperativeOptionProtocol] {
         return [
             PGFrequentOperativeOption.operate,
-            PGFrequentOperativeOption.sendMoney,
+            PaymentsPGFrequentOperativeOption(dependencies: dependencies),
             TransactionHistoryPGSimpleFrequentOperativeOption(),
             BLIKPGSimpleFrequentOperativeOption(dependencyResolver: legacyDependenciesResolver)
         ]

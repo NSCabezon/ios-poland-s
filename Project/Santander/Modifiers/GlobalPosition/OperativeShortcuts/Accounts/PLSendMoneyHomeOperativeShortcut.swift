@@ -58,7 +58,7 @@ extension PLSendMoneyHomeOperativeShortcut: AccountOperativeActionTypeProtocol {
                 .sink { [unowned self] isEnabled in
                     UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true) {
                         if isEnabled {
-                            self.dependencies.oneTransferHomeCoordinator().start()
+                            self.dependencies.transferHomeCoordinator().start()
                         } else {
                             self.sendMoneyCoordinator.start()
                         }
