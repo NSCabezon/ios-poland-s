@@ -5,13 +5,13 @@ public class PLQuickBalanceSettingsViewModel {
     var allAccounts: [PLQuickBalanceSettingsAccountModel]?
     var selectedMainAccount: PLQuickBalanceSettingsAccountModel?
     var selectedSecondAccount: PLQuickBalanceSettingsAccountModel?
-    var amount: Int?
+    var amount: Double?
 
     init(isOn: Bool,
          allAccounts: [PLQuickBalanceSettingsAccountModel]? = nil,
          selectedAccount: PLQuickBalanceSettingsAccountModel? = nil,
          selectedSecondAccount: PLQuickBalanceSettingsAccountModel? = nil,
-         amount: Int) {
+         amount: Double) {
         self.isOn = isOn
         self.allAccounts = allAccounts
         self.selectedMainAccount = selectedAccount

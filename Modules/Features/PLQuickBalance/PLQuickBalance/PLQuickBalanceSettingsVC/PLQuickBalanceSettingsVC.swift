@@ -60,20 +60,28 @@ extension PLQuickBalanceSettingsVC: PLQuickBalanceSettingsViewControllerProtocol
 
 extension PLQuickBalanceSettingsVC: OneInputAmountViewDelegate {
     func textFieldDidChange() {
-        let amount = Int(settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: ""))
-        if amount ?? 0 > 0 {
+
+        let string = settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")
+        let formatter = NumberFormatter()
+        formatter.decimalSeparator = ","
+        let amount = formatter.number(from: string)
+
+        if amount?.doubleValue ?? 0 > 0 {
             settingsView.accountFirst.amountView.hideError()
             settingsView.accountFirst.oneInputAmountError.hideError()
         } else {
             settingsView.accountFirst.amountView.showError(localized("pl_quickView_errorText_amountTooLow"))
             settingsView.accountFirst.oneInputAmountError.showError(localized("pl_quickView_errorText_amountTooLow"))
         }
-        presenter.updateAmount(amount: amount)
+        presenter.updateAmount(amount: amount?.doubleValue)
     }
 
     func textFielEndEditing() {
-        let amount = Int(settingsView.accountFirst.amountView.getAmount())
-        presenter.updateAmount(amount: amount)
+        let string = settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")
+        let formatter = NumberFormatter()
+        formatter.decimalSeparator = ","
+        let amount = formatter.number(from: string)
+        presenter.updateAmount(amount: amount?.doubleValue)
     }
 }
 
@@ -85,8 +93,12 @@ extension PLQuickBalanceSettingsVC {
 
     @objc private func onTapSubmit() {
         if settingsView.accountFirst.selectIndex == 1 {
-            if let amount = Int(settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")),
-               amount > 0 {
+            let string = settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")
+            let formatter = NumberFormatter()
+            formatter.decimalSeparator = ","
+            let amount = formatter.number(from: string)
+
+            if amount?.doubleValue ?? 0 > 0 {
                 presenter.onTapSubmit()
             } else {
                 settingsView.accountFirst.amountView.showError(localized("pl_quickView_errorText_amountTooLow"))

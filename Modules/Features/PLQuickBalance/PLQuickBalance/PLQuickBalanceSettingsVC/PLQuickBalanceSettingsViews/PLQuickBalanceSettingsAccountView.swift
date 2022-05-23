@@ -40,13 +40,16 @@ class PLQuickBalanceSettingsAccountView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func fill(title: String, subtitle: String, amount: Int? = nil) {
+    func fill(title: String, subtitle: String, amount: Double? = nil) {
         account.title.text = title
         account.subtitle.text = subtitle
 
         if let amount = amount, amount > 0 {
             selectIndex = 1
-            amountView.setAmount(String(amount))
+            let formatter = NumberFormatter()
+            formatter.decimalSeparator = ","
+            let string = formatter.string(from: NSNumber(value: amount))
+            amountView.setAmount(string ?? "")
         } else {
             selectIndex = 0
             amountView.setAmount("")

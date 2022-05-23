@@ -1,9 +1,9 @@
 public struct PLQuickBalanceConfirmParameterDTO: Codable {
     public let accountNo: String
-    public let amount: Int?
+    public let amount: Double?
 
     public init(accountNo: String,
-                amount: Int?) {
+                amount: Double?) {
         self.accountNo = accountNo
         self.amount = amount
     }

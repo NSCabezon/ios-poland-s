@@ -9,7 +9,7 @@ protocol PLQuickBalanceSettingsPresenterProtocol {
     func onTapSwitch()
     func changeMainAccount()
     func changeSecondAccount()
-    func updateAmount(amount: Int?)
+    func updateAmount(amount: Double?)
 }
 
 final class PLQuickBalanceSettingsPresenter {
@@ -100,7 +100,7 @@ extension PLQuickBalanceSettingsPresenter: PLQuickBalanceSettingsPresenterProtoc
             }
 
             if let amount = settings.first?.amount  {
-                self?.viewModel.amount = Int(amount)
+                self?.viewModel.amount = Double(amount)
             }
 
             self?.updateView()
@@ -162,7 +162,7 @@ extension PLQuickBalanceSettingsPresenter: PLQuickBalanceSettingsPresenterProtoc
                                           accountType: .second)
     }
 
-    func updateAmount(amount: Int?) {
+    func updateAmount(amount: Double?) {
         viewModel.amount = amount
     }
 }

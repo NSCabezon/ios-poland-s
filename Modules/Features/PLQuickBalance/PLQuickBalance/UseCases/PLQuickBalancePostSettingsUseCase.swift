@@ -16,7 +16,7 @@ class PLQuickBalancePostSettingsUseCase: UseCase<PLQuickBalanceSettingsUseCaseIn
         let managerProvider: PLManagersProviderProtocol = self.dependenciesResolver.resolve(for: PLManagersProviderProtocol.self)
         let accounts = requestValues.accounts?.compactMap({ account -> PLQuickBalanceConfirmParameterDTO? in
             guard let id = account.accountNo else { return nil }
-            return  PLQuickBalanceConfirmParameterDTO(accountNo: id, amount: account.amount)
+            return PLQuickBalanceConfirmParameterDTO(accountNo: id, amount: account.amount)
         })
 
         let response = try managerProvider.getQuickBalanceManager().confirmQuickBalance(accounts: accounts)
@@ -34,7 +34,7 @@ extension PLQuickBalancePostSettingsUseCase: PLQuickBalancePostSettingsUseCasePr
 
 struct PLQuickBalanceAccount {
     let accountNo: String?
-    let amount: Int?
+    let amount: Double?
 }
 
 struct PLQuickBalanceSettingsUseCaseInput {
