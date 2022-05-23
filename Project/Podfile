@@ -3,58 +3,12 @@ install! 'cocoapods', :deterministic_uuids => false
 
 source 'https://github.com/CocoaPods/Specs.git'
 
+load "../santander-one/CorePods.rb"
 # --------- General Core dependencies
 def core_dependencies
-
-  # Common
-  pod 'LoginCommon', :path => '../santander-one/Modules/Features/LoginCommon'
-  pod 'Operative', :path => '../santander-one/Operative'
-  pod 'WebViews', :path => '../santander-one/Modules/Libraries/WebViews'
-  pod 'UI', :path => '../santander-one/UI', :testspecs => ['Tests']
-  pod 'PdfCommons', :path => '../santander-one/PdfCommons'
-  pod 'CommonAppExtensions', :path => '../santander-one/Modules/AppExtensions/CommonAppExtensions'
-  pod 'Menu', :path => '../santander-one/Menu'
-  pod 'SQLite.swift/SQLCipher', :path => '../santander-one/Modules/Libraries/SQLite.swift'
-  pod 'UIOneComponents', :path => '../santander-one/UIOneComponents'
-  pod 'OneAuthorizationProcessor', :path => '../santander-one/Modules/Features/OneAuthorizationProcessor'
-  pod 'RxCombine', :path => '../santander-one/Modules/Libraries/RxCombine'
-  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
-  pod 'SANServicesLibrary', :path => '../santander-one/Modules/Libraries/SANServicesLibrary'
-
-  # Core Features
-  pod 'GlobalPosition', :path => '../santander-one/GlobalPosition'
-  pod 'CoreFoundationLib', :path => '../santander-one/Modules/Libraries/CoreFoundationLib', :testspecs => ['Tests']
-  pod 'Loans', :path => '../santander-one/Loans', :testspecs => ['Tests']
-  pod 'Account', :path => '../santander-one/Accounts'
-  pod 'Cards', :path => '../santander-one/Cards', :testspecs => ['Tests']
-  pod 'PersonalArea', :path => '../santander-one/PersonalArea', :testspecs => ['Tests']
-  pod 'PersonalManager', :path => '../santander-one/PersonalManager'
-  pod 'PrivateMenu', :path => '../santander-one/PrivateMenu', :testspecs => ['Tests']
-  pod 'Transfer', :path => '../santander-one/Transfer'
-  pod 'Inbox', :path => '../santander-one/Inbox'
-  pod 'Bills', :path => '../santander-one/Bills'
-  pod 'GlobalSearch', :path => '../santander-one/GlobalSearch'
-  pod 'BranchLocator', :path => '../santander-one/Modules/Features/BranchLocator'
-  pod 'FinantialTimeline', :path => '../santander-one/Modules/Features/FinantialTimeline'
-  pod 'CoreDomain', :path => '../santander-one/Modules/Libraries/CoreDomain'
-  pod 'CorePushNotificationsService', :path => '../santander-one/CorePushNotificationsService'
-  pod 'Localization', :path => '../santander-one/Localization'
-  pod 'OfferCarousel', :path => '../santander-one/OfferCarousel'
-  pod 'TransferOperatives', :path => '../santander-one/Modules/Features/TransferOperatives', :testspecs => ['Tests']
   pod 'SelfSignedCertificate', :path => '../santander-one/SelfSignedCertificate'
-  pod 'Funds', :path => '../santander-one/Funds'
-  pod 'FeatureFlags', :path => '../santander-one/Modules/Features/FeatureFlags'
-  pod 'Onboarding', :path => '../santander-one/Modules/Features/Onboarding'
-  pod 'SavingProducts', :path => '../santander-one/Modules/Features/SavingProducts'
-  pod 'SANServicesLibrary', :path => '../santander-one/Modules/Libraries/SANServicesLibrary'
 end
 
-def legacy_libraries
-  pod 'Locker', :path => '../santander-one/Modules/Libraries/Locker'
-  pod 'Logger', :path => '../santander-one/Modules/Libraries/Logger'
-  pod 'SANLegacyLibrary', :path => '../santander-one/Modules/Libraries/SANLegacyLibrary'
-  pod 'RetailLegacy', :path => '../santander-one/RetailLegacy'
-end
 
 def core_thirdparty_dependencies
   pod 'IQKeyboardManagerSwift', '6.5.6'
@@ -104,16 +58,16 @@ end
 
 #------------ Tests ----------------
 def core_test_dependencies
-  pod 'UnitTestCommons', :path => '../santander-one/UnitTestCommons'
-  pod 'CoreTestData', :path => '../santander-one/Modules/Libraries/CoreTestData'
+  unit_test_commons
+  core_test_data
 end
 
 # --------- Target configuration
 target 'Santander' do
   use_frameworks!
 
+  core_features
   core_dependencies
-  legacy_libraries
   core_thirdparty_dependencies
 
   pl_features
