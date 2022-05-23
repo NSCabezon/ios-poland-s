@@ -39,7 +39,7 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
         [
             .init(type: .title(keyOrValue: "confirmation_label_originAccount"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
-            .init(type: .label(keyOrValue: operativeData.originAccount?.alias?.camelCasedString, isBold: true),
+            .init(type: .label(keyOrValue: operativeData.originFullName, isBold: true),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemText),
             .init(type: .label(keyOrValue: operativeData.destinationAccount?.getIBANPapel, isBold: false),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"),
@@ -114,7 +114,7 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
         [
             .init(type: .title(keyOrValue: "confirmation_label_destinationAccount"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
-            .init(type: .label(keyOrValue: operativeData.destinationAccount?.alias, isBold: true),
+            .init(type: .label(keyOrValue: operativeData.destinationFullName, isBold: true),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemText),
             .init(type: .label(keyOrValue: operativeData.destinationAccount?.ibanRepresentable?.ibanPapel, isBold: false),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"),

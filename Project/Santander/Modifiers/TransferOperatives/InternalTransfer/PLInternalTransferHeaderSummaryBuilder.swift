@@ -39,7 +39,7 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
         let items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "summary_label_originAccount"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
-            .init(type: .label(keyOrValue: operativeData.originAccount?.alias,
+            .init(type: .label(keyOrValue: operativeData.originFullName,
                                isBold: true),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemText),
             .init(type: .label(keyOrValue: operativeData.originAccount?.getIBANPapel,
@@ -118,7 +118,7 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
         let items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "confirmation_label_destinationAccount"),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
-            .init(type: .label(keyOrValue: operativeData.destinationAccount?.alias, isBold: true),
+            .init(type: .label(keyOrValue: operativeData.destinationFullName, isBold: true),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemText),
             .init(type: .label(keyOrValue: operativeData.destinationAccount?.getIBANPapel, isBold: false),
                   accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"),
