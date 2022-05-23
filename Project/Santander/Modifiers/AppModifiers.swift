@@ -70,9 +70,6 @@ final class AppModifiers {
     private lazy var otherOperativesModifier: OtherOperativesModifierProtocol = {
         return OtherOperativesModifier(dependencies: dependencies, dependenciesResolver: legacyDependenciesResolver)
     }()
-    private lazy var cardTransactionsSearchModifier: CardTransactionsSearchModifierProtocol = {
-        return PLCardTransactionsSearchModifier()
-    }()
     private lazy var personalAreaSectionsSecurityModifier: PersonalAreaSectionsSecurityModifierProtocol = {
         return PLPersonalAreaSectionsSecurityModifier()
     }()
@@ -154,9 +151,6 @@ private extension AppModifiers {
         }
         self.legacyDependenciesInjector.register(for: AccountTransactionProtocol.self) { _ in
             return PLAccountTransaction()
-        }
-        self.legacyDependenciesInjector.register(for: CardTransactionsSearchModifierProtocol.self) { _ in
-            return self.cardTransactionsSearchModifier
         }
         self.legacyDependenciesInjector.register(for: OnboardingPermissionOptionsProtocol.self) { _ in
             return OnboardingPermissionOptions()

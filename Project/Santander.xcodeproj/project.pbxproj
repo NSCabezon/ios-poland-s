@@ -345,7 +345,6 @@
 		D23C3FA22816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */; };
 		D2AEF96227EC6C6F0043F32D /* ru.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2AEF96127EC6C6E0043F32D /* ru.strings */; };
 		D2AEF96427EC6C7E0043F32D /* uk.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2AEF96327EC6C7D0043F32D /* uk.strings */; };
-		D2F5C33626E62647002431DE /* PLCardTransactionsSearchModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */; };
 		D51D215E27B3C888008629D4 /* PLOpinatorManagerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D215D27B3C888008629D4 /* PLOpinatorManagerModifier.swift */; };
 		D53DAFD5281D3EF00051D444 /* PLGlobalPositionProductModifierUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53DAFD4281D3EF00051D444 /* PLGlobalPositionProductModifierUseCase.swift */; };
 		D547C8FC272A9B2C0090DABF /* PLPersonalDataModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */; };
@@ -764,7 +763,6 @@
 		D23C3FA12816ADC000916B76 /* PLPrivateMenuOtherServicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPrivateMenuOtherServicesUseCase.swift; sourceTree = "<group>"; };
 		D2AEF96127EC6C6E0043F32D /* ru.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru.strings; path = "../../i18n-poland/clients/iOS/ru.strings"; sourceTree = "<group>"; };
 		D2AEF96327EC6C7D0043F32D /* uk.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = uk.strings; path = "../../i18n-poland/clients/iOS/uk.strings"; sourceTree = "<group>"; };
-		D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLCardTransactionsSearchModifier.swift; sourceTree = "<group>"; };
 		D51D215D27B3C888008629D4 /* PLOpinatorManagerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLOpinatorManagerModifier.swift; sourceTree = "<group>"; };
 		D53DAFD4281D3EF00051D444 /* PLGlobalPositionProductModifierUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLGlobalPositionProductModifierUseCase.swift; sourceTree = "<group>"; };
 		D547C8FB272A9B2C0090DABF /* PLPersonalDataModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalDataModifier.swift; sourceTree = "<group>"; };
@@ -2396,7 +2394,6 @@
 		D2F5C33326E6262A002431DE /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				D2F5C33526E62647002431DE /* PLCardTransactionsSearchModifier.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -2958,7 +2955,6 @@
 				B01155EE271581BD00A4C175 /* OneAppInitViewController.swift in Sources */,
 				B7D59A3D27A00A8B00E2D777 /* SelectOptionButtonModel.swift in Sources */,
 				0DAA4D5226C3BA53005A921C /* PLBuyInsuranceOperative.swift in Sources */,
-				D2F5C33626E62647002431DE /* PLCardTransactionsSearchModifier.swift in Sources */,
 				0D38C7E626DE3CB70062C02C /* PLTurnOnOperative.swift in Sources */,
 				45D378FE27ABECC2002C47E9 /* PLTopUpTransferSettingsDTO.swift in Sources */,
 				B0D77A5C276C8C0300766705 /* AdditionalUseCasesProvider.swift in Sources */,
