@@ -17,7 +17,7 @@ struct PLGetPersonalAreaHomeConfigurationUseCase: GetPersonalAreaHomeConfigurati
 
 private extension PLGetPersonalAreaHomeConfigurationUseCase {
     struct PLPersonalAreaHome: PersonalAreaHomeRepresentable {
-        var isEnabledDigitalProfileView: Bool = true
+        var isEnabledDigitalProfileView: Bool = false
         var digitalProfileInfo: PersonalAreaDigitalProfileRepresentable?
         var isPersonalAreaSecuritySettingEnabled: Bool = true
         var isPersonalDocOfferEnabled: Bool = true
