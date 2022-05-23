@@ -3,6 +3,7 @@ import PLUI
 import SANPLLibrary
 import CoreFoundationLib
 import UIOneComponents
+import UI
 
 protocol PLQuickBalanceSettingsViewControllerProtocol: AnyObject, LoaderPresentable {
     func updateView(_ viewModel: PLQuickBalanceSettingsViewModel)
@@ -30,7 +31,9 @@ class PLQuickBalanceSettingsVC: UIViewController {
         super.viewDidLoad()
         view = settingsView
         self.view.backgroundColor = .white
-        self.title = localized("pl_quickView_toolbar")
+        NavigationBarBuilder(style: .white, title: .title(key: localized("pl_quickView_toolbar")))
+            .setLeftAction(.back(action: #selector(close)))
+            .build(on: self, with: nil)
 
         presenter.viewDidLoad()
         settingsView.switchView.addTarget(self, action: #selector(onTapSwitch), for: .valueChanged)
@@ -41,6 +44,11 @@ class PLQuickBalanceSettingsVC: UIViewController {
         settingsView.accountFirst.button.addTarget(self, action: #selector(onTapAccountFirst), for: .touchUpInside)
         settingsView.accountSecond.button.addTarget(self, action: #selector(onTapAccountSecond), for: .touchUpInside)
         settingsView.accountFirst.amountView.delegate = self
+    }
+
+   @objc private func close() {
+        let coordinator = dependenciesResolver.resolve(for: PLQuickBalanceCoordinatorProtocol.self)
+        coordinator.pop()
     }
 }
 

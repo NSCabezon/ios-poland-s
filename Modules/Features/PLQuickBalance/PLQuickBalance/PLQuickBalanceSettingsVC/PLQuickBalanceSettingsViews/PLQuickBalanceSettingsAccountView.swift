@@ -11,7 +11,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
 
     let oneRadioButtonAmount = OneRadioButtonView()
     let oneRadioButtonPercentage = OneRadioButtonView()
-
+    let infoPercentageLabel = UILabel()
     let amountView = OneInputAmountView()
     let oneInputAmountError = OneSubLabelError()
     var constraintsAmount: [NSLayoutConstraint]?
@@ -68,7 +68,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
         oneRadioButtonAmount.removeFromSuperview()
         amountView.removeFromSuperview()
         oneRadioButtonPercentage.removeFromSuperview()
-
+        infoPercentageLabel.removeFromSuperview()
     }
 
     func configureAccountView(){
@@ -76,8 +76,16 @@ class PLQuickBalanceSettingsAccountView: UIView {
         addSubview(account)
         if showRadioButtons {
             addSubview(oneRadioButtonAmount)
-            addSubview(amountView)
             addSubview(oneRadioButtonPercentage)
+            addSubview(infoPercentageLabel)
+            addSubview(amountView)
+
+            infoPercentageLabel.text = localized("pl_quickView_errorText_setPercentage")
+            infoPercentageLabel.font = UIFont.santander(family: .text, type: .regular, size: 14)
+            infoPercentageLabel.textColor = UIColor(red: 68/255.0,
+                                                green: 68/255.0,
+                                                blue: 68/255.0,
+                                                alpha: 1)
 
             oneRadioButtonAmount.delegate = self
             oneRadioButtonAmount.setViewModel(viewModelAmount, index: 0)
@@ -85,7 +93,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
             oneRadioButtonPercentage.setViewModel(viewModelPercentage, index: 1)
 
             amountView.setupTextField(OneInputAmountViewModel(status: .activated,
-                                                              type: .text))
+                                                              type: .unowned))
             oneInputAmountError.setContainer(amountView)
             addSubview(oneInputAmountError)
         }
@@ -109,7 +117,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
             NSLayoutConstraint.activate([
                 oneRadioButtonAmount.leadingAnchor.constraint(equalTo: leadingAnchor),
                 oneRadioButtonAmount.trailingAnchor.constraint(equalTo: trailingAnchor),
-                oneRadioButtonAmount.topAnchor.constraint(equalTo: account.bottomAnchor, constant: 0)
+                oneRadioButtonAmount.topAnchor.constraint(equalTo: account.bottomAnchor)
             ])
 
             oneRadioButtonPercentage.translatesAutoresizingMaskIntoConstraints = false
@@ -119,11 +127,18 @@ class PLQuickBalanceSettingsAccountView: UIView {
                 oneRadioButtonPercentage.topAnchor.constraint(equalTo: oneRadioButtonAmount.bottomAnchor)
             ])
 
+            infoPercentageLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                infoPercentageLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                infoPercentageLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+                infoPercentageLabel.topAnchor.constraint(equalTo: oneRadioButtonPercentage.bottomAnchor)
+            ])
+
             amountView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 amountView.leadingAnchor.constraint(equalTo: leadingAnchor),
                 amountView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                amountView.topAnchor.constraint(equalTo: oneRadioButtonPercentage.bottomAnchor),
+                amountView.topAnchor.constraint(equalTo: infoPercentageLabel.bottomAnchor, constant: 4),
             ])
 
             constraintsAmount = [oneRadioButtonPercentage.bottomAnchor.constraint(equalTo: bottomAnchor)]
@@ -143,6 +158,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
         }
 
         if selectIndex == 0 {
+            infoPercentageLabel.alpha = 0
             amountView.alpha = 0
             amountView.setAmount("")
             oneInputAmountError.alpha = 0
@@ -153,6 +169,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
                 NSLayoutConstraint.activate(constraints)
             }
         } else {
+            infoPercentageLabel.alpha = 1
             amountView.alpha = 1
             oneInputAmountError.alpha = 1
             if let constraints = constraintsPercentage {
