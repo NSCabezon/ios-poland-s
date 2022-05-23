@@ -138,7 +138,7 @@ extension PLQuickBalanceSettingsPresenter: PLQuickBalanceSettingsPresenterProtoc
             message = localized("pl_quickView_text_turnedOff")
         }
     
-        self.view?.showMessage(title: localized("generic_label_done"), message: message, image: "icnAlert", onConfirm: { [weak self] in
+        self.view?.showMessage(title: localized("generic_label_done"), message: message, image: "icnCheck", onConfirm: { [weak self] in
             self?.coordinator.pop()
             })
     }
