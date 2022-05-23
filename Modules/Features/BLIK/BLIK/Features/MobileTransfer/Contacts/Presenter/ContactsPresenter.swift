@@ -96,8 +96,15 @@ private extension ContactsPresenter {
     }
     
     func verifyContacts(_ contacts: [MobileContact]) {
+        if contacts.isEmpty {
+            view?.hideLoader { [weak self] in
+                self?.view?.showEmptyView(true)
+                
+            }
+            return
+        }
         let phoneNumbers = contacts.map { $0.phoneNumber }
-        let phoneNumbersChunked = phoneNumbers.chunks(1000)
+        let phoneNumbersChunked = phoneNumbers.chunks(500)
         var output: [HashedNumberMetadata] = []
         let multiScenario = MultiScenario(handledOn: dependenciesResolver.resolve())
         for phonePackage in phoneNumbersChunked {
