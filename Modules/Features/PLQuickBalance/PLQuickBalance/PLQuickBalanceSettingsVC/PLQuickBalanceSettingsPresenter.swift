@@ -74,17 +74,37 @@ extension PLQuickBalanceSettingsPresenter: PLQuickBalanceSettingsPresenterProtoc
 
     func getDataAccounts(settings: [PLGetQuickBalanceSettingsDTO]) {
         let accounts = try? self.managersProvider.getGlobalPositionManager().getAllProducts().get().accounts
+        let cards = try? self.managersProvider.getGlobalPositionManager().getAllProducts().get().cards?.filter({ card in
+            return card.type == "CREDIT"
+        })
+
+        let savings = try? self.managersProvider.getGlobalPositionManager().getAllProducts().get().savings
+
+
+
         self.view?.hideLoader(completion: { [weak self] in
             self?.viewModel.allAccounts = accounts?.compactMap({ accountDTO in
-                PLQuickBalanceSettingsViewModel.map(accountDTO)
+                PLQuickBalanceSettingsViewModel.mapAccount(accountDTO)
             })
 
+            if let models = cards?.compactMap({ cardDTO in
+                PLQuickBalanceSettingsViewModel.mapCreditCard(cardDTO)
+            }), models.count > 0 {
+                self?.viewModel.allAccounts?.append(contentsOf: models)
+            }
+
+            if let models = savings?.compactMap({ savingDTO in
+                PLQuickBalanceSettingsViewModel.mapSaving(savingDTO)
+            }), models.count > 0 {
+                self?.viewModel.allAccounts?.append(contentsOf: models)
+            }
+
             if let id = settings[safe: 0]?.accountNo {
-                self?.viewModel.selectedMainAccount = PLQuickBalanceSettingsViewModel.map(accounts?.first(where: {$0.number == id }))
+                self?.viewModel.selectedMainAccount = self?.viewModel.allAccounts?.first(where: { $0.id == id })
             }
 
             if let id = settings[safe: 1]?.accountNo {
-                self?.viewModel.selectedSecondAccount = PLQuickBalanceSettingsViewModel.map(accounts?.first(where: {$0.number == id }))
+                self?.viewModel.selectedSecondAccount = self?.viewModel.allAccounts?.first(where: { $0.id == id })
             }
 
             if self?.viewModel.selectedMainAccount != nil {
@@ -92,11 +112,11 @@ extension PLQuickBalanceSettingsPresenter: PLQuickBalanceSettingsPresenterProtoc
             }
 
             if self?.viewModel.selectedMainAccount == nil {
-                self?.viewModel.selectedMainAccount = PLQuickBalanceSettingsViewModel.map(accounts?.first(where: {$0.defaultForPayments == true }))
+                self?.viewModel.selectedMainAccount = PLQuickBalanceSettingsViewModel.mapAccount(accounts?.first(where: {$0.defaultForPayments == true }))
             }
 
             if self?.viewModel.selectedMainAccount == nil {
-                self?.viewModel.selectedMainAccount = PLQuickBalanceSettingsViewModel.map(accounts?.first)
+                self?.viewModel.selectedMainAccount = self?.viewModel.allAccounts?.first
             }
 
             if let amount = settings.first?.amount  {

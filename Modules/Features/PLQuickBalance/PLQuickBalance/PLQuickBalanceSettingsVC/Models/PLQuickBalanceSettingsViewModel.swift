@@ -21,7 +21,7 @@ public class PLQuickBalanceSettingsViewModel {
 }
 
 extension PLQuickBalanceSettingsViewModel {
-    static func map(_ accountDTO: AccountDTO?) -> PLQuickBalanceSettingsAccountModel? {
+    static func mapAccount(_ accountDTO: AccountDTO?) -> PLQuickBalanceSettingsAccountModel? {
         guard
             let id = accountDTO?.number,
             let name = accountDTO?.name?.userDefined ?? accountDTO?.name?.description,
@@ -31,4 +31,27 @@ extension PLQuickBalanceSettingsViewModel {
                                                   name: name,
                                                   number: String(number))
     }
+
+    static func mapCreditCard(_ cardDTO: CardDTO?) -> PLQuickBalanceSettingsAccountModel? {
+        guard
+            let id = cardDTO?.productId?.id,
+            let name = cardDTO?.name?.userDefined ?? cardDTO?.name?.description,
+            let number = cardDTO?.panIdentifier?.suffix(4)
+        else { return nil }
+        return PLQuickBalanceSettingsAccountModel(id: id,
+                                                  name: name,
+                                                  number: String(number))
+    }
+
+    static func mapSaving(_ savingDTO: SavingDTO?) -> PLQuickBalanceSettingsAccountModel? {
+        guard
+            let id = savingDTO?.number,
+            let name = savingDTO?.name?.userDefined ?? savingDTO?.name?.description,
+            let number = savingDTO?.number.suffix(4)
+        else { return nil }
+        return PLQuickBalanceSettingsAccountModel(id: id,
+                                                  name: name,
+                                                  number: String(number))
+    }
+
 }
