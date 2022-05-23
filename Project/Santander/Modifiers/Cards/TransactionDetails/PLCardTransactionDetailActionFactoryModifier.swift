@@ -33,14 +33,14 @@ class PLCardTransactionDetailActionFactoryModifier: CardTransactionDetailActionF
         return false
     }
 
-    func getCustomActions(for card: CardEntity, forTransaction transaction: CardTransactionEntity) -> [CardActionType]? {
+    func getCustomActions(for card: CardEntity, forTransaction transaction: CardTransactionEntity) -> [OldCardActionType]? {
         if let receiptId = transaction.dto.receiptId, receiptId.isNotEmpty {
             return [.pdfDetail, .share(nil)]
         }
         return [.share(nil)]
     }
 
-    func didSelectAction(_ action: CardActionType, forTransaction transaction: CardTransactionEntity, andCard card: CardEntity) -> Bool {
+    func didSelectAction(_ action: OldCardActionType, forTransaction transaction: CardTransactionEntity, andCard card: CardEntity) -> Bool {
         switch action {
         case .pdfDetail:
             if let receiptId = transaction.dto.receiptId {
