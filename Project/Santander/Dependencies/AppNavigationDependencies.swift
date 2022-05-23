@@ -42,7 +42,9 @@ final class AppNavigationDependencies {
     )
     private lazy var personalAreaModuleCoordinator = PersonalAreaModuleCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: (self.drawer.currentRootViewController as? UINavigationController)!, userPreferencesDependencies: moduleDependencies)
     private let appSideMenuNavigationDependencies: AppSideMenuNavigationDependencies
-    private lazy var authorizationCoordinator = PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+    private var authorizationCoordinator: PLAuthorizationCoordinator {
+        PLAuthorizationCoordinator(dependenciesResolver: dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+    }
     private let moduleDependencies: ModuleDependencies
     private lazy var applePayEnrollmentManager = PLApplePayEnrollmentManager(dependenciesResolver: dependenciesEngine,
                                                                              navigationController: self.drawer.currentRootViewController as? UINavigationController)

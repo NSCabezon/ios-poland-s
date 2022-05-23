@@ -19,6 +19,7 @@ protocol PLAuthorizationView: AnyObject {
     func addInputSignatureView()
     func showGenericError(_ viewModel: BottomSheetErrorViewModel)
     func setContinueButton(_ isEnabled: Bool)
+    func endTimer()
 }
 
 final class PLAuthorizationViewController: UIViewController {
@@ -125,6 +126,10 @@ extension PLAuthorizationViewController: PLAuthorizationView {
         let type: SizablePresentationType = .custom(isPan: false)
         bottomSheet.show(in: self, type: type, view: view)
         topVisibleViewController.transitioningDelegate = self
+    }
+    
+    func endTimer() {
+        self.remainingTimeView.endTimer()
     }
 }
 
