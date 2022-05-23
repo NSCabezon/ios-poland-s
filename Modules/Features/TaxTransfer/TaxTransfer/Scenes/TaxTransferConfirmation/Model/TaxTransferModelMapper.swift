@@ -49,12 +49,13 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
             selectedPeriodNumber: selectedPeriodNumber
         )
         let recipientAccountNumber = getRecipientAccountNumber(from: taxAuthority)
+        let recipientName = getRecipientName(from: taxAuthority)
         
         return TaxTransferModel(
             amount: formData.amount.stringToDecimal ?? 0,
             title: title,
             account: account,
-            recipientName: taxAuthority.selectedPredefinedTaxAuthority?.name,
+            recipientName: recipientName,
             recipientAccountNumber: recipientAccountNumber,
             transactionType: .taxTransfer,
             taxSymbol: taxAuthority.selectedTaxSymbol,
@@ -114,5 +115,19 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
             accountNumber = selectedUsTaxAuthorityData.taxAuthorityAccount.accountNumber
         }
         return accountNumber
+    }
+    
+    private func getRecipientName(from taxAuthority: SelectedTaxAuthority) -> String {
+        let name: String
+
+        switch taxAuthority {
+        case let .predefinedTaxAuthority(selectedPredefinedTaxAuthorityData):
+            name = selectedPredefinedTaxAuthorityData.taxAuthority.name
+        case let .irpTaxAuthority(selectedIrpTaxAuthorityData):
+            name = selectedIrpTaxAuthorityData.taxAuthorityName
+        case let .usTaxAuthority(selectedUsTaxAuthorityData):
+            name = selectedUsTaxAuthorityData.taxAuthorityAccount.accountName
+        }
+        return name
     }
 }

@@ -21,7 +21,7 @@ protocol TaxOperativeSummaryMapping {
 final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
     func map(_ model: TaxTransferModel) -> [OperativeSummaryStandardBodyItemViewModel] {
         let dateString = getDateString(from: model.date)
-        let recipientName = model.recipientName ?? localized("pl_foundtrans_text_RecipFoudSant")
+        let recipientName = model.recipientName ?? ""
         let recipientAccountNumber = IBANFormatter.format(iban: model.recipientAccountNumber)
         let accountNumber = IBANFormatter.format(iban: model.account.number)
         let transferType: String = localized("pl_generic_label_exTransfer")
