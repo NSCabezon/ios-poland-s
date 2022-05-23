@@ -12,6 +12,7 @@ import RetailLegacy
 import CoreFoundationLib
 import PrivateMenu
 import BLIK
+import Authorization
 
 extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     func resolve() -> GetMyProductSubMenuUseCase {
@@ -54,24 +55,12 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
-    func insuranceSavingsHomeCoordinator() -> BindableCoordinator {
-        ToastCoordinator("generic_alert_notAvailableOperation")
-    }
-    
-    func insuranceProtectionHomeCoordinator() -> BindableCoordinator {
-        ToastCoordinator("generic_alert_notAvailableOperation")
-    }
-    
-    func securityCoordinator() -> BindableCoordinator {
-        ToastCoordinator("generic_alert_notAvailableOperation")
-    }
-
-    func helpCenterCoordinator() -> BindableCoordinator {
-        ToastCoordinator("generic_alert_notAvailableOperation")
-    }
-    
     func blikCoordinator() -> BindableCoordinator {
         oldResolver.resolve(for: BLIKHomeCoordinator.self)
+    }
+    
+    func mobileAuthorizationCoordinator() -> BindableCoordinator {
+        oldResolver.resolve(for: AuthorizationModuleCoordinator.self)
     }
 
     func branchLocatorCoordinator() -> BindableCoordinator {

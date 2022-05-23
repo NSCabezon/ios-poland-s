@@ -76,6 +76,9 @@ final class AppNavigationDependencies {
         dependenciesEngine.register(for: BLIKHomeCoordinator.self) { resolver in
             return BLIKHomeCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }
+        dependenciesEngine.register(for: AuthorizationModuleCoordinator.self) { resolver in
+            AuthorizationModuleCoordinator(dependenciesResolver: resolver, navigationController: self.drawer.currentRootViewController as? UINavigationController)
+        }
         dependenciesEngine.register(for: TaxTransferFormCoordinatorProtocol.self) { _ in
             return TaxTransferFormCoordinator(dependenciesResolver: self.dependenciesEngine, navigationController: self.drawer.currentRootViewController as? UINavigationController)
         }

@@ -18,6 +18,9 @@ public final class AuthorizationModuleCoordinator: AuthorizationModuleCoordinato
     
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    public var childCoordinators: [Coordinator] = []
+    public var onFinish: (() -> Void)?
+    public var dataBinding: DataBinding = DataBindingObject()
     private lazy var authorizationHandler: ChallengesHandlerDelegate = dependenciesEngine.resolve()
     
     public init(
@@ -104,3 +107,5 @@ extension AuthorizationModuleCoordinator {
         navigationController?.viewControllers.remove(at: index)
     }
 }
+
+extension AuthorizationModuleCoordinator: BindableCoordinator {}

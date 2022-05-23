@@ -25,7 +25,7 @@ extension PLGetDigitalProfilePercentageUseCase: GetDigitalProfilePercentageUseCa
     }
     
     func fetchIsDigitalProfileEnabled() -> AnyPublisher<Bool, Never> {
-        return Just(true)
+        return Just(false)
             .eraseToAnyPublisher()
     }
 }
