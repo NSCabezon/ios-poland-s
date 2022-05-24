@@ -102,10 +102,6 @@ extension AddTaxPayerFormCoordinator: AddTaxPayerFormCoordinatorProtocol {
 
 private extension AddTaxPayerFormCoordinator {
     func setUpDependencies() {
-        dependenciesEngine.register(for: TaxIdentifierMapping.self) { _ in
-            return TaxIdentifierMapper()
-        }
-        
         dependenciesEngine.register(for: TaxIdentifierValidating.self) { _ in
             return TaxIdentifierValidator()
         }
