@@ -92,12 +92,15 @@ extension PLQuickBalanceSettingsVC {
     }
 
     @objc private func onTapSubmit() {
-        if settingsView.accountFirst.selectIndex == 1 {
-            let string = settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")
-            let formatter = NumberFormatter()
-            formatter.decimalSeparator = ","
-            let amount = formatter.number(from: string)
+        settingsView.endEditing(true)
 
+        let string = settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")
+        let formatter = NumberFormatter()
+        formatter.decimalSeparator = ","
+        let amount = formatter.number(from: string)
+        presenter.updateAmount(amount: amount)
+
+        if settingsView.accountFirst.selectIndex == 1 {
             if amount?.doubleValue ?? 0 > 0 {
                 presenter.onTapSubmit()
             } else {
