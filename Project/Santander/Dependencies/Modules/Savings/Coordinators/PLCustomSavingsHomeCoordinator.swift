@@ -74,6 +74,10 @@ final class PLCustomSavingsHomeCoordinator: SavingsHomeCoordinator {
     func goToMoreOperatives(_ savingProduct: SavingProductRepresentable) {
         defaultCoordinator.goToMoreOperatives(savingProduct)
     }
+
+    func goToSendMoney(with option: SavingProductOptionRepresentable) {
+        defaultCoordinator.goToSendMoney(with: option)
+    }
 }
 
 private extension PLCustomSavingsHomeCoordinator {
