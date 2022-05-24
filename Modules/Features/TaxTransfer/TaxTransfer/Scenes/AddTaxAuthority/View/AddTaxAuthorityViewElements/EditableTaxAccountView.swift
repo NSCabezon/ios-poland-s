@@ -87,7 +87,7 @@ private extension EditableTaxAccountView {
             textFieldDelegate: nil) { component in
             component.textField.keyboardType = .numberPad
         }
-        accountTextField.textField.placeholder = localized("generic_label_taxAuthorityAcc")
+        accountTextField.textField.placeholder = localized("generic_label_taxPayerAccNum")
         accountTextField.textField.setEditingStyle(.writable(configuration: configuration))
         accountFormatter.delegate = textFieldDelegate
     }
