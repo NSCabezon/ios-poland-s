@@ -97,11 +97,11 @@ extension PLQuickBalanceSettingsVC {
         let string = settingsView.accountFirst.amountView.getAmount().replacingOccurrences(of: " ", with: "")
         let formatter = NumberFormatter()
         formatter.decimalSeparator = ","
-        let amount = formatter.number(from: string)
+        let amount = formatter.number(from: string)?.doubleValue
         presenter.updateAmount(amount: amount)
 
         if settingsView.accountFirst.selectIndex == 1 {
-            if amount?.doubleValue ?? 0 > 0 {
+            if amount ?? 0 > 0 {
                 presenter.onTapSubmit()
             } else {
                 settingsView.accountFirst.amountView.showError(localized("pl_quickView_errorText_amountTooLow"))
