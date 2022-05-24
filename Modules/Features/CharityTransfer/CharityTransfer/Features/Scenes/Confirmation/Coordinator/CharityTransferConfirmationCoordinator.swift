@@ -12,14 +12,15 @@ import PLCommons
 import SANPLLibrary
 import PLCryptography
 
-public protocol CharityTransferConfirmationCoordinatorProtocol {
+protocol CharityTransferConfirmationCoordinatorProtocol {
     func pop()
     func backToTransfer()
     func showSummary(with model: CharityTransferSummary)
+    func closeAuthorization()
 }
 
-public final class CharityTransferConfirmationCoordinator: ModuleCoordinator {
-    public weak var navigationController: UINavigationController?
+final class CharityTransferConfirmationCoordinator {
+    private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let model: CharityTransferModel
 
@@ -32,7 +33,7 @@ public final class CharityTransferConfirmationCoordinator: ModuleCoordinator {
         setupDependencies()
     }
     
-    public func start() {
+    func start() {
         let controller =  dependenciesEngine.resolve(for: CharityTransferConfirmationViewController.self)
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -77,11 +78,11 @@ private extension CharityTransferConfirmationCoordinator {
 
 extension CharityTransferConfirmationCoordinator: CharityTransferConfirmationCoordinatorProtocol {
 
-    public func pop() {
+    func pop() {
         navigationController?.popViewController(animated: true)
     }
 
-    public func backToTransfer() {
+    func backToTransfer() {
         let accountSelectorViewControllerIndex = navigationController?.viewControllers.firstIndex {
             $0 is AccountSelectorViewController
         }
@@ -102,11 +103,18 @@ extension CharityTransferConfirmationCoordinator: CharityTransferConfirmationCoo
         navigationController?.popToViewController(parentController, animated: true)
     }
     
-    public func showSummary(with model: CharityTransferSummary) {
+    func showSummary(with model: CharityTransferSummary) {
         let coordinator = CharityTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
                                                            navigationController: navigationController,
                                                            summary: model)
         coordinator.start()
+    }
+    
+    func closeAuthorization() {
+        guard let confirmationVC = navigationController?.viewControllers.first(where: {
+            $0 is CharityTransferConfirmationViewController
+        }) else { return }
+        navigationController?.popToViewController(confirmationVC, animated: false)
     }
 }
 

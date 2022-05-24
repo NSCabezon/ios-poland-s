@@ -7,8 +7,8 @@ protocol ZusTransferSummaryCoordinatorProtocol {
     func backToTransfers()
 }
 
-final class ZusTransferSummaryCoordinator: ModuleCoordinator {
-    weak var navigationController: UINavigationController?
+final class ZusTransferSummaryCoordinator {
+    private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let summary: ZusTransferSummary
 

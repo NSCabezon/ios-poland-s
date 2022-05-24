@@ -6,8 +6,8 @@ protocol CharityTransferSummaryCoordinatorProtocol {
     func goToGlobalPosition()
 }
 
-final class CharityTransferSummaryCoordinator: ModuleCoordinator {
-    weak var navigationController: UINavigationController?
+final class CharityTransferSummaryCoordinator {
+    private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let summary: CharityTransferSummary
 

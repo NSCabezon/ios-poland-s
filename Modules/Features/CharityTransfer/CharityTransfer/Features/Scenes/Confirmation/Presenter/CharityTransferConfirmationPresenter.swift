@@ -123,11 +123,13 @@ extension CharityTransferConfirmationPresenter: CharityTransferConfirmationPrese
             .onSuccess { [weak self] result in
                 guard let self = self else { return }
                 self.view?.hideLoader {
+                    self.coordinator.closeAuthorization()
                     self.coordinator.showSummary(with: result.summary)
                 }
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
+                    self?.coordinator.closeAuthorization()
                     self?.showErrorMessage(error: error.getErrorDesc() ?? "")
                 }
             }
