@@ -89,7 +89,7 @@ extension PLAccountHomeActionModifier {
             .receive(on: Schedulers.main)
             .sink { [unowned self] isEnabled in
                 if isEnabled {
-                    self.dependencies.oneTransferHomeCoordinator()
+                    self.dependencies.transferHomeCoordinator()
                         .set(account)
                         .start()
                 } else {
