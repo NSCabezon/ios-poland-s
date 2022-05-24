@@ -342,6 +342,7 @@
 		DBD0EDEE2797004900932251 /* LoadPLHelpCenterOnlineAdvisorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0EDED2797004900932251 /* LoadPLHelpCenterOnlineAdvisorUseCase.swift */; };
 		DBD0EDF527983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD0EDF427983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift */; };
 		DBE8739B27FED3B500D3C353 /* ca.cer in Resources */ = {isa = PBXBuildFile; fileRef = DBE8739A27FED3B500D3C353 /* ca.cer */; };
+		DBF6E15A2837C5A8000FBEA6 /* PLPersonalAreaSecurityCustomActionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF6E1592837C5A8000FBEA6 /* PLPersonalAreaSecurityCustomActionCoordinator.swift */; };
 		EF0CDC0327C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CDC0227C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift */; };
 		EF0CDC0527C803D800FDA289 /* ModuleDependencies+Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CDC0427C803D800FDA289 /* ModuleDependencies+Repository.swift */; };
 		EF2F1BBA27ED2B6C009872EF /* PLPrivateMenuTransferOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2F1BB927ED2B6C009872EF /* PLPrivateMenuTransferOption.swift */; };
@@ -746,6 +747,7 @@
 		DBD0EDED2797004900932251 /* LoadPLHelpCenterOnlineAdvisorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPLHelpCenterOnlineAdvisorUseCase.swift; sourceTree = "<group>"; };
 		DBD0EDF427983D5700932251 /* LoadPLHelpHelpQuestionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPLHelpHelpQuestionsUseCase.swift; sourceTree = "<group>"; };
 		DBE8739A27FED3B500D3C353 /* ca.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = ca.cer; sourceTree = "<group>"; };
+		DBF6E1592837C5A8000FBEA6 /* PLPersonalAreaSecurityCustomActionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLPersonalAreaSecurityCustomActionCoordinator.swift; sourceTree = "<group>"; };
 		EDD4762FEF9D27A14358B73A /* Pods-Santander.pro-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Santander.pro-release.xcconfig"; path = "Target Support Files/Pods-Santander/Pods-Santander.pro-release.xcconfig"; sourceTree = "<group>"; };
 		EE1C0CC0A1B07EB6E65F78FE /* Pods-SantanderTests.dev-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantanderTests.dev-release.xcconfig"; path = "Target Support Files/Pods-SantanderTests/Pods-SantanderTests.dev-release.xcconfig"; sourceTree = "<group>"; };
 		EF0CDC0227C7FE9F00FDA289 /* CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckNewSendMoneyHomeEnabledUseCaseDependenciesResolver.swift; sourceTree = "<group>"; };
@@ -1850,6 +1852,7 @@
 				829C89BB280EEE1C00975BF4 /* PLGetPersonalAreaHomeConfigurationUseCase.swift */,
 				829C89C1280F0C2200975BF4 /* PLGetUsernameUseCase.swift */,
 				823D0C112816F2CA0017C2D2 /* PLGetHomeUserPreferencesUseCase.swift */,
+				DBF6E1592837C5A8000FBEA6 /* PLPersonalAreaSecurityCustomActionCoordinator.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -2980,6 +2983,7 @@
 				EF62D91C27D795C6007C9007 /* PLOneTransferHomeVisibilityModifier.swift in Sources */,
 				4446D0CC2701B789008B45A0 /* PLAccountHomePresenterModifier.swift in Sources */,
 				D5B9E49E2706CEEF0043196C /* PLCardTransactionDetailActionFactoryModifier.swift in Sources */,
+				DBF6E15A2837C5A8000FBEA6 /* PLPersonalAreaSecurityCustomActionCoordinator.swift in Sources */,
 				0D59D63827201813007BF898 /* PLOpinatorInfoOption.swift in Sources */,
 				048F93DE2822916500D1E188 /* PLGetSavingProductMatrixUseCase.swift in Sources */,
 				CC43F43C27D7B20600FFA78A /* PLPrivateMenuGetNameUseCase.swift in Sources */,

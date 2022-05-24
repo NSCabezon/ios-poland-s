@@ -2,15 +2,22 @@ import UI
 import CoreFoundationLib
 import UIOneComponents
 
+protocol PLQuickBalanceAlertViewDelegate {
+    func dismissPLQuickBalanceAlertView()
+    func showSettings()
+}
+
+
 class PLQuickBalanceAlertView: UIView {
     let icon = UIImageView()
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let buttonsStackView = UIStackView()
-    let viewModel: PLQuickBalanceAlertViewModel
+    let viewModel: PLQuickBalanceAlertViewModel = PLQuickBalanceAlertViewModel()
+    var delegate: PLQuickBalanceAlertViewDelegate?
     
-    init(viewModel: PLQuickBalanceAlertViewModel) {
-        self.viewModel = viewModel
+    init(delegate: PLQuickBalanceAlertViewDelegate?) {
+        self.delegate = delegate
         super.init(frame: .zero)
         configureButtonsStackView()
         configureView()
@@ -22,6 +29,8 @@ class PLQuickBalanceAlertView: UIView {
         let cancelButton = makeButton(text: viewModel.cancelButtonTitle, backgroundColor: .white, titleColor: .bostonRed)
         let acceptButton = makeButton(text: viewModel.acceptButtonTitle, backgroundColor: .bostonRed, titleColor: .white)
         
+        cancelButton.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
+        acceptButton.addTarget(self, action: #selector(acceptButtonAction), for: .touchUpInside)
         buttonsStackView.axis = .horizontal
         buttonsStackView.distribution = .fillEqually
         buttonsStackView.alignment = .center
@@ -33,6 +42,14 @@ class PLQuickBalanceAlertView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func cancelButtonAction() {
+        delegate?.dismissPLQuickBalanceAlertView()
+    }
+    
+    @objc func acceptButtonAction() {
+        delegate?.showSettings()
     }
     
     private func makeButton(text: String, backgroundColor: UIColor, titleColor: UIColor) -> UIButton {
