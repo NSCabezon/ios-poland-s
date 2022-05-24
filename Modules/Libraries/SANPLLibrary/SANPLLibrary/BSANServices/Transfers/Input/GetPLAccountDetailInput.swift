@@ -8,7 +8,7 @@
 import Foundation
 
 public struct GetPLAccountDetailInput: Codable {
-    let accountNumber: String
+    public let accountNumber: String
     
     public init(accountNumber: String) {
         self.accountNumber = accountNumber
