@@ -45,6 +45,11 @@ public final class RemainingTimeView: UIView {
         self.configureTimer(with: viewModel)
         self.startTimer()
     }
+    
+    func endTimer() {
+        self.timer?.invalidate()
+        self.timer = nil
+    }
 }
 
 private extension RemainingTimeView {
@@ -149,7 +154,6 @@ private extension RemainingTimeView {
     
     func didTimerEnd() {
         self.delegate?.didTimerEnd()
-        self.timer?.invalidate()
-        self.timer = nil
+        self.endTimer()
     }
 }
