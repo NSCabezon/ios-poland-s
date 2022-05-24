@@ -35,5 +35,11 @@ struct SendMoneyDependencies {
         legacyDependenciesInjector.register(for: SendMoneyConfirmationUseCaseProtocol.self) { resolver in
             return PLSendMoneyConfirmationUseCase(dependenciesResolver: resolver)
         }
+        legacyDependenciesInjector.register(for: SendMoneyExchangeRatesUseCaseProtocol.self) { resolver in
+            return PLSendMoneyExchangeRatesUseCase(dependenciesResolver: resolver)
+        }
+        legacyDependenciesInjector.register(for: SendMoneySwiftBranchesUseCaseProtocol.self) { resolver in
+            return PLSendMoneySwiftBranchesUseCase(dependenciesResolver: resolver)
+        }
     }
 }

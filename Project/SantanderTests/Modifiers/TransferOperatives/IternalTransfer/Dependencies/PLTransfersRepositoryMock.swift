@@ -51,10 +51,14 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
         fatalError()
     }
     
-    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+    func getExchangeRatesReactive() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
         return Just(self.rates).tryMap({ result in
             return result
         }).eraseToAnyPublisher()
+    }
+    
+    func getExchangeRates() throws -> Result<[ExchangeRateRepresentable], Error> {
+        return .success(self.rates)
     }
     
     func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
