@@ -55,6 +55,10 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
     
+    func securityCoordinator() -> BindableCoordinator {
+        SecurityCoordinator(dependencies: self)
+    }
+
     func blikCoordinator() -> BindableCoordinator {
         oldResolver.resolve(for: BLIKHomeCoordinator.self)
     }
