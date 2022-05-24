@@ -66,6 +66,10 @@ extension ModuleDependencies: PrivateMenuModuleExternalDependenciesResolver {
     func branchLocatorCoordinator() -> BindableCoordinator {
         ToastCoordinator("generic_alert_notAvailableOperation")
     }
+
+    func insuranceProtectionHomeCoordinator() -> BindableCoordinator {
+        ToastCoordinator("generic_alert_notAvailableOperation")
+    }
 }
 
 extension BaseMenuViewController: PrivateMenuToggleOutsider { }
