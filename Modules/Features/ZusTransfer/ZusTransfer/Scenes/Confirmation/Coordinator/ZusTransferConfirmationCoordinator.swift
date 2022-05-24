@@ -1,4 +1,3 @@
-
 import UI
 import PLUI
 import CoreFoundationLib
@@ -7,14 +6,15 @@ import SANPLLibrary
 import PLCryptography
 import PLCommonOperatives
 
-public protocol ZusTransferConfirmationCoordinatorProtocol {
+protocol ZusTransferConfirmationCoordinatorProtocol {
     func pop()
     func backToTransfer()
     func showSummary(with model: ZusTransferSummary)
+    func closeAuthorization()
 }
 
-public final class ZusTransferConfirmationCoordinator: ModuleCoordinator {
-    public weak var navigationController: UINavigationController?
+final class ZusTransferConfirmationCoordinator {
+    private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let model: ZusTransferModel
 
@@ -27,7 +27,7 @@ public final class ZusTransferConfirmationCoordinator: ModuleCoordinator {
         setupDependencies()
     }
     
-    public func start() {
+    func start() {
         let controller =  dependenciesEngine.resolve(for: ZusTransferConfirmationViewController.self)
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -87,11 +87,11 @@ private extension ZusTransferConfirmationCoordinator {
 
 extension ZusTransferConfirmationCoordinator: ZusTransferConfirmationCoordinatorProtocol {
 
-    public func pop() {
+    func pop() {
         navigationController?.popViewController(animated: true)
     }
 
-    public func backToTransfer() {
+    func backToTransfer() {
         let accountSelectorViewControllerIndex = navigationController?.viewControllers.firstIndex {
             $0 is AccountSelectorViewController
         }
@@ -112,11 +112,18 @@ extension ZusTransferConfirmationCoordinator: ZusTransferConfirmationCoordinator
         navigationController?.popToViewController(parentController, animated: true)
     }
     
-    public func showSummary(with model: ZusTransferSummary) {
+    func showSummary(with model: ZusTransferSummary) {
         let coordinator = ZusTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
                                                         navigationController: navigationController,
                                                         summary: model)
         coordinator.start()
+    }
+    
+    func closeAuthorization() {
+        guard let confirmationVC = navigationController?.viewControllers.first(where: {
+            $0 is ZusTransferConfirmationViewController
+        }) else { return }
+        navigationController?.popToViewController(confirmationVC, animated: false)
     }
 }
 
