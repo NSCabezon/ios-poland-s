@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19529"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SMAmountAllInternationalDescriptionView" customModule="TransferOperatives" customModuleProvider="target">
+            <connections>
+                <outlet property="oneInputDescription" destination="t7o-Ly-RkD" id="MXa-JH-WPn"/>
+                <outlet property="oneLabelDescription" destination="gwY-Ck-9Lw" id="YVF-py-RCy"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="565"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="16" translatesAutoresizingMaskIntoConstraints="NO" id="gwY-Ck-9Lw" customClass="OneLabelView" customModule="UIOneComponents">
+                    <rect key="frame" x="16" y="0.0" width="382" height="16"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t7o-Ly-RkD" customClass="OneInputRegularView" customModule="UIOneComponents">
+                    <rect key="frame" x="16" y="24" width="382" height="541"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="gwY-Ck-9Lw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="3XK-Ow-Q46"/>
+                <constraint firstItem="t7o-Ly-RkD" firstAttribute="trailing" secondItem="gwY-Ck-9Lw" secondAttribute="trailing" id="4s7-c6-zAj"/>
+                <constraint firstAttribute="trailing" secondItem="gwY-Ck-9Lw" secondAttribute="trailing" constant="16" id="RUG-7i-hRI"/>
+                <constraint firstItem="t7o-Ly-RkD" firstAttribute="top" secondItem="gwY-Ck-9Lw" secondAttribute="bottom" constant="8" id="V2y-U9-s9p"/>
+                <constraint firstAttribute="bottom" secondItem="t7o-Ly-RkD" secondAttribute="bottom" id="mRV-V4-NzW"/>
+                <constraint firstItem="t7o-Ly-RkD" firstAttribute="leading" secondItem="gwY-Ck-9Lw" secondAttribute="leading" id="sPZ-D6-qug"/>
+                <constraint firstItem="gwY-Ck-9Lw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="w93-qj-TMJ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="137.68115942028987" y="-31.138392857142854"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

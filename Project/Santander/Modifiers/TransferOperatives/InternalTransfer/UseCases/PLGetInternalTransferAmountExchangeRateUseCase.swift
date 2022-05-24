@@ -24,7 +24,7 @@ extension PLGetInternalTransferAmountExchangeRateUseCase: GetInternalTransferAmo
         let fromCurrency = input.initialCurrency
         let toCurrency = input.targetCurrency
         let localCurrency = input.localCurrency
-        return transfersRepository.getExchangeRates().tryMap { rates in
+        return transfersRepository.getExchangeRatesReactive().tryMap { rates in
             guard fromCurrency != toCurrency else {
                 return .success(result: getOutputWith(fromCurrency: fromCurrency, toCurrency: toCurrency, sell: 1.0, buy: nil))
             }
