@@ -40,6 +40,7 @@ public struct AddressDetailDTO: Codable {
     public let propertyNo: String?
     public let zip: String?
     public let countryCode: String?
+    public let countryCodeISO: String?
     public let voivodship: String?
 }
 
@@ -67,7 +68,8 @@ extension CustomerDTO: PersonalBasicInfoRepresentable {
          address?.propertyNo ?? "",
          address?.zip ?? "",
          address?.countryCode ?? "",
-         address?.voivodship ?? ""]
+         address?.voivodship ?? "",
+         address?.countryCodeISO ?? ""]
     }
     
     public var correspondenceAddressNodes: [String]? {
@@ -78,7 +80,8 @@ extension CustomerDTO: PersonalBasicInfoRepresentable {
             correspondenceAddress?.propertyNo ?? "",
             correspondenceAddress?.zip ?? "",
             correspondenceAddress?.countryCode ?? "",
-            correspondenceAddress?.voivodship ?? ""
+            correspondenceAddress?.voivodship ?? "",
+            correspondenceAddress?.countryCodeISO ?? ""
         ]
     }
 
