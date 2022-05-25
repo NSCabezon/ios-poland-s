@@ -7,10 +7,8 @@
 
 import Foundation
 import XCTest
-import SANPLLibrary
 import CoreDomain
 import OpenCombine
-import UnitTestCommons
 import TransferOperatives
 import CoreTestData
 import CoreFoundationLib
@@ -26,44 +24,52 @@ class PLGetAccountsFullNameUseCaseTest: XCTestCase {
         registerAccounts()
     }
     
-    func test_Given_ThereIsANotIbanAccountThatIsWellFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsCorrect() {
+    func test_Given_ThereIsANotIbanAccountThatIsWellFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsCorrect() throws {
         // G
         let notIbanAccount = getAccount(0)
         // W
-        let value = sut.fetchAccountsFullName(notIbanAccount)
+        let value = try sut.fetchAccountsFullName(notIbanAccount)
             .replaceError(with: GetAccountsFullNameUseCaseOutput(fullName: nil))
+            .map { $0.fullName }
+            .sinkAwait()
         // T
         XCTAssertNotNil(value)
     }
     
-    func test_Given_ThereIsAnIbanAccountThatIsWellFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsCorrect() {
+    func test_Given_ThereIsAnIbanAccountThatIsWellFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsCorrect() throws {
         // G
         let ibanAccount = getAccount(1)
         // W
-        let value = sut.fetchAccountsFullName(ibanAccount)
+        let value = try sut.fetchAccountsFullName(ibanAccount)
             .replaceError(with: GetAccountsFullNameUseCaseOutput(fullName: nil))
+            .map { $0.fullName }
+            .sinkAwait()
         // T
         XCTAssertNotNil(value)
     }
     
-    func test_Given_ThereIsANotIbanAccountThatIsWrongFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsNil() {
+    func test_Given_ThereIsANotIbanAccountThatIsWrongFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsNil() throws {
         // G
         let notIbanAccount = getAccount(2)
         // W
-        let value = sut.fetchAccountsFullName(notIbanAccount)
+        let value = try sut.fetchAccountsFullName(notIbanAccount)
             .replaceError(with: GetAccountsFullNameUseCaseOutput(fullName: nil))
+            .map { $0.fullName }
+            .sinkAwait()
         // T
-        XCTAssertNotNil(value)
+        XCTAssertNil(value)
     }
     
-    func test_Given_ThereIsAnIbanAccountThatIsWrongFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsNil() {
+    func test_Given_ThereIsAnIbanAccountThatIsWrongFormatted_When_UseCaseIsExecuted_Then_GetFullNameIsNil() throws {
         // G
         let ibanAccount = getAccount(3)
         // W
-        let value = sut.fetchAccountsFullName(ibanAccount)
+        let value = try sut.fetchAccountsFullName(ibanAccount)
             .replaceError(with: GetAccountsFullNameUseCaseOutput(fullName: nil))
+            .map { $0.fullName }
+            .sinkAwait()
         // T
-        XCTAssertNotNil(value)
+        XCTAssertNil(value)
     }
 }
 
