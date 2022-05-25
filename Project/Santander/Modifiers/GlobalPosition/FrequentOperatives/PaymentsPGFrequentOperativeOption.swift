@@ -33,7 +33,7 @@ extension PaymentsPGFrequentOperativeOption: PGFrequentOperativeOptionProtocol {
                 .receive(on: Schedulers.main)
                 .sink { [unowned self] isEnabled in
                     if isEnabled {
-                        self.dependencies.oneTransferHomeCoordinator().start()
+                        self.dependencies.transferHomeCoordinator().start()
                     } else {
                         self.sendMoneyCoordinator.start()
                     }

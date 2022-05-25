@@ -9,6 +9,7 @@ import SANLegacyLibrary
 protocol AccountDataSourceProtocol {
     func getDetails(accountNumber: String, parameters: AccountDetailsParameters) throws -> Result<AccountDetailDTO, NetworkProviderError>
     func getSwiftBranches(accountNumber: String) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
+    func getSwiftBranches(parameters: SwiftBranchesParameters) throws -> Result<SwiftBranchesDTO, NetworkProviderError>
     func getWithholdingList(accountNumbers: [String]) throws -> Result<WithholdingListDTO, NetworkProviderError>
     func getAccountsForDebit(transactionType: Int) throws -> Result<[DebitAccountDTO], NetworkProviderError>
     func loadAccountTransactions(parameters: AccountTransactionsParameters?) throws -> Result<AccountTransactionsDTO, NetworkProviderError>
@@ -87,6 +88,23 @@ extension AccountDataSource: AccountDataSourceProtocol {
                                                                                                                 queryParams: self.queryParams,
                                                                                                                 contentType: nil,
                                                                                                                 localServiceName: .swiftBranches)
+        )
+        return result
+    }
+    
+    func getSwiftBranches(parameters: SwiftBranchesParameters) throws -> Result<SwiftBranchesDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName = AccountServiceType.swiftBranches.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<SwiftBranchesDTO, NetworkProviderError> = self.networkProvider.request(SwiftBranchesRequest(serviceName: serviceName,
+                                                                                                                       serviceUrl: absoluteUrl,
+                                                                                                                       method: .post,
+                                                                                                                       jsonBody: parameters,
+                                                                                                                       headers: self.headers,
+                                                                                                                       contentType: .json,
+                                                                                                                       localServiceName: .swiftBranches)
         )
         return result
     }
@@ -271,6 +289,40 @@ private struct AccountChangeAliasRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          body: Data? = nil,
          jsonBody: ChangeAliasParameters?,
+         headers: [String: String]?,
+         queryParams: [String: String]? = nil,
+         contentType: NetworkProviderContentType?,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.formData = body
+        self.jsonBody = jsonBody
+        self.headers = headers
+        self.queryParams = queryParams
+        self.contentType = contentType
+        self.localServiceName = localServiceName
+    }
+}
+
+private struct SwiftBranchesRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]?
+    let jsonBody: SwiftBranchesParameters?
+    let formData: Data?
+    let bodyEncoding: NetworkProviderBodyEncoding? = .body
+    let contentType: NetworkProviderContentType?
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         body: Data? = nil,
+         jsonBody: SwiftBranchesParameters?,
          headers: [String: String]?,
          queryParams: [String: String]? = nil,
          contentType: NetworkProviderContentType?,

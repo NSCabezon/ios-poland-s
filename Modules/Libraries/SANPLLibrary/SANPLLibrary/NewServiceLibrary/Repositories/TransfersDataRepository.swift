@@ -98,6 +98,9 @@ struct TransfersDataRepository: PLTransfersRepository {
     }
     
     func transferType(originAccount: AccountRepresentable, selectedCountry: String, selectedCurrerncy: String) throws -> Result<TransfersType, Error> {
+        guard selectedCountry == "PL" && selectedCurrerncy == "PLN" else {
+            return.success(.INTERNATIONAL_NO_SEPA)
+        }
         return .success(.NATIONAL_SEPA)
     }
     
@@ -206,13 +209,13 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
-    func getExchangeRates() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
+    func getExchangeRatesReactive() -> AnyPublisher<[ExchangeRateRepresentable], Error> {
         Future { promise in
             do {
-                let result = try self.bsanTransferManager.getExchangeRates()
+                let result = try self.getExchangeRates()
                 switch result {
                 case .success(let response):
-                    promise(.success(response.exchangeRates))
+                    promise(.success(response))
                 case .failure(let error):
                     promise(.failure(error))
                 }
@@ -221,5 +224,15 @@ struct TransfersDataRepository: PLTransfersRepository {
             }
         }
         .eraseToAnyPublisher()
+    }
+    
+    func getExchangeRates() throws -> Result<[ExchangeRateRepresentable], Error> {
+        let result = try self.bsanTransferManager.getExchangeRates()
+        switch result {
+        case .success(let response):
+            return .success(response.exchangeRates)
+        case.failure(let error):
+            return .failure(error)
+        }
     }
 }

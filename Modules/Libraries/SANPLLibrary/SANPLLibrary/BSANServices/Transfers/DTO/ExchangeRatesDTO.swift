@@ -5,7 +5,8 @@
 //  Created by Mario Rosales Maillo on 4/3/22.
 //
 
-import Foundation
+import CoreDomain
+import CoreFoundationLib
 
 public struct ExchangeRatesDTO: Codable {
     public let exRates: [ExchangeRateDTO]
@@ -39,5 +40,15 @@ extension ExchangeRateDTO: ExchangeRateRepresentable {
 
     public var sellRate: Decimal {
         return foreignCurrencyRate.sellRate / Decimal(currencyUnit)
+    }
+    
+    public var currencyCode: String { currency }
+    
+    public var buyRateRepresentable: AmountRepresentable {
+        AmountRepresented(value: buyRate, currencyRepresentable: CurrencyRepresented(currencyCode: "PLN"))
+    }
+    
+    public var sellRateRepresentable: AmountRepresentable {
+        AmountRepresented(value: sellRate, currencyRepresentable: CurrencyRepresented(currencyCode: "PLN"))
     }
 }

@@ -27,6 +27,10 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
         return PLOneTransferHomeActionsCoordinator(transferExternalResolver: self)
     }
     
+    func transferHomeCoordinator() -> BindableCoordinator {
+        return oneTransferHomeCoordinator()
+    }
+    
     func resolve() -> OneTransferHomeVisibilityModifier {
         return PLOneTransferHomeVisibilityModifier()
     }
