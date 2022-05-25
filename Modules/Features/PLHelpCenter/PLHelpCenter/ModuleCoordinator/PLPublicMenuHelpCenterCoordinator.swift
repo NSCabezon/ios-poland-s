@@ -20,5 +20,5 @@ public final class PLPublicMenuHelpCenterCoordinator: BindableCoordinator {
     
     public func start() {
         dependenciesResolver.resolve(for: PLHelpCenterModuleCoordinator.self).start()
-        }
+    }
 }

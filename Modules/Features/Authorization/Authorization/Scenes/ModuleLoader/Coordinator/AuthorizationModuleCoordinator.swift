@@ -23,6 +23,9 @@ public final class AuthorizationModuleCoordinator: AuthorizationModuleCoordinato
     public var dataBinding: DataBinding = DataBindingObject()
     private lazy var authorizationHandler: ChallengesHandlerDelegate = dependenciesEngine.resolve()
     
+    var onAuthorizationSuccess: (() -> Void)?
+    var onAuthorizationError: (() -> Void)?
+    
     public init(
         dependenciesResolver: DependenciesResolver,
         navigationController: UINavigationController?
@@ -68,11 +71,9 @@ public final class AuthorizationModuleCoordinator: AuthorizationModuleCoordinato
                
                switch(challengeResult) {
                case .handled(_):
-                   //TODO: handle success challengeResult
-                   print("success")
+                   self.onAuthorizationSuccess?()
                default:
-                   print("error")
-                   //TODO: handle success challengeResult 
+                   self.onAuthorizationError?()
                }
            }
            removeModuleControllerFromStack()
