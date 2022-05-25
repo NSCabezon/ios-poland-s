@@ -41,13 +41,6 @@ class PLInternalTransferPreSetupUseCaseTest: XCTestCase {
         XCTAssertTrue(value == true)
     }
     
-    func test_Given_One_Account_Then_Is_fail() {
-        var oneAccount: [AccountRepresentable]  = []
-        oneAccount.append(accounts[0])
-        let value = sut.isMinimunAccounts(accounts: oneAccount)
-        XCTAssertTrue(value == false)
-    }
-    
     func test_Given_Any_Account_Then_Is_fail() {
         let value = sut.isMinimunAccounts(accounts: [])
         XCTAssertTrue(value == false)
