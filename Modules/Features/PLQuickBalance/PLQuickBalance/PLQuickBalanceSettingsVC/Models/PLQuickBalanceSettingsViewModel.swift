@@ -24,9 +24,10 @@ extension PLQuickBalanceSettingsViewModel {
     static func mapAccount(_ accountDTO: AccountDTO?) -> PLQuickBalanceSettingsAccountModel? {
         guard
             let id = accountDTO?.number,
-            let name = accountDTO?.name?.userDefined ?? accountDTO?.name?.description,
             let number = accountDTO?.number?.suffix(4)
         else { return nil }
+        let name = accountDTO?.name?.userDefined ?? accountDTO?.name?.description ?? ""
+
         return PLQuickBalanceSettingsAccountModel(id: id,
                                                   name: name,
                                                   number: String(number))
@@ -34,10 +35,11 @@ extension PLQuickBalanceSettingsViewModel {
 
     static func mapCreditCard(_ cardDTO: CardDTO?) -> PLQuickBalanceSettingsAccountModel? {
         guard
-            let id = cardDTO?.productId?.id,
-            let name = cardDTO?.name?.userDefined ?? cardDTO?.name?.description,
-            let number = cardDTO?.panIdentifier?.suffix(4)
+            let id = cardDTO?.relatedAccountData?.accountNo,
+            let number = cardDTO?.maskedPan?.suffix(4)
         else { return nil }
+        let name = cardDTO?.name?.userDefined ?? cardDTO?.name?.description ?? ""
+
         return PLQuickBalanceSettingsAccountModel(id: id,
                                                   name: name,
                                                   number: String(number))
@@ -46,12 +48,11 @@ extension PLQuickBalanceSettingsViewModel {
     static func mapSaving(_ savingDTO: SavingDTO?) -> PLQuickBalanceSettingsAccountModel? {
         guard
             let id = savingDTO?.number,
-            let name = savingDTO?.name?.userDefined ?? savingDTO?.name?.description,
             let number = savingDTO?.number.suffix(4)
         else { return nil }
+        let name = savingDTO?.name?.userDefined ?? savingDTO?.name?.description ?? ""
         return PLQuickBalanceSettingsAccountModel(id: id,
                                                   name: name,
                                                   number: String(number))
     }
-
 }

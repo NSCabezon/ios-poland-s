@@ -59,7 +59,7 @@ class PLQuickBalanceView: UIView {
             mainAccountHistoryView.setLabelsWith(item: item)
             addMainAccountHistoryView()
         }
-        
+
     }
     
     private func configureSecondAccountViewWith(item: PLQuickBalanceDTOElement) {
@@ -148,9 +148,18 @@ class PLQuickBalanceView: UIView {
         secondAccountView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             secondAccountView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 64),
-            secondAccountView.topAnchor.constraint(equalTo: mainAccountHistoryView.bottomAnchor, constant: 15),
             secondAccountView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -23)
         ])
+
+        if mainAccountHistoryView.superview == nil {
+            NSLayoutConstraint.activate([
+                secondAccountView.topAnchor.constraint(equalTo: mainAccountView.bottomAnchor, constant: 15),
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                secondAccountView.topAnchor.constraint(equalTo: mainAccountHistoryView.bottomAnchor, constant: 15),
+            ])
+        }
     }
     
     private func addSecondHistoryView() {

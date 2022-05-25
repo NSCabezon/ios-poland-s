@@ -155,6 +155,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
     }
 
     func updateStateRadioButton() {
+
         for radioButton in [oneRadioButtonAmount,
                             oneRadioButtonPercentage] {
             radioButton.setByStatus(radioButton.index == selectIndex ? .activated : .inactive)
@@ -239,6 +240,7 @@ class PLQuickBalanceSettingsAccountView: UIView {
 
 extension PLQuickBalanceSettingsAccountView: OneRadioButtonViewDelegate {
     func didSelectOneRadioButton(_ index: Int) {
+        endEditing(true)
         selectIndex = index
         updateStateRadioButton()
     }

@@ -88,6 +88,7 @@ extension PLQuickBalanceSettingsVC: OneInputAmountViewDelegate {
 extension PLQuickBalanceSettingsVC {
 
     @objc private func onTapSwitch() {
+        settingsView.endEditing(true)
         presenter.onTapSwitch()
     }
 
@@ -113,10 +114,12 @@ extension PLQuickBalanceSettingsVC {
     }
 
     @objc private func onTapAccountFirst() {
+        settingsView.endEditing(true)
         presenter.changeMainAccount()
     }
 
     @objc private func onTapAccountSecond() {
+        settingsView.endEditing(true)
         presenter.changeSecondAccount()
     }
 }
