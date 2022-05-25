@@ -71,6 +71,18 @@ class PLGetAccountsFullNameUseCaseTest: XCTestCase {
         // T
         XCTAssertNil(value)
     }
+    
+    func test_Given_ThereIsAnAccountWithoutIban_When_UseCaseIsExecuted_Then_GetFullNameIsNil() throws {
+        // G
+        let account = getAccountWithoutIban()
+        // W
+        let value = try sut.fetchAccountsFullName(account)
+            .replaceError(with: GetAccountsFullNameUseCaseOutput(fullName: nil))
+            .map { $0.fullName }
+            .sinkAwait()
+        // T
+        XCTAssertNil(value)
+    }
 }
 
 private extension PLGetAccountsFullNameUseCaseTest {
@@ -86,5 +98,43 @@ private extension PLGetAccountsFullNameUseCaseTest {
             AccountEntity($0).representable
         }
         return accounts[index]
+    }
+    
+    func getAccountWithoutIban() -> AccountRepresentable {
+        return AccountRepresentedMock()
+    }
+}
+
+private struct AccountRepresentedMock: AccountRepresentable {
+    var currencyName: String?
+    var alias: String?
+    var currentBalanceRepresentable: AmountRepresentable?
+    var ibanRepresentable: IBANRepresentable?
+    var contractNumber: String?
+    var contractRepresentable: ContractRepresentable?
+    var isMainAccount: Bool?
+    var currencyRepresentable: CurrencyRepresentable?
+    var getIBANShort: String
+    var getIBANPapel: String
+    var getIBANString: String
+    var situationType: String?
+    var availableAmountRepresentable: AmountRepresentable?
+    var availableNoAutAmountRepresentable: AmountRepresentable?
+    var overdraftRemainingRepresentable: AmountRepresentable?
+    var earningsAmountRepresentable: AmountRepresentable?
+    var productSubtypeRepresentable: ProductSubtypeRepresentable?
+    var countervalueCurrentBalanceAmountRepresentable: AmountRepresentable?
+    var countervalueAvailableNoAutAmountRepresentable: AmountRepresentable?
+    var ownershipTypeDesc: OwnershipTypeDesc?
+    var tipoSituacionCto: String?
+    
+    init() {
+        self.getIBANShort = ""
+        self.getIBANPapel = ""
+        self.getIBANString = ""
+    }
+    
+    func equalsTo(other: AccountRepresentable?) -> Bool {
+        return false
     }
 }
