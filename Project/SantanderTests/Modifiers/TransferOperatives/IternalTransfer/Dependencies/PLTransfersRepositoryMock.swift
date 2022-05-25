@@ -15,17 +15,19 @@ import OpenCombine
 struct PLTransfersRepositoryMock: PLTransfersRepository {
 
     private var rates: [ExchangeRateRepresentable]!
+    private var accounts: [AccountRepresentable]
     
-    public init(rates: [ExchangeRateRepresentable]) {
+    public init(rates: [ExchangeRateRepresentable], accounts: [AccountRepresentable]) {
         self.rates = rates
+        self.accounts = accounts
     }
     
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
-        fatalError()
+        return .success(self.accounts)
     }
     
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
-        fatalError()
+        return .success(self.accounts)
     }
     
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
@@ -33,11 +35,11 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
     }
     
     func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error> {
-        fatalError()
+        return Just(self.accounts).setFailureType(to: Error.self).eraseToAnyPublisher()
     }
     
     func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error> {
-        fatalError()
+        return Just(self.accounts).setFailureType(to: Error.self).eraseToAnyPublisher()
     }
     
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {

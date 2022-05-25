@@ -1,10 +1,3 @@
-//
-//  InternalTransferPreSetupUseCase.swift
-//  TransferOperatives
-//
-//  Created by Cristobal Ramos Laina on 15/2/22.
-//
-
 import Foundation
 import OpenCombine
 import CoreDomain
@@ -54,7 +47,9 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
             }
             .eraseToAnyPublisher()
     }
-    
+}
+
+private extension PLInternalTransferPreSetupUseCase {
     func isMinimunAccounts(accounts: [AccountRepresentable]) -> Bool {
         if !accounts.isEmpty {
             return true

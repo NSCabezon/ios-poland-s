@@ -1,20 +1,18 @@
-//
-//  PLGetInternalTransferDestinationAccountsUseCase.swift
-//  Santander
-//
-//  Created by Carlos Monfort Gómez on 21/2/22.
-//
-
-import OpenCombine
-import CoreDomain
 import TransferOperatives
 import SANPLLibrary
+import OpenCombine
+import CoreDomain
+
+protocol PLGetInternalTransferDestAccountsUseCaseDependenciesResolver {
+    func resolve() -> PLTransfersRepository
+    func resolve() -> GlobalPositionDataRepository
+}
 
 struct PLGetInternalTransferDestAccountsUseCase {
     let transfersRepository: PLTransfersRepository
     let globalPositionRepository: GlobalPositionDataRepository
     
-    init(dependencies: PLInternalTransferOperativeExternalDependenciesResolver) {
+    init(dependencies: PLGetInternalTransferDestAccountsUseCaseDependenciesResolver) {
         self.transfersRepository = dependencies.resolve()
         self.globalPositionRepository = dependencies.resolve()
     }
