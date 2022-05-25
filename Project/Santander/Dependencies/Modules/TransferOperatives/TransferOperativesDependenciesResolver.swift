@@ -12,7 +12,7 @@ import PLCommons
 import Operative
 import UI
 
-extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver {
+extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PLInternalTransferOperativeExternalDependenciesResolver, PLGetInternalTransferDestAccountsUseCaseDependenciesResolver {
     func resolve() -> PLTransfersRepository {
         return oldResolver.resolve()
     }
@@ -29,12 +29,12 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
         return PLAccountNumberFormatter()
     }
     
-    func resolve() -> InternalTransferAmountModifierProtocol? {
+    func resolve() -> InternalTransferAmountModifierProtocol {
         return PLInternalTransferAmountModifier()
     }
 
     func resolve() -> GetInternalTransferDestinationAccountsUseCase {
-        return PLGetInternalTransferDestAccountsUseCase()
+        return PLGetInternalTransferDestAccountsUseCase(dependencies: self)
     }
     
     func resolve() -> CurrencyFormatterProvider {

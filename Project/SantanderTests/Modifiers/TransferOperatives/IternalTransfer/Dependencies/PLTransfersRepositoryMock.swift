@@ -18,17 +18,19 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
     }
     
     private var rates: [ExchangeRateRepresentable]!
+    private var accounts: [AccountRepresentable]
     
-    public init(rates: [ExchangeRateRepresentable]) {
+    public init(rates: [ExchangeRateRepresentable], accounts: [AccountRepresentable]) {
         self.rates = rates
+        self.accounts = accounts
     }
     
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
-        fatalError()
+        return .success(self.accounts)
     }
     
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
-        fatalError()
+        return .success(self.accounts)
     }
     
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
