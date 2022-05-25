@@ -1,10 +1,3 @@
-//
-//  InternalTransferPreSetupUseCase.swift
-//  TransferOperatives
-//
-//  Created by Cristobal Ramos Laina on 15/2/22.
-//
-
 import Foundation
 import OpenCombine
 import CoreDomain
@@ -40,34 +33,58 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
             .mapError { _ in
                 return InternalTransferOperativeError.network
             }
-            .flatMap { globalPosition, debitAccounts, creditAccounts -> AnyPublisher<PreSetupData, InternalTransferOperativeError> in
+            .tryMap { (globalPosition: GlobalPositionAndUserPrefMergedRepresentable, debitAccounts: [AccountRepresentable], creditAccounts: [AccountRepresentable]) -> (Int, [PolandAccountRepresentable], [PolandAccountRepresentable]) in
                 let notVisiblesPGAccounts = globalPosition.accounts.filter { $0.isVisible == false }
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                let (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount) = originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                let (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount) = filterInputAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                let (destinationAccountsVisibles, destinationAccountsNotVisibles, _) = filterInputAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
                 if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
-                    return Fail(error: InternalTransferOperativeError.minimunAccounts).eraseToAnyPublisher()
+                    throw InternalTransferOperativeError.minimunAccounts
+                }
+                if isMinimunAccounts(accounts: destinationAccountsVisibles + destinationAccountsNotVisibles) == false {
+                    throw InternalTransferOperativeError.minimunAccounts
                 }
                 if creditCardAccountConditions(notOriginCreditCardAccount) == false {
-                    return Fail(error: InternalTransferOperativeError.genericError).eraseToAnyPublisher()
+                    throw InternalTransferOperativeError.genericError
                 }
-                let (destinationAccountsVisibles, destinationAccountsNotVisibles) = destinationAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
-                let data = PreSetupData(originAccountsVisibles: originAccountsVisibles,
-                                    originAccountsNotVisibles: originAccountsNotVisibles,
-                                    destinationAccountsVisibles: destinationAccountsVisibles,
-                                    destinationAccountsNotVisibles: destinationAccountsNotVisibles)
-                return Just(data).setFailureType(to: InternalTransferOperativeError.self).eraseToAnyPublisher()
+                return (globalPosition.accounts.count, originAccountsVisibles.compactMap { $0 as? PolandAccountRepresentable }, originAccountsNotVisibles.compactMap { $0 as? PolandAccountRepresentable })
+            }
+            .map { accountsCount, originAccountsVisibles, originAccountsNotVisibles in
+                return (
+                    accountsCount,
+                    removeUniqueNonCreditCardAccount(originAccountsVisibles),
+                    removeUniqueNonCreditCardAccount(originAccountsNotVisibles)
+                )
+            }
+            .map { accountsCount, originAccountsVisibles, originAccountsNotVisibles in
+                return (
+                    accountsCount,
+                    removeCreditCardAccountsIfNecessary(originAccountsVisibles),
+                    removeCreditCardAccountsIfNecessary(originAccountsNotVisibles)
+                )
+            }
+            .map { accountsCount, originAccountsVisibles, originAccountsNotVisibles in
+                let totalFilteredAccounts = originAccountsVisibles.count + originAccountsNotVisibles.count
+                let hasFilteredAcccounts = accountsCount > totalFilteredAccounts
+                return PreSetupData(
+                    accountsVisibles: originAccountsVisibles,
+                    accountsNotVisibles: originAccountsNotVisibles,
+                    didFilterAccounts: hasFilteredAcccounts
+                )
+            }
+            .mapError { error -> InternalTransferOperativeError in
+                guard let error = error as? InternalTransferOperativeError else { return .genericError}
+                return error
             }
             .eraseToAnyPublisher()
     }
-    
+}
+
+private extension PLInternalTransferPreSetupUseCase {
     func isMinimunAccounts(accounts: [AccountRepresentable]) -> Bool {
-        if accounts.count > 1 {
-            return true
-        } else {
-            return false
-        }
+        return accounts.count > 0
     }
     
     func creditCardAccountConditions(_ notCreditCardAccounts: [AccountRepresentable]) -> Bool {
@@ -80,7 +97,7 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
         }
     }
     
-    func originAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable], [AccountRepresentable]) {
+    func filterInputAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable], [AccountRepresentable]) {
         var originAccountsVisibles: [AccountRepresentable] = []
         var originAccountsNotVisibles: [AccountRepresentable] = []
         var notOriginCreditCardAccount: [AccountRepresentable] = []
@@ -101,24 +118,28 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
         return (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount)
     }
     
-    func destinationAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable]) {
-        var destinationAccountsVisibles: [AccountRepresentable] = []
-        var destinationAccountsNotVisibles: [AccountRepresentable] = []
-        var notDestinationCreditCardAccount: [AccountRepresentable] = []
-        accounts.forEach { account in
-            let polandAccount = account as? PolandAccountRepresentable
-            if polandAccount?.type != .creditCard {
-                notDestinationCreditCardAccount.append(account)
-            }
-            let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
-                return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
-            }
-            guard containsAccountNotVisible else {
-                destinationAccountsVisibles.append(account)
-                return
-            }
-            destinationAccountsNotVisibles.append(account)
+    /// Remove the unique account found in an array of Poland accounts if it's the
+    /// only one that is not credit card.
+    /// - Parameter polandAccounts: an array of Poland accounts.
+    /// - Returns: an array of Poland accounts filtered.
+    func removeUniqueNonCreditCardAccount(_ polandAccounts: [PolandAccountRepresentable]) -> [PolandAccountRepresentable] {
+        let creditCardAccounts = polandAccounts.filter { $0.type == .creditCard }
+        guard creditCardAccounts.count == polandAccounts.count - 1 else {
+            return polandAccounts
         }
-        return (destinationAccountsVisibles, destinationAccountsNotVisibles)
+        return creditCardAccounts
+    }
+    
+    /// Remove all the credit card accounts of an array if the accounts that are
+    /// not credit card are also not PLN.
+    /// - Parameter polandAccounts: array of Poland accounts.
+    /// - Returns: an array of Poland accounts filtered.
+    func removeCreditCardAccountsIfNecessary(_ polandAccounts: [PolandAccountRepresentable]) -> [PolandAccountRepresentable] {
+        let notCreditCardAccounts = polandAccounts.filter { $0.type != .creditCard }
+        guard !notCreditCardAccounts.isEmpty else { return polandAccounts }
+        guard !notCreditCardAccounts.contains(where: { $0.currencyCode == "PLN" }) else {
+            return polandAccounts
+        }
+        return notCreditCardAccounts
     }
 }
