@@ -165,6 +165,8 @@ class PLQuickBalanceSettingsAccountView: UIView {
             infoPercentageLabel.alpha = 0
             amountView.alpha = 0
             amountView.setAmount("")
+            amountView.hideError()
+            oneInputAmountError.hideError()
             oneInputAmountError.alpha = 0
             if let constraints = constraintsPercentage {
                 NSLayoutConstraint.deactivate(constraints)
