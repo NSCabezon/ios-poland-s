@@ -66,7 +66,7 @@ final class AcceptTransactionUseCase: UseCase<AcceptTransactionUseCaseInput, Acc
             .acceptTransfer(
                 AcceptDomesticTransactionParameters(
                     title: form.title,
-                    type: .BLIK_P2P_TRANSACTION,
+                    type: .ONEAPP_BLIK_P2P_TRANSACTION,
                     transferType: transferType,
                     dstPhoneNo: form.trimmedPhoneNumber,
                     valueDate: date,

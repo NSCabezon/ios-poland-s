@@ -94,6 +94,7 @@ public extension AcceptDomesticTransferSummaryDTO {
         case PLN_FROM_CURRENCY_ACCOUNT_TOKEN_TRANSACTION
         case PAYHUB_TRANSCTION
         case BLIK_P2PR_TRANSACTION
+        case ONEAPP_BLIK_P2P_TRANSACTION
     }
     
 }
