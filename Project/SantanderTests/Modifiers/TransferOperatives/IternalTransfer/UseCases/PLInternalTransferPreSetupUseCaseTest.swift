@@ -52,7 +52,7 @@ private extension PLInternalTransferPreSetupUseCaseTest {
     }
     
     func getAccountForDebit() -> [AccountForDebitDTO] {
-        return self.mockDataInjector.loadFromFile("getEmptyAccounts")
+        return self.mockDataInjector.loadFromFile("emptyArrayResponse")
     }
     
     func getGlobalPositionMock() -> GlobalPositionMock {
