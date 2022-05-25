@@ -24,7 +24,7 @@ class PLGetInternalTransferAmountExchangeRateUseCaseTest: XCTestCase {
                                                    currencySymbol: "", buyRate: 0.0, sellRate: 1.888, decPlaces: 0),
                      ExchangeRateRepresentableMock(currency: CurrencyType.dollar.rawValue,
                                                    currencySymbol: "", buyRate: 4.55, sellRate: 0.0, decPlaces: 0)]
-        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates))
+        useCase = PLGetInternalTransferAmountExchangeRateUseCase(dependencies: PLInternalTransferExternalDependenciesResolverMock(rates: rates, accounts: []))
     }
 
     override func tearDownWithError() throws {
