@@ -23,5 +23,6 @@ public struct TaxTransferModel {
     public let billingPeriodNumber: Int?
     public let obligationIdentifier: String
     public let date: Date
+    let taxAuthority: SelectedTaxAuthority
 }
 

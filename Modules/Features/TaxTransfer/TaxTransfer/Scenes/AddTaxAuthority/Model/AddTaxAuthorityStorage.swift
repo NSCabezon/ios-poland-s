@@ -8,20 +8,8 @@
 import CoreFoundationLib
 
 final class AddTaxAuthorityStorage {
-    private let keychain = KeychainWrapper()
-    private let compilation: CompilationProtocol
-    
-    init(dependenciesResolver: DependenciesResolver) {
-        self.compilation = dependenciesResolver.resolve(for: CompilationProtocol.self)
-    }
-    
     func getLastSelectedCities() throws -> [TaxAuthorityCity] {
-        let query = KeychainQuery(
-            service: keychainService,
-            account: KeychainAccount.cities.rawValue,
-            accessGroup: compilation.keychain.sharedTokenAccessGroup
-        )
-        let citiesData = try KeychainWrapper().fetch(query: query) as? Data
+        let citiesData = UserDefaults.standard.data(forKey: UserDefaultsKey.cities.rawValue)
         guard
             let data = citiesData,
             let citiesText = String(data: data, encoding: .utf8)
@@ -34,12 +22,7 @@ final class AddTaxAuthorityStorage {
     }
     
     func getLastSelectedTaxAccountNumbers() throws -> [String] {
-        let query = KeychainQuery(
-            service: keychainService,
-            account: KeychainAccount.taxAccounts.rawValue,
-            accessGroup: compilation.keychain.sharedTokenAccessGroup
-        )
-        let taxAccountNumbersData = try KeychainWrapper().fetch(query: query) as? Data
+        let taxAccountNumbersData = UserDefaults.standard.data(forKey: UserDefaultsKey.taxAccounts.rawValue)
         guard
             let data = taxAccountNumbersData,
             let taxAccountNumbersText = String(data: data, encoding: .utf8)
@@ -56,13 +39,7 @@ final class AddTaxAuthorityStorage {
             currentlySavedItems: currentlySavedCities.map { $0.cityName }
         )
         let data = textToSave.data(using: String.Encoding.utf8)
-        let query = KeychainQuery(
-            service: keychainService,
-            account: KeychainAccount.cities.rawValue,
-            accessGroup: compilation.keychain.sharedTokenAccessGroup,
-            data: data as NSCoding?
-        )
-        try KeychainWrapper().save(query: query)
+        UserDefaults.standard.set(data, forKey: UserDefaultsKey.cities.rawValue)
     }
     
     func saveLastSelectedTaxAccountNumber(_ taxAccountNumber: String) throws {
@@ -72,19 +49,20 @@ final class AddTaxAuthorityStorage {
             currentlySavedItems: currentlySavedTaxAccountNumbers
         )
         let data = textToSave.data(using: String.Encoding.utf8)
-        let query = KeychainQuery(
-            service: keychainService,
-            account: KeychainAccount.taxAccounts.rawValue,
-            accessGroup: compilation.keychain.sharedTokenAccessGroup,
-            data: data as NSCoding?
-        )
-        try KeychainWrapper().save(query: query)
+        UserDefaults.standard.set(data, forKey: UserDefaultsKey.taxAccounts.rawValue)
     }
     
     private func getThreeLastSelectedItemsText(
         newItem: String,
         currentlySavedItems: [String]
     ) -> String {
+        if currentlySavedItems.contains(newItem) {
+            let savedItemsWithoutDuplicatedNewItem = currentlySavedItems.filter { $0 != newItem }
+            return ([newItem] + savedItemsWithoutDuplicatedNewItem)
+               .prefix(3)
+               .joined(separator: String(encodedItemsSeparator))
+        }
+        
         return ([newItem] + currentlySavedItems)
            .prefix(3)
            .joined(separator: String(encodedItemsSeparator))
@@ -98,11 +76,7 @@ final class AddTaxAuthorityStorage {
 }
 
 extension AddTaxAuthorityStorage {
-    var keychainService: String {
-        return "Santander"
-    }
-    
-    enum KeychainAccount: String {
+    enum UserDefaultsKey: String {
         case cities = "keychainTaxAuthorityCities"
         case taxAccounts = "keychainTaxAuthorityAccounts"
     }

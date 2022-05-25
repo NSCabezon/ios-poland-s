@@ -65,7 +65,8 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
             billingYear: selectedBillingYear,
             billingPeriodNumber: selectedPeriodNumber,
             obligationIdentifier: formData.obligationIdentifier,
-            date: formData.date
+            date: formData.date,
+            taxAuthority: taxAuthority
         )
     }
     

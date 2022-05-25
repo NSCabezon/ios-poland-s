@@ -41,6 +41,7 @@ final class TaxTransferSummaryPresenter {
     
     func viewDidLoad() {
         prepareViewModel()
+        saveTransferDataInStorageIfNeeded()
     }
 }
 
@@ -95,5 +96,16 @@ private extension TaxTransferSummaryPresenter {
                                 collapsableSections: .defaultCollapsable(visibleSections: 3))
         view?.setupStandardFooterWithTitle(localized("summary_label_nowThat"), items: viewModel.footerItems)
         view?.build()
+    }
+    
+    func saveTransferDataInStorageIfNeeded() {
+        switch transferModel.taxAuthority {
+        case let .usTaxAuthority(data):
+            let storage = AddTaxAuthorityStorage()
+            try? storage.saveLastSelectedCity(TaxAuthorityCity(cityName: data.cityName))
+            try? storage.saveLastSelectedTaxAccountNumber(data.taxAuthorityAccount.accountNumber)
+        case .irpTaxAuthority, .predefinedTaxAuthority:
+            break
+        }
     }
 }
