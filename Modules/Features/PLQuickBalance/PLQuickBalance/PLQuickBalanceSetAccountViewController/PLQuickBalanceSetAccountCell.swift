@@ -21,7 +21,7 @@ class PLQuickBalanceSetAccountCell: UITableViewCell {
 
         contentView.addSubview(selectorView)
         NSLayoutConstraint.activate([
-            selectorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            selectorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             selectorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             selectorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             selectorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
