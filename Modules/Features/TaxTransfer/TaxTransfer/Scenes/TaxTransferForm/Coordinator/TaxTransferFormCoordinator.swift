@@ -264,8 +264,12 @@ private extension TaxTransferFormCoordinator {
             return TaxTransferFormDataProvider(dependenciesResolver: resolver)
         }
         
-        dependenciesEngine.register(for: TaxTransferModelMapping.self) { _ in
-            return TaxTransferModelMapper()
+        dependenciesEngine.register(for: TaxTransferModelMapping.self) { resolver in
+            return TaxTransferModelMapper(dependenciesResolver: resolver)
+        }
+        
+        dependenciesEngine.register(for: TaxIdentifierMapping.self) { _ in
+            return TaxIdentifierMapper()
         }
     }
 }

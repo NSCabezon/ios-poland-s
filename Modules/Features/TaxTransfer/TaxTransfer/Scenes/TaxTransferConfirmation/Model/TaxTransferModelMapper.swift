@@ -6,6 +6,7 @@
 //
 
 import PLCommons
+import CoreFoundationLib
 
 protocol TaxTransferModelMapping {
     func map(
@@ -21,16 +22,12 @@ protocol TaxTransferModelMapping {
 }
 
 final class TaxTransferModelMapper: TaxTransferModelMapping {
-    private struct Constants {
-        static var firstArg = "/TI/"
-        static var secondArg = "/OKR/"
-        static var thirdArg = "/SFP/"
-        
-        static var firstArgMaxLenght = 15
-        static var secondArgMaxLenght = 7
-        static var thirdArgMaxLength = 7
-    }
+    private let dependenciesResolver: DependenciesResolver
 
+    init(dependenciesResolver: DependenciesResolver) {
+        self.dependenciesResolver = dependenciesResolver
+    }
+    
     func map(
         account: AccountForDebit,
         formData: TaxTransferFormFields,
@@ -41,13 +38,16 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
         selectedBillingYear: String?,
         selectedPeriodNumber: Int?
     ) -> TaxTransferModel {
-        let title = getTitle(
-            formData: formData,
+        let title = TaxTransferTitleBuilder(
+            taxPayer: taxPayer,
+            taxPayerInfo: taxPayerInfo,
             taxAuthority: taxAuthority,
+            obligationIdentifier: formData.obligationIdentifier,
             period: billingPeriod,
             selectedBillingYear: selectedBillingYear,
-            selectedPeriodNumber: selectedPeriodNumber
-        )
+            selectedPeriodNumber: selectedPeriodNumber,
+            dependenciesResolver: dependenciesResolver
+        ).build()
         let recipientAccountNumber = getRecipientAccountNumber(from: taxAuthority)
         let recipientName = getRecipientName(from: taxAuthority)
         
@@ -67,40 +67,6 @@ final class TaxTransferModelMapper: TaxTransferModelMapping {
             obligationIdentifier: formData.obligationIdentifier,
             date: formData.date
         )
-    }
-
-    private func getTitle(
-        formData: TaxTransferFormFields,
-        taxAuthority: SelectedTaxAuthority,
-        period: TaxTransferBillingPeriodType?,
-        selectedBillingYear: String?,
-        selectedPeriodNumber: Int?
-    ) -> String {
-        let obligationIdentifier = formData.obligationIdentifier
-        let taxAuthority = taxAuthority.selectedTaxSymbol.name
-        let formattedYear = selectedBillingYear?.suffix(2) ?? ""
-        let billingPeriod: String
-        
-        switch period {
-        case .year:
-            billingPeriod = "\(formattedYear)\(period?.short)"
-        default:
-            if let period = period?.short, let selectedPeriodNumber = selectedPeriodNumber {
-                billingPeriod = "\(formattedYear)\(period)\(selectedPeriodNumber)"
-            } else {
-                billingPeriod = ""
-            }
-        }
-
-        guard obligationIdentifier.count <= Constants.firstArgMaxLenght,
-              billingPeriod.count <= Constants.secondArgMaxLenght,
-              taxAuthority.count <= Constants.thirdArgMaxLength else {
-                  return ""
-              }
-        
-        return Constants.firstArg + obligationIdentifier +
-            Constants.secondArg + billingPeriod +
-            Constants.thirdArg + taxAuthority
     }
     
     private func getRecipientAccountNumber(from taxAuthority: SelectedTaxAuthority) -> String {

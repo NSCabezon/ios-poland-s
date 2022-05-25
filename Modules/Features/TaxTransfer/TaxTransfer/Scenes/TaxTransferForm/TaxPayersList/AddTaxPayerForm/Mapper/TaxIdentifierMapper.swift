@@ -7,6 +7,7 @@
 
 protocol TaxIdentifierMapping {
     func map(_ identifier: TaxIdentifierType) -> TaxPayer.IdentifierType
+    func map(_ identifier: TaxPayer.IdentifierType) -> TaxIdentifierType
 }
 
 final class TaxIdentifierMapper: TaxIdentifierMapping {
@@ -23,6 +24,25 @@ final class TaxIdentifierMapper: TaxIdentifierMapping {
         case .passport:
             return .passport
         case .other:
+            return .other
+        }
+    }
+
+    func map(_ identifier: TaxPayer.IdentifierType) -> TaxIdentifierType {
+        switch identifier {
+        case .nationalIdentityCard:
+            return .ID
+        case .taxPayerIdentificationNumber:
+            return .NIP
+        case .socialSecurityNumber:
+            return .PESEL
+        case .nationalBusinessRegistryNumber:
+            return .REGON
+        case .passport:
+            return .passport
+        case .other:
+            return .other
+        case .closed:
             return .other
         }
     }
