@@ -118,11 +118,13 @@ extension MobileTransferConfirmationPresenter: MobileTransferConfirmationPresent
                             let mapper = MobileTransferSummaryMapper()
                             let summaryModel = mapper.map(summary: result.summary, transferType: result.transferType, customer: customer.customer)
                             self?.view?.hideLoader {
+                                self?.coordinator.closeAuthorization()
                                 self?.coordinator.showSummary(with: summaryModel)
                             }
                         }
                         .onError { [weak self] error in
                             self?.view?.hideLoader {
+                                self?.coordinator.closeAuthorization()
                                 guard let errorKey = error.getErrorDesc() else {
                                     self?.showServiceInaccessibleError()
                                     return
@@ -132,6 +134,7 @@ extension MobileTransferConfirmationPresenter: MobileTransferConfirmationPresent
                         }
                 } else {
                     self?.view?.hideLoader {
+                        self?.coordinator.closeAuthorization()
                         self?.showServiceInaccessibleError()
                         return
                     }
@@ -139,6 +142,7 @@ extension MobileTransferConfirmationPresenter: MobileTransferConfirmationPresent
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
+                    self?.coordinator.closeAuthorization()
                     guard let errorKey = error.getErrorDesc() else {
                         self?.showServiceInaccessibleError()
                         return

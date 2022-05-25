@@ -39,6 +39,7 @@ public class PLTransactionParametersProvider: PLTransactionParametersProviderPro
              .mCommerceUnder(let transactionParameters),
              .zusTransfer(let transactionParameters),
              .topUpTransfer(let transactionParameters),
+             .codeBlik(let transactionParameters),
              .taxTransfer(let transactionParameters):
             let joinedParameters = transactionProvider.getParameters(
                 transactionParametersInput: transactionParameters,
