@@ -12,7 +12,7 @@ public protocol PLBLIKManagerProtocol {
     func cancelTransaction(request: CancelBLIKTransactionRequestDTO, trnId: Int) throws -> Result<Void, NetworkProviderError>
     func getPinPublicKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError>
-    func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
+    func acceptTransaction(_ parameters: BlikAcceptTransactionParameters) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
     func setTransactionDataVisibility(_ parameters: SetNoPinTrnVisibleParameters) throws -> Result<Void, NetworkProviderError>
@@ -90,8 +90,8 @@ extension PLBLIKManager: PLBLIKManagerProtocol {
         try dataSource.getAccounts()
     }
     
-    public func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError> {
-        try dataSource.acceptTransaction(trnId: trnId, trnDate: trnDate)
+    public func acceptTransaction(_ parameters: BlikAcceptTransactionParameters) throws -> Result<Void, NetworkProviderError> {
+        try dataSource.acceptTransaction(parameters)
     }
     
     public func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError> {

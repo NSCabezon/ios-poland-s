@@ -1,15 +1,16 @@
 import UI
 import CoreFoundationLib
 
-public protocol MobileTransferConfirmationCoordinatorProtocol {
+protocol MobileTransferConfirmationCoordinatorProtocol {
     func pop()
     func backToBlikHome()
     func backToTransfer()
     func showSummary(with model: MobileTransferSummary)
+    func closeAuthorization()
 }
 
-public final class MobileTransferConfirmationCoordinator: ModuleCoordinator {
-    public weak var navigationController: UINavigationController?
+final class MobileTransferConfirmationCoordinator {
+    private weak var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
     private let viewModel: MobileTransferViewModel
     private let isDstAccInternal: Bool
@@ -28,7 +29,7 @@ public final class MobileTransferConfirmationCoordinator: ModuleCoordinator {
         setupDependencies()
     }
     
-    public func start() {
+    func start() {
         let presenter = MobileTransferConfirmationPresenter(dependenciesResolver: dependenciesEngine,
                                                             viewModel: viewModel,
                                                             isDstAccInternal: isDstAccInternal,
@@ -61,7 +62,7 @@ private extension MobileTransferConfirmationCoordinator {
 
 extension MobileTransferConfirmationCoordinator: MobileTransferConfirmationCoordinatorProtocol {
     
-    public func backToBlikHome() {
+    func backToBlikHome() {
         let blikHomeVC = navigationController?.viewControllers.reversed().first(where: { $0 is BLIKHomeViewController })
        
         if let blikHomeViewController = blikHomeVC {
@@ -81,11 +82,11 @@ extension MobileTransferConfirmationCoordinator: MobileTransferConfirmationCoord
         navigationController?.popToViewController(parentController, animated: true)
     }
     
-    public func pop() {
+    func pop() {
         navigationController?.popViewController(animated: true)
     }
     
-    public func showSummary(with model: MobileTransferSummary) {
+    func showSummary(with model: MobileTransferSummary) {
         let coordinator = MobileTransferSummaryCoordinator(dependenciesResolver: dependenciesEngine,
                                                            navigationController: navigationController,
                                                            summary: model)
@@ -93,7 +94,14 @@ extension MobileTransferConfirmationCoordinator: MobileTransferConfirmationCoord
         coordinator.start()
     }
     
-    public func backToTransfer() {
+    func backToTransfer() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func closeAuthorization() {
+        guard let confirmationVC = navigationController?.viewControllers.first(where: {
+            $0 is MobileTransferConfirmationViewController
+        }) else { return }
+        navigationController?.popToViewController(confirmationVC, animated: false)
     }
 }

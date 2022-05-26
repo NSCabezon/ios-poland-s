@@ -217,18 +217,25 @@ private extension BLIKConfirmationPresenter {
     func startAcceptTransaction() {
         guard let viewModel = viewModel else { return }
         timer.stopTimer()
-        Scenario(useCase: acceptBLIKTransactionUseCase,
-                 input: .init(trnId: viewModel.trnId,
-                              trnDate: viewModel.transactionDate))
+        Scenario(
+            useCase: acceptBLIKTransactionUseCase,
+            input: .init(
+                trnId: viewModel.trnId,
+                trnDate: viewModel.transactionDate,
+                transaction: viewModel.transaction
+            )
+        )
             .execute(on: useCaseHandler)
             .onSuccess { [weak self] _ in
                 self?.view?.hideLoader() {
+                    self?.coordinator.closeAuthorization()
                     self?.coordinator.goToSummary(with: viewModel)
                 }
             }
-            .onError {[weak self] error in
+            .onError { [weak self] error in
                 guard let errorDesc = error.getErrorDesc() else {
                     self?.view?.hideLoader {
+                        self?.coordinator.closeAuthorization()
                         self?.showServiceInaccessibleError()
                     }
                     return
@@ -245,6 +252,7 @@ private extension BLIKConfirmationPresenter {
                     errorImage = "icnAlertError"
                 }
                 self?.view?.hideLoader {
+                    self?.coordinator.closeAuthorization()
                     self?.showError(with: errorKey, image: errorImage)
                 }
             }

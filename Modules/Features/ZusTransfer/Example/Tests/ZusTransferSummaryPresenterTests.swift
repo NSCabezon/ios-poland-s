@@ -60,7 +60,7 @@ final class ZusTransferSummaryPresenterTests: XCTestCase {
         }
         XCTAssertNotNil(viewModel)
         viewModel?.action()
-        XCTAssertTrue(coordinator?.goToGlobalPositionCalled == true)
+        XCTAssertTrue(coordinator?.backToTransfersCalled == true)
     }
     
     func test_goToZusTransfer_called_should_start_goToMakeAnotherPayment_coordinator_function() throws {

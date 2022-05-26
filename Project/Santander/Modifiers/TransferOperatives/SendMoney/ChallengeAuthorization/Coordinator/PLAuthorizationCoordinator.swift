@@ -99,6 +99,8 @@ extension PLAuthorizationCoordinator: BlikChallengesHandlerDelegate {
         self.progressTotalTime = progressTotalTime
         self.bottomSheetDismissedClosure = bottomSheetDismissedClosure
         handle(challenge, authorizationId: authorizationId, completion: completion)
+        // delete cache after starting viewController
+        self.progressTotalTime = nil
     }
 }
 

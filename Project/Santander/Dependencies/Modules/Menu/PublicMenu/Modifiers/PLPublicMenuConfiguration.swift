@@ -84,6 +84,16 @@ struct PLPublicMenuConfiguration {
                               type: .smallButton(style: PLSmallButtonType())),
         bottom: nil
     )
+    private let cancelCardItem = PublicMenuElement(
+        top: PublicMenuOption(kindOfNode: KindOfPublicMenuNode.none,
+                              titleKey: KindOfPublicMenuNode.cancelCardViewModel.titleKey,
+                              iconKey: KindOfPublicMenuNode.cancelCardViewModel.iconKey,
+                              action: .custom(action: PLCustomActions.cancelCard.rawValue),
+                              accessibilityIdentifier: KindOfPublicMenuNode.cancelCardViewModel.accessibility,
+                              type: .smallButton(style: PLSmallButtonType())),
+        bottom: nil
+    )
+    
     private let rowNil = PublicMenuElement(top: nil, bottom: nil)
     private let trustedDevice: Bool
     
@@ -96,7 +106,8 @@ struct PLPublicMenuConfiguration {
             [firstItem, serviceItem],
             [atmItem],
             [offerItem, contactItem],
-            [mobAuthElem]
+            [mobAuthElem],
+            [cancelCardItem]
         ]
     }
 }

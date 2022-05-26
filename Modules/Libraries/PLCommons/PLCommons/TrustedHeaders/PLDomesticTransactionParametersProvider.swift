@@ -35,6 +35,18 @@ public class PLDomesticTransactionParametersProvider: PLDomesticTransactionParam
                 transactionParametersInput.userID
             ].joined()
         }
+        if case .codeBlik(_) = type {
+            var formatAmountTmp = PLAmountFormatter.formatAmount(
+                amount: transactionParametersInput.debitAmount.getStringValue()
+            )
+            formatAmountTmp = formatAmountTmp?.replacingOccurrences(of: ",", with: ".")
+            formatAmountTmp = formatAmountTmp?.replacingOccurrences(of: " ", with: "")
+            return [
+                transactionParametersInput.merchantId,
+                formatAmountTmp ?? "",
+                transactionParametersInput.transactionTime
+            ].joined()
+        }
         return [
             transactionParametersInput.debitAccountNumber,
             transactionParametersInput.creditAccountNumber,

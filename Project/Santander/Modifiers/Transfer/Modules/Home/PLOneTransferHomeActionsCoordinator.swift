@@ -12,6 +12,7 @@ import Transfer
 import PhoneTopUp
 import ZusTransfer
 import ScanAndPay
+import TaxTransfer
 
 class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
     weak var navigationController: UINavigationController?
@@ -37,7 +38,8 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         case .creditCard:
             ToastCoordinator("generic_alert_notAvailableOperation").start()
         case .transferTax:
-            ToastCoordinator("generic_alert_notAvailableOperation").start()
+            let coordinator = oldResolver.resolve(for: TaxTransferFormCoordinatorProtocol.self)
+            coordinator.start()
         case .transferZus:
             let coordinator = oldResolver.resolve(for: ZusTransferModuleCoordinatorProtocol.self)
             coordinator.start()

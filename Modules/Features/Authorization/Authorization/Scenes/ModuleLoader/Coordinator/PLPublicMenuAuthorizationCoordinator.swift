@@ -19,7 +19,13 @@ public final class PLPublicMenuAuthorizationCoordinator: BindableCoordinator {
         self.dependenciesResolver = dependenciesResolver
     }
     
+    private lazy var authorizationCoordinator: AuthorizationModuleCoordinator = {
+        let authorizationCoordinator = dependenciesResolver.resolve(for: AuthorizationModuleCoordinator.self)
+        authorizationCoordinator.onAuthorizationSuccess = onFinish
+        return authorizationCoordinator
+    }()
+    
     public func start() {
-        dependenciesResolver.resolve(for: AuthorizationModuleCoordinator.self).start()
-        }
+        authorizationCoordinator.start()
+    }
 }

@@ -73,7 +73,7 @@ private extension EditableTaxAccountView {
     func getSectionContainer() -> FormSectionContainer {
         return FormSectionContainer(
             containedView: containerView,
-            sectionTitle: localized("generic_label_taxAuthorityAcc")
+            sectionTitle: localized("generic_label_taxPayerAccNum")
         )
     }
     
@@ -87,7 +87,7 @@ private extension EditableTaxAccountView {
             textFieldDelegate: nil) { component in
             component.textField.keyboardType = .numberPad
         }
-        accountTextField.textField.placeholder = localized("generic_label_taxAuthorityAcc")
+        accountTextField.textField.placeholder = localized("generic_label_taxPayerAccNum")
         accountTextField.textField.setEditingStyle(.writable(configuration: configuration))
         accountFormatter.delegate = textFieldDelegate
     }

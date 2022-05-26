@@ -13,6 +13,7 @@ import PLCommons
 protocol TopUpConfirmationCoordinatorProtocol: AnyObject, ModuleCoordinator {
     func back()
     func close()
+    func closeAuthorization()
     func showSummary(with model: TopUpModel)
 }
 
@@ -20,6 +21,13 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     // MARK: Properties
     
     weak var navigationController: UINavigationController?
+    private lazy var controller: TopUpConfirmationViewController = {
+        let presenter = dependenciesEngine.resolve(for: TopUpConfirmationPresenterProtocol.self)
+        let viewController = TopUpConfirmationViewController(
+            presenter: presenter)
+        presenter.view = viewController
+        return viewController
+    }()
     private let dependenciesEngine: DependenciesDefault
     private let summary: TopUpModel
     
@@ -60,11 +68,7 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
         }
 
         self.dependenciesEngine.register(for: TopUpConfirmationViewController.self) { resolver in
-            let presenter = resolver.resolve(for: TopUpConfirmationPresenterProtocol.self)
-            let viewController = TopUpConfirmationViewController(
-                presenter: presenter)
-            presenter.view = viewController
-            return viewController
+            return self.controller
         }
     }
     
@@ -81,6 +85,10 @@ final class TopUpConfirmationCoordinator: TopUpConfirmationCoordinatorProtocol {
     
     func close() {
         navigationController?.closeTopUpProces()
+    }
+    
+    func closeAuthorization() {
+        navigationController?.popToViewController(controller, animated: false)
     }
     
     func showSummary(with model: TopUpModel) {

@@ -40,15 +40,6 @@ final class CharityTransferConfirmationPresenterTests: XCTestCase {
         XCTAssertFalse(view.viewModel?.items.isEmpty == true)
     }
     
-    func test_confirm_called_use_case_success_should_start_showSummary_and_loader_hide() throws {
-        SUT.confirmTapped()
-        XCTAssertTrue(view.showLoaderCalled)
-        delayedTests { [unowned self] in
-            XCTAssertTrue(self.view.hideLoaderCalled)
-            XCTAssertTrue(self.coordinator.showSummaryCalled)
-        }
-    }
-    
     func test_goBack_called_should_start_pop_coordinator_function() throws {
         SUT.goBack()
         XCTAssertTrue(coordinator.popCalled)

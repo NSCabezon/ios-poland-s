@@ -10,6 +10,7 @@ protocol ZusSmeTransferConfirmationCoordinatorProtocol {
     func pop()
     func backToTransfer()
     func showSummary(with model: ZusSmeSummaryModel)
+    func closeAuthorization()
 }
 
 final class ZusSmeTransferConfirmationCoordinator {
@@ -110,6 +111,13 @@ extension ZusSmeTransferConfirmationCoordinator: ZusSmeTransferConfirmationCoord
                                                            navigationController: navigationController,
                                                            summary: model)
         coordinator.start()
+    }
+    
+    func closeAuthorization() {
+        guard let confirmationVC = navigationController?.viewControllers.first(where: {
+            $0 is ZusSmeTransferConfirmationViewController
+        }) else { return }
+        navigationController?.popToViewController(confirmationVC, animated: false)
     }
 }
 

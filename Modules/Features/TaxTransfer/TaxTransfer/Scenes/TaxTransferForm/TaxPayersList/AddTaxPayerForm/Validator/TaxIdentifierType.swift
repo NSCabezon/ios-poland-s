@@ -133,4 +133,21 @@ enum TaxIdentifierType: SelectableItem {
             return nil
         }
     }
+    
+    var documentType: String {
+        switch self {
+        case .NIP:
+            return "N"
+        case .REGON:
+            return "R"
+        case .PESEL:
+            return "P"
+        case .ID:
+            return "1"
+        case .passport:
+            return "2"
+        case .other:
+            return "3"
+        }
+    }
 }

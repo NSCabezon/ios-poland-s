@@ -27,6 +27,7 @@ public enum PolandDeepLink: CaseIterable {
     case blik
     case myProducts(entryType: String, mediumType: String, subjectID: String, baseAddress: String)
     case onlineAdvisor(params: String)
+    case quickBalance
     
     public static var allCases: [PolandDeepLink] {
         return [.helpCenter,
@@ -38,6 +39,7 @@ public enum PolandDeepLink: CaseIterable {
                 .services,
                 .blik,
                 .onlineAdvisor(params: ""),
+                .quickBalance,
                 .myProducts(entryType: "", mediumType: "", subjectID: "", baseAddress: "")]
     }
 }
@@ -61,6 +63,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         )
         case PolandDeepLink.onlineAdvisor(params: "").deepLinkKey:
             self = .onlineAdvisor(params: userInfo[CoreFoundationLib.DeepLinkUserInfoKeys.date] ?? "")
+        case PolandDeepLink.quickBalance.deepLinkKey: self = .quickBalance
         default: return nil
         }
     }
@@ -77,6 +80,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .blik: return "blik_pl"
         case .myProducts: return "myProducts"
         case .onlineAdvisor: return "onlineAdvisor"
+        case .quickBalance: return "quickBalance"
         }
     }
       
@@ -92,6 +96,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .blik: return "blik"
         case .myProducts: return "myProducts"
         case .onlineAdvisor: return "onlineAdvisor"
+        case .quickBalance: return "quickBalance"
         }
     }
     
@@ -110,6 +115,7 @@ extension PolandDeepLink: DeepLinkEnumerationCapable {
         case .blik: return .privateDeepLink
         case .myProducts: return .privateDeepLink
         case .onlineAdvisor: return  .publicDeepLink
+        case .quickBalance: return  .privateDeepLink
         }
     }
 }

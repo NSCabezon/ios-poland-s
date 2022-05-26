@@ -34,6 +34,14 @@ class ViewController: UIViewController {
             return MockStringLoader()
         }
         
+        defaultResolver.register(for: PLTransfersRepository.self) { _ in
+            return PLTransfersRepositoryMock()
+        }
+        
+        defaultResolver.register(for: ChallengesHandlerDelegate.self) { _ in
+            PLAuthorizationCoordinatorMock()
+        }
+        
         return defaultResolver
     }()
     
@@ -64,8 +72,9 @@ class ViewController: UIViewController {
                     charityTransferSettings: CharityTransferSettings(
                         transferRecipientName: "Fundacja Santander",
                         transferAccountNumber: "26 1090 0088 0000 0001 4223 0553",
-                        transferTitle: "Darowizna dla Fundacji Santander"
-                    )
+                        transferTitle: "Darowizna dla Fundacji Santander",
+                        windowTitle: "Przelew na Fundację Santander",
+                        infoText: "W Fundacji Santander myślimy o przyszłości, działamy dziś. Pomóż nam stwarzać możliwości")
                 )
                 coordinator.start()
             }

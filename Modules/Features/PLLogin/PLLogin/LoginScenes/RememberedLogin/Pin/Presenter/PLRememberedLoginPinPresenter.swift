@@ -11,6 +11,7 @@ import LoginCommon
 import PLCommons
 import LocalAuthentication
 import Dynatrace
+import PLQuickBalance
 
 protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPublicMenuPresentableProtocol {
     var view: PLRememberedLoginPinViewControllerProtocol? { get set }
@@ -30,6 +31,7 @@ protocol PLRememberedLoginPinPresenterProtocol: MenuTextWrapperProtocol, PLPubli
     func trackView()
     func trackChangeLoginTypeButton()
     func didSelectChooseEnvironment()
+    func deviceHasSystemPasscode() -> Bool
 }
 
 final class PLRememberedLoginPinPresenter: SafetyCurtainDoorman {
@@ -207,7 +209,8 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
     }
     
     func didSelectBalance() {
-        
+        let quickBalance =  self.dependenciesResolver.resolve(for: PLQuickBalanceCoordinatorProtocol.self)
+        quickBalance.start()
     }
 
     func didSelectBlik() {
@@ -242,6 +245,13 @@ extension PLRememberedLoginPinPresenter : PLRememberedLoginPinPresenterProtocol 
 
     func identifyUser(_ userId: String?) {
         Dynatrace.identifyUser(userId)
+    }
+    
+    func deviceHasSystemPasscode() -> Bool {
+    #if DEBUG
+        return true
+    #endif
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error:nil)
     }
 }
 

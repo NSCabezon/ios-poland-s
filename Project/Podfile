@@ -36,6 +36,7 @@ def pl_features
   pod 'PLContexts', :path => '../Modules/Features/PLContexts'
   pod 'SplitPayment', :path => '../Modules/Features/SplitPayment'
   pod 'ScanAndPay', :path => '../Modules/Features/ScanAndPay'
+  pod 'PLQuickBalance', :path => '../Modules/Features/PLQuickBalance'
 end
 
 def pl_libraries
@@ -53,7 +54,7 @@ end
 def pl_thirdparty_dependencies
   pod 'SwiftLint', '0.43.1'
   pod 'Dynatrace', '~> 8.227'
-  pod 'Vcc', :git => 'git@github.com:santander-group-europe/ios-poland-onlineAdvisor.git', :tag => '5.10.20220330150017.3809'
+  pod 'Vcc', :git => 'git@github.com:santander-group-europe/ios-poland-onlineAdvisor.git', :tag => '5.10.20220520161723.3834'
 end
 
 #------------ Tests ----------------

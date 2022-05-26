@@ -15,6 +15,7 @@
                 "propertyNo": "7/9",
                 "zip": "44-330",
                 "countryCode": "616",
+                "countryCodeISO": "PL",
                 "voivodship": "24"
             },
             "correspondenceAddress": {
@@ -24,6 +25,7 @@
                 "propertyNo": "7/9",
                 "zip": "44-330",
                 "countryCode": "616",
+                "countryCodeISO": "ES",
                 "voivodship": "24"
             },
             "marketingSegment": "99",

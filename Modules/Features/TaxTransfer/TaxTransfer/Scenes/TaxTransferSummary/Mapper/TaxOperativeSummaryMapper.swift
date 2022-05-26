@@ -20,9 +20,8 @@ protocol TaxOperativeSummaryMapping {
 
 final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
     func map(_ model: TaxTransferModel) -> [OperativeSummaryStandardBodyItemViewModel] {
-        let title: String = localized("pl_toolbar_title_taxTransfer")
         let dateString = getDateString(from: model.date)
-        let recipientName = model.recipientName ?? localized("pl_foundtrans_text_RecipFoudSant")
+        let recipientName = model.recipientName ?? ""
         let recipientAccountNumber = IBANFormatter.format(iban: model.recipientAccountNumber)
         let accountNumber = IBANFormatter.format(iban: model.account.number)
         let transferType: String = localized("pl_generic_label_exTransfer")
@@ -31,7 +30,7 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
         var items: [OperativeSummaryStandardBodyItemViewModel] = [
             .init(title: localized("pl_generic_label_amount"),
                   subTitle: amountValueString(model.amount, size: 32),
-                  info: localized("pl_transferOption_button_transferTax")),
+                  info: model.title),
             .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: model.account.name,
                   info: accountNumber),
@@ -66,7 +65,7 @@ final class TaxOperativeSummaryMapper: TaxOperativeSummaryMapping {
                     currency: summaryModel.currency,
                     withAmountSize: 32
                 ),
-                info: localized("pl_toolbar_title_taxTransfer")
+                info: transferModel.title
             ),
             .init(title: localized("pl_generic_label_accountToPayFrom"),
                   subTitle: summaryModel.accountName,
@@ -117,22 +116,6 @@ private extension TaxOperativeSummaryMapper {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = PLTimeFormat.ddMMyyyyDotted.rawValue
         return dateFormatter.string(from: date)
-    }
-    
-    func getBillingPeriod(
-        year: String,
-        periodType: TaxTransferBillingPeriodType?,
-        billingPeriodNumber: Int?
-    ) -> String {
-        guard !year.isEmpty else {
-            return ""
-        }
-        var billingPeriod = localized("pl_taxTransfer_tab_year") + ": " + year
-        
-        if periodType != .year {
-            billingPeriod = billingPeriod.appending("\n" + (periodType?.name ?? "") + ": " + "\(billingPeriodNumber ?? 0)")
-        }
-        return billingPeriod
     }
     
     func getTaxInfo(transferModel: TaxTransferModel) -> NSAttributedString {
@@ -190,5 +173,21 @@ private extension TaxOperativeSummaryMapper {
             attributedAccountDetails.append($0)
         }
         return attributedAccountDetails
+    }
+    
+    func getBillingPeriod(
+        year: String,
+        periodType: TaxTransferBillingPeriodType?,
+        billingPeriodNumber: Int?
+    ) -> String {
+        guard !year.isEmpty else {
+            return ""
+        }
+        var billingPeriod = localized("pl_taxTransfer_tab_year") + ": " + year
+        
+        if periodType != .year {
+            billingPeriod = billingPeriod.appending("\n" + (periodType?.name ?? "") + ": " + "\(billingPeriodNumber ?? 0)")
+        }
+        return billingPeriod
     }
 }
