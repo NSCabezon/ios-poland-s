@@ -142,6 +142,7 @@ extension AddTaxPayerFormViewController: AddTaxPayerFormView {
     
     func showInvalidFormMessages(_ messages: InvalidAddTaxPayerFormMessages) {
         formView.showInvalidFormMessages(messages)
+        bottomButtonView.disableButton()
     }
     
     func clearValidationMessages() {

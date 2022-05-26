@@ -32,7 +32,7 @@ final class TaxAuthorityCitySelectorCoordinator {
     }
     
     func start() {
-        let storage = AddTaxAuthorityStorage(dependenciesResolver: dependenciesEngine)
+        let storage = AddTaxAuthorityStorage()
         let lastSelectedCities = (try? storage.getLastSelectedCities()) ?? []
         let configuration = ItemSelectorConfiguration<TaxAuthorityCity>(
             navigationTitle: localized("generic_label_city"),

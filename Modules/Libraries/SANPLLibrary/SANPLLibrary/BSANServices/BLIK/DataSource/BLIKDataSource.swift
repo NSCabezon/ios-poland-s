@@ -12,7 +12,7 @@ protocol BLIKDataSourceProtocol {
     func cancelTransaction(request: CancelBLIKTransactionRequestDTO, trnId: Int) throws -> Result<Void, NetworkProviderError>
     func getPinPublicKey() throws -> Result<PubKeyDTO, NetworkProviderError>
     func getAccounts() throws -> Result<[BlikCustomerAccountDTO], NetworkProviderError>
-    func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError>
+    func acceptTransaction(_ parameters: BlikAcceptTransactionParameters) throws -> Result<Void, NetworkProviderError>
     func phoneVerification(aliases: [String]) throws -> Result<PhoneVerificationDTO, NetworkProviderError>
     func p2pAlias(msisdn: String) throws -> Result<P2pAliasDTO, NetworkProviderError>
     func setPSPAliasLabel(_ parameters: SetPSPAliasLabelParameters) throws -> Result<Void, NetworkProviderError>
@@ -248,19 +248,24 @@ class BLIKDataSource: BLIKDataSourceProtocol {
         )
     }
     
-    func acceptTransaction(trnId: Int, trnDate: String) throws -> Result<Void, NetworkProviderError> {
-        let request = AcceptBLIKTransactionRequestDTO(transactionDate: trnDate)
+    func acceptTransaction(_ parameters: BlikAcceptTransactionParameters) throws -> Result<Void, NetworkProviderError> {
+        let request = AcceptBLIKTransactionRequestDTO(transactionDate: parameters.trnDate)
         guard let baseUrl = self.getBaseUrl(), let data = try? JSONEncoder().encode(request) else {
             return .failure(NetworkProviderError.other)
         }
         let serviceUrl = baseUrl + blikPath
-        let serviceName = BlikServiceType.transactionToConfirm.rawValue + "/\(trnId)/confirm"
+        let serviceName = BlikServiceType.transactionToConfirm.rawValue + "/\(parameters.trnId)/confirm"
         return networkProvider.request(
-            BlikRequest(serviceName: serviceName,
-                        serviceUrl: serviceUrl,
-                        method: .post,
-                        request: data,
-                        bodyEncoding: .form)
+            BlikRequest(
+                serviceName: serviceName,
+                serviceUrl: serviceUrl,
+                method: .post,
+                request: data,
+                bodyEncoding: .form,
+                authorization: .twoFactorOperation(
+                    transactionParameters: parameters.transactionParameters
+                )
+            )
         )
     }
     

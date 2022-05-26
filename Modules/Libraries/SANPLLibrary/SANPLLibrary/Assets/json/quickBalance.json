@@ -1,0 +1,36 @@
+{
+    "12345678Z": {
+        "0": {
+            "loginId": 0,
+            "items": [
+              {
+                "accountDescription": "Konto Jakie Chcę",
+                "currencyCode": "PLN",
+                "type": "EXACT_AMOUNT",
+                "value": 120,
+                "lastTransaction": {
+                  "debitAddress": "string",
+                  "title": "Zakupy mobilne",
+                  "amount": -50,
+                  "valueDate": "string"
+                }
+              },
+              {
+                "accountDescription": "Konto Oszczędnościowe",
+                "currencyCode": "PLN",
+                "type": "EXACT_AMOUNT",
+                "value": 120,
+                "lastTransaction": {
+                  "debitAddress": "string",
+                  "title": "Przelew Blik",
+                  "amount": -80,
+                  "valueDate": "string"
+                }
+              }
+
+            ]
+          }
+    }
+}
+
+

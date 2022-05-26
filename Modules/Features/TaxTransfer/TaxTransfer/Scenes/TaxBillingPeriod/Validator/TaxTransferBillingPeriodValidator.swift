@@ -13,8 +13,8 @@ protocol TaxTransferBillingPeriodValidating {
 
 final class TaxTransferBillingPeriodValidator: TaxTransferBillingPeriodValidating {
     func validate(_ form: TaxTransferBillingPeriodForm) -> TaxBillingPeriodValidationResult {
-        let invalidYearMesssage = getValidation(for: form.year)
-        let invalidDayMessage = getValidation(for: form.day ?? "")
+        let invalidYearMesssage = getValidation(for: form.year, periodType: .year)
+        let invalidDayMessage = getValidation(for: form.day ?? "", periodType: .day)
 
         if invalidYearMesssage == nil && invalidDayMessage == nil, form.periodType != nil {
             return .valid
@@ -27,10 +27,18 @@ final class TaxTransferBillingPeriodValidator: TaxTransferBillingPeriodValidatin
         }
     }
     
-    private func getValidation(for value: String) -> String? {
+    private func getValidation(for value: String, periodType: TaxTransferBillingPeriodType?) -> String? {
         guard value.count >= 1 else {
-            return localized("pl_generic_validationText_thisFieldCannotBeEmpty")
+            return getErrorMessage(periodType: periodType)
         }
         return nil
+    }
+    
+    private func getErrorMessage(periodType: TaxTransferBillingPeriodType?) -> String {
+        if periodType != .day {
+            return localized("pl_generic_validationText_thisFieldCannotBeEmpty")
+        } else {
+            return localized("pl_taxTransfer_validation_periodNumberDdMm")
+        }
     }
 }

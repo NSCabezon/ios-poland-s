@@ -9,16 +9,25 @@ import PersonalArea
 import CoreFoundationLib
 
 class PLPersonalDataModifier: PersonalDataModifier {
+
+    let dependenciesResolver: DependenciesResolver
+    lazy var locale: Locale = {
+        let stringLoader: StringLoader = dependenciesResolver.resolve(for: StringLoader.self)
+        let identifier = stringLoader.getCurrentLanguage().languageType.rawValue
+        return Locale(identifier: identifier)
+    }()
+
+    public init(dependencies: DependenciesResolver) {
+        self.dependenciesResolver = dependencies
+    }
+
     func buildPersonalData(with personalInfo: PersonalInfoWrapper?) -> PersonalDataInfo? {
         guard let personalInfo = personalInfo else { return nil }
-        let address = polandAddress(personalInfo.addressNodes)
-        let phone = maskedPhone(personalInfo.phone) ?? " "
-        let smsPhone = maskedPhone(personalInfo.smsPhone) ?? " "
         var personalDataInfo = PersonalDataInfo()
-        personalDataInfo.mainAddress = address
+        personalDataInfo.mainAddress = polandAddress(personalInfo.addressNodes)
         personalDataInfo.correspondenceAddress = polandAddress(personalInfo.correspondenceAddressNodes)
-        personalDataInfo.phone = phone
-        personalDataInfo.smsPhone = smsPhone
+        personalDataInfo.phone = maskedPhone(personalInfo.phone) ?? " "
+        personalDataInfo.smsPhone = maskedPhone(personalInfo.smsPhone) ?? " "
         personalDataInfo.email = personalInfo.email
         personalDataInfo.emailAlternative = localized("personalArea_text_uninformed")
         personalDataInfo.correspondenceAddressMode = .web
@@ -37,7 +46,14 @@ private extension PLPersonalDataModifier {
     
     func polandAddress(_ nodes: [String]?) -> String? {
         guard let nodes = nodes, nodes.count >= 5 else { return nil }
-        return concat(strings: [nodes[2], nodes[3], nodes[4], nodes[1]])
+        return concat(strings: [nodes[2], nodes[3], nodes[4], nodes[1], countryNameFromISO(nodes[safe: 7])])
+    }
+
+    func countryNameFromISO(_ countryCodeISO: String?) -> String? {
+        guard let countryCodeISO = countryCodeISO else {
+            return nil
+        }
+        return locale.localizedString(forRegionCode: countryCodeISO)
     }
     
     func concat(strings: [String?]) -> String {

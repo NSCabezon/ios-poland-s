@@ -1,0 +1,6 @@
+use_frameworks!
+target 'PLQuickBalance_Tests' do
+  pod 'PLQuickBalance', :path => '../'
+  
+  
+end

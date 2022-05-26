@@ -43,7 +43,8 @@ struct PLPrivateMenuMyProductsUseCase: GetMyProductSubMenuUseCase {
         PrivateSubmenuAction.myProductOffer(.pensions): UserPrefBoxType.pension,
         PrivateSubmenuAction.myProductOffer(.funds): UserPrefBoxType.fund,
         PrivateSubmenuAction.myProductOffer(.insuranceSavings): UserPrefBoxType.insuranceSaving,
-        PrivateSubmenuAction.myProductOffer(.insuranceProtection): UserPrefBoxType.insuranceProtection
+        PrivateSubmenuAction.myProductOffer(.insuranceProtection): UserPrefBoxType.insuranceProtection,
+        PrivateSubmenuAction.myProductOffer(.savingProducts): UserPrefBoxType.savingProduct
     ]
     
     init(dependencies: PrivateMenuModuleExternalDependenciesResolver) {
@@ -70,7 +71,8 @@ private extension PLPrivateMenuMyProductsUseCase {
             .myProductOffer(.pensions),
             .myProductOffer(.funds),
             .myProductOffer(.insuranceSavings),
-            .myProductOffer(.insuranceProtection)
+            .myProductOffer(.insuranceProtection),
+            .myProductOffer(.savingProducts)
         ]
         return defaultOptions
     }

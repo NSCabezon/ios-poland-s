@@ -20,12 +20,15 @@ protocol TaxTransferFormView: AnyObject, LoaderPresentable, ErrorPresentable, Co
 
 final class TaxTransferFormViewController: UIViewController {
     private let presenter: TaxTransferFormPresenterProtocol
-    internal let keyboardManager = KeyboardManager()
     private let scrollView = UIScrollView()
     private let bottomButtonView = BottomButtonView()
     private lazy var formView = TaxTransferFormContainerView(
         configuration: presenter.getTaxFormConfiguration(),
         delegate: self
+    )
+    private lazy var keyboardDismissGesture = UITapGestureRecognizer(
+        target: self,
+        action: #selector(closeKeyboard)
     )
 
     init(presenter: TaxTransferFormPresenterProtocol) {
@@ -42,6 +45,16 @@ final class TaxTransferFormViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        observeKeyboardEvents()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -97,7 +110,6 @@ private extension TaxTransferFormViewController {
         configureNavigationItem()
         configureSubviews()
         configureBottomView()
-        configureKeyboardManager()
         configureStyling()
     }
     
@@ -136,11 +148,6 @@ private extension TaxTransferFormViewController {
         ])
     }
     
-    func configureKeyboardManager() {
-        keyboardManager.setDelegate(self)
-        keyboardManager.update()
-    }
-    
     func configureBottomView() {
         bottomButtonView.disableButton()
         bottomButtonView.configure(title: localized("pl_generic_button_done")) { [weak self] in
@@ -160,11 +167,32 @@ private extension TaxTransferFormViewController {
     @objc func close() {
         presenter.didTapClose()
     }
-}
+    
+    func observeKeyboardEvents() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillDisappear),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillAppear),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
+    @objc func keyboardWillAppear() {
+        view.addGestureRecognizer(keyboardDismissGesture)
+    }
 
-extension TaxTransferFormViewController: KeyboardManagerDelegate {
-    var associatedScrollView: UIScrollView? {
-        return scrollView
+    @objc func keyboardWillDisappear() {
+        view.removeGestureRecognizer(keyboardDismissGesture)
+    }
+    
+    @objc func closeKeyboard() {
+        view.endEditing(true)
     }
 }
 

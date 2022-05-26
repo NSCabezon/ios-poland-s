@@ -32,7 +32,7 @@ final class TaxAccountSelectorCoordinator {
     }
     
     func start() {
-        let storage = AddTaxAuthorityStorage(dependenciesResolver: dependenciesEngine)
+        let storage = AddTaxAuthorityStorage()
         let lastSelectedTaxAccountNumbers = (try? storage.getLastSelectedTaxAccountNumbers()) ?? []
         let lastSelectedTaxAccounts = lastSelectedTaxAccountNumbers.compactMap { accountNumber -> TaxAccount? in
             return taxAccounts.first { $0.accountNumber == accountNumber }

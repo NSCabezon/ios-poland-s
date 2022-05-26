@@ -1,6 +1,7 @@
 import UI
 import CoreFoundationLib
 import PLCommonOperatives
+import PLCommons
 
 /**
     #Add method that must be handle by the BLIKConfirmationCoordinator like 
@@ -12,6 +13,7 @@ protocol BLIKConfirmationCoordinatorProtocol {
     func goToGlobalPosition()
     func isBlikConfirmationViewControllerPresented() -> Bool
     func closeControllerIfOtherThanBlikConfirmationVC()
+    func closeAuthorization()
 }
 
 final class BLIKConfirmationCoordinator: ModuleCoordinator {
@@ -69,6 +71,13 @@ extension BLIKConfirmationCoordinator: BLIKConfirmationCoordinatorProtocol {
             navigationController?.popViewController(animated: true)
         }
     }
+    
+    func closeAuthorization() {
+        guard let confirmationVC = navigationController?.viewControllers.first(where: {
+            $0 is BLIKConfirmationViewController
+        }) else { return }
+        navigationController?.popToViewController(confirmationVC, animated: false)
+    }
 }
 
 /**
@@ -125,6 +134,12 @@ private extension BLIKConfirmationCoordinator {
         }
         dependenciesEngine.register(for: PenndingChallengeUseCaseProtocol.self) { resolver in
             PenndingChallengeUseCase(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PLTransactionParametersProviderProtocol.self) { resolver in
+             PLTransactionParametersProvider(dependenciesResolver: resolver)
+        }
+        dependenciesEngine.register(for: PLDomesticTransactionParametersGenerable.self) { _ in
+             PLDomesticTransactionParametersProvider()
         }
     }
 }

@@ -40,6 +40,8 @@
 		A3EB6226280FF89800269C97 /* AccountForDebitStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6225280FF89800269C97 /* AccountForDebitStub.swift */; };
 		A3EB6228280FFD7900269C97 /* CharityTransferModelStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EB6227280FFD7900269C97 /* CharityTransferModelStub.swift */; };
 		B0176DC4275F63E400CD49DE /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0176DC3275F63E400CD49DE /* Mocks.swift */; };
+		B03FDECA282BADA000DE5248 /* PLAuthorizationProcessorManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03FDEC9282BADA000DE5248 /* PLAuthorizationProcessorManagerMock.swift */; };
+		B03FDECC282BADCD00DE5248 /* PLAuthorizationCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03FDECB282BADCD00DE5248 /* PLAuthorizationCoordinatorMock.swift */; };
 		B07ED7162768BAC600210603 /* CharityTransferValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED7142768BAA800210603 /* CharityTransferValidatorTests.swift */; };
 		B07ED71D2768BF5600210603 /* CharityTransferPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED71B2768BF3C00210603 /* CharityTransferPresenterTests.swift */; };
 		B07ED71E2768BF5A00210603 /* CharityTransferFormCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07ED7182768BE8E00210603 /* CharityTransferFormCoordinatorMock.swift */; };
@@ -94,6 +96,8 @@
 		A3EB6225280FF89800269C97 /* AccountForDebitStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountForDebitStub.swift; sourceTree = "<group>"; };
 		A3EB6227280FFD7900269C97 /* CharityTransferModelStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferModelStub.swift; sourceTree = "<group>"; };
 		B0176DC3275F63E400CD49DE /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
+		B03FDEC9282BADA000DE5248 /* PLAuthorizationProcessorManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationProcessorManagerMock.swift; sourceTree = "<group>"; };
+		B03FDECB282BADCD00DE5248 /* PLAuthorizationCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLAuthorizationCoordinatorMock.swift; sourceTree = "<group>"; };
 		B07ED7142768BAA800210603 /* CharityTransferValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferValidatorTests.swift; sourceTree = "<group>"; };
 		B07ED7182768BE8E00210603 /* CharityTransferFormCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferFormCoordinatorMock.swift; sourceTree = "<group>"; };
 		B07ED71B2768BF3C00210603 /* CharityTransferPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharityTransferPresenterTests.swift; sourceTree = "<group>"; };
@@ -158,13 +162,13 @@
 		607FACD21AFB9204008FA782 /* Example for CharityTransfer */ = {
 			isa = PBXGroup;
 			children = (
+				B03FDEC8282BAD8700DE5248 /* Mocks */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				B0176DC3275F63E400CD49DE /* Mocks.swift */,
 			);
 			name = "Example for CharityTransfer";
 			path = CharityTransfer;
@@ -323,6 +327,16 @@
 				A3EB6227280FFD7900269C97 /* CharityTransferModelStub.swift */,
 			);
 			name = Stubs;
+			sourceTree = "<group>";
+		};
+		B03FDEC8282BAD8700DE5248 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B0176DC3275F63E400CD49DE /* Mocks.swift */,
+				B03FDEC9282BADA000DE5248 /* PLAuthorizationProcessorManagerMock.swift */,
+				B03FDECB282BADCD00DE5248 /* PLAuthorizationCoordinatorMock.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		B07ED7122768B59400210603 /* TransferForm */ = {
@@ -527,6 +541,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANServicesLibrary/SANServicesLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
@@ -564,6 +579,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANServicesLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
@@ -633,6 +649,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SANLegacyLibrary/SANLegacyLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SANPLLibrary/SANPLLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/SANServicesLibrary/SANServicesLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLCipher/SQLCipher.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SecurityExtensions/SecurityExtensions.framework",
@@ -670,6 +687,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANLegacyLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANPLLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SANServicesLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLCipher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SecurityExtensions.framework",
@@ -697,6 +715,8 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				B03FDECC282BADCD00DE5248 /* PLAuthorizationCoordinatorMock.swift in Sources */,
+				B03FDECA282BADA000DE5248 /* PLAuthorizationProcessorManagerMock.swift in Sources */,
 				B0176DC4275F63E400CD49DE /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

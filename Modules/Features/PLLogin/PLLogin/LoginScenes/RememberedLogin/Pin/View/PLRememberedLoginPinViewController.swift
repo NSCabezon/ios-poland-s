@@ -113,8 +113,7 @@ private extension PLRememberedLoginPinViewController {
     }
     
     @objc func didSelectBalanceButton() {
-        //self.presenter.didSelectBalance()
-        Toast.show(localized("generic_alert_notAvailableOperation"))
+        self.presenter.didSelectBalance()
     }
     
     @objc func didSelectChangeUserButton() {
@@ -157,6 +156,8 @@ private extension PLRememberedLoginPinViewController {
         balanceButton.setImage(Assets.image(named: "icnBalance"), for: .normal)
         balanceButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(didSelectBalanceButton)))
+        balanceButton.isHidden = !presenter.deviceHasSystemPasscode()
+        
         changeLoginTypeButton.setTitleColor(UIColor.Legacy.uiWhite, for: .normal)
         changeLoginTypeButton.titleLabel?.font =  .santander(family: .text, type: .regular, size: 14)
         changeLoginTypeButton.addGestureRecognizer(UITapGestureRecognizer(target: self,

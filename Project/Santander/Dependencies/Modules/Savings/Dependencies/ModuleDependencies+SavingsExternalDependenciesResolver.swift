@@ -11,7 +11,13 @@ import CoreDomain
 import OpenCombine
 import UI
 
+extension DefaultCheckNewSendMoneyHomeEnabledUseCase: SavingsCheckNewHomeSendMoneyIsEnabledUseCase { }
+
 extension ModuleDependencies: SavingsExternalDependenciesResolver {
+    func resolve() -> SavingsCheckNewHomeSendMoneyIsEnabledUseCase {
+        return DefaultCheckNewSendMoneyHomeEnabledUseCase(dependencies: self)
+    }
+
     func resolve() -> SavingTransactionsRepository {
         return PLSavingTransactionsRepository(dependencies: self.oldResolver)
     }
@@ -52,5 +58,13 @@ extension ModuleDependencies: SavingsExternalDependenciesResolver {
 
     public func resolve() -> GetSavingDetailsInfoUseCase {
         return PLGetSavingDetailsInfoUseCase(dependencies: self.oldResolver)
+    }
+
+    func savingsOneTransferHomeCoordinator() -> BindableCoordinator {
+        return self.oneTransferHomeCoordinator()
+    }
+
+    func savingsSendMoneyCoordinator() -> ModuleCoordinator {
+        return self.oldResolver.resolve(for: SendMoneyCoordinatorProtocol.self)
     }
 }

@@ -39,10 +39,9 @@ final class PLCustomSavingsHomeCoordinator: SavingsHomeCoordinator {
     }
     
     func start() {
-        guard let product: SavingProductRepresentable = dataBinding.get() else { return }
-        guard product.accountSubType == PLSavingTransactionsRepositoryProductType.goals.rawValue else {
+        guard let product: SavingProductRepresentable = dataBinding.get(),
+                product.accountSubType == PLSavingTransactionsRepositoryProductType.goals.rawValue else {
             defaultCoordinator.navigationController = navigationController
-            defaultCoordinator.dataBinding.set(product)
             defaultCoordinator.start()
             return
         }
@@ -73,6 +72,10 @@ final class PLCustomSavingsHomeCoordinator: SavingsHomeCoordinator {
 
     func goToMoreOperatives(_ savingProduct: SavingProductRepresentable) {
         defaultCoordinator.goToMoreOperatives(savingProduct)
+    }
+
+    func goToSendMoney(with option: SavingProductOptionRepresentable) {
+        defaultCoordinator.goToSendMoney(with: option)
     }
 }
 

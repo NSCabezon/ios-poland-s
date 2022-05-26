@@ -18,4 +18,5 @@ public enum PLDomesticTransactionParametersType {
     case zusTransfer(PLDomesticTransactionParametersInput)
     case topUpTransfer(PLDomesticTransactionParametersInput)
     case taxTransfer(PLDomesticTransactionParametersInput)
+    case codeBlik(PLDomesticTransactionParametersInput)
 }

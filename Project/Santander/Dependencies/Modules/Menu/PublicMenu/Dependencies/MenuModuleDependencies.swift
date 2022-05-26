@@ -4,6 +4,7 @@ import CoreFoundationLib
 import RetailLegacy
 import UI
 import SANPLLibrary
+import Cards
 
 extension ModuleDependencies: PublicMenuExternalDependenciesResolver {
     
@@ -28,7 +29,7 @@ extension ModuleDependencies: PublicMenuExternalDependenciesResolver {
     }
     
     func publicMenuCustomCoordinatorForAction() -> BindableCoordinator {
-        return DefaultPublicMenuCustomActionCoordinator(dependenciesResolver: oldResolver, navigationController: resolveSideMenuNavigationController())
+        return DefaultPublicMenuCustomActionCoordinator(dependenciesResolver: oldResolver, navigationController: resolveSideMenuNavigationController(), cardExternalDependencies: cardExternalDependenciesResolver())
     }
 }
 

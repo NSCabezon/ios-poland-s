@@ -13,6 +13,7 @@ public protocol ErrorPresentable {
         closeButton: Dialog.CloseButton,
         onConfirm: (() -> Void)?
     )
+    func showMessage(title: String, message: String, image: String, onConfirm: (() -> Void)?)
 }
 
 extension ErrorPresentable where Self: UIViewController {
@@ -76,5 +77,27 @@ extension ErrorPresentable where Self: UIViewController {
     
     public func showServiceInaccessibleMessage(onConfirm: (() -> Void)?) {
         showErrorMessage(localized("pl_blik_alert_text_error"), onConfirm: onConfirm)
+    }
+    
+    public func showMessage(title: String, message: String, image: String, onConfirm: (() -> Void)?) {
+        let dialog = Dialog(
+            title: title,
+            items: [
+                .styledConfiguredText(
+                    .plain(text: message),
+                    configuration: LocalizedStylableTextConfiguration(
+                        font: .santander(
+                            family: .micro,
+                            type: .regular,
+                            size: 16
+                        ),
+                        alignment: .center
+                    )
+                )
+            ],
+            image: image,
+            actionButton: .init(title: localized("generic_link_ok"), style: .red, action: onConfirm ?? {}),
+            closeButton: .none, hasTitleAndNotAlignment: true)
+        dialog.show(in: self)
     }
 }

@@ -49,7 +49,7 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         }
         XCTAssertEqual(viewModel.accountNumber, "*1234")
         XCTAssertEqual(viewModel.accountNumberUnformatted, "12123412341234123412341234")
-        XCTAssertEqual(viewModel.availableFunds, "1500.00 PLN")
+        XCTAssertEqual(viewModel.availableFunds, "1 500,00 PLN")
         XCTAssertEqual(viewModel.name, "Konto Jakie Chcesz")
         XCTAssertEqual(viewModel.isSelected, true)
     }
@@ -153,7 +153,8 @@ final class ZusTransferFormPresenterTests: XCTestCase {
         sut.didSelectRecipient(
             Recipient(
                 name: "ZUS",
-                accountNumber: "82600000020260017772273629"
+                accountNumber: "82600000020260017772273629",
+                transactionTitle: "Przelew ZUS"
             )
         )
         XCTAssertTrue(view.updateRecipientCalled)

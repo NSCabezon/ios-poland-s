@@ -14,4 +14,5 @@ extension KindOfPublicMenuNode {
     static let offerViewModel = (titleKey: "menuPublic_link_becomeClient", iconKey: "icnOffer", accessibility: "publicMenuOurOffer")
     static let contactViewModel = (titleKey: "pl_menuPublic_link_emergency", iconKey: "icnPhoneRed", accessibility: "publicMenuContact")
     static let mobileAuthorizationViewModel = (titleKey: "pl_menuPublic_link_mobileAuthorization", iconKey: "icnMobileAuthorization", accessibility: "publicMenuMobileAuthorization")
+    static let cancelCardViewModel = (titleKey: "pl_menuPublic_link_cancelCard", iconKey: "icnBlockCard", accessibility: "publicMenuCancelCard")
 }

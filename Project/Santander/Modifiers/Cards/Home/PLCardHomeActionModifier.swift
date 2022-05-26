@@ -12,6 +12,7 @@ import CreditCardRepayment
 import PLCommons
 import PLCommonOperatives
 import PersonalArea
+import GlobalPosition
 
 final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingActionModifierProtocol {
     
@@ -53,7 +54,8 @@ final class PLCardHomeActionModifier: CardHomeActionModifier, CardBoardingAction
                     .viewStatements,
                     .cancelCard,
                     .creditLimitIncrease,
-                    .cardActivation:
+                    .cardActivation,
+                    .offer:
                 self.openWebViewIfProceeds(for: identifier,
                                               entity: entity)
             default:
@@ -151,8 +153,13 @@ private extension PLCardHomeActionModifier {
     }
     
     func goToPGProductsCustomization() {
-        let coordinator = dependenciesResolver.resolve(for: PersonalAreaModuleCoordinator.self)
-        coordinator.goToGPProductsCustomization()
+        let gpNavigator: GlobalPositionModuleCoordinatorDelegate = dependenciesResolver.resolve()
+        let localAppConfig: LocalAppConfig = dependenciesResolver.resolve()
+        if localAppConfig.isEnabledConfigureWhatYouSee {
+            gpNavigator.didSelectConfigureGPProducts()
+        } else {
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
+        }
     }
 
     func goToApplePay(_ card: CardEntity) {

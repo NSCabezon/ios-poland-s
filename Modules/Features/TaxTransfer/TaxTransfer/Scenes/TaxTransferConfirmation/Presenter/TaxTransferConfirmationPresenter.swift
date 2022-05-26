@@ -144,6 +144,7 @@ private extension TaxTransferConfirmationPresenter {
             .onSuccess { [weak self] result in
                 guard let self = self else { return }
                 self.view?.hideLoader {
+                    self.coordinator.closeAuthorizationFlow()
                     self.coordinator.showSummary(
                         with: result.summary,
                         transferModel: self.model
@@ -152,6 +153,7 @@ private extension TaxTransferConfirmationPresenter {
             }
             .onError { [weak self] error in
                 self?.view?.hideLoader {
+                    self?.coordinator.closeAuthorizationFlow()
                     self?.showErrorMessage(error: error.getErrorDesc() ?? "")
                 }
             }
@@ -161,15 +163,15 @@ private extension TaxTransferConfirmationPresenter {
         let errorResult = AcceptTaxTransactionErrorResult(rawValue: error)
         switch errorResult {
         case .noConnection:
-            self.showError(with: "pl_generic_alert_textUnstableConnection")
+            showError(with: "pl_generic_alert_textUnstableConnection")
         case .accountOnBlacklist:
-            self.showError(with: "pl_generic_error_transferAcceptedOnlyAtBranch")
+            showError(with: "pl_generic_error_transferAcceptedOnlyAtBranch")
         case .expressRecipientInactive:
-            self.showError(with: "pl_generic_error_transferNotAcceptedInBeneficiaryBank")
+            showError(with: "pl_generic_error_transferNotAcceptedInBeneficiaryBank")
         case .limitExceeded:
-            self.showError(with: "pl_blik_alert_text_dayLimit", nameImage: "icnAlert")
+            showError(with: "pl_generic_alert_textDayLimit", nameImage: "icnAlert")
         default:
-            self.handleServiceInaccessible()
+            handleServiceInaccessible()
         }
     }
     

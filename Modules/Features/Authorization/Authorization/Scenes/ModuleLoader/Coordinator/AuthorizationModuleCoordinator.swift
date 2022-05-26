@@ -18,7 +18,13 @@ public final class AuthorizationModuleCoordinator: AuthorizationModuleCoordinato
     
     public var navigationController: UINavigationController?
     private let dependenciesEngine: DependenciesDefault
+    public var childCoordinators: [Coordinator] = []
+    public var onFinish: (() -> Void)?
+    public var dataBinding: DataBinding = DataBindingObject()
     private lazy var authorizationHandler: ChallengesHandlerDelegate = dependenciesEngine.resolve()
+    
+    var onAuthorizationSuccess: (() -> Void)?
+    var onAuthorizationError: (() -> Void)?
     
     public init(
         dependenciesResolver: DependenciesResolver,
@@ -65,11 +71,9 @@ public final class AuthorizationModuleCoordinator: AuthorizationModuleCoordinato
                
                switch(challengeResult) {
                case .handled(_):
-                   //TODO: handle success challengeResult
-                   print("success")
+                   self.onAuthorizationSuccess?()
                default:
-                   print("error")
-                   //TODO: handle success challengeResult 
+                   self.onAuthorizationError?()
                }
            }
            removeModuleControllerFromStack()
@@ -104,3 +108,5 @@ extension AuthorizationModuleCoordinator {
         navigationController?.viewControllers.remove(at: index)
     }
 }
+
+extension AuthorizationModuleCoordinator: BindableCoordinator {}

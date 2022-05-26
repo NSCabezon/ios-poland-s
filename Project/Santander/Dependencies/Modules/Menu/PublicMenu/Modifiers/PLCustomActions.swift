@@ -12,4 +12,5 @@ public enum PLCustomActions: String {
     case offer
     case mobileAuthorization
     case contactMenu
+    case cancelCard
 }

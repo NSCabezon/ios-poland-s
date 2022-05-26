@@ -19,6 +19,7 @@ def core_dependencies
   pod 'Operative', :path => '../../../../santander-one/Operative'
   pod 'CorePushNotificationsService', :path => '../../../../santander-one/CorePushNotificationsService'
   pod 'WebViews', :path => '../../../../santander-one/Modules/Libraries/WebViews'
+  pod 'SANServicesLibrary', :path => '../../../../santander-one/Modules/Libraries/SANServicesLibrary'
   pod 'SelfSignedCertificate', :path => '../../../../santander-one/SelfSignedCertificate'
   pod 'RxCombine', :path => '../../../../santander-one/Modules/Libraries/RxCombine'
   pod 'Localization', :path => '../../../../santander-one/Localization'
