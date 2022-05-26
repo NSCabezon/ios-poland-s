@@ -119,4 +119,22 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
     func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
         fatalError()
     }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) -> AnyPublisher<PLAccountDetailRepresentable, Error> {
+        var accountDetail = PLAccountDetailRepresentedMock(name: nil)
+        if isLenghtAccountNumberCorrect(parameters.accountNumber) {
+            accountDetail = PLAccountDetailRepresentedMock(name: "Full Name")
+        }
+        return Just(accountDetail)
+            .tryMap({ result in
+                return result
+            })
+            .eraseToAnyPublisher()
+    }
+}
+
+private extension PLTransfersRepositoryMock {
+    func isLenghtAccountNumberCorrect(_ account: String) -> Bool {
+        return account.count == 26
+    }
 }

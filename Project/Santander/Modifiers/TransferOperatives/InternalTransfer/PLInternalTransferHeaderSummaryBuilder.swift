@@ -36,18 +36,23 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
     
     func addSourceAccount() {
         guard let operativeData = operativeData else { return }
-        let items: [OneListFlowItemViewModel.Item] = [
+        var items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "summary_label_originAccount"),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
-            .init(type: .label(keyOrValue: operativeData.originAccount?.alias,
-                               isBold: true),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemText),
-            .init(type: .label(keyOrValue: operativeData.originAccount?.getIBANPapel,
-                               isBold: false),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"),
-            .init(type: .image(imageKeyOrUrl: bankLogoURLFrom(ibanRepresentable: operativeData.originAccount?.ibanRepresentable)),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemIcn)
-        ]
+                  accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle)
+            ]
+        if let originFullName = operativeData.originFullName {
+            items.append(.init(type: .label(keyOrValue: originFullName,
+                                            isBold: true),
+                               accessibilityId: AccessibilityOneComponents.oneListFlowItemText))
+        }
+        items.append(.init(type: .label(keyOrValue: operativeData.originAccount?.alias,
+                                        isBold: true),
+                           accessibilityId: AccessibilityOneComponents.oneListFlowItemText + "1"))
+        items.append(.init(type: .label(keyOrValue: operativeData.originAccount?.getIBANPapel,
+                                        isBold: false),
+                           accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"))
+        items.append(.init(type: .image(imageKeyOrUrl: bankLogoURLFrom(ibanRepresentable: operativeData.originAccount?.ibanRepresentable)),
+                           accessibilityId: AccessibilityOneComponents.oneListFlowItemIcn))
         append(items, suffix: AccessibilityInternalTransferSummary.Summary.sourceSuffix, isFirstItem: true)
     }
     
@@ -115,16 +120,20 @@ final class PLInternalTransferHeaderSummaryBuilder: InternalTransferHeaderSummar
     
     func addDestinationAccount() {
         guard let operativeData = operativeData else { return }
-        let items: [OneListFlowItemViewModel.Item] = [
+        var items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "confirmation_label_destinationAccount"),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle),
-            .init(type: .label(keyOrValue: operativeData.destinationAccount?.alias, isBold: true),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemText),
-            .init(type: .label(keyOrValue: operativeData.destinationAccount?.getIBANPapel, isBold: false),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"),
-            .init(type: .image(imageKeyOrUrl: bankLogoURLFrom(ibanRepresentable: operativeData.destinationAccount?.ibanRepresentable)),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemIcn)
-        ]
+                  accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle)
+            ]
+        if let destinationFullName = operativeData.destinationFullName {
+            items.append(.init(type: .label(keyOrValue: destinationFullName, isBold: true),
+                               accessibilityId: AccessibilityOneComponents.oneListFlowItemText))
+        }
+        items.append(.init(type: .label(keyOrValue: operativeData.destinationAccount?.alias, isBold: true),
+                           accessibilityId: AccessibilityOneComponents.oneListFlowItemText +  "1"))
+        items.append(.init(type: .label(keyOrValue: operativeData.destinationAccount?.getIBANPapel, isBold: false),
+                           accessibilityId: AccessibilityOneComponents.oneListFlowItemInfo + "1"))
+        items.append(.init(type: .image(imageKeyOrUrl: bankLogoURLFrom(ibanRepresentable: operativeData.destinationAccount?.ibanRepresentable)),
+                           accessibilityId: AccessibilityOneComponents.oneListFlowItemIcn))
         append(items, suffix: AccessibilityInternalTransferSummary.Summary.destinationSuffix, isLastItem: true)
     }
     

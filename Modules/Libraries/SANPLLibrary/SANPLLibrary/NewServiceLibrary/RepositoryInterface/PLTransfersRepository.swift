@@ -24,6 +24,7 @@ public protocol PLTransfersRepository: TransfersRepository {
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConfirmationTransferDTO, Error>
     func getExchangeRatesReactive() -> AnyPublisher<[ExchangeRateRepresentable], Error>
     func getExchangeRates() throws -> Result<[ExchangeRateRepresentable], Error>
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) -> AnyPublisher<PLAccountDetailRepresentable, Error>
 }
 
 public extension PLTransfersRepository {
