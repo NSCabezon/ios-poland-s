@@ -10,6 +10,8 @@ import CoreDomain
 public protocol PLTransfersManagerProtocol {
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], NetworkProviderError>
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<CheckInternalAccountRepresentable, NetworkProviderError>
     func getRecentRecipients() throws -> Result<[TransferRepresentable], NetworkProviderError>
@@ -19,6 +21,7 @@ public protocol PLTransfersManagerProtocol {
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionAvailabilityRepresentable, NetworkProviderError>
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
     func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError>
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) throws -> Result<PLAccountDetailDTO, NetworkProviderError>
 }
 
 final class PLTransfersManager {
@@ -51,8 +54,28 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
         }
     }
     
+    func getAccountsForDebitSwitch() throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountsForDebitSwitch()
+        switch result {
+        case .success(let accountForDebitDTO):
+            return .success(accountForDebitDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], NetworkProviderError> {
         let result = try self.transferDataSource.getAccountsForCredit()
+        switch result {
+        case .success(let accountForCreditDTO):
+            return .success(accountForCreditDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountRepresentable], NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountsForCreditSwitch(accountType)
         switch result {
         case .success(let accountForCreditDTO):
             return .success(accountForCreditDTO)
@@ -170,6 +193,16 @@ extension PLTransfersManager: PLTransfersManagerProtocol {
     
     func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError> {
         let result = try self.transferDataSource.getExchangeRates()
+        switch result {
+        case .success(let exchangeRatesDTO):
+            return .success(exchangeRatesDTO)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) throws -> Result<PLAccountDetailDTO, NetworkProviderError> {
+        let result = try self.transferDataSource.getAccountDetail(parameters)
         switch result {
         case .success(let exchangeRatesDTO):
             return .success(exchangeRatesDTO)

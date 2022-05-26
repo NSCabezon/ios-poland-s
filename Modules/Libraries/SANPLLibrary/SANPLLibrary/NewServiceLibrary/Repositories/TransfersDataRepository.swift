@@ -23,6 +23,23 @@ struct TransfersDataRepository: PLTransfersRepository {
         }
     }
     
+    func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error> {
+        return Future { promise in
+            do {
+                let response = try bsanTransferManager.getAccountsForDebitSwitch()
+                switch response {
+                case .success(let accounts):
+                    promise(.success(accounts))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     func getAccountsForCredit() throws -> Result<[AccountRepresentable], Error> {
         let response = try bsanTransferManager.getAccountsForCredit()
         switch response {
@@ -31,6 +48,23 @@ struct TransfersDataRepository: PLTransfersRepository {
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error> {
+        return Future { promise in
+            do {
+                let response = try bsanTransferManager.getAccountsForCreditSwitch(accountType)
+                switch response {
+                case .success(let accounts):
+                    promise(.success(accounts))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
     }
     
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
@@ -234,5 +268,22 @@ struct TransfersDataRepository: PLTransfersRepository {
         case.failure(let error):
             return .failure(error)
         }
+    }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) -> AnyPublisher<PLAccountDetailRepresentable, Error> {
+        Future { promise in
+            do {
+                let result = try self.bsanTransferManager.getAccountDetail(parameters)
+                switch result {
+                case .success(let account):
+                    promise(.success(account))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            } catch let error {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }

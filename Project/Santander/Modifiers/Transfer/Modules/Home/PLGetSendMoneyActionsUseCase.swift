@@ -9,6 +9,12 @@ import OpenCombine
 import CoreDomain
 import Transfer
 import CoreFoundationLib
+import SANPLLibrary
+
+protocol PLGetSendMoneyActionsUseCaseDependenciesResolver {
+    func resolve() -> GetCandidateOfferUseCase
+    func resolve() -> BSANDataProvider
+}
 
 enum PLSendMoneyHomeActionTypeIdentifier: String {
     case blik
@@ -19,12 +25,17 @@ enum PLSendMoneyHomeActionTypeIdentifier: String {
     case fxExchange
     case scanPay
     case topUpPhone
+    case splitPayment
+    case pendingSignatures
 }
 
 struct PLGetSendMoneyActionsUseCase {
     var candidateOfferUseCase: GetCandidateOfferUseCase
-    public init(candidateOfferUseCase: GetCandidateOfferUseCase) {
-        self.candidateOfferUseCase = candidateOfferUseCase
+    var dataProvider: BSANDataProvider
+    
+    public init(dependencies: PLGetSendMoneyActionsUseCaseDependenciesResolver) {
+        self.candidateOfferUseCase = dependencies.resolve()
+        self.dataProvider = dependencies.resolve()
     }
     
     private let blik: SendMoneyHomeActionType = .custom(
@@ -82,6 +93,20 @@ struct PLGetSendMoneyActionsUseCase {
         description: "pl_transferOption_text_topUpPhone",
         icon: "oneIcnMobileTopUp"
     )
+    
+    private let splitPayment: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.splitPayment.rawValue,
+        title: "pl_transferOption_button_splitPayment",
+        description: "pl_transferOption_text_splitPayment",
+        icon: "oneIcnSplit"
+    )
+    
+    private let pendingSignatures: SendMoneyHomeActionType = .custom(
+        identifier: PLSendMoneyHomeActionTypeIdentifier.pendingSignatures.rawValue,
+        title: "pl_transferOption_button_pendingSignatures",
+        description: "pl_transferOption_text_pendingSignatures",
+        icon: "oneIcnPendingSignatures"
+    )
 }
 
 extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
@@ -117,11 +142,48 @@ extension PLGetSendMoneyActionsUseCase: GetSendMoneyActionsUseCase {
 
 private extension PLGetSendMoneyActionsUseCase {
     func getHomeSendMoneyActions(_ offerActions: [SendMoneyHomeActionType]) -> [SendMoneyHomeActionType] {
+        guard let contexts = dataProvider.getCustomerIndividual()?.customerContexts,
+           let selectedContext = contexts.filter({ $0.selected == true }).first,
+           let contextType = selectedContext.type
+        else {
+           return getDefaultActions(offerActions)
+        }
+        return getActions(context: contextType, offerActions: offerActions)
+    }
+    
+    func getActions(context: ContextType, offerActions: [SendMoneyHomeActionType]) -> [SendMoneyHomeActionType] {
+        switch context {
+        case .INDIVIDUAL:
+            return getDefaultActions(offerActions)
+        case .COMPANY:
+            return getMojaFirmaActions()
+        case .PROXY, .MINI_COMPANY:
+            return getMiniFirmaActions(offerActions)
+        }
+    }
+    
+    func getDefaultActions(_ offerActions: [SendMoneyHomeActionType]) -> [SendMoneyHomeActionType] {
         var actions = [.transfer, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
         for action in offerActions {
             switch action {
             case .donations:
                 actions.insert(action, at: 5)
+            default: break
+            }
+        }
+        return actions
+    }
+    
+    func getMojaFirmaActions() -> [SendMoneyHomeActionType] {
+        return [.transfer, splitPayment, transferTax, transferZus, pendingSignatures, fxExchange]
+    }
+    
+    func getMiniFirmaActions(_ offerActions: [SendMoneyHomeActionType]) -> [SendMoneyHomeActionType] {
+        var actions = [.transfer, splitPayment, blik, .transferBetweenAccounts, .scheduleTransfers, anotherBank, creditCard, transferTax, transferZus, fxExchange, scanPay, topUpPhone]
+        for action in offerActions {
+            switch action {
+            case .donations:
+                actions.insert(action, at: 6)
             default: break
             }
         }

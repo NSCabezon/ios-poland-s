@@ -9,6 +9,7 @@ import CoreFoundationLib
 import CoreDomain
 import Transfer
 import UI
+import SANPLLibrary
 
 extension ModuleDependencies: TransferExternalDependenciesResolver {
     func resolve() -> FaqsRepositoryProtocol {
@@ -20,7 +21,7 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     }
     
     func resolve() -> GetSendMoneyActionsUseCase {
-        return PLGetSendMoneyActionsUseCase(candidateOfferUseCase: resolve())
+        return PLGetSendMoneyActionsUseCase(dependencies: self)
     }
     
     func resolveCustomSendMoneyActionCoordinator() -> BindableCoordinator {
@@ -33,5 +34,11 @@ extension ModuleDependencies: TransferExternalDependenciesResolver {
     
     func resolve() -> OneTransferHomeVisibilityModifier {
         return PLOneTransferHomeVisibilityModifier()
+    }
+}
+
+extension ModuleDependencies: PLGetSendMoneyActionsUseCaseDependenciesResolver {
+    func resolve() -> BSANDataProvider {
+        return BSANDataProvider(dataRepository: oldResolver.resolve(for: DataRepository.self))
     }
 }

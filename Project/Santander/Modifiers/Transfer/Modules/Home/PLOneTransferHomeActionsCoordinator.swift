@@ -51,6 +51,10 @@ class PLOneTransferHomeActionsCoordinator: BindableCoordinator {
         case .topUpPhone:
             let coordinator = oldResolver.resolve(for: TopUpDataLoaderCoordinatorProtocol.self)
             coordinator.start()
+        case .splitPayment:
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
+        case .pendingSignatures:
+            ToastCoordinator("generic_alert_notAvailableOperation").start()
         }
     }
 }

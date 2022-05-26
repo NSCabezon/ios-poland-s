@@ -10,6 +10,8 @@ import CoreDomain
 protocol TransfersDataSourceProtocol {
     func getAccountsForDebit() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
     func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError>
+    func getAccountsForDebitSwitch() throws -> Result<[AccountForDebitDTO], NetworkProviderError>
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountForCreditDTO], NetworkProviderError>
     func getPayees(_ parameters: GetPayeesParameters) throws -> Result<[PayeeDTO], NetworkProviderError>
     func getRecentRecipients() throws -> Result<RecentRecipientsDTO, NetworkProviderError>
     func doIBANValidation(_ parameters: IBANValidationParameters) throws -> Result<IBANValidationDTO, NetworkProviderError>
@@ -19,6 +21,7 @@ protocol TransfersDataSourceProtocol {
     func checkTransaction(parameters: CheckTransactionParameters, accountReceiver: String) throws -> Result<CheckTransactionDTO, NetworkProviderError>
     func notifyDevice(_ parameters: NotifyDeviceParameters) throws -> Result<AuthorizationIdDTO, NetworkProviderError>
     func getExchangeRates() throws -> Result<ExchangeRatesDTO, NetworkProviderError>
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) throws -> Result<PLAccountDetailDTO, NetworkProviderError>
 }
 
 private extension TransfersDataSource {
@@ -31,6 +34,7 @@ final class TransfersDataSource {
     private enum TransferServiceType: String {
         case accountForDebit = "/accounts/for-debit"
         case accountForCredit = "/accounts/for-credit/1"
+        case accountForCreditSwitch = "/accounts/for-credit/61"
         case payees = "/payees/account/all"
         case recentRecipients = "/transactions/recent-recipients"
         case ibanValidation = "/accounts/"
@@ -40,12 +44,14 @@ final class TransfersDataSource {
         case checkTransactionAvailability = "/payhubpl-prodef/api/instant_payments/accounts/"
         case notifyDevice = "/auth/devices/mobile-authorization/notify-device/transactions"
         case exchangeRates = "/exrates"
+        case accountDetail = "/accounts"
     }
     
     private let networkProvider: NetworkProvider
     private let dataProvider: BSANDataProvider
     private let basePath = "/api"
     private let version2 = "/v2"
+    private let branch = "/branch"
     private var headers: [String: String] = [:]
 
     init(networkProvider: NetworkProvider, dataProvider: BSANDataProvider) {
@@ -92,6 +98,27 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
         return result
     }
     
+    func getAccountsForDebitSwitch() throws -> Result<[AccountForDebitDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let queryParams = ["context": "SWITCH"]
+        let serviceName = TransferServiceType.accountForDebit.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<[AccountForDebitDTO], NetworkProviderError> = self.networkProvider.request(
+            TransferRequest(
+                serviceName: serviceName,
+                serviceUrl: absoluteUrl,
+                method: .get,
+                headers: self.headers,
+                queryParams: queryParams,
+                contentType: nil,
+                localServiceName: .accountsForDebit
+            )
+        )
+        return result
+    }
+    
     func getAccountsForCredit() throws -> Result<[AccountForCreditDTO], NetworkProviderError> {
         guard let baseUrl = self.getBaseUrl() else {
             return .failure(NetworkProviderError.other)
@@ -105,6 +132,27 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                 method: .get,
                 headers: self.headers,
                 queryParams: nil,
+                contentType: nil,
+                localServiceName: .accountsForCredit
+            )
+        )
+        return result
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) throws -> Result<[AccountForCreditDTO], NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let queryParams = ["context": "SWITCH", "srcAccountType": accountType]
+        let serviceName = TransferServiceType.accountForCreditSwitch.rawValue
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<[AccountForCreditDTO], NetworkProviderError> = self.networkProvider.request(
+            TransferRequest(
+                serviceName: serviceName,
+                serviceUrl: absoluteUrl,
+                method: .get,
+                headers: self.headers,
+                queryParams: queryParams,
                 contentType: nil,
                 localServiceName: .accountsForCredit
             )
@@ -253,6 +301,21 @@ extension TransfersDataSource: TransfersDataSourceProtocol {
                                                                                                                 localServiceName: .exchangeRates))
         return result
     }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) throws -> Result<PLAccountDetailDTO, NetworkProviderError> {
+        guard let baseUrl = self.getBaseUrl() else {
+            return .failure(NetworkProviderError.other)
+        }
+        let serviceName: String = TransferServiceType.accountDetail.rawValue + "/\(parameters.accountNumber)" + self.branch
+        let absoluteUrl = baseUrl + self.basePath
+        let result: Result<PLAccountDetailDTO, NetworkProviderError> = self.networkProvider.request(AccountDetailRequest(serviceName: serviceName,
+                                                                                                                        serviceUrl: absoluteUrl,
+                                                                                                                        method: .get,
+                                                                                                                        headers: self.headers,
+                                                                                                                        contentType: .json,
+                                                                                                                        localServiceName: .accountOwnerDetail))
+        return result
+    }
 }
 
 private struct TransferRequest: NetworkProviderRequest {
@@ -381,6 +444,34 @@ private struct ExchangeRatesRequest: NetworkProviderRequest {
          method: NetworkProviderMethod,
          headers: [String: String]?,
          bodyEncoding: NetworkProviderBodyEncoding? = .none,
+         localServiceName: PLLocalServiceName) {
+        self.serviceName = serviceName
+        self.serviceUrl = serviceUrl
+        self.method = method
+        self.headers = headers
+        self.bodyEncoding = bodyEncoding
+        self.localServiceName = localServiceName
+    }
+}
+    
+private struct AccountDetailRequest: NetworkProviderRequest {
+    let serviceName: String
+    let serviceUrl: String
+    let method: NetworkProviderMethod
+    let headers: [String: String]?
+    let queryParams: [String: Any]? = nil
+    let jsonBody: NotifyDeviceParameters? = nil
+    let formData: Data? = nil
+    let bodyEncoding: NetworkProviderBodyEncoding?
+    let contentType: NetworkProviderContentType? = nil
+    let localServiceName: PLLocalServiceName
+    let authorization: NetworkProviderRequestAuthorization? = .oauth
+    init(serviceName: String,
+         serviceUrl: String,
+         method: NetworkProviderMethod,
+         headers: [String: String]?,
+         bodyEncoding: NetworkProviderBodyEncoding? = .none,
+         contentType: NetworkProviderContentType?,
          localServiceName: PLLocalServiceName) {
         self.serviceName = serviceName
         self.serviceUrl = serviceUrl

@@ -39,7 +39,7 @@ class PLInternalTransferPreSetupUseCaseTest: XCTestCase {
     
     func test_Given_EmptyAccounts_When_AllCases_Then_getEmptyAccountsError() throws {
         let value = try sut.fetchPreSetup().sinkAwaitError()
-        XCTAssertTrue(value == .minimunAccounts)
+        XCTAssertTrue(value == .originMinimunAccounts)
     }
 }
 

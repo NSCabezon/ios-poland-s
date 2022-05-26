@@ -2,7 +2,7 @@ custom_rules:
   init_usage:
     message: "Constructors should be called without init, just Foo(baz: parameter)."
     name: "Init as constructor"
-    regex: (?<!super)(?<!self)(\.init\()
+    regex: ([A-Z]{1}[a-z]*\.init\()
 disabled_rules:
   - trailing_whitespace
   - nesting
