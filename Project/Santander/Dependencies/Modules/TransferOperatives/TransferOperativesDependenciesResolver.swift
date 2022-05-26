@@ -17,6 +17,14 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
         return oldResolver.resolve()
     }
     
+    func resolve() -> InternalTransferConfirmationBuilder {
+        return PLInternalTransferConfirmationBuilder(dependencies: self)
+    }
+    
+    func resolve() -> InternalTransferHeaderSummaryBuilder {
+        return PLInternalTransferHeaderSummaryBuilder(dependencies: self)
+    }
+    
     func resolve() -> InternalTransferPreSetupUseCase {
         return PLInternalTransferPreSetupUseCase(dependencies: self)
     }
@@ -55,5 +63,9 @@ extension ModuleDependencies: TransferOperativesExternalDependenciesResolver, PL
     
     func resolve() -> PLAccountOtherOperativesInfoRepository {
         return oldResolver.resolve()
+    }
+    
+    func resolve() -> GetAccountsFullNameUseCase {
+        return PLGetAccountsFullNameUseCase(dependencies: self)
     }
 }

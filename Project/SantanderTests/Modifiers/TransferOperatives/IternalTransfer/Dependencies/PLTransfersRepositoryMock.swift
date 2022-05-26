@@ -13,10 +13,7 @@ import OpenCombine
 @testable import IDZSwiftCommonCrypto
 
 struct PLTransfersRepositoryMock: PLTransfersRepository {
-    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
-        fatalError()
-    }
-    
+
     private var rates: [ExchangeRateRepresentable]!
     private var accounts: [AccountRepresentable]
     
@@ -31,6 +28,18 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
     
     func getAccountsForDebit() throws -> Result<[AccountRepresentable], Error> {
         return .success(self.accounts)
+    }
+    
+    func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error> {
+        fatalError()
+    }
+    
+    func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error> {
+        return Just(self.accounts).setFailureType(to: Error.self).eraseToAnyPublisher()
+    }
+    
+    func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error> {
+        return Just(self.accounts).setFailureType(to: Error.self).eraseToAnyPublisher()
     }
     
     func checkTransactionAvailability(input: CheckTransactionAvailabilityInput) throws -> Result<CheckTransactionAvailabilityRepresentable, Error> {
@@ -109,5 +118,23 @@ struct PLTransfersRepositoryMock: PLTransfersRepository {
     
     func noSepaPayeeDetail(of alias: String, recipientType: String) -> AnyPublisher<NoSepaPayeeDetailRepresentable, Error> {
         fatalError()
+    }
+    
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) -> AnyPublisher<PLAccountDetailRepresentable, Error> {
+        var accountDetail = PLAccountDetailRepresentedMock(name: nil)
+        if isLenghtAccountNumberCorrect(parameters.accountNumber) {
+            accountDetail = PLAccountDetailRepresentedMock(name: "Full Name")
+        }
+        return Just(accountDetail)
+            .tryMap({ result in
+                return result
+            })
+            .eraseToAnyPublisher()
+    }
+}
+
+private extension PLTransfersRepositoryMock {
+    func isLenghtAccountNumberCorrect(_ account: String) -> Bool {
+        return account.count == 26
     }
 }

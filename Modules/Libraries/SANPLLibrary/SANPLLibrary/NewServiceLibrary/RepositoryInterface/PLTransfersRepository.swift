@@ -17,11 +17,14 @@ public protocol PLTransfersRepository: TransfersRepository {
     func getChallenge(parameters: GenericSendMoneyConfirmationInput) throws -> Result<SendMoneyChallengeRepresentable, NetworkProviderError>
     func notifyDevice(_ parameters: NotifyDeviceInput) throws -> Result<AuthorizationIdRepresentable, NetworkProviderError>
     func getAccountsForDebit() -> AnyPublisher<[AccountRepresentable], Error>
+    func getAccountsForDebitSwitch() -> AnyPublisher<[AccountRepresentable], Error>
     func getAccountsForCredit() -> AnyPublisher<[AccountRepresentable], Error>
+    func getAccountsForCreditSwitch(_ accountType: String) -> AnyPublisher<[AccountRepresentable], Error>
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) throws -> Result<ConfirmationTransferDTO, Error>
     func sendConfirmation(input: GenericSendMoneyConfirmationInput) -> AnyPublisher<ConfirmationTransferDTO, Error>
     func getExchangeRatesReactive() -> AnyPublisher<[ExchangeRateRepresentable], Error>
     func getExchangeRates() throws -> Result<[ExchangeRateRepresentable], Error>
+    func getAccountDetail(_ parameters: GetPLAccountDetailInput) -> AnyPublisher<PLAccountDetailRepresentable, Error>
 }
 
 public extension PLTransfersRepository {
