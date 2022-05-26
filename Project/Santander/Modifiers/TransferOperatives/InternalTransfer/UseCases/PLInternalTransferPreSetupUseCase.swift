@@ -35,11 +35,15 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
             }
             .tryMap { (globalPosition: GlobalPositionAndUserPrefMergedRepresentable, debitAccounts: [AccountRepresentable], creditAccounts: [AccountRepresentable]) -> (Int, [PolandAccountRepresentable], [PolandAccountRepresentable]) in
                 let notVisiblesPGAccounts = globalPosition.accounts.filter { $0.isVisible == false }
+                let notVisiblesPGSavingAccounts = globalPosition.savingsProducts.filter { $0.isVisible == false }
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                let (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount) = filterInputAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
-                let (destinationAccountsVisibles, destinationAccountsNotVisibles, _) = filterInputAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                let gpNotVisibleSavingAccounts = notVisiblesPGSavingAccounts.map { savingAccount in
+                    return savingAccount.product
+                }
+                let (originAccountsVisibles, originAccountsNotVisibles, notOriginCreditCardAccount) = filterInputAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts, gpNotVisibleSavingAccounts: gpNotVisibleSavingAccounts)
+                let (destinationAccountsVisibles, destinationAccountsNotVisibles, _) = filterInputAccounts(accounts: creditAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts, gpNotVisibleSavingAccounts: gpNotVisibleSavingAccounts)
                 if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
                     throw InternalTransferOperativeError.minimunAccounts
                 }
@@ -97,7 +101,7 @@ private extension PLInternalTransferPreSetupUseCase {
         }
     }
     
-    func filterInputAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable], [AccountRepresentable]) {
+    func filterInputAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable], gpNotVisibleSavingAccounts: [SavingProductRepresentable]) -> ([AccountRepresentable], [AccountRepresentable], [AccountRepresentable]) {
         var originAccountsVisibles: [AccountRepresentable] = []
         var originAccountsNotVisibles: [AccountRepresentable] = []
         var notOriginCreditCardAccount: [AccountRepresentable] = []
@@ -109,7 +113,10 @@ private extension PLInternalTransferPreSetupUseCase {
             let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
                 return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
             }
-            guard containsAccountNotVisible else {
+            let containsSavingAccountNotVisible = gpNotVisibleSavingAccounts.contains { accountNotVisibles in
+                return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
+            }
+            guard containsAccountNotVisible || containsSavingAccountNotVisible else {
                 originAccountsVisibles.append(account)
                 return
             }
