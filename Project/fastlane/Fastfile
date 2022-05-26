@@ -254,6 +254,7 @@ platform :ios do
         build_for_testing: false,
         result_bundle: true,
         output_style: "basic",
+        devices: ["iPhone 12"],
         suppress_xcode_output: options[:suppress_xcode_output]
     )
   end

@@ -78,22 +78,35 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
             addAmount()
         }
     }
-
+    
+    func getDetail() -> (String) {
+        guard let operativeData = operativeData else { return "" }
+        switch operativeData.internalTransferDateType {
+        case .now, .none:
+            return "confirmation_label_today"
+        case .day:
+            return operativeData.issueDate.toString(format: TimeFormat.dd_MM_yyyy.rawValue)
+        default: return "confirmation_label_today"
+        }
+    }
+    
     func addSendDate() {
-        guard let operativeData = operativeData else { return }
-        let date = operativeData.issueDate.toString(format: TimeFormat.dd_MM_yyyy.rawValue)
-        let dateString = operativeData.issueDate.isDayInToday() ? "confirmation_label_today" : date
-        var items: [OneListFlowItemViewModel.Item] = [
+        let subtitle = self.getDetail()
+        let items: [OneListFlowItemViewModel.Item] =
+        [
             .init(type: .title(keyOrValue: "confirmation_label_sendDate"),
-                  accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle)
+                  accessibilityId: AccessibilityOneComponents.oneListFlowItemTitle,
+                  accessibilityLabel: localized("voiceover_sendDateInformation")),
+            .init(type: .label(keyOrValue: subtitle, isBold: true),
+                  accessibilityId: AccessibilityOneComponents.oneListFlowItemText,
+                  accessibilityLabel: localized(subtitle))
         ]
-            items.append(.init(type: .label(keyOrValue: dateString, isBold: true),
-                               accessibilityId: AccessibilityOneComponents.oneListFlowItemText))
         append(items, suffix: AccessibilityInternalTransferConfirmation.dateSuffix)
     }
     
     func addSendType() {
-        guard let operativeData = operativeData, let originAccount = operativeData.originAccount,
+        guard let operativeData = operativeData,
+              let originAccount = operativeData.originAccount,
               let destinationAccount = operativeData.destinationAccount else { return }
         var items: [OneListFlowItemViewModel.Item] = [
             .init(type: .title(keyOrValue: "confirmation_label_sendType"),
@@ -103,7 +116,7 @@ final class PLInternalTransferConfirmationBuilder: InternalTransferConfirmationB
                                     destinationAccount: destinationAccount,
                                     date: operativeData.issueDate) {
             items.append(.init(type: .tag(tag: .init(itemKeyOrValue: "confirmation_label_internalTransfer", tagKeyOrValue: localized("sendMoney_tag_free"))),
-                               accessibilityId: AccessibilityOneComponents.oneListFlowItemTag))
+                               accessibilityId: AccessibilityOneComponents.oneListFlowItemTagConfirmation))
         } else {
             items.append(.init(type: .label(keyOrValue: "confirmation_label_internalTransfer", isBold: true),
                                accessibilityId: AccessibilityOneComponents.oneListFlowItemText))
