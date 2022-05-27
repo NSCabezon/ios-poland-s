@@ -34,10 +34,14 @@ extension PLInternalTransferPreSetupUseCase: InternalTransferPreSetupUseCase {
             }
             .flatMap { globalPosition, debitAccounts -> AnyPublisher<PreSetupData, InternalTransferOperativeError> in
                 let notVisiblesPGAccounts = globalPosition.accounts.filter { $0.isVisible == false }
+                let notVisiblesPGSavingAccounts = globalPosition.savingsProducts.filter { $0.isVisible == false }
                 let gpNotVisibleAccounts = notVisiblesPGAccounts.map { account in
                     return account.product
                 }
-                let (originAccountsVisibles, originAccountsNotVisibles) = originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts)
+                let gpNotVisibleSavingAccounts = notVisiblesPGSavingAccounts.map { savingAccount in
+                    return savingAccount.product
+                }
+                let (originAccountsVisibles, originAccountsNotVisibles) = originAccounts(accounts: debitAccounts, gpNotVisibleAccounts: gpNotVisibleAccounts, gpNotVisibleSavingAccounts: gpNotVisibleSavingAccounts)
                 if isMinimunAccounts(accounts: originAccountsVisibles + originAccountsNotVisibles) == false {
                     return Fail(error: InternalTransferOperativeError.originMinimunAccounts).eraseToAnyPublisher()
                 }
@@ -58,7 +62,7 @@ private extension PLInternalTransferPreSetupUseCase {
         }
     }
     
-    func originAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable]) -> ([AccountRepresentable], [AccountRepresentable]) {
+    func originAccounts(accounts: [AccountRepresentable], gpNotVisibleAccounts: [AccountRepresentable], gpNotVisibleSavingAccounts: [SavingProductRepresentable]) -> ([AccountRepresentable], [AccountRepresentable]) {
         var originAccountsVisibles: [AccountRepresentable] = []
         var originAccountsNotVisibles: [AccountRepresentable] = []
         accounts.forEach { account in
@@ -66,7 +70,10 @@ private extension PLInternalTransferPreSetupUseCase {
             let containsAccountNotVisible = gpNotVisibleAccounts.contains { accountNotVisibles in
                 return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
             }
-            guard containsAccountNotVisible else {
+            let containsSavingAccountNotVisible = gpNotVisibleSavingAccounts.contains { accountNotVisibles in
+                return polandAccount?.ibanRepresentable?.codBban.contains(accountNotVisibles.ibanRepresentable?.codBban ?? "") ?? false
+            }
+            guard containsAccountNotVisible || containsSavingAccountNotVisible else {
                 originAccountsVisibles.append(account)
                 return
             }
